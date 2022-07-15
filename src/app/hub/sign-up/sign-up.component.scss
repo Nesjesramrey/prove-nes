@@ -1,0 +1,66 @@
+:host {
+  .form-hldr {
+    width: 600px;
+    margin: 0;
+    margin-left: 40px;
+    padding-top: 120px;
+    float: left;
+    position: relative;
+    z-index: 7;
+
+    .set-6:nth-child(odd) {
+      padding-right: 10px;
+    }
+
+    .set-6:nth-child(even) {
+      padding-left: 10px;
+    }
+
+    form {
+      float: left;
+      margin-top: 20px;
+    }
+  }
+
+  .form-ctrls {
+    display: flex;
+    align-items: center;
+  }
+
+  .cover {
+    width: 100vw;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    height: 100vh;
+    background: url('../../../assets/images/auth-bg.png') no-repeat;
+    background-position: right;
+    background-size: contain;
+    z-index: 4;
+
+    img {
+      float: left;
+    }
+  }
+
+  .legals {
+    p {
+      margin-bottom: 10px;
+    }
+
+    .row {
+      display: flex;
+      margin-bottom: 4px;
+
+      * {
+        margin: 0;
+      }
+    }
+  }
+
+  .activation-legend {
+    text-align: center;
+    margin: 10px 0;
+    font-style: italic;
+  }
+}

@@ -1,1 +1,278 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+  margin: 0 auto;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  cursor: default;
+  background: #f1f1f1 !important;
+}
+
+body {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+  outline: none;
+  border: none;
+  background: none;
+}
+
+textarea {
+  resize: none;
+}
+
+button {
+  cursor: pointer;
+  box-shadow: none !important;
+}
+
+button:disabled {
+  cursor: not-allowed !important;
+}
+
+textarea {
+  resize: none !important;
+}
+
+.app,
+.page {
+  width: 100%;
+  height: 100%;
+}
+
+.set-1 {
+  width: 8.33333333%;
+}
+
+.set-2 {
+  width: 16.66666667%;
+}
+
+.set-3 {
+  width: 25%;
+}
+
+.set-4 {
+  width: 33.33333333%;
+}
+
+.set-5 {
+  width: 41.66666667%;
+}
+
+.set-6 {
+  width: 50%;
+}
+
+.set-7 {
+  width: 58.33333333%;
+}
+
+.set-8 {
+  width: 66.66666667%;
+}
+
+.set-9 {
+  width: 75%;
+}
+
+.set-10 {
+  width: 83.33333333%;
+}
+
+.set-11 {
+  width: 91.66666667%;
+}
+
+.set-12 {
+  width: 100%;
+}
+
+.set-1,
+.set-2,
+.set-3,
+.set-4,
+.set-5,
+.set-6,
+.set-7,
+.set-8,
+.set-9,
+.set-10,
+.set-11,
+.set-12 {
+  float: left;
+}
+
+.set-1:before,
+.set-2:before,
+.set-3:before,
+.set-4:before,
+.set-5:before,
+.set-6:before,
+.set-7:before,
+.set-8:before,
+.set-9:before,
+.set-10:before,
+.set-11:before,
+.set-12:before {
+  content: " ";
+  display: table;
+}
+
+.set-1:after,
+.set-2:after,
+.set-3:after,
+.set-4:after,
+.set-5:after,
+.set-6:after,
+.set-7:after,
+.set-8:after,
+.set-9:after,
+.set-10:after,
+.set-11:after,
+.set-12:after {
+  content: " ";
+  display: table;
+  clear: both;
+}
+
+.txt-left {
+  text-align: left !important;
+}
+
+.txt-right {
+  text-align: right !important;
+}
+
+.txt-center {
+  text-align: center !important;
+}
+
+.txt-justify {
+  text-align: justify !important;
+}
+
+.innerhldr {
+  width: 80%;
+  float: left;
+  margin: 40px 10%;
+}
+
+.roundblue {
+  width: 35px;
+  height: 35px;
+  border-radius: 100%;
+  background: #CEDDFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba($color: #000000, $alpha: 0.1);
+
+  mat-icon {
+    color: #306EFF !important;
+    font-size: 14pt;
+  }
+}
+
+.roundgreen {
+  width: 35px;
+  height: 35px;
+  border-radius: 100%;
+  background: #20C588;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba($color: #000000, $alpha: 0.1);
+
+  mat-icon {
+    color: #ffffff !important;
+    font-size: 14pt;
+  }
+}
+
+.roundbluemini {
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  background: #CEDDFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba($color: #000000, $alpha: 0.1);
+
+  mat-icon {
+    color: #306EFF !important;
+    font-size: 14pt;
+  }
+}
+
+.roundbluemini:disabled {
+  opacity: 0.7;
+  cursor: not-allowed !important;
+}
+
+.roundgray {
+  width: 35px;
+  height: 35px;
+  border-radius: 100%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba($color: #000000, $alpha: 0.1);
+
+  mat-icon {
+    color: #636363 !important;
+    font-size: 14pt;
+  }
+}
+
+.carousel {
+  z-index: 19 !important;
+  min-height: 300px;
+}
+
+.carousel-cells {
+  float: left;
+  // will-change: auto !important;
+
+  .carousel-cell {
+    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+  }
+}
+
+mat-icon {
+  width: auto !important;
+  height: auto !important;
+}
+
+.overlay-e {
+  z-index: 370 !important;
+}
+
+.mat-tab-header {
+  width: 100%;
+}
+
+.mat-tab-label {
+  min-width: auto !important;
+  margin: 0 !important;
+
+  mat-icon {
+    font-size: 14pt;
+    margin-right: 10px;
+  }
+}
+
+.mat-tab-body-wrapper {
+  padding-top: 20px;
+  width: 100%;
+}

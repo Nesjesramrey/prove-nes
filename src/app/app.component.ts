@@ -1,10 +1,77 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ThemeVariables, ThemeRef, lyl, StyleRenderer } from '@alyle/ui';
+import { NavigationStart, Router } from '@angular/router';
+import { AuthenticationService } from './services/authentication.service';
+import { UserService } from './services/user.service';
+import { forkJoin, Observable } from 'rxjs';
+import { Location } from '@angular/common';
+
+const STYLES = (theme: ThemeVariables, ref: ThemeRef) => {
+  const __ = ref.selectorsOf(STYLES);
+  return {
+    $global: lyl`{
+      body {
+        background-color: ${theme.background.default}
+        color: ${theme.text.default}
+        font-family: ${theme.typography.fontFamily}
+        margin: 0
+        direction: ${theme.direction}
+      }
+    }`,
+    root: lyl`{
+      display: block
+    }`
+  };
+};
 
 @Component({
-  selector: 'app-root',
+  selector: '.app',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  providers: [StyleRenderer]
 })
-export class AppComponent {
-  title = 'app-frontend';
+export class AppComponent implements OnInit {
+  readonly classes = this.sRenderer.renderSheet(STYLES, true);
+  public isDataAvailable: boolean = false;
+  public isAuthenticated: boolean = false;
+  public token: any = null;
+  public payload: any = null;
+  public user: any = null;
+
+  constructor(
+    readonly sRenderer: StyleRenderer,
+    public router: Router,
+    public location: Location,
+    public authenticationSrvc: AuthenticationService,
+    public userSrvc: UserService
+  ) {
+    this.isAuthenticated = this.authenticationSrvc.isAuthenticated;
+    this.token = this.authenticationSrvc.fetchToken;
+
+    this.router.events.subscribe((val) => {
+      if (val instanceof NavigationStart) {
+        let lastVal: any = val['url'].substring(val['url'].lastIndexOf('/') + 1);
+        if (lastVal == 'registro') {
+          console.log('hub');
+        }
+      }
+    });
+  }
+
+  ngOnInit(): void {
+    if (this.token != null) {
+      this.payload = JSON.parse(atob(this.token.split('.')[1]));
+      let user: Observable<any> = this.userSrvc.fetchUserById({ _id: this.payload['sub'] });
+      forkJoin([user]).subscribe((reply: any) => {
+        this.user = reply[0]['user'];
+        setTimeout(() => {
+          this.isDataAvailable = true;
+        });
+      });
+    } else {
+      setTimeout(() => {
+        this.isDataAvailable = true;
+      });
+    }
+  }
 }

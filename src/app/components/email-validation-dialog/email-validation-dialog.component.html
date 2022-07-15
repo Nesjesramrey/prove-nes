@@ -1,0 +1,21 @@
+<h3 ly-dialog-title class="txt-center">Ingresa el código de activación</h3>
+
+<div ly-dialog-content class="set-12">
+  <form class="set-12" [formGroup]="emailValidationFormGroup" (submit)="onValidateEmail(emailValidationFormGroup)">
+    <div class="set-12 inputs">
+      <input type="text" autocomplete="off" minlength="1" maxlength="1" formControlName="step_1">
+      <input type="text" autocomplete="off" minlength="1" maxlength="1" formControlName="step_2">
+      <input type="text" autocomplete="off" minlength="1" maxlength="1" formControlName="step_3">
+      <input type="text" autocomplete="off" minlength="1" maxlength="1" formControlName="step_4">
+    </div>
+
+    <div class="set-12 txt-right">
+      <small>¿No lo encuentras? <a href="javascript:void(0)" (click)="sendCode()">Envíar otro</a></small>
+    </div>
+
+    <div class="set-12 ctrls txt-right">
+      <button type="button" ly-button raised bg="accent" (click)="killDialog()">Cancelar</button>
+      <button type="submit" ly-button raised bg="primary" [disabled]="emailValidationFormGroup.invalid">Validar</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,77 @@
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="set-12" *ngIf="isDataAvailable">
+  <h3 ly-dialog-title class="txt-center">Nuevo Documento</h3>
+
+  <div ly-dialog-content class="set-12 dialog-body">
+    <form class="set-12" [formGroup]="documentFormGroup" (submit)="onCreateDocument(documentFormGroup)">
+      <div class="set-8">
+        <ly-field appearance="outlined" [lyWidth]="1">
+          <input lyNativeControl type="text" formControlName="title">
+          <ly-label>Titulo *</ly-label>
+        </ly-field>
+      </div>
+
+      <div class="set-4">
+        <ly-field appearance="outlined" [lyWidth]="1">
+          <ly-label>Cobertura *</ly-label>
+          <ly-select formControlName="coverage">
+            <ly-option [value]="state._id" *ngFor="let state of statesMex">
+              <small>{{state.name}}</small>
+            </ly-option>
+          </ly-select>
+        </ly-field>
+      </div>
+
+      <div class="set-12 section-title">
+        <p>Editores</p>
+        <button type="button" (click)="addCollaboratorField()" disabled>
+          <small>Agregar Editor</small>
+          <mat-icon>add_circle</mat-icon>
+        </button>
+      </div>
+
+      <div formArrayName="collaborators" class="set-12">
+        <div *ngFor="let item of collaboratorForm.controls; let i = index;" class="set-12">
+          <div [formGroupName]="i">
+            <div class="set-12" class="collab">
+              <div class="set-7">
+                <ly-field appearance="outlined" [lyWidth]="1">
+                  <input lyNativeControl type="text" formControlName="email">
+                  <ly-label>Correo electrónico *</ly-label>
+                </ly-field>
+              </div>
+
+              <div class="set-4">
+                <ly-field appearance="outlined" [lyWidth]="1">
+                  <ly-label>Tipo *</ly-label>
+                  <ly-select formControlName="activity">
+                    <ly-option [value]="collaboratorType.type" *ngFor="let collaboratorType of collaboratorTypes"
+                      [disabled]="collaboratorType.disabled">
+                      <small>{{collaboratorType.displayName}}</small>
+                    </ly-option>
+                  </ly-select>
+                </ly-field>
+              </div>
+              <div class="set-1">
+                <button type="button" class="roundbluemini" (click)="removeCollaboratorField(i)" matTooltip="Eliminar"
+                  matTooltipPosition="left" disabled>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="set-12 ctrls">
+        <button type="button" ly-button raised bg="accent" (click)="killDialog()">Cancelar</button>
+        <button type="submit" ly-button raised bg="primary" [disabled]="documentFormGroup.invalid || submitted">
+          Crear Documento
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

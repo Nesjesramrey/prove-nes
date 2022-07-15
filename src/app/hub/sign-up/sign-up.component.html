@@ -1,0 +1,85 @@
+<div class="form-hldr">
+  <h1>¡Hola!</h1>
+  <h4>Necesitas una cuenta para ingresar.</h4>
+
+  <form [formGroup]="signUpFormGroup" (submit)="onSignUp(signUpFormGroup)">
+    <div class="set-6">
+      <ly-field appearance="outlined" [lyWidth]="1">
+        <input lyNativeControl type="text" formControlName="firstname">
+        <ly-label>Nombre(s) *</ly-label>
+      </ly-field>
+    </div>
+
+    <div class="set-6">
+      <ly-field appearance="outlined" [lyWidth]="1">
+        <input lyNativeControl type="text" formControlName="lastname">
+        <ly-label>Apellido(s) *</ly-label>
+      </ly-field>
+    </div>
+
+    <div class="set-6">
+      <ly-field appearance="outlined" [lyWidth]="1">
+        <input lyNativeControl type="text" formControlName="email">
+        <ly-label>Correo electrónico *</ly-label>
+      </ly-field>
+    </div>
+
+    <div class="set-6">
+      <ly-field appearance="outlined" [lyWidth]="1">
+        <input lyNativeControl type="password" formControlName="password">
+        <ly-label>Contraseña *</ly-label>
+      </ly-field>
+    </div>
+
+    <div class="set-6">
+      <ly-field appearance="outlined" [lyWidth]="1">
+        <input lyNativeControl type="text" formControlName="phone">
+        <ly-label>Teléfono</ly-label>
+      </ly-field>
+    </div>
+
+    <div class="set-6">
+      <ly-field appearance="outlined" [lyWidth]="1">
+        <input lyNativeControl type="text" formControlName="zipcode">
+        <ly-label>Código postal</ly-label>
+      </ly-field>
+    </div>
+
+    <div class="set-12 legals">
+      <p>
+        <small>He leído y estoy de acuerdo con:</small>
+      </p>
+      <div class="set-12 row">
+        <ly-checkbox formControlName="terms"></ly-checkbox>
+        <a href="#">
+          <small>Términos y condiciones</small>
+        </a>
+      </div>
+      <div class="set-12 row">
+        <ly-checkbox formControlName="privacy"></ly-checkbox>
+        <a href="#">
+          <small>Política de privacidad</small>
+        </a>
+      </div>
+      <div class="set-12 activation-legend">
+        <p>
+          <small>
+            Al hacer <strong>click</strong> en <strong>"Registrarme"</strong>, te envíaremos un correo de activación. **
+          </small>
+        </p>
+      </div>
+    </div>
+
+    <div class="set-12 form-ctrls">
+      <div class="set-6">
+        <small>¿Ya tienes cuenta? <a href="#" routerLink="/hub/ingresar">Ingresar</a></small>
+      </div>
+      <div class="set-6 txt-right">
+        <button type="submit" ly-button raised bg="primary"
+          [disabled]="signUpFormGroup.invalid || submitted">Registrarme</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="cover"></div>
