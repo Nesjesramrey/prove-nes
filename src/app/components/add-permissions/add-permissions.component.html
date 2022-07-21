@@ -1,0 +1,29 @@
+<div class="set-12 dialog-head">
+  <h3>Agregar permisos</h3>
+</div>
+
+<div class="set-12">
+  <ly-field appearance="outlined">
+    <ly-select placeholder="Permisos" [formControl]="permissionsFormControl" multiple>
+      <ly-select-trigger>
+        <span>{{permissionsFormControl.value ? permissionsFormControl.value[0] : ''}}</span>
+        <span *ngIf="permissionsFormControl.value?.length > 1">
+          <small>
+            (+{{permissionsFormControl.value.length - 1}} {{permissionsFormControl.value?.length === 2 ? 'other' :
+            'others'}})
+          </small>
+        </span>
+      </ly-select-trigger>
+
+      <ly-option *ngFor="let permission of permissionList" [value]="permission">
+        <small>{{ permission }}</small>
+      </ly-option>
+    </ly-select>
+  </ly-field>
+</div>
+
+<div class="set-12 txt-right">
+  <button type="button" mat-raised-button color="primary" (click)="onAddPermissions()">
+    Agregar permisos
+  </button>
+</div>

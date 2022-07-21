@@ -11,6 +11,7 @@ export class EndPointService {
   public signoutEndPoint: string = '/authentication/signout';
 
   // users
+  public fetchAllUsersEndPoint: string = '/user/fetch-all-users';
   public fetchUserByIdEndPoint: string = '/user/fetch-user-by-id';
 
   // documents
@@ -22,6 +23,14 @@ export class EndPointService {
 
   // utility
   public fetchAllStatesMexEndPoint: string = '/utility/fetch-all-states-mex';
+
+  // uploads
+  public uploadUserAvatarEndPoint: string = '/upload/upload-avatar-file';
+
+  // notifications
+  public createNewNotificationEndPoint: string = '/notification/create-new-notification';
+  public fetchMyNotificationsLengthEndPoint: string = '/notification/fetch-my-notifications-length';
+  public fetchMyNotificationsContentEndPoint: string = '/notification/fetch-my-notifications-content';
 
   constructor() { }
 }

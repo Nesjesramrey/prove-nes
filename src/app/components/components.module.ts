@@ -12,6 +12,9 @@ import { LyButtonModule } from '@alyle/ui/button';
 import { LyFieldModule } from '@alyle/ui/field';
 import { LySelectModule } from '@alyle/ui/select';
 import { LyTooltipModule } from '@alyle/ui/tooltip';
+import { LyImageCropperModule } from '@alyle/ui/image-cropper';
+import { LySliderModule } from '@alyle/ui/slider';
+import { LyIconModule } from '@alyle/ui/icon';
 
 import { AppPageletComponent } from "./app-pagelet/app-pagelet.component";
 import { AppFooterComponent } from "./app-footer/app-footer.component";
@@ -19,6 +22,8 @@ import { EmailValidationDialogComponent } from "./email-validation-dialog/email-
 import { AddDocumentDialogComponent } from "./add-document-dialog/add-document-dialog.component";
 import { PieChartComponent } from "./pie-chart/pie-chart.component";
 import { LineChartComponent } from "./line-chart/line-chart.component";
+import { SetAvatarDialogComponent } from "./set-avatar-dialog/set-avatar-dialog.component";
+import { AddPermissionsComponent } from "./add-permissions/add-permissions.component";
 
 @NgModule({
   imports: [
@@ -32,6 +37,9 @@ import { LineChartComponent } from "./line-chart/line-chart.component";
     LyFieldModule,
     LySelectModule,
     LyTooltipModule,
+    LyImageCropperModule,
+    LySliderModule,
+    LyIconModule,
     NgChartsModule,
     AppSharedModule
   ],
@@ -41,7 +49,9 @@ import { LineChartComponent } from "./line-chart/line-chart.component";
     EmailValidationDialogComponent,
     AddDocumentDialogComponent,
     PieChartComponent,
-    LineChartComponent
+    LineChartComponent,
+    SetAvatarDialogComponent,
+    AddPermissionsComponent
   ],
   exports: [
     AppPageletComponent,
@@ -49,11 +59,15 @@ import { LineChartComponent } from "./line-chart/line-chart.component";
     EmailValidationDialogComponent,
     AddDocumentDialogComponent,
     PieChartComponent,
-    LineChartComponent
+    LineChartComponent,
+    SetAvatarDialogComponent,
+    AddPermissionsComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
-    AddDocumentDialogComponent
+    AddDocumentDialogComponent,
+    SetAvatarDialogComponent,
+    AddPermissionsComponent
   ],
   providers: [],
 })

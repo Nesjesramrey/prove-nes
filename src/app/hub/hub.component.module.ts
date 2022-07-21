@@ -18,6 +18,7 @@ import { HubComponent } from './hub.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SingleUserComponent } from './single-user/single-user.component';
+import { UserNotificationsComponent } from './user-notifications/user-notifications.component';
 
 @NgModule({
   imports: [
@@ -40,7 +41,8 @@ import { SingleUserComponent } from './single-user/single-user.component';
     HubComponent,
     SignUpComponent,
     SignInComponent,
-    SingleUserComponent
+    SingleUserComponent,
+    UserNotificationsComponent
   ]
 })
 export class HubComponentModule { }

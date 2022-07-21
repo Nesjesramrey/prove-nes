@@ -1,4 +1,4 @@
-<ly-toolbar>
+<ly-toolbar *ngIf="isDataAvailable">
   <div class="set-6 logo">
     <button type="button" (click)="linkMe('home')">
       <img src="../../../assets/images/PANDOlogo.png" alt="PANDO">
@@ -35,8 +35,9 @@
         {{ user.firstname | firstword | firstletter }}{{ user.lastname | firstword | firstletter }}
       </span>
     </button>
-    <button type="button" class="btn-ico" *ngIf="user != null">
-      <mat-icon>notifications</mat-icon>
+    <button type="button" class="btn-ico" *ngIf="user != null" (click)="linkMe('notifications')">
+      <mat-icon [matBadge]="notifications" matBadgeColor="warn" *ngIf="notifications != 0">notifications</mat-icon>
+      <mat-icon *ngIf="notifications == 0">notifications</mat-icon>
     </button>
     <button type="button" class="btn-ico" *ngIf="user != null" (click)="onSignOut()">
       <mat-icon>power_settings_new</mat-icon>

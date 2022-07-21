@@ -1,0 +1,31 @@
+<div class="innerhldr">
+  <div class="set-3">&nbsp;</div>
+
+  <div class="set-6">
+    <mat-card class="set-12">
+      <div class="set-12" *ngFor="let notification of notifications">
+        <div class="set-12 notification" *ngIf="notification.type == 'document_invite'">
+          <div class="set-2">
+            <div class="avatar"></div>
+          </div>
+
+          <div class="set-8">
+            <p><small>{{notification.message}}</small></p>
+            <p>
+              <strong><small>{{notification.document.title}}</small></strong>
+            </p>
+            <p>
+              <small>{{notification.created_at | date: 'mediumDate'}} - {{notification.created_at | date: 'mediumTime'}}</small>
+            </p>
+          </div>
+
+          <div class="set-2 txt-right">
+            <button type="button" mat-icon-button>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>

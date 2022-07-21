@@ -10,6 +10,10 @@ export class UserService {
     public endpointSrvc: EndPointService
   ) { }
 
+  fetchAllUsers() {
+    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAllUsersEndPoint, {});
+  }
+
   fetchUserById(data: any) {
     return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchUserByIdEndPoint, data);
   }

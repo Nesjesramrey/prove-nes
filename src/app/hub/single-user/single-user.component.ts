@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { AddDocumentDialogComponent } from 'src/app/components/add-document-dialog/add-document-dialog.component';
+import { SetAvatarDialogComponent } from 'src/app/components/set-avatar-dialog/set-avatar-dialog.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DocumentService } from 'src/app/services/document.service';
 import { UserService } from 'src/app/services/user.service';
@@ -34,25 +35,45 @@ export class SingleUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let user: Observable<any> = this.userSrvc.fetchUserById({ _id: this.userID });
-    let documents: Observable<any> = this.documentSrvc.fetchMyDocuments({ created_by: this.userID });
-
-    forkJoin([user, documents]).subscribe((reply: any) => {
+    this.userSrvc.fetchUserById({ _id: this.userID }).subscribe((reply: any) => {
       // console.log(reply);
-      if (reply[0]['status'] == false) {
-        this.router.navigateByUrl('/404');
-        return;
+      this.user = reply['user'];
+      // console.log(this.user);
+
+      if (this.user['activities'].length != 0) {
+        if (this.user['activities'].includes('administrator')) {
+          let documents: Observable<any> = this.documentSrvc.fetchMyDocuments({ created_by: this.userID });
+          forkJoin([documents]).subscribe((reply: any) => {
+            // console.log(reply);
+            this.documents = reply[0]['documents'];
+            // console.log('documents: ', this.documents);
+
+            setTimeout(() => {
+              // this.isDataAvailable = true;
+            });
+          });
+        }
       }
-
-      this.user = reply[0]['user'];
-      // console.log('user: ', this.user);
-      this.documents = reply[1]['documents'];
-      // console.log('documents: ', this.documents);
-
-      setTimeout(() => {
-        this.isDataAvailable = true;
-      });
     });
+
+    // let user: Observable<any> = this.userSrvc.fetchUserById({ _id: this.userID });
+    // let documents: Observable<any> = this.documentSrvc.fetchMyDocuments({ created_by: this.userID });
+
+    // forkJoin([user, documents]).subscribe((reply: any) => {
+    //   if (reply[0]['status'] == false) {
+    //     this.router.navigateByUrl('/404');
+    //     return;
+    //   }
+
+    //   this.user = reply[0]['user'];
+    //   console.log('user: ', this.user);
+    //   this.documents = reply[1]['documents'];
+    //   console.log('documents: ', this.documents);
+
+    //   setTimeout(() => {
+    //     this.isDataAvailable = true;
+    //   });
+    // });
   }
 
   openAddDocumentDialog() {
@@ -67,6 +88,20 @@ export class SingleUserComponent implements OnInit {
     dialogRef.afterClosed.subscribe((reply: any) => {
       if (reply != undefined) {
         this.documents.unshift(reply['document']);
+      }
+    });
+  }
+
+  openCropperDialog(event: Event) {
+    const dialogRef = this.dialog.open<SetAvatarDialogComponent, Event>(SetAvatarDialogComponent, {
+      width: 420,
+      data: event,
+      disableClose: true
+    });
+
+    dialogRef.afterClosed.subscribe((reply: any) => {
+      if (reply != undefined) {
+        console.log(reply);
       }
     });
   }

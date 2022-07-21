@@ -1,3 +1,7 @@
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+  <mat-spinner></mat-spinner>
+</div>
+
 <div class="innerhldr" *ngIf="isDataAvailable">
   <div class="set-4 col-lft">
     <mat-card class="set-12">
@@ -5,7 +9,8 @@
         <img src="../../../assets/images/Aspens_Ed_Moss.jpeg" alt="">
       </div>
 
-      <button type="button" class="avatar">
+      <input #fileInput type="file" (change)="openCropperDialog($event)" accept="image/*" hidden>
+      <button type="button" class="avatar" (click)="fileInput.click()">
         <img src="{{user.avatarImage}}" alt="{{user.firstname}} {{user.lastname}}" *ngIf="user.avatarImage != ''">
         <span *ngIf="user.avatarImage == ''">
           {{ user.firstname | firstword | firstletter }}{{ user.lastname | firstword | firstletter }}

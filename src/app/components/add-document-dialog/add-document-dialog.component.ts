@@ -3,6 +3,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { DocumentService } from 'src/app/services/document.service';
+import { NotificationService } from 'src/app/services/notification.service';
+import { SocketService } from 'src/app/services/socket.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
@@ -28,7 +30,9 @@ export class AddDocumentDialogComponent implements OnInit {
     @Inject(LY_DIALOG_DATA) public dialogData: any,
     public formBuilder: FormBuilder,
     public documentSrvc: DocumentService,
-    public utilitySrvc: UtilityService
+    public utilitySrvc: UtilityService,
+    public notificationSrvc: NotificationService,
+    public socketSrvc: SocketService
   ) {
     // console.log(this.dialogData);
   }
@@ -78,12 +82,24 @@ export class AddDocumentDialogComponent implements OnInit {
       collaborators: formGroup.value.collaborators
     }
     this.documentSrvc.createNewDocument(data).subscribe((reply: any) => {
-      console.log(reply);
+      // console.log(reply);
       this.submitted = false;
       if (reply['status'] == false) {
         this.utilitySrvc.openErrorSnackBar(reply['error']);
         return;
       }
+
+      this.notificationSrvc.createNewNotification({
+        type: 'document_invite',
+        message_to: reply['message_to'],
+        message_from: reply['message_from'],
+        document: reply['document']['_id'],
+        message: 'Te han invitado a colaborar'
+      }).subscribe((reply: any) => {
+        // console.log(reply);
+        this.socketSrvc.putNotification({ new_notification: true });
+      });
+
       this.utilitySrvc.openSuccessSnackBar(reply['message']);
       this.dialogRef.close(reply);
     });

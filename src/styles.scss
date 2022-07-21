@@ -42,6 +42,15 @@ textarea {
   resize: none !important;
 }
 
+table {
+  width: 100%;
+  text-align: center;
+
+  th {
+    text-align: center !important;
+  }
+}
+
 .app,
 .page {
   width: 100%;
@@ -275,4 +284,52 @@ mat-icon {
 .mat-tab-body-wrapper {
   padding-top: 20px;
   width: 100%;
+}
+
+.mat-paginator-container {
+  * {
+    margin: 0;
+  }
+}
+
+.mat-menu-content:not(:empty) {
+  padding: 0 !important;
+}
+
+.mat-menu-panel {
+  min-height: auto !important;
+}
+
+.cdk-overlay-pane {
+  position: absolute !important;
+}
+
+.mat-menu-item {
+  height: auto !important;
+  line-height: normal !important;
+  padding: 10px !important;
+
+  span {
+    font-size: 9pt !important;
+  }
+
+  mat-icon {
+    font-size: 11pt !important;
+  }
+}
+
+.LySelect-option-at {
+  justify-content: flex-start !important;
+
+  * {
+    margin: 0 !important;
+  }
+
+  .LySelect-optionText-av {
+    margin-left: 10px !important;
+  }
+}
+
+.mat-checkbox-disabled {
+  cursor: not-allowed !important;
 }

@@ -1,0 +1,14 @@
+:host {
+  .ctrls {
+    padding: 0 20px 20px 20px;
+    text-align: right;
+
+    button {
+      margin-left: 10px;
+    }
+
+    button:first-child {
+      margin-left: 0;
+    }
+  }
+}

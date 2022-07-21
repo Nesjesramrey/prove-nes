@@ -15,6 +15,9 @@ import { EndPointService } from './services/endpoint.service';
 import { UtilityService } from './services/utility.service';
 import { UserService } from './services/user.service';
 import { DocumentService } from './services/document.service';
+import { UploadService } from './services/upload.service';
+import { SocketService } from './services/socket.service';
+import { NotificationService } from './services/notification.service';
 
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire/compat';
@@ -34,6 +37,9 @@ const firebaseConfig = {
   measurementId: "G-52TGZKKXKS"
 };
 
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+const socketConfig: SocketIoConfig = { url: 'http://localhost:4040', options: {} };
+
 @NgModule({
   declarations: [
     AppComponent
@@ -51,7 +57,8 @@ const firebaseConfig = {
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,
-    NgChartsModule
+    NgChartsModule,
+    SocketIoModule.forRoot(socketConfig),
   ],
   providers: [
     { provide: HAMMER_GESTURE_CONFIG, useClass: LyHammerGestureConfig },
@@ -63,7 +70,10 @@ const firebaseConfig = {
     EndPointService,
     UtilityService,
     UserService,
-    DocumentService
+    DocumentService,
+    UploadService,
+    SocketService,
+    NotificationService
   ],
   bootstrap: [AppComponent]
 })
