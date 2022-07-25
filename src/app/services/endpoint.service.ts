@@ -13,6 +13,7 @@ export class EndPointService {
   // users
   public fetchAllUsersEndPoint: string = '/user/fetch-all-users';
   public fetchUserByIdEndPoint: string = '/user/fetch-user-by-id';
+  public addUserPermissionsEndPoint: string = '/user/add-permissions';
 
   // documents
   public createNewDocumentEndPoint: string = '/document/create-new-document';

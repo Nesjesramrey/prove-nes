@@ -19,6 +19,7 @@ export class SingleUserComponent implements OnInit {
   public isAuthenticated: boolean = false;
   public token: any = null;
   public user: any = null;
+  public userActivities: any = [];
   public documents: any = [];
 
   constructor(
@@ -36,12 +37,19 @@ export class SingleUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.userSrvc.fetchUserById({ _id: this.userID }).subscribe((reply: any) => {
-      // console.log(reply);
       this.user = reply['user'];
-      // console.log(this.user);
+      this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
 
-      if (this.user['activities'].length != 0) {
-        if (this.user['activities'].includes('administrator')) {
+      if (this.userActivities.length != 0) {
+        // moderator
+        if (this.userActivities.includes('moderator')) {
+          setTimeout(() => {
+            this.isDataAvailable = true;
+          });
+        }
+
+        // administrator
+        if (this.userActivities.includes('administrator')) {
           let documents: Observable<any> = this.documentSrvc.fetchMyDocuments({ created_by: this.userID });
           forkJoin([documents]).subscribe((reply: any) => {
             // console.log(reply);
@@ -49,7 +57,7 @@ export class SingleUserComponent implements OnInit {
             // console.log('documents: ', this.documents);
 
             setTimeout(() => {
-              // this.isDataAvailable = true;
+              this.isDataAvailable = true;
             });
           });
         }

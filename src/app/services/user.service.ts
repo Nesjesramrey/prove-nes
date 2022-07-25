@@ -17,4 +17,8 @@ export class UserService {
   fetchUserById(data: any) {
     return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchUserByIdEndPoint, data);
   }
+
+  addUserPermissions(data: any) {
+    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.addUserPermissionsEndPoint, data);
+  }
 }

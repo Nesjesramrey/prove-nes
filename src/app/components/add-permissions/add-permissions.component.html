@@ -4,26 +4,27 @@
 
 <div class="set-12">
   <ly-field appearance="outlined">
-    <ly-select placeholder="Permisos" [formControl]="permissionsFormControl" multiple>
-      <ly-select-trigger>
-        <span>{{permissionsFormControl.value ? permissionsFormControl.value[0] : ''}}</span>
-        <span *ngIf="permissionsFormControl.value?.length > 1">
-          <small>
-            (+{{permissionsFormControl.value.length - 1}} {{permissionsFormControl.value?.length === 2 ? 'other' :
-            'others'}})
-          </small>
-        </span>
-      </ly-select-trigger>
-
+    <ly-label>Permisos *</ly-label>
+    <ly-select [formControl]="permissionsFormControl" multiple [compareWith]="compareWithFn">
       <ly-option *ngFor="let permission of permissionList" [value]="permission">
-        <small>{{ permission }}</small>
+        <small>{{ permission.viewValue }}</small>
       </ly-option>
     </ly-select>
   </ly-field>
+  <ly-error *ngIf="permissionsFormControl.hasError('required')" class="set-12 hasError">
+    <small>Campos requeridos *</small>
+  </ly-error>
 </div>
 
-<div class="set-12 txt-right">
-  <button type="button" mat-raised-button color="primary" (click)="onAddPermissions()">
-    Agregar permisos
-  </button>
+<div class="set-12 ctrls">
+  <div class="set-12">
+    <button type="button" class="remove" matTooltip="Se eliminarán todos los permisos" matTooltipPosition="left"
+      (click)="onAddPermissions('remove')">
+      <span>Remover permisos</span>
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </div>
+  <button type="button" mat-raised-button color="accent" (click)="killDialog()">Cancelar</button>
+  <button type="button" mat-raised-button color="primary" (click)="onAddPermissions('add')"
+    [disabled]="permissionsFormControl.invalid">Agregar permisos</button>
 </div>

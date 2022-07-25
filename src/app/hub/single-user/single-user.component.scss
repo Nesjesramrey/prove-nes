@@ -1,6 +1,13 @@
 :host {
   margin-top: 80px;
 
+  mat-spinner {
+    position: absolute !important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
   mat-card:not(:first-child) {
     margin-top: 20px;
   }

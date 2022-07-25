@@ -28,6 +28,7 @@ export class UsersListComponent implements OnInit {
   public token: any = null;
   public payload: any = null;
   public user: any = null;
+  public userActivities: any = [];
 
   constructor(
     public authenticationSrvc: AuthenticationService,
@@ -49,9 +50,10 @@ export class UsersListComponent implements OnInit {
       forkJoin([user, users]).subscribe((reply: any) => {
         // console.log(reply);
         this.user = reply[0]['user'];
+        this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
         this.users = reply[1]['users'];
 
-        if (this.user['activities'].includes('moderator')) {
+        if (this.userActivities.includes('moderator')) {
           setTimeout(() => {
             this.dataSource = new MatTableDataSource(this.users);
             this.setDataSourceAttributes();
@@ -96,16 +98,32 @@ export class UsersListComponent implements OnInit {
   }
 
   onAddUserPermissions(userID: string) {
+    let user: any = this.users.filter((x: any) => { return x['_id'] == userID; });
     const dialogRef = this.dialog.open<AddPermissionsComponent>(AddPermissionsComponent, {
       width: 420,
       data: {
-        userID: userID
+        userID: userID,
+        user: user
       },
       disableClose: true
     });
 
     dialogRef.afterClosed.subscribe((reply: any) => {
-      if (reply != undefined) { }
+      if (reply != undefined) {
+        let user: any = this.users.filter((x: any) => {
+          return x['_id'] == reply['user']['_id'];
+        });
+        user[0]['activities'] = reply['user']['activities'];
+      }
     });
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }

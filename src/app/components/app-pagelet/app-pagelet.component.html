@@ -42,5 +42,16 @@
     <button type="button" class="btn-ico" *ngIf="user != null" (click)="onSignOut()">
       <mat-icon>power_settings_new</mat-icon>
     </button>
+
+    <button type="button" class="btn-ico" *ngIf="user != null && userActivities.includes('moderator')"
+      [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="linkMe('userList')">
+        <mat-icon>groups</mat-icon>
+        <span>Usuarios</span>
+      </button>
+    </mat-menu>
   </div>
 </ly-toolbar>

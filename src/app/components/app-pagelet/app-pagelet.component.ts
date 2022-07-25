@@ -16,6 +16,7 @@ export class AppPageletComponent implements OnInit {
   @Input('user') public user: any = null;
   public notifications: any = null;
   public isDataAvailable: boolean = false;
+  public userActivities: any = [];
 
   constructor(
     public router: Router,
@@ -28,9 +29,12 @@ export class AppPageletComponent implements OnInit {
   ngOnInit(): void {
     setTimeout(() => {
       if (this.user != null) {
+        this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
         let notifications: Observable<any> = this.notificationSrvc.fetchMyNotificationsLength({ user_id: this.user['_id'] });
+
         forkJoin([notifications]).subscribe((reply: any) => {
           this.notifications = reply[0]['notifications'];
+
           this.socketSrvc.getNotification().subscribe((reply: any) => {
             if (reply['new_notification'] != undefined) {
               this.notificationSrvc.fetchMyNotificationsLength({ user_id: this.user['_id'] }).subscribe((reply: any) => {
@@ -38,6 +42,7 @@ export class AppPageletComponent implements OnInit {
               });
             }
           });
+
           this.isDataAvailable = true;
         });
       } else {
@@ -66,6 +71,10 @@ export class AppPageletComponent implements OnInit {
 
       case 'notifications':
         this.router.navigateByUrl('/hub/notificaciones');
+        break;
+
+      case 'userList':
+        this.router.navigateByUrl('/admin/usuarios');
         break;
     }
   }

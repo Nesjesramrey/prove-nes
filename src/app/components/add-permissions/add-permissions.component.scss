@@ -8,4 +8,39 @@
   .dialog-head {
     margin-bottom: 20px;
   }
+
+  .ctrls {
+    text-align: right;
+
+    .set-12 {
+      margin-bottom: 15px;
+    }
+
+    button.remove {
+      display: flex;
+      align-items: center;
+      margin: 0;
+      float: right;
+
+      mat-icon {
+        margin-left: 5px;
+        font-size: 11pt;
+      }
+    }
+
+    button {
+      margin-left: 10px;
+    }
+
+    button:first-child {
+      margin-left: 0;
+    }
+  }
+
+  .hasError {
+    margin-bottom: 10px;
+    font-style: italic;
+    color: #ff0000;
+    font-weight: bold;
+  }
 }

@@ -36,7 +36,7 @@ export class UserNotificationsComponent implements OnInit {
         this.user = reply[0]['user'];
         // console.log(this.user);
         this.notifications = reply[1]['notifications'];
-        console.log(this.notifications);
+        // console.log(this.notifications);
         this.isDataAvailable = true;
       });
     } else {
