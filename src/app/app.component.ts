@@ -52,7 +52,7 @@ export class AppComponent implements OnInit {
       if (val instanceof NavigationStart) {
         let lastVal: any = val['url'].substring(val['url'].lastIndexOf('/') + 1);
         if (lastVal == 'registro') {
-          console.log('hub');
+          // console.log('hub');
         }
       }
     });

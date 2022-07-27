@@ -1,0 +1,29 @@
+<div class="msg-host" [ngClass]="{'host-expanded': expanded, 'host-height' : isVisible }">
+  <div class="set-12 c-head">
+    <div class="row info">
+      <div class="avatar"></div>
+      <span>Customer Support</span>
+    </div>
+    <div class="row ctrls">
+      <button type="button" (click)="expandBox()" *ngIf="isVisible">
+        <mat-icon *ngIf="!expanded">north_west</mat-icon>
+        <mat-icon *ngIf="expanded">south_east</mat-icon>
+      </button>
+      <button type="button" (click)="toggleVisibility()">
+        <mat-icon *ngIf="!isVisible">forum</mat-icon>
+        <mat-icon *ngIf="isVisible">close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="set-12 c-msg-area" *ngIf="isVisible"></div>
+
+  <div class="set-12 c-txtarea" *ngIf="isVisible">
+    <textarea cdkTextareaAutosize placeholder="Escribe un mensaje..."></textarea>
+    <button type="button">
+      <mat-icon>expand_less</mat-icon>
+    </button>
+  </div>
+
+  <div class="set-12 c-footer" *ngIf="isVisible"></div>
+</div>

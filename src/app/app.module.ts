@@ -18,6 +18,7 @@ import { DocumentService } from './services/document.service';
 import { UploadService } from './services/upload.service';
 import { SocketService } from './services/socket.service';
 import { NotificationService } from './services/notification.service';
+import { SupportService } from './services/support.service';
 
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire/compat';
@@ -73,7 +74,8 @@ const socketConfig: SocketIoConfig = { url: 'http://localhost:4040', options: {}
     DocumentService,
     UploadService,
     SocketService,
-    NotificationService
+    NotificationService,
+    SupportService
   ],
   bootstrap: [AppComponent]
 })

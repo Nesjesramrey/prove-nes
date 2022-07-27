@@ -24,6 +24,7 @@ import { PieChartComponent } from "./pie-chart/pie-chart.component";
 import { LineChartComponent } from "./line-chart/line-chart.component";
 import { SetAvatarDialogComponent } from "./set-avatar-dialog/set-avatar-dialog.component";
 import { AddPermissionsComponent } from "./add-permissions/add-permissions.component";
+import { MessageBoxComponent } from "./message-box/message-box.component";
 
 @NgModule({
   imports: [
@@ -51,7 +52,8 @@ import { AddPermissionsComponent } from "./add-permissions/add-permissions.compo
     PieChartComponent,
     LineChartComponent,
     SetAvatarDialogComponent,
-    AddPermissionsComponent
+    AddPermissionsComponent,
+    MessageBoxComponent
   ],
   exports: [
     AppPageletComponent,
@@ -61,7 +63,8 @@ import { AddPermissionsComponent } from "./add-permissions/add-permissions.compo
     PieChartComponent,
     LineChartComponent,
     SetAvatarDialogComponent,
-    AddPermissionsComponent
+    AddPermissionsComponent,
+    MessageBoxComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
