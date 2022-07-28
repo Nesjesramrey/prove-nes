@@ -33,5 +33,10 @@ export class EndPointService {
   public fetchMyNotificationsLengthEndPoint: string = '/notification/fetch-my-notifications-length';
   public fetchMyNotificationsContentEndPoint: string = '/notification/fetch-my-notifications-content';
 
+  // support
+  public sendSupportMessageEndPoint: string = '/support/init-support-conversation';
+  public fetchSupportConversationsEndPoint: string = '/support/fetch-support-conversations';
+  public killSupportConversationEndPoint: string = '/support/kill-support-conversation';
+
   constructor() { }
 }

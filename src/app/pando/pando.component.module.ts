@@ -12,6 +12,7 @@ import { LyFieldModule } from '@alyle/ui/field';
 
 import { PandoComponent } from './pando.component';
 import { UsersListComponent } from './users-list/users-list.component';
+import { SupportConversationsComponent } from './support-conversations/support-conversations.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { UsersListComponent } from './users-list/users-list.component';
   ],
   declarations: [
     PandoComponent,
-    UsersListComponent
+    UsersListComponent,
+    SupportConversationsComponent
   ]
 })
 export class PandoComponentModule { }

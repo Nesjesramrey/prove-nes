@@ -16,14 +16,24 @@
     </div>
   </div>
 
-  <div class="set-12 c-msg-area" *ngIf="isVisible"></div>
+  <div class="set-12 c-msg-area" *ngIf="isVisible">
+    <div class="set-12" *ngFor="let msg of conversation.messages">
+      <small>{{msg.text}}</small>
+    </div>
+  </div>
 
   <div class="set-12 c-txtarea" *ngIf="isVisible">
-    <textarea cdkTextareaAutosize placeholder="Escribe un mensaje..."></textarea>
+    <form [formGroup]="msgFormGroup">
+      <textarea cdkTextareaAutosize placeholder="Escribe un mensaje..." formControlName="message"></textarea>
+    </form>
     <button type="button">
       <mat-icon>expand_less</mat-icon>
     </button>
   </div>
 
-  <div class="set-12 c-footer" *ngIf="isVisible"></div>
+  <div class="set-12 c-footer" *ngIf="isVisible">
+    <button type="button" mat-mini-fab color="primary" (click)="onSendMessage()">
+      <mat-icon>send</mat-icon>
+    </button>
+  </div>
 </div>

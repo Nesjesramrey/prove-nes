@@ -19,4 +19,12 @@ export class SocketService {
   getNotification() {
     return this.socket.fromEvent('new_notification').pipe(map(object => object));
   }
+
+  putSupportNotification(object: any) {
+    this.socket.emit('new_supportNotification', object);
+  }
+
+  getSupportNotification() {
+    return this.socket.fromEvent('new_supportNotification').pipe(map(object => object));
+  }
 }

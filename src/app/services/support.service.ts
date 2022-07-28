@@ -10,7 +10,15 @@ export class SupportService {
     public endpointSrvc: EndPointService
   ) { }
 
-  // uploadUserAvatar(data: any) {
-  //   return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.uploadUserAvatarEndPoint, data);
-  // }
+  sendSupportMessage(data: any) {
+    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.sendSupportMessageEndPoint, data);
+  }
+
+  fetchSupportConversations() {
+    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchSupportConversationsEndPoint, {});
+  }
+
+  killSupportConversation(data: any) {
+    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.killSupportConversationEndPoint, data);
+  }
 }
