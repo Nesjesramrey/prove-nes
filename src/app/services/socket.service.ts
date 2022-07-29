@@ -27,4 +27,12 @@ export class SocketService {
   getSupportNotification() {
     return this.socket.fromEvent('new_supportNotification').pipe(map(object => object));
   }
+
+  putSupportConversationMessage(object: any) {
+    this.socket.emit('new_supportMessage', object);
+  }
+
+  getSupportConversationMessage() {
+    return this.socket.fromEvent('new_supportMessage').pipe(map(object => object));
+  }
 }

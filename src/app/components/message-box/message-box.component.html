@@ -16,8 +16,8 @@
     </div>
   </div>
 
-  <div class="set-12 c-msg-area" *ngIf="isVisible">
-    <div class="set-12" *ngFor="let msg of conversation.messages">
+  <div class="set-12 c-msg-area" *ngIf="isVisible && conversation != null">
+    <div class="set-12 msg" *ngFor="let msg of conversation.messages">
       <small>{{msg.text}}</small>
     </div>
   </div>

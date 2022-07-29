@@ -78,6 +78,15 @@
     height: auto;
     min-height: 252px;
     overflow: auto;
+    padding: 10px;
+
+    .msg {
+      padding: 10px;
+      background: rgba($color: #ff0000, $alpha: 0.1);
+      border-radius: 5px;
+      overflow: hidden;
+      margin-bottom: 4px;
+    }
   }
 
   .c-txtarea {

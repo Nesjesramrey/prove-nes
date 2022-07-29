@@ -14,7 +14,7 @@ export class MessageBoxComponent implements OnInit {
   public isVisible: boolean = false;
   @Input('user') public user: any = null;
   public msgFormGroup!: FormGroup;
-  public conversation: any = [];
+  public conversation: any = null;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -24,6 +24,10 @@ export class MessageBoxComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.supportService.getSupportMsg().subscribe((reply: any) => {
+      this.conversation = reply;
+    });
+
     this.msgFormGroup = this.formBuilder.group({
       message: ['', [Validators.required]]
     });
@@ -43,23 +47,51 @@ export class MessageBoxComponent implements OnInit {
   }
 
   onSendMessage() {
-    let data: any = {
-      customer: this.user['_id'],
-      messages: [{
-        text: this.msgFormGroup.value.message,
-        user: this.user['_id']
-      }]
-    }
-    this.supportService.sendSupportMessage(data).subscribe((reply: any) => {
-      console.log(reply);
-      if (reply['status'] == false) {
-        this.utilityService.openErrorSnackBar(reply['error']);
-        return;
+    let data: any;
+
+    // saved conversation
+    if (this.conversation != null) {
+      data = {
+        conversationID: this.conversation['_id'],
+        sender: this.user['_id'],
+        message: {
+          text: this.msgFormGroup.value.message,
+          user: this.user['_id']
+        }
       }
-      this.conversation = reply['conversation'];
-      this.socketService.putSupportNotification({ new_conversation: true, conversation: reply['conversation'] });
-      // console.log(this.conversation);
-      // this.utilityService.openSuccessSnackBar(reply['message']);
-    });
+
+      this.supportService.injectConversationMessage(data).subscribe((reply: any) => {
+        if (reply['status'] == false) {
+          this.utilityService.openErrorSnackBar(reply['error']);
+          return;
+        }
+
+        this.conversation['messages'] = reply['conversation']['messages'];
+        this.socketService.putSupportConversationMessage({ conversation: reply['conversation'] });
+        this.msgFormGroup.patchValue({ message: '' });
+      });
+    }
+
+    // new conversation
+    else {
+      data = {
+        customer: this.user['_id'],
+        messages: [{
+          text: this.msgFormGroup.value.message,
+          user: this.user['_id']
+        }]
+      }
+
+      this.supportService.sendSupportMessage(data).subscribe((reply: any) => {
+        if (reply['status'] == false) {
+          this.utilityService.openErrorSnackBar(reply['error']);
+          return;
+        }
+
+        this.conversation = reply['conversation'];
+        this.socketService.putSupportNotification({ new_conversation: true, conversation: reply['conversation'] });
+        this.msgFormGroup.patchValue({ message: '' });
+      });
+    }
   }
 }

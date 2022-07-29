@@ -75,7 +75,7 @@
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="onAttendMsg()">
+            <button mat-menu-item (click)="onAttendMsg(conversations._id)">
               <mat-icon>forum</mat-icon>
               <span>Abrir conversación</span>
             </button>

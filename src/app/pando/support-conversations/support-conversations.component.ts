@@ -28,6 +28,7 @@ export class SupportConversationsComponent implements OnInit {
   }
   public selection = new SelectionModel<any>(true, []);
   public isDataAvailable: boolean = false;
+  public conversation: any = null;
 
   constructor(
     public authenticationService: AuthenticationService,
@@ -47,11 +48,9 @@ export class SupportConversationsComponent implements OnInit {
       let conversations: Observable<any> = this.supportService.fetchSupportConversations();
 
       forkJoin([user, conversations]).subscribe((reply: any) => {
-        // console.log(reply);
         this.user = reply[0]['user'];
-        // console.log('user: ', this.user);
         this.conversations = reply[1]['conversations'];
-        // console.log('conversations: ', this.conversations);
+
         setTimeout(() => {
           this.dataSource = new MatTableDataSource(this.conversations);
           this.setDataSourceAttributes();
@@ -59,12 +58,21 @@ export class SupportConversationsComponent implements OnInit {
           this.socketServie.getSupportNotification().subscribe((reply: any) => {
             if (reply['new_conversation'] != undefined) {
               reply['conversation']['isNew'] = true;
-              console.log(reply['conversation']);
               this.conversations.unshift(reply['conversation']);
               this.dataSource = new MatTableDataSource(this.conversations);
               this.setDataSourceAttributes();
             }
           });
+
+          this.socketServie.getSupportConversationMessage().subscribe((reply: any) => {
+            console.log(reply);
+            let conversation = this.conversations.filter((x: any) => {
+              return x['_id'] == reply['conversation']['_id'];
+            });
+            console.log(conversation);
+            this.conversation = conversation;
+          });
+
           this.isDataAvailable = true;
         }, 700);
       });
@@ -107,7 +115,10 @@ export class SupportConversationsComponent implements OnInit {
     }
   }
 
-  onAttendMsg() { }
+  onAttendMsg(conversatioID: string) {
+    this.conversation = this.conversations.filter((x: any) => { return x['_id'] == conversatioID; });
+    this.supportService.injectSupportMsg(this.conversation[0]);
+  }
 
   onDeleteMsg(conversationID: string) {
     let data: any = { conversationID: conversationID }
