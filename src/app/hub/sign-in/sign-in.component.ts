@@ -11,6 +11,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 export class SignInComponent implements OnInit {
   public signInFormGroup!: FormGroup;
   public submitted: boolean = false;
+  public hide: boolean = true;
 
   constructor(
     public formBuilder: FormBuilder,

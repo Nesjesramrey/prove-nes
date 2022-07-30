@@ -3,22 +3,27 @@
   <h4>Ingresa a tu cuenta.</h4>
 
   <form [formGroup]="signInFormGroup" (submit)="onSignIn(signInFormGroup)">
-    <ly-field appearance="outlined" [lyWidth]="1">
-      <input lyNativeControl type="text" formControlName="email">
-      <ly-label>Correo electrónico *</ly-label>
-    </ly-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Correo electrónico</mat-label>
+      <input matInput type="text" autocomplete="off" formControlName="email">
+    </mat-form-field>
 
-    <ly-field appearance="outlined" [lyWidth]="1">
-      <input lyNativeControl type="password" formControlName="password">
-      <ly-label>Contraseña *</ly-label>
-    </ly-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Contraseña</mat-label>
+      <input matInput type="password" formControlName="password" [type]="hide ? 'password' : 'text'">
+      <button type="button" matSuffix (click)="hide = !hide">
+        <mat-icon color="primary">
+          {{ hide ? 'visibility_off' : 'visibility' }}
+        </mat-icon>
+      </button>
+    </mat-form-field>
 
     <div class="set-12 form-ctrls">
       <div class="set-6">
         <small>¿No tienes cuenta? <a href="#" routerLink="/hub/registro">Registro</a></small>
       </div>
       <div class="set-6 txt-right">
-        <button type="submit" ly-button raised bg="primary"
+        <button type="submit" mat-raised-button color="primary"
           [disabled]="signInFormGroup.invalid || submitted">Ingresar</button>
       </div>
     </div>
