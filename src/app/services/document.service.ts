@@ -18,15 +18,22 @@ export class DocumentService {
     return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchMyDocumentsEndPoint, data);
   }
 
+  fetchSingleDocumentById(data: any) {
+    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchSingleDocumentByIdEndPoint, data);
+  }
+
+  fetchEditorDocuments(data: any) {
+    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchEditorDocumentsEndPoint, data);
+  }
+
+
+
+
   addDocumentCollaborator(data: any) {
     return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.addDocumentCollaboratorEndPoint, data);
   }
 
   addDocumentColumn(data: any) {
     return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.addDocumentColumnEndPoint, data);
-  }
-
-  fetchSingleDocumentById(data: any) {
-    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchSingleDocumentByIdEndPoint, data);
   }
 }

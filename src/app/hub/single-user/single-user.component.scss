@@ -136,27 +136,27 @@
     }
   }
 
-  .card-row {
-    display: flex;
-    align-items: center;
+  // .card-row {
+  //   display: flex;
+  //   align-items: center;
 
-    * {
-      margin: 0;
-    }
+  //   * {
+  //     margin: 0;
+  //   }
 
-    mat-icon {
-      font-size: 13pt;
-      color: #306EFF;
-    }
+  //   mat-icon {
+  //     font-size: 13pt;
+  //     color: #306EFF;
+  //   }
 
-    button {
-      margin-left: 10px;
-    }
+  //   button {
+  //     margin-left: 10px;
+  //   }
 
-    button:first-child {
-      margin-left: 0;
-    }
-  }
+  //   button:first-child {
+  //     margin-left: 0;
+  //   }
+  // }
 
   .counts {
     margin: 10px 0 20px 0;

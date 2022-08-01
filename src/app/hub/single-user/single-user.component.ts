@@ -21,6 +21,7 @@ export class SingleUserComponent implements OnInit {
   public user: any = null;
   public userActivities: any = [];
   public documents: any = [];
+  public haveRootPermissions: boolean = false;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -40,21 +41,21 @@ export class SingleUserComponent implements OnInit {
       this.user = reply['user'];
       this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
 
+      // root activities
       if (this.userActivities.length != 0) {
+        this.haveRootPermissions = true;
+
         // moderator
         if (this.userActivities.includes('moderator')) {
           setTimeout(() => {
             this.isDataAvailable = true;
           });
         }
-
         // administrator
         if (this.userActivities.includes('administrator')) {
           let documents: Observable<any> = this.documentSrvc.fetchMyDocuments({ created_by: this.userID });
           forkJoin([documents]).subscribe((reply: any) => {
-            // console.log(reply);
             this.documents = reply[0]['documents'];
-            // console.log('documents: ', this.documents);
 
             setTimeout(() => {
               this.isDataAvailable = true;
@@ -62,26 +63,19 @@ export class SingleUserComponent implements OnInit {
           });
         }
       }
+      // inner activities
+      else {
+        this.haveRootPermissions = false;
+
+        this.documentSrvc.fetchEditorDocuments({ userID: this.userID }).subscribe((reply: any) => {
+          this.documents = reply['documents'];
+
+          setTimeout(() => {
+            this.isDataAvailable = true;
+          });
+        });
+      }
     });
-
-    // let user: Observable<any> = this.userSrvc.fetchUserById({ _id: this.userID });
-    // let documents: Observable<any> = this.documentSrvc.fetchMyDocuments({ created_by: this.userID });
-
-    // forkJoin([user, documents]).subscribe((reply: any) => {
-    //   if (reply[0]['status'] == false) {
-    //     this.router.navigateByUrl('/404');
-    //     return;
-    //   }
-
-    //   this.user = reply[0]['user'];
-    //   console.log('user: ', this.user);
-    //   this.documents = reply[1]['documents'];
-    //   console.log('documents: ', this.documents);
-
-    //   setTimeout(() => {
-    //     this.isDataAvailable = true;
-    //   });
-    // });
   }
 
   openAddDocumentDialog() {

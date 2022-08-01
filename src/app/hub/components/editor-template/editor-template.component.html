@@ -1,0 +1,43 @@
+<div class="set-12 carousel-hldr" *ngIf="documents.length != 0">
+  <carousel [cellsToShow]="2">
+    <div class="carousel-cell" *ngFor="let document of documents">
+      <mat-card>
+        <div class="set-12 card-row">
+          <div class="set-8">
+            <h4>{{document.title}}</h4>
+          </div>
+          <div class="set-4 txt-right">
+            <button type="button" matTooltip="Editar">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button type="button" matTooltip="Abrir">
+              <mat-icon>file_open</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="set-12 card-row counts">
+          <mat-icon>person</mat-icon> <small>{{document.collaborators.length}} Usuarios</small>
+          <mat-icon>front_hand</mat-icon> <small>0 Interacciones</small>
+        </div>
+
+        <div class="set-12 empty-layout" *ngIf="document.layout.length == 0">
+          <div class="set-12 date">
+            <small>{{document.created_at | date: 'mediumDate'}} - {{document.created_at | date: 'mediumTime'}}</small>
+          </div>
+
+          <div class="set-12">
+            <mat-icon>folder</mat-icon>
+            <p><strong><small>Tu documento esta vacio</small></strong></p>
+          </div>
+
+          <div class="set-12 ctrls">
+            <button type="button" mat-raised-button color="primary" (click)="popLayoutDialog(document._id)">
+              <span>Crear esquema</span>
+            </button>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </carousel>
+</div>

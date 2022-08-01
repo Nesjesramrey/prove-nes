@@ -63,4 +63,8 @@ export class UtilityService {
   fetchAllStatesMex() {
     return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAllStatesMexEndPoint, {});
   }
+
+  fetchAllCategories() {
+    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAllCategoriesEndPoint, {});
+  }
 }

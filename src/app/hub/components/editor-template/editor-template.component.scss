@@ -1,0 +1,63 @@
+:host {
+  .carousel-hldr {
+    margin-bottom: 20px;
+
+    mat-card {
+      padding: 20px !important;
+      height: 100%;
+      box-shadow: none !important;
+    }
+  }
+
+  .card-row {
+    display: flex;
+    align-items: center;
+
+    * {
+      margin: 0;
+    }
+
+    mat-icon {
+      font-size: 13pt;
+      color: #306EFF;
+    }
+
+    button {
+      margin-left: 10px;
+    }
+
+    button:first-child {
+      margin-left: 0;
+    }
+  }
+
+  .counts {
+    margin: 10px 0;
+
+    mat-icon {
+      margin-right: 5px;
+    }
+
+    small {
+      margin-right: 30px;
+    }
+  }
+
+  .empty-layout {
+    text-align: center;
+    margin-top: 10px;
+
+    mat-icon {
+      font-size: 30pt;
+      color: #306EFF;
+    }
+
+    .date {
+      margin-bottom: 20px;
+    }
+
+    .ctrls {
+      margin-top: 30px;
+    }
+  }
+}

@@ -1,0 +1,95 @@
+<!-- <div class="set-12 toptools">
+  <strong><small>DOCUMENTOS</small></strong>
+  <button type="button" class="roundgreen" *ngIf="documents.length != 0" (click)="openAddDocumentDialog()">
+    <mat-icon>note_add</mat-icon>
+  </button>
+</div> -->
+
+<!-- empty documents -->
+<!-- <div class="set-12 carousel-hldr" *ngIf="documents.length == 0">
+  <carousel [cellsToShow]="1">
+    <div class="carousel-cell">
+      <mat-card class="emptycard">
+        <div class="set-12 txt-center">
+          <h4>Agrega un documento</h4>
+          <button type="button" class="roundblue" (click)="openAddDocumentDialog()">
+            <mat-icon>note_add</mat-icon>
+          </button>
+        </div>
+      </mat-card>
+    </div>
+  </carousel>
+</div> -->
+
+<!-- available documents -->
+<!-- <div class="set-12 carousel-hldr" *ngIf="documents.length != 0">
+  <carousel [cellsToShow]="2">
+    <div class="carousel-cell" *ngFor="let document of documents">
+      <mat-card>
+        <div class="set-12 card-row">
+          <div class="set-8">
+            <h4>{{document.title}}</h4>
+          </div>
+          <div class="set-4 txt-right">
+            <button type="button" matTooltip="Editar">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button type="button" routerLink="/documentos/{{document._id}}" matTooltip="Abrir">
+              <mat-icon>file_open</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="set-12 card-row counts">
+          <mat-icon>person</mat-icon> <small>{{document.collaborators.length}} Usuarios</small>
+          <mat-icon>front_hand</mat-icon> <small>0 Interacciones</small>
+        </div>
+
+        <div class="set-12" *ngIf="document.layout.length == 0">
+          <h3>Sin categorias</h3>
+        </div>
+      </mat-card>
+    </div>
+  </carousel>
+</div>
+
+<div class="set-12 tabs">
+  <mat-card class="set-12">
+    <mat-tab-group>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>analytics</mat-icon>
+          <span>BI</span>
+        </ng-template>
+
+        <div class="set-12 top-cards">
+          <div class="set-6">
+            <mat-card class="set-12 inner-card">
+              <span class="roundico-green">
+                <mat-icon>groups</mat-icon>
+              </span>
+              <span>Usuarios</span>
+            </mat-card>
+          </div>
+
+          <div class="set-6">
+            <mat-card class="set-12 inner-card">
+              <span class="roundico-orange">
+                <mat-icon>front_hand</mat-icon>
+              </span>
+              <span>Interacciones</span>
+            </mat-card>
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>rss_feed</mat-icon>
+          <span>Activity center</span>
+        </ng-template>
+        <div class="set-12">Hello</div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div> -->

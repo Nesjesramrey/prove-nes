@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HubComponentRoutingModule } from './hub.component-routing.module';
 import { AppMaterialModule } from '../app-material.module';
 import { ComponentsModule } from '../components/components.module';
+import { HubComponentsModule } from './components/hub.components.module';
 import { AppSharedModule } from '../app-shared.module';
 
 import { LyCarouselModule } from '@alyle/ui/carousel';
@@ -28,6 +29,7 @@ import { UserNotificationsComponent } from './user-notifications/user-notificati
     HubComponentRoutingModule,
     AppMaterialModule,
     ComponentsModule,
+    HubComponentsModule,
     AppSharedModule,
     LyCarouselModule,
     LyTypographyModule,

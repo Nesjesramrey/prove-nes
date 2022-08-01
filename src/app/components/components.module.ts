@@ -25,6 +25,7 @@ import { LineChartComponent } from "./line-chart/line-chart.component";
 import { SetAvatarDialogComponent } from "./set-avatar-dialog/set-avatar-dialog.component";
 import { AddPermissionsComponent } from "./add-permissions/add-permissions.component";
 import { MessageBoxComponent } from "./message-box/message-box.component";
+import { AddDocumentLayoutComponent } from "./add-document-layout/add-document-layout.component";
 
 @NgModule({
   imports: [
@@ -53,7 +54,8 @@ import { MessageBoxComponent } from "./message-box/message-box.component";
     LineChartComponent,
     SetAvatarDialogComponent,
     AddPermissionsComponent,
-    MessageBoxComponent
+    MessageBoxComponent,
+    AddDocumentLayoutComponent
   ],
   exports: [
     AppPageletComponent,
@@ -64,13 +66,15 @@ import { MessageBoxComponent } from "./message-box/message-box.component";
     LineChartComponent,
     SetAvatarDialogComponent,
     AddPermissionsComponent,
-    MessageBoxComponent
+    MessageBoxComponent,
+    AddDocumentLayoutComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
     AddDocumentDialogComponent,
     SetAvatarDialogComponent,
-    AddPermissionsComponent
+    AddPermissionsComponent,
+    AddDocumentLayoutComponent
   ],
   providers: [],
 })

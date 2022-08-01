@@ -18,12 +18,16 @@ export class EndPointService {
   // documents
   public createNewDocumentEndPoint: string = '/document/create-new-document';
   public fetchMyDocumentsEndPoint: string = '/document/fetch-my-documents';
+  public fetchSingleDocumentByIdEndPoint: string = '/document/fetch-single-document-by-id';
+  public fetchEditorDocumentsEndPoint: string = '/document/fetch-editor-documents';
+
+
   public addDocumentCollaboratorEndPoint: string = '/document/add-document-collaborator';
   public addDocumentColumnEndPoint: string = '/document/add-document-column';
-  public fetchSingleDocumentByIdEndPoint: string = '/document/fetch-single-document-by-id';
 
   // utility
   public fetchAllStatesMexEndPoint: string = '/utility/fetch-all-states-mex';
+  public fetchAllCategoriesEndPoint: string = '/utility/fetch-all-categories';
 
   // uploads
   public uploadUserAvatarEndPoint: string = '/upload/upload-avatar-file';
