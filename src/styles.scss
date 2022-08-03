@@ -342,3 +342,7 @@ mat-form-field {
 .mat-horizontal-content-container {
   padding: 0 !important;
 }
+
+.cdk-overlay-container {
+  z-index: 330 !important;
+}

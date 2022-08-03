@@ -26,6 +26,10 @@ export class DocumentService {
     return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchEditorDocumentsEndPoint, data);
   }
 
+  addDocumentLayout(data: any) {
+    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.addDocumentLayoutEndPoint, data);
+  }
+
 
 
 

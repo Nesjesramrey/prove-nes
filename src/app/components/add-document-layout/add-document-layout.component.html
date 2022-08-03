@@ -11,6 +11,7 @@
 </div>
 
 <div class="set-12" *ngIf="isDataAvailable">
+  <input type="file" #file (change)="onFileSelected($event)">
   <mat-stepper labelPosition="bottom" #stepper [@.disabled]="true" [disableRipple]="true">
     <mat-step>
       <ng-template matStepLabel>Agrega una descripción</ng-template>
@@ -24,11 +25,19 @@
           </div>
 
           <div class="set-3">
-            <button type="button" class="upload-img">
+            <button type="button" class="upload-img" (click)="file.click()">
               <mat-icon>add_a_photo</mat-icon>
             </button>
           </div>
         </form>
+      </div>
+
+      <div class="set-12 file-hldr" *ngIf="stepOneFormGroup.value.file != null">
+        <small>{{stepOneFormGroup.value.file.name}}</small>
+        <!-- <button type="button" mat-icon-button color="primary" matTooltip="Eliminar imágen" matTooltpClass="tooltip"
+          matTooltipPosition="right" (click)="clearFile()">
+          <mat-icon>cancel</mat-icon>
+        </button> -->
       </div>
     </mat-step>
 
@@ -36,10 +45,28 @@
       <ng-template matStepLabel>Agrega tu esquema</ng-template>
       <div class="set-12 step-content">
         <div class="set-12 tools">
-          <button type="button">
-            <span>Agregar categoría</span>
-            <mat-icon>add_circle</mat-icon>
+          <button type="button" (click)="toggleCategoryField()">
+            <span *ngIf="!new_category">Agregar categoría</span>
+            <mat-icon *ngIf="!new_category">add_circle</mat-icon>
+            <span *ngIf="new_category">Cancelar</span>
+            <mat-icon *ngIf="new_category">cancel</mat-icon>
           </button>
+        </div>
+
+        <div class="set-12" *ngIf="new_category">
+          <div class="set-6">&nbsp;</div>
+          <div class="set-6">
+            <form [formGroup]="addCategoryFormGroup" (submit)="onCreateCategory(addCategoryFormGroup)">
+              <mat-form-field appearance="outline">
+                <mat-label>Nombre</mat-label>
+                <input type="text" matInput formControlName="name" autocomplete="off">
+                <button type="submit" mat-icon-button matSuffix [disabled]="addCategoryFormGroup.invalid"
+                  matTooltip="Guardar categoría" matTooltipClass="tooltip" matTooltipPosition="left">
+                  <mat-icon>save</mat-icon>
+                </button>
+              </mat-form-field>
+            </form>
+          </div>
         </div>
 
         <div class="set-12">

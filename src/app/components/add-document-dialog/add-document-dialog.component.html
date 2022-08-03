@@ -8,21 +8,21 @@
   <div ly-dialog-content class="set-12 dialog-body">
     <form class="set-12" [formGroup]="documentFormGroup" (submit)="onCreateDocument(documentFormGroup)">
       <div class="set-8">
-        <ly-field appearance="outlined" [lyWidth]="1">
-          <input lyNativeControl type="text" formControlName="title">
-          <ly-label>Titulo *</ly-label>
-        </ly-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Titulo</mat-label>
+          <input type="text" matInput formControlName="title">
+        </mat-form-field>
       </div>
 
       <div class="set-4">
-        <ly-field appearance="outlined" [lyWidth]="1">
-          <ly-label>Cobertura *</ly-label>
-          <ly-select formControlName="coverage">
-            <ly-option [value]="state._id" *ngFor="let state of statesMex">
+        <mat-form-field appearance="outline">
+          <mat-label>Cobertura</mat-label>
+          <mat-select formControlName="coverage" multiple>
+            <mat-option *ngFor="let state of statesMex" [value]="state._id">
               <small>{{state.name}}</small>
-            </ly-option>
-          </ly-select>
-        </ly-field>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
 
       <div class="set-12 section-title">
@@ -38,22 +38,22 @@
           <div [formGroupName]="i">
             <div class="set-12" class="collab">
               <div class="set-7">
-                <ly-field appearance="outlined" [lyWidth]="1">
-                  <input lyNativeControl type="text" formControlName="email">
-                  <ly-label>Correo electrónico *</ly-label>
-                </ly-field>
+                <mat-form-field appearance="outline">
+                  <mat-label>Correo electrónico</mat-label>
+                  <input type="text" matInput formControlName="email">
+                </mat-form-field>
               </div>
 
               <div class="set-4">
-                <ly-field appearance="outlined" [lyWidth]="1">
-                  <ly-label>Tipo *</ly-label>
-                  <ly-select formControlName="activity">
-                    <ly-option [value]="collaboratorType.type" *ngFor="let collaboratorType of collaboratorTypes"
+                <mat-form-field appearance="outline">
+                  <mat-label>Tipo</mat-label>
+                  <mat-select formControlName="activity">
+                    <mat-option [value]="collaboratorType.type" *ngFor="let collaboratorType of collaboratorTypes"
                       [disabled]="collaboratorType.disabled">
                       <small>{{collaboratorType.displayName}}</small>
-                    </ly-option>
-                  </ly-select>
-                </ly-field>
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
               </div>
               <div class="set-1">
                 <button type="button" class="roundbluemini" (click)="removeCollaboratorField(i)" matTooltip="Eliminar"
@@ -67,8 +67,8 @@
       </div>
 
       <div class="set-12 ctrls">
-        <button type="button" ly-button raised bg="accent" (click)="killDialog()">Cancelar</button>
-        <button type="submit" ly-button raised bg="primary" [disabled]="documentFormGroup.invalid || submitted">
+        <button type="button" mat-raised-button color="accent" (click)="killDialog()">Cancelar</button>
+        <button type="submit" mat-raised-button color="primary" [disabled]="documentFormGroup.invalid || submitted">
           Crear Documento
         </button>
       </div>

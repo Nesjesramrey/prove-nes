@@ -43,6 +43,12 @@
   </div>
 
   <div class="set-8 col-rgt">
+    <div class="set-12" *ngIf="haveRootPermissions">
+      <div class="set-12" *ngIf="userActivities.includes('administrator')">
+        <div class="admin-template" [user]="user" [documents]="documents"></div>
+      </div>
+    </div>
+
     <div class="set-12" *ngIf="!haveRootPermissions">
       <div class="editor-template" [documents]="documents"></div>
     </div>

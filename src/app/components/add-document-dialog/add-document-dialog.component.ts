@@ -1,6 +1,7 @@
 import { LyDialogRef, LY_DIALOG_DATA } from '@alyle/ui/dialog';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { forkJoin, Observable } from 'rxjs';
 import { DocumentService } from 'src/app/services/document.service';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -26,8 +27,8 @@ export class AddDocumentDialogComponent implements OnInit {
   public isDataAvailable: boolean = false;
 
   constructor(
-    public dialogRef: LyDialogRef,
-    @Inject(LY_DIALOG_DATA) public dialogData: any,
+    public dialogRef: MatDialogRef<AddDocumentDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public formBuilder: FormBuilder,
     public documentSrvc: DocumentService,
     public utilitySrvc: UtilityService,

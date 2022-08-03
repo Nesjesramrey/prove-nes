@@ -20,6 +20,7 @@ export class EndPointService {
   public fetchMyDocumentsEndPoint: string = '/document/fetch-my-documents';
   public fetchSingleDocumentByIdEndPoint: string = '/document/fetch-single-document-by-id';
   public fetchEditorDocumentsEndPoint: string = '/document/fetch-editor-documents';
+  public addDocumentLayoutEndPoint: string = '/document/add-document-layout';
 
 
   public addDocumentCollaboratorEndPoint: string = '/document/add-document-collaborator';
@@ -27,6 +28,7 @@ export class EndPointService {
 
   // utility
   public fetchAllStatesMexEndPoint: string = '/utility/fetch-all-states-mex';
+  public createNewCategoryEndPoint: string = '/utility/create-new-category';
   public fetchAllCategoriesEndPoint: string = '/utility/fetch-all-categories';
 
   // uploads

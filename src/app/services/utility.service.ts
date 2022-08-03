@@ -9,6 +9,7 @@ import { EndPointService } from './endpoint.service';
 export class UtilityService {
   public emailPattern: any = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   public numberOnly: string = '^[0-9]*$';
+  public image_extensions: any = ['jpg', 'jpeg', 'png', 'bmp'];
 
   constructor(
     public snackbar: MatSnackBar,
@@ -62,6 +63,10 @@ export class UtilityService {
 
   fetchAllStatesMex() {
     return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAllStatesMexEndPoint, {});
+  }
+
+  createNewCategory(data: any) {
+    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.createNewCategoryEndPoint, data);
   }
 
   fetchAllCategories() {

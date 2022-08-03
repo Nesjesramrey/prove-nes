@@ -1,12 +1,12 @@
-<!-- <div class="set-12 toptools">
+<div class="set-12 toptools">
   <strong><small>DOCUMENTOS</small></strong>
   <button type="button" class="roundgreen" *ngIf="documents.length != 0" (click)="openAddDocumentDialog()">
     <mat-icon>note_add</mat-icon>
   </button>
-</div> -->
+</div>
 
 <!-- empty documents -->
-<!-- <div class="set-12 carousel-hldr" *ngIf="documents.length == 0">
+<div class="set-12 carousel-hldr" *ngIf="documents.length == 0">
   <carousel [cellsToShow]="1">
     <div class="carousel-cell">
       <mat-card class="emptycard">
@@ -19,34 +19,46 @@
       </mat-card>
     </div>
   </carousel>
-</div> -->
+</div>
 
 <!-- available documents -->
-<!-- <div class="set-12 carousel-hldr" *ngIf="documents.length != 0">
-  <carousel [cellsToShow]="2">
+<div class="set-12 carousel-hldr" *ngIf="documents.length != 0 && isDataAvailable">
+  <carousel [cellsToShow]="2" [arrows]="documents.length > 2 ? true : false">
     <div class="carousel-cell" *ngFor="let document of documents">
       <mat-card>
-        <div class="set-12 card-row">
-          <div class="set-8">
-            <h4>{{document.title}}</h4>
-          </div>
-          <div class="set-4 txt-right">
-            <button type="button" matTooltip="Editar">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button type="button" routerLink="/documentos/{{document._id}}" matTooltip="Abrir">
-              <mat-icon>file_open</mat-icon>
-            </button>
-          </div>
+        <div class="set-12 imghldr">
+          <mat-icon *ngIf="document.coverImage == ''">panorama</mat-icon>
         </div>
 
-        <div class="set-12 card-row counts">
-          <mat-icon>person</mat-icon> <small>{{document.collaborators.length}} Usuarios</small>
-          <mat-icon>front_hand</mat-icon> <small>0 Interacciones</small>
-        </div>
+        <div class="set-12 infohldr">
+          <div class="set-12 card-row">
+            <div class="set-8">
+              <h4>{{document.title}}</h4>
+            </div>
+            <div class="set-4 txt-right">
+              <button type="button" matTooltip="Editar">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button type="button" matTooltip="Abrir">
+                <mat-icon>file_open</mat-icon>
+              </button>
+              <button type="button" matTooltip="Datos" (click)="displayDocumentData(document._id)">
+                <mat-icon>bubble_chart</mat-icon>
+              </button>
+            </div>
+          </div>
 
-        <div class="set-12" *ngIf="document.layout.length == 0">
-          <h3>Sin categorias</h3>
+          <div class="set-12 card-row editorname">
+            <small>
+              Editor: {{document.editors[0].user.firstname}} {{document.editors[0].user.lastname}} <span
+                *ngIf="document.editors.length > 1">+</span>
+            </small>
+          </div>
+
+          <div class="set-12 card-row counts">
+            <mat-icon>person</mat-icon> <small>{{document.collaborators.length}} Usuarios</small>
+            <mat-icon>front_hand</mat-icon> <small>0 Interacciones</small>
+          </div>
         </div>
       </mat-card>
     </div>
@@ -81,6 +93,14 @@
             </mat-card>
           </div>
         </div>
+
+        <div class="set-12 category-list" *ngIf="selectedDocument != null">
+          <div class="set-12 list" *ngIf="selectedDocument.layout.length != 0">
+            <div class="set-12 category" *ngFor="let layer of selectedDocument.layout">
+              <small>{{layer.name}}</small>
+            </div>
+          </div>
+        </div>
       </mat-tab>
 
       <mat-tab>
@@ -92,4 +112,4 @@
       </mat-tab>
     </mat-tab-group>
   </mat-card>
-</div> -->
+</div>

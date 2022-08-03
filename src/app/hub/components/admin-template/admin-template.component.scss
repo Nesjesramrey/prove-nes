@@ -1,0 +1,187 @@
+:host {
+  .toptools {
+    text-align: right;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    * {
+      margin: 0;
+    }
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 20px;
+    }
+  }
+
+  .carousel-hldr {
+    margin-bottom: 20px;
+
+    mat-card {
+      overflow: hidden;
+      padding: 0 !important;
+      height: 100%;
+      box-shadow: none !important;
+    }
+  }
+
+  .card-row {
+    display: flex;
+    align-items: center;
+
+    * {
+      margin: 0;
+    }
+
+    mat-icon {
+      font-size: 13pt;
+      color: #306EFF;
+    }
+
+    button {
+      margin-left: 10px;
+    }
+
+    button:first-child {
+      margin-left: 0;
+    }
+  }
+
+  .editorname {
+    margin: 20px 0 10px 0;
+    color: #636363;
+  }
+
+  .emptycard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    button {
+      margin-top: 20px;
+    }
+  }
+
+  .imghldr {
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba($color: #CEDDFF, $alpha: 0.4);
+    border-bottom: 1px solid rgba($color: #000000, $alpha: 0.05);
+
+    mat-icon {
+      font-size: 70pt;
+      color: rgba($color: #000000, $alpha: 0.1);
+    }
+  }
+
+  .infohldr {
+    padding: 20px;
+  }
+
+  .counts {
+    margin: 10px 0 20px 0;
+
+    mat-icon {
+      margin-right: 5px;
+    }
+
+    small {
+      margin-right: 30px;
+    }
+  }
+
+  .tabs {
+    .set-6:nth-child(odd) {
+      padding-right: 10px;
+    }
+
+    .set-6:nth-child(even) {
+      padding-left: 10px;
+    }
+
+    mat-card {
+      padding: 20px !important;
+    }
+
+    .top-cards {
+      .inner-card {
+        display: flex;
+        align-items: center;
+
+        * {
+          margin: 0;
+        }
+
+        .roundico-green,
+        .roundico-orange {
+          width: 70px;
+          height: 70px;
+          border-radius: 100%;
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-right: 20px;
+        }
+
+        .roundico-green {
+          background: #E1F2EC;
+
+          mat-icon {
+            color: #20C588;
+          }
+        }
+
+        .roundico-orange {
+          background: #FCDBC3;
+
+          mat-icon {
+            color: #FF6D00;
+          }
+        }
+
+        mat-icon {
+          font-size: 30pt;
+        }
+      }
+    }
+
+    .card-list {
+      margin-top: 30px;
+
+      .list-title {
+        display: flex;
+        align-items: center;
+
+        * {
+          margin: 0;
+        }
+
+        mat-icon {
+          font-size: 11pt;
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+
+  .category-list {
+    .list {
+      margin-top: 20px;
+    }
+
+    .category {
+      padding: 10px 0;
+      border-bottom: 1px solid rgba($color: #000000, $alpha: 0.05);
+    }
+
+    .category:last-child {
+      border-bottom: 0;
+    }
+  }
+}

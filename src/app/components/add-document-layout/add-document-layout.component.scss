@@ -2,11 +2,23 @@
   .dialog-head {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    // margin-bottom: 20px;
+  }
+
+  input[type="file"] {
+    visibility: hidden;
+    height: 1px;
+    width: 1px;
+    margin: 0;
+    padding: 0;
   }
 
   ::ng-deep .mat-step-header:hover {
     background: transparent !important;
+  }
+
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 0;
   }
 
   .step-content {
@@ -32,7 +44,7 @@
     }
 
     .tools {
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       display: flex;
       align-items: center;
       justify-content: flex-end;
@@ -57,5 +69,10 @@
     .ctrls {
       text-align: right;
     }
+  }
+
+  .file-hldr {
+    font-weight: bold;
+    font-style: italic;
   }
 }
