@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddDocumentLayoutComponent } from 'src/app/components/add-document-layout/add-document-layout.component';
+import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
   selector: '.editor-template',
@@ -11,7 +12,8 @@ export class EditorTemplateComponent implements OnInit {
   @Input('documents') public documents: any = [];
 
   constructor(
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public utilityService: UtilityService
   ) { }
 
   ngOnInit(): void {
@@ -34,5 +36,9 @@ export class EditorTemplateComponent implements OnInit {
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) { }
     });
+  }
+
+  linkMe(url: string) {
+    this.utilityService.linkMe(url);
   }
 }

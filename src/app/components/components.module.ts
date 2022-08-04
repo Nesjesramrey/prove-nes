@@ -26,6 +26,7 @@ import { SetAvatarDialogComponent } from "./set-avatar-dialog/set-avatar-dialog.
 import { AddPermissionsComponent } from "./add-permissions/add-permissions.component";
 import { MessageBoxComponent } from "./message-box/message-box.component";
 import { AddDocumentLayoutComponent } from "./add-document-layout/add-document-layout.component";
+import { DocumentManagerComponent } from "./document-manager/document-manager.component";
 
 @NgModule({
   imports: [
@@ -55,7 +56,8 @@ import { AddDocumentLayoutComponent } from "./add-document-layout/add-document-l
     SetAvatarDialogComponent,
     AddPermissionsComponent,
     MessageBoxComponent,
-    AddDocumentLayoutComponent
+    AddDocumentLayoutComponent,
+    DocumentManagerComponent
   ],
   exports: [
     AppPageletComponent,
@@ -67,14 +69,16 @@ import { AddDocumentLayoutComponent } from "./add-document-layout/add-document-l
     SetAvatarDialogComponent,
     AddPermissionsComponent,
     MessageBoxComponent,
-    AddDocumentLayoutComponent
+    AddDocumentLayoutComponent,
+    DocumentManagerComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
     AddDocumentDialogComponent,
     SetAvatarDialogComponent,
     AddPermissionsComponent,
-    AddDocumentLayoutComponent
+    AddDocumentLayoutComponent,
+    DocumentManagerComponent
   ],
   providers: [],
 })

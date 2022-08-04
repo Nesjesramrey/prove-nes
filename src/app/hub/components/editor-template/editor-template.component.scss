@@ -1,9 +1,10 @@
 :host {
   .carousel-hldr {
     margin-bottom: 20px;
+    height: 430px;
 
     mat-card {
-      padding: 20px !important;
+      padding: 0 !important;
       height: 100%;
       box-shadow: none !important;
     }
@@ -59,5 +60,23 @@
     .ctrls {
       margin-top: 30px;
     }
+  }
+
+  .imghldr {
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba($color: #CEDDFF, $alpha: 0.4);
+    border-bottom: 1px solid rgba($color: #000000, $alpha: 0.05);
+
+    mat-icon {
+      font-size: 70pt;
+      color: rgba($color: #000000, $alpha: 0.1);
+    }
+  }
+
+  .infohldr {
+    padding: 20px;
   }
 }

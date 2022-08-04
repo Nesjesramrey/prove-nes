@@ -4,6 +4,8 @@ import { forkJoin, Observable } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
 import { DocumentService } from 'src/app/services/document.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DocumentManagerComponent } from 'src/app/components/document-manager/document-manager.component';
 
 @Component({
   selector: '.single-document-page',
@@ -22,7 +24,8 @@ export class SingleDocumentComponent implements OnInit {
     public activatedRoute: ActivatedRoute,
     public authenticationService: AuthenticationService,
     public userService: UserService,
-    public documentService: DocumentService
+    public documentService: DocumentService,
+    public dialog: MatDialog
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.token = this.authenticationService.fetchToken;
@@ -57,5 +60,21 @@ export class SingleDocumentComponent implements OnInit {
         });
       });
     }
+  }
+
+  popDocumentManager(type: string) {
+    const dialogRef = this.dialog.open<DocumentManagerComponent>(DocumentManagerComponent, {
+      width: '640px',
+      data: {
+        type: type,
+        documentID: this.documentID,
+        document: this.document
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
   }
 }

@@ -1,8 +1,11 @@
-<ly-toolbar *ngIf="isDataAvailable">
+<mat-toolbar *ngIf="isDataAvailable">
   <div class="set-6 logo">
-    <button type="button" (click)="linkMe('home')">
-      <img src="../../../assets/images/PANDOlogo.png" alt="PANDO">
-    </button>
+    <div class="set-3">
+      <img src="../../../assets/images/PANDOlogo.png" alt="PANDO" (click)="linkMe('home')">
+    </div>
+    <div class="set-9">
+      <input type="text" placeholder="Búscar en PANDO...">
+    </div>
   </div>
 
   <div class="set-6 navigation">
@@ -54,4 +57,4 @@
       </button>
     </mat-menu>
   </div>
-</ly-toolbar>
+</mat-toolbar>

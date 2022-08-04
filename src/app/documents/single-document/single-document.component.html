@@ -1,4 +1,83 @@
-<div class="innerhldr" *ngIf="isDataAvailable">
-  <div class="set-4 col-lft">4</div>
-  <div class="set-8 col-rgt">8</div>
+<div class="set-12" *ngIf="isDataAvailable">
+  <div class="set-3 col-lft">
+    <mat-card class="set-12 doc-description">
+      <div class="set-12 imghldr">
+        <mat-icon>panorama</mat-icon>
+      </div>
+
+      <div class="set-12 infohldr">
+        <p class="card-title">{{document.title}}</p>
+        <p class="card-description">{{document.description}}</p>
+      </div>
+    </mat-card>
+  </div>
+
+  <div class="set-9 col-rgt">
+    <div class="set-12">
+      <div class="set-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Cobertura</mat-label>
+          <mat-select multiple>
+            <mat-select-trigger>
+            </mat-select-trigger>
+            <mat-option></mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="set-8 txt-right">
+        <button type="button" mat-mini-fab color="accent" class="mini" matTooltip="Agregar Esquema"
+          (click)="popDocumentManager('layout')">
+          <mat-icon>group_add</mat-icon>
+        </button>
+        <button type="button" mat-mini-fab color="primary" class="mini" matTooltip="Agregar Colaborador"
+          (click)="popDocumentManager('collaborator')">
+          <mat-icon>person_add</mat-icon>
+        </button>
+        <button type="button" mat-mini-fab color="warn" class="mini" matTooltip="Agregar Categoría"
+          (click)="popDocumentManager('category')">
+          <mat-icon>create_new_folder</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="set-12">
+      <mat-card class="set-12 info-lists">
+        <div class="set-4">
+          <div class="inner-card">
+            <span class="roundico-green">
+              <mat-icon>groups</mat-icon>
+            </span>
+          </div>
+          <div class="inner-card">
+            <span class="roundico-orange">
+              <mat-icon>front_hand</mat-icon>
+            </span>
+          </div>
+        </div>
+
+        <div class="set-4">
+          <p class="list-title">
+            <small>Soluciones</small>
+            <mat-icon>insights</mat-icon>
+          </p>
+        </div>
+
+        <div class="set-4">
+          <p class="list-title">
+            <small>Problemas</small>
+            <mat-icon>warning</mat-icon>
+          </p>
+        </div>
+      </mat-card>
+    </div>
+
+    <div class="set-12 category-list">
+      <mat-card class="set-12">
+        <div class="set-12" *ngFor="let layer of document.layout">
+          {{layer.name}}
+        </div>
+      </mat-card>
+    </div>
+  </div>
 </div>
