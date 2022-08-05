@@ -49,7 +49,7 @@ export class AddDocumentLayoutComponent implements OnInit {
       this.categories.filter((x: any) => { this.categoriesString.push(x['name']); });
 
       this.stepOneFormGroup = this.formBuilder.group({
-        description: ['', []],
+        description: ['', [Validators.required]],
         file: ['', []]
       });
 
@@ -80,7 +80,7 @@ export class AddDocumentLayoutComponent implements OnInit {
 
   categorySelected(event: MatAutocompleteSelectedEvent): void {
     let category: any = this.categories.filter((x: any) => { return x['name'] == event['option']['value'] });
-    this.layout.push(category[0]['_id']);
+    this.layout.push({ category: category[0]['_id'] });
     this.selectedCategories.push(event.option.value);
     this.categoryInput.nativeElement.value = '';
     this.categoryCtrl.setValue(null);

@@ -1,20 +1,27 @@
 <div class="set-12 dialog-head">
   <div class="set-10">
     <h3 class="txt-left">{{document.title}}</h3>
+    <p class="bycopy">
+      <i>
+        <small>By: {{document.created_by.firstname}} {{document.created_by.lastname}}</small>
+      </i>
+    </p>
   </div>
   <div class="set-2 txt-right">
     <button type="button" mat-icon-button color="primary" matTooltip="Salir" matTooltipClass="tooltip"
       (click)="killDialog()">
-      <mat-icon>close</mat-icon>
+      <mat-icon>cancel</mat-icon>
     </button>
   </div>
 </div>
 
-<div class="set-12" *ngIf="isDataAvailable">
+<div class="set-12 dialog-body" *ngIf="isDataAvailable">
   <input type="file" #file (change)="onFileSelected($event)">
-  <mat-stepper labelPosition="bottom" #stepper [@.disabled]="true" [disableRipple]="true">
-    <mat-step>
-      <ng-template matStepLabel>Agrega una descripción</ng-template>
+  <mat-stepper labelPosition="bottom" #stepper [disableRipple]="true" [linear]="true">
+    <mat-step [stepControl]="stepOneFormGroup">
+      <ng-template matStepLabel>
+        <small>Agrega una descripción</small>
+      </ng-template>
       <div class="set-12 step-content">
         <form [formGroup]="stepOneFormGroup">
           <div class="set-9">
@@ -30,6 +37,10 @@
             </button>
           </div>
         </form>
+        <div class="set-12 txt-right">
+          <button type="button" mat-button color="primary" matStepperNext
+            [disabled]="stepOneFormGroup.invalid">Siguiente</button>
+        </div>
       </div>
 
       <div class="set-12 file-hldr" *ngIf="stepOneFormGroup.value.file != null">
@@ -42,7 +53,9 @@
     </mat-step>
 
     <mat-step>
-      <ng-template matStepLabel>Agrega tu esquema</ng-template>
+      <ng-template matStepLabel>
+        <small>Agrega tu esquema</small>
+      </ng-template>
       <div class="set-12 step-content">
         <div class="set-12 tools">
           <button type="button" (click)="toggleCategoryField()">
@@ -94,7 +107,8 @@
         </div>
 
         <div class="set-12 ctrls">
-          <button type="button" mat-raised-button color="primary"
+          <button type="button" mat-button color="primary" matStepperPrevious>Atras</button>
+          <button type="button" mat-button color="accent"
             [disabled]="stepOneFormGroup.invalid && stepTwoFormGroup.invalid" (click)="onCreateLayout()">
             <span>Guardar</span>
           </button>

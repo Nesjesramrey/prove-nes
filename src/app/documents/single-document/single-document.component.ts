@@ -5,7 +5,9 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
 import { DocumentService } from 'src/app/services/document.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DocumentManagerComponent } from 'src/app/components/document-manager/document-manager.component';
+import { AddDocumentCategoryComponent } from 'src/app/components/add-document-category/add-document-category.component';
+import { AddDocumentCollaboratorComponent } from 'src/app/components/add-document-collaborator/add-document-collaborator.component';
+import { AddDocumentLayoutComponent } from 'src/app/components/add-document-layout/add-document-layout.component';
 
 @Component({
   selector: '.single-document-page',
@@ -18,6 +20,7 @@ export class SingleDocumentComponent implements OnInit {
   public user: any = null;
   public payload: any = null;
   public document: any = null;
+  public layout: any = [];
   public isDataAvailable: boolean = false;
 
   constructor(
@@ -42,6 +45,7 @@ export class SingleDocumentComponent implements OnInit {
         // console.log(reply);
         this.user = reply[0]['user'];
         this.document = reply[1]['document'];
+        this.layout = this.document['layout'];
 
         setTimeout(() => {
           this.isDataAvailable = true;
@@ -62,11 +66,18 @@ export class SingleDocumentComponent implements OnInit {
     }
   }
 
-  popDocumentManager(type: string) {
-    const dialogRef = this.dialog.open<DocumentManagerComponent>(DocumentManagerComponent, {
+  popAddDocumentCategory() {
+    // const dialogRef = this.dialog.open<AddDocumentCategoryComponent>(AddDocumentCategoryComponent, {
+    //   width: '640px',
+    //   data: {
+    //     documentID: this.documentID,
+    //     document: this.document
+    //   },
+    //   disableClose: true
+    // });
+    const dialogRef = this.dialog.open<AddDocumentLayoutComponent>(AddDocumentLayoutComponent, {
       width: '640px',
       data: {
-        type: type,
         documentID: this.documentID,
         document: this.document
       },
@@ -77,4 +88,21 @@ export class SingleDocumentComponent implements OnInit {
       if (reply != undefined) { }
     });
   }
+
+  popAddDocumentCollaborator() {
+    const dialogRef = this.dialog.open<AddDocumentCollaboratorComponent>(AddDocumentCollaboratorComponent, {
+      width: '640px',
+      data: {
+        documentID: this.documentID,
+        document: this.document
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  popAddDocumentLayout() { }
 }

@@ -1,0 +1,55 @@
+:host {
+  .dialog-head {
+    display: flex;
+    align-items: center;
+  }
+
+  .dialog-body {
+    textarea {
+      min-height: 100px;
+      max-height: 100px;
+    }
+
+    .set-9 {
+      padding-right: 20px;
+    }
+
+    .upload-img {
+      display: flex;
+      width: 100%;
+      min-height: 100px;
+      align-items: center;
+      justify-content: center;
+      border: 1px dashed rgba($color: #000000, $alpha: 0.1);
+      border-radius: 5px;
+    }
+
+    .ctrls {
+      text-align: right;
+      margin-top: 10px;
+    }
+  }
+
+  .tools {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    button {
+      margin: 0;
+      display: flex;
+      align-items: center;
+
+      * {
+        margin: 0;
+      }
+
+      mat-icon {
+        margin-left: 5px;
+        font-size: 15pt;
+        color: #306EFF;
+      }
+    }
+  }
+}

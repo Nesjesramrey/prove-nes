@@ -5,15 +5,8 @@
     // margin-bottom: 20px;
   }
 
-  input[type="file"] {
-    visibility: hidden;
-    height: 1px;
-    width: 1px;
-    margin: 0;
-    padding: 0;
-  }
-
-  ::ng-deep .mat-step-header:hover {
+  ::ng-deep .mat-step-header:hover,
+  ::ng-deep .mat-step-header {
     background: transparent !important;
   }
 

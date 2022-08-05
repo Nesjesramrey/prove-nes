@@ -27,15 +27,15 @@
 
       <div class="set-8 txt-right">
         <button type="button" mat-mini-fab color="accent" class="mini" matTooltip="Agregar Esquema"
-          (click)="popDocumentManager('layout')">
+          (click)="popAddDocumentLayout()">
           <mat-icon>group_add</mat-icon>
         </button>
         <button type="button" mat-mini-fab color="primary" class="mini" matTooltip="Agregar Colaborador"
-          (click)="popDocumentManager('collaborator')">
+          (click)="popAddDocumentCollaborator()">
           <mat-icon>person_add</mat-icon>
         </button>
         <button type="button" mat-mini-fab color="warn" class="mini" matTooltip="Agregar Categoría"
-          (click)="popDocumentManager('category')">
+          (click)="popAddDocumentCategory()">
           <mat-icon>create_new_folder</mat-icon>
         </button>
       </div>
@@ -45,14 +45,27 @@
       <mat-card class="set-12 info-lists">
         <div class="set-4">
           <div class="inner-card">
-            <span class="roundico-green">
-              <mat-icon>groups</mat-icon>
-            </span>
+            <div class="set-4">
+              <span class="roundico-green">
+                <mat-icon>groups</mat-icon>
+              </span>
+            </div>
+            <div class="set-8">
+              <p><small>Usuarios</small></p>
+              <strong>0</strong>
+            </div>
           </div>
+
           <div class="inner-card">
-            <span class="roundico-orange">
-              <mat-icon>front_hand</mat-icon>
-            </span>
+            <div class="set-4">
+              <span class="roundico-orange">
+                <mat-icon>front_hand</mat-icon>
+              </span>
+            </div>
+            <div class="set-8">
+              <p><small>Interacciones</small></p>
+              <strong>0</strong>
+            </div>
           </div>
         </div>
 
@@ -74,8 +87,8 @@
 
     <div class="set-12 category-list">
       <mat-card class="set-12">
-        <div class="set-12" *ngFor="let layer of document.layout">
-          {{layer.name}}
+        <div class="set-12" *ngFor="let layer of layout">
+          {{layer.category.name}}
         </div>
       </mat-card>
     </div>

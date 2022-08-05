@@ -43,6 +43,14 @@ textarea {
   resize: none !important;
 }
 
+input[type="file"] {
+  visibility: hidden;
+  height: 1px;
+  width: 1px;
+  margin: 0;
+  padding: 0;
+}
+
 table {
   width: 100%;
   text-align: center;
@@ -168,6 +176,11 @@ table {
 
 .txt-justify {
   text-align: justify !important;
+}
+
+.bycopy {
+  font-size: 9pt;
+  color: rgba($color: #000000, $alpha: 0.6);
 }
 
 .innerhldr {
