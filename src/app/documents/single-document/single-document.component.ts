@@ -67,15 +67,7 @@ export class SingleDocumentComponent implements OnInit {
   }
 
   popAddDocumentCategory() {
-    // const dialogRef = this.dialog.open<AddDocumentCategoryComponent>(AddDocumentCategoryComponent, {
-    //   width: '640px',
-    //   data: {
-    //     documentID: this.documentID,
-    //     document: this.document
-    //   },
-    //   disableClose: true
-    // });
-    const dialogRef = this.dialog.open<AddDocumentLayoutComponent>(AddDocumentLayoutComponent, {
+    const dialogRef = this.dialog.open<AddDocumentCategoryComponent>(AddDocumentCategoryComponent, {
       width: '640px',
       data: {
         documentID: this.documentID,
@@ -83,6 +75,15 @@ export class SingleDocumentComponent implements OnInit {
       },
       disableClose: true
     });
+
+    // const dialogRef = this.dialog.open<AddDocumentLayoutComponent>(AddDocumentLayoutComponent, {
+    //   width: '640px',
+    //   data: {
+    //     documentID: this.documentID,
+    //     document: this.document
+    //   },
+    //   disableClose: true
+    // });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) { }

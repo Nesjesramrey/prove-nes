@@ -49,11 +49,6 @@ export class AddDocumentCategoryComponent implements OnInit {
     });
   }
 
-  _filter(value: string) {
-    const filterValue = value.toLowerCase();
-    return this.categories.filter((option: any) => option.toLowerCase().includes(filterValue));
-  }
-
   onFileSelected(event: any) { }
 
   filterCategories(value: any) {

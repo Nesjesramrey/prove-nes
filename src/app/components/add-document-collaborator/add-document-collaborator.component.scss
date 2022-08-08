@@ -3,4 +3,16 @@
     display: flex;
     align-items: center;
   }
+
+  .dialog-body {
+    margin-top: 20px;
+
+    .set-3 {
+      padding-left: 20px;
+    }
+
+    .ctrls {
+      text-align: right;
+    }
+  }
 }

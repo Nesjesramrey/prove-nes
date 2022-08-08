@@ -6,8 +6,8 @@
 
   .dialog-body {
     textarea {
-      min-height: 100px;
-      max-height: 100px;
+      // min-height: 100px;
+      max-height: 150px;
     }
 
     .set-9 {
@@ -17,12 +17,25 @@
     .upload-img {
       display: flex;
       width: 100%;
-      min-height: 100px;
+      min-height: 59.5px;
       align-items: center;
       justify-content: center;
-      border: 1px dashed rgba($color: #000000, $alpha: 0.1);
+      border: 1px dashed rgba(0, 0, 0, 0.1);
       border-radius: 5px;
+      margin: 0.25em 0;
+
+      mat-icon {
+        color: #306EFF;
+        // opacity: 0.4;
+        transition: all .2s linear;
+      }
     }
+
+    // .upload-img:hover {
+    //   mat-icon {
+    //     opacity: 1;
+    //   }
+    // }
 
     .ctrls {
       text-align: right;
