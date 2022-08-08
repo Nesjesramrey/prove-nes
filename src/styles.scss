@@ -360,3 +360,31 @@ mat-form-field {
 .cdk-overlay-container {
   z-index: 330 !important;
 }
+
+.green-snackbar {
+  color: #ffffff;
+  background: #b7d43c !important;
+  text-align: left !important;
+
+  .mat-simple-snackbar-action {
+    color: #ffffff !important;
+  }
+
+  .mat-button-focus-overlay {
+    background: none !important;
+  }
+}
+
+.red-snackbar {
+  color: #ffffff;
+  background: #ff0000 !important;
+  text-align: left !important;
+
+  .mat-simple-snackbar-action {
+    color: #ffffff !important;
+  }
+
+  .mat-button-focus-overlay {
+    background: none !important;
+  }
+}

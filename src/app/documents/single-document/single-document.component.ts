@@ -8,6 +8,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddDocumentCategoryComponent } from 'src/app/components/add-document-category/add-document-category.component';
 import { AddDocumentCollaboratorComponent } from 'src/app/components/add-document-collaborator/add-document-collaborator.component';
 import { AddDocumentLayoutComponent } from 'src/app/components/add-document-layout/add-document-layout.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: '.single-document-page',
@@ -22,6 +24,9 @@ export class SingleDocumentComponent implements OnInit {
   public document: any = null;
   public layout: any = [];
   public isDataAvailable: boolean = false;
+  public displayedColumns: string[] = ['select', 'name', 'email', 'activities', 'menu'];
+  public dataSource = new MatTableDataSource<any>();
+  public selection = new SelectionModel<any>(true, []);
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -45,9 +50,12 @@ export class SingleDocumentComponent implements OnInit {
         // console.log(reply);
         this.user = reply[0]['user'];
         this.document = reply[1]['document'];
+        // console.log(this.document);
         this.layout = this.document['layout'];
+        console.log(this.layout);
 
         setTimeout(() => {
+          this.dataSource = new MatTableDataSource(this.layout);
           this.isDataAvailable = true;
         });
       });

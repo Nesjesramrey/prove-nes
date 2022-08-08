@@ -17,10 +17,10 @@
       <div class="set-4">
         <mat-form-field appearance="outline">
           <mat-label>Cobertura</mat-label>
-          <mat-select multiple>
-            <mat-select-trigger>
-            </mat-select-trigger>
-            <mat-option></mat-option>
+          <mat-select>
+            <mat-option *ngFor="let option of document.coverage">
+              <small>{{option.name}}</small>
+            </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
