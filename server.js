@@ -18,5 +18,5 @@ app.get('*', function(req, res) {
 //Starting server on port 8080
 app.listen(port, () => {
     console.log('Server started!');
-    console.log('on port'+ port);
+    console.log('on port', port);
 });
