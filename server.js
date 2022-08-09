@@ -1,6 +1,6 @@
 const express = require('express');
 var path = require('path');
-//puerto
+//puerto de escucha
 const port = process.env.PORT ||8080;
 //const compression = require('compression')
 
