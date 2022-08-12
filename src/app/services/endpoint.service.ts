@@ -44,6 +44,7 @@ export class EndPointService {
   public injectConversationMessageEndPoint: string = '/support/inject-conversation-message';
   public fetchSupportConversationsEndPoint: string = '/support/fetch-support-conversations';
   public killSupportConversationEndPoint: string = '/support/kill-support-conversation';
+  public searchConversationsByDateEndPoint: string = '/support/search-conversations-by-date';
 
   constructor() { }
 }

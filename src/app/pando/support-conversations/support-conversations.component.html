@@ -3,7 +3,7 @@
 </div>
 
 <div class="set-12" *ngIf="isDataAvailable">
-  <div class="set-12">
+  <div class="set-12 top-tools">
     <div class="set-6">
       <mat-form-field appearance="outline">
         <mat-label>Búscar usuario...</mat-label>
@@ -14,12 +14,45 @@
         </button>
       </mat-form-field>
     </div>
+
+    <div class="set-6">
+      <form class="set-12" [formGroup]="searchByDateFormGroup" (submit)="onSearchByDate(searchByDateFormGroup)">
+        <div class="set-11">
+          <div class="set-6">
+            <mat-form-field appearance="outline">
+              <mat-label>Desde:</mat-label>
+              <input matInput [matDatepicker]="pickerFrom" [max]="today" formControlName="fromDate">
+              <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+              <mat-datepicker #pickerFrom></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div class="set-6">
+            <mat-form-field appearance="outline">
+              <mat-label>Hasta:</mat-label>
+              <input matInput [matDatepicker]="pickerTo" [max]="today" formControlName="toDate">
+              <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+              <mat-datepicker #pickerTo></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="set-1">
+          <button type="submit" class="roundblue roundbluemini" [disabled]="searchByDateFormGroup.invalid"
+            matTooltip="Búscar" matTooltipClass="tooltip">
+            <mat-icon>search</mat-icon>
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 
+  <!-- no conversations -->
   <div class="set-12" *ngIf="conversations.length == 0">
     <h3>No hay conversaciones</h3>
   </div>
 
+  <!-- convesations available -->
   <div class="set-12 msglist" *ngIf="conversations.length != 0">
     <table mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="select">

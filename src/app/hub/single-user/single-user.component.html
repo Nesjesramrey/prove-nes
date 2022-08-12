@@ -18,7 +18,8 @@
       </button>
 
       <div class="set-12 cardbody">
-        <button type="button" class="roundblue cardmore">
+        <button type="button" class="roundblue cardmore" (click)="linkMe('/hub/configuracion')"
+          matTooltip="Configuración" matTooltipClass="tooltip">
           <mat-icon>settings</mat-icon>
         </button>
         <h3 class="txt-center">{{user.firstname}} {{user.lastname}}</h3>

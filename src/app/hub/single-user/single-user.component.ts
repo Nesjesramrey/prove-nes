@@ -7,6 +7,7 @@ import { SetAvatarDialogComponent } from 'src/app/components/set-avatar-dialog/s
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DocumentService } from 'src/app/services/document.service';
 import { UserService } from 'src/app/services/user.service';
+import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
   selector: '.single-user-page',
@@ -29,7 +30,8 @@ export class SingleUserComponent implements OnInit {
     public dialog: LyDialog,
     public authenticationSrvc: AuthenticationService,
     public userSrvc: UserService,
-    public documentSrvc: DocumentService
+    public documentSrvc: DocumentService,
+    public utilityService: UtilityService
   ) {
     this.userID = this.activatedRoute['snapshot']['params']['userID'];
     this.isAuthenticated = this.authenticationSrvc['isAuthenticated'];
@@ -106,5 +108,9 @@ export class SingleUserComponent implements OnInit {
         console.log(reply);
       }
     });
+  }
+
+  linkMe(url: string) {
+    this.utilityService.linkMe(url);
   }
 }

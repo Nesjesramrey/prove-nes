@@ -1,6 +1,6 @@
 :host {
   padding: 40px;
-  margin-top: 70px;
+  margin-top: 80px;
 
   .msglist {
     -webkit-box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.5);
@@ -17,5 +17,28 @@
 
   .new-conversation {
     background: #e5f6ff !important;
+  }
+
+  .top-tools {
+    .set-6:nth-child(odd) {
+      padding-right: 10px;
+    }
+
+    .set-6:nth-child(even) {
+      padding-left: 10px;
+    }
+
+    .set-1 {
+      padding-left: 10px;
+
+      * {
+        margin: 0;
+      }
+
+      button {
+        float: right;
+        margin-top: 17px;
+      }
+    }
   }
 }

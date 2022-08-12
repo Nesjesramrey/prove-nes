@@ -39,4 +39,8 @@ export class SupportService {
   killSupportConversation(data: any) {
     return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.killSupportConversationEndPoint, data);
   }
+
+  searchConversationsByDate(data: any) {
+    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.searchConversationsByDateEndPoint, data);
+  }
 }
