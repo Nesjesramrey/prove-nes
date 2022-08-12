@@ -20,7 +20,7 @@ export class SupportConversationsComponent implements OnInit {
   public user: any = null;
   public payload: any = null;
   public conversations: any = [];
-  public displayedColumns: string[] = ['select', 'customer', 'email', 'support', 'date', 'menu'];
+  public displayedColumns: string[] = ['select', 'customer', 'email', 'support', 'date', 'status', 'menu'];
   public dataSource = new MatTableDataSource<any>();
   public paginator!: MatPaginator;
   @ViewChild('matPaginator') set matPaginator(mp: MatPaginator) {
@@ -57,6 +57,7 @@ export class SupportConversationsComponent implements OnInit {
       let conversations: Observable<any> = this.supportService.fetchSupportConversations();
 
       forkJoin([user, conversations]).subscribe((reply: any) => {
+        console.log(reply);
         this.user = reply[0]['user'];
         this.conversations = reply[1]['conversations'];
 
@@ -126,6 +127,7 @@ export class SupportConversationsComponent implements OnInit {
 
   onAttendMsg(conversatioID: string) {
     this.conversation = this.conversations.filter((x: any) => { return x['_id'] == conversatioID; });
+    this.conversation[0]['status'] = { value: 'process', viewValue: 'En proceso' };
     this.supportService.injectSupportMsg(this.conversation[0]);
   }
 
@@ -152,7 +154,18 @@ export class SupportConversationsComponent implements OnInit {
     };
 
     this.supportService.searchConversationsByDate(data).subscribe((reply: any) => {
-      console.log(reply);
+      // console.log(reply);
+      if (reply['status'] == false) {
+        this.utilityService.openErrorSnackBar(reply['error']);
+        return;
+      }
+      this.conversations = [];
+      this.conversations = reply['conversations'];
+      this.dataSource = new MatTableDataSource(this.conversations);
+      this.setDataSourceAttributes();
+      if (this.conversations.length == 0) {
+        this.utilityService.openErrorSnackBar('No se econcntraron conversaciones.');
+      }
     });
   }
 }

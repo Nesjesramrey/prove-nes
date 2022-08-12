@@ -40,6 +40,7 @@ export class SingleUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.userSrvc.fetchUserById({ _id: this.userID }).subscribe((reply: any) => {
+      console.log(reply);
       this.user = reply['user'];
       this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
 
