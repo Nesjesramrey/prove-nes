@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -29,6 +29,9 @@ export class SingleDocumentComponent implements OnInit {
   public displayedColumns: string[] = ['select', 'name', 'email', 'activities', 'menu'];
   public dataSource = new MatTableDataSource<any>();
   public selection = new SelectionModel<any>(true, []);
+  public editingRowId : string | null = null;
+
+  @ViewChild('editRowName') editRowName!: ElementRef<HTMLInputElement>;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -115,6 +118,34 @@ export class SingleDocumentComponent implements OnInit {
   }
 
   popAddDocumentLayout() { }
+
+  handleEditing(id: string | null, ) {
+    this.editingRowId = id;
+    setTimeout(() => {
+      this.editRowName.nativeElement.focus();
+    }, 50);
+  }
+
+  saveName(){
+    const newValue = this.editRowName.nativeElement.value;
+
+    if (newValue === null || newValue.length == 0) return
+  
+
+    this.categories = this.categories.map(cat => {
+      
+      if (cat.id == this.editingRowId ) {
+        return  { ...cat, name: newValue }
+      }
+
+      return cat;
+    })
+
+
+    this.editingRowId = null;
+    this.editRowName.nativeElement.value = ""
+  }
+
 }
 
 
@@ -126,9 +157,9 @@ const _categories_mock = [
     name: "deporte", id: "uuid221a", users: 500, interactions: 6200, solutions: 100, problems: 700, ranking: 700,
   },
   {
-    name: "derechos humanos", id: "uuid221a", users: 500, interactions: 6200, solutions: 100, problems: 700, ranking: 700,
+    name: "derechos humanos", id: "uuid221b", users: 500, interactions: 6200, solutions: 100, problems: 700, ranking: 700,
   },
   {
-    name: "económico", id: "uuid221a", users: 500, interactions: 6200, solutions: 100, problems: 700, ranking: 700,
+    name: "económico", id: "uuid221c", users: 500, interactions: 6200, solutions: 100, problems: 700, ranking: 700,
   }
 ];

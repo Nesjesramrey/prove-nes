@@ -184,13 +184,32 @@
           border: 1px solid transparent;
           cursor: text;
 
+        
+          .text {
+            font-size: 1.1em;
+          }
+
           span {
             margin: 0;
           }
+
+          mat-icon {
+            font-size: 15pt;
+          }
           
-          &:hover {
+          &:hover, &.editing {
             background-color: #CEDDFF;
             border-color:  #306EFF;
+          }
+
+
+          &.editing {
+            background-color: #e8e8e8;
+
+            mat-icon {
+              color: #20C588;
+              cursor: pointer;
+            }
           }
         }
         // display: inline-block;
