@@ -29,6 +29,21 @@ export class AuthenticationService {
       });
   }
 
+  firebaseSignIn(email: string, password: string) {
+    return this.angularFireAuth.signInWithEmailAndPassword(email, password)
+      .then((result) => {
+        console.log(result);
+        this.angularFireAuth.authState.subscribe((user) => {
+          if (user) {
+            console.log(user);
+          }
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   validateEmail(data: any) {
     return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.validateEmailEndPoint, data);
   }
