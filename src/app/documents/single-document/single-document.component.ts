@@ -23,6 +23,8 @@ export class SingleDocumentComponent implements OnInit {
   public payload: any = null;
   public document: any = null;
   public layout: any = [];
+  public categories: any[] = _categories_mock;
+  public categoriesDisplayedColumns: string[] = ["name", "users", "interactions", "solutions", "problems", "ranking", "actions"]
   public isDataAvailable: boolean = false;
   public displayedColumns: string[] = ['select', 'name', 'email', 'activities', 'menu'];
   public dataSource = new MatTableDataSource<any>();
@@ -47,7 +49,6 @@ export class SingleDocumentComponent implements OnInit {
       let user: Observable<any> = this.userService.fetchUserById({ _id: this.payload['sub'] });
       let document: Observable<any> = this.documentService.fetchSingleDocumentById({ document_id: this.documentID });
       forkJoin([user, document]).subscribe((reply: any) => {
-        // console.log(reply);
         this.user = reply[0]['user'];
         this.document = reply[1]['document'];
         // console.log(this.document);
@@ -115,3 +116,19 @@ export class SingleDocumentComponent implements OnInit {
 
   popAddDocumentLayout() { }
 }
+
+
+
+
+
+const _categories_mock = [
+  {
+    name: "deporte", id: "uuid221a", users: 500, interactions: 6200, solutions: 100, problems: 700, ranking: 700,
+  },
+  {
+    name: "derechos humanos", id: "uuid221a", users: 500, interactions: 6200, solutions: 100, problems: 700, ranking: 700,
+  },
+  {
+    name: "económico", id: "uuid221a", users: 500, interactions: 6200, solutions: 100, problems: 700, ranking: 700,
+  }
+];

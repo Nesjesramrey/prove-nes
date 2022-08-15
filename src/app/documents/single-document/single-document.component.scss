@@ -45,13 +45,15 @@
     margin-left: 40px;
 
     mat-icon {
-      font-size: 13pt !important;
+      font-size: 14pt !important;
+      color: #fff;        
     }
   }
 
   .inner-card {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     margin-bottom: 20px;
 
     * {
@@ -68,6 +70,10 @@
       align-items: center;
       justify-content: center;
       margin-right: 20px;
+
+      mat-icon {
+        font-size: 20pt !important;
+      }
     }
 
     .roundico-green {
@@ -96,9 +102,12 @@
   }
 
   .info-lists {
+    padding: 1.5em;
+     
     p.list-title {
       display: flex;
       align-items: center;
+      font-weight: 600;
 
       * {
         margin: 0;
@@ -106,6 +115,33 @@
 
       mat-icon {
         margin-left: 10px;
+
+        &.icon-insights {
+          color: #20C588;
+        }
+        &.icon-warnings {
+          color: #E98282;
+        }
+      }
+    }
+
+    .top-list {
+      margin-top: 15pt;
+      counter-reset: orderedlist;
+
+      .top-list-item {
+        list-style: none;
+        font-weight: 600;
+        border-bottom: 1px solid #DBDBDB;
+        padding: 0.6em 0;
+
+        &:before {
+          counter-increment: orderedlist;
+          content: counter(orderedlist);
+          font-weight: 400;
+          margin-right: 15pt;
+          color: #131313
+        }
       }
     }
 
@@ -124,5 +160,51 @@
 
   .category-list {
     margin-top: 20px;
+
+
+    /* CATEGORIES TABLE */
+    .categories-table {
+
+      .mat-cell {
+        padding: 0.5em 0;
+      }
+
+      .mat-cell.mat-column-name {
+        // min-width: 100px !important;
+        width: 200px !important;
+
+        div {
+          border-radius: 1.5em;
+          padding: 0.5em 0.8em;
+          text-transform: capitalize;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          transition: all 350ms linear;
+          border: 1px solid transparent;
+          cursor: text;
+
+          span {
+            margin: 0;
+          }
+          
+          &:hover {
+            background-color: #CEDDFF;
+            border-color:  #306EFF;
+          }
+        }
+        // display: inline-block;
+      }
+      
+      .mat-column-actions {
+        width: 50px;
+        padding-right: 0;
+        text-align: right;
+      }
+
+    }
+
   }
 }
+
+
