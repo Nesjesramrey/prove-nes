@@ -18,6 +18,10 @@ export class UserService {
     return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchUserByIdEndPoint, data);
   }
 
+  fetchUserByFirebaseUID(data: any) {
+    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchUserByFirebaseUIDEndPoint, data);
+  }
+
   addUserPermissions(data: any) {
     return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.addUserPermissionsEndPoint, data);
   }

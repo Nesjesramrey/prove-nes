@@ -9,6 +9,8 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 export class AuthenticationService {
   public token_key: string = 'token';
   public isNewUser: string = 'isNewUser';
+  public accessToken: string = 'accessToken';
+  public uid: string = 'uid';
 
   constructor(
     public httpClient: HttpClient,
@@ -58,6 +60,14 @@ export class AuthenticationService {
 
   signout(data: any) {
     return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.signoutEndPoint, data);
+  }
+
+  get fetchAccessToken() {
+    return localStorage.getItem(this.accessToken);
+  }
+
+  get uID() {
+    return localStorage.getItem(this.uid);
   }
 
   get fetchToken() {

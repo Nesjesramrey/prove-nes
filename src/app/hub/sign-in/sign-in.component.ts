@@ -23,48 +23,53 @@ export class SignInComponent implements OnInit {
 
   ngOnInit(): void {
     this.signInFormGroup = this.formBuilder.group({
-      email: ['al.paredes@icloud.com', [Validators.required, Validators.pattern(this.utilitySrvc.emailPattern), this.utilitySrvc.emailDomainValidator]],
-      password: ['KxElxnWsjsa74', [Validators.required, Validators.minLength(9)]]
+      email: ['', [Validators.required, Validators.pattern(this.utilitySrvc.emailPattern), this.utilitySrvc.emailDomainValidator]],
+      password: ['', [Validators.required, Validators.minLength(9)]]
     });
   }
 
   onSignIn(form: FormGroup) {
     this.submitted = true;
 
+    // this.angularFireAuth.signInWithEmailAndPassword(form['value']['email'], form['value']['password'])
+    //   .then((reply: any) => {
+    //     console.log(reply);
+    //     this.angularFireAuth.authState.subscribe((data: any) => {
+    //       console.log(data['multiFactor']['user']);
+    //       this.submitted = false;
+    //       localStorage.setItem('accessToken', data['multiFactor']['user']['accessToken']);
+    //       localStorage.setItem('uid', data['multiFactor']['user']['uid']);
+    //       window.location.reload();
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     console.log(error['code']);
+    //     this.submitted = false;
+    //     switch (error['code']) {
+    //       case 'auth/wrong-password':
+    //         this.utilitySrvc.openErrorSnackBar('Tu contraseña es incorrecta.');
+    //         break;
+    //       case 'auth/user-not-found':
+    //         this.utilitySrvc.openErrorSnackBar('No se encontro el usuario.');
+    //         break;
+    //     }
+    //   });
+
     let data: any = {
       email: form.value.email,
       password: form.value.password
     }
 
-    this.angularFireAuth.signInWithEmailAndPassword(form['value']['email'], form['value']['password'])
-      .then((result) => {
-        // console.log(result['user']);
-        this.angularFireAuth.authState.subscribe((user) => {
-          console.log(user);
-        });
-      })
-      .catch((error) => {
-        console.log(error['code']);
+    this.authenticationSrvc.signin(data).subscribe((reply: any) => {
+      this.submitted = false;
 
-        switch (error['code']) {
-          case 'auth/wrong-password':
-            break;
+      if (reply['status'] == false) {
+        this.utilitySrvc.openErrorSnackBar(reply['error']);
+        return;
+      }
 
-          case 'auth/user-not-found':
-            break
-        }
-      });
-
-    // this.authenticationSrvc.signin(data).subscribe((reply: any) => {
-    //   this.submitted = false;
-
-    //   if (reply['status'] == false) {
-    //     this.utilitySrvc.openErrorSnackBar(reply['error']);
-    //     return;
-    //   }
-
-    //   localStorage.setItem('token', reply['token']);
-    //   window.location.reload();
-    // });
+      localStorage.setItem('token', reply['token']);
+      window.location.reload();
+    });
   }
 }
