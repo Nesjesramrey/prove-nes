@@ -51,9 +51,7 @@ export class AppComponent implements OnInit {
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationStart) {
         let lastVal: any = val['url'].substring(val['url'].lastIndexOf('/') + 1);
-        if (lastVal == 'registro') {
-          // console.log('hub');
-        }
+        if (lastVal == 'registro') { }
       }
     });
   }
