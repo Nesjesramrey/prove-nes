@@ -29,6 +29,7 @@ import { AddDocumentLayoutComponent } from "./add-document-layout/add-document-l
 import { AddDocumentCategoryComponent } from "./add-document-category/add-document-category.component";
 import { AddDocumentCollaboratorComponent } from "./add-document-collaborator/add-document-collaborator.component";
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
+import { AvatarsRowComponent } from './avatars-row/avatars-row.component';
 
 @NgModule({
   imports: [
@@ -61,7 +62,8 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
     AddDocumentLayoutComponent,
     AddDocumentCategoryComponent,
     AddDocumentCollaboratorComponent,
-    BreadcrumbsComponent
+    BreadcrumbsComponent,
+    AvatarsRowComponent
   ],
   exports: [
     AppPageletComponent,
@@ -76,7 +78,8 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
     AddDocumentLayoutComponent,
     AddDocumentCategoryComponent,
     AddDocumentCollaboratorComponent,
-    BreadcrumbsComponent
+    BreadcrumbsComponent,
+    AvatarsRowComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
