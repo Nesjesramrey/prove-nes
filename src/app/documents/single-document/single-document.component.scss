@@ -39,6 +39,15 @@
   .card-description {
     text-align: justify;
     font-size: 11pt;
+    line-height: 18pt;
+    color: #636363;
+
+    &.link {
+      margin-top: 10pt;
+      display: inline-block;
+      text-decoration: underline;
+      cursor: pointer;
+    }
   }
 
   button.mini {
@@ -161,6 +170,12 @@
   .category-list {
     margin-top: 20px;
 
+    .title {
+      font-weight: 600;
+      font-size: 13pt;
+      text-transform: uppercase;
+      letter-spacing: 2pt;
+    }
 
     /* CATEGORIES TABLE */
     .categories-table {
@@ -225,5 +240,3 @@
 
   }
 }
-
-

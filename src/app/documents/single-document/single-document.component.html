@@ -1,4 +1,13 @@
 <div class="set-12" *ngIf="isDataAvailable">
+
+  <breadcrumbs-component>
+    <li class="breadcrumb-item">Perfil</li>
+      
+    <li>Documentos</li>
+      
+    <li>{{document.title}}</li>
+  </breadcrumbs-component>
+  
   <div class="set-3 col-lft">
     <mat-card class="set-12 doc-description">
       <div class="set-12 imghldr">
@@ -7,7 +16,8 @@
 
       <div class="set-12 infohldr">
         <p class="card-title">{{document.title}}</p>
-        <p class="card-description">{{document.description}}</p>
+        <p class="card-description">{{document.description || "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in vestibulum ex. Nullam viverra venenatis ipsum, eget lobortis nisi tempus vel. Donec ut scelerisque nibh. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed non purus feugiat lectus egestas rutrum quis vitae nisi. Sed orci mi, mollis id turpis eget, sodales malesuada diam. Ut blandit, est et malesuada euismod, sem est tristique tortor, non varius dolor orci in metus. Vivamus diam metus, malesuada dapibus turpis id, consequat tempor purus. Etiam elit justo, iaculis a tortor nec, pretium cursus ante."}}</p>
+        <span class="card-description link">Leer más</span>
       </div>
     </mat-card>
   </div>
@@ -115,7 +125,7 @@
     <!-- CATEGORIES TABLE- -->
     <div class="set-12 category-list">
       <mat-card class="set-12">
-        <p>Categorias</p>
+        <p class="title">Categorias</p>
 
         <!-- TABLE -->
         <table mat-table [dataSource]="categories" class="categories-table">

@@ -7,6 +7,7 @@ import { AppSharedModule } from '../app-shared.module';
 
 import { DocumentsComponent } from './documents.component';
 import { SingleDocumentComponent } from './single-document/single-document.component';
+import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
   imports: [
@@ -15,11 +16,12 @@ import { SingleDocumentComponent } from './single-document/single-document.compo
     ReactiveFormsModule,
     DocumentsComponentRoutingModule,
     AppMaterialModule,
-    AppSharedModule
+    AppSharedModule,
+    ComponentsModule
   ],
   declarations: [
     DocumentsComponent,
-    SingleDocumentComponent
+    SingleDocumentComponent,
   ]
 })
 export class DocumentsComponentModule { }
