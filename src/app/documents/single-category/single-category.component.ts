@@ -31,6 +31,17 @@ export class SingleCategoryComponent implements OnInit {
   public editingTitle: boolean = false;
   public imageUrl!: string;
 
+  /* TABLE */
+  public displayedColumns: string[] = [
+    'name',
+    'users',
+    'interactions',
+    'solutions',
+    'problems',
+    'actions',
+  ];
+  public subcategories: any[] = [];
+
   @ViewChild('titleField') titleField!: ElementRef<HTMLInputElement>;
 
   constructor(
@@ -65,6 +76,8 @@ export class SingleCategoryComponent implements OnInit {
         this.category = _categories_mock.find(
           (cat) => cat.id === this.categoryID
         )!;
+
+        this.subcategories = _mockSubcategories;
 
         setTimeout(() => {
           this.dataSource = new MatTableDataSource(this.layout);
@@ -105,16 +118,15 @@ export class SingleCategoryComponent implements OnInit {
     if (event == null) return;
 
     const file = (event.target as HTMLInputElement)?.files![0];
-    // this.uploadForm.patchValue({
-    //   avatar: file,
-    // });
-    // this.uploadForm.get('avatar').updateValueAndValidity();
-    // File Preview
     const reader = new FileReader();
     reader.onload = () => {
       this.imageUrl = reader.result as string;
     };
     reader.readAsDataURL(file);
+  }
+
+  handleDeleteProblem(id: string) {
+    this.subcategories = this.subcategories.filter((item) => item.id !== id);
   }
 }
 
@@ -150,6 +162,27 @@ const _categories_mock = [
   {
     name: 'económico',
     id: 'uuid221c',
+    users: 500,
+    interactions: 6200,
+    solutions: 100,
+    problems: 700,
+    ranking: 700,
+  },
+];
+
+const _mockSubcategories = [
+  {
+    name: 'acceso a la educación',
+    id: 'uuid221ssc',
+    users: 500,
+    interactions: 6200,
+    solutions: 100,
+    problems: 700,
+    ranking: 700,
+  },
+  {
+    name: 'deporte',
+    id: 'uuid221src',
     users: 500,
     interactions: 6200,
     solutions: 100,

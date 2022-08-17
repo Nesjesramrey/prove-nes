@@ -12,6 +12,7 @@
 
     <li>{{ category.name }}</li>
   </breadcrumbs-component>
+  <!-- LEFT COLUMN // ASIDE -->
   <div class="set-3 col-lft">
     <mat-card class="set-12 category-description">
       <div class="title-box">
@@ -83,6 +84,186 @@
       <button mat-button>
         Cargar template <mat-icon color="primary">file_upload</mat-icon>
       </button>
+    </div>
+  </div>
+  <!-- RIGHT COLUMN // CONTENT -->
+
+  <div class="set-9 col-rgt">
+    <div class="set-12 head">
+      <div class="set-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Cobertura</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let option of document.coverage">
+              <small>{{ option.name }}</small>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <!-- HEAD ACTIONS -->
+      <div class="set-8 actions">
+        <button
+          type="button"
+          mat-mini-fab
+          class="layout"
+          matTooltip="Agregar layout colaboradores"
+        >
+          <mat-icon>person_add</mat-icon>
+        </button>
+
+        <button
+          type="button"
+          mat-mini-fab
+          color="primary"
+          matTooltip="Agregar colaborado"
+        >
+          <mat-icon>group_add</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="set-12">
+      <div class="resume">
+        <!-- Data -->
+        <div class="col">
+          <mat-card class="data-resume">
+            <div class="row">
+              <span class="roundico-green">
+                <mat-icon>groups</mat-icon>
+              </span>
+
+              <div class="text">
+                <p><small>Usuarios</small></p>
+                <strong>0</strong>
+              </div>
+            </div>
+
+            <div class="row">
+              <span class="roundico-orange">
+                <mat-icon>front_hand</mat-icon>
+              </span>
+
+              <div class="text">
+                <p><small>Interacciones</small></p>
+                <strong>0</strong>
+              </div>
+            </div>
+          </mat-card>
+        </div>
+        <!-- Soluciones -->
+        <div class="col">
+          <mat-card>
+            <p class="list-title">
+              <small>Soluciones</small>
+              <mat-icon class="icon-insights">insights</mat-icon>
+            </p>
+
+            <ol class="top-list">
+              <li class="top-list-item">
+                <span>Inseguridad</span>
+              </li>
+              <li class="top-list-item">
+                <span>Inseguridad</span>
+              </li>
+              <li class="top-list-item">
+                <span>Inseguridad</span>
+              </li>
+            </ol>
+          </mat-card>
+        </div>
+        <!-- Problemas -->
+        <div class="col">
+          <mat-card>
+            <p class="list-title">
+              <small>Problemas</small>
+              <mat-icon class="icon-warnings">warning</mat-icon>
+            </p>
+
+            <ol class="top-list">
+              <li class="top-list-item">
+                <span>Inseguridad</span>
+              </li>
+              <li class="top-list-item">
+                <span>Inseguridad</span>
+              </li>
+              <li class="top-list-item">
+                <span>Inseguridad</span>
+              </li>
+            </ol>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="set-12">
+      <mat-card>
+        <!-- TABLE -->
+        <table mat-table [dataSource]="subcategories" class="problems-table">
+          <!-- NAME Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <div class="text-box">
+                <div class="icon">
+                  <mat-icon>web</mat-icon>
+                </div>
+                <div>
+                  {{ element.name }}
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Users Column -->
+          <ng-container matColumnDef="users">
+            <th mat-header-cell *matHeaderCellDef>Usuarios</th>
+            <td mat-cell *matCellDef="let element">{{ element.users }}</td>
+          </ng-container>
+
+          <!-- SOLUTIONS Column -->
+          <ng-container matColumnDef="interactions">
+            <th mat-header-cell *matHeaderCellDef>Interacciones</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.interactions }}
+            </td>
+          </ng-container>
+
+          <!-- solutions Column -->
+          <ng-container matColumnDef="solutions">
+            <th mat-header-cell *matHeaderCellDef>Soluciones</th>
+            <td mat-cell *matCellDef="let element">{{ element.solutions }}</td>
+          </ng-container>
+
+          <!-- PROBLEMS Column -->
+          <ng-container matColumnDef="problems">
+            <th mat-header-cell *matHeaderCellDef>Problemas</th>
+            <td mat-cell *matCellDef="let element">{{ element.problems }}</td>
+          </ng-container>
+
+          <!-- ACTIONS Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                  <span>Agregar problematica</span>
+                </button>
+                <button mat-menu-item (click)="handleDeleteProblem(element.id)">
+                  <span>Eliminar</span>
+                </button>
+              </mat-menu>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </mat-card>
     </div>
   </div>
 </div>
