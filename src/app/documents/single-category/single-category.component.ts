@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { forkJoin, Observable } from 'rxjs';
@@ -8,6 +8,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { DocumentService } from '../../services/document.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UtilityService } from '../../services/utility.service';
+// import { FormBuilder, FormGroup } from "@angular/forms";
 
 @Component({
   selector: '.app-single-category',
@@ -16,24 +17,21 @@ import { UtilityService } from '../../services/utility.service';
 })
 export class SingleCategoryComponent implements OnInit {
   public documentID: string = '';
+  public categoryID: string = '';
   public token: any = null;
   public user: any = null;
   public payload: any = null;
   public document: any = null;
   public layout: any = [];
-  public categoriesDisplayedColumns: string[] = [
-    'name',
-    'users',
-    'interactions',
-    'solutions',
-    'problems',
-    'ranking',
-    'actions',
-  ];
+  public category: Category = _categories_mock[0];
+
   public isDataAvailable: boolean = false;
   public dataSource = new MatTableDataSource<any>();
   public selection = new SelectionModel<any>(true, []);
-  public editingRowId: string | null = null;
+  public editingTitle: boolean = false;
+  public imageUrl!: string;
+
+  @ViewChild('titleField') titleField!: ElementRef<HTMLInputElement>;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -44,6 +42,7 @@ export class SingleCategoryComponent implements OnInit {
     public utilityService: UtilityService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
+    this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
     this.token = this.authenticationService.fetchToken;
   }
 
@@ -60,8 +59,12 @@ export class SingleCategoryComponent implements OnInit {
         });
       forkJoin([user, document]).subscribe((reply: any) => {
         this.user = reply[0]['user'];
-        this.document = reply[1]['document']
+        this.document = reply[1]['document'];
         this.layout = this.document['layout'];
+
+        this.category = _categories_mock.find(
+          (cat) => cat.id === this.categoryID
+        )!;
 
         setTimeout(() => {
           this.dataSource = new MatTableDataSource(this.layout);
@@ -84,4 +87,73 @@ export class SingleCategoryComponent implements OnInit {
       });
     }
   }
+
+  openEditingTitle() {
+    this.editingTitle = true;
+
+    setTimeout(() => {
+      this.titleField.nativeElement.focus();
+    }, 50);
+  }
+
+  saveName() {
+    this.category.name = this.titleField.nativeElement.value;
+    this.editingTitle = false;
+  }
+
+  handleSelectImage(event: any) {
+    if (event == null) return;
+
+    const file = (event.target as HTMLInputElement)?.files![0];
+    // this.uploadForm.patchValue({
+    //   avatar: file,
+    // });
+    // this.uploadForm.get('avatar').updateValueAndValidity();
+    // File Preview
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imageUrl = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  }
 }
+
+interface Category {
+  name: string;
+  id: string;
+  users: number;
+  interactions: number;
+  solutions: number;
+  problems: number;
+  ranking: number;
+}
+
+const _categories_mock = [
+  {
+    name: 'deporte',
+    id: 'uuid221a',
+    users: 500,
+    interactions: 6200,
+    solutions: 100,
+    problems: 700,
+    ranking: 700,
+  },
+  {
+    name: 'derechos humanos',
+    id: 'uuid221b',
+    users: 500,
+    interactions: 6200,
+    solutions: 100,
+    problems: 700,
+    ranking: 700,
+  },
+  {
+    name: 'económico',
+    id: 'uuid221c',
+    users: 500,
+    interactions: 6200,
+    solutions: 100,
+    problems: 700,
+    ranking: 700,
+  },
+];
