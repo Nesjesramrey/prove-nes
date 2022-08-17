@@ -34,21 +34,27 @@ export class SignInComponent implements OnInit {
     // this.angularFireAuth.signInWithEmailAndPassword(form['value']['email'], form['value']['password'])
     //   .then((reply: any) => {
     //     console.log(reply);
+
     //     this.angularFireAuth.authState.subscribe((data: any) => {
     //       console.log(data['multiFactor']['user']);
+
     //       this.submitted = false;
+
     //       localStorage.setItem('accessToken', data['multiFactor']['user']['accessToken']);
     //       localStorage.setItem('uid', data['multiFactor']['user']['uid']);
+
     //       window.location.reload();
     //     });
     //   })
     //   .catch((error) => {
     //     console.log(error['code']);
     //     this.submitted = false;
+
     //     switch (error['code']) {
     //       case 'auth/wrong-password':
     //         this.utilitySrvc.openErrorSnackBar('Tu contraseña es incorrecta.');
     //         break;
+
     //       case 'auth/user-not-found':
     //         this.utilitySrvc.openErrorSnackBar('No se encontro el usuario.');
     //         break;
