@@ -10,6 +10,7 @@ import { AddDocumentCollaboratorComponent } from 'src/app/components/add-documen
 import { AddDocumentLayoutComponent } from 'src/app/components/add-document-layout/add-document-layout.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
+import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
   selector: '.single-document-page',
@@ -38,7 +39,9 @@ export class SingleDocumentComponent implements OnInit {
     public authenticationService: AuthenticationService,
     public userService: UserService,
     public documentService: DocumentService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public utilityService: UtilityService
+
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.token = this.authenticationService.fetchToken;
@@ -144,6 +147,11 @@ export class SingleDocumentComponent implements OnInit {
 
     this.editingRowId = null;
     this.editRowName.nativeElement.value = ""
+  }
+
+
+  linkCategories(id: string) {
+    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${id}`)
   }
 
 }

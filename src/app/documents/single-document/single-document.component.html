@@ -165,13 +165,13 @@
           <!-- USERS Column -->
           <ng-container matColumnDef="users">
             <th mat-header-cell *matHeaderCellDef> Usuarios </th>
-            <td mat-cell *matCellDef="let element"> {{element.users}} </td>
+            <td mat-cell *matCellDef="let element" (click)="linkCategories(element.id)"> {{element.users}} </td>
           </ng-container>
 
           <!-- Interacions Column -->
           <ng-container matColumnDef="interactions">
             <th mat-header-cell *matHeaderCellDef> Interacciones</th>
-            <td mat-cell *matCellDef="let element"> {{element.interactions}} </td>
+            <td mat-cell *matCellDef="let element" (click)="linkCategories(element.id)"> {{element.interactions}} </td>
           </ng-container>
 
           <!-- SOLUTIONS Column -->

@@ -39,8 +39,8 @@ const firebaseConfig = {
 };
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-// const socketConfig: SocketIoConfig = { url: 'http://localhost:4040', options: {} };
-const socketConfig: SocketIoConfig = { url: 'pando-Backend-Dev-Env.eba-zk3eys8d.us-east-1.elasticbeanstalk.com', options: {} };
+const socketConfig: SocketIoConfig = { url: 'http://localhost:4040', options: {} };
+// const socketConfig: SocketIoConfig = { url: 'pando-Backend-Dev-Env.eba-zk3eys8d.us-east-1.elasticbeanstalk.com', options: {} };
 
 @NgModule({
   declarations: [

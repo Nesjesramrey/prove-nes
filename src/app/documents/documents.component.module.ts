@@ -8,6 +8,7 @@ import { AppSharedModule } from '../app-shared.module';
 import { DocumentsComponent } from './documents.component';
 import { SingleDocumentComponent } from './single-document/single-document.component';
 import { ComponentsModule } from '../components/components.module';
+import { SingleCategoryComponent } from './single-category/single-category.component';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { ComponentsModule } from '../components/components.module';
   declarations: [
     DocumentsComponent,
     SingleDocumentComponent,
+    SingleCategoryComponent
   ]
 })
 export class DocumentsComponentModule { }
