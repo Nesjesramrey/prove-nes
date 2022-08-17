@@ -28,6 +28,8 @@ import { MessageBoxComponent } from "./message-box/message-box.component";
 import { AddDocumentLayoutComponent } from "./add-document-layout/add-document-layout.component";
 import { AddDocumentCategoryComponent } from "./add-document-category/add-document-category.component";
 import { AddDocumentCollaboratorComponent } from "./add-document-collaborator/add-document-collaborator.component";
+import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
+import { AvatarsRowComponent } from './avatars-row/avatars-row.component';
 
 @NgModule({
   imports: [
@@ -59,7 +61,9 @@ import { AddDocumentCollaboratorComponent } from "./add-document-collaborator/ad
     MessageBoxComponent,
     AddDocumentLayoutComponent,
     AddDocumentCategoryComponent,
-    AddDocumentCollaboratorComponent
+    AddDocumentCollaboratorComponent,
+    BreadcrumbsComponent,
+    AvatarsRowComponent
   ],
   exports: [
     AppPageletComponent,
@@ -73,7 +77,9 @@ import { AddDocumentCollaboratorComponent } from "./add-document-collaborator/ad
     MessageBoxComponent,
     AddDocumentLayoutComponent,
     AddDocumentCategoryComponent,
-    AddDocumentCollaboratorComponent
+    AddDocumentCollaboratorComponent,
+    BreadcrumbsComponent,
+    AvatarsRowComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,

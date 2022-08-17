@@ -1,0 +1,88 @@
+<div class="set-12" *ngIf="isDataAvailable">
+  <breadcrumbs-component>
+    <li class="breadcrumb-item">Perfil</li>
+
+    <li>Documentos</li>
+
+    <li *ngIf="!!document.title; else noTitle">{{ document.title }}</li>
+
+    <ng-template #noTitle>
+      <div>categoria</div>
+    </ng-template>
+
+    <li>{{ category.name }}</li>
+  </breadcrumbs-component>
+  <div class="set-3 col-lft">
+    <mat-card class="set-12 category-description">
+      <div class="title-box">
+        <!-- <div class="editing-box"></div> -->
+        <div *ngIf="editingTitle; else editingMode" class="editing-box editing">
+          <input
+            class="text"
+            type="text"
+            value="{{ category.name }}"
+            #titleField
+          />
+
+          <span (click)="saveName()">
+            <mat-icon>check_circle</mat-icon>
+          </span>
+        </div>
+
+        <ng-template #editingMode>
+          <div class="editing-box">
+            <span class="text">
+              {{ category.name }}
+            </span>
+
+            <span (click)="openEditingTitle()">
+              <mat-icon>edit</mat-icon>
+            </span>
+          </div>
+        </ng-template>
+      </div>
+
+      <div class="textfield">
+        <textarea placeholder="Escribe una descripciòn"></textarea>
+
+        <button
+          mat-mini-fab
+          color="primary"
+          aria-label="Example icon button with a menu icon"
+        >
+          <mat-icon>upload</mat-icon>
+        </button>
+      </div>
+
+      <div class="imagebox">
+        <label [ngClass]="imageUrl ? 'data' : 'empty'">
+          <mat-icon>photo_camera</mat-icon>
+          <span>Subir imagen</span>
+          <input
+            type="file"
+            accept="image/*"
+            (change)="handleSelectImage($event)"
+          />
+        </label>
+
+        <img
+          class="preview"
+          [src]="imageUrl"
+          alt="img_upload"
+          [ngClass]="imageUrl ? 'data' : 'empty'"
+        />
+      </div>
+
+      <avatars-row></avatars-row>
+    </mat-card>
+
+    <div class="template-actions">
+      <button mat-button>
+        Descargar template <mat-icon color="primary">file_download</mat-icon>
+      </button>
+      <button mat-button>
+        Cargar template <mat-icon color="primary">file_upload</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

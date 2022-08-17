@@ -1,7 +1,7 @@
 const express = require('express');
 var path = require('path');
 //puerto de escucha
-const port = process.env.PORT ||8080;
+const port = process.env.PORT ||4040;
 //const compression = require('compression')
 
 //Starting Express app
@@ -16,7 +16,7 @@ app.get('*', function(req, res) {
     res.sendFile(path.join(__dirname, 'dist/app-frontend/index.html'));
 });
 
-//Starting server on port 8080
+//Starting server on port 4040
 app.listen(port, () => {
     console.log('Server started!');
     console.log('on port', port);

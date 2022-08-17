@@ -1,4 +1,13 @@
 <div class="set-12" *ngIf="isDataAvailable">
+
+  <breadcrumbs-component>
+    <li class="breadcrumb-item">Perfil</li>
+      
+    <li>Documentos</li>
+      
+    <li>{{document.title}}</li>
+  </breadcrumbs-component>
+  
   <div class="set-3 col-lft">
     <mat-card class="set-12 doc-description">
       <div class="set-12 imghldr">
@@ -7,8 +16,14 @@
 
       <div class="set-12 infohldr">
         <p class="card-title">{{document.title}}</p>
-        <p class="card-description">{{document.description}}</p>
+        <p class="card-description">{{document.description || "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in vestibulum ex. Nullam viverra venenatis ipsum, eget lobortis nisi tempus vel. Donec ut scelerisque nibh. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed non purus feugiat lectus egestas rutrum quis vitae nisi. Sed orci mi, mollis id turpis eget, sodales malesuada diam. Ut blandit, est et malesuada euismod, sem est tristique tortor, non varius dolor orci in metus. Vivamus diam metus, malesuada dapibus turpis id, consequat tempor purus. Etiam elit justo, iaculis a tortor nec, pretium cursus ante."}}</p>
+        <span class="card-description link">Leer más</span>
+
+        
+        <avatars-row></avatars-row>
+
       </div>
+
     </mat-card>
   </div>
 
@@ -72,24 +87,129 @@
         <div class="set-4">
           <p class="list-title">
             <small>Soluciones</small>
-            <mat-icon>insights</mat-icon>
+            <mat-icon class="icon-insights">insights</mat-icon>
           </p>
+
+          <ol class="top-list">
+            <li class="top-list-item">
+              <span>Inseguridad</span>
+            </li>
+            <li class="top-list-item">
+              <span>Inseguridad</span>
+            </li>
+            <li class="top-list-item">
+              <span>Inseguridad</span>
+            </li>
+          </ol>
+
         </div>
 
         <div class="set-4">
           <p class="list-title">
             <small>Problemas</small>
-            <mat-icon>warning</mat-icon>
+            <mat-icon class="icon-warnings">warning</mat-icon>
           </p>
+
+
+          <ol class="top-list">
+            <li class="top-list-item">
+              <span>Inseguridad</span>
+            </li>
+            <li class="top-list-item">
+              <span>Inseguridad</span>
+            </li>
+            <li class="top-list-item">
+              <span>Inseguridad</span>
+            </li>
+          </ol>
+
         </div>
       </mat-card>
     </div>
 
+    <!-- CATEGORIES TABLE- -->
     <div class="set-12 category-list">
       <mat-card class="set-12">
-        <div class="set-12" *ngFor="let layer of layout">
+        <p class="title">Categorias</p>
+
+        <!-- TABLE -->
+        <table mat-table [dataSource]="categories" class="categories-table">
+          <!-- NAME Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <div *ngIf="editingRowId == element.id; else editingMode" class="editing">
+                  <input class="text" type="text" value="{{element.name}}" #editRowName />
+                  
+                  <span (click)="saveName()">
+                    <mat-icon>check_circle</mat-icon>
+                  </span>
+              
+              </div>
+
+              <ng-template #editingMode>
+                <div>
+
+                  <span class="text">
+                    {{element.name}}
+                  </span>
+                  
+                  <span (click)="handleEditing(element.id)">
+                    <mat-icon>edit</mat-icon>
+                  </span>
+                </div>
+              </ng-template>
+            </td>
+          </ng-container>
+
+          <!-- USERS Column -->
+          <ng-container matColumnDef="users">
+            <th mat-header-cell *matHeaderCellDef> Usuarios </th>
+            <td mat-cell *matCellDef="let element" (click)="linkCategories(element.id)"> {{element.users}} </td>
+          </ng-container>
+
+          <!-- Interacions Column -->
+          <ng-container matColumnDef="interactions">
+            <th mat-header-cell *matHeaderCellDef> Interacciones</th>
+            <td mat-cell *matCellDef="let element" (click)="linkCategories(element.id)"> {{element.interactions}} </td>
+          </ng-container>
+
+          <!-- SOLUTIONS Column -->
+          <ng-container matColumnDef="solutions">
+            <th mat-header-cell *matHeaderCellDef> Soluciones</th>
+            <td mat-cell *matCellDef="let element"> {{element.solutions}} </td>
+          </ng-container>
+
+          <!-- PROBLEMS Column -->
+          <ng-container matColumnDef="problems">
+            <th mat-header-cell *matHeaderCellDef> Problemas</th>
+            <td mat-cell *matCellDef="let element"> {{element.problems}} </td>
+          </ng-container>
+
+          <!-- RANKING Column -->
+          <ng-container matColumnDef="ranking">
+            <th mat-header-cell *matHeaderCellDef> Ranking</th>
+            <td mat-cell *matCellDef="let element"> {{element.ranking}} </td>
+          </ng-container>
+
+          <!-- ACTIONS Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let element"> 
+              <button mat-icon-button>
+                <mat-icon>more_vert</mat-icon>
+              </button>   
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="categoriesDisplayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: categoriesDisplayedColumns;"></tr>
+
+        </table>
+
+        <!-- <div class="set-12" *ngFor="let layer of layout">
           {{layer.category.name}}
-        </div>
+        </div> -->
       </mat-card>
     </div>
   </div>

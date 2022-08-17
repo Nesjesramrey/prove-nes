@@ -7,6 +7,8 @@ import { AppSharedModule } from '../app-shared.module';
 
 import { DocumentsComponent } from './documents.component';
 import { SingleDocumentComponent } from './single-document/single-document.component';
+import { ComponentsModule } from '../components/components.module';
+import { SingleCategoryComponent } from './single-category/single-category.component';
 
 @NgModule({
   imports: [
@@ -15,11 +17,13 @@ import { SingleDocumentComponent } from './single-document/single-document.compo
     ReactiveFormsModule,
     DocumentsComponentRoutingModule,
     AppMaterialModule,
-    AppSharedModule
+    AppSharedModule,
+    ComponentsModule
   ],
   declarations: [
     DocumentsComponent,
-    SingleDocumentComponent
+    SingleDocumentComponent,
+    SingleCategoryComponent
   ]
 })
 export class DocumentsComponentModule { }
