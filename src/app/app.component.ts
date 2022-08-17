@@ -37,16 +37,18 @@ export class AppComponent implements OnInit {
   public token: any = null;
   public payload: any = null;
   public user: any = null;
+  public uid: any = null;
 
   constructor(
     readonly sRenderer: StyleRenderer,
     public router: Router,
     public location: Location,
     public authenticationSrvc: AuthenticationService,
-    public userSrvc: UserService
+    public userService: UserService
   ) {
     this.isAuthenticated = this.authenticationSrvc.isAuthenticated;
     this.token = this.authenticationSrvc.fetchToken;
+    this.uid = this.authenticationSrvc.fetchFirebaseUID;
 
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationStart) {
@@ -59,13 +61,20 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     if (this.token != null) {
       this.payload = JSON.parse(atob(this.token.split('.')[1]));
-      let user: Observable<any> = this.userSrvc.fetchUserById({ _id: this.payload['sub'] });
+      let user: Observable<any> = this.userService.fetchUserById({ _id: this.payload['sub'] });
       forkJoin([user]).subscribe((reply: any) => {
+        console.log(reply);
         this.user = reply[0]['user'];
         setTimeout(() => {
           this.isDataAvailable = true;
         });
       });
+
+      // let user: Observable<any> = this.userService.fetchUserByFirebaseUID({ firebaseID: this.uid });
+      // forkJoin([user]).subscribe((reply: any) => {
+      //   console.log(reply);
+      //   this
+      // });
     } else {
       setTimeout(() => {
         this.isDataAvailable = true;

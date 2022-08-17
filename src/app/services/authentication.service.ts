@@ -66,7 +66,7 @@ export class AuthenticationService {
     return localStorage.getItem(this.accessToken);
   }
 
-  get uID() {
+  get fetchFirebaseUID() {
     return localStorage.getItem(this.uid);
   }
 
@@ -76,6 +76,7 @@ export class AuthenticationService {
 
   get isAuthenticated() {
     return !!localStorage.getItem(this.token_key);
+    // return !!localStorage.getItem(this.accessToken);
   }
 
   get isNew() {

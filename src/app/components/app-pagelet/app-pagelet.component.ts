@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -23,7 +24,8 @@ export class AppPageletComponent implements OnInit {
     public authenticationSrvc: AuthenticationService,
     public notificationSrvc: NotificationService,
     public socketSrvc: SocketService,
-    public utilitySrvc: UtilityService
+    public utilitySrvc: UtilityService,
+    public angularFireAuth: AngularFireAuth
   ) { }
 
   ngOnInit(): void {
@@ -80,6 +82,11 @@ export class AppPageletComponent implements OnInit {
   }
 
   onSignOut() {
+    // return this.angularFireAuth.signOut().then(() => {
+    //   localStorage.removeItem('accessToken');
+    //   localStorage.removeItem('uid');
+    // });
+
     this.token = this.authenticationSrvc.fetchToken;
     let data: any = {
       _id: this.user['_id'],
