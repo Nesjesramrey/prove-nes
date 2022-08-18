@@ -142,6 +142,22 @@
     }
   }
 
+  .problems_row_head {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    
+    > p {
+      margin: 0;
+    }
+    .add-problem {
+      background-color: #f2f2f2;
+      mat-icon {
+        color: #e98282;
+      }
+    }
+  }
+
   .col-rgt {
     padding-left: 30px;
 
@@ -309,7 +325,6 @@
         > div {
           margin: 0;
         }
-
 
         .icon {
           background-color: #636363;

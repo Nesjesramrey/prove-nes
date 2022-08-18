@@ -174,10 +174,21 @@
         <!-- Problemas -->
         <div class="col">
           <mat-card>
-            <p class="list-title">
-              <small>Problemas</small>
-              <mat-icon class="icon-warnings">warning</mat-icon>
-            </p>
+            <div class="problems_row_head">
+              <p class="list-title">
+                <small>Problemas</small>
+                <mat-icon class="icon-warnings">warning</mat-icon>
+              </p>
+
+              <button
+                type="button"
+                mat-mini-fab
+                class="add-problem"
+                matTooltip="Agregar tema"
+              >
+                <mat-icon>add_circle</mat-icon>
+              </button>
+            </div>
 
             <ol class="top-list">
               <li class="top-list-item">
