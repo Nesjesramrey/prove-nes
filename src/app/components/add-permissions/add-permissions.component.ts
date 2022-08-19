@@ -1,6 +1,6 @@
-import { LyDialogRef, LY_DIALOG_DATA } from '@alyle/ui/dialog';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserService } from 'src/app/services/user.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
@@ -14,11 +14,12 @@ export class AddPermissionsComponent implements OnInit {
   public permissionList = [
     { value: 'moderator', viewValue: 'Moderador' },
     { value: 'administrator', viewValue: 'Administrador' },
+    { value: 'support', viewValue: 'Soporte' },
   ];
 
   constructor(
-    public dialogRef: LyDialogRef,
-    @Inject(LY_DIALOG_DATA) public dialogData: any,
+    public dialogRef: MatDialogRef<any>,
+    @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public userSrvc: UserService,
     public utilitySrvc: UtilityService
   ) {

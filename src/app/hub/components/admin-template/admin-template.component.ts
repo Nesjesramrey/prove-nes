@@ -22,13 +22,12 @@ export class AdminTemplateComponent implements OnInit {
       this.documents.filter((x: any) => {
         let editors: any = [];
         x['collaborators'].filter((c: any) => {
-          if (c['activity'] == 'editor') {
+          if (c['activity']['value'] == 'editor') {
             editors.push(c);
           }
         });
         x['editors'] = editors;
       });
-      // console.log(this.documents);
       this.isDataAvailable = true;
     });
   }

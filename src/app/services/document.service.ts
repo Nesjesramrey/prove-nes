@@ -15,7 +15,7 @@ export class DocumentService {
   }
 
   fetchMyDocuments(data: any) {
-    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchMyDocumentsEndPoint, data);
+    return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.createNewDocumentEndPoint + `?createdBy=${data['createdBy']}`, {});
   }
 
   fetchSingleDocumentById(data: any) {

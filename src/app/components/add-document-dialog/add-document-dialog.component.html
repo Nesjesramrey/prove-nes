@@ -19,7 +19,7 @@
           <mat-label>Cobertura</mat-label>
           <mat-select formControlName="coverage" multiple>
             <mat-option *ngFor="let state of statesMex" [value]="state._id">
-              <small>{{state.name}}</small>
+              <small>{{state.name | titlecase}}</small>
             </mat-option>
           </mat-select>
         </mat-form-field>

@@ -66,17 +66,13 @@ export class AuthenticationService {
     return localStorage.getItem(this.accessToken);
   }
 
-  get fetchFirebaseUID() {
-    return localStorage.getItem(this.uid);
-  }
-
   get fetchToken() {
     return localStorage.getItem(this.token_key);
   }
 
   get isAuthenticated() {
-    return !!localStorage.getItem(this.token_key);
-    // return !!localStorage.getItem(this.accessToken);
+    // return !!localStorage.getItem(this.token_key);
+    return !!localStorage.getItem(this.accessToken);
   }
 
   get isNew() {

@@ -1,6 +1,7 @@
 import { LyDialog } from '@alyle/ui/dialog';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
@@ -33,7 +34,7 @@ export class UsersListComponent implements OnInit {
   constructor(
     public authenticationSrvc: AuthenticationService,
     public userSrvc: UserService,
-    public dialog: LyDialog,
+    public dialog: MatDialog,
     public router: Router
   ) {
     this.token = this.authenticationSrvc.fetchToken;
@@ -99,16 +100,15 @@ export class UsersListComponent implements OnInit {
 
   onAddUserPermissions(userID: string) {
     let user: any = this.users.filter((x: any) => { return x['_id'] == userID; });
-    const dialogRef = this.dialog.open<AddPermissionsComponent>(AddPermissionsComponent, {
-      width: 420,
+    const dialog = this.dialog.open(AddPermissionsComponent, {
+      width: '420px',
       data: {
         userID: userID,
         user: user
-      },
-      disableClose: true
+      }
     });
 
-    dialogRef.afterClosed.subscribe((reply: any) => {
+    dialog.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
         let user: any = this.users.filter((x: any) => {
           return x['_id'] == reply['user']['_id'];
@@ -116,6 +116,25 @@ export class UsersListComponent implements OnInit {
         user[0]['activities'] = reply['user']['activities'];
       }
     });
+
+
+    // const dialogRef = this.dialog.open(AddPermissionsComponent, {
+    //   width: 420,
+    //   data: {
+    //     userID: userID,
+    //     user: user
+    //   },
+    //   disableClose: true
+    // });
+
+    // dialogRef.afterClosed.subscribe((reply: any) => {
+    //   if (reply != undefined) {
+    //     let user: any = this.users.filter((x: any) => {
+    //       return x['_id'] == reply['user']['_id'];
+    //     });
+    //     user[0]['activities'] = reply['user']['activities'];
+    //   }
+    // });
   }
 
   applyFilter(event: Event) {
