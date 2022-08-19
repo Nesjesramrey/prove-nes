@@ -2,9 +2,8 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export class EndPointService {
-  // public apiEndPoint: string = 'http://localhost:4040';
-  // public apiEndPoint: string = 'pando-Backend-Dev-Env.eba-zk3eys8d.us-east-1.elasticbeanstalk.com';
-  public apiEndPoint: string = 'http://pando-backend-dev-env.eba-zk3eys8d.us-east-1.elasticbeanstalk.com'
+  public apiEndPoint: string = 'http://localhost:4040/api/v1';
+  // public apiEndPoint: string = 'http://pando-backend-dev-env.eba-zk3eys8d.us-east-1.elasticbeanstalk.com'
 
   // authentication
   public validateEmailEndPoint: string = '/authentication/validate-email';
@@ -13,6 +12,7 @@ export class EndPointService {
   public signoutEndPoint: string = '/authentication/signout';
 
   // users
+  public fetchFireUserEndPoint: string = '/user/profile';
   public fetchAllUsersEndPoint: string = '/user/fetch-all-users';
   public fetchUserByIdEndPoint: string = '/user/fetch-user-by-id';
   public fetchUserByFirebaseUIDEndPoint: string = '/user/fetch-user-by-firebase-uid';
