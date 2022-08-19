@@ -57,7 +57,7 @@ export class SignUpComponent implements OnInit {
         console.log(this.user['accessToken']);
 
         let signUpData: any = {
-          firebaseID: this.user['uid'],
+          firebaseUID: this.user['uid'],
           firstname: formGroup['value']['firstname'],
           lastname: formGroup['value']['lastname'],
           email: formGroup['value']['email'],

@@ -18,7 +18,6 @@ export class SingleUserComponent implements OnInit {
   public userID: string = '';
   public isDataAvailable: boolean = false;
   public isAuthenticated: boolean = false;
-  public token: any = null;
   public user: any = null;
   public userActivities: any = [];
   public documents: any = [];
@@ -35,10 +34,21 @@ export class SingleUserComponent implements OnInit {
   ) {
     this.userID = this.activatedRoute['snapshot']['params']['userID'];
     this.isAuthenticated = this.authenticationSrvc['isAuthenticated'];
-    this.token = this.authenticationSrvc.fetchToken;
   }
 
   ngOnInit(): void {
+    this.userSrvc.fetchFireUser().subscribe((reply: any) => {
+      // console.log(reply);
+      this.user = reply;
+      // console.log('user: ', this.user);
+      this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
+      // console.log(this.userActivities);
+      setTimeout(() => {
+        this.isDataAvailable = true;
+      });
+    });
+    return;
+
     this.userSrvc.fetchUserById({ _id: this.userID }).subscribe((reply: any) => {
       console.log(reply);
       this.user = reply['user'];

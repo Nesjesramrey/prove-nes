@@ -34,19 +34,18 @@ export class AppPageletComponent implements OnInit {
         this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
         let notifications: Observable<any> = this.notificationSrvc.fetchMyNotificationsLength({ user_id: this.user['_id'] });
 
-        forkJoin([notifications]).subscribe((reply: any) => {
-          this.notifications = reply[0]['notifications'];
-
-          this.socketSrvc.getNotification().subscribe((reply: any) => {
-            if (reply['new_notification'] != undefined) {
-              this.notificationSrvc.fetchMyNotificationsLength({ user_id: this.user['_id'] }).subscribe((reply: any) => {
-                this.notifications = reply['notifications'];
-              });
-            }
-          });
-
-          this.isDataAvailable = true;
-        });
+        // forkJoin([notifications]).subscribe((reply: any) => {
+        //   this.notifications = reply[0]['notifications'];
+        //   this.socketSrvc.getNotification().subscribe((reply: any) => {
+        //     if (reply['new_notification'] != undefined) {
+        //       this.notificationSrvc.fetchMyNotificationsLength({ user_id: this.user['_id'] }).subscribe((reply: any) => {
+        //         this.notifications = reply['notifications'];
+        //       });
+        //     }
+        //   });
+        //   this.isDataAvailable = true;
+        // });
+        this.isDataAvailable = true;
       } else {
         this.isDataAvailable = true;
       }

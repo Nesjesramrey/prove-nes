@@ -23,7 +23,7 @@ export class UserService {
   fetchFireUser() {
     // let headers = new Headers();
     // this.createAuthorizationHeader(headers);
-    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchFireUserEndPoint, {});
+    return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchFireUserEndPoint, {});
   }
 
   fetchAllUsers() {

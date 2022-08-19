@@ -3,7 +3,7 @@ import { ThemeVariables, ThemeRef, lyl, StyleRenderer } from '@alyle/ui';
 import { NavigationStart, Router } from '@angular/router';
 import { AuthenticationService } from './services/authentication.service';
 import { UserService } from './services/user.service';
-import { forkJoin, Observable } from 'rxjs';
+import { UtilityService } from './services/utility.service';
 
 const STYLES = (theme: ThemeVariables, ref: ThemeRef) => {
   const __ = ref.selectorsOf(STYLES);
@@ -39,7 +39,8 @@ export class AppComponent implements OnInit {
     readonly sRenderer: StyleRenderer,
     // public router: Router,
     public authenticationSrvc: AuthenticationService,
-    public userService: UserService
+    public userService: UserService,
+    public utilityServicfe: UtilityService
   ) {
     this.accessToken = this.authenticationSrvc.fetchAccessToken;
     // console.log('accessToken: ', this.accessToken);
@@ -54,11 +55,33 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.accessToken != null) {
-      this.userService.fetchFireUser().subscribe((reply: any) => {
-        console.log(reply);
-      });
-      setTimeout(() => {
-        this.isDataAvailable = true;
+      // this.userService.fetchFireUser().subscribe((reply: any) => {
+      //   this.user = reply;
+      //   setTimeout(() => {
+      //     this.isDataAvailable = true;
+      //   });
+      // });
+
+      this.userService.fetchFireUser().subscribe({
+        error: (error) => {
+          switch (error['status']) {
+            case 401:
+              this.utilityServicfe.openErrorSnackBar('Tu token de acceso ha caducado, intenta ingresar otra vez.');
+              localStorage.removeItem('accessToken');
+              break;
+          }
+          setTimeout(() => {
+            this.isDataAvailable = true;
+          });
+        },
+        next: (reply: any) => {
+          this.user = reply;
+          console.log(this.user);
+          setTimeout(() => {
+            this.isDataAvailable = true;
+          });
+        },
+        complete: () => { },
       });
     } else {
       setTimeout(() => {

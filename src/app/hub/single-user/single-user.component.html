@@ -11,8 +11,8 @@
 
       <input #fileInput type="file" (change)="openCropperDialog($event)" accept="image/*" hidden>
       <button type="button" class="avatar" (click)="fileInput.click()">
-        <img src="{{user.avatarImage}}" alt="{{user.firstname}} {{user.lastname}}" *ngIf="user.avatarImage != ''">
-        <span *ngIf="user.avatarImage == ''">
+        <img src="{{user.avatarImage}}" alt="{{user.firstname}} {{user.lastname}}" *ngIf="user.avatarImage != null">
+        <span *ngIf="user.avatarImage == null">
           {{ user.firstname | firstword | firstletter }}{{ user.lastname | firstword | firstletter }}
         </span>
       </button>
