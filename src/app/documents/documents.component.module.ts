@@ -9,7 +9,7 @@ import { DocumentsComponent } from './documents.component';
 import { SingleDocumentComponent } from './single-document/single-document.component';
 import { ComponentsModule } from '../components/components.module';
 import { SingleCategoryComponent } from './single-category/single-category.component';
-import { ThemesComponent } from './themes/themes.component';
+import { SingleThemeComponent } from './single-theme/single-theme.component';
 
 @NgModule({
   imports: [
@@ -25,7 +25,7 @@ import { ThemesComponent } from './themes/themes.component';
     DocumentsComponent,
     SingleDocumentComponent,
     SingleCategoryComponent,
-    ThemesComponent
+    SingleThemeComponent
   ]
 })
 export class DocumentsComponentModule { }
