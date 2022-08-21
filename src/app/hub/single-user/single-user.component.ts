@@ -18,7 +18,6 @@ export class SingleUserComponent implements OnInit {
   public userID: string = '';
   public isDataAvailable: boolean = false;
   public isAuthenticated: boolean = false;
-  public token: any = null;
   public user: any = null;
   public userActivities: any = [];
   public documents: any = [];
@@ -35,10 +34,45 @@ export class SingleUserComponent implements OnInit {
   ) {
     this.userID = this.activatedRoute['snapshot']['params']['userID'];
     this.isAuthenticated = this.authenticationSrvc['isAuthenticated'];
-    this.token = this.authenticationSrvc.fetchToken;
   }
 
   ngOnInit(): void {
+    this.userSrvc.fetchFireUser().subscribe((reply: any) => {
+      // console.log(reply);
+      this.user = reply;
+      // console.log('user: ', this.user);
+      this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
+      // console.log(this.userActivities);
+      // root activities
+      if (this.userActivities.length != 0) {
+        this.haveRootPermissions = true;
+
+        // moderator
+        if (this.userActivities.includes('moderator')) {
+          setTimeout(() => {
+            this.isDataAvailable = true;
+          });
+        }
+        // administrator
+        if (this.userActivities.includes('administrator')) {
+          let documents: Observable<any> = this.documentSrvc.fetchMyDocuments({ createdBy: this.userID });
+          forkJoin([documents]).subscribe((reply: any) => {
+            // console.log(reply);
+            this.documents = reply[0];
+            console.log('documents: ', this.documents);
+            setTimeout(() => {
+              this.isDataAvailable = true;
+            });
+          });
+          // let documents: Observable<any> = this.documentSrvc.fetchMyDocuments({ created_by: this.userID });
+          // forkJoin([documents]).subscribe((reply: any) => {
+          //   this.documents = reply[0]['documents'];
+          // });
+        }
+      }
+    });
+    return;
+
     this.userSrvc.fetchUserById({ _id: this.userID }).subscribe((reply: any) => {
       console.log(reply);
       this.user = reply['user'];

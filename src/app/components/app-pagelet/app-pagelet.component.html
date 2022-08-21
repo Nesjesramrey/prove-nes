@@ -33,8 +33,8 @@
 
     <!-- user available -->
     <button type="button" class="avatar" (click)="linkMe('profile')" *ngIf="user != null">
-      <img src="{{user.avatarImage}}" alt="{{user.firstname}}" *ngIf="user.avatarImage != ''">
-      <span *ngIf="user.avatarImage == ''">
+      <img src="{{user.avatarImage}}" alt="{{user.firstname}}" *ngIf="user.avatarImage != null">
+      <span *ngIf="user.avatarImage == null">
         {{ user.firstname | firstword | firstletter }}{{ user.lastname | firstword | firstletter }}
       </span>
     </button>

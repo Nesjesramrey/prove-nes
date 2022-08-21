@@ -3,17 +3,18 @@
 </div>
 
 <div class="set-12">
-  <ly-field appearance="outlined">
-    <ly-label>Permisos *</ly-label>
-    <ly-select [formControl]="permissionsFormControl" multiple [compareWith]="compareWithFn">
-      <ly-option *ngFor="let permission of permissionList" [value]="permission">
+  <mat-form-field appearance="outline">
+    <mat-label>Permisos</mat-label>
+    <mat-select [formControl]="permissionsFormControl" multiple [compareWith]="compareWithFn">
+      <mat-option *ngFor="let permission of permissionList" [value]="permission">
         <small>{{ permission.viewValue }}</small>
-      </ly-option>
-    </ly-select>
-  </ly-field>
-  <ly-error *ngIf="permissionsFormControl.hasError('required')" class="set-12 hasError">
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-error *ngIf="permissionsFormControl.hasError('required')" class="set-12 hasError">
     <small>Campos requeridos *</small>
-  </ly-error>
+  </mat-error>
 </div>
 
 <div class="set-12 ctrls">

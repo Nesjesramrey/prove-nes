@@ -3,8 +3,7 @@ import { ThemeVariables, ThemeRef, lyl, StyleRenderer } from '@alyle/ui';
 import { NavigationStart, Router } from '@angular/router';
 import { AuthenticationService } from './services/authentication.service';
 import { UserService } from './services/user.service';
-import { forkJoin, Observable } from 'rxjs';
-import { Location } from '@angular/common';
+import { UtilityService } from './services/utility.service';
 
 const STYLES = (theme: ThemeVariables, ref: ThemeRef) => {
   const __ = ref.selectorsOf(STYLES);
@@ -33,48 +32,57 @@ const STYLES = (theme: ThemeVariables, ref: ThemeRef) => {
 export class AppComponent implements OnInit {
   readonly classes = this.sRenderer.renderSheet(STYLES, true);
   public isDataAvailable: boolean = false;
-  public isAuthenticated: boolean = false;
-  public token: any = null;
-  public payload: any = null;
   public user: any = null;
-  public uid: any = null;
+  public accessToken: any = null;
 
   constructor(
     readonly sRenderer: StyleRenderer,
-    public router: Router,
-    public location: Location,
+    // public router: Router,
     public authenticationSrvc: AuthenticationService,
-    public userService: UserService
+    public userService: UserService,
+    public utilityServicfe: UtilityService
   ) {
-    this.isAuthenticated = this.authenticationSrvc.isAuthenticated;
-    this.token = this.authenticationSrvc.fetchToken;
-    this.uid = this.authenticationSrvc.fetchFirebaseUID;
+    this.accessToken = this.authenticationSrvc.fetchAccessToken;
+    // console.log('accessToken: ', this.accessToken);
 
-    this.router.events.subscribe((val) => {
-      if (val instanceof NavigationStart) {
-        let lastVal: any = val['url'].substring(val['url'].lastIndexOf('/') + 1);
-        if (lastVal == 'registro') { }
-      }
-    });
+    // this.router.events.subscribe((val) => {
+    //   if (val instanceof NavigationStart) {
+    //     let lastVal: any = val['url'].substring(val['url'].lastIndexOf('/') + 1);
+    //     if (lastVal == 'registro') { }
+    //   }
+    // });
   }
 
   ngOnInit(): void {
-    if (this.token != null) {
-      this.payload = JSON.parse(atob(this.token.split('.')[1]));
-      let user: Observable<any> = this.userService.fetchUserById({ _id: this.payload['sub'] });
-      forkJoin([user]).subscribe((reply: any) => {
-        console.log(reply);
-        this.user = reply[0]['user'];
-        setTimeout(() => {
-          this.isDataAvailable = true;
-        });
-      });
-
-      // let user: Observable<any> = this.userService.fetchUserByFirebaseUID({ firebaseID: this.uid });
-      // forkJoin([user]).subscribe((reply: any) => {
-      //   console.log(reply);
-      //   this
+    if (this.accessToken != null) {
+      // this.userService.fetchFireUser().subscribe((reply: any) => {
+      //   this.user = reply;
+      //   setTimeout(() => {
+      //     this.isDataAvailable = true;
+      //   });
       // });
+
+      this.userService.fetchFireUser().subscribe({
+        error: (error) => {
+          switch (error['status']) {
+            case 401:
+              this.utilityServicfe.openErrorSnackBar('Tu token de acceso ha caducado, intenta ingresar otra vez.');
+              localStorage.removeItem('accessToken');
+              break;
+          }
+          setTimeout(() => {
+            this.isDataAvailable = true;
+          });
+        },
+        next: (reply: any) => {
+          this.user = reply;
+          // console.log(this.user);
+          setTimeout(() => {
+            this.isDataAvailable = true;
+          });
+        },
+        complete: () => { },
+      });
     } else {
       setTimeout(() => {
         this.isDataAvailable = true;

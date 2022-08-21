@@ -19,8 +19,9 @@ import { UploadService } from './services/upload.service';
 import { SocketService } from './services/socket.service';
 import { NotificationService } from './services/notification.service';
 import { SupportService } from './services/support.service';
+import { InterceptorService } from './services/interceptor.service';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
@@ -28,14 +29,24 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { NgChartsModule } from 'ng2-charts';
 
+// const firebaseConfig = {
+//   apiKey: "AIzaSyCPslMhtXbG3Yt5zbjrrFgEWQdkNI90eTs",
+//   authDomain: "pando-e0a16.firebaseapp.com",
+//   projectId: "pando-e0a16",
+//   storageBucket: "pando-e0a16.appspot.com",
+//   messagingSenderId: "77420216693",
+//   appId: "1:77420216693:web:af914a0056ca44b6b5133c",
+//   measurementId: "G-52TGZKKXKS"
+// };
+
 const firebaseConfig = {
-  apiKey: "AIzaSyCPslMhtXbG3Yt5zbjrrFgEWQdkNI90eTs",
-  authDomain: "pando-e0a16.firebaseapp.com",
-  projectId: "pando-e0a16",
-  storageBucket: "pando-e0a16.appspot.com",
-  messagingSenderId: "77420216693",
-  appId: "1:77420216693:web:af914a0056ca44b6b5133c",
-  measurementId: "G-52TGZKKXKS"
+  apiKey: "AIzaSyC6wQIqqNSIS2meJ5-KtuKIODomaJlTxYM",
+  authDomain: "wsnotifications-2020.firebaseapp.com",
+  databaseURL: "https://wsnotifications-2020.firebaseio.com",
+  projectId: "wsnotifications-2020",
+  storageBucket: "wsnotifications-2020.appspot.com",
+  messagingSenderId: "314617395456",
+  appId: "1:314617395456:web:a7dbd4b8033f75cbd71be5"
 };
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
@@ -76,7 +87,8 @@ const socketConfig: SocketIoConfig = { url: 'http://pando-backend-dev-env.eba-zk
     UploadService,
     SocketService,
     NotificationService,
-    SupportService
+    SupportService,
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }
   ],
   bootstrap: [AppComponent]
 })
