@@ -39,19 +39,9 @@ const firebaseConfig = {
   measurementId: "G-52TGZKKXKS"
 };
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyC6wQIqqNSIS2meJ5-KtuKIODomaJlTxYM",
-//   authDomain: "wsnotifications-2020.firebaseapp.com",
-//   databaseURL: "https://wsnotifications-2020.firebaseio.com",
-//   projectId: "wsnotifications-2020",
-//   storageBucket: "wsnotifications-2020.appspot.com",
-//   messagingSenderId: "314617395456",
-//   appId: "1:314617395456:web:a7dbd4b8033f75cbd71be5"
-// };
-
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-// const socketConfig: SocketIoConfig = { url: 'http://localhost:4040', options: {} };
-const socketConfig: SocketIoConfig = { url: 'http://pando-backend-dev-env.eba-zk3eys8d.us-east-1.elasticbeanstalk.com', options: {} };
+const socketConfig: SocketIoConfig = { url: 'http://localhost:4040', options: {} };
+// const socketConfig: SocketIoConfig = { url: 'http://pando-backend-dev-env.eba-zk3eys8d.us-east-1.elasticbeanstalk.com', options: {} };
 
 @NgModule({
   declarations: [
