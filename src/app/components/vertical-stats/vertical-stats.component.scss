@@ -1,0 +1,40 @@
+.card-container {
+  width: 300px;
+  padding: 70px 30px;
+
+  .images-box {
+    width: 45px;
+    padding: 10px;
+    height: 45px;
+
+    border-radius: 100%;
+    img {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .texts-box {
+    margin-left: 15px;
+
+    .name {
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+    }
+    .amount {
+      font-size: 30px;
+      font-weight: 500;
+    }
+  }
+}
+
+.green-icon-color {
+  border: 2px solid rgb(98, 241, 15);
+  background-color: rgba(96, 228, 20, 0.185);
+}
+
+.red-icon-color {
+  border: 2px solid rgb(236, 120, 11);
+  background-color: rgba(214, 161, 14, 0.185);
+}

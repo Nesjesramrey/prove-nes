@@ -31,7 +31,8 @@ import { AddDocumentCategoryComponent } from "./add-document-category/add-docume
 import { AddDocumentCollaboratorComponent } from "./add-document-collaborator/add-document-collaborator.component";
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { AvatarsRowComponent } from './avatars-row/avatars-row.component';
-import { HorizontalStatsComponent } from "./horizontal-stats/horizontal-stats.component";
+import { HorizontalStatsComponent } from './horizontal-stats/horizontal-stats.component';
+import { VerticalStatsComponent } from './vertical-stats/vertical-stats.component';
 
 @NgModule({
   imports: [
@@ -67,7 +68,8 @@ import { HorizontalStatsComponent } from "./horizontal-stats/horizontal-stats.co
     AddDocumentCollaboratorComponent,
     HorizontalStatsComponent,
     BreadcrumbsComponent,
-    AvatarsRowComponent
+    AvatarsRowComponent,
+    VerticalStatsComponent
   ],
   exports: [
     AppPageletComponent,
@@ -85,7 +87,8 @@ import { HorizontalStatsComponent } from "./horizontal-stats/horizontal-stats.co
     AddDocumentCollaboratorComponent,
     HorizontalStatsComponent,
     BreadcrumbsComponent,
-    AvatarsRowComponent
+    AvatarsRowComponent,
+    VerticalStatsComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
