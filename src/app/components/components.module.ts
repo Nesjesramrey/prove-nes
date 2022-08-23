@@ -21,6 +21,7 @@ import { AppFooterComponent } from "./app-footer/app-footer.component";
 import { EmailValidationDialogComponent } from "./email-validation-dialog/email-validation-dialog.component";
 import { AddDocumentDialogComponent } from "./add-document-dialog/add-document-dialog.component";
 import { PieChartComponent } from "./pie-chart/pie-chart.component";
+import { SpiderChartComponent } from './spider-chart/spider-chart.component';
 import { LineChartComponent } from "./line-chart/line-chart.component";
 import { SetAvatarDialogComponent } from "./set-avatar-dialog/set-avatar-dialog.component";
 import { AddPermissionsComponent } from "./add-permissions/add-permissions.component";
@@ -55,6 +56,7 @@ import { AvatarsRowComponent } from './avatars-row/avatars-row.component';
     EmailValidationDialogComponent,
     AddDocumentDialogComponent,
     PieChartComponent,
+    SpiderChartComponent,
     LineChartComponent,
     SetAvatarDialogComponent,
     AddPermissionsComponent,
@@ -71,6 +73,7 @@ import { AvatarsRowComponent } from './avatars-row/avatars-row.component';
     EmailValidationDialogComponent,
     AddDocumentDialogComponent,
     PieChartComponent,
+    SpiderChartComponent,
     LineChartComponent,
     SetAvatarDialogComponent,
     AddPermissionsComponent,
