@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
     // public router: Router,
     public authenticationSrvc: AuthenticationService,
     public userService: UserService,
-    public utilityServicfe: UtilityService
+    public utilityService: UtilityService
   ) {
     this.accessToken = this.authenticationSrvc.fetchAccessToken;
     // console.log('accessToken: ', this.accessToken);
@@ -64,10 +64,11 @@ export class AppComponent implements OnInit {
 
       this.userService.fetchFireUser().subscribe({
         error: (error) => {
+          console.log(error);
           switch (error['status']) {
             case 401:
-              this.utilityServicfe.openErrorSnackBar('Tu token de acceso ha caducado, intenta ingresar otra vez.');
-              localStorage.removeItem('accessToken');
+              // this.utilityService.openErrorSnackBar('Tu token de acceso ha caducado, intenta ingresar otra vez.');
+              // localStorage.removeItem('accessToken');
               break;
           }
           setTimeout(() => {

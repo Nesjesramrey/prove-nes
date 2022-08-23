@@ -37,40 +37,52 @@ export class SingleUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userSrvc.fetchFireUser().subscribe((reply: any) => {
-      // console.log(reply);
-      this.user = reply;
-      // console.log('user: ', this.user);
-      this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
-      // console.log(this.userActivities);
-      // root activities
-      if (this.userActivities.length != 0) {
-        this.haveRootPermissions = true;
-
-        // moderator
-        if (this.userActivities.includes('moderator')) {
-          setTimeout(() => {
-            this.isDataAvailable = true;
-          });
+    this.userSrvc.fetchFireUser().subscribe({
+      error: (error) => {
+        switch (error['status']) {
+          case 401:
+            // this.utilityService.openErrorSnackBar('Tu token de acceso ha caducado, intenta ingresar otra vez.');
+            // localStorage.removeItem('accessToken');
+            break;
         }
-        // administrator
-        if (this.userActivities.includes('administrator')) {
-          let documents: Observable<any> = this.documentSrvc.fetchMyDocuments({ createdBy: this.userID });
-          forkJoin([documents]).subscribe((reply: any) => {
-            // console.log(reply);
-            this.documents = reply[0];
-            console.log('documents: ', this.documents);
-            setTimeout(() => {
-              this.isDataAvailable = true;
-            });
-          });
-          // let documents: Observable<any> = this.documentSrvc.fetchMyDocuments({ created_by: this.userID });
-          // forkJoin([documents]).subscribe((reply: any) => {
-          //   this.documents = reply[0]['documents'];
-          // });
-        }
-      }
+        setTimeout(() => {
+          this.isDataAvailable = true;
+        });
+      },
+      next: () => { },
+      complete: () => { }
     });
+
+
+
+    // this.userSrvc.fetchFireUser().subscribe((reply: any) => {
+    //   this.user = reply;
+    //   this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
+    //   if (this.userActivities.length != 0) {
+    //     this.haveRootPermissions = true;
+
+    //     if (this.userActivities.includes('moderator')) {
+    //       setTimeout(() => {
+    //         this.isDataAvailable = true;
+    //       });
+    //     }
+    //     if (this.userActivities.includes('administrator')) {
+    //       let documents: Observable<any> = this.documentSrvc.fetchMyDocuments({ createdBy: this.userID });
+    //       forkJoin([documents]).subscribe((reply: any) => {
+    //         // console.log(reply);
+    //         this.documents = reply[0];
+    //         console.log('documents: ', this.documents);
+    //         setTimeout(() => {
+    //           this.isDataAvailable = true;
+    //         });
+    //       });
+    //       // let documents: Observable<any> = this.documentSrvc.fetchMyDocuments({ created_by: this.userID });
+    //       // forkJoin([documents]).subscribe((reply: any) => {
+    //       //   this.documents = reply[0]['documents'];
+    //       // });
+    //     }
+    //   }
+    // });
     return;
 
     this.userSrvc.fetchUserById({ _id: this.userID }).subscribe((reply: any) => {
