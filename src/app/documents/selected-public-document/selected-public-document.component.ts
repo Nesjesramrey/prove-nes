@@ -10,11 +10,11 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
-  selector: '.public-document-page',
-  templateUrl: './public-document.component.html',
-  styleUrls: ['./public-document.component.scss']
+  selector: '.selected-public-document-page',
+  templateUrl: './selected-public-document.component.html',
+  styleUrls: ['./selected-public-document.component.scss']
 })
-export class PublicDocumentComponent implements OnInit {
+export class SelectedPublicDocumentComponent implements OnInit {
   public documentID: string = '';
   public token: any = null;
   public user: any = null;

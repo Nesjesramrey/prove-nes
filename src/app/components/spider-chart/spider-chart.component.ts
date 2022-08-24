@@ -24,6 +24,7 @@ export class SpiderChartComponent implements OnInit {
         borderWidth: 1,
         fill: true,
         pointRadius: 0,
+        backgroundColor: 'rgba(255, 109, 0, 0.6)',
       }
     },
     scales: {

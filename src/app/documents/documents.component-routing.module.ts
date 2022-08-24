@@ -5,13 +5,14 @@ import { SingleDocumentComponent } from './single-document/single-document.compo
 import { SingleCategoryComponent } from './single-category/single-category.component';
 import { SingleThemeComponent } from './single-theme/single-theme.component';
 import { PublicDocumentComponent } from './public-document/public-document.component';
+import { SelectedPublicDocumentComponent } from './selected-public-document/selected-public-document.component';
 
 const routes: Routes = [
   {
     path: '', children: [
       { path: '', redirectTo: '/404', pathMatch: 'full' },
       { path: '', component: DocumentsComponent },
-      { path: 'public', component: PublicDocumentComponent, canActivate: [] },
+      { path: 'selected-public', component: SelectedPublicDocumentComponent, canActivate: [] },
       { path: ':documentID', component: SingleDocumentComponent, canActivate: [] },
       { path: ':documentID/categoria/:categoryID', component: SingleCategoryComponent, canActivate: [] },
       { path: ':documentID/categoria/:categoryID:/temas/:themeID', component: SingleThemeComponent, canActivate: [] }
