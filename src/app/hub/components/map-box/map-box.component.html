@@ -1,6 +1,6 @@
 <div class="set-12 map-container">
   <mat-card>
-    <div class="map">
+    <div class="map" #svgMapBox>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         xmlns:amcharts="http://amcharts.com/ammap"
@@ -24,7 +24,7 @@
 
     <!-- DATA -->
     <div class="aside-data">
-      <p class="title">{{ selectedState.title }}</p>
+      <p class="title">{{ selectedState?.title ?? " " }}</p>
 
       <div class="data-box">
         <p class="subtitle">Dato</p>

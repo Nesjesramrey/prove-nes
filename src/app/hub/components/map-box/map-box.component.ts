@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: '.app-map-box',
@@ -8,12 +8,21 @@ import { Component, OnInit } from '@angular/core';
 export class MapBoxComponent implements OnInit {
   public activeState: string | null = null;
   public states: statePath[] = _statesList;
-  public selectedState: statePath = _statesList[1];
+  public selectedState: statePath = this.states[0];
 
+  @ViewChild('svgMapBox') svgMapBox!: ElementRef<HTMLDivElement>;
 
   constructor() {}
 
   ngOnInit(): void {}
+
+  ngAfterViewInit() {
+    this.svgMapBox.nativeElement.scrollLeft = 160;
+    this.svgMapBox.nativeElement.scrollTop = 75;
+    setTimeout(() => {
+      this.selectedState = this.states[1];
+    }, 200);
+  }
 
   onClickState(newState: statePath) {
     this.activeState = newState.id;
