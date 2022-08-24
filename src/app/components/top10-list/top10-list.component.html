@@ -1,13 +1,13 @@
 <mat-list class="container shadow">
   <p class="title">Top 10 Soluciones</p>
-  <mat-list-item *ngFor="let folder of folders">
+  <mat-list-item *ngFor="let item of data">
     <span mat-line style="font-size: 5px">
       <div mat-line>
-        <p class="name">{{ folder.name }}</p>
+        <p class="name">{{ item.name }}</p>
       </div>
     </span>
     <div mat-line class="progress-bar">
-      <div id="progress" class="progress" [style.width.%]="folder.value"></div>
+      <div id="progress" class="progress" [style.width.%]="item.value"></div>
     </div>
   </mat-list-item>
 </mat-list>
