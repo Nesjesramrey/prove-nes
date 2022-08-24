@@ -1,10 +1,10 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { AppMaterialModule } from "../app-material.module";
-import { NgChartsModule } from "ng2-charts";
-import { AppSharedModule } from "../app-shared.module";
+import { AppMaterialModule } from '../app-material.module';
+import { NgChartsModule } from 'ng2-charts';
+import { AppSharedModule } from '../app-shared.module';
 
 import { LyToolbarModule } from '@alyle/ui/toolbar';
 import { LyTypographyModule } from '@alyle/ui/typography';
@@ -16,23 +16,24 @@ import { LyImageCropperModule } from '@alyle/ui/image-cropper';
 import { LySliderModule } from '@alyle/ui/slider';
 import { LyIconModule } from '@alyle/ui/icon';
 
-import { AppPageletComponent } from "./app-pagelet/app-pagelet.component";
-import { AppFooterComponent } from "./app-footer/app-footer.component";
-import { EmailValidationDialogComponent } from "./email-validation-dialog/email-validation-dialog.component";
-import { AddDocumentDialogComponent } from "./add-document-dialog/add-document-dialog.component";
-import { PieChartComponent } from "./pie-chart/pie-chart.component";
+import { AppPageletComponent } from './app-pagelet/app-pagelet.component';
+import { AppFooterComponent } from './app-footer/app-footer.component';
+import { EmailValidationDialogComponent } from './email-validation-dialog/email-validation-dialog.component';
+import { AddDocumentDialogComponent } from './add-document-dialog/add-document-dialog.component';
+import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { SpiderChartComponent } from './spider-chart/spider-chart.component';
-import { LineChartComponent } from "./line-chart/line-chart.component";
-import { SetAvatarDialogComponent } from "./set-avatar-dialog/set-avatar-dialog.component";
-import { AddPermissionsComponent } from "./add-permissions/add-permissions.component";
-import { MessageBoxComponent } from "./message-box/message-box.component";
-import { AddDocumentLayoutComponent } from "./add-document-layout/add-document-layout.component";
-import { AddDocumentCategoryComponent } from "./add-document-category/add-document-category.component";
-import { AddDocumentCollaboratorComponent } from "./add-document-collaborator/add-document-collaborator.component";
+import { LineChartComponent } from './line-chart/line-chart.component';
+import { SetAvatarDialogComponent } from './set-avatar-dialog/set-avatar-dialog.component';
+import { AddPermissionsComponent } from './add-permissions/add-permissions.component';
+import { MessageBoxComponent } from './message-box/message-box.component';
+import { AddDocumentLayoutComponent } from './add-document-layout/add-document-layout.component';
+import { AddDocumentCategoryComponent } from './add-document-category/add-document-category.component';
+import { AddDocumentCollaboratorComponent } from './add-document-collaborator/add-document-collaborator.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { AvatarsRowComponent } from './avatars-row/avatars-row.component';
 import { HorizontalStatsComponent } from './horizontal-stats/horizontal-stats.component';
 import { VerticalStatsComponent } from './vertical-stats/vertical-stats.component';
+import { Top10ListComponent } from './top10-list/top10-list.component';
 
 @NgModule({
   imports: [
@@ -50,7 +51,7 @@ import { VerticalStatsComponent } from './vertical-stats/vertical-stats.componen
     LySliderModule,
     LyIconModule,
     NgChartsModule,
-    AppSharedModule
+    AppSharedModule,
   ],
   declarations: [
     AppPageletComponent,
@@ -69,7 +70,8 @@ import { VerticalStatsComponent } from './vertical-stats/vertical-stats.componen
     HorizontalStatsComponent,
     BreadcrumbsComponent,
     AvatarsRowComponent,
-    VerticalStatsComponent
+    VerticalStatsComponent,
+    Top10ListComponent
   ],
   exports: [
     AppPageletComponent,
@@ -86,6 +88,7 @@ import { VerticalStatsComponent } from './vertical-stats/vertical-stats.componen
     AddDocumentCategoryComponent,
     AddDocumentCollaboratorComponent,
     HorizontalStatsComponent,
+    VerticalStatsComponent,
     BreadcrumbsComponent,
     AvatarsRowComponent,
     VerticalStatsComponent
@@ -97,7 +100,7 @@ import { VerticalStatsComponent } from './vertical-stats/vertical-stats.componen
     AddPermissionsComponent,
     AddDocumentLayoutComponent,
     AddDocumentCategoryComponent,
-    AddDocumentCollaboratorComponent
+    AddDocumentCollaboratorComponent,
   ],
   providers: [],
 })
