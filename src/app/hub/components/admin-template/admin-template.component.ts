@@ -21,16 +21,20 @@ export class AdminTemplateComponent implements OnInit {
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.documents.filter((x: any) => {
-        let editors: any = [];
-        x['collaborators'].filter((c: any) => {
-          if (c['activity']['value'] == 'editor') {
-            editors.push(c);
-          }
-        });
-        x['editors'] = editors;
-      });
+      this.setDocumentEditor();
       this.isDataAvailable = true;
+    });
+  }
+
+  setDocumentEditor() {
+    this.documents.filter((x: any) => {
+      let editors: any = [];
+      x['collaborators'].filter((c: any) => {
+        if (c['activity']['value'] == 'editor') {
+          editors.push(c);
+        }
+      });
+      x['editors'] = editors;
     });
   }
 
@@ -46,6 +50,7 @@ export class AdminTemplateComponent implements OnInit {
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
         this.documents.unshift(reply);
+        this.setDocumentEditor();
       }
     });
   }

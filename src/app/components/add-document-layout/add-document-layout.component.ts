@@ -27,8 +27,9 @@ export class AddDocumentLayoutComponent implements OnInit {
   public stepTwoFormGroup!: FormGroup;
   public isDataAvailable: boolean = false;
   public layout: any = [];
-  public new_category: boolean = false;
+  public addNewCategory: boolean = false;
   public addCategoryFormGroup!: FormGroup;
+  public isSubmitted: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<AddDocumentLayoutComponent>,
@@ -45,11 +46,11 @@ export class AddDocumentLayoutComponent implements OnInit {
     let categories: Observable<any> = this.utilityservice.fetchAllCategories();
     forkJoin([categories]).subscribe((reply: any) => {
       // console.log(reply);
-      this.categories = reply[0]['clasifications'];
+      this.categories = reply[0];
       this.categories.filter((x: any) => { this.categoriesString.push(x['name']); });
 
       this.stepOneFormGroup = this.formBuilder.group({
-        description: ['', [Validators.required]],
+        description: ['', []],
         file: ['', []]
       });
 
@@ -62,7 +63,9 @@ export class AddDocumentLayoutComponent implements OnInit {
       });
 
       this.setFilteredCategories();
-      this.isDataAvailable = true;
+      setTimeout(() => {
+        this.isDataAvailable = true;
+      }, 1000);
     });
   }
 
@@ -76,11 +79,21 @@ export class AddDocumentLayoutComponent implements OnInit {
   removeCategory(category: string): void {
     const index = this.selectedCategories.indexOf(category);
     if (index >= 0) { this.selectedCategories.splice(index, 1); }
+    console.log(this.selectedCategories);
+    this.stepTwoFormGroup.patchValue({ layout: this.selectedCategories });
   }
 
   categorySelected(event: MatAutocompleteSelectedEvent): void {
     let category: any = this.categories.filter((x: any) => { return x['name'] == event['option']['value'] });
-    this.layout.push({ category: category[0]['_id'] });
+    this.layout.push(category[0]['_id']);
+    this.stepTwoFormGroup.patchValue({ layout: this.layout });
+
+    if (this.selectedCategories.includes(event.option.value)) {
+      this.utilityservice.openErrorSnackBar('Ya se agrego la categoría.');
+      this.categoryInput.nativeElement.value = '';
+      this.categoryCtrl.setValue(null);
+      return;
+    }
     this.selectedCategories.push(event.option.value);
     this.categoryInput.nativeElement.value = '';
     this.categoryCtrl.setValue(null);
@@ -113,35 +126,28 @@ export class AddDocumentLayoutComponent implements OnInit {
   }
 
   onCreateLayout() {
-    // let file: File;
-    // let data = new FormData();
-    // file = this.stepOneFormGroup.get('file')?.value;
-
-    // data.append('file', file);
-    // data.append('documentID', this.document['_id']);
-    // data.append('description', this.stepOneFormGroup.value.description);
-    // data.append('layout', this.layout);
-
-    let data: any = {
-      documentID: this.document['_id'],
-      description: this.stepOneFormGroup.value.description,
-      layout: this.layout
+    this.isSubmitted = true;
+    let files: File;
+    let data = {
+      formData: new FormData(),
+      documentID: this.document['_id']
     }
 
-    this.documentService.addDocumentLayout(data).subscribe((reply: any) => {
+    files = this.stepOneFormGroup.get('files')?.value;
+    data['formData'].append('files', files);
+    data['formData'].append('description', this.stepOneFormGroup.value.description);
+    data['formData'].append('categories', JSON.stringify(this.layout));
+
+    this.documentService.createDocumentLayout(data).subscribe((reply) => {
       // console.log(reply);
-      if (reply['status'] == false) {
-        this.utilityservice.openErrorSnackBar(reply['error']);
-        return;
-      }
-      this.utilityservice.openSuccessSnackBar(reply['message']);
-      this.dialogRef.close();
+      this.dialogRef.close(reply);
+      this.isSubmitted = false;
     });
   }
 
   toggleCategoryField() {
-    this.new_category = !this.new_category;
-    if (!this.new_category) {
+    this.addNewCategory = !this.addNewCategory;
+    if (!this.addNewCategory) {
       this.addCategoryFormGroup.patchValue({ name: '' });
       this.addCategoryFormGroup.updateValueAndValidity();
     }
@@ -163,22 +169,14 @@ export class AddDocumentLayoutComponent implements OnInit {
 
     this.utilityservice.createNewCategory(data).subscribe((reply: any) => {
       // console.log(reply);
-      if (reply['status'] == false) {
-        this.utilityservice.openErrorSnackBar(reply['error']);
-        return;
-      }
-
-      this.utilityservice.openSuccessSnackBar(reply['message']);
-      this.categories.push(reply['clasification']);
-      this.categoriesString.push(reply['clasification']['name']);
+      this.utilityservice.openSuccessSnackBar('¡Se agrego correctamente!');
+      this.categories.push(reply);
+      this.categoriesString.push(reply['name']);
+      this.selectedCategories.push(reply['name']);
+      this.stepTwoFormGroup.patchValue({ layout: this.selectedCategories });
       this.setFilteredCategories();
       this.addCategoryFormGroup.reset();
-      this.new_category = false;
+      this.addNewCategory = false;
     });
   }
-
-  // clearFile() {
-  //   this.stepOneFormGroup.patchValue({ file: '' });
-  //   this.stepOneFormGroup.updateValueAndValidity();
-  // }
 }

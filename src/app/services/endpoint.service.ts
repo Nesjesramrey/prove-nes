@@ -2,9 +2,8 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export class EndPointService {
-    public apiEndPoint: string = 'http://localhost:4040/api/v1';
-  // public apiEndPoint: string = 'pando-Backend-Dev-Env.eba-zk3eys8d.us-east-1.elasticbeanstalk.com';
-  // public apiEndPoint: string = 'http://pando-backend-dev-env.eba-zk3eys8d.us-east-1.elasticbeanstalk.com'
+  // public apiEndPoint: string = 'http://localhost:4040/api/v1';
+  public apiEndPoint: string = 'http://pando-backend-dev-env.eba-zk3eys8d.us-east-1.elasticbeanstalk.com'
 
 
   // authentication
@@ -24,6 +23,8 @@ export class EndPointService {
   // documents
   public createNewDocumentEndPoint: string = '/document';
   public fetchSingleDocumentByIdEndPoint: string = '/document/';
+  public fetchDocumentsByCollaboratorEndPoint: string = '/document/collaborator/';
+  public createDocumentLayoutEndPoint: string = '/layout/document/';
 
   // public createNewDocumentEndPoint: string = '/document/create-new-document';
   public fetchMyDocumentsEndPoint: string = '/document/fetch-my-documents';
@@ -37,10 +38,12 @@ export class EndPointService {
 
   // utility
   public fetchAllStatesEndPoint: string = '/state';
+  public createNewCategoryEndPoint: string = '/category';
+  public fetchAllCategoriesEndPoint: string = '/category/';
 
   public fetchAllStatesMexEndPoint: string = '/utility/fetch-all-states-mex';
-  public createNewCategoryEndPoint: string = '/utility/create-new-category';
-  public fetchAllCategoriesEndPoint: string = '/utility/fetch-all-categories';
+  // public createNewCategoryEndPoint: string = '/utility/create-new-category';
+  // public fetchAllCategoriesEndPoint: string = '/utility/fetch-all-categories';
 
   // uploads
   public uploadUserAvatarEndPoint: string = '/upload/upload-avatar-file';

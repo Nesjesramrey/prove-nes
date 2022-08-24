@@ -1,9 +1,9 @@
 <div class="set-12 carousel-hldr" *ngIf="documents.length != 0">
-  <carousel [cellsToShow]="2">
+  <carousel [cellsToShow]="2" [arrows]="documents.length > 2 ? true : false">
     <div class="carousel-cell" *ngFor="let document of documents">
       <mat-card>
         <div class="set-12 imghldr">
-          <mat-icon *ngIf="document.coverImage == ''">panorama</mat-icon>
+          <mat-icon *ngIf="document.images.length == 0">panorama</mat-icon>
         </div>
 
         <div class="set-12 infohldr">
@@ -26,7 +26,7 @@
             <mat-icon>front_hand</mat-icon> <small>0 Interacciones</small>
           </div>
 
-          <div class="set-12 empty-layout" *ngIf="document.layout.length == 0">
+          <div class="set-12 empty-layout" *ngIf="document.layouts.length == 0">
             <div class="set-12 date">
               <small>{{document.created_at | date: 'mediumDate'}} - {{document.created_at | date: 'mediumTime'}}</small>
             </div>
@@ -40,6 +40,19 @@
               <button type="button" mat-raised-button color="primary" (click)="popLayoutDialog(document._id)">
                 <span>Crear esquema</span>
               </button>
+            </div>
+          </div>
+
+          <div class="set-12 available-layout" *ngIf="document.layouts.length != 0">
+            <h4 class="category-title">Categorías</h4>
+            <div class="set-12" *ngFor="let layout of document.layouts">
+              <ul>
+                <li>
+                  <button type="button">
+                    <small>{{layout.category.name}}</small>
+                  </button>
+                </li>
+              </ul>
             </div>
           </div>
         </div>

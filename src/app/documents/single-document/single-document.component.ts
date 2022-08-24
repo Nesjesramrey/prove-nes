@@ -48,7 +48,7 @@ export class SingleDocumentComponent implements OnInit {
   ngOnInit(): void {
     this.documentService.fetchSingleDocumentById({ _id: this.documentID }).subscribe((reply: any) => {
       this.document = reply;
-      // console.log(this.document);
+      console.log(this.document);
     });
 
     if (this.accessToken != null) {
