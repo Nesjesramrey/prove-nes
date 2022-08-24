@@ -19,7 +19,7 @@ export class DocumentService {
   }
 
   fetchSingleDocumentById(data: any) {
-    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchSingleDocumentByIdEndPoint, data);
+    return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchSingleDocumentByIdEndPoint + `${data['_id']}`, {});
   }
 
   fetchEditorDocuments(data: any) {

@@ -55,13 +55,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.accessToken != null) {
-      // this.userService.fetchFireUser().subscribe((reply: any) => {
-      //   this.user = reply;
-      //   setTimeout(() => {
-      //     this.isDataAvailable = true;
-      //   });
-      // });
-
       this.userService.fetchFireUser().subscribe({
         error: (error) => {
           console.log(error);

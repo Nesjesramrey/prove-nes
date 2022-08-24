@@ -39,7 +39,7 @@
               <button type="button" matTooltip="Editar">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button type="button" matTooltip="Abrir">
+              <button type="button" matTooltip="Abrir" (click)="linkMe(document._id)">
                 <mat-icon>file_open</mat-icon>
               </button>
               <button type="button" matTooltip="Datos" (click)="displayDocumentData(document._id)">

@@ -75,7 +75,7 @@ export class AddDocumentDialogComponent implements OnInit {
   }
 
   onCreateDocument(formGroup: FormGroup) {
-    // this.submitted = true;
+    this.submitted = true;
     formGroup['value']['collaborators'].filter((x: any) => { x['activity'] = x['_id']; });
 
     let data: any = {
@@ -104,7 +104,7 @@ export class AddDocumentDialogComponent implements OnInit {
       // });
 
       // this.utilitySrvc.openSuccessSnackBar(reply['message']);
-      // this.dialogRef.close(reply);
+      this.dialogRef.close(reply);
     });
   }
 
