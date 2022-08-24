@@ -10,6 +10,7 @@ import { SingleDocumentComponent } from './single-document/single-document.compo
 import { ComponentsModule } from '../components/components.module';
 import { SingleCategoryComponent } from './single-category/single-category.component';
 import { SingleThemeComponent } from './single-theme/single-theme.component';
+import { PublicDocumentComponent } from './public-document/public-document.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { SingleThemeComponent } from './single-theme/single-theme.component';
     DocumentsComponent,
     SingleDocumentComponent,
     SingleCategoryComponent,
-    SingleThemeComponent
+    SingleThemeComponent,
+    PublicDocumentComponent
   ]
 })
 export class DocumentsComponentModule { }

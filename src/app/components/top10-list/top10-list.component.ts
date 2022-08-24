@@ -7,7 +7,7 @@ export interface Section {
 }
 
 @Component({
-  selector: 'app-top10-list',
+  selector: '.top10-list',
   templateUrl: './top10-list.component.html',
   styleUrls: ['./top10-list.component.scss'],
 })
@@ -39,7 +39,7 @@ export class Top10ListComponent implements OnInit {
     },
   ];
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }

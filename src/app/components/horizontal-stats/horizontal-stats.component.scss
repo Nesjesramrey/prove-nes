@@ -1,22 +1,24 @@
 .card-container {
-  width: 500px;
-  padding: 50px 22px;
-  height: 150px;
-
+  width: 100%;
+  padding: 50px 10px;
+  margin: 0px auto;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   .image-box {
-    width: 55px;
-    height: 55px;
-    padding: 18px;
+    width: 45px;
+    height: 45px;
+    padding: 10px;
     border-radius: 100%;
     img {
-      width: 20px;
-      height: 20px;
+      width: 22.5px;
+      height: 22.5px;
     }
   }
 
   .texts-box {
-    margin-left: 15px;
-
+    text-align: center;
     .name {
       font-size: 16px;
       font-weight: 400;
@@ -30,9 +32,9 @@
 }
 
 .gray-icon-color {
-  background-color: rgba(68, 68, 68, 0.075);
+  background-color: #E1F2EC;
 }
 
 .red-icon-color {
-  background-color: rgba(248, 184, 6, 0.185);
+  background-color: #FCDBC3;
 }

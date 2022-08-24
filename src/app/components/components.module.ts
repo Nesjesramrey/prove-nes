@@ -34,6 +34,7 @@ import { AvatarsRowComponent } from './avatars-row/avatars-row.component';
 import { HorizontalStatsComponent } from './horizontal-stats/horizontal-stats.component';
 import { VerticalStatsComponent } from './vertical-stats/vertical-stats.component';
 import { Top10ListComponent } from './top10-list/top10-list.component';
+import { MapBoxComponent } from './map-box/map-box.component';
 
 @NgModule({
   imports: [
@@ -71,7 +72,8 @@ import { Top10ListComponent } from './top10-list/top10-list.component';
     BreadcrumbsComponent,
     AvatarsRowComponent,
     VerticalStatsComponent,
-    Top10ListComponent
+    Top10ListComponent,
+    MapBoxComponent
   ],
   exports: [
     AppPageletComponent,
@@ -91,7 +93,9 @@ import { Top10ListComponent } from './top10-list/top10-list.component';
     VerticalStatsComponent,
     BreadcrumbsComponent,
     AvatarsRowComponent,
-    VerticalStatsComponent
+    VerticalStatsComponent,
+    Top10ListComponent,
+    MapBoxComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,

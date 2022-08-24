@@ -1,14 +1,11 @@
-<div class="position">
-  <mat-list class="container">
-    <h4>Top 10 Soluciones</h4>
-    <mat-list-item *ngFor="let folder of folders">
-      <span mat-line style="font-size: 5px">
-        <div mat-line>{{ folder.name }}</div>
-      </span>
-      <div mat-line class="progress-bar">
-        <div id="progress" class="progress"></div>
-      </div>
-    </mat-list-item>
-    <br /><br />
-  </mat-list>
-</div>
+<mat-list class="container shadow">
+  <h4>Top 10 Soluciones</h4>
+  <mat-list-item *ngFor="let folder of folders">
+    <span mat-line style="font-size: 5px">
+      <div mat-line>{{ folder.name }}</div>
+    </span>
+    <div mat-line class="progress-bar">
+      <div id="progress" class="progress" [style.width.%]="folder.value"></div>
+    </div>
+  </mat-list-item>
+</mat-list>
