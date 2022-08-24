@@ -2,7 +2,6 @@
   .map-container {
     width: 100%;
     padding: 0;
-
     mat-card {
       width: 100%;
       display: flex;
@@ -11,11 +10,11 @@
       padding: 0;
       height: 100%;
     }
-
+    
     .map {
       //   max-width: 730px;
       // width: 80%;
-      height: 265px;
+      height: 350px;
       display: block;
       background-color: #ceddff;
       margin: 0;
