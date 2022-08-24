@@ -12,6 +12,7 @@ const routes: Routes = [
     path: '', children: [
       { path: '', redirectTo: '/404', pathMatch: 'full' },
       { path: '', component: DocumentsComponent },
+      { path: 'public', component: PublicDocumentComponent, canActivate: [] },
       { path: 'selected-public', component: SelectedPublicDocumentComponent, canActivate: [] },
       { path: ':documentID', component: SingleDocumentComponent, canActivate: [] },
       { path: ':documentID/categoria/:categoryID', component: SingleCategoryComponent, canActivate: [] },

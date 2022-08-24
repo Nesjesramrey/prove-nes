@@ -21,26 +21,31 @@
       flex-direction: column;
       width: calc(100% - 30%);
       gap: 2rem;
-      .main {
+      .main-box {
         width: 100%;
-        height: 50%;
-        background-color: white;
-        display: block;
-        background-image: radial-gradient(#212121 5%, transparent 5%);
-        background-position: 0 0, 20px 20px;
-        background-size: 30px 30px;
-        border-radius: 5px;
+        height: 400px;
+        overflow: auto;
+        .main {
+          width: 2000px;
+          height: 100%;
+          background-color: white;
+          display: block;
+          background-image: radial-gradient(#212121 5%, transparent 5%);
+          background-position: 0 0, 20px 20px;
+          background-size: 30px 30px;
+          border-radius: 5px;
+        }
       }
       .middle {
         width: 100%;
         height: 50px;
-        display: flex;
+        // display: flex;
         // padding: 5px;
         align-items: center;
 
         .title {
           text-transform: uppercase;
-          font-family: 'Noto Sans';
+          font-family: "Noto Sans";
           font-style: normal;
           font-weight: 600;
           font-size: 18px;
@@ -49,14 +54,15 @@
         }
         .select > select {
           background-color: white;
-          width: 114px;
+          width: 150px;
+          padding: 0px 20px;
           height: 26px;
-          font-family: 'Noto Sans';
+          font-family: "Noto Sans";
           font-style: normal;
           font-weight: 400;
           font-size: 16px;
           line-height: 22px;
-          border: 1px solid #A5A5A5;
+          border: 1px solid #a5a5a5;
           border-radius: 5px;
         }
       }
@@ -65,15 +71,15 @@
         display: flex;
         justify-content: right;
         & > button {
-          background: #FFFFFF;
-          border: 1px solid #306EFF;
+          background: #ffffff;
+          border: 1px solid #306eff;
           border-radius: 5px;
-          font-family: 'Noto Sans';
+          font-family: "Noto Sans";
           font-style: normal;
           font-weight: 600;
           font-size: 14px;
           line-height: 16px;
-          color: #306EFF;
+          color: #306eff;
           padding: 6px 6px;
           margin: 0px 0px 0px auto;
         }
@@ -98,7 +104,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba($color: #CEDDFF, $alpha: 0.4);
+    background: rgba($color: #ceddff, $alpha: 0.4);
     border-bottom: 1px solid rgba($color: #000000, $alpha: 0.05);
 
     mat-icon {
@@ -113,7 +119,7 @@
 
   .card-title {
     color: #636363;
-    font-family: 'Noto Sans';
+    font-family: "Noto Sans";
     font-style: normal;
     font-weight: 600;
     font-size: 22px;
@@ -124,7 +130,7 @@
   }
 
   .card-description {
-    font-family: 'Noto Sans';
+    font-family: "Noto Sans";
     font-style: normal;
     font-weight: 400;
     line-height: 22px;
@@ -145,7 +151,7 @@
 
     mat-icon {
       font-size: 14pt !important;
-      color: #fff;        
+      color: #fff;
     }
   }
 
@@ -176,18 +182,18 @@
     }
 
     .roundico-green {
-      background: #E1F2EC;
+      background: #e1f2ec;
 
       mat-icon {
-        color: #20C588;
+        color: #20c588;
       }
     }
 
     .roundico-orange {
-      background: #FCDBC3;
+      background: #fcdbc3;
 
       mat-icon {
-        color: #FF6D00;
+        color: #ff6d00;
       }
     }
 
@@ -202,7 +208,7 @@
 
   .info-lists {
     padding: 1.5em;
-     
+
     p.list-title {
       display: flex;
       align-items: center;
@@ -216,10 +222,10 @@
         margin-left: 10px;
 
         &.icon-insights {
-          color: #20C588;
+          color: #20c588;
         }
         &.icon-warnings {
-          color: #E98282;
+          color: #e98282;
         }
       }
     }
@@ -231,7 +237,7 @@
       .top-list-item {
         list-style: none;
         font-weight: 600;
-        border-bottom: 1px solid #DBDBDB;
+        border-bottom: 1px solid #dbdbdb;
         padding: 0.6em 0;
 
         &:before {
@@ -239,11 +245,10 @@
           content: counter(orderedlist);
           font-weight: 400;
           margin-right: 15pt;
-          color: #131313
+          color: #131313;
         }
       }
     }
-
 
     .set-4:nth-child(2) {
       padding: 0 10px;
@@ -266,7 +271,6 @@
 
     /* CATEGORIES TABLE */
     .categories-table {
-
       .mat-cell {
         padding: 0.5em 0;
       }
@@ -286,7 +290,6 @@
           border: 1px solid transparent;
           cursor: text;
 
-        
           .text {
             font-size: 1.1em;
           }
@@ -298,33 +301,31 @@
           mat-icon {
             font-size: 15pt;
           }
-          
-          &:hover, &.editing {
-            background-color: #CEDDFF;
-            border-color:  #306EFF;
-          }
 
+          &:hover,
+          &.editing {
+            background-color: #ceddff;
+            border-color: #306eff;
+          }
 
           &.editing {
             background-color: #e8e8e8;
 
             mat-icon {
-              color: #20C588;
+              color: #20c588;
               cursor: pointer;
             }
           }
         }
         // display: inline-block;
       }
-      
+
       .mat-column-actions {
         width: 50px;
         padding-right: 0;
         text-align: right;
       }
-
     }
-
   }
 
   .card-container {
@@ -332,10 +333,25 @@
     padding: 0px;
   }
   .card-item > span.mat-list-base .mat-list-item .mat-list-item-content {
-    padding: 0px!important;
+    padding: 0px !important;
   }
   .inner-container {
     margin: 5px;
     padding: 5px;
   }
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgb(230, 230, 230);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(131, 131, 131);
+  border-radius: 20px;
+  height: 2px;
 }
