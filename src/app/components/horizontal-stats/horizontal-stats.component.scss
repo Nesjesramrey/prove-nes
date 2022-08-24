@@ -1,0 +1,38 @@
+.card-container {
+  width: 500px;
+  padding: 50px 22px;
+  height: 150px;
+
+  .image-box {
+    width: 55px;
+    height: 55px;
+    padding: 18px;
+    border-radius: 100%;
+    img {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .texts-box {
+    margin-left: 15px;
+
+    .name {
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+    }
+    .amount {
+      font-size: 30px;
+      font-weight: 500;
+    }
+  }
+}
+
+.gray-icon-color {
+  background-color: rgba(68, 68, 68, 0.075);
+}
+
+.red-icon-color {
+  background-color: rgba(248, 184, 6, 0.185);
+}

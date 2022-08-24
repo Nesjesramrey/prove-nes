@@ -31,6 +31,7 @@ import { AddDocumentCategoryComponent } from "./add-document-category/add-docume
 import { AddDocumentCollaboratorComponent } from "./add-document-collaborator/add-document-collaborator.component";
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { AvatarsRowComponent } from './avatars-row/avatars-row.component';
+import { HorizontalStatsComponent } from "./horizontal-stats/horizontal-stats.component";
 
 @NgModule({
   imports: [
@@ -64,6 +65,7 @@ import { AvatarsRowComponent } from './avatars-row/avatars-row.component';
     AddDocumentLayoutComponent,
     AddDocumentCategoryComponent,
     AddDocumentCollaboratorComponent,
+    HorizontalStatsComponent,
     BreadcrumbsComponent,
     AvatarsRowComponent
   ],
@@ -81,6 +83,7 @@ import { AvatarsRowComponent } from './avatars-row/avatars-row.component';
     AddDocumentLayoutComponent,
     AddDocumentCategoryComponent,
     AddDocumentCollaboratorComponent,
+    HorizontalStatsComponent,
     BreadcrumbsComponent,
     AvatarsRowComponent
   ],
