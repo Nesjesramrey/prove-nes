@@ -6,6 +6,7 @@ import { IvyCarouselModule } from 'angular-responsive-carousel';
 
 import { AdminTemplateComponent } from "./admin-template/admin-template.component";
 import { EditorTemplateComponent } from "./editor-template/editor-template.component";
+import { MapBoxComponent } from './map-box/map-box.component';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { EditorTemplateComponent } from "./editor-template/editor-template.compo
   ],
   declarations: [
     AdminTemplateComponent,
-    EditorTemplateComponent
+    EditorTemplateComponent,
+    MapBoxComponent
   ],
   exports: [
     AdminTemplateComponent,
