@@ -14,6 +14,10 @@ export class SpiderChartComponent implements OnInit {
         display: false
       }
     },
+    font: {
+      style: 'normal',
+      weight: 'bold',
+    },
     datasets: {
       radar: {
         borderColor: 'rgba(0, 0, 0, 0)',
