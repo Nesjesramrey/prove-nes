@@ -6,7 +6,11 @@ import { SingleCategoryComponent } from './single-category/single-category.compo
 import { SingleThemeComponent } from './single-theme/single-theme.component';
 import { PublicDocumentComponent } from './public-document/public-document.component';
 import { SelectedPublicDocumentComponent } from './selected-public-document/selected-public-document.component';
+<<<<<<< HEAD
 import { CategoryPublicDocumentComponent } from './category-public-document/category-public-document.component';
+=======
+import { SubcategoryDocumentComponent } from './subcategory-document/subcategory-document.component';
+>>>>>>> 0101deb344d093ec138a405802d3a0a6c477fac6
 
 const routes: Routes = [
   {
@@ -15,6 +19,7 @@ const routes: Routes = [
       { path: '', redirectTo: '/404', pathMatch: 'full' },
       { path: '', component: DocumentsComponent },
       { path: 'public', component: PublicDocumentComponent, canActivate: [] },
+<<<<<<< HEAD
       {
         path: 'category-public',
         component: CategoryPublicDocumentComponent,
@@ -42,6 +47,15 @@ const routes: Routes = [
       },
     ],
   },
+=======
+      { path: 'selected-public', component: SelectedPublicDocumentComponent, canActivate: [] },
+      { path: 'subcategory', component: SubcategoryDocumentComponent, canActivate: [] },
+      { path: ':documentID', component: SingleDocumentComponent, canActivate: [] },
+      { path: ':documentID/categoria/:categoryID', component: SingleCategoryComponent, canActivate: [] },
+      { path: ':documentID/categoria/:categoryID:/temas/:themeID', component: SingleThemeComponent, canActivate: [] }
+    ]
+  }
+>>>>>>> 0101deb344d093ec138a405802d3a0a6c477fac6
 ];
 
 @NgModule({

@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { UtilityService } from 'src/app/services/utility.service';
+import { Section } from 'src/app/components/top10-list/top10-list.component';
 
 @Component({
   selector: '.selected-public-document-page',
@@ -28,7 +29,7 @@ export class SelectedPublicDocumentComponent implements OnInit {
   public dataSource = new MatTableDataSource<any>();
   public selection = new SelectionModel<any>(true, []);
   public editingRowId: string | null = null;
-
+  public items: Section[] = []
   @ViewChild('editRowName') editRowName!: ElementRef<HTMLInputElement>;
 
   constructor(
@@ -42,6 +43,32 @@ export class SelectedPublicDocumentComponent implements OnInit {
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.token = this.authenticationService.fetchToken;
+    this.items = [
+      {
+        name: 'Construir escuelas en 2 años',
+        value: 88,
+      },
+      {
+        name: 'Construir 1000km de ancho de banda',
+        value: 50,
+      },
+      {
+        name: 'Estrategia de Combate al narcotrafico',
+        value: 50,
+      },
+      {
+        name: 'Camaras con IA en transporte',
+        value: 50,
+      },
+      {
+        name: 'Transporte publico gratis para estudiantes',
+        value: 50,
+      },
+      {
+        name: 'Subsidio a la familia por educacion',
+        value: 50,
+      },
+    ]
     // console.log(this.documentID);
   }
 
@@ -52,7 +79,6 @@ export class SelectedPublicDocumentComponent implements OnInit {
       let user: Observable<any> = this.userService.fetchUserById({ _id: this.payload['sub'] });
       user.subscribe((reply: any) => {
         console.log({ reply })
-        // this.user = reply[0]['user'];
       });
     }
   }
