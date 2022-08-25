@@ -39,8 +39,7 @@
     </div>
     <div class="set-8">
       <div class="main-box">
-        <div class="main shadow"></div>
-
+        <panel-subcategory [data]="categoriesData"></panel-subcategory>
         <div class="set-12 container-titles">
           <div class="set-6 title">
             <p>
@@ -62,10 +61,6 @@
               [dataSource]="solutionsDataSource"
               class="mat-elevation-z8"
             >
-              <!--- Note that these columns can be defined in any order.
-                    The actual rendered columns are set as a property on the row definition" -->
-
-              <!-- Position Column -->
               <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let element">
@@ -73,7 +68,6 @@
                 </td>
               </ng-container>
 
-              <!-- Name Column -->
               <ng-container matColumnDef="ranking">
                 <th mat-header-cell *matHeaderCellDef>Ranking</th>
                 <td mat-cell *matCellDef="let element">
@@ -81,7 +75,6 @@
                 </td>
               </ng-container>
 
-              <!-- Weight Column -->
               <ng-container matColumnDef="users">
                 <th mat-header-cell *matHeaderCellDef>Usuarios</th>
                 <td mat-cell *matCellDef="let element">{{ element.users }}</td>
@@ -97,10 +90,6 @@
               [dataSource]="problemsDataSource"
               class="mat-elevation-z8"
             >
-              <!--- Note that these columns can be defined in any order.
-                    The actual rendered columns are set as a property on the row definition" -->
-
-              <!-- Position Column -->
               <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let element">
@@ -108,7 +97,6 @@
                 </td>
               </ng-container>
 
-              <!-- Name Column -->
               <ng-container matColumnDef="ranking">
                 <th mat-header-cell *matHeaderCellDef>Ranking</th>
                 <td mat-cell *matCellDef="let element">
@@ -116,7 +104,6 @@
                 </td>
               </ng-container>
 
-              <!-- Weight Column -->
               <ng-container matColumnDef="users">
                 <th mat-header-cell *matHeaderCellDef>Usuarios</th>
                 <td mat-cell *matCellDef="let element">{{ element.users }}</td>

@@ -4,14 +4,6 @@
 
   .main-box {
     background-color: white;
-    .main {
-      height: 400px;
-      display: block;
-      background-image: radial-gradient(#212121 5%, transparent 5%);
-      background-position: 0 0, 20px 20px;
-      background-size: 30px 30px;
-      border-radius: 5px 5px 0px 0px;
-    }
   }
 
   .container-titles {
@@ -98,6 +90,4 @@
     padding: 0px 10px;
     padding-bottom: 50px;
   }
-  
 }
-
