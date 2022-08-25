@@ -1,0 +1,26 @@
+<div class="testimonials">
+  <p class="title">Testimonios</p>
+
+  <!-- TESTIMONIALS LIST -->
+  <div class="content">
+    <!-- ITEM -->
+
+    <mat-card class="testimonial-item" *ngFor="let testimonial of testimonials">
+      <!-- IMAGE -->
+      <div class="leading">
+        <img class="image" [src]="testimonial.image" />
+      </div>
+      <!-- CONTENT -->
+      <div class="info">
+        <p class="title">{{ testimonial.title }}</p>
+        <div class="about">
+          <!-- AVATAR -->
+
+          <img class="avatar" [src]="testimonial.avatar" />
+
+          <p>Fecha de creación: {{ testimonial.creation }}</p>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>
