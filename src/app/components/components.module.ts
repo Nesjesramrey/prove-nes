@@ -36,6 +36,7 @@ import { VerticalStatsComponent } from './vertical-stats/vertical-stats.componen
 import { Top10ListComponent } from './top10-list/top10-list.component';
 import { MapBoxComponent } from './map-box/map-box.component';
 import { FeaturedUsersComponent } from './featured-users/featured-users.component';
+import { CircumferenceCustonComponent } from './circumference-custon/circumference-custon.component';
 
 @NgModule({
   imports: [
@@ -75,7 +76,8 @@ import { FeaturedUsersComponent } from './featured-users/featured-users.componen
     VerticalStatsComponent,
     Top10ListComponent,
     FeaturedUsersComponent,
-    MapBoxComponent
+    MapBoxComponent,
+    CircumferenceCustonComponent
   ],
   exports: [
     AppPageletComponent,
