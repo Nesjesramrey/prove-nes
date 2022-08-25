@@ -32,13 +32,9 @@
       }
     }
   }
-  .users-container {
-    p {
-      font-size: 14px;
-      font-weight: 500;
-    }
-  }
-
+.featured-users{
+  height: min-content;
+}
   .doc-description {
     padding: 0 !important;
   }
@@ -98,6 +94,6 @@
     padding: 0px 10px;
     padding-bottom: 50px;
   }
-  
+
 }
 

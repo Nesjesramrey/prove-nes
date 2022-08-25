@@ -1,3 +1,5 @@
+
+
 ul {
   list-style-type: none;
   margin: 0;
@@ -21,7 +23,12 @@ li {
     border-radius: 100px;
   }
 }
-
+.title {
+  padding-top: 5px;
+  padding-right: 10px;
+  font-size: 14px;
+  font-weight: 500;
+}
 li:nth-child(n + 2) {
   margin-left: -5px;
 }
