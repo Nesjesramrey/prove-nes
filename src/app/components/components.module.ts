@@ -36,7 +36,11 @@ import { VerticalStatsComponent } from './vertical-stats/vertical-stats.componen
 import { Top10ListComponent } from './top10-list/top10-list.component';
 import { MapBoxComponent } from './map-box/map-box.component';
 import { FeaturedUsersComponent } from './featured-users/featured-users.component';
+<<<<<<< HEAD
 import { CircumferenceCustonComponent } from './circumference-custon/circumference-custon.component';
+=======
+import { PanelSubcategoryComponent } from './panel-subcategory/panel-subcategory.component';
+>>>>>>> 0ec4152d752e0b7f6b4d0ae9ba471829b5002fbd
 
 @NgModule({
   imports: [
@@ -76,8 +80,13 @@ import { CircumferenceCustonComponent } from './circumference-custon/circumferen
     VerticalStatsComponent,
     Top10ListComponent,
     FeaturedUsersComponent,
+<<<<<<< HEAD
     MapBoxComponent,
     CircumferenceCustonComponent
+=======
+    PanelSubcategoryComponent,
+    MapBoxComponent
+>>>>>>> 0ec4152d752e0b7f6b4d0ae9ba471829b5002fbd
   ],
   exports: [
     AppPageletComponent,
@@ -99,6 +108,7 @@ import { CircumferenceCustonComponent } from './circumference-custon/circumferen
     AvatarsRowComponent,
     VerticalStatsComponent,
     Top10ListComponent,
+    PanelSubcategoryComponent,
     FeaturedUsersComponent,
     MapBoxComponent
   ],

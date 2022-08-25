@@ -1,7 +1,7 @@
 .card-container {
 
   width: 100%;
-  padding: 105px 5px;
+  padding: 105px 2%;
   background-color: white;
   border-radius: 5px;
   .images-box {
@@ -17,7 +17,7 @@
   }
 
   .texts-box {
-    margin-left: 15px;
+    margin-left: 52px;
 
     .name {
       font-size: 16px;
@@ -32,11 +32,11 @@
 }
 
 .green-icon-color {
-  border: 2px solid rgb(98, 241, 15);
-  background-color: rgba(96, 228, 20, 0.185);
+  border: 1.5px solid #20C588;
+  background-color: #E1F2EC;
 }
 
 .red-icon-color {
-  border: 2px solid rgb(236, 120, 11);
-  background-color: rgba(214, 161, 14, 0.185);
+  border: 1.5px solid #FF6D00;
+  background-color: #FCDBC3;
 }

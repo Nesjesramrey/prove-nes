@@ -44,7 +44,7 @@ export class SubcategoryDocumentComponent implements OnInit {
   public problemsDataSource = PROBLEMS_DATA;
   public solutionsDataSource = SOLUTIONS_DATA;
 
-
+  public categoriesData = CATEGORIES;
   @ViewChild('editRowName') editRowName!: ElementRef<HTMLInputElement>;
 
   constructor(
@@ -90,6 +90,24 @@ export interface DataTable {
   ranking: number;
   users: number;
 }
+
+export interface ICategory {
+  name: string;
+}
+
+const CATEGORIES: ICategory[] = [
+  { name: 'Educación' },
+  { name: 'Infraestuctura' },
+  { name: 'Salud' },
+  { name: 'Empleo' },
+  { name: 'Derechos humanos' },
+  { name: 'Deporte' },
+  { name: 'Vivienda' },
+  { name: 'Subsidio familiar' },
+  { name: 'Obesidad Infantil' },
+  { name: 'Asaltos' },
+  { name: 'Transporte' },
+];
 
 const ELEMENT_DATA: PeriodicElement[] = [
   { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
