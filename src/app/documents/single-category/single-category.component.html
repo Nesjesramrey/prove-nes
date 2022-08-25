@@ -18,12 +18,7 @@
       <div class="title-box">
         <!-- <div class="editing-box"></div> -->
         <div *ngIf="editingTitle; else editingMode" class="editing-box editing">
-          <input
-            class="text"
-            type="text"
-            value="{{ category.name }}"
-            #titleField
-          />
+          <input class="text" type="text" value="{{ category.name }}" #titleField />
 
           <span (click)="saveName()">
             <mat-icon>check_circle</mat-icon>
@@ -46,11 +41,7 @@
       <div class="textfield">
         <textarea placeholder="Escribe una descripciòn"></textarea>
 
-        <button
-          mat-mini-fab
-          color="primary"
-          aria-label="Example icon button with a menu icon"
-        >
+        <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
           <mat-icon>upload</mat-icon>
         </button>
       </div>
@@ -59,19 +50,10 @@
         <label [ngClass]="imageUrl ? 'data' : 'empty'">
           <mat-icon>photo_camera</mat-icon>
           <span>Subir imagen</span>
-          <input
-            type="file"
-            accept="image/*"
-            (change)="handleSelectImage($event)"
-          />
+          <input type="file" accept="image/*" (change)="handleSelectImage($event)" />
         </label>
 
-        <img
-          class="preview"
-          [src]="imageUrl"
-          alt="img_upload"
-          [ngClass]="imageUrl ? 'data' : 'empty'"
-        />
+        <img class="preview" [src]="imageUrl" alt="img_upload" [ngClass]="imageUrl ? 'data' : 'empty'" />
       </div>
 
       <avatars-row></avatars-row>
@@ -102,22 +84,17 @@
       </div>
       <!-- HEAD ACTIONS -->
       <div class="set-8 actions">
-        <button
-          type="button"
-          mat-mini-fab
-          class="layout"
-          matTooltip="Agregar layout colaboradores"
-        >
+        <button type="button" mat-mini-fab class="layout" matTooltip="Agregar layout colaboradores">
           <mat-icon>person_add</mat-icon>
         </button>
 
-        <button
-          type="button"
-          mat-mini-fab
-          color="primary"
-          matTooltip="Agregar colaborado"
-        >
+        <button type="button" mat-mini-fab color="primary" matTooltip="Agregar colaborado">
           <mat-icon>group_add</mat-icon>
+        </button>
+
+        <button type="button" mat-mini-fab color="warn" class="mini" matTooltip="Agregar Categoría"
+          (click)="popAddDocumentCategory()">
+          <mat-icon>create_new_folder</mat-icon>
         </button>
       </div>
     </div>
@@ -180,12 +157,7 @@
                 <mat-icon class="icon-warnings">warning</mat-icon>
               </p>
 
-              <button
-                type="button"
-                mat-mini-fab
-                class="add-problem"
-                matTooltip="Agregar tema"
-              >
+              <button type="button" mat-mini-fab class="add-problem" matTooltip="Agregar tema">
                 <mat-icon>add_circle</mat-icon>
               </button>
             </div>

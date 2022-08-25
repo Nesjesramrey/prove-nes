@@ -72,7 +72,7 @@ export class SingleUserComponent implements OnInit {
         } else {
           this.documentSrvc.fetchDocumentsByCollaborator({ _id: this.user['_id'] }).subscribe((reply: any) => {
             this.documents = reply;
-            console.log(this.documents);
+            // console.log(this.documents);
             setTimeout(() => {
               this.isDataAvailable = true;
             });

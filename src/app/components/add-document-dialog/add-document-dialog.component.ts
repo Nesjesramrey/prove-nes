@@ -50,7 +50,9 @@ export class AddDocumentDialogComponent implements OnInit {
       });
       this.collaboratorsFormArray = this.documentFormGroup.get('collaborators') as FormArray;
       this.collaboratorsFormArray.push(this.createCollaboratorField('editor'));
-      this.isDataAvailable = true;
+      setTimeout(() => {
+        this.isDataAvailable = true;
+      }, 1000);
     });
   }
 

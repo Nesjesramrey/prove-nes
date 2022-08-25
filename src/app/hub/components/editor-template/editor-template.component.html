@@ -18,6 +18,9 @@
               <button type="button" matTooltip="Abrir" (click)="linkMe('/documentos/' + document._id)">
                 <mat-icon>file_open</mat-icon>
               </button>
+              <button type="button" matTooltip="Datos">
+                <mat-icon>bubble_chart</mat-icon>
+              </button>
             </div>
           </div>
 
@@ -28,7 +31,7 @@
 
           <div class="set-12 empty-layout" *ngIf="document.layouts.length == 0">
             <div class="set-12 date">
-              <small>{{document.created_at | date: 'mediumDate'}} - {{document.created_at | date: 'mediumTime'}}</small>
+              <small>{{document.createdAt | date: 'mediumDate'}} - {{document.createdAt | date: 'mediumTime'}}</small>
             </div>
 
             <div class="set-12">

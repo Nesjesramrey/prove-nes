@@ -2,8 +2,8 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export class EndPointService {
-  // public apiEndPoint: string = 'http://localhost:4040/api/v1';
-  public apiEndPoint: string = 'http://pando-backend-dev-env.eba-zk3eys8d.us-east-1.elasticbeanstalk.com'
+  public apiEndPoint: string = 'http://localhost:4040/api/v1';
+  // public apiEndPoint: string = 'http://pando-backend-dev-env.eba-zk3eys8d.us-east-1.elasticbeanstalk.com'
 
 
   // authentication
@@ -35,6 +35,13 @@ export class EndPointService {
 
   public addDocumentCollaboratorEndPoint: string = '/document/add-document-collaborator';
   public addDocumentColumnEndPoint: string = '/document/add-document-column';
+
+  // layouts
+  public fetchSingleLayoutByIdEndPoint: string = '/layout/';
+  public createNewLayoutOnlyEndPoint: string = '/layout/document/';
+
+  // sub layouts
+  public createNewSubLayoutEndPoint: string = '/sublayout/layout/';
 
   // utility
   public fetchAllStatesEndPoint: string = '/state';

@@ -51,7 +51,7 @@ export class AddDocumentLayoutComponent implements OnInit {
 
       this.stepOneFormGroup = this.formBuilder.group({
         description: ['', []],
-        file: ['', []]
+        files: ['', []]
       });
 
       this.stepTwoFormGroup = this.formBuilder.group({
@@ -79,14 +79,11 @@ export class AddDocumentLayoutComponent implements OnInit {
   removeCategory(category: string): void {
     const index = this.selectedCategories.indexOf(category);
     if (index >= 0) { this.selectedCategories.splice(index, 1); }
-    console.log(this.selectedCategories);
     this.stepTwoFormGroup.patchValue({ layout: this.selectedCategories });
   }
 
   categorySelected(event: MatAutocompleteSelectedEvent): void {
     let category: any = this.categories.filter((x: any) => { return x['name'] == event['option']['value'] });
-    this.layout.push(category[0]['_id']);
-    this.stepTwoFormGroup.patchValue({ layout: this.layout });
 
     if (this.selectedCategories.includes(event.option.value)) {
       this.utilityservice.openErrorSnackBar('Ya se agrego la categoría.');
@@ -94,6 +91,9 @@ export class AddDocumentLayoutComponent implements OnInit {
       this.categoryCtrl.setValue(null);
       return;
     }
+
+    this.layout.push(category[0]['_id']);
+    this.stepTwoFormGroup.patchValue({ layout: this.layout });
     this.selectedCategories.push(event.option.value);
     this.categoryInput.nativeElement.value = '';
     this.categoryCtrl.setValue(null);
@@ -131,11 +131,11 @@ export class AddDocumentLayoutComponent implements OnInit {
     let data = {
       formData: new FormData(),
       documentID: this.document['_id']
-    }
+    };
 
     files = this.stepOneFormGroup.get('files')?.value;
     data['formData'].append('files', files);
-    data['formData'].append('description', this.stepOneFormGroup.value.description);
+    data['formData'].append('description', this.stepOneFormGroup.value.description || JSON.stringify(null));
     data['formData'].append('categories', JSON.stringify(this.layout));
 
     this.documentService.createDocumentLayout(data).subscribe((reply) => {

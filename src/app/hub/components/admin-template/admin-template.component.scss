@@ -197,6 +197,17 @@
     ul {
       list-style-position: inside;
     }
+
+    button {
+      small {
+        transition: all .2s linear;
+      }
+    }
+
+    button:hover {
+      small {
+        color: #306EFF;
+      }
+    }
   }
 }
-

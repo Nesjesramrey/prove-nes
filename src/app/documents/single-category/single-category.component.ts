@@ -8,6 +8,8 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { DocumentService } from '../../services/document.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UtilityService } from '../../services/utility.service';
+import { LayoutService } from 'src/app/services/layout.service';
+import { AddDocumentCategoryComponent } from 'src/app/components/add-document-category/add-document-category.component';
 // import { FormBuilder, FormGroup } from "@angular/forms";
 
 @Component({
@@ -50,55 +52,67 @@ export class SingleCategoryComponent implements OnInit {
     public userService: UserService,
     public documentService: DocumentService,
     public dialog: MatDialog,
-    public utilityService: UtilityService
+    public utilityService: UtilityService,
+    public layoutService: LayoutService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
-    this.token = this.authenticationService.fetchToken;
+    this.token = this.authenticationService.accessToken;
   }
 
   ngOnInit(): void {
+    let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
+    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID });
+    forkJoin([document, category]).subscribe((reply: any) => {
+      this.document = reply[0];
+      console.log('document: ', this.document);
+      this.category = reply[1];
+      console.log('category: ', this.category);
+
+      this.isDataAvailable = true;
+    });
+
     // user available
-    if (this.token != null) {
-      this.payload = JSON.parse(atob(this.token.split('.')[1]));
-      let user: Observable<any> = this.userService.fetchUserById({
-        _id: this.payload['sub'],
-      });
-      let document: Observable<any> =
-        this.documentService.fetchSingleDocumentById({
-          document_id: this.documentID,
-        });
-      forkJoin([user, document]).subscribe((reply: any) => {
-        this.user = reply[0]['user'];
-        this.document = reply[1]['document'];
-        this.layout = this.document['layout'];
+    // if (this.token != null) {
+    //   this.payload = JSON.parse(atob(this.token.split('.')[1]));
+    //   let user: Observable<any> = this.userService.fetchUserById({
+    //     _id: this.payload['sub'],
+    //   });
+    //   let document: Observable<any> =
+    //     this.documentService.fetchSingleDocumentById({
+    //       document_id: this.documentID,
+    //     });
+    //   forkJoin([user, document]).subscribe((reply: any) => {
+    //     this.user = reply[0]['user'];
+    //     this.document = reply[1]['document'];
+    //     this.layout = this.document['layout'];
 
-        this.category = _categories_mock.find(
-          (cat) => cat.id === this.categoryID
-        )!;
+    //     this.category = _categories_mock.find(
+    //       (cat) => cat.id === this.categoryID
+    //     )!;
 
-        this.subcategories = _mockSubcategories;
+    //     this.subcategories = _mockSubcategories;
 
-        setTimeout(() => {
-          this.dataSource = new MatTableDataSource(this.layout);
-          this.isDataAvailable = true;
-        });
-      });
-    }
-    // no user available
-    else {
-      let document: Observable<any> =
-        this.documentService.fetchSingleDocumentById({
-          document_id: this.documentID,
-        });
-      forkJoin([document]).subscribe((reply: any) => {
-        this.document = reply[0]['document'];
+    //     setTimeout(() => {
+    //       this.dataSource = new MatTableDataSource(this.layout);
+    //       this.isDataAvailable = true;
+    //     });
+    //   });
+    // }
+    // // no user available
+    // else {
+    //   let document: Observable<any> =
+    //     this.documentService.fetchSingleDocumentById({
+    //       document_id: this.documentID,
+    //     });
+    //   forkJoin([document]).subscribe((reply: any) => {
+    //     this.document = reply[0]['document'];
 
-        setTimeout(() => {
-          this.isDataAvailable = true;
-        });
-      });
-    }
+    //     setTimeout(() => {
+    //       this.isDataAvailable = true;
+    //     });
+    //   });
+    // }
   }
 
   openEditingTitle() {
@@ -127,6 +141,23 @@ export class SingleCategoryComponent implements OnInit {
 
   handleDeleteProblem(id: string) {
     this.subcategories = this.subcategories.filter((item) => item.id !== id);
+  }
+
+  popAddDocumentCategory() {
+    const dialogRef = this.dialog.open<AddDocumentCategoryComponent>(AddDocumentCategoryComponent, {
+      width: '640px',
+      data: {
+        documentID: this.documentID,
+        document: this.document,
+        categoryID: this.categoryID,
+        type: 'sublayout'
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
   }
 }
 

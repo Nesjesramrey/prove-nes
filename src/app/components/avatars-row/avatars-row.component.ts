@@ -9,7 +9,5 @@ export class AvatarsRowComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void { }
 }

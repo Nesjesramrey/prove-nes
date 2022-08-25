@@ -9,13 +9,13 @@
   </div>
 </div>
 
-<div class="set-12 dialog-body">
+<div class="set-12 dialog-body" *ngIf="isDataAvailable">
   <input type="file" #file (change)="onFileSelected($event)">
-  <form class="set-12">
+  <form class="set-12" [formGroup]="addCategoryFormGroup" (submit)="onAddLayout(addCategoryFormGroup)">
     <div class="set-9">
       <mat-form-field appearance="outline">
         <mat-label>Descripción</mat-label>
-        <textarea matInput cdkTextareaAutosize></textarea>
+        <textarea matInput cdkTextareaAutosize formControlName="description"></textarea>
       </mat-form-field>
     </div>
 
@@ -24,7 +24,7 @@
         <mat-icon>add_a_photo</mat-icon>
       </button>
     </div>
-    
+
     <div class="set-12 tools">
       <button type="button" (click)="toggleCategoryField()">
         <span *ngIf="!new_category">Agregar categoría</span>

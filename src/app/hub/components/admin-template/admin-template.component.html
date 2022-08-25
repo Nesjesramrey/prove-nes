@@ -34,7 +34,8 @@
         <div class="set-12 infohldr">
           <div class="set-12 card-row">
             <div class="set-8">
-              <h4>{{document.title}}</h4>
+              <!-- <h4>{{document.title}}</h4> -->
+              {{(document.title.length > 20) ? (document.title | slice: 0:20) + '...' : (document.title)}}
             </div>
             <div class="set-4 txt-right">
               <button type="button" matTooltip="Editar">
@@ -63,15 +64,22 @@
           </div>
 
           <div class="set-12 available-layout">
-            <h4 class="category-title">Categorías</h4>
-            <div class="set-12" *ngFor="let layout of document.layouts">
-              <ul>
-                <li>
-                  <button type="button">
-                    <small>{{layout.category.name}}</small>
-                  </button>
-                </li>
-              </ul>
+            <h4 class="category-title">Esquema</h4>
+            <div class="set-12" *ngIf="document.layouts.length == 0">
+              <button type="button">
+                <small>Agregar esquema</small>
+              </button>
+            </div>
+            <div class="set-12" *ngIf="document.layouts.length != 0">
+              <div class="set-12" *ngFor="let layout of document.layouts">
+                <ul>
+                  <li>
+                    <button type="button">
+                      <small>{{layout.category.name}}</small>
+                    </button>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
