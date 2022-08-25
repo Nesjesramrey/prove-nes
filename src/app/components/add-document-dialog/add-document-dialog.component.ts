@@ -41,7 +41,7 @@ export class AddDocumentDialogComponent implements OnInit {
   ngOnInit(): void {
     let states: Observable<any> = this.utilitySrvc.fetchAllStates();
     forkJoin([states]).subscribe((reply) => {
-      // console.log(reply);
+      console.log({reply});
       this.statesMex = reply[0];
       this.documentFormGroup = this.formBuilder.group({
         title: ['', [Validators.required]],
