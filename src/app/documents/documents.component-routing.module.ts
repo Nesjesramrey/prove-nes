@@ -6,6 +6,7 @@ import { SingleCategoryComponent } from './single-category/single-category.compo
 import { SingleThemeComponent } from './single-theme/single-theme.component';
 import { PublicDocumentComponent } from './public-document/public-document.component';
 import { SelectedPublicDocumentComponent } from './selected-public-document/selected-public-document.component';
+import { SubcategoryDocumentComponent } from './subcategory-document/subcategory-document.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,7 @@ const routes: Routes = [
       { path: '', component: DocumentsComponent },
       { path: 'public', component: PublicDocumentComponent, canActivate: [] },
       { path: 'selected-public', component: SelectedPublicDocumentComponent, canActivate: [] },
+      { path: 'subcategory', component: SubcategoryDocumentComponent, canActivate: [] },
       { path: ':documentID', component: SingleDocumentComponent, canActivate: [] },
       { path: ':documentID/categoria/:categoryID', component: SingleCategoryComponent, canActivate: [] },
       { path: ':documentID/categoria/:categoryID:/temas/:themeID', component: SingleThemeComponent, canActivate: [] }

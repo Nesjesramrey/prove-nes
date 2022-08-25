@@ -12,6 +12,7 @@ import { SingleCategoryComponent } from './single-category/single-category.compo
 import { SingleThemeComponent } from './single-theme/single-theme.component';
 import { PublicDocumentComponent } from './public-document/public-document.component';
 import { SelectedPublicDocumentComponent } from './selected-public-document/selected-public-document.component';
+import { SubcategoryDocumentComponent } from './subcategory-document/subcategory-document.component';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { SelectedPublicDocumentComponent } from './selected-public-document/sele
     SingleCategoryComponent,
     SingleThemeComponent,
     PublicDocumentComponent,
+    SubcategoryDocumentComponent,
     SelectedPublicDocumentComponent
   ]
 })

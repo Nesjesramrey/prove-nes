@@ -1,0 +1,132 @@
+<div class="container">
+  <div class="set-12">
+    <div class="set-6">
+      <breadcrumbs-component>
+        <li class="breadcrumb-item">Documento madre</li>
+        <li class="breadcrumb-item">Economia</li>
+
+        <li>Empleo</li>
+      </breadcrumbs-component>
+    </div>
+    <div class="set-6 txt-right users-container">
+      <p>Usuarios destacados</p>
+    </div>
+  </div>
+
+  <div class="set-12" style="padding-bottom: 100px">
+    <div class="set-4 col-rgt-3">
+      <mat-card class="doc-description">
+        <div class="imghldr">
+          <!-- <mat-icon>panorama</mat-icon> -->
+          <img
+            src="../../../assets/images/stand.png"
+            alt=""
+            style="width: 100%"
+          />
+        </div>
+        <div class="infohldr">
+          <p class="card-title">Empleo</p>
+          <p class="card-description">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam sed
+            dignissimos natus minima repudiandae consequatur distinctio unde
+            saepe ea quas accusantium animi reiciendis asperiores, nesciunt
+            consequuntur fugiat earum doloribus repellat.
+          </p>
+          <span class="card-description link">Leer más</span>
+        </div>
+      </mat-card>
+    </div>
+    <div class="set-8">
+      <div class="main-box">
+        <div class="main shadow"></div>
+
+        <div class="set-12 container-titles">
+          <div class="set-6 title">
+            <p>
+              Soluciones
+              <img src="../../../assets/images/row.png" alt="" width="22" />
+            </p>
+          </div>
+          <div class="set-6 title">
+            <p>
+              Problemas
+              <img src="../../../assets/images/alert.webp" alt="" width="20" />
+            </p>
+          </div>
+        </div>
+        <div class="set-12">
+          <div class="set-6">
+            <table
+              mat-table
+              [dataSource]="solutionsDataSource"
+              class="mat-elevation-z8"
+            >
+              <!--- Note that these columns can be defined in any order.
+                    The actual rendered columns are set as a property on the row definition" -->
+
+              <!-- Position Column -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                  <p style="font-weight: 500">{{ element.name }}</p>
+                </td>
+              </ng-container>
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="ranking">
+                <th mat-header-cell *matHeaderCellDef>Ranking</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.ranking }}
+                </td>
+              </ng-container>
+
+              <!-- Weight Column -->
+              <ng-container matColumnDef="users">
+                <th mat-header-cell *matHeaderCellDef>Usuarios</th>
+                <td mat-cell *matCellDef="let element">{{ element.users }}</td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+          </div>
+          <div class="set-6">
+            <table
+              mat-table
+              [dataSource]="problemsDataSource"
+              class="mat-elevation-z8"
+            >
+              <!--- Note that these columns can be defined in any order.
+                    The actual rendered columns are set as a property on the row definition" -->
+
+              <!-- Position Column -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                  <p style="font-weight: 500">{{ element.name }}</p>
+                </td>
+              </ng-container>
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="ranking">
+                <th mat-header-cell *matHeaderCellDef>Ranking</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.ranking }}
+                </td>
+              </ng-container>
+
+              <!-- Weight Column -->
+              <ng-container matColumnDef="users">
+                <th mat-header-cell *matHeaderCellDef>Usuarios</th>
+                <td mat-cell *matCellDef="let element">{{ element.users }}</td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

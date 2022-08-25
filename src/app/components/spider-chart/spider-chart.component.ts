@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType, Scale, ScaleChartOptions } from 'chart.js';
 
 @Component({
-  selector: '.spider-chart',
+  selector: 'spider-chart',
   templateUrl: './spider-chart.component.html',
   styleUrls: ['./spider-chart.component.scss']
 })

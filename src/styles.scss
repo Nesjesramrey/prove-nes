@@ -161,13 +161,18 @@ table {
   display: table;
   clear: both;
 }
-
 .col-rgt {
-  padding-right: 30px;
+  padding-left: 30px;
 }
+
 .col-rgt-1 {
   padding-right: 10px;
 }
+
+.col-rgt-3 {
+  padding-right: 30px;
+}
+
 
 .mt-1{
   margin-top: 10px;
