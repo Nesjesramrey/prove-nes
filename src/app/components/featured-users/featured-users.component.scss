@@ -1,0 +1,27 @@
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid white;
+  display: inline-block;
+  position: relative;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2);
+  -webkit-transition: 0.2s ease;
+  transition: 0.2s ease;
+  img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 100px;
+  }
+}
+
+li:nth-child(n + 2) {
+  margin-left: -5px;
+}

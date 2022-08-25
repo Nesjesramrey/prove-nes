@@ -35,6 +35,7 @@ import { HorizontalStatsComponent } from './horizontal-stats/horizontal-stats.co
 import { VerticalStatsComponent } from './vertical-stats/vertical-stats.component';
 import { Top10ListComponent } from './top10-list/top10-list.component';
 import { MapBoxComponent } from './map-box/map-box.component';
+import { FeaturedUsersComponent } from './featured-users/featured-users.component';
 
 @NgModule({
   imports: [
@@ -73,6 +74,7 @@ import { MapBoxComponent } from './map-box/map-box.component';
     AvatarsRowComponent,
     VerticalStatsComponent,
     Top10ListComponent,
+    FeaturedUsersComponent,
     MapBoxComponent
   ],
   exports: [
@@ -95,6 +97,7 @@ import { MapBoxComponent } from './map-box/map-box.component';
     AvatarsRowComponent,
     VerticalStatsComponent,
     Top10ListComponent,
+    FeaturedUsersComponent,
     MapBoxComponent
   ],
   entryComponents: [
