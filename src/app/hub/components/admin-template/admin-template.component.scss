@@ -84,7 +84,7 @@
   }
 
   .counts {
-    margin: 10px 0 20px 0;
+    margin: 10px 0 0 0;
 
     mat-icon {
       margin-right: 5px;
@@ -184,6 +184,18 @@
 
     .category:last-child {
       border-bottom: 0;
+    }
+  }
+
+  .available-layout {
+    margin-top: 20px;
+
+    .category-title {
+      margin-bottom: 10px;
+    }
+
+    ul {
+      list-style-position: inside;
     }
   }
 }

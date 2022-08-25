@@ -4,7 +4,7 @@
     <mat-icon>note_add</mat-icon>
   </button>
 </div>
- 
+
 <!-- empty documents -->
 <div class="set-12 carousel-hldr" *ngIf="documents.length == 0">
   <carousel [cellsToShow]="1">
@@ -27,7 +27,8 @@
     <div class="carousel-cell" *ngFor="let document of documents">
       <mat-card>
         <div class="set-12 imghldr">
-          <mat-icon *ngIf="document.coverImage == ''">panorama</mat-icon>
+          <mat-icon *ngIf="document.images.length == 0">panorama</mat-icon>
+          <img [src]="document.images[0]" alt="" *ngIf="document.images.length != 0">
         </div>
 
         <div class="set-12 infohldr">
@@ -39,7 +40,7 @@
               <button type="button" matTooltip="Editar">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button type="button" matTooltip="Abrir">
+              <button type="button" matTooltip="Abrir" (click)="linkMe(document._id)">
                 <mat-icon>file_open</mat-icon>
               </button>
               <button type="button" matTooltip="Datos" (click)="displayDocumentData(document._id)">
@@ -60,6 +61,19 @@
             <mat-icon>person</mat-icon> <small>{{document.collaborators.length}} Usuarios</small>
             <mat-icon>front_hand</mat-icon> <small>0 Interacciones</small>
           </div>
+
+          <div class="set-12 available-layout">
+            <h4 class="category-title">Categorías</h4>
+            <div class="set-12" *ngFor="let layout of document.layouts">
+              <ul>
+                <li>
+                  <button type="button">
+                    <small>{{layout.category.name}}</small>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </mat-card>
     </div>
@@ -68,7 +82,7 @@
 
 <div class="set-12 tabs">
   <mat-card class="set-12">
-    <mat-tab-group>
+    <mat-tab-group [disableRipple]="true" [@.disabled]="true">
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon>analytics</mat-icon>

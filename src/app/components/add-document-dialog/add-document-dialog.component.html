@@ -71,6 +71,7 @@
         <button type="submit" mat-raised-button color="primary" [disabled]="documentFormGroup.invalid || submitted">
           Crear Documento
         </button>
+        <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
       </div>
     </form>
   </div>

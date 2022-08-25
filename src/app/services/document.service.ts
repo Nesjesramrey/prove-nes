@@ -19,8 +19,27 @@ export class DocumentService {
   }
 
   fetchSingleDocumentById(data: any) {
-    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchSingleDocumentByIdEndPoint, data);
+    return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchSingleDocumentByIdEndPoint + `${data['_id']}`, {});
   }
+
+  fetchDocumentsByCollaborator(data: any) {
+    return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchDocumentsByCollaboratorEndPoint + `${data['_id']}`, {});
+  }
+
+  createDocumentLayout(data: any) {
+    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.createDocumentLayoutEndPoint + `${data['documentID']}`, data['formData']);
+  }
+
+
+
+
+
+
+
+
+
+
+
 
   fetchEditorDocuments(data: any) {
     return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchEditorDocumentsEndPoint, data);

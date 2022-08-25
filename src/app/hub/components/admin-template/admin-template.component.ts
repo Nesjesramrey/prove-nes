@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddDocumentDialogComponent } from 'src/app/components/add-document-dialog/add-document-dialog.component';
+import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
   selector: '.admin-template',
@@ -14,21 +15,26 @@ export class AdminTemplateComponent implements OnInit {
   public selectedDocument: any = null;
 
   constructor(
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public utilityService: UtilityService
   ) { }
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.documents.filter((x: any) => {
-        let editors: any = [];
-        x['collaborators'].filter((c: any) => {
-          if (c['activity']['value'] == 'editor') {
-            editors.push(c);
-          }
-        });
-        x['editors'] = editors;
-      });
+      this.setDocumentEditor();
       this.isDataAvailable = true;
+    });
+  }
+
+  setDocumentEditor() {
+    this.documents.filter((x: any) => {
+      let editors: any = [];
+      x['collaborators'].filter((c: any) => {
+        if (c['activity']['value'] == 'editor') {
+          editors.push(c);
+        }
+      });
+      x['editors'] = editors;
     });
   }
 
@@ -43,7 +49,8 @@ export class AdminTemplateComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
-        this.documents.unshift(reply['document']);
+        this.documents.unshift(reply);
+        this.setDocumentEditor();
       }
     });
   }
@@ -52,6 +59,10 @@ export class AdminTemplateComponent implements OnInit {
     let document: any = this.documents.filter((doc: any) => { return doc['_id'] == documentID; });
     this.selectedDocument = null;
     this.selectedDocument = document[0];
-    console.log(this.selectedDocument);
+    // console.log(this.selectedDocument);
+  }
+
+  linkMe(documentID: string) {
+    this.utilityService.linkMe('/documentos/' + documentID);
   }
 }

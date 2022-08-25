@@ -74,7 +74,17 @@
   }
 
   .ctrls {
-    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    * {
+      margin: 0;
+    }
+
+    mat-spinner {
+      margin-left: 20px;
+    }
 
     button {
       margin-left: 10px;

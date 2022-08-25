@@ -62,6 +62,18 @@
     }
   }
 
+  .available-layout {
+    margin-top: 20px;
+
+    .category-title {
+      margin-bottom: 10px;
+    }
+
+    ul {
+      list-style-position: inside;
+    }
+  }
+
   .imghldr {
     min-height: 150px;
     display: flex;
