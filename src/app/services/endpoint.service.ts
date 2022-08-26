@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 @Injectable()
 export class EndPointService {
   // public apiEndPoint: string = 'http://localhost:4040/api/v1';
-  public apiEndPoint: string = 'http://pando-backend-dev-env.eba-zk3eys8d.us-east-1.elasticbeanstalk.com'
+  public apiEndPoint: string = 'http://pando-backend-dev-env.eba-zk3eys8d.us-east-1.elasticbeanstalk.com/api/v1';
 
 
   // authentication
