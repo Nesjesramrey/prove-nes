@@ -11,6 +11,7 @@ import { UtilityService } from '../../services/utility.service';
 import { LayoutService } from 'src/app/services/layout.service';
 import { AddDocumentCategoryComponent } from 'src/app/components/add-document-category/add-document-category.component';
 // import { FormBuilder, FormGroup } from "@angular/forms";
+import { AddDocumentThemeComponent } from '../../components/add-document-theme/add-document-theme.component';
 
 @Component({
   selector: '.app-single-category',
@@ -166,7 +167,32 @@ export class SingleCategoryComponent implements OnInit {
       }
     });
   }
+
+
+  popAddDocumentTheme() {
+    // console.log("POP");
+    const dialogRef = this.dialog.open<AddDocumentThemeComponent>(AddDocumentThemeComponent, {
+      width: '640px',
+      data: {
+        documentID: this.documentID,
+        document: this.document,
+        categoryID: this.categoryID,
+        type: 'sublayout'
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        console.log(reply);
+      }
+    });
+
+  }
+
 }
+
+
 
 interface Category {
   name: string;
