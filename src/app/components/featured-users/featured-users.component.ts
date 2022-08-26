@@ -36,6 +36,8 @@ export class FeaturedUsersComponent implements OnInit {
       profileImage:'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
     },
   ]
+  visibleUsers:UserDataType[]= this.userData.slice(0,5);
+  userQuantity:number = this.userData.length;
   constructor() { }
 
   trackByFn(index:number, userData:UserDataType):number{
