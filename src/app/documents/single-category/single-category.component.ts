@@ -69,7 +69,7 @@ export class SingleCategoryComponent implements OnInit {
       this.document = reply[0];
       // console.log('document: ', this.document);
       this.selectedCategory = reply[1];
-      // console.log('category: ', this.selectedCategory);
+      console.log('category: ', this.selectedCategory);
       this.subcategories = this.selectedCategory['subLayouts'];
       // console.log('subcategories: ', this.subcategories);
 
@@ -170,7 +170,6 @@ export class SingleCategoryComponent implements OnInit {
 
 
   popAddDocumentTheme() {
-    // console.log("POP");
     const dialogRef = this.dialog.open<AddDocumentThemeComponent>(AddDocumentThemeComponent, {
       width: '640px',
       data: {
@@ -187,7 +186,6 @@ export class SingleCategoryComponent implements OnInit {
         console.log(reply);
       }
     });
-
   }
 
 }

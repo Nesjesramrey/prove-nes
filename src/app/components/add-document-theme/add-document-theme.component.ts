@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TopicService } from 'src/app/services/topic.service';
 
 @Component({
   selector: 'app-add-document-theme',
@@ -15,9 +16,10 @@ export class AddDocumentThemeComponent implements OnInit {
   constructor(
     public formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<AddDocumentThemeComponent>,
-    @Inject(MAT_DIALOG_DATA) public dialogData: any
+    @Inject(MAT_DIALOG_DATA) public dialogData: any,
+    public topicService: TopicService
   ) {
-    // console.log(this.dialogData);
+    console.log(this.dialogData);
   }
 
   ngOnInit(): void {
@@ -44,5 +46,16 @@ export class AddDocumentThemeComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
-  onCreateTopic(form: FormGroup) { }
+  onCreateTopic(form: FormGroup) {
+    let data: any = {
+      title: form['value']['title'],
+      description: form['value']['description'],
+      solution: form['value']['solution'],
+      layout_id: this.dialogData['categoryID']
+    };
+    this.topicService.createNewTopic(data).subscribe((reply: any) => {
+      // console.log(reply);
+      this.dialogRef.close(reply['topics']);
+    });
+  }
 }
