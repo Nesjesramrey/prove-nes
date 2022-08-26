@@ -2,11 +2,26 @@
   <div class="set-7 txt-right title">Usuarios destacados</div>
   <div class="set-5">
     <ul>
-      <li *ngFor="let imageUser of userData">
-        <img
-          [src]="imageUser.profileImage"
-        />
-        </li>
+      <div
+        *ngFor="let imageUser of userData; trackBy: trackByFn;let indexUser=index; "
+      >
+        <div class="set-2" *ngIf="indexUser<5; else elseBlock">
+          <li>
+            <img class="profileImage" [src]="imageUser.profileImage" />
+          </li>
+        </div>
+        <ng-template #elseBlock>
+          <div class="set-1" *ngIf=" indexUser ===6">
+            <li>
+              <div>
+                <div class="moreUsers">
+                  <img class="moreUsersImage" src='/assets/images/groupUser.png' />
+                </div>
+              </div>
+            </li>
+          </div>
+        </ng-template>
+      </div>
     </ul>
   </div>
 </div>
