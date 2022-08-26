@@ -4,6 +4,7 @@
       <mat-card>
         <div class="set-12 imghldr">
           <mat-icon *ngIf="document.images.length == 0">panorama</mat-icon>
+          <img [src]="document.images[0]" alt="" *ngIf="document.images.length != 0">
         </div>
 
         <div class="set-12 infohldr">

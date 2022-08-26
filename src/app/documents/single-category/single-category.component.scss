@@ -7,6 +7,7 @@
 
   .category-description {
     margin-bottom: 20pt;
+
     .title-box {
       .editing-box {
         // min-width: 180px;
@@ -109,6 +110,7 @@
         &.data {
           background-color: rgba(250, 250, 250, 0.7);
           opacity: 0;
+
           &:hover {
             opacity: 1;
           }
@@ -146,12 +148,14 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    
-    > p {
+
+    >p {
       margin: 0;
     }
+
     .add-problem {
       background-color: #f2f2f2;
+
       mat-icon {
         color: #e98282;
       }
@@ -216,6 +220,7 @@
                   display: inline-block;
                   margin: 0;
                 }
+
                 strong {
                   margin-top: 5pt;
                   font-size: 16pt;
@@ -272,6 +277,7 @@
               &.icon-insights {
                 color: #20c588;
               }
+
               &.icon-warnings {
                 color: #e98282;
               }
@@ -304,11 +310,23 @@
       }
     }
 
+    table {
+      th.mat-header-cell:first-of-type {
+        padding: 0 !important;
+      }
+
+      tr:last-child {
+        .mat-cell {
+          border: 0 !important;
+        }
+      }
+    }
+
     /* TABLE */
     .mat-column-name {
       // background-color: red;
       padding: 8pt 0;
-      width: 300px;
+      // width: 300px;
 
       .text-box {
         // width: 90%;
@@ -322,7 +340,7 @@
         text-transform: uppercase;
         font-weight: bold;
 
-        > div {
+        >div {
           margin: 0;
         }
 
@@ -339,10 +357,46 @@
         }
       }
     }
+
     .mat-column-actions {
       width: 50px;
       padding-right: 0;
       text-align: right;
+    }
+  }
+
+  button.mini {
+    margin-left: 20px;
+
+    mat-icon {
+      font-size: 14pt !important;
+      color: #fff;
+    }
+  }
+
+  .empty-subs {
+    mat-card {
+      min-height: 270px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    mat-icon {
+      font-size: 30pt;
+    }
+
+    button {
+      margin-top: 30px;
+    }
+  }
+
+  .loading {
+    mat-spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
   }
 }

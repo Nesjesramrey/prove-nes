@@ -109,20 +109,21 @@ export class AddDocumentLayoutComponent implements OnInit {
   }
 
   onFileSelected(event: any) {
-    let ext: any;
-    if (event.target.files.length == 0) {
-      return;
-    } else {
-      ext = event.target.files[0].name.substr(event.target.files[0].name.lastIndexOf('.') + 1);
-    }
+    // let ext: any;
+    // if (event.target.files.length == 0) {
+    //   return;
+    // } else {
+    //   ext = event.target.files[0].name.substr(event.target.files[0].name.lastIndexOf('.') + 1);
+    // }
 
-    if (!this.utilityservice.image_extensions.includes(ext)) {
-      this.utilityservice.openErrorSnackBar('Solo archivos de tipo imágen son permitidos');
-      return;
-    }
+    // if (!this.utilityservice.image_extensions.includes(ext)) {
+    //   this.utilityservice.openErrorSnackBar('Solo archivos de tipo imágen son permitidos');
+    //   return;
+    // }
 
-    this.stepOneFormGroup.patchValue({ file: event.target.files[0] });
+    this.stepOneFormGroup.patchValue({ files: event.target.files[0] });
     this.stepOneFormGroup.updateValueAndValidity();
+    // console.log(this.stepOneFormGroup.controls);
   }
 
   onCreateLayout() {
@@ -135,7 +136,7 @@ export class AddDocumentLayoutComponent implements OnInit {
 
     files = this.stepOneFormGroup.get('files')?.value;
     data['formData'].append('files', files);
-    data['formData'].append('description', this.stepOneFormGroup.value.description || JSON.stringify(null));
+    data['formData'].append('description', this.stepOneFormGroup.value.description);
     data['formData'].append('categories', JSON.stringify(this.layout));
 
     this.documentService.createDocumentLayout(data).subscribe((reply) => {

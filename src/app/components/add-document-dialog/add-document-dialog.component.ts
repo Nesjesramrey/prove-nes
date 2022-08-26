@@ -20,7 +20,8 @@ export class AddDocumentDialogComponent implements OnInit {
     { type: 'administrator', displayName: 'Administrador', disabled: true },
     { type: 'editor', displayName: 'Editor', disabled: false },
     { type: 'collaborator', displayName: 'Colaborador', disabled: true },
-    { type: 'citizen', displayName: 'Ciudadano', disabled: true }
+    { type: 'citizen', displayName: 'Ciudadano', disabled: true },
+    { type: 'D', displayName: 'D', disabled: true }
   ];
   public statesMex: any = [];
   public submitted: boolean = false;
@@ -41,7 +42,7 @@ export class AddDocumentDialogComponent implements OnInit {
   ngOnInit(): void {
     let states: Observable<any> = this.utilitySrvc.fetchAllStates();
     forkJoin([states]).subscribe((reply) => {
-      console.log({reply});
+      console.log({ reply });
       this.statesMex = reply[0];
       this.documentFormGroup = this.formBuilder.group({
         title: ['', [Validators.required]],

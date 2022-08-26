@@ -27,6 +27,7 @@ export class DocumentService {
   }
 
   createDocumentLayout(data: any) {
+    for (var pair of data.formData.entries()) { console.log(pair[0] + ', ' + pair[1]); }
     return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.createDocumentLayoutEndPoint + `${data['documentID']}`, data['formData']);
   }
 

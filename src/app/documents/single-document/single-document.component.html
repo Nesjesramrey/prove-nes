@@ -13,7 +13,8 @@
   <div class="set-3 col-lft">
     <mat-card class="set-12 doc-description">
       <div class="set-12 imghldr">
-        <mat-icon>panorama</mat-icon>
+        <mat-icon *ngIf="document.images.length == 0">panorama</mat-icon>
+        <img [src]="document.images[0]" alt="" *ngIf="document.images.length != 0">
       </div>
 
       <div class="set-12 infohldr">
@@ -44,11 +45,11 @@
 
       <div class="set-8 txt-right">
         <button type="button" mat-mini-fab color="accent" class="mini" matTooltip="Agregar Esquema"
-          (click)="popAddDocumentLayout()">
+          (click)="popAddDocumentLayout()" disabled>
           <mat-icon>group_add</mat-icon>
         </button>
         <button type="button" mat-mini-fab color="primary" class="mini" matTooltip="Agregar Colaborador"
-          (click)="popAddDocumentCollaborator()">
+          (click)="popAddDocumentCollaborator()" disabled>
           <mat-icon>person_add</mat-icon>
         </button>
         <button type="button" mat-mini-fab color="warn" class="mini" matTooltip="Agregar Categoría"

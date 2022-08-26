@@ -25,8 +25,9 @@ export class SingleCategoryComponent implements OnInit {
   public payload: any = null;
   public document: any = null;
   public layout: any = [];
-  public category: Category = _categories_mock[0];
+  // public category: Category = _categories_mock[0];
 
+  public selectedCategory: any = null;
   public isDataAvailable: boolean = false;
   public dataSource = new MatTableDataSource<any>();
   public selection = new SelectionModel<any>(true, []);
@@ -65,11 +66,15 @@ export class SingleCategoryComponent implements OnInit {
     let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID });
     forkJoin([document, category]).subscribe((reply: any) => {
       this.document = reply[0];
-      console.log('document: ', this.document);
-      this.category = reply[1];
-      console.log('category: ', this.category);
+      // console.log('document: ', this.document);
+      this.selectedCategory = reply[1];
+      // console.log('category: ', this.selectedCategory);
+      this.subcategories = this.selectedCategory['subLayouts'];
+      // console.log('subcategories: ', this.subcategories);
 
-      this.isDataAvailable = true;
+      setTimeout(() => {
+        this.isDataAvailable = true;
+      }, 300);
     });
 
     // user available
@@ -124,7 +129,7 @@ export class SingleCategoryComponent implements OnInit {
   }
 
   saveName() {
-    this.category.name = this.titleField.nativeElement.value;
+    this.selectedCategory.name = this.titleField.nativeElement.value;
     this.editingTitle = false;
   }
 
@@ -156,7 +161,9 @@ export class SingleCategoryComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) { }
+      if (reply != undefined) {
+        console.log(reply);
+      }
     });
   }
 }

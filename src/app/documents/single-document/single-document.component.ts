@@ -51,7 +51,7 @@ export class SingleDocumentComponent implements OnInit {
       this.document = reply;
       console.log('document: ', this.document);
       this.layouts = this.document['layouts'];
-      // console.log('layouts: ', this.layouts);
+      console.log('layouts: ', this.layouts);
     });
 
     if (this.accessToken != null) {
@@ -113,17 +113,11 @@ export class SingleDocumentComponent implements OnInit {
       disableClose: true
     });
 
-    // const dialogRef = this.dialog.open<AddDocumentLayoutComponent>(AddDocumentLayoutComponent, {
-    //   width: '640px',
-    //   data: {
-    //     documentID: this.documentID,
-    //     document: this.document
-    //   },
-    //   disableClose: true
-    // });
-
     dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) { }
+      if (reply != undefined) {
+        this.document['layouts'].push(reply[0]);
+        console.log(this.document);
+      }
     });
   }
 
