@@ -1,0 +1,73 @@
+<div class="set-12 dialog-head">
+  <div class="set-9">
+    <h3>Agregar Problema</h3>
+  </div>
+  <div class="set-3 txt-right">
+    <button type="button" mat-icon-button color="primary"  (click)="killDialog()">
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </div>
+</div>
+
+<!-- <div class="set-12 dialog-body" *ngIf="!isDataAvailable">
+  <mat-spinner></mat-spinner>
+</div> -->
+
+<div class="set-12 dialog-body">
+  <form [formGroup]="addThemeFormGroup" (submit)="onCreateCategory()">
+    <input
+      type="text"
+      matInput
+      placeholder="Título del problema"
+      autocomplete="off"
+      class="title-box"
+      formControlName="title"
+    />
+
+    <div class="second-line">
+      <textarea
+        matInput
+        placeholder="Escribe una descripción"
+        formControlName="description"
+      ></textarea>
+
+      <div class="imagebox">
+        <label [ngClass]="imageUrl ? 'data' : 'empty'">
+          <mat-icon>photo_camera</mat-icon>
+          <span>Subir imagen</span>
+          <input
+            type="file"
+            accept="image/*"
+            (change)="handleSelectImage($event)"
+            formControlName="image"
+          />
+        </label>
+
+        <img
+          class="preview"
+          [src]="imageUrl"
+          alt="img_upload"
+          [ngClass]="imageUrl ? 'data' : 'empty'"
+        />
+      </div>
+    </div>
+
+    <div>
+      <textarea
+        matInput
+        placeholder="Escribe una solución"
+        class="solution-box"
+        formControlName="solution"
+      ></textarea>
+    </div>
+
+    <div class="set-12 ctrls">
+      <button type="submit" mat-raised-button color="primary">
+        Agregar problematica
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- [formGroup]="addCategoryFormGroup" -->
+<!-- (submit)="onAddLayout(addCategoryFormGroup)" -->

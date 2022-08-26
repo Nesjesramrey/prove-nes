@@ -28,7 +28,7 @@ export class EndPointService {
 
   // public createNewDocumentEndPoint: string = '/document/create-new-document';
   public fetchMyDocumentsEndPoint: string = '/document/fetch-my-documents';
-  // public fetchSingleDocumentByIdEndPoint: string = '/document/fetch-single-document-by-id';
+  // public fetchSingleDocumentByngIdEndPoint: string = '/document/fetch-single-document-by-id';
   public fetchEditorDocumentsEndPoint: string = '/document/fetch-editor-documents';
   public addDocumentLayoutEndPoint: string = '/document/add-document-layout';
 

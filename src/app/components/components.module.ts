@@ -30,6 +30,7 @@ import { AddDocumentCategoryComponent } from "./add-document-category/add-docume
 import { AddDocumentCollaboratorComponent } from "./add-document-collaborator/add-document-collaborator.component";
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { AvatarsRowComponent } from './avatars-row/avatars-row.component';
+import { AddDocumentThemeComponent } from './add-document-theme/add-document-theme.component';
 
 @NgModule({
   imports: [
@@ -63,7 +64,8 @@ import { AvatarsRowComponent } from './avatars-row/avatars-row.component';
     AddDocumentCategoryComponent,
     AddDocumentCollaboratorComponent,
     BreadcrumbsComponent,
-    AvatarsRowComponent
+    AvatarsRowComponent,
+    AddDocumentThemeComponent
   ],
   exports: [
     AppPageletComponent,

@@ -1,0 +1,164 @@
+:host {
+  .dialog-head {
+    display: flex;
+    align-items: center;
+  }
+
+  .dialog-body {
+    textarea {
+      // min-height: 100px;
+      max-height: 150px;
+    }
+
+    .set-9 {
+      padding-right: 20px;
+    }
+
+    .upload-img {
+      display: flex;
+      width: 100%;
+      min-height: 59.5px;
+      align-items: center;
+      justify-content: center;
+      border: 1px dashed rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      margin: 0.25em 0;
+
+      mat-icon {
+        color: #306eff;
+        // opacity: 0.4;
+        transition: all 0.2s linear;
+      }
+    }
+
+    // .upload-img:hover {
+    //   mat-icon {
+    //     opacity: 1;
+    //   }
+    // }
+
+    .ctrls {
+      text-align: right;
+      margin-top: 10px;
+    }
+  }
+
+  .tools {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    button {
+      margin: 0;
+      display: flex;
+      align-items: center;
+
+      * {
+        margin: 0;
+      }
+
+      mat-icon {
+        margin-left: 5px;
+        font-size: 15pt;
+        color: #306eff;
+      }
+    }
+  }
+
+  .imagebox {
+    border-style: dashed;
+    border-width: 2px;
+    min-height: 100px;
+    height: auto;
+    margin-bottom: 50pt;
+    position: relative;
+
+    label {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      font-size: 12pt;
+      user-select: none;
+      z-index: 3;
+      cursor: pointer;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: all 390ms linear;
+      box-sizing: border-box;
+
+      &.data {
+        background-color: rgba(250, 250, 250, 0.7);
+        opacity: 0;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+
+      mat-icon {
+        font-size: 25pt;
+        color: #306eff;
+      }
+
+      span {
+        margin-top: 8pt;
+      }
+    }
+
+    .preview {
+      width: 100%;
+      // height: 100%;A
+      object-fit: cover;
+      transition: opacity 450ms linear;
+      z-index: 2;
+
+      &.empty {
+        opacity: 0;
+      }
+
+      &.data {
+        opacity: 1;
+      }
+    }
+  }
+
+  .second-line {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20pt;
+    margin-bottom: 20pt;
+
+    textarea {
+      width: 60%;
+    }
+
+    .imagebox {
+      margin: 0;
+      width: 35%;
+      height: 150px;
+      max-height: 150px;
+    }
+  }
+
+  .title-box {
+    margin-top: 20pt;
+  }
+
+  .solution-box {
+    height: 100px;
+    margin-bottom: 20pt;
+  }
+
+  textarea,
+  input {
+    padding: 0.8em;
+    border: 2px solid #636363;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+}
