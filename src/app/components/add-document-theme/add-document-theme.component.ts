@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-document-theme',
@@ -14,12 +14,15 @@ export class AddDocumentThemeComponent implements OnInit {
 
   constructor(
     public formBuilder: FormBuilder,
-    public dialogRef: MatDialogRef<AddDocumentThemeComponent>
-  ) {}
+    public dialogRef: MatDialogRef<AddDocumentThemeComponent>,
+    @Inject(MAT_DIALOG_DATA) public dialogData: any
+  ) {
+    // console.log(this.dialogData);
+  }
 
   ngOnInit(): void {
     this.addThemeFormGroup = this.formBuilder.group({
-      title: ['', []],
+      title: ['', [Validators.required]],
       description: ['', []],
       solution: ['', []],
       image: ['', []],
@@ -41,7 +44,5 @@ export class AddDocumentThemeComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
-  onCreateCategory() {
-    console.log(this.addThemeFormGroup);
-  }
+  onCreateTopic(form: FormGroup) { }
 }
