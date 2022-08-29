@@ -1,34 +1,26 @@
 <div>
-  <ul>
-    <li>
-      <img
-        src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg"
-      />
-    </li>
-    <li>
-      <img
-        src="https://images.pexels.com/photos/2726111/pexels-photo-2726111.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-      />
-    </li>
-    <li>
-      <img
-        src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-      />
-    </li>
-    <li>
-      <img
-        src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg"
-      />
-    </li>
-    <li>
-      <img
-        src="https://images.pexels.com/photos/2726111/pexels-photo-2726111.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-      />
-    </li>
-    <li>
-      <img
-        src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-      />
-    </li>
-  </ul>
+  <div class="set-7 txt-right title">Usuarios destacados</div>
+  <div class="set-5">
+    <ul>
+      <div
+        *ngFor="let imageUser of visibleUsers; trackBy: trackByFn;let indexUser=index; "
+      >
+      <div class="set-2">
+        <li >
+          <img class="profileImage" [src]="imageUser.profileImage" />
+        </li>
+      </div>
+      </div>
+      <div class="set-1" *ngIf=" userQuantity >5">
+        <li>
+          <div>
+            <div class="moreUsers">
+              <img class="moreUsersImage" src="/assets/images/groupUser.png" />
+            </div>
+          </div>
+        </li>
+      </div>
+    </ul>
+  </div>
 </div>
+{{console}}
