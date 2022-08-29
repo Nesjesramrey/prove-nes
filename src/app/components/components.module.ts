@@ -106,6 +106,7 @@ import { CircumferenceCustonComponent } from './circumference-custon/circumferen
     PanelSubcategoryComponent,
     FeaturedUsersComponent,
     MapBoxComponent,
+    ModalPermissionComponent,
     CircumferenceCustonComponent,
   ],
   entryComponents: [
