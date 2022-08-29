@@ -7,6 +7,7 @@ import { map, startWith } from 'rxjs/operators';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { LayoutService } from 'src/app/services/layout.service';
 
 @Component({
   selector: '.add-document-category',
@@ -25,27 +26,39 @@ export class AddDocumentCategoryComponent implements OnInit {
   @ViewChild('categoryInput') categoryInput!: ElementRef<HTMLInputElement>;
   public new_category: boolean = false;
   public addCategoryFormGroup!: FormGroup;
+  public isDataAvailable: boolean = false;
+  public selectedCategoryId: any = null;
+  public addedLayouts: any = [];
 
   constructor(
     public dialogRef: MatDialogRef<AddDocumentCategoryComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public utilityService: UtilityService,
-    public formBuilder: FormBuilder
-  ) { }
+    public formBuilder: FormBuilder,
+    public layoutService: LayoutService
+  ) {
+    console.log(this.dialogData);
+    this.dialogData['document']['layouts'].filter((x: any) => { this.addedLayouts.push(x['category']['_id']); });
+  }
 
   ngOnInit(): void {
     let categories: Observable<any> = this.utilityService.fetchAllCategories();
     forkJoin([categories]).subscribe((reply: any) => {
       // console.log(reply);
-      this.categories = reply[0]['clasifications'];
+      this.categories = reply[0];
       this.categories.filter((x: any) => { this.categoriesString.push(x['name']); });
       // console.log(this.categories);
 
       this.addCategoryFormGroup = this.formBuilder.group({
-        name: ['', [Validators.required, Validators.minLength(2)]]
+        description: ['', []],
+        files: ['', []],
+        category: ['', []]
       });
 
       this.setFilteredCategories();
+      setTimeout(() => {
+        this.isDataAvailable = true;
+      }, 1000);
     });
   }
 
@@ -79,7 +92,20 @@ export class AddDocumentCategoryComponent implements OnInit {
 
   categorySelected(event: MatAutocompleteSelectedEvent): void {
     let category: any = this.categories.filter((x: any) => { return x['name'] == event['option']['value'] });
-    this.layout.push({ category: category[0]['_id'] });
+    if (this.addedLayouts.includes(category[0]['_id'])) {
+      this.utilityService.openErrorSnackBar('La categoría ya esta en uso');
+      this.categoryInput.nativeElement.value = '';
+      this.categoryCtrl.setValue(null);
+      return;
+    }
+
+    if (this.selectedCategories.length == 1) {
+      this.utilityService.openErrorSnackBar('Solo se puede agregar 1 categoría.');
+      this.categoryInput.nativeElement.value = '';
+      this.categoryCtrl.setValue(null);
+      return;
+    }
+    this.selectedCategoryId = category[0]['_id'];
     this.selectedCategories.push(event.option.value);
     this.categoryInput.nativeElement.value = '';
     this.categoryCtrl.setValue(null);
@@ -88,7 +114,7 @@ export class AddDocumentCategoryComponent implements OnInit {
   toggleCategoryField() {
     this.new_category = !this.new_category;
     if (!this.new_category) {
-      this.addCategoryFormGroup.patchValue({ name: '' });
+      this.addCategoryFormGroup.patchValue({ category: '' });
       this.addCategoryFormGroup.updateValueAndValidity();
     }
   }
@@ -116,5 +142,42 @@ export class AddDocumentCategoryComponent implements OnInit {
 
   killDialog() {
     this.dialogRef.close();
+  }
+
+  onAddLayout(form: FormGroup) {
+    let files: File;
+    let data: any
+
+    if (this.dialogData['type'] != undefined) {
+      if (this.dialogData['type'] == 'sublayout') {
+        data = {
+          formData: new FormData(),
+          category: this.dialogData['categoryID']
+        }
+
+        files = this.addCategoryFormGroup.get('files')?.value;
+        data['formData'].append('files', files);
+        data['formData'].append('description', this.addCategoryFormGroup.value.description);
+        data['formData'].append('category', this.selectedCategoryId);
+
+        this.layoutService.createNewSubLayout(data).subscribe((reply: any) => {
+          this.dialogRef.close(reply['layouts']);
+        });
+      }
+    } else {
+      data = {
+        formData: new FormData(),
+        documentID: this.dialogData['documentID']
+      };
+
+      files = this.addCategoryFormGroup.get('files')?.value;
+      data['formData'].append('files', files);
+      data['formData'].append('description', this.addCategoryFormGroup.value.description);
+      data['formData'].append('category', this.selectedCategoryId);
+
+      this.layoutService.createNewLayoutOnly(data).subscribe((reply: any) => {
+        this.dialogRef.close(reply['layouts']);
+      });
+    }
   }
 }

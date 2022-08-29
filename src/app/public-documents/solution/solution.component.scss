@@ -1,0 +1,24 @@
+.solution {
+  padding: 40px;
+  margin-top: 80px;
+  float: left;
+  width: 100%;
+  height: auto;
+
+  .content {
+    width: 100%;
+    margin-top: 30pt;
+
+    display: grid;
+    gap: 20pt;
+    grid-template-columns: 6fr 3fr;
+
+    .left {
+      height: 300px;
+    }
+
+    .right {
+      height: 200px;
+    }
+  }
+}

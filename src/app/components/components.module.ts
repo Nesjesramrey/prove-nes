@@ -31,6 +31,7 @@ import { AddDocumentCategoryComponent } from './add-document-category/add-docume
 import { AddDocumentCollaboratorComponent } from './add-document-collaborator/add-document-collaborator.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { AvatarsRowComponent } from './avatars-row/avatars-row.component';
+import { AddDocumentThemeComponent } from './add-document-theme/add-document-theme.component';
 import { HorizontalStatsComponent } from './horizontal-stats/horizontal-stats.component';
 import { VerticalStatsComponent } from './vertical-stats/vertical-stats.component';
 import { Top10ListComponent } from './top10-list/top10-list.component';
@@ -75,6 +76,7 @@ import { CircumferenceCustonComponent } from './circumference-custon/circumferen
     HorizontalStatsComponent,
     BreadcrumbsComponent,
     AvatarsRowComponent,
+    AddDocumentThemeComponent,
     VerticalStatsComponent,
     Top10ListComponent,
     FeaturedUsersComponent,

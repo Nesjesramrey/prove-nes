@@ -23,7 +23,8 @@ export class SingleDocumentComponent implements OnInit {
   public user: any = null;
   public document: any = null;
   public layout: any = [];
-  public categories: any[] = _categories_mock;
+  // public categories: any[] = _categories_mock;
+  public layouts: any[] = [];
   public categoriesDisplayedColumns: string[] = ["name", "users", "interactions", "solutions", "problems", "ranking", "actions"]
   public isDataAvailable: boolean = false;
   public displayedColumns: string[] = ['select', 'name', 'email', 'activities', 'menu'];
@@ -48,13 +49,15 @@ export class SingleDocumentComponent implements OnInit {
   ngOnInit(): void {
     this.documentService.fetchSingleDocumentById({ _id: this.documentID }).subscribe((reply: any) => {
       this.document = reply;
-      // console.log(this.document);
+      console.log('document: ', this.document);
+      this.layouts = this.document['layouts'];
+      console.log('layouts: ', this.layouts);
     });
 
     if (this.accessToken != null) {
       this.userService.fetchFireUser().subscribe({
         error: (error) => {
-          console.log(error);
+          // console.log(error);
           switch (error['status']) {
             case 401:
               // this.utilityService.openErrorSnackBar('Tu token de acceso ha caducado, intenta ingresar otra vez.');
@@ -63,14 +66,14 @@ export class SingleDocumentComponent implements OnInit {
           }
           setTimeout(() => {
             this.isDataAvailable = true;
-          });
+          }, 1000);
         },
         next: (reply: any) => {
           this.user = reply;
           // console.log(this.user);
           setTimeout(() => {
             this.isDataAvailable = true;
-          });
+          }, 1000);
         },
         complete: () => { },
       });
@@ -110,17 +113,11 @@ export class SingleDocumentComponent implements OnInit {
       disableClose: true
     });
 
-    // const dialogRef = this.dialog.open<AddDocumentLayoutComponent>(AddDocumentLayoutComponent, {
-    //   width: '640px',
-    //   data: {
-    //     documentID: this.documentID,
-    //     document: this.document
-    //   },
-    //   disableClose: true
-    // });
-
     dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) { }
+      if (reply != undefined) {
+        this.document['layouts'].push(reply[0]);
+        console.log(this.document);
+      }
     });
   }
 
@@ -148,25 +145,25 @@ export class SingleDocumentComponent implements OnInit {
     }, 50);
   }
 
-  saveName() {
-    const newValue = this.editRowName.nativeElement.value;
+  // saveName() {
+  //   const newValue = this.editRowName.nativeElement.value;
 
-    if (newValue === null || newValue.length == 0) return
-
-
-    this.categories = this.categories.map(cat => {
-
-      if (cat.id == this.editingRowId) {
-        return { ...cat, name: newValue }
-      }
-
-      return cat;
-    })
+  //   if (newValue === null || newValue.length == 0) return
 
 
-    this.editingRowId = null;
-    this.editRowName.nativeElement.value = ""
-  }
+  //   this.categories = this.categories.map(cat => {
+
+  //     if (cat.id == this.editingRowId) {
+  //       return { ...cat, name: newValue }
+  //     }
+
+  //     return cat;
+  //   })
+
+
+  //   this.editingRowId = null;
+  //   this.editRowName.nativeElement.value = ""
+  // }
 
 
   linkCategories(id: string) {

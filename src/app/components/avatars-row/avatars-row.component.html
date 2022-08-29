@@ -1,8 +1,7 @@
 <div class="avatars-row">
   <div class="title">
-    <span> Gestiona </span>
-
-    <mat-icon> manage_accounts</mat-icon>
+    <span> {{ title }} </span>
+    <mat-icon *ngIf="showIcon"> manage_accounts</mat-icon>
   </div>
 
   <div class="avatars-list">
@@ -10,20 +9,16 @@
       <mat-icon>person_add</mat-icon>
     </div>
     <div class="avatar item">
-      <img
-        src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg"
-      />
+      <img src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg" />
     </div>
 
     <div class="avatar item">
       <img
-        src="https://images.pexels.com/photos/2726111/pexels-photo-2726111.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-      />
+        src="https://images.pexels.com/photos/2726111/pexels-photo-2726111.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" />
     </div>
     <div class="avatar item">
       <img
-        src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-      />
+        src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" />
     </div>
     <div class="avatar more">+20</div>
   </div>

@@ -19,6 +19,10 @@ const routes: Routes = [
       import('./documents/documents.component.module').then(module => module.DocumentsComponentModule)
   },
   {
+    path: 'documentos-publicos', loadChildren: () =>
+      import('./public-documents/public-documents.component.module').then(module => module.PublicDocumentsModule)
+  },
+  {
     path: 'legales', loadChildren: () =>
       import('./legal/legal.component.module').then(module => module.LegalComponentModule)
   },

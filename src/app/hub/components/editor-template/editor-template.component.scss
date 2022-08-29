@@ -7,6 +7,7 @@
       padding: 0 !important;
       height: 100%;
       box-shadow: none !important;
+      overflow: hidden;
     }
   }
 
@@ -46,7 +47,6 @@
 
   .empty-layout {
     text-align: center;
-    margin-top: 10px;
 
     mat-icon {
       font-size: 30pt;
@@ -62,13 +62,27 @@
     }
   }
 
+  .available-layout {
+    margin-top: 20px;
+
+    .category-title {
+      margin-bottom: 10px;
+    }
+
+    ul {
+      list-style-position: inside;
+    }
+  }
+
   .imghldr {
     min-height: 150px;
+    max-height: 150px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: rgba($color: #CEDDFF, $alpha: 0.4);
     border-bottom: 1px solid rgba($color: #000000, $alpha: 0.05);
+    overflow: hidden;
 
     mat-icon {
       font-size: 70pt;

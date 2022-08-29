@@ -2,9 +2,8 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export class EndPointService {
-    public apiEndPoint: string = 'http://localhost:4040/api/v1';
-  // public apiEndPoint: string = 'pando-Backend-Dev-Env.eba-zk3eys8d.us-east-1.elasticbeanstalk.com';
-  // public apiEndPoint: string = 'http://pando-backend-dev-env.eba-zk3eys8d.us-east-1.elasticbeanstalk.com'
+  // public apiEndPoint: string = 'http://localhost:4040/api/v1';
+  public apiEndPoint: string = 'http://pando-backend-dev-env.eba-zk3eys8d.us-east-1.elasticbeanstalk.com/api/v1';
 
 
   // authentication
@@ -24,10 +23,12 @@ export class EndPointService {
   // documents
   public createNewDocumentEndPoint: string = '/document';
   public fetchSingleDocumentByIdEndPoint: string = '/document/';
+  public fetchDocumentsByCollaboratorEndPoint: string = '/document/collaborator/';
+  public createDocumentLayoutEndPoint: string = '/layout/document/';
 
   // public createNewDocumentEndPoint: string = '/document/create-new-document';
   public fetchMyDocumentsEndPoint: string = '/document/fetch-my-documents';
-  // public fetchSingleDocumentByIdEndPoint: string = '/document/fetch-single-document-by-id';
+  // public fetchSingleDocumentByngIdEndPoint: string = '/document/fetch-single-document-by-id';
   public fetchEditorDocumentsEndPoint: string = '/document/fetch-editor-documents';
   public addDocumentLayoutEndPoint: string = '/document/add-document-layout';
 
@@ -35,12 +36,24 @@ export class EndPointService {
   public addDocumentCollaboratorEndPoint: string = '/document/add-document-collaborator';
   public addDocumentColumnEndPoint: string = '/document/add-document-column';
 
+  // layouts
+  public fetchSingleLayoutByIdEndPoint: string = '/layout/';
+  public createNewLayoutOnlyEndPoint: string = '/layout/document/';
+
+  // sub layouts
+  public createNewSubLayoutEndPoint: string = '/sublayout/layout/';
+
+  // topics
+  public createNewTopicEndPoint: string = '/topic/layout/';
+
   // utility
   public fetchAllStatesEndPoint: string = '/state';
+  public createNewCategoryEndPoint: string = '/category';
+  public fetchAllCategoriesEndPoint: string = '/category/';
 
   public fetchAllStatesMexEndPoint: string = '/utility/fetch-all-states-mex';
-  public createNewCategoryEndPoint: string = '/utility/create-new-category';
-  public fetchAllCategoriesEndPoint: string = '/utility/fetch-all-categories';
+  // public createNewCategoryEndPoint: string = '/utility/create-new-category';
+  // public fetchAllCategoriesEndPoint: string = '/utility/fetch-all-categories';
 
   // uploads
   public uploadUserAvatarEndPoint: string = '/upload/upload-avatar-file';

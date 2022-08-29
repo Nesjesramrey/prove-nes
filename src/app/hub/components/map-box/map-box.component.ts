@@ -6,7 +6,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
   styleUrls: ['./map-box.component.scss'],
 })
 export class MapBoxComponent implements OnInit {
-  public activeState: string | null = null;
+  // public activeState: string | null = null;
   public states: statePath[] = _statesList;
   public selectedState: statePath = this.states[0];
 
@@ -21,11 +21,12 @@ export class MapBoxComponent implements OnInit {
     this.svgMapBox.nativeElement.scrollTop = 75;
     setTimeout(() => {
       this.selectedState = this.states[1];
+      // this.activeState = this.states[1].id;
     }, 200);
   }
 
   onClickState(newState: statePath) {
-    this.activeState = newState.id;
+    // this.activeState = newState.id;
     this.selectedState = newState;
   }
 }

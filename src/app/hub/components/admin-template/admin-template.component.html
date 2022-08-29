@@ -4,7 +4,7 @@
     <mat-icon>note_add</mat-icon>
   </button>
 </div>
- 
+
 <!-- empty documents -->
 <div class="set-12 carousel-hldr" *ngIf="documents.length == 0">
   <carousel [cellsToShow]="1">
@@ -27,13 +27,15 @@
     <div class="carousel-cell" *ngFor="let document of documents">
       <mat-card>
         <div class="set-12 imghldr">
-          <mat-icon *ngIf="document.coverImage == ''">panorama</mat-icon>
+          <mat-icon *ngIf="document.images.length == 0">panorama</mat-icon>
+          <img [src]="document.images[0]" alt="" *ngIf="document.images.length != 0">
         </div>
 
         <div class="set-12 infohldr">
           <div class="set-12 card-row">
             <div class="set-8">
-              <h4>{{document.title}}</h4>
+              <!-- <h4>{{document.title}}</h4> -->
+              {{(document.title.length > 20) ? (document.title | slice: 0:20) + '...' : (document.title)}}
             </div>
             <div class="set-4 txt-right">
               <button type="button" matTooltip="Editar">
@@ -60,6 +62,26 @@
             <mat-icon>person</mat-icon> <small>{{document.collaborators.length}} Usuarios</small>
             <mat-icon>front_hand</mat-icon> <small>0 Interacciones</small>
           </div>
+
+          <!-- <div class="set-12 available-layout">
+            <h4 class="category-title">Esquema</h4>
+            <div class="set-12" *ngIf="document.layouts.length == 0">
+              <button type="button">
+                <small>Agregar esquema</small>
+              </button>
+            </div>
+            <div class="set-12" *ngIf="document.layouts.length != 0">
+              <div class="set-12" *ngFor="let layout of document.layouts">
+                <ul>
+                  <li>
+                    <button type="button">
+                      <small>{{layout.category.name}}</small>
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div> -->
         </div>
       </mat-card>
     </div>
@@ -68,7 +90,7 @@
 
 <div class="set-12 tabs">
   <mat-card class="set-12">
-    <mat-tab-group>
+    <mat-tab-group [disableRipple]="true" [@.disabled]="true">
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon>analytics</mat-icon>

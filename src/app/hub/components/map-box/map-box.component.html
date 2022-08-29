@@ -16,7 +16,7 @@
             [id]="statePath.id"
             [title]="statePath.title"
             [attr.d]="statePath.d"
-            [ngClass]="activeState === statePath.id ? 'active' : ''"
+            [ngClass]="selectedState.id === statePath.id ? 'active' : ''"
           />
         </g>
       </svg>
@@ -24,7 +24,7 @@
 
     <!-- DATA -->
     <div class="aside-data">
-      <p class="title">{{ selectedState?.title ?? " " }}</p>
+      <p class="title">{{ selectedState.title }}</p>
 
       <div class="data-box">
         <p class="subtitle">Dato</p>
