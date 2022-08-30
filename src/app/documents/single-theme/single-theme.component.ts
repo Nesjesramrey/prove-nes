@@ -23,6 +23,13 @@ export class SingleThemeComponent implements OnInit {
   public themeData: Theme = _mockTheme;
   public imageToUpload: string[] = [];
   public states: any = [];
+  public displayedColumns: string[] = [
+    'title',
+    'ranking',
+    'users',
+    'interactions',
+  ];
+  public solutionsList: Solution[] = _mockSolutions;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -104,3 +111,49 @@ const _mockTheme: Theme = {
   description: '',
   images: [],
 };
+
+interface Solution {
+  id: string;
+  title: string;
+  ranking: number;
+  users: number;
+  interactions: number;
+}
+
+const _mockSolutions: Solution[] = [
+  {
+    id: 'sol-01',
+    title: 'Deporte todos los días',
+    ranking: 10,
+    users: 200,
+    interactions: 120,
+  },
+  {
+    id: 'sol-02',
+    title: 'Crear y personalizar ligas',
+    ranking: 10,
+    users: 200,
+    interactions: 120,
+  },
+  {
+    id: 'sol-03',
+    title: 'Crear y personalizar ligas',
+    ranking: 10,
+    users: 200,
+    interactions: 120,
+  },
+  {
+    id: 'sol-04',
+    title: 'Crear y personalizar ligas',
+    ranking: 10,
+    users: 200,
+    interactions: 120,
+  },
+  {
+    id: 'sol-05',
+    title: 'Crear y personalizar ligas',
+    ranking: 10,
+    users: 200,
+    interactions: 120,
+  },
+];

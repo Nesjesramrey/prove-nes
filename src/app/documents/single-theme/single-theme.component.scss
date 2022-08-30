@@ -92,6 +92,34 @@
     .table-card {
       grid-column: 4 / span 3;
       width: 100%;
+
+      .mat-column-title {
+        text-align: left;
+        padding-left: 0;
+        font-weight: bold;
+      }
+
+      .mat-column-title {
+        text-align: left;
+        padding-left: 0;
+        font-weight: bold;
+      }
+
+      .list-title {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        small {
+          margin: 0;
+          margin-right: 7pt;
+        }
+
+        mat-icon {
+          margin: 0;
+          color: #20c588;
+        }
+      }
     }
   }
 }

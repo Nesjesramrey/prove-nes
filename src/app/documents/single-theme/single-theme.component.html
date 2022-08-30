@@ -99,7 +99,6 @@
     </mat-card>
 
     <div class="table-card">
-
       <div>
         <mat-form-field appearance="outline">
           <mat-label>Cobertura</mat-label>
@@ -113,8 +112,43 @@
 
       <mat-card>
         <div>
-          <p>TABLA</p>
+          <p class="list-title">
+            <small>Soluciones</small>
+            <mat-icon class="icon-insights">insights</mat-icon>
+          </p>
         </div>
+
+        <table mat-table [dataSource]="solutionsList" class="problems-table">
+          <!-- NAME Column -->
+          <!-- Users Column -->
+          <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+          </ng-container>
+
+          <!-- Ranking Column -->
+          <ng-container matColumnDef="ranking">
+            <th mat-header-cell *matHeaderCellDef>Ranking</th>
+            <td mat-cell *matCellDef="let element">{{ element.ranking }}</td>
+          </ng-container>
+
+          <!-- Users Column -->
+          <ng-container matColumnDef="users">
+            <th mat-header-cell *matHeaderCellDef>Usuarios</th>
+            <td mat-cell *matCellDef="let element">{{ element.users }}</td>
+          </ng-container>
+
+          <!-- SOLUTIONS Column -->
+          <ng-container matColumnDef="interactions">
+            <th mat-header-cell *matHeaderCellDef>Interacciones</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.interactions }}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
       </mat-card>
     </div>
   </div>
