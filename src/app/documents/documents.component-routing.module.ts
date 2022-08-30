@@ -17,9 +17,8 @@ const routes: Routes = [
       { path: '', component: DocumentsComponent },
       { path: 'public', component: PublicDocumentComponent, canActivate: [] },
       {
-        path: 'category',
+        path: ':documentID/categoria/:categoryID',
         component: CategoryPublicDocumentComponent,
-        canActivate: [],
       },
       {
         path: 'subcategory',
