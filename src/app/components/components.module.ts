@@ -39,7 +39,9 @@ import { MapBoxComponent } from './map-box/map-box.component';
 import { FeaturedUsersComponent } from './featured-users/featured-users.component';
 import { ModalPermissionComponent } from './modal-permission/modal-permission.component';
 import { PanelSubcategoryComponent } from './panel-subcategory/panel-subcategory.component';
-import { CircumferenceCustonComponent } from './circumference-custon/circumference-custon.component';
+import { CircleCustomComponent } from './circle-custom/circle-custom.component';
+import { PanelCirclesComponent } from './panel-circles/panel-circles.component';
+import { ExpandedTextComponent } from './expanded-text/expanded-text.component';
 
 @NgModule({
   imports: [
@@ -83,7 +85,9 @@ import { CircumferenceCustonComponent } from './circumference-custon/circumferen
     PanelSubcategoryComponent,
     MapBoxComponent,
     ModalPermissionComponent,
-    CircumferenceCustonComponent,
+    PanelCirclesComponent,
+    ExpandedTextComponent,
+    CircleCustomComponent,
   ],
   exports: [
     AppPageletComponent,
@@ -109,7 +113,9 @@ import { CircumferenceCustonComponent } from './circumference-custon/circumferen
     FeaturedUsersComponent,
     MapBoxComponent,
     ModalPermissionComponent,
-    CircumferenceCustonComponent,
+    PanelCirclesComponent,
+    ExpandedTextComponent,
+    CircleCustomComponent,
   ],
   entryComponents: [
     EmailValidationDialogComponent,
