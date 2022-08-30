@@ -15,20 +15,18 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: '/404', pathMatch: 'full' },
       { path: '', component: DocumentsComponent },
-      { path: ':documentID', component: PublicDocumentComponent },
       {
-        path: ':documentID/categoria/:categoryID',
-        component: CategoryPublicDocumentComponent,
-      },
-      {
-        path: 'subcategory',
+        path: 'publico/subcategory',
         component: SubcategoryDocumentComponent,
-        canActivate: [],
       },
       {
-        path: 'selected-public',
+        path: 'publico/selected',
         component: SelectedPublicDocumentComponent,
-        canActivate: [],
+      },
+      { path: 'publico/:documentID', component: PublicDocumentComponent },
+      {
+        path: 'publico/:documentID/categoria/:categoryID',
+        component: CategoryPublicDocumentComponent,
       },
       {
         path: ':documentID',
@@ -53,4 +51,4 @@ const routes: Routes = [
   exports: [RouterModule],
   imports: [RouterModule.forChild(routes)],
 })
-export class DocumentsComponentRoutingModule {}
+export class DocumentsComponentRoutingModule { }

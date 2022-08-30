@@ -34,7 +34,7 @@
       </div>
     </div>
     <div class="right">
-      <div class="main shadow"></div>
+      <panel-circles style="width: 100%;" [data]="categoriesData"></panel-circles>
       <div class="middle">
         <div class="select">
           <select required>
@@ -46,12 +46,11 @@
         </div>
       </div>
       <div class="bottom">
-        <span class="vert-stats">
+        <span class="vert-stats" style="width: 50%">
           <vertical-stats></vertical-stats>
         </span>
-
-        <spider-chart></spider-chart>
-        <top10-list [data]="items"></top10-list>
+        <spider-chart style="width: 100%"></spider-chart>
+        <top10-list [data]="items" style="width: 100%"></top10-list>
       </div>
     </div>
   </div>

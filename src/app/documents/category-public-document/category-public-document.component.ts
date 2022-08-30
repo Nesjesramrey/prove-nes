@@ -9,6 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { UtilityService } from 'src/app/services/utility.service';
 import { Section } from 'src/app/components/top10-list/top10-list.component';
+import { ICategory } from '../subcategory-document/subcategory-document.component';
 
 @Component({
   selector: 'app-category-public-document',
@@ -44,7 +45,7 @@ export class CategoryPublicDocumentComponent implements OnInit {
   public selection = new SelectionModel<any>(true, []);
   public editingRowId: string | null = null;
   public items: Section[] = []
-
+  public categoriesData = CATEGORIES;
   @ViewChild('editRowName') editRowName!: ElementRef<HTMLInputElement>;
 
   constructor(
@@ -104,6 +105,12 @@ export class CategoryPublicDocumentComponent implements OnInit {
     this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${id}`);
   }
 }
+
+const CATEGORIES: ICategory[] = [
+  { name: 'Educación' },
+  { name: 'Infraestuctura' },
+  { name: 'Salud' },
+];
 
 const _categories_mock = [
   {

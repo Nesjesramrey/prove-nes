@@ -5,84 +5,42 @@
   width: 100%;
   height: auto;
 
-  .layout {
-    width: calc(100vw - 70px);
-    height: calc(100vh - 200px);
+  .select > select {
+    background-color: white;
+    width: 114px;
+    height: 26px;
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    border: 1px solid #A5A5A5;
+    border-radius: 5px;
+  }
+  .title {
+    text-transform: uppercase;
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 25px;
+  }
+  .button {
+    width: 100%;
     display: flex;
-    gap: 3rem;
-    .left {
-      display: flex;
-      flex-direction: column;
-      width: 30%;
-      gap: 1rem;
-    }
-    .right {
-      display: flex;
-      flex-direction: column;
-      width: calc(100% - 30%);
-      gap: 2rem;
-      .main {
-        width: 100%;
-        height: 50%;
-        background-color: white;
-        display: block;
-        background-image: radial-gradient(#212121 5%, transparent 5%);
-        background-position: 0 0, 20px 20px;
-        background-size: 30px 30px;
-        border-radius: 5px;
-      }
-      .middle {
-        width: 100%;
-        height: 50px;
-        display: flex;
-        // padding: 5px;
-        align-items: center;
-
-        .title {
-          text-transform: uppercase;
-          font-family: 'Noto Sans';
-          font-style: normal;
-          font-weight: 600;
-          font-size: 18px;
-          line-height: 25px;
-          width: 350px;
-        }
-        .select > select {
-          background-color: white;
-          width: 114px;
-          height: 26px;
-          font-family: 'Noto Sans';
-          font-style: normal;
-          font-weight: 400;
-          font-size: 16px;
-          line-height: 22px;
-          border: 1px solid #A5A5A5;
-          border-radius: 5px;
-        }
-      }
-      .button {
-        width: 100%;
-        display: flex;
-        justify-content: right;
-        & > button {
-          background: #FFFFFF;
-          border: 1px solid #306EFF;
-          border-radius: 5px;
-          font-family: 'Noto Sans';
-          font-style: normal;
-          font-weight: 600;
-          font-size: 14px;
-          line-height: 16px;
-          color: #306EFF;
-          padding: 6px 6px;
-          margin: 0px 0px 0px auto;
-        }
-      }
-    }
-    .bottom {
-      display: flex;
-      gap: 2rem;
-      margin: 0px;
+    justify-content: right;
+    & > button {
+      background: #FFFFFF;
+      border: 1px solid #306EFF;
+      border-radius: 5px;
+      font-family: 'Noto Sans';
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 16px;
+      color: #306EFF;
+      padding: 6px 6px;
+      margin: 0px 0px 0px auto;
     }
   }
   .col-rgt {

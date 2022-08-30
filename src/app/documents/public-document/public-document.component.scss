@@ -4,8 +4,9 @@
 
   .main-box {
     // width: 100%;
-    height: 350px;
-    overflow: auto;
+    height: 400px;
+    overflow-x: auto;
+    overflow-y: none;
     // .main {
     //   width: 2000px;
     //   height: 100%;

@@ -7,6 +7,7 @@ import { DocumentService } from 'src/app/services/document.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UtilityService } from 'src/app/services/utility.service';
 import { Section } from 'src/app/components/top10-list/top10-list.component';
+import { ICategory } from '../subcategory-document/subcategory-document.component';
 
 @Component({
   selector: '.public-document-page',
@@ -64,9 +65,7 @@ export class PublicDocumentComponent implements OnInit {
   }
 }
 
-export interface ICategory {
-  name: string;
-}
+
 
 const CATEGORIES: ICategory[] = [
   { name: 'Educación' },

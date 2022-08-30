@@ -10,7 +10,9 @@ export interface ICategoryFormat {
   size: number;
   opacity: number;
 }
-
+export interface ICategory {
+  name: string;
+}
 @Component({
   selector: 'panel-circles',
   templateUrl: './panel-circles.component.html',
@@ -24,7 +26,7 @@ export class PanelCirclesComponent implements OnInit {
   @Input() data: any[] = [];
 
   constructor(
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadCategories();
@@ -55,5 +57,5 @@ export class PanelCirclesComponent implements OnInit {
   //   this.isVisible = !this.isVisible;
   //   this.expanded = false;
   // }
- 
+
 }
