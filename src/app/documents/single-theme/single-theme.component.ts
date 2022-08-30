@@ -5,6 +5,7 @@ import { UserService } from '../../services/user.service';
 import { DocumentService } from '../../services/document.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UtilityService } from '../../services/utility.service';
+import { Observable, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-single-theme',
@@ -19,6 +20,9 @@ export class SingleThemeComponent implements OnInit {
   public layout: any = [];
   public isDataAvailable: boolean = false;
   public layouts: any[] = [];
+  public themeData: Theme = _mockTheme;
+  public imageToUpload: string[] = [];
+  public states: any = [];
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -60,5 +64,43 @@ export class SingleThemeComponent implements OnInit {
         complete: () => {},
       });
     }
+
+    let categories: Observable<any> = this.utilityService.fetchAllCategories();
+    let states: Observable<any> = this.utilityService.fetchAllStatesMex();
+    forkJoin([categories, states]).subscribe((reply: any) => {
+      // console.log(reply);
+      this.states = reply[1]['states'];
+      // console.log(this.states);
+    });
+  }
+
+  handleSelectImage(event: any) {
+    if (event == null) return;
+
+    const files = (event.target as HTMLInputElement)?.files ?? [];
+
+    if (files?.length > 0) {
+      Object.values(files).map((file) => {
+        const reader = new FileReader();
+
+        reader.onload = () => {
+          this.imageToUpload.push(reader.result as string);
+        };
+
+        reader.readAsDataURL(file);
+      });
+    }
   }
 }
+
+interface Theme {
+  title: string;
+  description: string;
+  images: string[];
+}
+
+const _mockTheme: Theme = {
+  title: 'Tema principal',
+  description: '',
+  images: [],
+};
