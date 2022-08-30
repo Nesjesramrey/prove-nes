@@ -3,19 +3,19 @@
   margin-bottom: 100px;
 
   .main-box {
-    width: 100%;
+    // width: 100%;
     height: 350px;
     overflow: auto;
-    .main {
-      width: 2000px;
-      height: 100%;
-      background-color: white;
-      display: block;
-      background-image: radial-gradient(#212121 5%, transparent 5%);
-      background-position: 0 0, 20px 20px;
-      background-size: 30px 30px;
-      border-radius: 5px;
-    }
+    // .main {
+    //   width: 2000px;
+    //   height: 100%;
+    //   background-color: white;
+    //   display: block;
+    //   background-image: radial-gradient(#212121 5%, transparent 5%);
+    //   background-position: 0 0, 20px 20px;
+    //   background-size: 30px 30px;
+    //   border-radius: 5px;
+    // }
   }
 
   .select > select {

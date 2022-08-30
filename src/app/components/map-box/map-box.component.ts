@@ -1,16 +1,17 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 
 @Component({
-  selector: '.app-map-box',
+  selector: 'app-map-box',
   templateUrl: './map-box.component.html',
   styleUrls: ['./map-box.component.scss'],
 })
 export class MapBoxComponent implements OnInit {
-  public activeState: string | null = null;
+  public activeState: string[] = [];
   public states: statePath[] = _statesList;
   public selectedState: statePath = this.states[0];
 
   @ViewChild('svgMapBox') svgMapBox!: ElementRef<HTMLDivElement>;
+  @Input() data: any[] = [];
 
   constructor() {}
 
@@ -20,13 +21,18 @@ export class MapBoxComponent implements OnInit {
     this.svgMapBox.nativeElement.scrollLeft = 160;
     this.svgMapBox.nativeElement.scrollTop = 75;
     setTimeout(() => {
-      this.selectedState = this.states[1];
+      this.data.map((item) => {
+        const index = this.states.findIndex(
+          (x) => x.title.toLowerCase() === item.name.toLowerCase()
+        );
+        this.activeState.push(this.states[index].id)
+      });
     }, 200);
   }
 
   onClickState(newState: statePath) {
-    this.activeState = newState.id;
-    this.selectedState = newState;
+    // this.activeState = newState.id;
+    // this.selectedState = newState;
   }
 }
 

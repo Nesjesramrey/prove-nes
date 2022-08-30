@@ -16,7 +16,7 @@
             [id]="statePath.id"
             [title]="statePath.title"
             [attr.d]="statePath.d"
-            [ngClass]="activeState === statePath.id ? 'active' : ''"
+            [ngClass]="activeState.includes(statePath.id) ? 'active' : ''"
           />
         </g>
       </svg>

@@ -15,7 +15,7 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: '/404', pathMatch: 'full' },
       { path: '', component: DocumentsComponent },
-      { path: 'public', component: PublicDocumentComponent, canActivate: [] },
+      { path: ':documentID', component: PublicDocumentComponent },
       {
         path: 'category',
         component: CategoryPublicDocumentComponent,
