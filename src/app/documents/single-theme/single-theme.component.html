@@ -1,1 +1,56 @@
-<p>single-theme works!</p>
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="isDataAvailable">
+  <div class="header">
+    <breadcrumbs-component>
+      <li class="breadcrumb-item">Perfil</li>
+      <li>Documentos</li>
+      <li>{{ document.title }}</li>
+    </breadcrumbs-component>
+
+    <div class="actions-rigth">
+      <button mat-raised-button disabled>Guardar cambios</button>
+
+      <div class="button-group">
+        <button
+          type="button"
+          mat-mini-fab
+          class="mini test"
+          matTooltip="Agregar testimonio"
+          disabled
+        >
+          <mat-icon>forum</mat-icon>
+        </button>
+        <p>Agregar testimonio</p>
+      </div>
+      <div class="button-group">
+        <button
+          type="button"
+          mat-mini-fab
+          class="mini warn"
+          matTooltip="Agregar problema"
+          disabled
+        >
+          <mat-icon>warning</mat-icon>
+        </button>
+
+        <p>Agregar Problema</p>
+      </div>
+
+      <div class="button-group">
+        <button
+          type="button"
+          mat-mini-fab
+          class="mini insights"
+          matTooltip="Agregar Categoría"
+        >
+          <mat-icon>insights</mat-icon>
+        </button>
+
+        <p>Agregar Solución</p>
+      </div>
+    </div>
+  </div>
+</div>

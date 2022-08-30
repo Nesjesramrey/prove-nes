@@ -1,0 +1,51 @@
+:host {
+  padding: 40px;
+  margin-top: 80px;
+  float: left;
+  width: 100%;
+  height: auto;
+
+  .header {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    > * {
+      margin: 0;
+    }
+
+
+    .actions-rigth {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 110px;
+      margin: 0 10pt;
+
+      p {
+        font-size: 11pt;
+        text-align: center;
+        margin-top: 10pt;
+        color: #636363;
+      }
+
+      .test {
+        background-color: #9747ff;
+      }
+
+      .warn {
+        background-color: #e98282;
+      }
+
+      mat-icon {
+        color: #fff;
+      }
+    }
+  }
+}
