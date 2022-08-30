@@ -2,15 +2,19 @@
 
 <section class="container">
   <div class="out-circumference" [style.border-color]="data.out_circle_color">
-    <div
-      class="in-circumference"
-      [style.background-color]="data.in_circle_color"
-    >
-      <span>
-        <h3 class="title">{{ data.title }}</h3>
-        <br />
-        <h2 class="value">{{ data.value }}</h2>
-      </span>
-    </div>
+    <span class="overlay" [style.background-color]="data.overlay">
+      <div
+        class="in-circumference"
+        [style.background-color]="data.in_circle_background"
+        [style.background-image]="data.in_circle_background"
+        [style.opacity]="0.75"
+      >
+        <span>
+          <h3 class="title">{{ data.title }}</h3>
+          <br />
+          <h2 class="value">{{ data.value }}</h2>
+        </span>
+      </div>
+    </span>
   </div>
 </section>
