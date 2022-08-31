@@ -11,6 +11,7 @@ import { ComponentsModule } from '../components/components.module';
 import { SingleCategoryComponent } from './single-category/single-category.component';
 import { SingleThemeComponent } from './single-theme/single-theme.component';
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -25,7 +26,8 @@ import { SingleThemeComponent } from './single-theme/single-theme.component';
     DocumentsComponent,
     SingleDocumentComponent,
     SingleCategoryComponent,
-    SingleThemeComponent
+    SingleThemeComponent,
+
   ]
 })
 export class DocumentsComponentModule { }

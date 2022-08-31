@@ -32,6 +32,8 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { AvatarsRowComponent } from './avatars-row/avatars-row.component';
 import { AddDocumentThemeComponent } from './add-document-theme/add-document-theme.component';
 import { CompleteRegistrationComponent } from "./complete-registration/complete-registration.component";
+import { AddDocumentSolutionComponent } from './add-document-solution/add-document-solution.component';
+import { AddDocumentTestimonyComponent } from './add-document-testimony/add-document-testimony.component';
 
 @NgModule({
   imports: [
@@ -67,7 +69,9 @@ import { CompleteRegistrationComponent } from "./complete-registration/complete-
     BreadcrumbsComponent,
     AvatarsRowComponent,
     AddDocumentThemeComponent,
-    CompleteRegistrationComponent
+    CompleteRegistrationComponent,
+    AddDocumentSolutionComponent,
+    AddDocumentTestimonyComponent
   ],
   exports: [
     AppPageletComponent,
