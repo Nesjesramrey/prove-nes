@@ -81,18 +81,9 @@ export class AppPageletComponent implements OnInit {
   }
 
   onSignOut() {
-    // this.token = this.authenticationSrvc.fetchToken;
-    // let data: any = {
-    //   _id: this.user['_id'],
-    //   token: this.token
-    // }
-    // this.authenticationSrvc.signout(data).subscribe((reply: any) => {
-    //   if (reply['status'] == false) {
-    //     this.utilitySrvc.openErrorSnackBar(reply['error']);
-    //     return;
-    //   }
-    //   localStorage.removeItem('token');
-    //   window.location.reload();
-    // });
+    return this.angularFireAuth.signOut().then(() => {
+      localStorage.removeItem('accessToken');
+      window.location.reload();
+    });
   }
 }

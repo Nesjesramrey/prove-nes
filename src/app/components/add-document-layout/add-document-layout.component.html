@@ -26,6 +26,7 @@
       <ng-template matStepLabel>
         <small>Agrega una descripción</small>
       </ng-template>
+
       <div class="set-12 step-content">
         <form [formGroup]="stepOneFormGroup">
           <div class="set-9">
@@ -47,8 +48,10 @@
         </div>
       </div>
 
-      <div class="set-12 file-hldr" *ngIf="stepOneFormGroup.value.file != null">
-        <small>{{stepOneFormGroup.value.file.name}}</small>
+      <div class="set-12 file-hldr" *ngIf="fileNames.length != 0">
+        <p *ngFor="let name of fileNames">
+          <small>{{name}}</small>
+        </p>
       </div>
     </mat-step>
 

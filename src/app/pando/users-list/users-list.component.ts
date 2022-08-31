@@ -26,7 +26,7 @@ export class UsersListComponent implements OnInit {
   }
   public users: any = [];
   public isDataAvailable: boolean = false;
-  public token: any = null;
+  public accessToken: any = null;
   public payload: any = null;
   public user: any = null;
   public userActivities: any = [];
@@ -37,38 +37,69 @@ export class UsersListComponent implements OnInit {
     public dialog: MatDialog,
     public router: Router
   ) {
-    this.token = this.authenticationSrvc.fetchToken;
+    this.accessToken = this.authenticationSrvc.fetchAccessToken;
   }
 
   ngOnInit(): void {
-    // token exists
-    if (this.token != null) {
-      this.payload = JSON.parse(atob(this.token.split('.')[1]));
+    this.userSrvc.fetchAllUsers().subscribe((reply: any) => {
+      // console.log(reply);
+      this.users = reply;
+      this.dataSource = new MatTableDataSource(this.users);
+      this.setDataSourceAttributes();
+    });
 
-      let user: Observable<any> = this.userSrvc.fetchUserById({ _id: this.payload['sub'] });
-      let users: Observable<any> = this.userSrvc.fetchAllUsers();
 
-      forkJoin([user, users]).subscribe((reply: any) => {
-        // console.log(reply);
-        this.user = reply[0]['user'];
-        this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
-        this.users = reply[1]['users'];
-
-        if (this.userActivities.includes('moderator')) {
-          setTimeout(() => {
-            this.dataSource = new MatTableDataSource(this.users);
-            this.setDataSourceAttributes();
-            this.isDataAvailable = true;
-          }, 700);
-        } else {
-          this.router.navigateByUrl('/404');
+    this.userSrvc.fetchFireUser().subscribe({
+      error: (error) => {
+        switch (error['status']) {
+          case 401:
+            // this.utilityService.openErrorSnackBar('Tu token de acceso ha caducado, intenta ingresar otra vez.');
+            // localStorage.removeItem('accessToken');
+            break;
         }
-      });
-    }
+        setTimeout(() => {
+          this.isDataAvailable = true;
+        });
+      },
+      next: (reply: any) => {
+        this.user = reply;
+        this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
+        console.log(this.user);
+        setTimeout(() => {
+          this.isDataAvailable = true;
+        });
+      },
+      complete: () => { }
+    });
+    // token exists
+    // if (this.token != null) {
+    //   this.payload = JSON.parse(atob(this.token.split('.')[1]));
+
+    //   let user: Observable<any> = this.userSrvc.fetchUserById({ _id: this.payload['sub'] });
+    //   let users: Observable<any> = this.userSrvc.fetchAllUsers();
+
+    //   forkJoin([user, users]).subscribe((reply: any) => {
+    //     // console.log(reply);
+    //     this.user = reply[0]['user'];
+    //     this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
+    //     this.users = reply[1]['users'];
+
+    //     if (this.userActivities.includes('moderator')) {
+    //       setTimeout(() => {
+    //         this.dataSource = new MatTableDataSource(this.users);
+    //         this.setDataSourceAttributes();
+    //         this.isDataAvailable = true;
+    //       }, 700);
+    //     } else {
+    //       this.router.navigateByUrl('/404');
+    //     }
+    //   });
+    // }
     //  token null
-    else {
-      this.router.navigateByUrl('/404');
-    }
+    // else {
+    //   this.router.navigateByUrl('/404');
+    // }
+    this.isDataAvailable = true;
   }
 
   isAllSelected() {

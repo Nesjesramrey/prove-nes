@@ -7,7 +7,7 @@
 
 <!-- empty documents -->
 <div class="set-12 carousel-hldr" *ngIf="documents.length == 0">
-  <carousel [cellsToShow]="1">
+  <carousel [cellsToShow]="1" [arrows]="false">
     <div class="carousel-cell">
       <mat-card class="emptycard">
         <div class="set-12 txt-center">
@@ -62,26 +62,6 @@
             <mat-icon>person</mat-icon> <small>{{document.collaborators.length}} Usuarios</small>
             <mat-icon>front_hand</mat-icon> <small>0 Interacciones</small>
           </div>
-
-          <!-- <div class="set-12 available-layout">
-            <h4 class="category-title">Esquema</h4>
-            <div class="set-12" *ngIf="document.layouts.length == 0">
-              <button type="button">
-                <small>Agregar esquema</small>
-              </button>
-            </div>
-            <div class="set-12" *ngIf="document.layouts.length != 0">
-              <div class="set-12" *ngFor="let layout of document.layouts">
-                <ul>
-                  <li>
-                    <button type="button">
-                      <small>{{layout.category.name}}</small>
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div> -->
         </div>
       </mat-card>
     </div>
