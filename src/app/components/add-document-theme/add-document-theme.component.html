@@ -1,6 +1,7 @@
 <div class="set-12 dialog-head">
   <div class="set-9">
-    <h3>Agregar Problema</h3>
+    <h3 *ngIf="showThemeForm">Agregar Problema</h3>
+    <h3 *ngIf="showSolutionForm">Agregar Solución</h3>
   </div>
   <div class="set-3 txt-right">
     <button type="button" mat-icon-button color="primary" (click)="killDialog()">
@@ -13,8 +14,8 @@
   <mat-spinner></mat-spinner>
 </div> -->
 
-<div class="set-12 dialog-body">
-  <form [formGroup]="addThemeFormGroup" (submit)="onCreateTopic(addThemeFormGroup)">
+<div class="set-12 dialog-body" *ngIf="showThemeForm">
+  <form [formGroup]="addThemeFormGroup" (submit)="onCreateTopic(addThemeFormGroup)" >
     <input type="text" matInput placeholder="Título del problema" autocomplete="off" class="title-box"
       formControlName="title" />
 
@@ -32,9 +33,6 @@
       </div>
     </div>
 
-    <div>
-      <textarea matInput placeholder="Escribe una solución" class="solution-box" formControlName="solution"></textarea>
-    </div>
 
     <div class="set-12 ctrls">
       <button type="submit" mat-raised-button color="primary" [disabled]="addThemeFormGroup.invalid">
@@ -43,6 +41,22 @@
     </div>
   </form>
 </div>
+  
+<div class="set-12 dialog-body" *ngIf="showSolutionForm">
+  <form [formGroup]="addSolutionFormGroup" (submit)="onCreateSolution(addSolutionFormGroup)" >
+    <div>
+      <textarea matInput placeholder="Escribe una solución" class="solution-box" formControlName="solution"></textarea>
+    </div>
+
+    <div class="set-12 ctrls">
+      <button type="submit" mat-raised-button color="primary" [disabled]="addSolutionFormGroup.invalid">
+        Agregar solución
+      </button>
+    </div>
+  </form>
+</div>
+
+
 
 <!-- [formGroup]="addCategoryFormGroup" -->
 <!-- (submit)="onAddLayout(addCategoryFormGroup)" -->
