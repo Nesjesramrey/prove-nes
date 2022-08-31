@@ -99,6 +99,9 @@
               <input placeholder="..." #categoryInput [formControl]="categoryCtrl" [matAutocomplete]="auto"
                 [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                 (matChipInputTokenEnd)="addCategory($event)">
+                <button type="button" matSuffix>
+                  <mat-icon>save</mat-icon>
+                </button>
             </mat-chip-list>
 
             <mat-autocomplete #auto="matAutocomplete" (optionSelected)="categorySelected($event)">

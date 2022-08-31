@@ -20,7 +20,7 @@
                 <mat-icon>file_open</mat-icon>
               </button>
               <button type="button" matTooltip="Datos">
-                <mat-icon>bubble_chart</mat-icon>
+                <mat-icon>pie_chart</mat-icon>
               </button>
             </div>
           </div>
@@ -52,7 +52,8 @@
             <div class="set-12" *ngFor="let layout of document.layouts">
               <ul>
                 <li>
-                  <button type="button">
+                  <button type="button" (click)="linkMe('/documentos/' + document._id + '/categoria/' + layout._id)"
+                    matTooltip="Abrir categoría" matTooltipClass="tooltip" matTooltipPosition="right">
                     <small>{{layout.category.name}}</small>
                   </button>
                 </li>
