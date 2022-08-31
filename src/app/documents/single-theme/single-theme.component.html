@@ -19,6 +19,7 @@
           mat-mini-fab
           class="mini test"
           matTooltip="Agregar testimonio"
+          (click)="popAddDocumentTestimony()"
         >
           <mat-icon>forum</mat-icon>
         </button>
@@ -30,6 +31,7 @@
           mat-mini-fab
           class="mini warn"
           matTooltip="Agregar problema"
+          (click)="popAddDocumentTheme()"
         >
           <mat-icon>warning</mat-icon>
         </button>
@@ -43,6 +45,7 @@
           mat-mini-fab
           class="mini insights"
           matTooltip="Agregar Solución"
+          (click)="popAddDocumentSolution()"
         >
           <mat-icon>insights</mat-icon>
         </button>
@@ -153,17 +156,16 @@
     </div>
 
     <mat-card class="donut-card">
-      <p>Título de gráfica</p>
+      <div class="pie-chart chart"></div>
+      <!-- <div class="line-chart chart"></div> -->
     </mat-card>
 
     <mat-card class="bars-card">
       <p>Título de gráfica</p>
     </mat-card>
 
-
     <mat-card class="circle-card">
       <p>Título de gráfica</p>
     </mat-card>
-
   </div>
 </div>

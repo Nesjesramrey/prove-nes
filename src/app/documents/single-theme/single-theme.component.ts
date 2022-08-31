@@ -6,6 +6,9 @@ import { DocumentService } from '../../services/document.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UtilityService } from '../../services/utility.service';
 import { Observable, forkJoin } from 'rxjs';
+import { AddDocumentThemeComponent } from '../../components/add-document-theme/add-document-theme.component';
+import { AddDocumentSolutionComponent } from '../../components/add-document-solution/add-document-solution.component';
+import { AddDocumentTestimonyComponent } from '../../components/add-document-testimony/add-document-testimony.component';
 
 @Component({
   selector: 'app-single-theme',
@@ -15,6 +18,8 @@ import { Observable, forkJoin } from 'rxjs';
 export class SingleThemeComponent implements OnInit {
   public documentID: string = '';
   public accessToken: any = null;
+  public categoryID: string = '';
+
   public user: any = null;
   public document: any = null;
   public layout: any = [];
@@ -41,6 +46,7 @@ export class SingleThemeComponent implements OnInit {
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.accessToken = this.authenticationService.fetchAccessToken;
+    this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
   }
 
   ngOnInit(): void {
@@ -97,6 +103,72 @@ export class SingleThemeComponent implements OnInit {
         reader.readAsDataURL(file);
       });
     }
+  }
+
+  popAddDocumentTheme() {
+    const dialogRef = this.dialog.open<AddDocumentThemeComponent>(
+      AddDocumentThemeComponent,
+      {
+        width: '640px',
+        data: {
+          documentID: this.documentID,
+          document: this.document,
+          categoryID: this.categoryID,
+          type: 'sublayout',
+        },
+        disableClose: true,
+      }
+    );
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        console.log(reply);
+      }
+    });
+  }
+
+  popAddDocumentSolution() {
+    const dialogRef = this.dialog.open<AddDocumentSolutionComponent>(
+      AddDocumentSolutionComponent,
+      {
+        width: '640px',
+        data: {
+          documentID: this.documentID,
+          document: this.document,
+          categoryID: this.categoryID,
+          type: 'sublayout',
+        },
+        disableClose: true,
+      }
+    );
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        console.log(reply);
+      }
+    });
+  }
+
+  popAddDocumentTestimony() {
+    const dialogRef = this.dialog.open<AddDocumentTestimonyComponent>(
+      AddDocumentTestimonyComponent,
+      {
+        width: '640px',
+        data: {
+          documentID: this.documentID,
+          document: this.document,
+          categoryID: this.categoryID,
+          type: 'sublayout',
+        },
+        disableClose: true,
+      }
+    );
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        console.log(reply);
+      }
+    });
   }
 }
 

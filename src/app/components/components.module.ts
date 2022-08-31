@@ -31,6 +31,8 @@ import { AddDocumentCollaboratorComponent } from "./add-document-collaborator/ad
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { AvatarsRowComponent } from './avatars-row/avatars-row.component';
 import { AddDocumentThemeComponent } from './add-document-theme/add-document-theme.component';
+import { AddDocumentSolutionComponent } from './add-document-solution/add-document-solution.component';
+import { AddDocumentTestimonyComponent } from './add-document-testimony/add-document-testimony.component';
 
 @NgModule({
   imports: [
@@ -65,7 +67,9 @@ import { AddDocumentThemeComponent } from './add-document-theme/add-document-the
     AddDocumentCollaboratorComponent,
     BreadcrumbsComponent,
     AvatarsRowComponent,
-    AddDocumentThemeComponent
+    AddDocumentThemeComponent,
+    AddDocumentSolutionComponent,
+    AddDocumentTestimonyComponent
   ],
   exports: [
     AppPageletComponent,
