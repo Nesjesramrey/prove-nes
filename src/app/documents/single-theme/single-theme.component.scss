@@ -51,6 +51,7 @@
   .body {
     display: grid;
     column-gap: 15pt;
+    row-gap: 20pt;
     grid-template-columns: repeat(8, 1fr);
     margin-top: 15pt;
 
@@ -120,6 +121,19 @@
           color: #20c588;
         }
       }
+    }
+
+    .donut-card {
+      width: 100%;
+      grid-column: 1 / span 2;
+    }
+    .bars-card {
+      width: 100%;
+      grid-column-end: span 3;
+    }
+    .circle-card {
+      width: 100%;
+      grid-column-end: span 2;
     }
   }
 }
