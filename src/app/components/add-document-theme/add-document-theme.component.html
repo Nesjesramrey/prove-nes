@@ -26,7 +26,11 @@
     <div class="second-line">
 
 
-      <textarea class="desc_text" matInput placeholder="Escribe una descripción" formControlName="description"></textarea>
+
+      <mat-form-field class="example-full-width" appearance="outline" class="desc_text" >
+        <mat-label>Escribe una descripción</mat-label>
+        <textarea matInput  placeholder="Escribe una descripción" formControlName="description"></textarea>
+      </mat-form-field>
 
       <div class="imagebox">
         <label [ngClass]="imageUrl ? 'data' : 'empty'">

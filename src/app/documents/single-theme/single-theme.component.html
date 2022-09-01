@@ -56,6 +56,37 @@
   </div>
 
   <div class="body">
+    <mat-card class="images-card">
+      <carousel-component [contentSize]="carouselContentSize">
+        <div class="render-images" [style.width]="carouselContentSize + 'px'">
+          <label class="item">
+            <mat-icon color="primary">add_circle</mat-icon>
+            <input
+              type="file"
+              accept="image/*"
+              id="addImageInput"
+              (change)="handleSelectImage($event)"
+              multiple
+            />
+          </label>
+
+          <img
+            *ngFor="let image of imageToUpload"
+            class="item"
+            alt="img-list"
+            [src]="image"
+          />
+
+          <img
+            *ngFor="let image of themeData.images"
+            class="item"
+            alt="img-list"
+            [src]="image"
+          />
+        </div>
+      </carousel-component>
+    </mat-card>
+
     <mat-card class="about-card">
       <mat-form-field class="example-full-width" appearance="outline">
         <mat-label>Título</mat-label>
@@ -70,33 +101,6 @@
         <mat-label>Descripción</mat-label>
         <textarea matInput placeholder="Descripción del tema"></textarea>
       </mat-form-field>
-
-      <div class="render-images">
-        <img
-          *ngFor="let image of imageToUpload"
-          class="item"
-          alt="img-list"
-          [src]="image"
-        />
-
-        <img
-          *ngFor="let image of themeData.images"
-          class="item"
-          alt="img-list"
-          [src]="image"
-        />
-
-        <label class="item">
-          <mat-icon color="primary">add_circle</mat-icon>
-          <input
-            type="file"
-            accept="image/*"
-            id="addImageInput"
-            (change)="handleSelectImage($event)"
-            multiple
-          />
-        </label>
-      </div>
 
       <avatars-row></avatars-row>
     </mat-card>
@@ -155,13 +159,13 @@
       </mat-card>
     </div>
 
+    <mat-card class="bars-card">
+      <p>Título de gráfica</p>
+    </mat-card>
+
     <mat-card class="donut-card">
       <div class="pie-chart chart"></div>
       <!-- <div class="line-chart chart"></div> -->
-    </mat-card>
-
-    <mat-card class="bars-card">
-      <p>Título de gráfica</p>
     </mat-card>
 
     <mat-card class="circle-card">
