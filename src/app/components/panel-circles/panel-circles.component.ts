@@ -25,8 +25,7 @@ export class PanelCirclesComponent implements OnInit {
   @Input('user') public user: any = null;
   @Input() data: any[] = [];
 
-  constructor(
-  ) { }
+  constructor() {}
 
   ngOnInit(): void {
     this.loadCategories();
@@ -57,5 +56,4 @@ export class PanelCirclesComponent implements OnInit {
   //   this.isVisible = !this.isVisible;
   //   this.expanded = false;
   // }
-
 }

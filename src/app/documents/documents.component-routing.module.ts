@@ -51,4 +51,4 @@ const routes: Routes = [
   exports: [RouterModule],
   imports: [RouterModule.forChild(routes)],
 })
-export class DocumentsComponentRoutingModule { }
+export class DocumentsComponentRoutingModule {}
