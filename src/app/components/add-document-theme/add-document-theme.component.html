@@ -16,11 +16,17 @@
 
 <div class="set-12 dialog-body" *ngIf="showThemeForm">
   <form [formGroup]="addThemeFormGroup" (submit)="onCreateTopic(addThemeFormGroup)" >
-    <input type="text" matInput placeholder="Título del problema" autocomplete="off" class="title-box"
-      formControlName="title" />
+
+    <mat-form-field appearance="outline">
+      <mat-label>Título del problema</mat-label>
+      <textarea matInput cdkTextareaAutosize formControlName="title"></textarea>
+    </mat-form-field>
+
 
     <div class="second-line">
-      <textarea matInput placeholder="Escribe una descripción" formControlName="description"></textarea>
+
+
+      <textarea class="desc_text" matInput placeholder="Escribe una descripción" formControlName="description"></textarea>
 
       <div class="imagebox">
         <label [ngClass]="imageUrl ? 'data' : 'empty'">
@@ -44,6 +50,25 @@
   
 <div class="set-12 dialog-body" *ngIf="showSolutionForm">
   <form [formGroup]="addSolutionFormGroup" (submit)="onCreateSolution(addSolutionFormGroup)" >
+
+
+    <input type="text" matInput placeholder="Título de la solución" autocomplete="off" class="title-box"
+      formControlName="title" />
+
+    <div class="second-line">
+      <textarea matInput placeholder="Escribe una descripción" formControlName="description"></textarea>
+
+      <div class="imagebox">
+        <label [ngClass]="imageUrl ? 'data' : 'empty'">
+          <mat-icon>photo_camera</mat-icon>
+          <span>Subir imagen</span>
+          <input type="file" accept="image/*" (change)="handleSelectImage($event)" formControlName="image" />
+        </label>
+
+        <img class="preview" [src]="imageUrl" alt="img_upload" [ngClass]="imageUrl ? 'data' : 'empty'" />
+      </div>
+    </div>
+
     <div>
       <textarea matInput placeholder="Escribe una solución" class="solution-box" formControlName="solution"></textarea>
     </div>

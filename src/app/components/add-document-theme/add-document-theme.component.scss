@@ -154,8 +154,17 @@
     margin-bottom: 20pt;
   }
 
+  /*
   textarea,
   input {
+    padding: 0.8em;
+    border: 2px solid #636363;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  */
+
+  .desc_text{
     padding: 0.8em;
     border: 2px solid #636363;
     border-radius: 5px;
