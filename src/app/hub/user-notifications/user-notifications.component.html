@@ -14,7 +14,7 @@
 
     <mat-card class="set-12" *ngIf="notifications.length != 0">
       <div class="set-12" *ngFor="let notification of notifications">
-        <div class="set-12 notification" *ngIf="notification.type == 'document_invite'">
+        <div class="set-12 notification">
           <div class="set-2">
             <div class="avatar"></div>
           </div>
@@ -25,7 +25,7 @@
               <strong><small>{{notification.document.title}}</small></strong>
             </p>
             <p>
-              <small>{{notification.created_at | date: 'mediumDate'}} - {{notification.created_at | date:
+              <small>{{notification.createdAt | date: 'mediumDate'}} - {{notification.createdAt | date:
                 'mediumTime'}}</small>
             </p>
           </div>

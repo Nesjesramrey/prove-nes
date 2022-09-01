@@ -29,6 +29,7 @@ export class AddDocumentCategoryComponent implements OnInit {
   public isDataAvailable: boolean = false;
   public selectedCategoryId: any = null;
   public addedLayouts: any = [];
+  public fileNames: any = [];
 
   constructor(
     public dialogRef: MatDialogRef<AddDocumentCategoryComponent>,
@@ -62,7 +63,11 @@ export class AddDocumentCategoryComponent implements OnInit {
     });
   }
 
-  onFileSelected(event: any) { }
+  onFileSelected(event: any) {
+    Array.from(event.target.files).forEach((file: any) => { this.fileNames.push(file['name']); });
+    this.addCategoryFormGroup.patchValue({ files: event.target.files });
+    this.addCategoryFormGroup.updateValueAndValidity();
+  }
 
   filterCategories(value: any) {
     const filterValue = value.toLowerCase();

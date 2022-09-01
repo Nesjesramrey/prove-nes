@@ -63,7 +63,8 @@ export class EndPointService {
   // notifications
   public createNewNotificationEndPoint: string = '/notification/create-new-notification';
   public fetchMyNotificationsLengthEndPoint: string = '/notification/fetch-my-notifications-length';
-  public fetchMyNotificationsContentEndPoint: string = '/notification/fetch-my-notifications-content';
+  // public fetchMyNotificationsContentEndPoint: string = '/notification/fetch-my-notifications-content';
+  public fetchMyNotificationsContentEndPoint: string = '/notification';
 
   // support
   public sendSupportMessageEndPoint: string = '/support/init-support-conversation';

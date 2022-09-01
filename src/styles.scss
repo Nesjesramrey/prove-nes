@@ -60,6 +60,10 @@ table {
   }
 }
 
+.btn {
+  cursor: pointer;
+}
+
 .app,
 .page {
   width: 100%;
@@ -391,5 +395,21 @@ mat-form-field {
 
   .mat-button-focus-overlay {
     background: none !important;
+  }
+}
+
+.created-by {
+  font-size: 9pt;
+  font-style: italic;
+  font-weight: bold;
+  color: rgba($color: #000000, $alpha: 0.4);
+
+  .author {
+    transition: all .2s linear;
+    cursor: pointer;
+  }
+
+  .author:hover {
+    color: #306EFF;
   }
 }
