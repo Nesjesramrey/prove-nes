@@ -19,6 +19,7 @@ export class SingleThemeComponent implements OnInit {
   public documentID: string = '';
   public accessToken: any = null;
   public categoryID: string = '';
+  public carouselContentSize: number = 150;
 
   public user: any = null;
   public document: any = null;
@@ -85,6 +86,14 @@ export class SingleThemeComponent implements OnInit {
       this.states = reply[1]['states'];
       // console.log(this.states);
     });
+
+    this.calculateCarouselContentSize();
+  }
+
+  calculateCarouselContentSize() {
+    const newVal =
+      (this.themeData.images.length + this.imageToUpload.length) * 150;
+    this.carouselContentSize = (newVal || 150) + 150;
   }
 
   handleSelectImage(event: any) {
@@ -97,12 +106,16 @@ export class SingleThemeComponent implements OnInit {
         const reader = new FileReader();
 
         reader.onload = () => {
-          this.imageToUpload.push(reader.result as string);
+          this.imageToUpload.unshift(reader.result as string);
         };
 
         reader.readAsDataURL(file);
       });
     }
+
+    setTimeout(() => {
+      this.calculateCarouselContentSize();
+    }, 300);
   }
 
   popAddDocumentTheme() {
@@ -181,7 +194,12 @@ interface Theme {
 const _mockTheme: Theme = {
   title: 'Tema principal',
   description: '',
-  images: [],
+  images: [
+    "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg",
+    "https://images.pexels.com/photos/2726111/pexels-photo-2726111.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg",
+  ],
 };
 
 interface Solution {

@@ -34,6 +34,7 @@ import { AddDocumentThemeComponent } from './add-document-theme/add-document-the
 import { CompleteRegistrationComponent } from "./complete-registration/complete-registration.component";
 import { AddDocumentSolutionComponent } from './add-document-solution/add-document-solution.component';
 import { AddDocumentTestimonyComponent } from './add-document-testimony/add-document-testimony.component';
+import { CarouselComponent } from './carousel/carousel.component';
 
 @NgModule({
   imports: [
@@ -71,7 +72,8 @@ import { AddDocumentTestimonyComponent } from './add-document-testimony/add-docu
     AddDocumentThemeComponent,
     CompleteRegistrationComponent,
     AddDocumentSolutionComponent,
-    AddDocumentTestimonyComponent
+    AddDocumentTestimonyComponent,
+    CarouselComponent
   ],
   exports: [
     AppPageletComponent,
@@ -88,7 +90,8 @@ import { AddDocumentTestimonyComponent } from './add-document-testimony/add-docu
     AddDocumentCollaboratorComponent,
     BreadcrumbsComponent,
     AvatarsRowComponent,
-    CompleteRegistrationComponent
+    CompleteRegistrationComponent,
+    CarouselComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,

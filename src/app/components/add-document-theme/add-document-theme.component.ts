@@ -35,7 +35,10 @@ export class AddDocumentThemeComponent implements OnInit {
     });
 
     this.addSolutionFormGroup = this.formBuilder.group({
+      title: ['', [Validators.required]],
+      description: ['', []],
       solution: ['', []],
+      image: ['', []],
     });
   }
 
@@ -71,7 +74,10 @@ export class AddDocumentThemeComponent implements OnInit {
 
   onCreateSolution(form: FormGroup) {
     let data: any = {
+      title: form['value']['title'],
+      description: form['value']['description'],      
       solution: form['value']['solution'],
+      layout_id: this.dialogData['categoryID']
     };
     //this.topicService.createNewTopic(data).subscribe((reply: any) => {
     //  console.log(reply);
