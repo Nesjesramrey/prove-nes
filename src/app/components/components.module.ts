@@ -42,6 +42,7 @@ import { PanelSubcategoryComponent } from './panel-subcategory/panel-subcategory
 import { CircleCustomComponent } from './circle-custom/circle-custom.component';
 import { PanelCirclesComponent } from './panel-circles/panel-circles.component';
 import { ExpandedTextComponent } from './expanded-text/expanded-text.component';
+import { TestimonyCardComponent } from './testimony-card/testimony-card.component';
 
 @NgModule({
   imports: [
@@ -87,6 +88,7 @@ import { ExpandedTextComponent } from './expanded-text/expanded-text.component';
     ModalPermissionComponent,
     PanelCirclesComponent,
     ExpandedTextComponent,
+    TestimonyCardComponent,
     CircleCustomComponent,
   ],
   exports: [
@@ -115,6 +117,7 @@ import { ExpandedTextComponent } from './expanded-text/expanded-text.component';
     ModalPermissionComponent,
     PanelCirclesComponent,
     ExpandedTextComponent,
+    TestimonyCardComponent,
     CircleCustomComponent,
   ],
   entryComponents: [

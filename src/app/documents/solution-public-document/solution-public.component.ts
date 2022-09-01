@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { forkJoin, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
 import { DocumentService } from 'src/app/services/document.service';
@@ -8,16 +8,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { UtilityService } from 'src/app/services/utility.service';
-import { Section } from 'src/app/components/top10-list/top10-list.component';
-import { ICategory } from '../subcategory-document/subcategory-document.component';
-import { LayoutService } from 'src/app/services/layout.service';
 
 @Component({
-  selector: 'app-category-public-document',
-  templateUrl: './category-public-document.component.html',
-  styleUrls: ['./category-public-document.component.scss'],
+  selector: '.solution-public-page',
+  templateUrl: './solution-public.component.html',
+  styleUrls: ['./solution-public.component.scss'],
 })
-export class CategoryPublicDocumentComponent implements OnInit {
+export class SolutionPublicComponent implements OnInit {
+  public documentID: string = '';
   public token: any = null;
   public user: any = null;
   public payload: any = null;
@@ -34,22 +32,19 @@ export class CategoryPublicDocumentComponent implements OnInit {
     'actions',
   ];
   public isDataAvailable: boolean = false;
-  public displayedColumns: string[] = [
-    'select',
-    'name',
-    'email',
-    'activities',
-    'menu',
-  ];
-  public dataSource = new MatTableDataSource<any>();
+  // public displayedColumns: string[] = ['select', 'name', 'email', 'activities', 'menu'];
+  // public dataSource = new MatTableDataSource<any>();
   public selection = new SelectionModel<any>(true, []);
   public editingRowId: string | null = null;
-  public items: Section[] = [];
-  public categoriesData = CATEGORIES;
+  // public displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  public displayedColumns: string[] = ['name', 'ranking', 'users'];
 
-  public selectedCategory: any = null;
-  public documentID: string = '';
-  public categoryID: string = '';
+  public dataSource = ELEMENT_DATA;
+
+  public problemsDataSource = PROBLEMS_DATA;
+  public solutionsDataSource = SOLUTIONS_DATA;
+
+  public categoriesData = CATEGORIES;
   @ViewChild('editRowName') editRowName!: ElementRef<HTMLInputElement>;
 
   constructor(
@@ -58,39 +53,11 @@ export class CategoryPublicDocumentComponent implements OnInit {
     public userService: UserService,
     public documentService: DocumentService,
     public dialog: MatDialog,
-    public utilityService: UtilityService,
-    public layoutService: LayoutService
+    public utilityService: UtilityService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
-    this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
     this.token = this.authenticationService.fetchToken;
     // console.log(this.documentID);
-    this.items = [
-      {
-        name: 'Construir escuelas en 2 años',
-        value: 88,
-      },
-      {
-        name: 'Construir 1000km de ancho de banda',
-        value: 50,
-      },
-      {
-        name: 'Estrategia de Combate al narcotrafico',
-        value: 50,
-      },
-      {
-        name: 'Camaras con IA en transporte',
-        value: 50,
-      },
-      {
-        name: 'Transporte publico gratis para estudiantes',
-        value: 50,
-      },
-      {
-        name: 'Subsidio a la familia por educacion',
-        value: 50,
-      },
-    ];
   }
 
   ngOnInit(): void {
@@ -105,21 +72,6 @@ export class CategoryPublicDocumentComponent implements OnInit {
         // this.user = reply[0]['user'];
       });
     }
-
-    let document: Observable<any> =
-      this.documentService.fetchSingleDocumentById({ _id: this.documentID });
-    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({
-      _id: this.categoryID,
-    });
-    forkJoin([document, category]).subscribe((reply: any) => {
-      console.log(reply);
-      this.document = reply[0];
-      this.selectedCategory = reply[1];
-
-      setTimeout(() => {
-        this.isDataAvailable = true;
-      }, 300);
-    });
   }
 
   linkCategories(id: string) {
@@ -127,10 +79,55 @@ export class CategoryPublicDocumentComponent implements OnInit {
   }
 }
 
+export interface PeriodicElement {
+  name: string;
+  position: number;
+  weight: number;
+  symbol: string;
+}
+export interface DataTable {
+  name: string;
+  ranking: number;
+  users: number;
+}
+
+export interface ICategory {
+  name: string;
+}
+
 const CATEGORIES: ICategory[] = [
   { name: 'Educación' },
   { name: 'Infraestuctura' },
   { name: 'Salud' },
+  { name: 'Empleo' },
+  { name: 'Derechos humanos' },
+  { name: 'Deporte' },
+  { name: 'Vivienda' },
+  { name: 'Subsidio familiar' },
+  { name: 'Obesidad Infantil' },
+  { name: 'Asaltos' },
+  { name: 'Transporte' },
+];
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
+  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
+  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
+  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
+];
+
+const SOLUTIONS_DATA: DataTable[] = [
+  { name: 'Solución A', ranking: 10, users: 255 },
+  { name: 'Solución A', ranking: 10, users: 255 },
+  { name: 'Solución A', ranking: 10, users: 255 },
+  { name: 'Solución A', ranking: 10, users: 255 },
+];
+
+const PROBLEMS_DATA: DataTable[] = [
+  { name: 'Problema A', ranking: 10, users: 255 },
+  { name: 'Problema A', ranking: 10, users: 255 },
+  { name: 'Problema A', ranking: 10, users: 255 },
+  { name: 'Problema A', ranking: 10, users: 255 },
 ];
 
 const _categories_mock = [

@@ -1,5 +1,32 @@
 import { Color } from '@alyle/ui/color';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'circle-custom',
+  templateUrl: './circle-custom.component.html',
+  styleUrls: ['./circle-custom.component.scss'],
+})
+export class CircleCustomComponent implements OnInit {
+  @Input() data: any;
+  @Input() size: string = 'medium';
+
+  constructor() {}
+
+  ngOnInit(): void {
+      this.data.size = this.processSize(this.size);
+      if (this.data.out_circle == false) {
+        this.data.out_circle_color = 'transparent';
+      }
+  }
+
+  processSize(size: string): any {
+    if (this.data.title.length > 13) return { box: 250, font: 24 };
+    if (size === 'small') return { box: 140, font: 18 };
+    if (size === 'medium') return { box: 235, font: 22 };
+    if (size === 'large') return { box: 250, font: 28 };
+  }
+}
 
 export interface Data {
   title: string;
@@ -8,27 +35,13 @@ export interface Data {
   in_circle_background: string;
   out_circle_color: string;
   overlay: any;
-}
-
-@Component({
-  selector: 'circle-custom',
-  templateUrl: './circle-custom.component.html',
-  styleUrls: ['./circle-custom.component.scss'],
-})
-export class CircleCustomComponent implements OnInit {
-  data: Data = {
-    title: 'Economía',
-    value: 1500,
-    out_circle: true,
-    in_circle_background: '#ff6d00',
-    out_circle_color: '#ff6d00',
-    overlay: '#ff6d00',
+  size: {
+    box: number;
+    font: number;
   };
-  constructor() {}
-
-  ngOnInit(): void {
-    if (this.data.out_circle == false) {
-      this.data.out_circle_color = 'transparent';
-    }
-  }
+  opacity: number;
+  pos?: {
+    x: number;
+    y: number;
+  };
 }

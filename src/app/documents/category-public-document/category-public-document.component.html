@@ -5,7 +5,7 @@
     <li>Economia</li>
   </breadcrumbs-component>
 
-  <div class="layout">
+  <div class="layout" *ngIf="selectedCategory">
     <div class="left">
       <mat-card class="set-12 doc-description">
         <div class="set-12 imghldr">
@@ -17,16 +17,12 @@
           />
         </div>
         <div class="set-12 infohldr">
-          <h3>Economia</h3>
+          <h3>{{ selectedCategory.category.name }}</h3>
           <br />
-          <p class="card-description">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry Lorem Ipsum is simply dummy text of the printing and
-            typesetting industry Lorem Ipsum is simply dummy text of the
-            printing and typesetting industry Lorem Ipsum is simply dummy text
-            of the printing and typesetting industry Lorem Ipsum is simply dummy
-            text of the printing and typesetting industry
-          </p>
+            <expanded-text
+            [text]="selectedCategory.description"
+            [minLength]="200"
+          ></expanded-text>
         </div>
       </mat-card>
       <div class="set-12" style="margin-top: 10px">
@@ -34,7 +30,10 @@
       </div>
     </div>
     <div class="right">
-      <panel-circles style="width: 100%;" [data]="categoriesData"></panel-circles>
+      <panel-circles
+        [data]="selectedCategory.subLayouts"
+        [withBorder]="true"
+      ></panel-circles>
       <div class="middle">
         <div class="select">
           <select required>

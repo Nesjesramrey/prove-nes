@@ -2,22 +2,6 @@
   margin: 120px 40px;
   margin-bottom: 100px;
 
-  .main-box {
-    // width: 100%;
-    height: 400px;
-    overflow-x: auto;
-    overflow-y: none;
-    // .main {
-    //   width: 2000px;
-    //   height: 100%;
-    //   background-color: white;
-    //   display: block;
-    //   background-image: radial-gradient(#212121 5%, transparent 5%);
-    //   background-position: 0 0, 20px 20px;
-    //   background-size: 30px 30px;
-    //   border-radius: 5px;
-    // }
-  }
 
   .select > select {
     background-color: white;
@@ -85,18 +69,5 @@
     }
   }
 
-  *::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
 
-  *::-webkit-scrollbar-track {
-    background: rgb(230, 230, 230);
-  }
-
-  *::-webkit-scrollbar-thumb {
-    background-color: rgb(131, 131, 131);
-    border-radius: 20px;
-    height: 2px;
-  }
 }

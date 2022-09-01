@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
@@ -31,7 +31,7 @@ export class PublicDocumentComponent implements OnInit {
     public userService: UserService,
     public documentService: DocumentService,
     public dialog: MatDialog,
-    public utilityService: UtilityService
+    public utilityService: UtilityService,
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.token = this.authenticationService.fetchToken;
@@ -57,15 +57,10 @@ export class PublicDocumentComponent implements OnInit {
       .fetchSingleDocumentById({ _id: this.documentID })
       .subscribe((reply: any) => {
         this.document = reply;
+        console.log(reply);
       });
   }
-
-  linkCategories(id: string) {
-    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${id}`);
-  }
 }
-
-
 
 const CATEGORIES: ICategory[] = [
   { name: 'Educación' },

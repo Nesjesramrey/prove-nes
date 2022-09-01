@@ -1,14 +1,26 @@
-<div class="main shadow">
-  <div
-    class="random-text"
-    [ngStyle]="{
-      left: item.pos.x + 'px',
-      right: item.pos.y + 'px'
-    }"
-    *ngFor="let item of categories"
-  >
-    <circle-custom></circle-custom>
-    <!-- <span>{{ item.name }}</span>
-    <span>{{ item.quantity }}</span> -->
+<div class="main-box">
+  <div class="main shadow">
+    <div *ngFor="let item of categories" style="display: inline-block">
+      <circle-custom
+        [data]="item"
+        [size]="item.size"
+        (click)="redirectTo(item.id)"
+      ></circle-custom>
+    </div>
   </div>
 </div>
+<!-- <div class="main shadow"> -->
+<!-- <div -->
+<!-- class="random-text" -->
+<!-- [ngStyle]="{ -->
+<!-- left: item.pos.x + 'px', -->
+<!-- right: item.pos.y + 'px' -->
+<!-- }" -->
+<!-- *ngFor="let item of categories" -->
+<!-- > -->
+<!-- <circle-custom></circle-custom> -->
+<!-- <span>{{ item.name }}</span> -->
+<!-- <span>{{ item.quantity }}</span> -->
+<!-- </div> -->
+<!-- </div> -->
+<!--  -->
