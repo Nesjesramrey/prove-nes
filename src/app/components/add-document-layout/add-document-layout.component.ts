@@ -85,7 +85,6 @@ export class AddDocumentLayoutComponent implements OnInit {
 
   categorySelected(event: MatAutocompleteSelectedEvent): void {
     let category: any = this.categories.filter((x: any) => { return x['name'] == event['option']['value'] });
-    console.log(category[0]);
 
     if (this.selectedCategories.includes(event.option.value)) {
       this.utilityservice.openErrorSnackBar('Ya se agrego la categoría.');

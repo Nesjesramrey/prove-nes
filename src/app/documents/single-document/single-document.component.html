@@ -158,7 +158,7 @@
       <div class="set-12 category-list">
         <mat-card class="set-12">
           <p class="title">Categorías</p>
-          <table mat-table [dataSource]="layouts" class="categories-table">
+          <table mat-table [dataSource]="dataSource" class="categories-table">
             <ng-container matColumnDef="name">
               <th mat-header-cell *matHeaderCellDef>Categoría</th>
               <td mat-cell *matCellDef=" let element">

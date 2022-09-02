@@ -23,7 +23,6 @@ export class SingleDocumentComponent implements OnInit {
   public user: any = null;
   public document: any = null;
   public layout: any = [];
-  // public categories: any[] = _categories_mock;
   public layouts: any[] = [];
   public categoriesDisplayedColumns: string[] = ["name", "users", "interactions", "solutions", "problems", "ranking", "actions"]
   public isDataAvailable: boolean = false;
@@ -49,9 +48,10 @@ export class SingleDocumentComponent implements OnInit {
   ngOnInit(): void {
     this.documentService.fetchSingleDocumentById({ _id: this.documentID }).subscribe((reply: any) => {
       this.document = reply;
-      console.log('document: ', this.document);
+      // console.log('document: ', this.document);
       this.layouts = this.document['layouts'];
-      console.log('layouts: ', this.layouts);
+      // console.log('layouts: ', this.layouts);
+      this.dataSource = new MatTableDataSource(this.layouts);
     });
 
     if (this.accessToken != null) {
@@ -92,8 +92,8 @@ export class SingleDocumentComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
-        this.document['layouts'].push(reply[0]);
-        console.log(this.document);
+        this.layouts.push(reply[0]);
+        this.dataSource = new MatTableDataSource(this.layouts);
       }
     });
   }
@@ -115,52 +115,7 @@ export class SingleDocumentComponent implements OnInit {
 
   popAddDocumentLayout() { }
 
-  handleEditing(id: string | null,) {
-    this.editingRowId = id;
-    setTimeout(() => {
-      this.editRowName.nativeElement.focus();
-    }, 50);
-  }
-
-  // saveName() {
-  //   const newValue = this.editRowName.nativeElement.value;
-
-  //   if (newValue === null || newValue.length == 0) return
-
-
-  //   this.categories = this.categories.map(cat => {
-
-  //     if (cat.id == this.editingRowId) {
-  //       return { ...cat, name: newValue }
-  //     }
-
-  //     return cat;
-  //   })
-
-
-  //   this.editingRowId = null;
-  //   this.editRowName.nativeElement.value = ""
-  // }
-
-
   linkCategories(id: string) {
     this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${id}`)
   }
-
 }
-
-
-
-
-
-const _categories_mock = [
-  {
-    name: "deporte", id: "uuid221a", users: 500, interactions: 6200, solutions: 100, problems: 700, ranking: 700,
-  },
-  {
-    name: "derechos humanos", id: "uuid221b", users: 500, interactions: 6200, solutions: 100, problems: 700, ranking: 700,
-  },
-  {
-    name: "económico", id: "uuid221c", users: 500, interactions: 6200, solutions: 100, problems: 700, ranking: 700,
-  }
-];
