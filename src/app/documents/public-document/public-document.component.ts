@@ -57,9 +57,6 @@ export class PublicDocumentComponent implements OnInit {
       .fetchSingleDocumentById({ _id: this.documentID })
       .subscribe((reply: any) => {
         this.document = reply;
-        console.log({ reply: reply });
-        this.document.layouts = CATEGORIES;
-        console.log({ documento1: this.document });
       });
   }
 

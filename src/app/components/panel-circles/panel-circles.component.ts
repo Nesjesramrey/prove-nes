@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
 
 export interface ICategoryFormat {
@@ -28,14 +29,24 @@ export class PanelCirclesComponent implements OnInit {
   public categories: ICategoryFormat[] = [];
   public expanded: boolean = false;
 
+  public categoryID: string = '';
+  public documentID: string = '';
+
   @Input('user') public user: any = null;
   @Input() data: any[] = [];
-  @Input() document: any;
+  @Input() document: any = '';
   @Input() withBorder: boolean = false;
-  @Input() redirect: EventEmitter<any> | undefined;
-  // @Input() redirect: any = false;
+  @Input() redirectTo: string | undefined = '';
 
-  constructor(public utilityService: UtilityService) {}
+  constructor(
+    public utilityService: UtilityService,
+    public activatedRoute: ActivatedRoute
+  ) {
+    this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
+    this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
+    console.log(this.documentID);
+    console.log(this.categoryID);
+  }
 
   ngOnInit(): void {
     this.loadCategories();
@@ -48,10 +59,11 @@ export class PanelCirclesComponent implements OnInit {
     let maxX = 20;
     let maxY = 20;
 
+    console.log('>',{ documento: this.document });
     const data = this.document ? this.document.layouts : this.data;
-    console.log({ documento: data });
 
     this.categories = data.map((item: any, index: any) => {
+      console.log('3###', item);
       const background = this.withBorder
         ? '#ff6d00'
         : '../../../assets/images/books.png';
@@ -80,9 +92,18 @@ export class PanelCirclesComponent implements OnInit {
     });
   }
 
-  redirectTo(id: string) {
-    this.utilityService.linkMe(
-      `documentos/publico/${this.document._id}/categoria/${id}`
-    );
+  redirect(id: string) {
+    console.log(id);
+    let path = '';
+
+    if (this.redirectTo === 'CATEGORY') {
+      path = `documentos/publico/${this.documentID}/categoria/${id}`;
+    }
+
+    if (this.redirectTo === 'SUBCATEGORY') {
+      path = `documentos/publico/${this.documentID}/categoria/${this.categoryID}/subcategoria/${id}`;
+    }
+
+    this.utilityService.linkMe(path);
   }
 }

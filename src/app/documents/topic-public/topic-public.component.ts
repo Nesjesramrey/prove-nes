@@ -21,31 +21,8 @@ export class TopicPublicComponent implements OnInit {
   public payload: any = null;
   public document: any = null;
   public layout: any = [];
-  public categories: any[] = _categories_mock;
-  public categoriesDisplayedColumns: string[] = [
-    'name',
-    'users',
-    'interactions',
-    'solutions',
-    'problems',
-    'ranking',
-    'actions',
-  ];
-  public isDataAvailable: boolean = false;
-  // public displayedColumns: string[] = ['select', 'name', 'email', 'activities', 'menu'];
-  // public dataSource = new MatTableDataSource<any>();
-  public selection = new SelectionModel<any>(true, []);
-  public editingRowId: string | null = null;
-  // public displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  public displayedColumns: string[] = ['name', 'ranking', 'users'];
-
-  public dataSource = ELEMENT_DATA;
-
-  public problemsDataSource = PROBLEMS_DATA;
-  public solutionsDataSource = SOLUTIONS_DATA;
-
-  public categoriesData = CATEGORIES;
-  @ViewChild('editRowName') editRowName!: ElementRef<HTMLInputElement>;
+  public testimonials: any = TESTIMONIALS;
+  public solutions: any = SOLUTIONS_DATA;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -86,76 +63,106 @@ export interface PeriodicElement {
   symbol: string;
 }
 export interface DataTable {
-  name: string;
+  title: string;
   ranking: number;
   users: number;
+  score: number;
 }
 
-export interface ICategory {
-  name: string;
+export interface ITestimony {
+  title: string;
+  description: string;
+  created: string;
+  avatarUrl: string;
+  avatarUser: string;
 }
 
-const CATEGORIES: ICategory[] = [
-  { name: 'Educación' },
-  { name: 'Infraestuctura' },
-  { name: 'Salud' },
-  { name: 'Empleo' },
-  { name: 'Derechos humanos' },
-  { name: 'Deporte' },
-  { name: 'Vivienda' },
-  { name: 'Subsidio familiar' },
-  { name: 'Obesidad Infantil' },
-  { name: 'Asaltos' },
-  { name: 'Transporte' },
-];
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
+const TESTIMONIALS: ITestimony[] = [
+  {
+    title: 'Testimonio 1',
+    description: 'description',
+    created: '01/02/2022',
+    avatarUrl: 'books.png',
+    avatarUser: '16393769364132.jpeg',
+  },
+  {
+    title: 'Testimonio 2',
+    description: 'description',
+    created: '23/02/2022',
+    avatarUrl: 'books.png',
+    avatarUser: '16393769364132.jpeg',
+  },
+  {
+    title: 'Testimonio 3',
+    description: 'description',
+    created: '10/02/2022',
+    avatarUrl: 'books.png',
+    avatarUser: '16393769364132.jpeg',
+  },
+  {
+    title: 'Testimonio 4',
+    description: 'description',
+    created: '08/02/2022',
+    avatarUrl: 'books.png',
+    avatarUser: '16393769364132.jpeg',
+  },
+  {
+    title: 'Testimonio 5',
+    description: 'description',
+    created: '05/02/2022',
+    avatarUrl: 'books.png',
+    avatarUser: '16393769364132.jpeg',
+  },
+  {
+    title: 'Testimonio 6',
+    description: 'description',
+    created: '21/02/2022',
+    avatarUrl: 'books.png',
+    avatarUser: '16393769364132.jpeg',
+  },
+  {
+    title: 'Testimonio 7',
+    description: 'description',
+    created: '22/02/2022',
+    avatarUrl: 'books.png',
+    avatarUser: '16393769364132.jpeg',
+  },
+  {
+    title: 'Testimonio 8',
+    description: 'description',
+    created: '04/02/2022',
+    avatarUrl: 'books.png',
+    avatarUser: '16393769364132.jpeg',
+  },
+  {
+    title: 'Testimonio 9',
+    description: 'description',
+    created: '01/03/2022',
+    avatarUrl: 'books.png',
+    avatarUser: '16393769364132.jpeg',
+  },
 ];
 
 const SOLUTIONS_DATA: DataTable[] = [
-  { name: 'Solución A', ranking: 10, users: 255 },
-  { name: 'Solución A', ranking: 10, users: 255 },
-  { name: 'Solución A', ranking: 10, users: 255 },
-  { name: 'Solución A', ranking: 10, users: 255 },
-];
-
-const PROBLEMS_DATA: DataTable[] = [
-  { name: 'Problema A', ranking: 10, users: 255 },
-  { name: 'Problema A', ranking: 10, users: 255 },
-  { name: 'Problema A', ranking: 10, users: 255 },
-  { name: 'Problema A', ranking: 10, users: 255 },
-];
-
-const _categories_mock = [
   {
-    name: 'deporte',
-    id: 'uuid221a',
-    users: 500,
-    interactions: 6200,
-    solutions: 100,
-    problems: 700,
-    ranking: 700,
+    title:
+      'Incorporar informales a través de cuotas únicas de ISR y Seguridad Social',
+    ranking: 10,
+    users: 255,
+    score: 1.2,
   },
   {
-    name: 'derechos humanos',
-    id: 'uuid221b',
-    users: 500,
-    interactions: 6200,
-    solutions: 100,
-    problems: 700,
-    ranking: 700,
+    title: 'Tipificar la actividad económica ilegal como delito grave',
+    ranking: 10,
+    users: 255,
+    score: 2,
   },
+  { title: 'Crear padrón de informales', ranking: 10, users: 255, score: 3 },
   {
-    name: 'económico',
-    id: 'uuid221c',
-    users: 500,
-    interactions: 6200,
-    solutions: 100,
-    problems: 700,
-    ranking: 700,
+    title:
+      'Publicar estudio de pérdidas económicas por actividad económica informal',
+    ranking: 10,
+    users: 255,
+    score: 1.3,
   },
 ];

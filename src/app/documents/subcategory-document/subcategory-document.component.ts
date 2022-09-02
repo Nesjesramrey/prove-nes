@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
 import { DocumentService } from 'src/app/services/document.service';
@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { UtilityService } from 'src/app/services/utility.service';
+import { LayoutService } from 'src/app/services/layout.service';
 
 @Component({
   selector: '.subcategory-document-page',
@@ -16,6 +17,9 @@ import { UtilityService } from 'src/app/services/utility.service';
 })
 export class SubcategoryDocumentComponent implements OnInit {
   public documentID: string = '';
+  public categoryID: string = '';
+  public subcategoryID: string = '';
+
   public token: any = null;
   public user: any = null;
   public payload: any = null;
@@ -38,7 +42,7 @@ export class SubcategoryDocumentComponent implements OnInit {
   public editingRowId: string | null = null;
   // public displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   public displayedColumns: string[] = ['name', 'ranking', 'users'];
-
+  public selectedCategory: any = null;
   public dataSource = ELEMENT_DATA;
 
   public problemsDataSource = PROBLEMS_DATA;
@@ -53,15 +57,42 @@ export class SubcategoryDocumentComponent implements OnInit {
     public userService: UserService,
     public documentService: DocumentService,
     public dialog: MatDialog,
-    public utilityService: UtilityService
+    public utilityService: UtilityService,
+    public layoutService: LayoutService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
+    this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
+    this.subcategoryID =
+      this.activatedRoute['snapshot']['params']['subcategoryID'];
+
     this.token = this.authenticationService.fetchToken;
     // console.log(this.documentID);
   }
 
   ngOnInit(): void {
     // user available
+    let document: Observable<any> =
+      this.documentService.fetchSingleDocumentById({ _id: this.documentID });
+    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({
+      _id: this.categoryID,
+    });
+
+    forkJoin([document, category]).subscribe((reply: any) => {
+      this.document = reply[0];
+      console.log('document: ', reply);
+      // this.subcategories = this.selectedCategory['subLayouts'];
+      // console.log('category: ', this.selectedCategory);
+      this.categoriesData = reply[1]['subLayouts'];
+      this.selectedCategory = reply[1].subLayouts.filter(
+        (item: any) => item._id === this.subcategoryID
+      )[0];
+      console.log('subcategories: ', this.selectedCategory);
+
+      setTimeout(() => {
+        this.isDataAvailable = true;
+      }, 300);
+    });
+
     if (this.token != null) {
       this.payload = JSON.parse(atob(this.token.split('.')[1]));
       let user: Observable<any> = this.userService.fetchUserById({

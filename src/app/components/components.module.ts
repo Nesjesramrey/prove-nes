@@ -47,6 +47,7 @@ import { CircleCustomComponent } from './circle-custom/circle-custom.component';
 import { PanelCirclesComponent } from './panel-circles/panel-circles.component';
 import { ExpandedTextComponent } from './expanded-text/expanded-text.component';
 import { TestimonyCardComponent } from './testimony-card/testimony-card.component';
+import { SolutionsCardComponent } from './solutions-card/solutions-card.component';
 
 @NgModule({
   imports: [
@@ -97,6 +98,7 @@ import { TestimonyCardComponent } from './testimony-card/testimony-card.componen
     PanelCirclesComponent,
     ExpandedTextComponent,
     TestimonyCardComponent,
+    SolutionsCardComponent,
     CircleCustomComponent,
   ],
   exports: [
@@ -128,6 +130,7 @@ import { TestimonyCardComponent } from './testimony-card/testimony-card.componen
     PanelCirclesComponent,
     ExpandedTextComponent,
     TestimonyCardComponent,
+    SolutionsCardComponent,
     CircleCustomComponent,
   ],
   entryComponents: [
