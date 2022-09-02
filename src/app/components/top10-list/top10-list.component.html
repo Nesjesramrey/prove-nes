@@ -7,7 +7,19 @@
       </div>
     </span>
     <div mat-line class="progress-bar">
-      <div id="progress" class="progress" [style.width.%]="item.value"></div>
+      <div
+        *ngIf="!isColor"
+        id="progress"
+        class="progress"
+        [style.width.%]="item.value"
+      ></div>
+      <div
+        *ngIf="isColor"
+        id="progress"
+        class="progress"
+        [style.width.%]="item.value"
+        [style.background]="color.bg"
+      ></div>
     </div>
   </mat-list-item>
 </mat-list>

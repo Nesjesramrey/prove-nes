@@ -12,12 +12,20 @@ export interface Section {
   styleUrls: ['./top10-list.component.scss'],
 })
 export class Top10ListComponent implements OnInit {
-
   @Input() data: Section[] = [];
+  @Input() color: any;
+  isColor: boolean = false;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     console.log({ data: this.data });
+    console.log({ color: this.color });
+    this.checkColor(this.color);
+  }
+  checkColor(color: any) {
+    if (color.bg === '#FF6D00') {
+      this.isColor = true;
+    }
   }
 }
