@@ -8,8 +8,6 @@ import { PublicDocumentComponent } from './public-document/public-document.compo
 import { SelectedPublicDocumentComponent } from './selected-public-document/selected-public-document.component';
 import { CategoryPublicDocumentComponent } from './category-public-document/category-public-document.component';
 import { SubcategoryDocumentComponent } from './subcategory-document/subcategory-document.component';
-import { SolutionPublicComponent } from './solution-public-document/solution-public.component';
-import { TopicPublicComponent } from './topic-public/topic-public.component';
 
 const routes: Routes = [
   {
@@ -24,14 +22,6 @@ const routes: Routes = [
       {
         path: 'publico/selected',
         component: SelectedPublicDocumentComponent,
-      },
-      {
-        path: 'publico/solution',
-        component: SolutionPublicComponent,
-      },
-      {
-        path: 'publico/topic',
-        component: TopicPublicComponent,
       },
       { path: 'publico/:documentID', component: PublicDocumentComponent },
       {
@@ -61,4 +51,4 @@ const routes: Routes = [
   exports: [RouterModule],
   imports: [RouterModule.forChild(routes)],
 })
-export class DocumentsComponentRoutingModule { }
+export class DocumentsComponentRoutingModule {}

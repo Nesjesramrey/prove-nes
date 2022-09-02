@@ -10,6 +10,7 @@ export interface ICategoryFormat {
   out_circle_color: string;
   opacity: number;
   size: string;
+  position: string;
   pos?: {
     x: number;
     y: number;
@@ -43,12 +44,14 @@ export class PanelCirclesComponent implements OnInit {
   loadCategories() {
     const sizes = ['small', 'medium', 'large'];
     const opacities = [0.75, 1];
+    const positions = ['first', 'second', 'third'];
     let maxX = 20;
     let maxY = 20;
 
     const data = this.document ? this.document.layouts : this.data;
+    console.log({ documento: data });
 
-    this.categories = data.map((item: any) => {
+    this.categories = data.map((item: any, index: any) => {
       const background = this.withBorder
         ? '#ff6d00'
         : '../../../assets/images/books.png';
@@ -63,8 +66,8 @@ export class PanelCirclesComponent implements OnInit {
         overlay: 'transparent',
         // opacity: 1,
         opacity: opacities[(Math.random() * opacities.length) | 0],
-        size: sizes[(Math.random() * sizes.length) | 0],
-
+        size: sizes[index],
+        position: positions[index],
         pos: {
           x: maxX,
           y: maxY,
