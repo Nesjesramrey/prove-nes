@@ -32,7 +32,6 @@ import { TopicPublicComponent } from './topic-public/topic-public.component';
     SingleDocumentComponent,
     SingleCategoryComponent,
     SingleThemeComponent,
-    ,
     PublicDocumentComponent,
     SelectedPublicDocumentComponent,
     CategoryPublicDocumentComponent,
