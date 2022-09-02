@@ -64,65 +64,13 @@
         </mat-card>
       </div>
       <div class="set-12 mt-2">
-        <mat-card class="doc-description" style="height: 280px">
-          <div class="solutions-box" style="text-align: start">
-            <p class="title">Soluciones</p>
-            <table class="mt-2">
-              <tbody>
-                <tr>
-                  <td>
-                    <p>
-                      Incorporar informales a través de cuotas únicas de ISR y
-                      Seguridad Social
-                    </p>
-                  </td>
-                  <td>
-                    <p>8.6</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <p>
-                      Tipificar la actividad económica ilegal como delito grave
-                    </p>
-                  </td>
-                  <td>
-                    <p>7.9</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <p>Crear padrón de informales</p>
-                  </td>
-                  <td>
-                    <p>7.9</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <p>
-                      Publicar estudio de pérdidas económicas por actividad
-                      económica informal
-                    </p>
-                  </td>
-                  <td>
-                    <p>7.9</p>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </mat-card>
+        <solutions-card [data]="solutions"></solutions-card>
       </div>
     </div>
     <div class="set-4">
-      <p style="font-weight: 500;margin-bottom:20px">Testimonios</p>
-      <div class="set-12 testimony-box">
-        <testimony-card></testimony-card>
-        <testimony-card></testimony-card>
-        <testimony-card></testimony-card>
-        <testimony-card></testimony-card>
-        <testimony-card></testimony-card>
+      <p style="font-weight: 500; margin-bottom: 20px">Testimonios</p>
+      <div class="set-12 testimony-box" style="height: 300px">
+        <testimony-card [data]="testimonials"></testimony-card>
       </div>
       <div class="main-box"></div>
     </div>

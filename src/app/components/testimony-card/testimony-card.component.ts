@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'testimony-card',
@@ -6,10 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./testimony-card.component.scss'],
 })
 export class TestimonyCardComponent implements OnInit {
-  public solutionsTotal: number = 2000;
-  public problemsTotal: number = 1200;
+  @Input() data: any = [];
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 }

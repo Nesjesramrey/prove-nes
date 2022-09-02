@@ -13,7 +13,7 @@
     </div>
   </div>
 
-  <div class="set-12" style="padding-bottom: 100px">
+  <div class="set-12" style="padding-bottom: 100px" *ngIf="selectedCategory">
     <div class="set-4 col-rgt-3">
       <mat-card class="doc-description">
         <div class="imghldr">
@@ -25,13 +25,12 @@
           />
         </div>
         <div class="infohldr">
-          <p class="card-title">Empleo</p>
-          <p class="card-description">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam sed
-            dignissimos natus minima repudiandae consequatur distinctio unde
-            saepe ea quas accusantium animi reiciendis asperiores, nesciunt
-            consequuntur fugiat earum doloribus repellat.
-          </p>
+          <p class="card-title">{{ selectedCategory.category.name }}</p>
+          <expanded-text
+            [text]="selectedCategory.description"
+            [minLength]="200"
+          ></expanded-text>
+
           <span class="card-description link">Leer más</span>
         </div>
       </mat-card>

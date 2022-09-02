@@ -14,7 +14,6 @@ export interface ICategoryFormat {
   opacity: number;
 }
 
-
 @Component({
   selector: 'panel-subcategory',
   templateUrl: './panel-subcategory.component.html',
@@ -59,8 +58,8 @@ export class PanelSubcategoryComponent implements OnInit {
     this.categories = this.data.map((item) => {
       item.size = sizes[(Math.random() * sizes.length) | 0];
       item.opacity = opacities[(Math.random() * opacities.length) | 0];
-
-      if (item.name.length > 12) {
+      item.name = item.category.name;
+      if (item.category.name.length > 12) {
         maxX = 400;
       } else {
         maxX = 600;
@@ -70,6 +69,7 @@ export class PanelSubcategoryComponent implements OnInit {
         x: Math.floor(Math.random() * (maxX + 1) + 0),
         y: Math.floor(Math.random() * (maxY + 1) + 0),
       };
+      console.log(item);
       return item;
     });
   }
