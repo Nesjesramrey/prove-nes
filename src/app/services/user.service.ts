@@ -27,7 +27,7 @@ export class UserService {
   }
 
   fetchAllUsers() {
-    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAllUsersEndPoint, {});
+    return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAllUsersEndPoint, {});
   }
 
   fetchUserById(data: any) {
@@ -39,6 +39,6 @@ export class UserService {
   }
 
   addUserPermissions(data: any) {
-    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.addUserPermissionsEndPoint, data);
+    return this.httpClient.put(this.endpointSrvc.apiEndPoint + this.endpointSrvc.addUserPermissionsEndPoint + `${data['userID']}`, data);
   }
 }

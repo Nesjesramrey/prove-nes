@@ -17,8 +17,11 @@
       <div class="set-4">
         <mat-form-field appearance="outline">
           <mat-label>Cobertura</mat-label>
-          <mat-select formControlName="coverage" multiple>
-            <mat-option *ngFor="let state of statesMex" [value]="state._id">
+          <mat-select formControlName="coverage" multiple (selectionChange)="onSelectCoverage($event)" #coverageSelect>
+            <mat-option value="all">
+              <small>Nacional</small>
+            </mat-option>
+            <mat-option *ngFor="let state of states" [value]="state._id">
               <small>{{state.name | titlecase}}</small>
             </mat-option>
           </mat-select>
@@ -27,10 +30,10 @@
 
       <div class="set-12 section-title">
         <p>Editores</p>
-        <button type="button" (click)="addCollaboratorField()" disabled>
+        <!-- <button type="button" (click)="addCollaboratorField()" disabled>
           <small>Agregar Editor</small>
           <mat-icon>add_circle</mat-icon>
-        </button>
+        </button> -->
       </div>
 
       <div formArrayName="collaborators" class="set-12">
@@ -44,7 +47,7 @@
                 </mat-form-field>
               </div>
 
-              <div class="set-4">
+              <div class="set-5">
                 <mat-form-field appearance="outline">
                   <mat-label>Tipo</mat-label>
                   <mat-select formControlName="activity">
@@ -55,19 +58,21 @@
                   </mat-select>
                 </mat-form-field>
               </div>
-              <div class="set-1">
+              <!-- <div class="set-1">
                 <button type="button" class="roundbluemini" (click)="removeCollaboratorField(i)" matTooltip="Eliminar"
                   matTooltipPosition="left" disabled>
                   <mat-icon>cancel</mat-icon>
                 </button>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
       </div>
 
       <div class="set-12 ctrls">
-        <button type="button" mat-raised-button color="accent" (click)="killDialog()">Cancelar</button>
+        <button type="button" mat-raised-button color="accent" (click)="killDialog()" [disabled]="submitted">
+          Cancelar
+        </button>
         <button type="submit" mat-raised-button color="primary" [disabled]="documentFormGroup.invalid || submitted">
           Crear Documento
         </button>

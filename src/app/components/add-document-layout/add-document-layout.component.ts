@@ -30,6 +30,7 @@ export class AddDocumentLayoutComponent implements OnInit {
   public addNewCategory: boolean = false;
   public addCategoryFormGroup!: FormGroup;
   public isSubmitted: boolean = false;
+  public fileNames: any = [];
 
   constructor(
     public dialogRef: MatDialogRef<AddDocumentLayoutComponent>,
@@ -84,6 +85,7 @@ export class AddDocumentLayoutComponent implements OnInit {
 
   categorySelected(event: MatAutocompleteSelectedEvent): void {
     let category: any = this.categories.filter((x: any) => { return x['name'] == event['option']['value'] });
+    console.log(category[0]);
 
     if (this.selectedCategories.includes(event.option.value)) {
       this.utilityservice.openErrorSnackBar('Ya se agrego la categoría.');
@@ -97,6 +99,10 @@ export class AddDocumentLayoutComponent implements OnInit {
     this.selectedCategories.push(event.option.value);
     this.categoryInput.nativeElement.value = '';
     this.categoryCtrl.setValue(null);
+  }
+
+  onEnterKey(event: any) {
+    console.log(event.target);
   }
 
   filterCategories(value: any) {
@@ -120,27 +126,26 @@ export class AddDocumentLayoutComponent implements OnInit {
     //   this.utilityservice.openErrorSnackBar('Solo archivos de tipo imágen son permitidos');
     //   return;
     // }
-
-    this.stepOneFormGroup.patchValue({ files: event.target.files[0] });
+    Array.from(event.target.files).forEach((file: any) => { this.fileNames.push(file['name']); });
+    this.stepOneFormGroup.patchValue({ files: event.target.files });
     this.stepOneFormGroup.updateValueAndValidity();
-    // console.log(this.stepOneFormGroup.controls);
+    // console.log(this.stepOneFormGroup.controls['files']['value']);
   }
 
   onCreateLayout() {
     this.isSubmitted = true;
-    let files: File;
+
     let data = {
       formData: new FormData(),
       documentID: this.document['_id']
     };
 
-    files = this.stepOneFormGroup.get('files')?.value;
-    data['formData'].append('files', files);
+    Array.from(this.stepOneFormGroup.controls['files']['value'])
+      .forEach((file: any) => { data['formData'].append('files', file); });
     data['formData'].append('description', this.stepOneFormGroup.value.description);
     data['formData'].append('categories', JSON.stringify(this.layout));
 
     this.documentService.createDocumentLayout(data).subscribe((reply) => {
-      // console.log(reply);
       this.dialogRef.close(reply);
       this.isSubmitted = false;
     });

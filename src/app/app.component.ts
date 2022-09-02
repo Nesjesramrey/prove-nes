@@ -4,6 +4,8 @@ import { NavigationStart, Router } from '@angular/router';
 import { AuthenticationService } from './services/authentication.service';
 import { UserService } from './services/user.service';
 import { UtilityService } from './services/utility.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CompleteRegistrationComponent } from './components/complete-registration/complete-registration.component';
 
 const STYLES = (theme: ThemeVariables, ref: ThemeRef) => {
   const __ = ref.selectorsOf(STYLES);
@@ -40,7 +42,8 @@ export class AppComponent implements OnInit {
     // public router: Router,
     public authenticationSrvc: AuthenticationService,
     public userService: UserService,
-    public utilityService: UtilityService
+    public utilityService: UtilityService,
+    public dialog: MatDialog
   ) {
     this.accessToken = this.authenticationSrvc.fetchAccessToken;
     // console.log('accessToken: ', this.accessToken);
@@ -71,6 +74,9 @@ export class AppComponent implements OnInit {
         next: (reply: any) => {
           this.user = reply;
           // console.log(this.user);
+          if (!this.user['isFullRegister']) {
+            this.openAddDocumentDialog();
+          }
           setTimeout(() => {
             this.isDataAvailable = true;
           });
@@ -82,5 +88,19 @@ export class AppComponent implements OnInit {
         this.isDataAvailable = true;
       });
     }
+  }
+
+  openAddDocumentDialog() {
+    const dialogRef = this.dialog.open(CompleteRegistrationComponent, {
+      width: '640px',
+      data: {
+        user: this.user
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
   }
 }

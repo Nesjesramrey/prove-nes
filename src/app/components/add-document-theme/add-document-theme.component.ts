@@ -12,6 +12,10 @@ export class AddDocumentThemeComponent implements OnInit {
   public isDataAvailable: boolean = false;
   public imageUrl!: string;
   public addThemeFormGroup!: FormGroup;
+  public addSolutionFormGroup!: FormGroup;
+  public showThemeForm:boolean = true;
+  public showSolutionForm:boolean = false;
+
 
   constructor(
     public formBuilder: FormBuilder,
@@ -24,6 +28,13 @@ export class AddDocumentThemeComponent implements OnInit {
 
   ngOnInit(): void {
     this.addThemeFormGroup = this.formBuilder.group({
+      title: ['', [Validators.required]],
+      description: ['', []],
+      //solution: ['', []],
+      image: ['', []],
+    });
+
+    this.addSolutionFormGroup = this.formBuilder.group({
       title: ['', [Validators.required]],
       description: ['', []],
       solution: ['', []],
@@ -50,12 +61,27 @@ export class AddDocumentThemeComponent implements OnInit {
     let data: any = {
       title: form['value']['title'],
       description: form['value']['description'],
-      solution: form['value']['solution'],
+      //solution: form['value']['solution'],
       layout_id: this.dialogData['categoryID']
     };
     this.topicService.createNewTopic(data).subscribe((reply: any) => {
-      // console.log(reply);
-      this.dialogRef.close(reply['topics']);
+      console.log(reply);
+      //this.dialogRef.close(reply['topics']);
+      this.showSolutionForm = true;
+      this.showThemeForm = false;
     });
   }
+
+  onCreateSolution(form: FormGroup) {
+    let data: any = {
+      title: form['value']['title'],
+      description: form['value']['description'],      
+      solution: form['value']['solution'],
+      layout_id: this.dialogData['categoryID']
+    };
+    //this.topicService.createNewTopic(data).subscribe((reply: any) => {
+    //  console.log(reply);
+      //this.dialogRef.close(reply['topics']);
+    //});
+  }  
 }

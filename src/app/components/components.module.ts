@@ -32,6 +32,10 @@ import { AddDocumentCollaboratorComponent } from './add-document-collaborator/ad
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { AvatarsRowComponent } from './avatars-row/avatars-row.component';
 import { AddDocumentThemeComponent } from './add-document-theme/add-document-theme.component';
+import { CompleteRegistrationComponent } from "./complete-registration/complete-registration.component";
+import { AddDocumentSolutionComponent } from './add-document-solution/add-document-solution.component';
+import { AddDocumentTestimonyComponent } from './add-document-testimony/add-document-testimony.component';
+import { CarouselComponent } from './carousel/carousel.component';
 import { HorizontalStatsComponent } from './horizontal-stats/horizontal-stats.component';
 import { VerticalStatsComponent } from './vertical-stats/vertical-stats.component';
 import { Top10ListComponent } from './top10-list/top10-list.component';
@@ -80,6 +84,10 @@ import { TestimonyCardComponent } from './testimony-card/testimony-card.componen
     BreadcrumbsComponent,
     AvatarsRowComponent,
     AddDocumentThemeComponent,
+    CompleteRegistrationComponent,
+    AddDocumentSolutionComponent,
+    AddDocumentTestimonyComponent,
+    CarouselComponent,
     VerticalStatsComponent,
     Top10ListComponent,
     FeaturedUsersComponent,
@@ -109,6 +117,8 @@ import { TestimonyCardComponent } from './testimony-card/testimony-card.componen
     VerticalStatsComponent,
     BreadcrumbsComponent,
     AvatarsRowComponent,
+    CompleteRegistrationComponent,
+    CarouselComponent,
     VerticalStatsComponent,
     Top10ListComponent,
     PanelSubcategoryComponent,
@@ -128,6 +138,7 @@ import { TestimonyCardComponent } from './testimony-card/testimony-card.componen
     AddDocumentLayoutComponent,
     AddDocumentCategoryComponent,
     AddDocumentCollaboratorComponent,
+    CompleteRegistrationComponent,
   ],
   providers: [],
 })

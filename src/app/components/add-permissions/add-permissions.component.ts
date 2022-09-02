@@ -12,9 +12,9 @@ import { UtilityService } from 'src/app/services/utility.service';
 export class AddPermissionsComponent implements OnInit {
   public permissionsFormControl = new FormControl([], [Validators.required]);
   public permissionList = [
-    { value: 'moderator', viewValue: 'Moderador' },
-    { value: 'administrator', viewValue: 'Administrador' },
-    { value: 'support', viewValue: 'Soporte' },
+    { value: 'moderator', viewValue: 'Moderador', _id: '62fcebae6d498ad2bf077c50' },
+    { value: 'administrator', viewValue: 'Administrador', _id: '62fcebae6d498ad2bf077c4e' },
+    { value: 'support', viewValue: 'Soporte', _id: '62fcebae6d498ad2bf077c51' },
   ];
 
   constructor(
@@ -35,9 +35,11 @@ export class AddPermissionsComponent implements OnInit {
 
     switch (action) {
       case 'add':
+        let activities: any = [];
+        this.permissionsFormControl['value'].filter((x: any) => { activities.push(x['_id']); });
         data = {
           userID: this.dialogData['userID'],
-          activities: this.permissionsFormControl['value']
+          activities: activities
         }
         break;
 
@@ -47,16 +49,17 @@ export class AddPermissionsComponent implements OnInit {
           activities: []
         }
         break;
-    }
+    };
 
     this.userSrvc.addUserPermissions(data).subscribe((reply: any) => {
-      if (reply['status'] == false) {
-        this.utilitySrvc.openErrorSnackBar(reply['error']);
-        return;
-      }
+      console.log(reply);
+      // if (reply['status'] == false) {
+      //   this.utilitySrvc.openErrorSnackBar(reply['error']);
+      //   return;
+      // }
 
-      this.utilitySrvc.openSuccessSnackBar(reply['message']);
-      this.dialogRef.close(reply);
+      // this.utilitySrvc.openSuccessSnackBar(reply['message']);
+      // this.dialogRef.close(reply);
     });
   }
 

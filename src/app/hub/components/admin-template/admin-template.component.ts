@@ -62,7 +62,7 @@ export class AdminTemplateComponent implements OnInit {
     // console.log(this.selectedDocument);
   }
 
-  linkMe(documentID: string) {
-    this.utilityService.linkMe('/documentos/' + documentID);
+  linkMe(url: string) {
+    this.utilityService.linkMe(url);
   }
 }

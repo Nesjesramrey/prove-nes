@@ -2,223 +2,223 @@
   <mat-spinner></mat-spinner>
 </div>
 
-
 <div class="set-12" *ngIf="isDataAvailable">
-  <breadcrumbs-component>
-    <li class="breadcrumb-item">Perfil</li>
-    <li>Documentos</li>
-    <li>{{document.title}}</li>
-  </breadcrumbs-component>
-
-  <div class="set-3 col-lft">
-    <mat-card class="set-12 doc-description">
-      <div class="set-12 imghldr">
-        <mat-icon *ngIf="document.images.length == 0">panorama</mat-icon>
-        <img [src]="document.images[0]" alt="" *ngIf="document.images.length != 0">
-      </div>
-
-      <div class="set-12 infohldr">
-        <p class="card-title">{{document.title}}</p>
-        <p class="card-description" *ngIf="document.description != null">{{document.description}}</p>
-        <button type="button" class="toolbtn" *ngIf="document.description == null">
-          <small>Agregar descripción</small>
-        </button>
-        <!-- <span class="card-description link" *ngIf="document.description != null">Leer más</span> -->
-        <avatars-row></avatars-row>
-      </div>
-
-    </mat-card>
+  <div class="set-12">
+    <div class="set-6">
+      <breadcrumbs-component>
+        <li class="breadcrumb-item">Perfil</li>
+        <li>Documentos</li>
+        <li>{{document.title}}</li>
+      </breadcrumbs-component>
+    </div>
+    <div class="set-6 txt-right">
+      <span class="created-by">
+        Autor: <span class="author">{{document.createdBy.firstname}} {{document.createdBy.lastname}}</span>
+      </span>
+    </div>
   </div>
 
-  <div class="set-9 col-rgt">
-    <div class="set-12">
-      <div class="set-4">
-        <mat-form-field appearance="outline">
-          <mat-label>Cobertura</mat-label>
-          <mat-select [value]="document.coverage[0]._id">
-            <mat-option *ngFor="let option of document.coverage" [value]="option._id">
-              <small>{{option.name | titlecase}}</small>
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div class="set-8 txt-right">
-        <button type="button" mat-mini-fab color="accent" class="mini" matTooltip="Agregar Esquema"
-          (click)="popAddDocumentLayout()" disabled>
-          <mat-icon>group_add</mat-icon>
-        </button>
-        <button type="button" mat-mini-fab color="primary" class="mini" matTooltip="Agregar Colaborador"
-          (click)="popAddDocumentCollaborator()" disabled>
-          <mat-icon>person_add</mat-icon>
-        </button>
-        <button type="button" mat-mini-fab color="warn" class="mini" matTooltip="Agregar Categoría"
-          (click)="popAddDocumentCategory()">
-          <mat-icon>create_new_folder</mat-icon>
-        </button>
-      </div>
-    </div>
-
-    <div class="set-12">
-      <mat-card class="set-12 info-lists">
-        <div class="set-4">
-          <div class="inner-card">
-            <div class="set-4">
-              <span class="roundico-green">
-                <mat-icon>groups</mat-icon>
-              </span>
-            </div>
-            <div class="set-8">
-              <p><small>Usuarios</small></p>
-              <strong>0</strong>
-            </div>
-          </div>
-
-          <div class="inner-card">
-            <div class="set-4">
-              <span class="roundico-orange">
-                <mat-icon>front_hand</mat-icon>
-              </span>
-            </div>
-            <div class="set-8">
-              <p><small>Interacciones</small></p>
-              <strong>0</strong>
-            </div>
-          </div>
+  <div class="set-12">
+    <div class="set-3 col-lft">
+      <mat-card class="set-12 doc-description">
+        <div class="set-12 imghldr">
+          <mat-icon *ngIf="document.images.length == 0">panorama</mat-icon>
+          <img [src]="document.images[0]" alt="" *ngIf="document.images.length != 0">
         </div>
 
-        <div class="set-4">
-          <p class="list-title">
-            <small>Soluciones</small>
-            <mat-icon class="icon-insights">insights</mat-icon>
-          </p>
-
-          <ol class="top-list">
-            <li class="top-list-item">
-              <span>Inseguridad</span>
-            </li>
-            <li class="top-list-item">
-              <span>Inseguridad</span>
-            </li>
-            <li class="top-list-item">
-              <span>Inseguridad</span>
-            </li>
-          </ol>
-
-        </div>
-
-        <div class="set-4">
-          <p class="list-title">
-            <small>Problemas</small>
-            <mat-icon class="icon-warnings">warning</mat-icon>
-          </p>
-
-
-          <ol class="top-list">
-            <li class="top-list-item">
-              <span>Inseguridad</span>
-            </li>
-            <li class="top-list-item">
-              <span>Inseguridad</span>
-            </li>
-            <li class="top-list-item">
-              <span>Inseguridad</span>
-            </li>
-          </ol>
-
-        </div>
-      </mat-card>
-    </div>
-
-    <!-- CATEGORIES TABLE- -->
-    <div class="set-12 category-list">
-      <mat-card class="set-12">
-        <p class="title">Categorias</p>
-        <!-- TABLE -->
-        <table mat-table [dataSource]="layouts" class="categories-table">
-          <!-- NAME Column -->
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>Categoría</th>
-            <td mat-cell *matCellDef=" let element">
-              <!-- <div *ngIf="editingRowId == element.id; else editingMode" class="editing">
-                <input class="text" type="text" value="{{element.category.name}}" #editRowName />
-                <span (click)="saveName()">
-                  <mat-icon>check_circle</mat-icon>
-                </span>
-              </div>
-
-              <ng-template #editingMode>
-                <div>
-                  <span class="text">
-                    {{element.name}}
-                  </span>
-                  <span (click)="handleEditing(element.id)">
-                    <mat-icon>edit</mat-icon>
-                  </span>
-                </div>
-              </ng-template> -->
-              <strong>{{element.category.name}}</strong>
-            </td>
-          </ng-container>
-
-          <!-- USERS Column -->
-          <ng-container matColumnDef="users">
-            <th mat-header-cell *matHeaderCellDef> Usuarios </th>
-            <td mat-cell *matCellDef="let element"> {{element.users || 'NA'}} </td>
-          </ng-container>
-
-          <!-- Interacions Column -->
-          <ng-container matColumnDef="interactions">
-            <th mat-header-cell *matHeaderCellDef> Interacciones</th>
-            <td mat-cell *matCellDef="let element"> {{element.interactions || 'NA'}} </td>
-          </ng-container>
-
-          <!-- SOLUTIONS Column -->
-          <ng-container matColumnDef="solutions">
-            <th mat-header-cell *matHeaderCellDef> Soluciones</th>
-            <td mat-cell *matCellDef="let element"> {{element.solutions || 'NA'}} </td>
-          </ng-container>
-
-          <!-- PROBLEMS Column -->
-          <ng-container matColumnDef="problems">
-            <th mat-header-cell *matHeaderCellDef> Problemas</th>
-            <td mat-cell *matCellDef="let element"> {{element.problems || 'NA'}} </td>
-          </ng-container>
-
-          <!-- RANKING Column -->
-          <ng-container matColumnDef="ranking">
-            <th mat-header-cell *matHeaderCellDef> Ranking</th>
-            <td mat-cell *matCellDef="let element"> {{element.ranking || 'NA'}} </td>
-          </ng-container>
-
-          <!-- ACTIONS Column -->
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef> </th>
-            <td mat-cell *matCellDef="let element">
-              <button mat-icon-button [matMenuTriggerFor]="menu">
+        <div class="set-12 infohldr">
+          <div class="set-12 card-title">
+            <div class="set-10">{{document.title}}</div>
+            <div class="set-2 txt-right">
+              <button type="button" [matMenuTriggerFor]="menu">
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
                 <button mat-menu-item>
                   <mat-icon>edit</mat-icon>
-                  <small>Editar</small>
+                  <span>Editar</span>
                 </button>
-                <button mat-menu-item (click)="linkCategories(element._id)">
-                  <mat-icon>launch</mat-icon>
-                  <small>Abrir</small>
+                <button mat-menu-item>
+                  <mat-icon>cloud_upload</mat-icon>
+                  <span>Cargar template</span>
+                </button>
+                <button mat-menu-item>
+                  <mat-icon>cloud_download</mat-icon>
+                  <span>Descargar template</span>
                 </button>
               </mat-menu>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="categoriesDisplayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: categoriesDisplayedColumns;"></tr>
-        </table>
-
-        <!-- <div class="set-12" *ngFor="let layer of layout">
-          {{layer.category.name}}
-        </div> -->
+            </div>
+          </div>
+          <p class="card-description" *ngIf="document.description != null">{{document.description}}</p>
+          <button type="button" class="toolbtn" *ngIf="document.description == null">
+            <small>Agregar descripción</small>
+          </button>
+          <avatars-row></avatars-row>
+        </div>
       </mat-card>
+    </div>
+
+    <div class="set-9 col-rgt">
+      <div class="set-12">
+        <div class="set-4">
+          <mat-form-field appearance="outline">
+            <mat-label>Cobertura</mat-label>
+            <mat-select [value]="document.coverage[0]._id">
+              <mat-option *ngFor="let option of document.coverage" [value]="option._id">
+                <small>{{option.name | titlecase}}</small>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="set-8 txt-right">
+          <button type="button" mat-mini-fab color="accent" class="mini" matTooltip="Agregar Esquema"
+            (click)="popAddDocumentLayout()" disabled>
+            <mat-icon>group_add</mat-icon>
+          </button>
+          <button type="button" mat-mini-fab color="primary" class="mini" matTooltip="Agregar Colaborador"
+            (click)="popAddDocumentCollaborator()" disabled>
+            <mat-icon>person_add</mat-icon>
+          </button>
+          <button type="button" mat-mini-fab color="warn" class="mini" matTooltip="Agregar Categoría"
+            (click)="popAddDocumentCategory()">
+            <mat-icon>create_new_folder</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="set-12">
+        <mat-card class="set-12 info-lists">
+          <div class="set-4">
+            <div class="inner-card">
+              <div class="set-4">
+                <span class="roundico-green">
+                  <mat-icon>groups</mat-icon>
+                </span>
+              </div>
+              <div class="set-8">
+                <p><small>Usuarios</small></p>
+                <strong>0</strong>
+              </div>
+            </div>
+
+            <div class="inner-card">
+              <div class="set-4">
+                <span class="roundico-orange">
+                  <mat-icon>front_hand</mat-icon>
+                </span>
+              </div>
+              <div class="set-8">
+                <p><small>Interacciones</small></p>
+                <strong>0</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="set-4">
+            <p class="list-title">
+              <small>Soluciones</small>
+              <mat-icon class="icon-insights">insights</mat-icon>
+            </p>
+
+            <!-- <ol class="top-list">
+              <li class="top-list-item">
+                <span>Inseguridad</span>
+              </li>
+              <li class="top-list-item">
+                <span>Inseguridad</span>
+              </li>
+              <li class="top-list-item">
+                <span>Inseguridad</span>
+              </li>
+            </ol> -->
+          </div>
+
+          <div class="set-4">
+            <p class="list-title">
+              <small>Problemas</small>
+              <mat-icon class="icon-warnings">warning</mat-icon>
+            </p>
+
+            <!-- <ol class="top-list">
+              <li class="top-list-item">
+                <span>Inseguridad</span>
+              </li>
+              <li class="top-list-item">
+                <span>Inseguridad</span>
+              </li>
+              <li class="top-list-item">
+                <span>Inseguridad</span>
+              </li>
+            </ol> -->
+          </div>
+        </mat-card>
+      </div>
+
+      <div class="set-12 category-list">
+        <mat-card class="set-12">
+          <p class="title">Categorías</p>
+          <table mat-table [dataSource]="layouts" class="categories-table">
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Categoría</th>
+              <td mat-cell *matCellDef=" let element">
+                <a href="javascript:void(0)" (click)="linkCategories(element._id)">{{element.category.name}}</a>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="users">
+              <th mat-header-cell *matHeaderCellDef> Usuarios </th>
+              <td mat-cell *matCellDef="let element"> {{element.users || 'NA'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="interactions">
+              <th mat-header-cell *matHeaderCellDef> Interacciones</th>
+              <td mat-cell *matCellDef="let element"> {{element.interactions || 'NA'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="solutions">
+              <th mat-header-cell *matHeaderCellDef> Soluciones</th>
+              <td mat-cell *matCellDef="let element"> {{element.solutions || 'NA'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="problems">
+              <th mat-header-cell *matHeaderCellDef> Problemas</th>
+              <td mat-cell *matCellDef="let element"> {{element.problems || 'NA'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="ranking">
+              <th mat-header-cell *matHeaderCellDef> Ranking</th>
+              <td mat-cell *matCellDef="let element"> {{element.ranking || 'NA'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef> </th>
+              <td mat-cell *matCellDef="let element">
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item>
+                    <mat-icon>edit</mat-icon>
+                    <small>Editar</small>
+                  </button>
+                  <button mat-menu-item>
+                    <mat-icon>report_problem</mat-icon>
+                    <small>Agregar problemática</small>
+                  </button>
+                  <button mat-menu-item (click)="linkCategories(element._id)">
+                    <mat-icon>visibility</mat-icon>
+                    <small>Abrir</small>
+                  </button>
+                </mat-menu>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="categoriesDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: categoriesDisplayedColumns;"></tr>
+          </table>
+        </mat-card>
+      </div>
     </div>
   </div>
 </div>
