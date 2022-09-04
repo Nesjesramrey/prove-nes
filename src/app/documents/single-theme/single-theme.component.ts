@@ -9,6 +9,7 @@ import { Observable, forkJoin } from 'rxjs';
 import { AddDocumentThemeComponent } from '../../components/add-document-theme/add-document-theme.component';
 import { AddDocumentSolutionComponent } from '../../components/add-document-solution/add-document-solution.component';
 import { AddDocumentTestimonyComponent } from '../../components/add-document-testimony/add-document-testimony.component';
+import { ChartData, ChartOptions } from 'chart.js';
 
 @Component({
   selector: 'app-single-theme',
@@ -36,6 +37,29 @@ export class SingleThemeComponent implements OnInit {
     'interactions',
   ];
   public solutionsList: Solution[] = _mockSolutions;
+
+  // simplet doughnut
+  public simpletDoughnutData: ChartData<'doughnut'> = simpleDonuthData;
+
+  // MULTI doughnut
+  public data: ChartData<'doughnut'> = data;
+  // MULTI doughnut
+  public chartOptions: ChartOptions<'doughnut'> = {
+    cutout: 98,
+    plugins: {
+      legend: { display: false },
+    },
+    scales: {
+      x: {
+        display: false,
+        ticks: { display: false },
+      },
+      y: {
+        display: false,
+        ticks: { display: false },
+      },
+    },
+  };
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -185,6 +209,65 @@ export class SingleThemeComponent implements OnInit {
   }
 }
 
+// simplet doughnut
+const simpleDonuthData: ChartData<'doughnut'> = {
+  labels: ['Dato'],
+  datasets: [
+    {
+      label: 'Dato',
+      data: [80, 30],
+      backgroundColor: ['#20C588', '#E1F2EC'],
+      hoverBackgroundColor: ['#20C588', '#E1F2EC'],
+      borderRadius: 10,
+      borderWidth: 2,
+      
+      hoverBorderWidth: 2,
+      borderColor: '#ffffff',
+      hoverBorderColor: '#ffffff',
+    },
+  ],
+};
+
+// MULTI doughnut
+const commontStyles = {
+  borderRadius: 10,
+  borderWidth: 7,
+  hoverBorderWidth: 7,
+  borderColor: '#ffffff',
+  hoverBorderColor: '#ffffff',
+  // hoverOffset: 10,
+  // borderAlign: 'center',
+};
+// MULTI doughnut
+const data: ChartData<'doughnut'> = {
+  labels: ['Categorias'],
+  datasets: [
+    {
+      label: 'My First Datase',
+      data: [80, 30],
+      backgroundColor: ['#20C588', '#f3f3f3'],
+      hoverBackgroundColor: ['#20C588', '#f3f3f3'],
+
+      // offset: 10,
+      ...commontStyles,
+    },
+    {
+      label: 'My Second Datase',
+      data: [60, 40],
+      backgroundColor: ['#306EFF', '#f3f3f3'],
+      hoverBackgroundColor: ['#306EFF', '#f3f3f3'],
+      ...commontStyles,
+    },
+    {
+      label: '',
+      data: [73, 27],
+      backgroundColor: ['#FFCF03', '#f3f3f3'],
+      hoverBackgroundColor: ['#FFCF03', '#f3f3f3'],
+      ...commontStyles,
+    },
+  ],
+};
+
 interface Theme {
   title: string;
   description: string;
@@ -195,10 +278,10 @@ const _mockTheme: Theme = {
   title: 'Tema principal',
   description: '',
   images: [
-    "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg",
-    "https://images.pexels.com/photos/2726111/pexels-photo-2726111.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg",
+    'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg',
+    'https://images.pexels.com/photos/2726111/pexels-photo-2726111.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+    'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg',
   ],
 };
 

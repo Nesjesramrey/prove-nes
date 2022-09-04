@@ -10,7 +10,7 @@ import { SingleDocumentComponent } from './single-document/single-document.compo
 import { ComponentsModule } from '../components/components.module';
 import { SingleCategoryComponent } from './single-category/single-category.component';
 import { SingleThemeComponent } from './single-theme/single-theme.component';
-
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   imports: [
@@ -20,14 +20,14 @@ import { SingleThemeComponent } from './single-theme/single-theme.component';
     DocumentsComponentRoutingModule,
     AppMaterialModule,
     AppSharedModule,
-    ComponentsModule
+    ComponentsModule,
+    NgChartsModule,
   ],
   declarations: [
     DocumentsComponent,
     SingleDocumentComponent,
     SingleCategoryComponent,
     SingleThemeComponent,
-
-  ]
+  ],
 })
-export class DocumentsComponentModule { }
+export class DocumentsComponentModule {}
