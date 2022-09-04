@@ -1,4 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { UtilityService } from '../../../services/utility.service';
+import { Observable, forkJoin } from 'rxjs';
+import { ChartOptions, ChartData } from 'chart.js';
 
 @Component({
   selector: '.app-map-box',
@@ -7,29 +10,104 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 })
 export class MapBoxComponent implements OnInit {
   // public activeState: string | null = null;
-  public states: statePath[] = _statesList;
-  public selectedState: statePath = this.states[0];
+  public mapStates: statePath[] = _statesList; // map
+  public selectedState: statePath = this.mapStates[0];
+  // API
+  public states: any = [];
+  public isDataAvailable: boolean = false;
+
+  public data: ChartData<'doughnut'> = data;
+
+  public chartOptions: ChartOptions<'doughnut'> = {
+    cutout: 80,
+    plugins: {
+      legend: { display: false },
+    },
+
+    scales: {
+      x: {
+        display: false,
+        ticks: { display: false },
+      },
+      y: {
+        display: false,
+        ticks: { display: false },
+      },
+    },
+  };
 
   @ViewChild('svgMapBox') svgMapBox!: ElementRef<HTMLDivElement>;
 
-  constructor() {}
+  constructor(public utilitySrvc: UtilityService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    let states: Observable<any> = this.utilitySrvc.fetchAllStates();
+    // let activities: Observable<any> = this.utilitySrvc.fetchAllCategories();
+
+    forkJoin([states]).subscribe((reply: any) => {
+      // console.log(reply);
+      this.states = reply[0];
+
+      this.isDataAvailable = true;
+    });
+  }
 
   ngAfterViewInit() {
-    this.svgMapBox.nativeElement.scrollLeft = 160;
-    this.svgMapBox.nativeElement.scrollTop = 75;
+    console.log('ngAfterViewInit');
     setTimeout(() => {
-      this.selectedState = this.states[1];
-      // this.activeState = this.states[1].id;
-    }, 200);
+      this.svgMapBox.nativeElement.scrollLeft =
+        (this.svgMapBox.nativeElement.clientWidth / 9) * 5;
+      this.svgMapBox.nativeElement.scrollTop = 75;
+    }, 100);
+  }
+
+  loaded() {
+    console.log('LOADASD');
   }
 
   onClickState(newState: statePath) {
-    // this.activeState = newState.id;
     this.selectedState = newState;
   }
 }
+
+const commontStylesº = {
+  borderRadius: 10,
+  borderWidth: 7,
+  hoverBorderWidth: 7,
+  borderColor: '#ffffff',
+  hoverBorderColor: '#ffffff',
+  // hoverOffset: 10,
+  // borderAlign: 'center',
+};
+
+const data: ChartData<'doughnut'> = {
+  labels: ['Categorias'],
+  datasets: [
+    {
+      label: 'My First Datase',
+      data: [80, 30],
+      backgroundColor: ['#20C588', '#f3f3f3'],
+      hoverBackgroundColor: ['#20C588', '#f3f3f3'],
+
+      // offset: 10,
+      ...commontStylesº,
+    },
+    {
+      label: 'My Second Datase',
+      data: [60, 40],
+      backgroundColor: ['#DDC5FB', '#f3f3f3'],
+      hoverBackgroundColor: ['#DDC5FB', '#f3f3f3'],
+      ...commontStylesº,
+    },
+    {
+      label: '',
+      data: [73, 27],
+      backgroundColor: ['#FCDBC3', '#f3f3f3'],
+      hoverBackgroundColor: ['#FCDBC3', '#f3f3f3'],
+      ...commontStylesº,
+    },
+  ],
+};
 
 interface statePath {
   id: string;

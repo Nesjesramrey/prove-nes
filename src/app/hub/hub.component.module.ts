@@ -21,6 +21,8 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { SingleUserComponent } from './single-user/single-user.component';
 import { UserNotificationsComponent } from './user-notifications/user-notifications.component';
 import { AppConfigurationComponent } from './app-configuration/app-configuration.component';
+import { MapBoxComponent } from './components/map-box/map-box.component';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   imports: [
@@ -38,7 +40,8 @@ import { AppConfigurationComponent } from './app-configuration/app-configuration
     LyButtonModule,
     LyCheckboxModule,
     LyDialogModule,
-    IvyCarouselModule
+    IvyCarouselModule,
+    NgChartsModule
   ],
   declarations: [
     HubComponent,
@@ -46,7 +49,7 @@ import { AppConfigurationComponent } from './app-configuration/app-configuration
     SignInComponent,
     SingleUserComponent,
     UserNotificationsComponent,
-    AppConfigurationComponent
-  ]
+    AppConfigurationComponent,
+  ],
 })
-export class HubComponentModule { }
+export class HubComponentModule {}
