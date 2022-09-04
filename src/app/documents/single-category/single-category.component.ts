@@ -69,7 +69,7 @@ export class SingleCategoryComponent implements OnInit {
       this.document = reply[0];
       // console.log('document: ', this.document);
       this.selectedCategory = reply[1];
-      // console.log('category: ', this.selectedCategory);
+      console.log('category: ', this.selectedCategory);
       this.subcategories = this.selectedCategory['subLayouts'];
       // console.log('subcategories: ', this.subcategories);
       this.dataSource = new MatTableDataSource(this.subcategories);
@@ -176,15 +176,14 @@ export class SingleCategoryComponent implements OnInit {
       data: {
         documentID: this.documentID,
         document: this.document,
-        categoryID: this.categoryID,
-        type: 'sublayout'
+        categoryID: this.categoryID
       },
       disableClose: true
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
-        console.log(reply);
+        this.selectedCategory.topics.push(reply);
       }
     });
   }
