@@ -159,34 +159,57 @@
       </mat-card>
     </div>
 
-    <mat-card class="bars-card">
-      <canvas
-        class="donut-chart"
-        baseChart
-        [data]="simpletDoughnutData"
-        [type]="'doughnut'"
-        [options]="chartOptions"
-      ></canvas>
+    <mat-card class="card-chart bars">
+      <p class="title">Título de la gráfica</p>
+
+      <div class="content">
+        <canvas
+          class="donut-chart"
+          baseChart
+          [data]="simpletDoughnutData"
+          [type]="'doughnut'"
+          [options]="chartOptions"
+        ></canvas>
+        <div class="label">
+          Dato <br />
+          <b>14500</b>
+        </div>
+      </div>
     </mat-card>
 
-    <mat-card class="donut-card">
-      <canvas
-        class="donut-chart"
-        baseChart
-        [data]="data"
-        [type]="'doughnut'"
-        [options]="chartOptions"
-      ></canvas>
+    <mat-card class="card-chart donut">
+      <p class="title">Título de la gráfica</p>
+      <div class="content">
+        <canvas
+          class="donut-chart"
+          baseChart
+          [data]="data"
+          [type]="'doughnut'"
+          [options]="chartOptions"
+        ></canvas>
+        <!-- <div class="label">
+          Dato <br />
+          <b>14500</b>
+        </div> -->
+      </div>
     </mat-card>
 
-    <mat-card class="circle-card">
-      <canvas
-        class="donut-chart"
-        baseChart
-        [data]="data"
-        [type]="'doughnut'"
-        [options]="chartOptions"
-      ></canvas>
+    <mat-card class="card-chart circle">
+      <p class="title">Título de la gráfica</p>
+      <div class="content">
+        <canvas
+          class="donut-chart"
+          baseChart
+          [data]="data"
+          [type]="'doughnut'"
+          [options]="chartOptions"
+        ></canvas>
+
+        <!-- <div class="label">
+          Dato <br />
+          <b>14500</b>
+        </div> -->
+      </div>
     </mat-card>
   </div>
 </div>

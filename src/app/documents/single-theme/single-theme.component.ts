@@ -44,7 +44,7 @@ export class SingleThemeComponent implements OnInit {
   public solutions: any = null;
 
   // simplet doughnut
-  public simpletDoughnutData: ChartData<'doughnut'> = simpleDonuthData;
+  public simpletDoughnutData: ChartData<'doughnut'> = _simpleDonuthData;
 
   // MULTI doughnut
   public data: ChartData<'doughnut'> = data;
@@ -52,7 +52,7 @@ export class SingleThemeComponent implements OnInit {
   public chartOptions: ChartOptions<'doughnut'> = {
     cutout: 98,
     plugins: {
-      legend: { display: false },
+      legend: { display: true, position: 'chartArea', align: "center" },
     },
     scales: {
       x: {
@@ -224,8 +224,8 @@ export class SingleThemeComponent implements OnInit {
 }
 
 // simplet doughnut
-const simpleDonuthData: ChartData<'doughnut'> = {
-  labels: ['Dato'],
+const _simpleDonuthData: ChartData<'doughnut'> = {
+  labels: ['75%'],
   datasets: [
     {
       label: 'Dato',
@@ -234,7 +234,6 @@ const simpleDonuthData: ChartData<'doughnut'> = {
       hoverBackgroundColor: ['#20C588', '#E1F2EC'],
       borderRadius: 10,
       borderWidth: 2,
-      
       hoverBorderWidth: 2,
       borderColor: '#ffffff',
       hoverBorderColor: '#ffffff',
@@ -254,7 +253,7 @@ const commontStyles = {
 };
 // MULTI doughnut
 const data: ChartData<'doughnut'> = {
-  labels: ['Categorias'],
+  labels: ['One', 'Two', 'Three'],
   datasets: [
     {
       label: 'My First Datase',
