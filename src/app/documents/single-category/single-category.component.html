@@ -124,17 +124,17 @@
               <mat-icon class="icon-insights">insights</mat-icon>
             </p>
 
-            <!-- <ol class="top-list">
+            <ol class="top-list">
               <li class="top-list-item">
+                <span>Inseguridad</span>
+              </li>
+              <!--li class="top-list-item">
                 <span>Inseguridad</span>
               </li>
               <li class="top-list-item">
                 <span>Inseguridad</span>
-              </li>
-              <li class="top-list-item">
-                <span>Inseguridad</span>
-              </li>
-            </ol> -->
+              </li-->
+            </ol> 
           </div>
 
           <div class="set-4">
@@ -143,17 +143,11 @@
               <mat-icon class="icon-warnings">warning</mat-icon>
             </p>
 
-            <!-- <ol class="top-list">
-              <li class="top-list-item">
-                <span>Inseguridad</span>
+            <ol class="top-list">
+              <li class="top-list-item" *ngFor="let topic of topics.slice(0, 4);">
+                <span>{{topic.title}}</span>
               </li>
-              <li class="top-list-item">
-                <span>Inseguridad</span>
-              </li>
-              <li class="top-list-item">
-                <span>Inseguridad</span>
-              </li>
-            </ol> -->
+            </ol>
           </div>
         </mat-card>
       </div>

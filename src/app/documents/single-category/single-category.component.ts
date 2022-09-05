@@ -9,6 +9,7 @@ import { DocumentService } from '../../services/document.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UtilityService } from '../../services/utility.service';
 import { LayoutService } from 'src/app/services/layout.service';
+import { SolutionService } from 'src/app/services/solution.service';
 import { AddDocumentCategoryComponent } from 'src/app/components/add-document-category/add-document-category.component';
 // import { FormBuilder, FormGroup } from "@angular/forms";
 import { AddDocumentThemeComponent } from '../../components/add-document-theme/add-document-theme.component';
@@ -57,7 +58,8 @@ export class SingleCategoryComponent implements OnInit {
     public documentService: DocumentService,
     public dialog: MatDialog,
     public utilityService: UtilityService,
-    public layoutService: LayoutService
+    public layoutService: LayoutService,
+    public solutionService: SolutionService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
@@ -67,15 +69,20 @@ export class SingleCategoryComponent implements OnInit {
   ngOnInit(): void {
     let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
     let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID });
-    forkJoin([document, category]).subscribe((reply: any) => {
+    let solutions: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.categoryID });
+    forkJoin([document, category, solutions]).subscribe((reply: any) => {
       this.document = reply[0];
       //console.log('document: ', this.document);
       this.selectedCategory = reply[1];
       this.collaborators = reply[0].collaborators;
       // console.log('category: ', this.selectedCategory);
-      this.topics = this.selectedCategory['topics'];      this.subcategories = this.selectedCategory['subLayouts'];
+      this.topics = this.selectedCategory['topics'];    
+      this.subcategories = this.selectedCategory['subLayouts'];
       // console.log('subcategories: ', this.subcategories);
       this.dataSource = new MatTableDataSource(this.subcategories);
+
+      //this.solutions = 
+      console.log('solutions: ', reply);
 
       setTimeout(() => {
         this.isDataAvailable = true;

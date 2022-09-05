@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export class EndPointService {
-  //public apiEndPoint: string = 'http://localhost:4040/api/v1';
+  // public apiEndPoint: string = 'http://localhost:4040/api/v1';
   public apiEndPoint: string = 'http://pando-backend-dev-env.eba-zk3eys8d.us-east-1.elasticbeanstalk.com/api/v1';
 
 
@@ -47,6 +47,10 @@ export class EndPointService {
 
   // topics
   public createNewTopicEndPoint: string = '/topic/layout/';
+
+  // solutions
+  public fetchSingleSolutionByIdEndPoint: string = '/solution/';
+  public createNewSolutionEndPoint: string = '/solution/topic/';
 
   // utility
   public fetchAllStatesEndPoint: string = '/state';

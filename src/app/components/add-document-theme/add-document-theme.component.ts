@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
 import { TopicService } from 'src/app/services/topic.service';
 import { UtilityService } from 'src/app/services/utility.service';
+import { SolutionService } from 'src/app/services/solution.service';
 
 @Component({
   selector: '.add-document-theme',
@@ -20,6 +21,7 @@ export class AddDocumentThemeComponent implements OnInit {
 
   public canAddSolution: boolean = false;
   public isSubmitted: boolean = false;
+  public isSolSubmitted: boolean = false;
   @ViewChild('stepper') public stepper!: MatStepper;
   public topic: any = null;
   public fileNames: any = [];
@@ -29,7 +31,8 @@ export class AddDocumentThemeComponent implements OnInit {
     public dialogRef: MatDialogRef<AddDocumentThemeComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public topicService: TopicService,
-    public utilityService: UtilityService
+    public utilityService: UtilityService,
+    public solutionService: SolutionService
   ) {
     // console.log(this.dialogData);
   }
@@ -88,15 +91,26 @@ export class AddDocumentThemeComponent implements OnInit {
   }
 
   onCreateSolution(form: FormGroup) {
+    this.isSolSubmitted = true;
     let data: any = {
-      title: form['value']['title'],
-      description: form['value']['description'],
-      solution: form['value']['solution'],
-      layout_id: this.dialogData['categoryID']
-    };
-    //this.topicService.createNewTopic(data).subscribe((reply: any) => {
-    //  console.log(reply);
-    //this.dialogRef.close(reply['topics']);
-    //});
+      category: this.dialogData['categoryID'],
+      formData: new FormData()
+    }
+
+    Array.from(this.addSolutionFormGroup.controls['files']['value'])
+      .forEach((file: any) => { data['formData'].append('files', file); });
+    data['formData'].append('title', form['value']['title']);
+    data['formData'].append('description', form['value']['description']);
+
+    this.solutionService.createNewSolution(data).subscribe({
+      error: (error) => {
+        this.utilityService.openErrorSnackBar('¡Oops!... Ocurrió un error, inténtalo más tarde.');
+        this.isSolSubmitted = false;
+      },
+      next: (reply: any) => {
+        this.dialogRef.close(this.topic);
+      },
+      complete: () => { },
+    });  
   }
 }
