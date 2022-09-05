@@ -11,8 +11,8 @@ import {
 } from '@alyle/ui/image-cropper';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
-import { forkJoin, Observable } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UtilityService } from 'src/app/services/utility.service';
 
 const STYLES = (_theme: ThemeVariables, ref: ThemeRef) => {
   ref.renderStyleSheet(SLIDER_STYLES);
@@ -61,11 +61,9 @@ export class SetAvatarDialogComponent implements OnInit, WithStyles, AfterViewIn
     resizableArea: true,
     keepAspectRatio: true
   };
-  public token: any = null;
-  public payload: any = null;
   public user: any = null;
   public uploadFormGroup!: FormGroup;
-  public uploadData: any = null;
+  public submitted: boolean = false;
 
   constructor(
     public dialogRef: LyDialogRef,
@@ -73,22 +71,21 @@ export class SetAvatarDialogComponent implements OnInit, WithStyles, AfterViewIn
     readonly sRenderer: StyleRenderer,
     public authenticationSrvc: AuthenticationService,
     public userSrvc: UserService,
-    public formBuilder: FormBuilder
-  ) {
-    // console.log(this.event);
-    this.token = this.authenticationSrvc.fetchToken;
-  }
+    public formBuilder: FormBuilder,
+    public utilityService: UtilityService
+  ) { }
 
   ngOnInit(): void {
-    this.payload = JSON.parse(atob(this.token.split('.')[1]));
-    let user: Observable<any> = this.userSrvc.fetchUserById({ _id: this.payload['sub'] });
-    forkJoin([user]).subscribe((reply: any) => {
-      // console.log(reply);
-      this.user = reply[0]['user'];
-      // console.log(this.user);
-      this.uploadFormGroup = this.formBuilder.group({
-        file: ['', [Validators.required]]
-      });
+    this.userSrvc.fetchFireUser().subscribe({
+      error: (error) => { },
+      next: (reply: any) => {
+        this.user = reply;
+      },
+      complete: () => { }
+    });
+
+    this.uploadFormGroup = this.formBuilder.group({
+      file: ['', [Validators.required]]
     });
   }
 
@@ -105,6 +102,7 @@ export class SetAvatarDialogComponent implements OnInit, WithStyles, AfterViewIn
   onLoaded(event: ImgCropperEvent) {
     this.cropper.fitToScreen();
     setTimeout(() => { this.cropper.center(); });
+    this.uploadFormGroup.updateValueAndValidity();
   }
 
   onError(event: ImgCropperErrorEvent) {
@@ -115,7 +113,19 @@ export class SetAvatarDialogComponent implements OnInit, WithStyles, AfterViewIn
     this.scale = event.value as number;
   }
 
-  onUploadAvatar() {
+  uploadAvatarImage() {
+    this.submitted = true;
     this.cropper.crop();
+    let file = this.utilityService.dataURIToBlob(this.uploadFormGroup['controls']['file']['value']);
+    let data: any = {
+      user_id: this.user['_id'],
+      formData: new FormData()
+    };
+    data['formData'].append('file', file, 'avatar.jpg');
+    this.userSrvc.uploadAvatarImageEndPoint(data).subscribe((reply: any) => {
+      console.log(reply);
+      this.submitted = false;
+      this.dialogRef.close(reply);
+    });
   }
 }

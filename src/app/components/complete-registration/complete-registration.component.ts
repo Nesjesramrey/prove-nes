@@ -25,5 +25,11 @@ export class CompleteRegistrationComponent implements OnInit {
     });
   }
 
-  onCompleteRegistration(form: FormGroup) { }
+  onCompleteRegistration(form: FormGroup) {
+    let data: any = {
+      firstname: form['value']['firstname'],
+      lastname: form['value']['lastname']
+    };
+    console.log(data);
+  }
 }

@@ -41,4 +41,8 @@ export class UserService {
   addUserPermissions(data: any) {
     return this.httpClient.put(this.endpointSrvc.apiEndPoint + this.endpointSrvc.addUserPermissionsEndPoint + `${data['userID']}`, data);
   }
+
+  uploadAvatarImageEndPoint(data: any) {
+    return this.httpClient.put(this.endpointSrvc.apiEndPoint + this.endpointSrvc.addUserPermissionsEndPoint + `${data['user_id']}` + '/profile_picture', data['formData']);
+  }
 }

@@ -83,8 +83,10 @@ export class AddDocumentThemeComponent implements OnInit {
         this.isSubmitted = false;
       },
       next: (reply: any) => {
+        // console.log(reply);
         this.canAddSolution = true;
         this.topic = reply['topics'][0];
+        console.log(this.topic);
       },
       complete: () => { },
     });
@@ -93,7 +95,7 @@ export class AddDocumentThemeComponent implements OnInit {
   onCreateSolution(form: FormGroup) {
     this.isSolSubmitted = true;
     let data: any = {
-      category: this.dialogData['categoryID'],
+      topic: this.topic['_id'],
       formData: new FormData()
     }
 
@@ -108,9 +110,10 @@ export class AddDocumentThemeComponent implements OnInit {
         this.isSolSubmitted = false;
       },
       next: (reply: any) => {
+        console.log(reply);
         this.dialogRef.close(this.topic);
       },
       complete: () => { },
-    });  
+    });
   }
 }

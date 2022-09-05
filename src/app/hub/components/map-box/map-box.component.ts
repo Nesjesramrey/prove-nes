@@ -38,7 +38,7 @@ export class MapBoxComponent implements OnInit {
 
   @ViewChild('svgMapBox') svgMapBox!: ElementRef<HTMLDivElement>;
 
-  constructor(public utilitySrvc: UtilityService) {}
+  constructor(public utilitySrvc: UtilityService) { }
 
   ngOnInit(): void {
     let states: Observable<any> = this.utilitySrvc.fetchAllStates();
@@ -53,7 +53,7 @@ export class MapBoxComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    console.log('ngAfterViewInit');
+    // console.log('ngAfterViewInit');
     setTimeout(() => {
       this.svgMapBox.nativeElement.scrollLeft =
         (this.svgMapBox.nativeElement.clientWidth / 9) * 5;

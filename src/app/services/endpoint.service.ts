@@ -16,6 +16,7 @@ export class EndPointService {
   public fetchFireUserEndPoint: string = '/user/profile';
   public fetchAllUsersEndPoint: string = '/user';
   public addUserPermissionsEndPoint: string = '/user/';
+  public uploadAvatarImageEndPoint: string = '/user/';
 
   // public fetchAllUsersEndPoint: string = '/user/fetch-all-users';
   public fetchUserByIdEndPoint: string = '/user/fetch-user-by-id';
