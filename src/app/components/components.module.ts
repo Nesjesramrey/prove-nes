@@ -48,6 +48,7 @@ import { PanelCirclesComponent } from './panel-circles/panel-circles.component';
 import { ExpandedTextComponent } from './expanded-text/expanded-text.component';
 import { TestimonyCardComponent } from './testimony-card/testimony-card.component';
 import { SolutionsCardComponent } from './solutions-card/solutions-card.component';
+import { CircleChartComponent } from './circle-chart/circle-chart.component';
 
 @NgModule({
   imports: [
@@ -100,6 +101,7 @@ import { SolutionsCardComponent } from './solutions-card/solutions-card.componen
     TestimonyCardComponent,
     SolutionsCardComponent,
     CircleCustomComponent,
+    CircleChartComponent
   ],
   exports: [
     AppPageletComponent,
@@ -132,6 +134,7 @@ import { SolutionsCardComponent } from './solutions-card/solutions-card.componen
     TestimonyCardComponent,
     SolutionsCardComponent,
     CircleCustomComponent,
+    CircleChartComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
