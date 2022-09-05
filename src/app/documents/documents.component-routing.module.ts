@@ -23,7 +23,7 @@ const routes: Routes = [
         component: SelectedPublicDocumentComponent,
       },
       {
-        path: 'publico/solution',
+        path: 'publico/solucion',
         component: SolutionPublicComponent,
       },
       {

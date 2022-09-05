@@ -31,7 +31,6 @@
     // background-color: red;
   }
 
-
   .actions-box {
     position: absolute;
     bottom: 20px;
@@ -51,6 +50,7 @@
       font-weight: 800;
     }
     .vote-button {
+      margin-top: 10px;
       background-color: #306eff;
       padding: 6px 50px;
       border-radius: 4px;
@@ -76,8 +76,7 @@
   .card-item {
     background-color: white;
     border-radius: 6px;
-    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
-      0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
 
     .title {
       font-size: 14px;
@@ -125,8 +124,6 @@
 
   .card-title {
     color: #636363;
-    font-family: "Noto Sans";
-    font-style: normal;
     font-weight: 600;
     font-size: 18px;
     line-height: 30px;
@@ -138,8 +135,6 @@
   }
 
   .card-description {
-    font-family: "Noto Sans";
-    font-style: normal;
     font-weight: 400;
     font-size: 14px;
     text-align: justify;
@@ -159,6 +154,31 @@
     box-shadow: none !important;
     padding: 0px 10px;
     padding-bottom: 50px;
+  }
+
+  .header-buttons {
+    padding: 0px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .button-box {
+      width: 60px;
+      text-align: center;
+      .add-button {
+        color: white;
+      }
+      .green {
+        background-color: #20c588;
+      }
+      .purple {
+        background-color: #9747ff;
+      }
+      p {
+        font-size: 12px;
+        font-weight: 500;
+      }
+    }
   }
 }
 

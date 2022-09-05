@@ -13,7 +13,7 @@
     </div>
   </div>
 
-  <div class="set-12" style="padding-bottom: 100px" *ngIf="subcategorySelected">
+  <div class="set-12" style="padding-bottom: 100px;margin-top: 20px;" *ngIf="subcategorySelected">
     <div class="set-4 col-rgt-3">
       <mat-card class="doc-description">
         <div class="imghldr">
@@ -73,7 +73,7 @@
               <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let element">
-                  <a style="font-weight: 500" (click)="redirect(element.ranking)">{{ element.name }}</a>
+                  <a style="font-weight: 500;cursor:pointer" (click)="redirect(element.ranking)">{{ element.name }}</a>
                 </td>
               </ng-container>
 

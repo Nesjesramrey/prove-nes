@@ -27,6 +27,7 @@ export class TopicPublicComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
 }
 
 export interface DataTable {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
   ChartConfiguration,
   ChartData,
@@ -56,6 +56,9 @@ export class SpiderChartComponent implements OnInit {
       },
     },
   };
+
+  @Input() withBorder: boolean = true;
+
   public spiderData: ChartData<'radar'> = {
     labels: ['data', 'data', 'data', 'data', 'data', 'data', 'data', 'data'],
     datasets: [{ data: [96, 65, 81, 76, 33, 81, 38, 79] }],

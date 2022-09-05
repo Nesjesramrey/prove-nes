@@ -64,10 +64,8 @@ export class SubcategoryDocumentComponent implements OnInit {
     });
   }
 
-  redirect(id: any) {
-    console.log(id);
-    let path = '';
-    path = `documentos/publico/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/tema/${id}`;
+  redirect(id: string) {
+    const path = `documentos/publico/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/tema/${id}`;
 
     this.utilityService.linkMe(path);
   }

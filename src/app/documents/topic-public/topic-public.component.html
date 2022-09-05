@@ -1,6 +1,6 @@
 <div class="container">
   <div class="set-12">
-    <div class="set-8">
+    <div class="set-6">
       <breadcrumbs-component>
         <li class="breadcrumb-item">Documento madre</li>
         <li class="breadcrumb-item">Economia</li>
@@ -11,9 +11,25 @@
     <div class="set-4 featured-users">
       <featured-users [inputAmount]="5"></featured-users>
     </div>
+    <div class="set-2">
+      <div class="header-buttons">
+        <div class="button-box">
+          <button type="button" mat-mini-fab color="warn" class="add-button green">
+            <mat-icon>create_new_folder</mat-icon>
+          </button>
+          <p>Agregar solución</p>
+        </div>
+        <div class="button-box">
+          <button type="button" mat-mini-fab color="warn" class="add-button purple">
+            <mat-icon style="color:white">create_new_folder</mat-icon>
+          </button>
+          <p>Agregar Testimonios</p>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="set-12" style="padding-bottom: 100px">
+  <div class="set-12" style="padding-bottom: 100px;margin-top: 20px;">
     <div class="set-8 col-rgt-3">
       <div class="set-12">
         <mat-card class="doc-description" style="height: 280px">
@@ -25,11 +41,7 @@
               <div class="actions-box">
                 <div class="set-12">
                   <div class="set-3">
-                    <img
-                      src="../../../assets/images/like-button.png"
-                      alt=""
-                      width="70"
-                    />
+                    <img src="../../../assets/images/like-button.png" alt="" width="70" />
                   </div>
                   <div class="set-9" style="padding-left: 30px">
                     <p class="title">Relevancia ciudadana</p>
