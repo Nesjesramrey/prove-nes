@@ -10,6 +10,8 @@ import { AddDocumentThemeComponent } from '../../components/add-document-theme/a
 import { AddDocumentSolutionComponent } from '../../components/add-document-solution/add-document-solution.component';
 import { AddDocumentTestimonyComponent } from '../../components/add-document-testimony/add-document-testimony.component';
 import { ChartData, ChartOptions } from 'chart.js';
+import { LayoutService } from 'src/app/services/layout.service';
+import { SolutionService } from 'src/app/services/solution.service';
 
 @Component({
   selector: 'app-single-theme',
@@ -20,6 +22,7 @@ export class SingleThemeComponent implements OnInit {
   public documentID: string = '';
   public accessToken: any = null;
   public categoryID: string = '';
+  public themeID: string = '';
   public carouselContentSize: number = 150;
 
   public user: any = null;
@@ -37,6 +40,8 @@ export class SingleThemeComponent implements OnInit {
     'interactions',
   ];
   public solutionsList: Solution[] = _mockSolutions;
+  public collaborators: any = null;
+  public solutions: any = null;
 
   // simplet doughnut
   public simpletDoughnutData: ChartData<'doughnut'> = _simpleDonuthData;
@@ -67,14 +72,29 @@ export class SingleThemeComponent implements OnInit {
     public userService: UserService,
     public documentService: DocumentService,
     public dialog: MatDialog,
-    public utilityService: UtilityService
+    public utilityService: UtilityService,
+    public layoutService: LayoutService,
+    public solutionService: SolutionService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
-    this.accessToken = this.authenticationService.fetchAccessToken;
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
+    this.themeID = this.activatedRoute['snapshot']['params']['themeID'];
+    this.accessToken = this.authenticationService.fetchAccessToken;
   }
 
   ngOnInit(): void {
+    let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
+    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID });
+    let solutions: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.themeID });
+    let categories: Observable<any> = this.utilityService.fetchAllCategories();
+    let states: Observable<any> = this.utilityService.fetchAllStatesMex();
+    forkJoin([categories, states, document, solutions]).subscribe((reply: any) => {
+      console.log(reply);
+      this.states = reply[1]['states'];
+      this.collaborators = reply[2].collaborators;
+      this.solutions = reply[3];
+      console.log(this.solutions);
+    });    
     this.documentService
       .fetchSingleDocumentById({ _id: this.documentID })
       .subscribe((reply: any) => {
@@ -103,13 +123,7 @@ export class SingleThemeComponent implements OnInit {
       });
     }
 
-    let categories: Observable<any> = this.utilityService.fetchAllCategories();
-    let states: Observable<any> = this.utilityService.fetchAllStatesMex();
-    forkJoin([categories, states]).subscribe((reply: any) => {
-      // console.log(reply);
-      this.states = reply[1]['states'];
-      // console.log(this.states);
-    });
+
 
     this.calculateCarouselContentSize();
   }

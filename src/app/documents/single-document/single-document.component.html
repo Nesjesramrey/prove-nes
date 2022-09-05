@@ -53,7 +53,7 @@
           <button type="button" class="toolbtn" *ngIf="document.description == null">
             <small>Agregar descripción</small>
           </button>
-          <avatars-row></avatars-row>
+          <avatars-row [users]="collaborators"></avatars-row>
         </div>
       </mat-card>
     </div>
@@ -98,7 +98,7 @@
               </div>
               <div class="set-8">
                 <p><small>Usuarios</small></p>
-                <strong>0</strong>
+                <strong>{{collaborators.length}}</strong>
               </div>
             </div>
 
@@ -121,17 +121,11 @@
               <mat-icon class="icon-insights">insights</mat-icon>
             </p>
 
-            <!-- <ol class="top-list">
+            <!--ol class="top-list">
               <li class="top-list-item">
                 <span>Inseguridad</span>
               </li>
-              <li class="top-list-item">
-                <span>Inseguridad</span>
-              </li>
-              <li class="top-list-item">
-                <span>Inseguridad</span>
-              </li>
-            </ol> -->
+            </ol-->
           </div>
 
           <div class="set-4">
@@ -202,7 +196,7 @@
                     <mat-icon>edit</mat-icon>
                     <small>Editar</small>
                   </button>
-                  <button mat-menu-item>
+                  <button mat-menu-item (click)="popAddDocumentTheme(element._id)">
                     <mat-icon>report_problem</mat-icon>
                     <small>Agregar problemática</small>
                   </button>

@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddDocumentCategoryComponent } from 'src/app/components/add-document-category/add-document-category.component';
 import { AddDocumentCollaboratorComponent } from 'src/app/components/add-document-collaborator/add-document-collaborator.component';
 import { AddDocumentLayoutComponent } from 'src/app/components/add-document-layout/add-document-layout.component';
+import { AddDocumentThemeComponent } from '../../components/add-document-theme/add-document-theme.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { UtilityService } from 'src/app/services/utility.service';
@@ -31,6 +32,7 @@ export class SingleDocumentComponent implements OnInit {
   public selection = new SelectionModel<any>(true, []);
   public editingRowId: string | null = null;
   @ViewChild('editRowName') editRowName!: ElementRef<HTMLInputElement>;
+  public collaborators: any = null; 
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -48,8 +50,9 @@ export class SingleDocumentComponent implements OnInit {
   ngOnInit(): void {
     this.documentService.fetchSingleDocumentById({ _id: this.documentID }).subscribe((reply: any) => {
       this.document = reply;
-      // console.log('document: ', this.document);
+      console.log('document: ', this.document);
       this.layouts = this.document['layouts'];
+      this.collaborators = this.document.collaborators;
       // console.log('layouts: ', this.layouts);
       this.dataSource = new MatTableDataSource(this.layouts);
     });
@@ -112,6 +115,26 @@ export class SingleDocumentComponent implements OnInit {
       if (reply != undefined) { }
     });
   }
+
+  popAddDocumentTheme(id: string) {
+    const dialogRef = this.dialog.open<AddDocumentThemeComponent>(AddDocumentThemeComponent, {
+      width: '640px',
+      data: {
+        documentID: this.documentID,
+        document: this.document,
+        categoryID: id,
+        type: 'sublayout'
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        console.log(reply);
+      }
+    });
+  }
+
 
   popAddDocumentLayout() { }
 

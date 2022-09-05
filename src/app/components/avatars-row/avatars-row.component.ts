@@ -8,8 +8,11 @@ import { Component, Input, OnInit } from '@angular/core';
 export class AvatarsRowComponent implements OnInit {
   @Input() title: string = "Gestiona";
   @Input() showIcon: boolean = true;
+  @Input() users: any = [];
 
   constructor() { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    //console.log(this.users); 
+   }
 }
