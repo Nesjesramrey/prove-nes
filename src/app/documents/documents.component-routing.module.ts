@@ -27,7 +27,8 @@ const routes: Routes = [
         component: SolutionPublicComponent,
       },
       {
-        path: 'publico/topic',
+        // path: 'publico/tema',
+        path: 'publico/:documentID/categoria/:categoryID/subcategoria/:subcategoryID/tema/:themeID',
         component: TopicPublicComponent,
       },
       { path: 'publico/:documentID', component: PublicDocumentComponent },

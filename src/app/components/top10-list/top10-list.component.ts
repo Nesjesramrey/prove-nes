@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MatListModule } from '@angular/material/list';
 
 export interface Section {
   name: string;
@@ -14,13 +13,12 @@ export interface Section {
 export class Top10ListComponent implements OnInit {
   @Input() data: Section[] = [];
   @Input() color: any;
+
   isColor: boolean = false;
 
   constructor() {}
 
   ngOnInit(): void {
-    console.log({ data: this.data });
-    console.log({ color: this.color });
     this.checkColor(this.color);
   }
   checkColor(color: any) {

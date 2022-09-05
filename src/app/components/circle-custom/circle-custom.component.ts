@@ -1,6 +1,4 @@
-import { Color } from '@alyle/ui/color';
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 export interface Data {
   title: string;
   value: number;
@@ -32,21 +30,21 @@ export class CircleCustomComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    console.log({ dataCircle: this.data });
-    this.data.size = this.processSize(this.size);
-    this.data.position = this.processPosition(this.position);
+    this.data.size = this.getSize(this.size);
+    this.data.position = this.getPosition(this.position);
     if (this.data.out_circle == false) {
       this.data.out_circle_color = 'transparent';
     }
   }
 
-  processSize(size: string): any {
+  getSize(size: string): any {
     // if (this.data.title.length > 13) return { box: 250, font: 24 };
     if (size === 'small') return { box: 250, font: 28 };
     if (size === 'medium') return { box: 170, font: 16 };
     if (size === 'large') return { box: 230, font: 26 };
   }
-  processPosition(position: string): any {
+
+  getPosition(position: string): any {
     if (position === 'first')
       return { left: 50, top: -60, position: 'relative' };
     if (position === 'second')

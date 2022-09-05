@@ -1,12 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { UserService } from 'src/app/services/user.service';
-import { DocumentService } from 'src/app/services/document.service';
-import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
-import { SelectionModel } from '@angular/cdk/collections';
 import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
@@ -16,52 +9,26 @@ import { UtilityService } from 'src/app/services/utility.service';
 })
 export class TopicPublicComponent implements OnInit {
   public documentID: string = '';
-  public token: any = null;
-  public user: any = null;
-  public payload: any = null;
-  public document: any = null;
-  public layout: any = [];
+  public categoryID: string = '';
+  public subcategoryID: string = '';
+  public themeID: string = '';
   public testimonials: any = TESTIMONIALS;
   public solutions: any = SOLUTIONS_DATA;
 
   constructor(
     public activatedRoute: ActivatedRoute,
-    public authenticationService: AuthenticationService,
-    public userService: UserService,
-    public documentService: DocumentService,
-    public dialog: MatDialog,
     public utilityService: UtilityService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
-    this.token = this.authenticationService.fetchToken;
-    // console.log(this.documentID);
+    this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
+    this.subcategoryID =
+      this.activatedRoute['snapshot']['params']['subcategoryID'];
+    this.themeID = this.activatedRoute['snapshot']['params']['themeID'];
   }
 
-  ngOnInit(): void {
-    // user available
-    if (this.token != null) {
-      this.payload = JSON.parse(atob(this.token.split('.')[1]));
-      let user: Observable<any> = this.userService.fetchUserById({
-        _id: this.payload['sub'],
-      });
-      user.subscribe((reply: any) => {
-        console.log({ reply });
-        // this.user = reply[0]['user'];
-      });
-    }
-  }
-
-  linkCategories(id: string) {
-    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${id}`);
-  }
+  ngOnInit(): void {}
 }
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
 export interface DataTable {
   title: string;
   ranking: number;

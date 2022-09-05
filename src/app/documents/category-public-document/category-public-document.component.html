@@ -1,41 +1,35 @@
-<div class="set-12">
-  <breadcrumbs-component>
-    <li class="breadcrumb-item">Perfil</li>
-
-    <li>Economia</li>
-  </breadcrumbs-component>
-
-  <div class="layout" *ngIf="selectedCategory">
-    <div class="left">
-      <mat-card class="set-12 doc-description">
-        <div class="set-12 imghldr">
-          <!-- <mat-icon>panorama</mat-icon> -->
+<div class="set-12" style="padding-bottom: 100px">
+  <div class="container" *ngIf="selectedCategory">
+    <breadcrumbs-component>
+      <li class="breadcrumb-item">{{ document.title }}</li>
+      <li>{{ selectedCategory.category.name }}</li>
+    </breadcrumbs-component>
+    <div class="set-4 col-rgt-3">
+      <mat-card class="doc-description">
+        <div class="imghldr">
           <img
             src="../../../assets/images/books.png"
             alt=""
             style="width: 100%"
           />
         </div>
-        <div class="set-12 infohldr">
-          <h3>{{ selectedCategory.category.name }}</h3>
-          <br />
-            <expanded-text
+        <div class="infohldr">
+          <p class="card-title">{{ selectedCategory.category.name }}</p>
+          <expanded-text
             [text]="selectedCategory.description"
             [minLength]="200"
           ></expanded-text>
         </div>
       </mat-card>
-      <div class="set-12" style="margin-top: 10px">
-        <div class="horizontal-stats"></div>
-      </div>
+      <div class="horizontal-stats mt-2"></div>
     </div>
-    <div class="right">
+    <div class="set-8">
       <panel-circles
         [data]="selectedCategory.subLayouts"
         [withBorder]="true"
         [redirectTo]="'SUBCATEGORY'"
       ></panel-circles>
-      <div class="middle">
+      <div class="mt-2">
         <div class="select">
           <select required>
             <option value="volvo">Municipio 1</option>
@@ -45,12 +39,16 @@
           </select>
         </div>
       </div>
-      <div class="bottom">
-        <span class="vert-stats" style="width: 50%">
+      <div class="set-12 mt-2">
+        <div class="set-3 col-rgt-2">
           <vertical-stats></vertical-stats>
-        </span>
-        <spider-chart style="width: 100%"></spider-chart>
-        <top10-list [data]="items" style="width: 100%"></top10-list>
+        </div>
+        <div class="set-5 col-rgt-2">
+          <spider-chart></spider-chart>
+        </div>
+        <div class="set-4">
+          <top10-list [data]="items"></top10-list>
+        </div>
       </div>
     </div>
   </div>
