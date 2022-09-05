@@ -10,7 +10,7 @@ import { CategoryPublicDocumentComponent } from './category-public-document/cate
 import { SubcategoryDocumentComponent } from './subcategory-document/subcategory-document.component';
 import { SolutionPublicComponent } from './solution-public-document/solution-public.component';
 import { TopicPublicComponent } from './topic-public/topic-public.component';
-
+import { ModalPermissionComponent } from '../components/modal-permission/modal-permission.component';
 const routes: Routes = [
   {
     path: '',
@@ -23,7 +23,15 @@ const routes: Routes = [
         component: SelectedPublicDocumentComponent,
       },
       {
+<<<<<<< HEAD
         path: 'publico/solucion',
+=======
+        path: 'publico/test-modal',
+        component: ModalPermissionComponent,
+      },
+      {
+        path: 'publico/solution',
+>>>>>>> b3ac1023c51c1f132f442b506c11f4ca51a9f64f
         component: SolutionPublicComponent,
       },
       {
