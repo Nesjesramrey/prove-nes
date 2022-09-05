@@ -136,17 +136,43 @@
       }
     }
 
-    .donut-card {
+    .card-chart {
       width: 100%;
-      grid-column: 2 / span 1;
-    }
-    .bars-card {
-      width: 100%;
-      grid-column: 2 / span 1;
-    }
-    .circle-card {
-      width: 100%;
-      grid-column: 2 / span 1;
+
+      // display: flex;
+      // justify-content: center;
+
+      &.donut {
+        grid-column: 2 / span 1;
+      }
+      &.bars {
+        grid-column: 2 / span 1;
+      }
+      &.circle {
+        grid-column: 2 / span 1;
+      }
+
+      .title {
+        font-size: 12pt;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .content {
+        // display: grid;
+        // grid-template-columns: 10fr 3fr;
+
+     
+
+        // display: flex;
+        // justify-content: center;
+        // width: 100%;
+
+        // .label {
+        //   font-size: 11pt;
+        //   max-width: 100px;
+        // }
+      }
     }
   }
 }
