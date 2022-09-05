@@ -1,15 +1,9 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { UserService } from 'src/app/services/user.service';
+import { forkJoin, Observable } from 'rxjs';
 import { DocumentService } from 'src/app/services/document.service';
-import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
-import { SelectionModel } from '@angular/cdk/collections';
-import { UtilityService } from 'src/app/services/utility.service';
 import { Section } from 'src/app/components/top10-list/top10-list.component';
-import { ICategory } from '../subcategory-document/subcategory-document.component';
+import { LayoutService } from 'src/app/services/layout.service';
 
 @Component({
   selector: 'app-category-public-document',
@@ -17,127 +11,71 @@ import { ICategory } from '../subcategory-document/subcategory-document.componen
   styleUrls: ['./category-public-document.component.scss'],
 })
 export class CategoryPublicDocumentComponent implements OnInit {
-  public documentID: string = '';
-  public token: any = null;
-  public user: any = null;
-  public payload: any = null;
   public document: any = null;
-  public layout: any = [];
-  public categories: any[] = _categories_mock;
-  public categoriesDisplayedColumns: string[] = [
-    'name',
-    'users',
-    'interactions',
-    'solutions',
-    'problems',
-    'ranking',
-    'actions',
-  ];
   public isDataAvailable: boolean = false;
-  public displayedColumns: string[] = [
-    'select',
-    'name',
-    'email',
-    'activities',
-    'menu',
-  ];
-  public dataSource = new MatTableDataSource<any>();
-  public selection = new SelectionModel<any>(true, []);
-  public editingRowId: string | null = null;
-  public items: Section[] = []
-  public categoriesData = CATEGORIES;
-  @ViewChild('editRowName') editRowName!: ElementRef<HTMLInputElement>;
+
+  public selectedCategory: any = null;
+  public documentID: string = '';
+  public categoryID: string = '';
+
+  public items: Section[] = top10;
 
   constructor(
     public activatedRoute: ActivatedRoute,
-    public authenticationService: AuthenticationService,
-    public userService: UserService,
     public documentService: DocumentService,
-    public dialog: MatDialog,
-    public utilityService: UtilityService
+    public layoutService: LayoutService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
-    this.token = this.authenticationService.fetchToken;
-    // console.log(this.documentID);
-    this.items = [
-      {
-        name: 'Construir escuelas en 2 años',
-        value: 88,
-      },
-      {
-        name: 'Construir 1000km de ancho de banda',
-        value: 50,
-      },
-      {
-        name: 'Estrategia de Combate al narcotrafico',
-        value: 50,
-      },
-      {
-        name: 'Camaras con IA en transporte',
-        value: 50,
-      },
-      {
-        name: 'Transporte publico gratis para estudiantes',
-        value: 50,
-      },
-      {
-        name: 'Subsidio a la familia por educacion',
-        value: 50,
-      },
-    ]
+    this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
   }
 
   ngOnInit(): void {
-    // user available
-    if (this.token != null) {
-      this.payload = JSON.parse(atob(this.token.split('.')[1]));
-      let user: Observable<any> = this.userService.fetchUserById({
-        _id: this.payload['sub'],
-      });
-      user.subscribe((reply: any) => {
-        console.log({ reply });
-        // this.user = reply[0]['user'];
-      });
-    }
+    this.loadCategory();
   }
 
-  linkCategories(id: string) {
-    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${id}`);
+  loadCategory() {
+    let document: Observable<any> =
+      this.documentService.fetchSingleDocumentById({ _id: this.documentID });
+
+    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({
+      _id: this.categoryID,
+    });
+
+    forkJoin([document, category]).subscribe((reply: any) => {
+      console.log(reply);
+      this.document = reply[0];
+      this.selectedCategory = reply[1];
+
+      setTimeout(() => {
+        this.isDataAvailable = true;
+      }, 300);
+    });
   }
 }
 
-const CATEGORIES: ICategory[] = [
-  { name: 'Educación' },
-  { name: 'Infraestuctura' },
-  { name: 'Salud' },
-];
-
-const _categories_mock = [
+const top10 = [
   {
-    name: 'deporte',
-    id: 'uuid221a',
-    users: 500,
-    interactions: 6200,
-    solutions: 100,
-    problems: 700,
-    ranking: 700,
+    name: 'Construir escuelas en 2 años',
+    value: 88,
   },
   {
-    name: 'derechos humanos',
-    id: 'uuid221b',
-    users: 500,
-    interactions: 6200,
-    solutions: 100,
-    problems: 700,
-    ranking: 700,
+    name: 'Construir 1000km de ancho de banda',
+    value: 50,
   },
   {
-    name: 'económico',
-    id: 'uuid221c',
-    users: 500,
-    interactions: 6200,
-    solutions: 100,
-    problems: 700,
-    ranking: 700,
+    name: 'Estrategia de Combate al narcotrafico',
+    value: 50,
+  },
+  {
+    name: 'Camaras con IA en transporte',
+    value: 50,
+  },
+  {
+    name: 'Transporte publico gratis para estudiantes',
+    value: 50,
+  },
+  {
+    name: 'Subsidio a la familia por educacion',
+    value: 50,
   },
 ];

@@ -7,7 +7,7 @@
 
 <!-- empty documents -->
 <div class="set-12 carousel-hldr" *ngIf="documents.length == 0">
-  <carousel [cellsToShow]="1">
+  <carousel [cellsToShow]="1" [arrows]="false">
     <div class="carousel-cell">
       <mat-card class="emptycard">
         <div class="set-12 txt-center">
@@ -41,11 +41,11 @@
               <button type="button" matTooltip="Editar">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button type="button" matTooltip="Abrir" (click)="linkMe(document._id)">
+              <button type="button" matTooltip="Abrir" (click)="linkMe('/documentos/' + document._id)">
                 <mat-icon>file_open</mat-icon>
               </button>
               <button type="button" matTooltip="Datos" (click)="displayDocumentData(document._id)">
-                <mat-icon>bubble_chart</mat-icon>
+                <mat-icon>pie_chart</mat-icon>
               </button>
             </div>
           </div>
@@ -63,25 +63,19 @@
             <mat-icon>front_hand</mat-icon> <small>0 Interacciones</small>
           </div>
 
-          <!-- <div class="set-12 available-layout">
-            <h4 class="category-title">Esquema</h4>
-            <div class="set-12" *ngIf="document.layouts.length == 0">
-              <button type="button">
-                <small>Agregar esquema</small>
-              </button>
+          <div class="set-12 available-layout" *ngIf="document.layouts.length != 0">
+            <h4 class="category-title">Categorías</h4>
+            <div class="set-12" *ngFor="let layout of document.layouts">
+              <ul>
+                <li>
+                  <button type="button" (click)="linkMe('/documentos/' + document._id + '/categoria/' + layout._id)"
+                    matTooltip="Abrir categoría" matTooltipClass="tooltip" matTooltipPosition="right">
+                    <small>{{layout.category.name}}</small>
+                  </button>
+                </li>
+              </ul>
             </div>
-            <div class="set-12" *ngIf="document.layouts.length != 0">
-              <div class="set-12" *ngFor="let layout of document.layouts">
-                <ul>
-                  <li>
-                    <button type="button">
-                      <small>{{layout.category.name}}</small>
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div> -->
+          </div>
         </div>
       </mat-card>
     </div>
@@ -136,5 +130,5 @@
     </mat-tab-group>
   </mat-card>
 </div>
-<!-- MAPA -->
-<div class="app-map-box"></div>
+  <!-- MAPA -->
+  <!-- <div class="app-map-box"></div> -->

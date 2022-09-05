@@ -1,16 +1,42 @@
-<section class="container">
+<section
+  class="container"
+  [ngStyle]="{
+    width: data.size.box + 'px',
+    height: data.size.box + 'px',
+    'margin-left': data.pos.x + 'px',
+    'margin-top': data.pos.y + 'px',
+    position: data.position.position,
+    left: data.position.left + 'px',
+    top: data.position.top + 'px'
+  }"
+>
   <div class="out-circumference" [style.border-color]="data.out_circle_color">
     <span class="overlay" [style.background-color]="data.overlay">
       <div
         class="in-circumference"
-        [style.background-color]="data.in_circle_background"
-        [style.background-image]="data.in_circle_background"
-        [style.opacity]="0.75"
+        [ngStyle]="{
+          'background-image': 'url(' + data.in_circle_background + ')',
+          'background-color': data.in_circle_background,
+          opacity: data.opacity
+        }"
       >
         <span>
-          <h3 class="title">{{ data.title }}</h3>
-          <br />
-          <h2 class="value">{{ data.value }}</h2>
+          <p
+            class="title"
+            [ngStyle]="{
+              'font-size': data.size.font + 'px'
+            }"
+          >
+            {{ data.title }}
+          </p>
+          <p
+            class="value"
+            [ngStyle]="{
+              'font-size': data.size.font + 16 + 'px'
+            }"
+          >
+            {{ data.value }}
+          </p>
         </span>
       </div>
     </span>

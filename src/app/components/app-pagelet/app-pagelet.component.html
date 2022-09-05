@@ -24,10 +24,10 @@
     <span class="sep">|</span>
 
     <!-- user not available -->
-    <button type="button" (click)="linkMe('join')" *ngIf="user == null">
+    <button type="button" (click)="linkMe('join')" *ngIf="user == null" matTooltip="Rigistro" matTooltipClass="tooltip">
       <mat-icon>app_registration</mat-icon>
     </button>
-    <button type="button" (click)="linkMe('login')" *ngIf="user == null">
+    <button type="button" (click)="linkMe('login')" *ngIf="user == null" matTooltip="Ingreso" matTooltipClass="tooltip">
       <mat-icon>account_box</mat-icon>
     </button>
 

@@ -36,7 +36,12 @@
   width: 100%;
   height: 100%;
   margin: 0px 0px;
-  background-color: #ff6d00;
+  background: linear-gradient(
+    270.1deg,
+    #20c588 50.09%,
+    #9747ff 71.25%,
+    #ffad70 97.89%
+  );
 }
 mat-list-item {
   margin: 2px 2px 2px 2px;

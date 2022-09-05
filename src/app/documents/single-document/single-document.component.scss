@@ -56,7 +56,6 @@
   .card-description {
     text-align: justify;
     font-size: 11pt;
-    line-height: 18pt;
     color: #636363;
 
     &.link {
@@ -172,6 +171,9 @@
       }
     }
 
+    .set-4:nth-child(1) {
+      padding-right: 20px;
+    }
 
     .set-4:nth-child(2) {
       padding: 0 10px;
@@ -207,54 +209,6 @@
       .mat-cell {
         padding: 0.5em 0;
       }
-
-      // .mat-cell.mat-column-name {
-      //   // min-width: 100px !important;
-      //   width: 200px !important;
-
-      //   div {
-      //     border-radius: 1.5em;
-      //     padding: 0.5em 0.8em;
-      //     text-transform: capitalize;
-      //     display: flex;
-      //     justify-content: space-between;
-      //     align-items: center;
-      //     transition: all 350ms linear;
-      //     border: 1px solid transparent;
-      //     cursor: text;
-
-
-      //     .text {
-      //       font-size: 1.1em;
-      //     }
-
-      //     span {
-      //       margin: 0;
-      //     }
-
-      //     mat-icon {
-      //       font-size: 15pt;
-      //     }
-
-      //     &:hover,
-      //     &.editing {
-      //       background-color: #CEDDFF;
-      //       border-color: #306EFF;
-      //     }
-
-
-      //     &.editing {
-      //       background-color: #e8e8e8;
-
-      //       mat-icon {
-      //         color: #20C588;
-      //         cursor: pointer;
-      //       }
-      //     }
-      //   }
-
-      //   // display: inline-block;
-      // }
 
       .mat-column-actions {
         width: 50px;

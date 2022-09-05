@@ -33,12 +33,11 @@ export class SignInComponent implements OnInit {
 
     this.angularFireAuth.signInWithEmailAndPassword(form['value']['email'], form['value']['password'])
       .then((reply: any) => {
-        // console.log(reply);
+        // console.log('reply: ', reply);
         this.angularFireAuth.authState.subscribe((data: any) => {
-          // console.log(data['multiFactor']['user']);
+          // console.log('user: ', data['multiFactor']['user']);
           this.submitted = false;
           localStorage.setItem('accessToken', data['multiFactor']['user']['accessToken']);
-          // localStorage.setItem('uid', data['multiFactor']['user']['uid']);
           window.location.reload();
         });
       })
@@ -46,32 +45,15 @@ export class SignInComponent implements OnInit {
         console.log(error['code']);
         this.submitted = false;
 
-        // switch (error['code']) {
-        //   case 'auth/wrong-password':
-        //     this.utilitySrvc.openErrorSnackBar('Tu contraseña es incorrecta.');
-        //     break;
+        switch (error['code']) {
+          case 'auth/wrong-password':
+            this.utilitySrvc.openErrorSnackBar('Tu contraseña es incorrecta.');
+            break;
 
-        //   case 'auth/user-not-found':
-        //     this.utilitySrvc.openErrorSnackBar('No se encontro el usuario.');
-        //     break;
-        // }
+          case 'auth/user-not-found':
+            this.utilitySrvc.openErrorSnackBar('No se encontro el usuario.');
+            break;
+        }
       });
-
-    // let data: any = {
-    //   email: form.value.email,
-    //   password: form.value.password
-    // }
-
-    // this.authenticationSrvc.signin(data).subscribe((reply: any) => {
-    //   this.submitted = false;
-
-    //   if (reply['status'] == false) {
-    //     this.utilitySrvc.openErrorSnackBar(reply['error']);
-    //     return;
-    //   }
-
-    //   localStorage.setItem('token', reply['token']);
-    //   window.location.reload();
-    // });
   }
 }

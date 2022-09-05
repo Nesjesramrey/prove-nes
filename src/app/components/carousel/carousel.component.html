@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="actions left" [ngClass]="currentScroll > 10 ? 'show' : 'hide'">
+    <button
+      mat-mini-fab
+      color="warn"
+      aria-label="Back"
+      (click)="onBack()"
+    >
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+  </div>
+  <div class="content" #contentScroll (scroll)="onElementScroll()">
+    <ng-content></ng-content>
+  </div>
+  <div class="actions right" [ngClass]="showNext ? 'show' : 'hide'">
+    <button
+      mat-mini-fab
+      color="warn"
+      aria-label="Next"
+      (click)="onNext()"
+    >
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+</div>

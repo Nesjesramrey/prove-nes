@@ -35,7 +35,7 @@ export class EditorTemplateComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
-        console.log(reply);
+        document[0]['images'] = reply['document']['images'];
         document[0]['layouts'] = reply['layouts'];
       }
     });

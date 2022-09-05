@@ -11,7 +11,7 @@
         <g>
           <path
             class="land"
-            *ngFor="let statePath of states"
+            *ngFor="let statePath of mapStates"
             (click)="onClickState(statePath)"
             [id]="statePath.id"
             [title]="statePath.title"
@@ -24,16 +24,56 @@
 
     <!-- DATA -->
     <div class="aside-data">
-      <p class="title">{{ selectedState.title }}</p>
+      <mat-form-field
+        appearance="fill"
+        *ngIf="isDataAvailable"
+        class="select-full"
+      >
+        <mat-label>Cobertura</mat-label>
+        <mat-select multiple>
+          <mat-option *ngFor="let state of states">
+            <small>{{ state.name }}</small>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-      <div class="data-box">
-        <p class="subtitle">Dato</p>
-        <p class="text">{{ 155 }}</p>
+      <div class="data-head">
+        <div class="row">
+          <div class="dot-map green">
+            <mat-icon>insights</mat-icon>
+          </div>
+
+          <p>
+            Soluciones <br />
+            <b>2500</b>
+          </p>
+        </div>
+
+        <div class="row">
+          <div class="dot-map red">
+            <mat-icon>warning</mat-icon>
+          </div>
+
+          <p>
+            Problemas <br />
+            <b>2500</b>
+          </p>
+        </div>
       </div>
 
-      <div class="data-box">
-        <p class="subtitle">Dato</p>
-        <p class="text">{{ 155 }}</p>
+      <div class="chart-container">
+        <canvas
+          class="donut-chart"
+          baseChart
+          [data]="data"
+          [type]="'doughnut'"
+          [options]="chartOptions"
+        ></canvas>
+
+        <p>
+          Categorias <br />
+          <b>2500</b>
+        </p>
       </div>
     </div>
   </mat-card>

@@ -1,12 +1,13 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AppMaterialModule } from "src/app/app-material.module";
+import { AppMaterialModule } from 'src/app/app-material.module';
 import { IvyCarouselModule } from 'angular-responsive-carousel';
 
-import { AdminTemplateComponent } from "./admin-template/admin-template.component";
-import { EditorTemplateComponent } from "./editor-template/editor-template.component";
+import { AdminTemplateComponent } from './admin-template/admin-template.component';
+import { EditorTemplateComponent } from './editor-template/editor-template.component';
 import { MapBoxComponent } from './map-box/map-box.component';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   imports: [
@@ -14,18 +15,16 @@ import { MapBoxComponent } from './map-box/map-box.component';
     FormsModule,
     ReactiveFormsModule,
     AppMaterialModule,
-    IvyCarouselModule
+    IvyCarouselModule,
+    NgChartsModule
   ],
   declarations: [
     AdminTemplateComponent,
     EditorTemplateComponent,
-    MapBoxComponent
+    MapBoxComponent,
   ],
-  exports: [
-    AdminTemplateComponent,
-    EditorTemplateComponent
-  ],
+  exports: [AdminTemplateComponent, EditorTemplateComponent, MapBoxComponent],
   entryComponents: [],
   providers: [],
 })
-export class HubComponentsModule { }
+export class HubComponentsModule {}

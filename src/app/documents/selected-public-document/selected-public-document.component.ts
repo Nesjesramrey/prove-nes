@@ -14,7 +14,7 @@ import { ICategory } from '../subcategory-document/subcategory-document.componen
 @Component({
   selector: '.selected-public-document-page',
   templateUrl: './selected-public-document.component.html',
-  styleUrls: ['./selected-public-document.component.scss']
+  styleUrls: ['./selected-public-document.component.scss'],
 })
 export class SelectedPublicDocumentComponent implements OnInit {
   public documentID: string = '';
@@ -24,14 +24,29 @@ export class SelectedPublicDocumentComponent implements OnInit {
   public document: any = null;
   public layout: any = [];
   public categories: any[] = _categories_mock;
-  public categoriesDisplayedColumns: string[] = ["name", "users", "interactions", "solutions", "problems", "ranking", "actions"]
+  public categoriesDisplayedColumns: string[] = [
+    'name',
+    'users',
+    'interactions',
+    'solutions',
+    'problems',
+    'ranking',
+    'actions',
+  ];
   public isDataAvailable: boolean = false;
-  public displayedColumns: string[] = ['select', 'name', 'email', 'activities', 'menu'];
+  public displayedColumns: string[] = [
+    'select',
+    'name',
+    'email',
+    'activities',
+    'menu',
+  ];
   public dataSource = new MatTableDataSource<any>();
   public selection = new SelectionModel<any>(true, []);
   public editingRowId: string | null = null;
-  public items: Section[] = []
+  public items: Section[] = [];
   public categoriesData = CATEGORIES;
+  public colors: any = COLORS;
   @ViewChild('editRowName') editRowName!: ElementRef<HTMLInputElement>;
 
   constructor(
@@ -41,7 +56,6 @@ export class SelectedPublicDocumentComponent implements OnInit {
     public documentService: DocumentService,
     public dialog: MatDialog,
     public utilityService: UtilityService
-
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.token = this.authenticationService.fetchToken;
@@ -70,7 +84,7 @@ export class SelectedPublicDocumentComponent implements OnInit {
         name: 'Subsidio a la familia por educacion',
         value: 50,
       },
-    ]
+    ];
     // console.log(this.documentID);
   }
 
@@ -78,20 +92,19 @@ export class SelectedPublicDocumentComponent implements OnInit {
     // user available
     if (this.token != null) {
       this.payload = JSON.parse(atob(this.token.split('.')[1]));
-      let user: Observable<any> = this.userService.fetchUserById({ _id: this.payload['sub'] });
+      let user: Observable<any> = this.userService.fetchUserById({
+        _id: this.payload['sub'],
+      });
       user.subscribe((reply: any) => {
-        console.log({ reply })
+        console.log({ reply });
       });
     }
   }
 
   linkCategories(id: string) {
-    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${id}`)
+    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${id}`);
   }
-
 }
-
-
 
 const CATEGORIES: ICategory[] = [
   { name: 'Educación' },
@@ -101,12 +114,33 @@ const CATEGORIES: ICategory[] = [
 
 const _categories_mock = [
   {
-    name: "deporte", id: "uuid221a", users: 500, interactions: 6200, solutions: 100, problems: 700, ranking: 700,
+    name: 'deporte',
+    id: 'uuid221a',
+    users: 500,
+    interactions: 6200,
+    solutions: 100,
+    problems: 700,
+    ranking: 700,
   },
   {
-    name: "derechos humanos", id: "uuid221b", users: 500, interactions: 6200, solutions: 100, problems: 700, ranking: 700,
+    name: 'derechos humanos',
+    id: 'uuid221b',
+    users: 500,
+    interactions: 6200,
+    solutions: 100,
+    problems: 700,
+    ranking: 700,
   },
   {
-    name: "económico", id: "uuid221c", users: 500, interactions: 6200, solutions: 100, problems: 700, ranking: 700,
-  }
+    name: 'económico',
+    id: 'uuid221c',
+    users: 500,
+    interactions: 6200,
+    solutions: 100,
+    problems: 700,
+    ranking: 700,
+  },
 ];
+const COLORS = {
+  bg: '#FF6D00',
+};

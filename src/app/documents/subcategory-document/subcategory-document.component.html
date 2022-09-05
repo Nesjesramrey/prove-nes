@@ -1,11 +1,11 @@
 <div class="container">
   <div class="set-12">
-    <div class="set-8">
+    <div class="set-8" *ngIf="isDataAvailable">
       <breadcrumbs-component>
-        <li class="breadcrumb-item">Documento madre</li>
-        <li class="breadcrumb-item">Economia</li>
+        <li class="breadcrumb-item">{{ document.title }}</li>
+        <li class="breadcrumb-item">{{ category.category.name }}</li>
 
-        <li>Empleo</li>
+        <li>{{ subcategorySelected.category.name }}</li>
       </breadcrumbs-component>
     </div>
     <div class="set-4 featured-users">
@@ -13,32 +13,21 @@
     </div>
   </div>
 
-  <div class="set-12" style="padding-bottom: 100px">
+  <div class="set-12" style="padding-bottom: 100px" *ngIf="subcategorySelected">
     <div class="set-4 col-rgt-3">
       <mat-card class="doc-description">
         <div class="imghldr">
-          <!-- <mat-icon>panorama</mat-icon> -->
-          <img
-            src="../../../assets/images/stand.png"
-            alt=""
-            style="width: 100%"
-          />
+          <img src="../../../assets/images/stand.png" alt="" style="width: 100%" />
         </div>
         <div class="infohldr">
-          <p class="card-title">Empleo</p>
-          <p class="card-description">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam sed
-            dignissimos natus minima repudiandae consequatur distinctio unde
-            saepe ea quas accusantium animi reiciendis asperiores, nesciunt
-            consequuntur fugiat earum doloribus repellat.
-          </p>
-          <span class="card-description link">Leer más</span>
+          <p class="card-title">{{ subcategorySelected.category.name }}</p>
+          <expanded-text [text]="subcategorySelected.description" [minLength]="200"></expanded-text>
         </div>
       </mat-card>
     </div>
     <div class="set-8">
       <div class="main-box">
-        <panel-subcategory [data]="categoriesData"></panel-subcategory>
+        <panel-subcategory [data]="category.subLayouts"></panel-subcategory>
         <div class="set-12 container-titles">
           <div class="set-6 title">
             <p>
@@ -55,11 +44,7 @@
         </div>
         <div class="set-12">
           <div class="set-6">
-            <table
-              mat-table
-              [dataSource]="solutionsDataSource"
-              class="mat-elevation-z8"
-            >
+            <table mat-table [dataSource]="solutionsDataSource" class="mat-elevation-z8">
               <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let element">
@@ -84,15 +69,11 @@
             </table>
           </div>
           <div class="set-6">
-            <table
-              mat-table
-              [dataSource]="problemsDataSource"
-              class="mat-elevation-z8"
-            >
+            <table mat-table [dataSource]="problemsDataSource" class="mat-elevation-z8">
               <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let element">
-                  <p style="font-weight: 500">{{ element.name }}</p>
+                  <a style="font-weight: 500" (click)="redirect(element.ranking)">{{ element.name }}</a>
                 </td>
               </ng-container>
 

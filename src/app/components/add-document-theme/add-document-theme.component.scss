@@ -1,13 +1,37 @@
 :host {
+  min-height: 170px;
+
   .dialog-head {
     display: flex;
     align-items: center;
   }
 
-  .dialog-body {
+  ::ng-deep .mat-step-header:hover,
+  ::ng-deep .mat-step-header {
+    background: transparent !important;
+  }
+
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 0;
+  }
+
+  ::ng-deep .mat-horizontal-stepper-header-container {
+    display: none !important;
+  }
+
+  .step-content {
+    margin-top: 5px;
+
+    form {
+      .inpts {
+        display: flex;
+        flex: 1;
+      }
+    }
+
     textarea {
-      // min-height: 100px;
-      max-height: 150px;
+      min-height: 100px;
+      max-height: 100px;
     }
 
     .set-9 {
@@ -17,148 +41,82 @@
     .upload-img {
       display: flex;
       width: 100%;
-      min-height: 59.5px;
+      min-height: 100px;
+      height: calc(100% - 20px);
       align-items: center;
       justify-content: center;
-      border: 1px dashed rgba(0, 0, 0, 0.1);
+      border: 1px dashed rgba($color: #000000, $alpha: 0.1);
       border-radius: 5px;
-      margin: 0.25em 0;
+    }
 
-      mat-icon {
-        color: #306eff;
-        // opacity: 0.4;
-        transition: all 0.2s linear;
+    .tools {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      button {
+        margin: 0;
+        display: flex;
+        align-items: center;
+
+        * {
+          margin: 0;
+        }
+
+        mat-icon {
+          margin-left: 5px;
+          font-size: 15pt;
+          color: #306EFF;
+        }
       }
     }
 
-    // .upload-img:hover {
-    //   mat-icon {
-    //     opacity: 1;
-    //   }
-    // }
-
     .ctrls {
       text-align: right;
-      margin-top: 10px;
-    }
-  }
-
-  .tools {
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-
-    button {
-      margin: 0;
       display: flex;
       align-items: center;
+      justify-content: flex-end;
 
       * {
         margin: 0;
       }
 
-      mat-icon {
-        margin-left: 5px;
-        font-size: 15pt;
-        color: #306eff;
+      mat-spinner {
+        margin-left: 20px;
+      }
+
+      button {
+        margin-left: 10px;
+      }
+
+      button:first-child {
+        margin-left: 0;
       }
     }
   }
 
-  .imagebox {
-    border-style: dashed;
-    border-width: 2px;
-    min-height: 100px;
-    height: auto;
-    margin-bottom: 50pt;
-    position: relative;
+  .file-hldr {
+    font-weight: bold;
+    font-style: italic;
+  }
 
-    label {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      font-size: 12pt;
-      user-select: none;
-      z-index: 3;
-      cursor: pointer;
+  .topic {
+    h3 {
+      margin-bottom: 10px;
+    }
+
+    .ctrls {
+      margin-top: 20px;
+    }
+  }
+
+  .loading {
+    mat-spinner {
       position: absolute;
-      top: 0;
-      left: 0;
-      transition: all 390ms linear;
-      box-sizing: border-box;
-
-      &.data {
-        background-color: rgba(250, 250, 250, 0.7);
-        opacity: 0;
-
-        &:hover {
-          opacity: 1;
-        }
-      }
-
-      mat-icon {
-        font-size: 25pt;
-        color: #306eff;
-      }
-
-      span {
-        margin-top: 8pt;
-      }
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
-
-    .preview {
-      width: 100%;
-      // height: 100%;A
-      object-fit: cover;
-      transition: opacity 450ms linear;
-      z-index: 2;
-
-      &.empty {
-        opacity: 0;
-      }
-
-      &.data {
-        opacity: 1;
-      }
-    }
-  }
-
-  .second-line {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20pt;
-    margin-bottom: 20pt;
-
-    textarea {
-      width: 60%;
-    }
-
-    .imagebox {
-      margin: 0;
-      width: 35%;
-      height: 150px;
-      max-height: 150px;
-    }
-  }
-
-  .title-box {
-    margin-top: 20pt;
-  }
-
-  .solution-box {
-    height: 100px;
-    margin-bottom: 20pt;
-  }
-
-  textarea,
-  input {
-    padding: 0.8em;
-    border: 2px solid #636363;
-    border-radius: 5px;
-    box-sizing: border-box;
   }
 }

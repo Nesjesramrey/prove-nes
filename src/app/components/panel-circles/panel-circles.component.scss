@@ -1,20 +1,33 @@
-.main {
+.main-box {
   height: 400px;
-  display: block;
-  background-image: radial-gradient(#212121 5%, transparent 5%);
-  background-position: 0 0, 20px 20px;
-  background-size: 30px 30px;
-  border-radius: 5px 5px 0px 0px;
-  padding: 40px;
-  background-color: white;
-  .random-text {
-    position: absolute;
-    span {
-      text-transform: uppercase;
-      font-weight: 600;
-      color: #ff6d00;
-      margin-top: 70px;
-      z-index: 1001;
-    }
+  overflow-x: auto;
+  overflow-y: hidden;
+  
+  .main {
+    height: 400px;
+    width: 2000px;
+    // width: 100%;
+    display: block;
+    background-image: radial-gradient(#212121 5%, transparent 5%);
+    background-position: 0 0, 20px 20px;
+    background-size: 30px 30px;
+    border-radius: 5px 5px 0px 0px;
+    padding: 40px;
+    background-color: white;
   }
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgb(230, 230, 230);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(131, 131, 131);
+  border-radius: 20px;
+  height: 2px;
 }

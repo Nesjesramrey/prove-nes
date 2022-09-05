@@ -1,0 +1,17 @@
+<mat-card class="doc-description" style="height: 280px">
+  <div class="solutions-box" style="text-align: start">
+    <p class="title">Soluciones</p>
+    <table class="mt-2">
+      <tbody>
+        <tr *ngFor="let item of data">
+          <td>
+            <p>{{ item.title }}</p>
+          </td>
+          <td>
+            <p>{{ item.score }}</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</mat-card>

@@ -8,6 +8,8 @@ import { PublicDocumentComponent } from './public-document/public-document.compo
 import { SelectedPublicDocumentComponent } from './selected-public-document/selected-public-document.component';
 import { CategoryPublicDocumentComponent } from './category-public-document/category-public-document.component';
 import { SubcategoryDocumentComponent } from './subcategory-document/subcategory-document.component';
+import { SolutionPublicComponent } from './solution-public-document/solution-public.component';
+import { TopicPublicComponent } from './topic-public/topic-public.component';
 
 const routes: Routes = [
   {
@@ -15,18 +17,28 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: '/404', pathMatch: 'full' },
       { path: '', component: DocumentsComponent },
-      {
-        path: 'publico/subcategory',
-        component: SubcategoryDocumentComponent,
-      },
+
       {
         path: 'publico/selected',
         component: SelectedPublicDocumentComponent,
+      },
+      {
+        path: 'publico/solution',
+        component: SolutionPublicComponent,
+      },
+      {
+        // path: 'publico/tema',
+        path: 'publico/:documentID/categoria/:categoryID/subcategoria/:subcategoryID/tema/:themeID',
+        component: TopicPublicComponent,
       },
       { path: 'publico/:documentID', component: PublicDocumentComponent },
       {
         path: 'publico/:documentID/categoria/:categoryID',
         component: CategoryPublicDocumentComponent,
+      },
+      {
+        path: 'publico/:documentID/categoria/:categoryID/subcategoria/:subcategoryID',
+        component: SubcategoryDocumentComponent,
       },
       {
         path: ':documentID',

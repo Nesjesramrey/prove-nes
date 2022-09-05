@@ -2,30 +2,11 @@
   margin: 120px 40px;
   margin-bottom: 100px;
 
-  .main-box {
-    // width: 100%;
-    height: 400px;
-    overflow-x: auto;
-    overflow-y: none;
-    // .main {
-    //   width: 2000px;
-    //   height: 100%;
-    //   background-color: white;
-    //   display: block;
-    //   background-image: radial-gradient(#212121 5%, transparent 5%);
-    //   background-position: 0 0, 20px 20px;
-    //   background-size: 30px 30px;
-    //   border-radius: 5px;
-    // }
-  }
-
   .select > select {
     background-color: white;
     width: 150px;
     padding: 0px 20px;
     height: 26px;
-    font-family: "Noto Sans";
-    font-style: normal;
     font-weight: 400;
     font-size: 16px;
     line-height: 22px;
@@ -55,12 +36,8 @@
   }
 
   .card-title {
-    color: #636363;
-    font-family: "Noto Sans";
-    font-style: normal;
     font-weight: 600;
     font-size: 20px;
-    line-height: 30px;
     text-transform: uppercase;
     color: #000000;
     margin-bottom: 10px;
@@ -69,8 +46,6 @@
   }
 
   .card-description {
-    font-family: "Noto Sans";
-    font-style: normal;
     font-weight: 400;
     font-size: 14px;
     text-align: justify;
@@ -85,18 +60,5 @@
     }
   }
 
-  *::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
 
-  *::-webkit-scrollbar-track {
-    background: rgb(230, 230, 230);
-  }
-
-  *::-webkit-scrollbar-thumb {
-    background-color: rgb(131, 131, 131);
-    border-radius: 20px;
-    height: 2px;
-  }
 }

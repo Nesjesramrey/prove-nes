@@ -14,6 +14,9 @@ import { PublicDocumentComponent } from './public-document/public-document.compo
 import { SelectedPublicDocumentComponent } from './selected-public-document/selected-public-document.component';
 import { CategoryPublicDocumentComponent } from './category-public-document/category-public-document.component';
 import { SubcategoryDocumentComponent } from './subcategory-document/subcategory-document.component';
+import { SolutionPublicComponent } from './solution-public-document/solution-public.component';
+import { TopicPublicComponent } from './topic-public/topic-public.component';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   imports: [
@@ -24,6 +27,7 @@ import { SubcategoryDocumentComponent } from './subcategory-document/subcategory
     AppMaterialModule,
     AppSharedModule,
     ComponentsModule,
+    NgChartsModule,
   ],
   declarations: [
     DocumentsComponent,
@@ -33,7 +37,9 @@ import { SubcategoryDocumentComponent } from './subcategory-document/subcategory
     PublicDocumentComponent,
     SelectedPublicDocumentComponent,
     CategoryPublicDocumentComponent,
+    SolutionPublicComponent,
+    TopicPublicComponent,
     SubcategoryDocumentComponent,
   ],
 })
-export class DocumentsComponentModule {}
+export class DocumentsComponentModule { }

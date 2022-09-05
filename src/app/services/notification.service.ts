@@ -19,6 +19,6 @@ export class NotificationService {
   }
 
   fetchMyNotificationsContent(data: any) {
-    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchMyNotificationsContentEndPoint, data);
+    return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchMyNotificationsContentEndPoint + `?message_to=${data['userID']}`, data);
   }
 }

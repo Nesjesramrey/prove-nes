@@ -32,6 +32,10 @@ import { AddDocumentCollaboratorComponent } from './add-document-collaborator/ad
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { AvatarsRowComponent } from './avatars-row/avatars-row.component';
 import { AddDocumentThemeComponent } from './add-document-theme/add-document-theme.component';
+import { CompleteRegistrationComponent } from "./complete-registration/complete-registration.component";
+import { AddDocumentSolutionComponent } from './add-document-solution/add-document-solution.component';
+import { AddDocumentTestimonyComponent } from './add-document-testimony/add-document-testimony.component';
+import { CarouselComponent } from './carousel/carousel.component';
 import { HorizontalStatsComponent } from './horizontal-stats/horizontal-stats.component';
 import { VerticalStatsComponent } from './vertical-stats/vertical-stats.component';
 import { Top10ListComponent } from './top10-list/top10-list.component';
@@ -42,6 +46,9 @@ import { PanelSubcategoryComponent } from './panel-subcategory/panel-subcategory
 import { CircleCustomComponent } from './circle-custom/circle-custom.component';
 import { PanelCirclesComponent } from './panel-circles/panel-circles.component';
 import { ExpandedTextComponent } from './expanded-text/expanded-text.component';
+import { TestimonyCardComponent } from './testimony-card/testimony-card.component';
+import { SolutionsCardComponent } from './solutions-card/solutions-card.component';
+import { CircleChartComponent } from './circle-chart/circle-chart.component';
 
 @NgModule({
   imports: [
@@ -79,6 +86,10 @@ import { ExpandedTextComponent } from './expanded-text/expanded-text.component';
     BreadcrumbsComponent,
     AvatarsRowComponent,
     AddDocumentThemeComponent,
+    CompleteRegistrationComponent,
+    AddDocumentSolutionComponent,
+    AddDocumentTestimonyComponent,
+    CarouselComponent,
     VerticalStatsComponent,
     Top10ListComponent,
     FeaturedUsersComponent,
@@ -87,7 +98,10 @@ import { ExpandedTextComponent } from './expanded-text/expanded-text.component';
     ModalPermissionComponent,
     PanelCirclesComponent,
     ExpandedTextComponent,
+    TestimonyCardComponent,
+    SolutionsCardComponent,
     CircleCustomComponent,
+    CircleChartComponent
   ],
   exports: [
     AppPageletComponent,
@@ -107,6 +121,8 @@ import { ExpandedTextComponent } from './expanded-text/expanded-text.component';
     VerticalStatsComponent,
     BreadcrumbsComponent,
     AvatarsRowComponent,
+    CompleteRegistrationComponent,
+    CarouselComponent,
     VerticalStatsComponent,
     Top10ListComponent,
     PanelSubcategoryComponent,
@@ -115,7 +131,10 @@ import { ExpandedTextComponent } from './expanded-text/expanded-text.component';
     ModalPermissionComponent,
     PanelCirclesComponent,
     ExpandedTextComponent,
+    TestimonyCardComponent,
+    SolutionsCardComponent,
     CircleCustomComponent,
+    CircleChartComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
@@ -125,6 +144,7 @@ import { ExpandedTextComponent } from './expanded-text/expanded-text.component';
     AddDocumentLayoutComponent,
     AddDocumentCategoryComponent,
     AddDocumentCollaboratorComponent,
+    CompleteRegistrationComponent,
   ],
   providers: [],
 })
