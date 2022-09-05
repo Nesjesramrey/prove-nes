@@ -160,16 +160,33 @@
     </div>
 
     <mat-card class="bars-card">
-      <p>Título de gráfica</p>
+      <canvas
+        class="donut-chart"
+        baseChart
+        [data]="simpletDoughnutData"
+        [type]="'doughnut'"
+        [options]="chartOptions"
+      ></canvas>
     </mat-card>
 
     <mat-card class="donut-card">
-      <div class="pie-chart chart"></div>
-      <!-- <div class="line-chart chart"></div> -->
+      <canvas
+        class="donut-chart"
+        baseChart
+        [data]="data"
+        [type]="'doughnut'"
+        [options]="chartOptions"
+      ></canvas>
     </mat-card>
 
     <mat-card class="circle-card">
-      <p>Título de gráfica</p>
+      <canvas
+        class="donut-chart"
+        baseChart
+        [data]="data"
+        [type]="'doughnut'"
+        [options]="chartOptions"
+      ></canvas>
     </mat-card>
   </div>
 </div>

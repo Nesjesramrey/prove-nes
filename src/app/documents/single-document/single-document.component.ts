@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddDocumentCategoryComponent } from 'src/app/components/add-document-category/add-document-category.component';
 import { AddDocumentCollaboratorComponent } from 'src/app/components/add-document-collaborator/add-document-collaborator.component';
 import { AddDocumentLayoutComponent } from 'src/app/components/add-document-layout/add-document-layout.component';
+import { AddDocumentThemeComponent } from '../../components/add-document-theme/add-document-theme.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { UtilityService } from 'src/app/services/utility.service';
@@ -23,7 +24,6 @@ export class SingleDocumentComponent implements OnInit {
   public user: any = null;
   public document: any = null;
   public layout: any = [];
-  // public categories: any[] = _categories_mock;
   public layouts: any[] = [];
   public categoriesDisplayedColumns: string[] = ["name", "users", "interactions", "solutions", "problems", "ranking", "actions"]
   public isDataAvailable: boolean = false;
@@ -32,6 +32,7 @@ export class SingleDocumentComponent implements OnInit {
   public selection = new SelectionModel<any>(true, []);
   public editingRowId: string | null = null;
   @ViewChild('editRowName') editRowName!: ElementRef<HTMLInputElement>;
+  public collaborators: any = null; 
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -51,7 +52,9 @@ export class SingleDocumentComponent implements OnInit {
       this.document = reply;
       console.log('document: ', this.document);
       this.layouts = this.document['layouts'];
-      console.log('layouts: ', this.layouts);
+      this.collaborators = this.document.collaborators;
+      // console.log('layouts: ', this.layouts);
+      this.dataSource = new MatTableDataSource(this.layouts);
     });
 
     if (this.accessToken != null) {
@@ -92,8 +95,8 @@ export class SingleDocumentComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
-        this.document['layouts'].push(reply[0]);
-        console.log(this.document);
+        this.layouts.push(reply[0]);
+        this.dataSource = new MatTableDataSource(this.layouts);
       }
     });
   }
@@ -113,54 +116,29 @@ export class SingleDocumentComponent implements OnInit {
     });
   }
 
-  popAddDocumentLayout() { }
+  popAddDocumentTheme(id: string) {
+    const dialogRef = this.dialog.open<AddDocumentThemeComponent>(AddDocumentThemeComponent, {
+      width: '640px',
+      data: {
+        documentID: this.documentID,
+        document: this.document,
+        categoryID: id,
+        type: 'sublayout'
+      },
+      disableClose: true
+    });
 
-  handleEditing(id: string | null,) {
-    this.editingRowId = id;
-    setTimeout(() => {
-      this.editRowName.nativeElement.focus();
-    }, 50);
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        console.log(reply);
+      }
+    });
   }
 
-  // saveName() {
-  //   const newValue = this.editRowName.nativeElement.value;
 
-  //   if (newValue === null || newValue.length == 0) return
-
-
-  //   this.categories = this.categories.map(cat => {
-
-  //     if (cat.id == this.editingRowId) {
-  //       return { ...cat, name: newValue }
-  //     }
-
-  //     return cat;
-  //   })
-
-
-  //   this.editingRowId = null;
-  //   this.editRowName.nativeElement.value = ""
-  // }
-
+  popAddDocumentLayout() { }
 
   linkCategories(id: string) {
     this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${id}`)
   }
-
 }
-
-
-
-
-
-const _categories_mock = [
-  {
-    name: "deporte", id: "uuid221a", users: 500, interactions: 6200, solutions: 100, problems: 700, ranking: 700,
-  },
-  {
-    name: "derechos humanos", id: "uuid221b", users: 500, interactions: 6200, solutions: 100, problems: 700, ranking: 700,
-  },
-  {
-    name: "económico", id: "uuid221c", users: 500, interactions: 6200, solutions: 100, problems: 700, ranking: 700,
-  }
-];

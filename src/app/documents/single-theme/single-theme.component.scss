@@ -59,6 +59,14 @@
       grid-column: 1 / span 1;
       width: 100%;
 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      carousel-component {
+        width: 100%;
+      }
+
       .render-images {
         width: 1800px;
         height: 100%;
@@ -87,7 +95,6 @@
     }
 
     .about-card {
-
       grid-column: 2 / span 1;
       width: 100%;
 

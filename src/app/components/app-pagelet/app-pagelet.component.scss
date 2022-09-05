@@ -1,13 +1,15 @@
 :host {
-  position: fixed;
+  //position: fixed;
   z-index: 99;
   width: 100%;
 
   mat-toolbar {
     height: 80px;
     padding: 0 40px;
-    background: rgba($color: #ffffff, $alpha: 0.79);
+    background: rgba($color: #ffffff, $alpha: 1);
     box-shadow: 0px 1px 11px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    z-index: 99999;
   }
 
   .logo {
@@ -19,7 +21,7 @@
     }
 
     img {
-      width: 30%;
+      width: 20%;
       float: left;
       cursor: pointer;
       max-width: 55px;
