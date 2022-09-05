@@ -13,6 +13,7 @@ import { SolutionService } from 'src/app/services/solution.service';
 import { AddDocumentCategoryComponent } from 'src/app/components/add-document-category/add-document-category.component';
 // import { FormBuilder, FormGroup } from "@angular/forms";
 import { AddDocumentThemeComponent } from '../../components/add-document-theme/add-document-theme.component';
+import { EditCategoryDataComponent } from 'src/app/components/edit-category-data/edit-category-data.component';
 
 @Component({
   selector: '.app-single-category',
@@ -35,8 +36,8 @@ export class SingleCategoryComponent implements OnInit {
   public selection = new SelectionModel<any>(true, []);
   public editingTitle: boolean = false;
   public imageUrl!: string;
-  public collaborators: any = null; 
-  public topics: any = null; 
+  public collaborators: any = null;
+  public topics: any = null;
 
   /* TABLE */
   public displayedColumns: string[] = [
@@ -76,7 +77,7 @@ export class SingleCategoryComponent implements OnInit {
       this.selectedCategory = reply[1];
       this.collaborators = reply[0].collaborators;
       // console.log('category: ', this.selectedCategory);
-      this.topics = this.selectedCategory['topics'];    
+      this.topics = this.selectedCategory['topics'];
       this.subcategories = this.selectedCategory['subLayouts'];
       // console.log('subcategories: ', this.subcategories);
       this.dataSource = new MatTableDataSource(this.subcategories);
@@ -198,10 +199,25 @@ export class SingleCategoryComponent implements OnInit {
     });
   }
 
+  popEditCategoryDialog() {
+    const dialogRef = this.dialog.open<EditCategoryDataComponent>(EditCategoryDataComponent, {
+      width: '640px',
+      data: {
+        layout: this.selectedCategory
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        this.selectedCategory['description'] = reply['description'];
+      }
+    });
+  }
+
   linkTopic(id: string) {
     this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/temas/${id}`)
   }
-
 }
 
 

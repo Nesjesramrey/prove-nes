@@ -35,6 +35,8 @@ import { CompleteRegistrationComponent } from "./complete-registration/complete-
 import { AddDocumentSolutionComponent } from './add-document-solution/add-document-solution.component';
 import { AddDocumentTestimonyComponent } from './add-document-testimony/add-document-testimony.component';
 import { CarouselComponent } from './carousel/carousel.component';
+import { EditDocumentDataComponent } from "./edit-document-data/edit-document-data.component";
+import { EditCategoryDataComponent } from "./edit-category-data/edit-category-data.component";
 
 @NgModule({
   imports: [
@@ -73,7 +75,9 @@ import { CarouselComponent } from './carousel/carousel.component';
     CompleteRegistrationComponent,
     AddDocumentSolutionComponent,
     AddDocumentTestimonyComponent,
-    CarouselComponent
+    CarouselComponent,
+    EditDocumentDataComponent,
+    EditCategoryDataComponent
   ],
   exports: [
     AppPageletComponent,
@@ -91,7 +95,9 @@ import { CarouselComponent } from './carousel/carousel.component';
     BreadcrumbsComponent,
     AvatarsRowComponent,
     CompleteRegistrationComponent,
-    CarouselComponent
+    CarouselComponent,
+    EditDocumentDataComponent,
+    EditCategoryDataComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
@@ -101,7 +107,9 @@ import { CarouselComponent } from './carousel/carousel.component';
     AddDocumentLayoutComponent,
     AddDocumentCategoryComponent,
     AddDocumentCollaboratorComponent,
-    CompleteRegistrationComponent
+    CompleteRegistrationComponent,
+    EditDocumentDataComponent,
+    EditCategoryDataComponent
   ],
   providers: [],
 })

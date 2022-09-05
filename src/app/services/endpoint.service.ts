@@ -28,6 +28,7 @@ export class EndPointService {
   public fetchSingleDocumentByIdEndPoint: string = '/document/';
   public fetchDocumentsByCollaboratorEndPoint: string = '/document/collaborator/';
   public createDocumentLayoutEndPoint: string = '/layout/document/';
+  public editDocumentDataEndPoint: string = '/document/';
 
   // public createNewDocumentEndPoint: string = '/document/create-new-document';
   public fetchMyDocumentsEndPoint: string = '/document/fetch-my-documents';
@@ -42,6 +43,7 @@ export class EndPointService {
   // layouts
   public fetchSingleLayoutByIdEndPoint: string = '/layout/';
   public createNewLayoutOnlyEndPoint: string = '/layout/document/';
+  public editLayoutDataEndPoint: string = '/layout/';
 
   // sub layouts
   public createNewSubLayoutEndPoint: string = '/sublayout/layout/';

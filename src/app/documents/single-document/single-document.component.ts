@@ -12,6 +12,7 @@ import { AddDocumentThemeComponent } from '../../components/add-document-theme/a
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { UtilityService } from 'src/app/services/utility.service';
+import { EditDocumentDataComponent } from 'src/app/components/edit-document-data/edit-document-data.component';
 
 @Component({
   selector: '.single-document-page',
@@ -32,7 +33,7 @@ export class SingleDocumentComponent implements OnInit {
   public selection = new SelectionModel<any>(true, []);
   public editingRowId: string | null = null;
   @ViewChild('editRowName') editRowName!: ElementRef<HTMLInputElement>;
-  public collaborators: any = null; 
+  public collaborators: any = null;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -50,7 +51,7 @@ export class SingleDocumentComponent implements OnInit {
   ngOnInit(): void {
     this.documentService.fetchSingleDocumentById({ _id: this.documentID }).subscribe((reply: any) => {
       this.document = reply;
-      console.log('document: ', this.document);
+      // console.log('document: ', this.document);
       this.layouts = this.document['layouts'];
       this.collaborators = this.document.collaborators;
       // console.log('layouts: ', this.layouts);
@@ -135,8 +136,24 @@ export class SingleDocumentComponent implements OnInit {
     });
   }
 
-
   popAddDocumentLayout() { }
+
+  popEditDocumentDialog() {
+    const dialogRef = this.dialog.open<EditDocumentDataComponent>(EditDocumentDataComponent, {
+      width: '640px',
+      data: {
+        document: this.document
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        this.document['title'] = reply['title'];
+        this.document['description'] = reply['description'];
+      }
+    });
+  }
 
   linkCategories(id: string) {
     this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${id}`)
