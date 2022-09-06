@@ -85,6 +85,7 @@
           />
         </div>
       </carousel-component>
+      <avatars-row></avatars-row>
     </mat-card>
 
     <mat-card class="about-card">
@@ -94,15 +95,16 @@
           matInput
           placeholder="Título del tema"
           [value]="themeData.title"
+          readonly
         />
       </mat-form-field>
 
       <mat-form-field class="example-full-width" appearance="outline">
         <mat-label>Descripción</mat-label>
-        <textarea matInput placeholder="Descripción del tema"></textarea>
+        <textarea matInput placeholder="Descripción del tema" [value]="themeData.description" readonly></textarea>
       </mat-form-field>
 
-      <avatars-row></avatars-row>
+      
     </mat-card>
 
     <div class="table-card">
@@ -159,7 +161,7 @@
       </mat-card>
     </div>
 
-    <mat-card class="card-chart bars">
+    <!-- <mat-card class="card-chart bars">
       <p class="title">Título de la gráfica</p>
 
       <div class="content">
@@ -175,7 +177,7 @@
           <b>14500</b>
         </div>
       </div>
-    </mat-card>
+    </mat-card> -->
 
     <mat-card class="card-chart donut">
       <p class="title">Título de la gráfica</p>
@@ -187,14 +189,11 @@
           [type]="'doughnut'"
           [options]="chartOptions"
         ></canvas>
-        <!-- <div class="label">
-          Dato <br />
-          <b>14500</b>
-        </div> -->
+
       </div>
     </mat-card>
 
-    <mat-card class="card-chart circle">
+    <!-- <mat-card class="card-chart circle">
       <p class="title">Título de la gráfica</p>
       <div class="content">
         <canvas
@@ -205,11 +204,8 @@
           [options]="chartOptions"
         ></canvas>
 
-        <!-- <div class="label">
-          Dato <br />
-          <b>14500</b>
-        </div> -->
+
       </div>
-    </mat-card>
+    </mat-card> -->
   </div>
 </div>

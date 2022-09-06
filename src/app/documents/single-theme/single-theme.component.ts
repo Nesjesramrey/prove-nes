@@ -52,7 +52,7 @@ export class SingleThemeComponent implements OnInit {
   public chartOptions: ChartOptions<'doughnut'> = {
     cutout: 98,
     plugins: {
-      legend: { display: true, position: 'chartArea', align: "center" },
+      legend: { display: false, position: 'chartArea', align: "center" },
     },
     scales: {
       x: {
@@ -130,8 +130,8 @@ export class SingleThemeComponent implements OnInit {
 
   calculateCarouselContentSize() {
     const newVal =
-      (this.themeData.images.length + this.imageToUpload.length) * 150;
-    this.carouselContentSize = (newVal || 150) + 150;
+      (this.themeData.images.length + this.imageToUpload.length) * 300;
+    this.carouselContentSize = (newVal || 300) + 300;
   }
 
   handleSelectImage(event: any) {
@@ -289,7 +289,7 @@ interface Theme {
 
 const _mockTheme: Theme = {
   title: 'Tema principal',
-  description: '',
+  description: 'Descripciòn del tema nueo',
   images: [
     'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg',
     'https://images.pexels.com/photos/2726111/pexels-photo-2726111.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
