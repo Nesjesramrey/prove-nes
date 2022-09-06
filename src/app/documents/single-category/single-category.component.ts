@@ -70,8 +70,10 @@ export class SingleCategoryComponent implements OnInit {
   ngOnInit(): void {
     let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
     let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID });
-    let solutions: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.categoryID });
-    forkJoin([document, category, solutions]).subscribe((reply: any) => {
+    // let solutions: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.categoryID });
+
+    forkJoin([document, category]).subscribe((reply: any) => {
+      console.log(reply);
       this.document = reply[0];
       //console.log('document: ', this.document);
       this.selectedCategory = reply[1];
