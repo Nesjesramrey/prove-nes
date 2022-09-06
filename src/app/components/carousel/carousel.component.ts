@@ -26,14 +26,15 @@ export class CarouselComponent implements OnInit {
 
     this.currentScroll = scrollLeft;
 
-    this.showNext = this.contentSize - clientWidth >= scrollLeft;
+
+    this.showNext = !((this.contentSize - clientWidth) <= scrollLeft);
   }
 
   onBack() {
     const { scrollLeft } = this.contentScroll.nativeElement;
 
     this.contentScroll.nativeElement.scrollLeft =
-      scrollLeft > 100 ? scrollLeft - 100 : 0;
+      scrollLeft > 100 ? scrollLeft - this.contentScroll.nativeElement.clientWidth : 0;
   }
 
   onNext() {
@@ -42,7 +43,7 @@ export class CarouselComponent implements OnInit {
     const max = this.contentSize - clientWidth;
 
     this.contentScroll.nativeElement.scrollLeft =
-      max == scrollLeft ? max : scrollLeft + 100;
+      max == scrollLeft ? max : scrollLeft + this.contentScroll.nativeElement.clientWidth;
 
   }
 }

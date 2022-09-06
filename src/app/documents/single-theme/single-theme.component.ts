@@ -31,7 +31,7 @@ export class SingleThemeComponent implements OnInit {
   public isDataAvailable: boolean = false;
   public layouts: any[] = [];
   public themeData: Theme = _mockTheme;
-  public imageToUpload: string[] = [];
+  public imagesToUpload: string[] = [];
   public states: any = [];
   public displayedColumns: string[] = [
     'title',
@@ -42,6 +42,7 @@ export class SingleThemeComponent implements OnInit {
   public solutionsList: Solution[] = _mockSolutions;
   public collaborators: any = null;
   public solutions: any = null;
+  public sliderImages: string[] = [..._mockTheme.images];
 
   // simplet doughnut
   public simpletDoughnutData: ChartData<'doughnut'> = _simpleDonuthData;
@@ -52,7 +53,7 @@ export class SingleThemeComponent implements OnInit {
   public chartOptions: ChartOptions<'doughnut'> = {
     cutout: 98,
     plugins: {
-      legend: { display: false, position: 'chartArea', align: "center" },
+      legend: { display: false, position: 'chartArea', align: 'center' },
     },
     scales: {
       x: {
@@ -83,18 +84,24 @@ export class SingleThemeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
-    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID });
-    let solutions: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.themeID });
+    let document: Observable<any> =
+      this.documentService.fetchSingleDocumentById({ _id: this.documentID });
+    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({
+      _id: this.categoryID,
+    });
+    let solutions: Observable<any> =
+      this.solutionService.fetchSingleSolutionById({ _id: this.themeID });
     let categories: Observable<any> = this.utilityService.fetchAllCategories();
     let states: Observable<any> = this.utilityService.fetchAllStatesMex();
-    forkJoin([categories, states, document, solutions]).subscribe((reply: any) => {
-      console.log(reply);
-      this.states = reply[1]['states'];
-      this.collaborators = reply[2].collaborators;
-      this.solutions = reply[3];
-      console.log(this.solutions);
-    });    
+    forkJoin([categories, states, document, solutions]).subscribe(
+      (reply: any) => {
+        console.log(reply);
+        this.states = reply[1]['states'];
+        this.collaborators = reply[2].collaborators;
+        this.solutions = reply[3];
+        console.log(this.solutions);
+      }
+    );
     this.documentService
       .fetchSingleDocumentById({ _id: this.documentID })
       .subscribe((reply: any) => {
@@ -122,16 +129,6 @@ export class SingleThemeComponent implements OnInit {
         complete: () => {},
       });
     }
-
-
-
-    this.calculateCarouselContentSize();
-  }
-
-  calculateCarouselContentSize() {
-    const newVal =
-      (this.themeData.images.length + this.imageToUpload.length) * 300;
-    this.carouselContentSize = (newVal || 300) + 300;
   }
 
   handleSelectImage(event: any) {
@@ -144,16 +141,14 @@ export class SingleThemeComponent implements OnInit {
         const reader = new FileReader();
 
         reader.onload = () => {
-          this.imageToUpload.unshift(reader.result as string);
+          this.imagesToUpload.unshift(reader.result as string);
         };
 
         reader.readAsDataURL(file);
       });
-    }
 
-    setTimeout(() => {
-      this.calculateCarouselContentSize();
-    }, 300);
+      this.sliderImages = [ ...this.imagesToUpload, ...this.sliderImages ];
+    }
   }
 
   popAddDocumentTheme() {
@@ -289,7 +284,8 @@ interface Theme {
 
 const _mockTheme: Theme = {
   title: 'Tema principal',
-  description: 'Descripciòn del tema nueo',
+  description:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc in nisi luctus, pulvinar magna vel, iaculis magna. Etiam nec sodales est. Praesent auctor vel metus ac ultricies. Morbi vel nisl vel lectus blandit fermentum eget ut nisi. Duis euismod turpis quis molestie ultricies. Pellentesque ut lacus sit amet turpis iaculis pulvinar. Sed lobortis pulvinar euismod. Praesent ut dui id eros aliquet varius. Etiam imperdiet vestibulum sem, non pulvinar magna bibendum eget. Sed finibus ornare volutpat. Praesent efficitur dignissim tempus. Morbi et aliquam velit. Nunc sit amet pretium dui, et venenatis mauris.',
   images: [
     'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg',
     'https://images.pexels.com/photos/2726111/pexels-photo-2726111.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',

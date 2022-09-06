@@ -37,6 +37,7 @@ import { AddDocumentTestimonyComponent } from './add-document-testimony/add-docu
 import { CarouselComponent } from './carousel/carousel.component';
 import { EditDocumentDataComponent } from "./edit-document-data/edit-document-data.component";
 import { EditCategoryDataComponent } from "./edit-category-data/edit-category-data.component";
+import { SliderImagesComponent } from './slider-images/slider-images.component';
 
 @NgModule({
   imports: [
@@ -77,7 +78,8 @@ import { EditCategoryDataComponent } from "./edit-category-data/edit-category-da
     AddDocumentTestimonyComponent,
     CarouselComponent,
     EditDocumentDataComponent,
-    EditCategoryDataComponent
+    EditCategoryDataComponent,
+    SliderImagesComponent
   ],
   exports: [
     AppPageletComponent,
@@ -97,7 +99,8 @@ import { EditCategoryDataComponent } from "./edit-category-data/edit-category-da
     CompleteRegistrationComponent,
     CarouselComponent,
     EditDocumentDataComponent,
-    EditCategoryDataComponent
+    EditCategoryDataComponent,
+    SliderImagesComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
