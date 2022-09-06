@@ -13,16 +13,16 @@ import { SolutionService } from 'src/app/services/solution.service';
 import { AddDocumentCategoryComponent } from 'src/app/components/add-document-category/add-document-category.component';
 // import { FormBuilder, FormGroup } from "@angular/forms";
 import { AddDocumentThemeComponent } from '../../components/add-document-theme/add-document-theme.component';
-import { EditCategoryDataComponent } from 'src/app/components/edit-category-data/edit-category-data.component';
 
 @Component({
-  selector: '.app-single-category',
-  templateUrl: './single-category.component.html',
-  styleUrls: ['./single-category.component.scss'],
+  selector: '.app-single-subcategory',
+  templateUrl: './single-subcategory.component.html',
+  styleUrls: ['./single-subcategory.component.scss'],
 })
-export class SingleCategoryComponent implements OnInit {
+export class SingleSubcategoryComponent implements OnInit {
   public documentID: string = '';
   public categoryID: string = '';
+  public subcategoryID: string = '';
   public token: any = null;
   public user: any = null;
   public payload: any = null;
@@ -36,19 +36,21 @@ export class SingleCategoryComponent implements OnInit {
   public selection = new SelectionModel<any>(true, []);
   public editingTitle: boolean = false;
   public imageUrl!: string;
-  public collaborators: any = null;
-  public topics: any = null;
+  public collaborators: any = null; 
+  public topics: any = null; 
+  public subcategory: any = null; 
 
   /* TABLE */
   public displayedColumns: string[] = [
     'name',
-    'users',
-    'interactions',
+    'category',
+    'subcategory',
     'solutions',
-    'problems',
+    'ranking',
     'actions',
   ];
-  public subcategories: any[] = [];
+  //public subcategories: any[] = [];
+  public subcategories: any[] = _mockTemas;
 
   @ViewChild('titleField') titleField!: ElementRef<HTMLInputElement>;
 
@@ -64,73 +66,35 @@ export class SingleCategoryComponent implements OnInit {
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
+    this.subcategoryID = this.activatedRoute['snapshot']['params']['subcategoryID'];
     this.token = this.authenticationService.accessToken;
   }
 
   ngOnInit(): void {
     let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
     let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID });
-    let solutions: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.categoryID });
-    forkJoin([document, category, solutions]).subscribe((reply: any) => {
+    
+    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID });
+    
+    forkJoin([document, category, subcategory]).subscribe((reply: any) => {
       this.document = reply[0];
       //console.log('document: ', this.document);
       this.selectedCategory = reply[1];
       this.collaborators = reply[0].collaborators;
       // console.log('category: ', this.selectedCategory);
-      this.topics = this.selectedCategory['topics'];
-      this.subcategories = this.selectedCategory['subLayouts'];
-      // console.log('subcategories: ', this.subcategories);
+      this.topics = this.selectedCategory['topics'];    
+      //this.subcategories = this.selectedCategory['subLayouts'];
+      console.log('subcategories: ', this.subcategories);
+      //this.dataSource = new MatTableDataSource(this.subcategories);
       this.dataSource = new MatTableDataSource(this.subcategories);
 
-      //this.solutions = 
-      console.log('solutions: ', reply);
+      this.subcategory =  reply[2];
+      console.log(this.subcategory);
 
       setTimeout(() => {
         this.isDataAvailable = true;
-      }, 300);
+      }, 300); 
     });
-
-    // user available
-    // if (this.token != null) {
-    //   this.payload = JSON.parse(atob(this.token.split('.')[1]));
-    //   let user: Observable<any> = this.userService.fetchUserById({
-    //     _id: this.payload['sub'],
-    //   });
-    //   let document: Observable<any> =
-    //     this.documentService.fetchSingleDocumentById({
-    //       document_id: this.documentID,
-    //     });
-    //   forkJoin([user, document]).subscribe((reply: any) => {
-    //     this.user = reply[0]['user'];
-    //     this.document = reply[1]['document'];
-    //     this.layout = this.document['layout'];
-
-    //     this.category = _categories_mock.find(
-    //       (cat) => cat.id === this.categoryID
-    //     )!;
-
-    //     this.subcategories = _mockSubcategories;
-
-    //     setTimeout(() => {
-    //       this.dataSource = new MatTableDataSource(this.layout);
-    //       this.isDataAvailable = true;
-    //     });
-    //   });
-    // }
-    // // no user available
-    // else {
-    //   let document: Observable<any> =
-    //     this.documentService.fetchSingleDocumentById({
-    //       document_id: this.documentID,
-    //     });
-    //   forkJoin([document]).subscribe((reply: any) => {
-    //     this.document = reply[0]['document'];
-
-    //     setTimeout(() => {
-    //       this.isDataAvailable = true;
-    //     });
-    //   });
-    // }
   }
 
   openEditingTitle() {
@@ -199,41 +163,20 @@ export class SingleCategoryComponent implements OnInit {
     });
   }
 
-  popEditCategoryDialog() {
-    const dialogRef = this.dialog.open<EditCategoryDataComponent>(EditCategoryDataComponent, {
-      width: '640px',
-      data: {
-        layout: this.selectedCategory
-      },
-      disableClose: true
-    });
-
-    dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) {
-        this.selectedCategory['description'] = reply['description'];
-      }
-    });
-  }
-
   linkTopic(id: string) {
     this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/temas/${id}`)
   }
-
-  linkSubcategory(id: string) {
-    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${id}`)
-  }  
 
 }
 
 
 
 interface Category {
+  _id: string;
   name: string;
-  id: string;
-  users: number;
-  interactions: number;
+  category: string;
+  subcategory: string;
   solutions: number;
-  problems: number;
   ranking: number;
 }
 
@@ -287,3 +230,13 @@ const _mockSubcategories = [
     ranking: 700,
   },
 ];
+const _mockTemas = [
+  {
+    _id:"adasd",
+    name: 'Solución',
+    category: 'Categoría',
+    subcategory: "subcategoría",
+    solutions: "soluciones",
+    ranking: "ranking"
+  },
+]
