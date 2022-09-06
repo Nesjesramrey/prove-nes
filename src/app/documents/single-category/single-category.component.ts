@@ -86,50 +86,8 @@ export class SingleCategoryComponent implements OnInit {
 
       setTimeout(() => {
         this.isDataAvailable = true;
-      }, 300);
+      }, 1000);
     });
-
-    // user available
-    // if (this.token != null) {
-    //   this.payload = JSON.parse(atob(this.token.split('.')[1]));
-    //   let user: Observable<any> = this.userService.fetchUserById({
-    //     _id: this.payload['sub'],
-    //   });
-    //   let document: Observable<any> =
-    //     this.documentService.fetchSingleDocumentById({
-    //       document_id: this.documentID,
-    //     });
-    //   forkJoin([user, document]).subscribe((reply: any) => {
-    //     this.user = reply[0]['user'];
-    //     this.document = reply[1]['document'];
-    //     this.layout = this.document['layout'];
-
-    //     this.category = _categories_mock.find(
-    //       (cat) => cat.id === this.categoryID
-    //     )!;
-
-    //     this.subcategories = _mockSubcategories;
-
-    //     setTimeout(() => {
-    //       this.dataSource = new MatTableDataSource(this.layout);
-    //       this.isDataAvailable = true;
-    //     });
-    //   });
-    // }
-    // // no user available
-    // else {
-    //   let document: Observable<any> =
-    //     this.documentService.fetchSingleDocumentById({
-    //       document_id: this.documentID,
-    //     });
-    //   forkJoin([document]).subscribe((reply: any) => {
-    //     this.document = reply[0]['document'];
-
-    //     setTimeout(() => {
-    //       this.isDataAvailable = true;
-    //     });
-    //   });
-    // }
   }
 
   openEditingTitle() {
@@ -181,7 +139,7 @@ export class SingleCategoryComponent implements OnInit {
   }
 
   popAddDocumentTheme(subcategoryID: string) {
-  const dialogRef = this.dialog.open<AddDocumentThemeComponent>(AddDocumentThemeComponent, {
+    const dialogRef = this.dialog.open<AddDocumentThemeComponent>(AddDocumentThemeComponent, {
       width: '640px',
       data: {
         documentID: this.documentID,
@@ -220,7 +178,7 @@ export class SingleCategoryComponent implements OnInit {
 
   linkSubcategory(id: string) {
     this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${id}`)
-  }  
+  }
 
 }
 
