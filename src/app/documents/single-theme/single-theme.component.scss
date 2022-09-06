@@ -149,13 +149,13 @@
       // justify-content: center;
 
       &.donut {
-        grid-area: 2 / 5 / 2 / 13;
+        grid-area: 2 / 5 / 2 / 9;
       }
       &.bars {
         grid-column: 4 / 12;
       }
       &.circle {
-        grid-column: 4 / 12;
+        grid-area: 2 / 9 / 2 / 13;
       }
 
       .title {
@@ -164,7 +164,7 @@
         text-transform: uppercase;
       }
 
-      .content {
+      // .content {
         // display: grid;
         // grid-template-columns: 10fr 3fr;
 
@@ -176,7 +176,7 @@
         //   font-size: 11pt;
         //   max-width: 100px;
         // }
-      }
+      // }
     }
   }
 }
