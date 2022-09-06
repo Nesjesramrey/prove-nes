@@ -73,7 +73,7 @@ export class SingleCategoryComponent implements OnInit {
     // let solutions: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.categoryID });
 
     forkJoin([document, category]).subscribe((reply: any) => {
-      // console.log(reply);
+      console.log(reply);
       this.document = reply[0];
       console.log('document: ', this.document);
       this.selectedCategory = reply[1];
