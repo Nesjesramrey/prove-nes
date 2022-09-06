@@ -82,9 +82,6 @@ export class SingleCategoryComponent implements OnInit {
       // console.log('subcategories: ', this.subcategories);
       this.dataSource = new MatTableDataSource(this.subcategories);
 
-      //this.solutions = 
-      console.log('solutions: ', reply);
-
       setTimeout(() => {
         this.isDataAvailable = true;
       }, 300);
@@ -181,13 +178,13 @@ export class SingleCategoryComponent implements OnInit {
     });
   }
 
-  popAddDocumentTheme() {
-    const dialogRef = this.dialog.open<AddDocumentThemeComponent>(AddDocumentThemeComponent, {
+  popAddDocumentTheme(subcategoryID: string) {
+  const dialogRef = this.dialog.open<AddDocumentThemeComponent>(AddDocumentThemeComponent, {
       width: '640px',
       data: {
         documentID: this.documentID,
         document: this.document,
-        categoryID: this.categoryID
+        categoryID: subcategoryID
       },
       disableClose: true
     });

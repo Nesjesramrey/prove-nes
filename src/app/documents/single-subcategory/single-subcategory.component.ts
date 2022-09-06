@@ -13,6 +13,8 @@ import { SolutionService } from 'src/app/services/solution.service';
 import { AddDocumentCategoryComponent } from 'src/app/components/add-document-category/add-document-category.component';
 // import { FormBuilder, FormGroup } from "@angular/forms";
 import { AddDocumentThemeComponent } from '../../components/add-document-theme/add-document-theme.component';
+import { ThemeService } from 'ng2-charts';
+import { throws } from 'assert';
 
 @Component({
   selector: '.app-single-subcategory',
@@ -39,6 +41,7 @@ export class SingleSubcategoryComponent implements OnInit {
   public collaborators: any = null; 
   public topics: any = null; 
   public subcategory: any = null; 
+  public solutions: any[] = []; 
 
   /* TABLE */
   public displayedColumns: string[] = [
@@ -50,7 +53,7 @@ export class SingleSubcategoryComponent implements OnInit {
     'actions',
   ];
   //public subcategories: any[] = [];
-  public subcategories: any[] = _mockTemas;
+  public subcategories: any[] = [];
 
   @ViewChild('titleField') titleField!: ElementRef<HTMLInputElement>;
 
@@ -73,7 +76,6 @@ export class SingleSubcategoryComponent implements OnInit {
   ngOnInit(): void {
     let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
     let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID });
-    
     let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID });
     
     forkJoin([document, category, subcategory]).subscribe((reply: any) => {
@@ -82,19 +84,33 @@ export class SingleSubcategoryComponent implements OnInit {
       this.selectedCategory = reply[1];
       this.collaborators = reply[0].collaborators;
       // console.log('category: ', this.selectedCategory);
-      this.topics = this.selectedCategory['topics'];    
       //this.subcategories = this.selectedCategory['subLayouts'];
-      console.log('subcategories: ', this.subcategories);
+      //console.log('subcategories: ', this.subcategories);
       //this.dataSource = new MatTableDataSource(this.subcategories);
-      this.dataSource = new MatTableDataSource(this.subcategories);
-
       this.subcategory =  reply[2];
-      console.log(this.subcategory);
+      //console.log(this.subcategory);
+      this.topics = this.subcategory['topics'];    
+      console.log(this.topics);
+      this.dataSource = new MatTableDataSource(this.topics);
+
+      for(let i=0; i<this.topics.length; i++){
+        let sols = this.topics[i].solutions;
+        for(let j=0; j<sols.length; j++){
+          //this.solutions.push(this.topics[i].solutions[j]);
+          console.log("la sol id " + this.topics[i].solutions[j])
+          let sol: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.topics[i].solutions[j] });
+          forkJoin([sol]).subscribe((reply: any) => {
+            console.log("elreply" + JSON.stringify(reply[0]));
+            this.solutions.push(reply[0]);
+          })    
+        }
+      }
 
       setTimeout(() => {
         this.isDataAvailable = true;
       }, 300); 
     });
+
   }
 
   openEditingTitle() {
