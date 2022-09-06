@@ -73,15 +73,15 @@ export class SingleCategoryComponent implements OnInit {
     // let solutions: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.categoryID });
 
     forkJoin([document, category]).subscribe((reply: any) => {
-      console.log(reply);
+      // console.log(reply);
       this.document = reply[0];
-      //console.log('document: ', this.document);
+      console.log('document: ', this.document);
       this.selectedCategory = reply[1];
       this.collaborators = reply[0].collaborators;
-      // console.log('category: ', this.selectedCategory);
+      console.log('category: ', this.selectedCategory);
       this.topics = this.selectedCategory['topics'];
       this.subcategories = this.selectedCategory['subLayouts'];
-      // console.log('subcategories: ', this.subcategories);
+      console.log('subcategories: ', this.subcategories);
       this.dataSource = new MatTableDataSource(this.subcategories);
 
       setTimeout(() => {
