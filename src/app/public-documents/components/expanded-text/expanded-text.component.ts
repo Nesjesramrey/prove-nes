@@ -20,6 +20,7 @@ export class ExpandedTextComponent implements OnInit {
   }
 
   processText() {
+    this.text = this.text || ' '
     let length = this.minLength;
     const textLength = this.text.length;
 

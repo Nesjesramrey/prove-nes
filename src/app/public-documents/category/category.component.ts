@@ -2,15 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { DocumentService } from 'src/app/services/document.service';
-import { Section } from 'src/app/components/top10-list/top10-list.component';
+import { Section } from 'src/app/public-documents/components/top10-list/top10-list.component';
 import { LayoutService } from 'src/app/services/layout.service';
 
 @Component({
-  selector: 'app-category-public-document',
-  templateUrl: './category-public-document.component.html',
-  styleUrls: ['./category-public-document.component.scss'],
+  selector: 'app-category-page',
+  templateUrl: './category.component.html',
+  styleUrls: ['./category.component.scss'],
 })
-export class CategoryPublicDocumentComponent implements OnInit {
+export class CategoryComponent implements OnInit {
   public document: any = null;
   public isDataAvailable: boolean = false;
 

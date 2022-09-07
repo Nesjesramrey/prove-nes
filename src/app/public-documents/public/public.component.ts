@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DocumentService } from 'src/app/services/document.service';
-import { Section } from 'src/app/components/top10-list/top10-list.component';
+import { Section } from 'src/app/public-documents/components/top10-list/top10-list.component';
 
 @Component({
-  selector: '.public-document-page',
-  templateUrl: './public-document.component.html',
-  styleUrls: ['./public-document.component.scss'],
+  selector: '.public-page',
+  templateUrl: './public.component.html',
+  styleUrls: ['./public.component.scss'],
 })
-export class PublicDocumentComponent implements OnInit {
+export class PublicComponent implements OnInit {
   public documentID: string = '';
   public document: any = null;
   public items: Section[] = ITEMS;

@@ -22,7 +22,7 @@ export class Top10ListComponent implements OnInit {
     this.checkColor(this.color);
   }
   checkColor(color: any) {
-    if (color.bg === '#FF6D00') {
+    if (color && color.bg === '#FF6D00') {
       this.isColor = true;
     }
   }

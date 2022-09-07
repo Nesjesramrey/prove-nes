@@ -91,11 +91,11 @@ export class PanelCirclesComponent implements OnInit {
     let path = '';
 
     if (this.redirectTo === 'CATEGORY') {
-      path = `documentos/publico/${this.documentID}/categoria/${id}`;
+      path = `documentos-publicos/${this.documentID}/categoria/${id}`;
     }
 
     if (this.redirectTo === 'SUBCATEGORY') {
-      path = `documentos/publico/${this.documentID}/categoria/${this.categoryID}/subcategoria/${id}`;
+      path = `documentos-publicos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${id}`;
     }
 
     this.utilityService.linkMe(path);

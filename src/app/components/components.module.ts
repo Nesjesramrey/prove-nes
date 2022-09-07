@@ -21,7 +21,6 @@ import { AppFooterComponent } from './app-footer/app-footer.component';
 import { EmailValidationDialogComponent } from './email-validation-dialog/email-validation-dialog.component';
 import { AddDocumentDialogComponent } from './add-document-dialog/add-document-dialog.component';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
-import { SpiderChartComponent } from './spider-chart/spider-chart.component';
 import { LineChartComponent } from './line-chart/line-chart.component';
 import { SetAvatarDialogComponent } from './set-avatar-dialog/set-avatar-dialog.component';
 import { AddPermissionsComponent } from './add-permissions/add-permissions.component';
@@ -36,19 +35,9 @@ import { CompleteRegistrationComponent } from "./complete-registration/complete-
 import { AddDocumentSolutionComponent } from './add-document-solution/add-document-solution.component';
 import { AddDocumentTestimonyComponent } from './add-document-testimony/add-document-testimony.component';
 import { CarouselComponent } from './carousel/carousel.component';
-import { HorizontalStatsComponent } from './horizontal-stats/horizontal-stats.component';
-import { VerticalStatsComponent } from './vertical-stats/vertical-stats.component';
-import { Top10ListComponent } from './top10-list/top10-list.component';
 import { MapBoxComponent } from './map-box/map-box.component';
-import { FeaturedUsersComponent } from './featured-users/featured-users.component';
-import { ModalPermissionComponent } from './modal-permission/modal-permission.component';
-import { PanelSubcategoryComponent } from './panel-subcategory/panel-subcategory.component';
-import { CircleCustomComponent } from './circle-custom/circle-custom.component';
-import { PanelCirclesComponent } from './panel-circles/panel-circles.component';
-import { ExpandedTextComponent } from './expanded-text/expanded-text.component';
-import { TestimonyCardComponent } from './testimony-card/testimony-card.component';
-import { SolutionsCardComponent } from './solutions-card/solutions-card.component';
 import { CircleChartComponent } from './circle-chart/circle-chart.component';
+import { SpiderChartComponent } from './spider-chart/spider-chart.component';
 
 @NgModule({
   imports: [
@@ -74,7 +63,6 @@ import { CircleChartComponent } from './circle-chart/circle-chart.component';
     EmailValidationDialogComponent,
     AddDocumentDialogComponent,
     PieChartComponent,
-    SpiderChartComponent,
     LineChartComponent,
     SetAvatarDialogComponent,
     AddPermissionsComponent,
@@ -82,7 +70,6 @@ import { CircleChartComponent } from './circle-chart/circle-chart.component';
     AddDocumentLayoutComponent,
     AddDocumentCategoryComponent,
     AddDocumentCollaboratorComponent,
-    HorizontalStatsComponent,
     BreadcrumbsComponent,
     AvatarsRowComponent,
     AddDocumentThemeComponent,
@@ -90,18 +77,9 @@ import { CircleChartComponent } from './circle-chart/circle-chart.component';
     AddDocumentSolutionComponent,
     AddDocumentTestimonyComponent,
     CarouselComponent,
-    VerticalStatsComponent,
-    Top10ListComponent,
-    FeaturedUsersComponent,
-    PanelSubcategoryComponent,
     MapBoxComponent,
-    ModalPermissionComponent,
-    PanelCirclesComponent,
-    ExpandedTextComponent,
-    TestimonyCardComponent,
-    SolutionsCardComponent,
-    CircleCustomComponent,
-    CircleChartComponent
+    CircleChartComponent,
+    SpiderChartComponent
   ],
   exports: [
     AppPageletComponent,
@@ -109,7 +87,6 @@ import { CircleChartComponent } from './circle-chart/circle-chart.component';
     EmailValidationDialogComponent,
     AddDocumentDialogComponent,
     PieChartComponent,
-    SpiderChartComponent,
     LineChartComponent,
     SetAvatarDialogComponent,
     AddPermissionsComponent,
@@ -117,23 +94,12 @@ import { CircleChartComponent } from './circle-chart/circle-chart.component';
     AddDocumentLayoutComponent,
     AddDocumentCategoryComponent,
     AddDocumentCollaboratorComponent,
-    HorizontalStatsComponent,
-    VerticalStatsComponent,
     BreadcrumbsComponent,
     AvatarsRowComponent,
     CompleteRegistrationComponent,
     CarouselComponent,
-    VerticalStatsComponent,
-    Top10ListComponent,
-    PanelSubcategoryComponent,
-    FeaturedUsersComponent,
     MapBoxComponent,
-    ModalPermissionComponent,
-    PanelCirclesComponent,
-    ExpandedTextComponent,
-    TestimonyCardComponent,
-    SolutionsCardComponent,
-    CircleCustomComponent,
+    SpiderChartComponent,
     CircleChartComponent
   ],
   entryComponents: [
