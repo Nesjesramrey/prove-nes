@@ -13,8 +13,8 @@ const routes: Routes = [
       { path: '', component: DocumentsComponent },
       { path: ':documentID', component: SingleDocumentComponent, canActivate: [] },
       { path: ':documentID/categoria/:categoryID', component: SingleCategoryComponent, canActivate: [] },
-      { path: ':documentID/categoria/:categoryID/temas/:themeID', component: SingleThemeComponent, canActivate: [] },
-      { path: ':documentID/categoria/:categoryID/subcategoria/:subcategoryID', component: SingleSubcategoryComponent, canActivate: [] }
+      { path: ':documentID/categoria/:categoryID/subcategoria/:subcategoryID', component: SingleSubcategoryComponent, canActivate: [] },
+      { path: ':documentID/categoria/:categoryID/subcategoria/:subcategoryID/temas/:themeID', component: SingleThemeComponent, canActivate: [] },
     ]
   }
 ];

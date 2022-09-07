@@ -22,11 +22,14 @@ export class SingleThemeComponent implements OnInit {
   public documentID: string = '';
   public accessToken: any = null;
   public categoryID: string = '';
+  public subcategoryID: string = '';
   public themeID: string = '';
   public carouselContentSize: number = 150;
-
+  public selectedCategory: any = null;
   public user: any = null;
   public document: any = null;
+  public category: any = null;
+  public subcategory: any = null;
   public layout: any = [];
   public isDataAvailable: boolean = false;
   public layouts: any[] = [];
@@ -79,27 +82,29 @@ export class SingleThemeComponent implements OnInit {
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
+    this.subcategoryID = this.activatedRoute['snapshot']['params']['subcategoryID'];
     this.themeID = this.activatedRoute['snapshot']['params']['themeID'];
     this.accessToken = this.authenticationService.fetchAccessToken;
   }
 
   ngOnInit(): void {
-    let document: Observable<any> =
-      this.documentService.fetchSingleDocumentById({ _id: this.documentID });
-    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({
-      _id: this.categoryID,
-    });
-    let solutions: Observable<any> =
-      this.solutionService.fetchSingleSolutionById({ _id: this.themeID });
+    let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
+    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID,});
+    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID,});
     let categories: Observable<any> = this.utilityService.fetchAllCategories();
-    let states: Observable<any> = this.utilityService.fetchAllStatesMex();
-    forkJoin([categories, states, document, solutions]).subscribe(
-      (reply: any) => {
-        console.log(reply);
-        this.states = reply[1]['states'];
-        this.collaborators = reply[2].collaborators;
-        this.solutions = reply[3];
-        console.log(this.solutions);
+    let solutions: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.themeID });
+    
+    //forkJoin([categories, document, solutions, category, subcategory]).subscribe((reply: any) => {
+    forkJoin([document, category, subcategory]).subscribe((reply: any) => {  
+        
+        //this.states = reply[1]['states'];
+        this.collaborators = reply[0].collaborators;
+        //this.solutions = reply[2];
+        this.category = reply[1];
+        console.log("categoria " + JSON.stringify(this.category));
+        this.subcategory = reply[2];
+        console.log("subcategoria " + JSON.stringify(this.subcategory));
+        
       }
     );
     this.documentService

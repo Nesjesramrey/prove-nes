@@ -8,6 +8,8 @@
       <li class="breadcrumb-item">Perfil</li>
       <li>Documentos</li>
       <li>{{ document.title }}</li>
+      <li>{{ category.category.name }}</li>
+      <li>{{ subcategory.category.name }}</li>
     </breadcrumbs-component>
 
     <div class="actions-rigth">
@@ -144,9 +146,9 @@
       <div>
         <mat-form-field appearance="outline">
           <mat-label>Cobertura</mat-label>
-          <mat-select multiple>
-            <mat-option *ngFor="let state of states">
-              <small>{{ state.name }}</small>
+          <mat-select [value]="document.coverage[0]._id">
+            <mat-option *ngFor="let option of document.coverage" [value]="option._id">
+              <small>{{ option.name | titlecase }}</small>
             </mat-option>
           </mat-select>
         </mat-form-field>

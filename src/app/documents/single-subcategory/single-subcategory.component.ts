@@ -46,8 +46,8 @@ export class SingleSubcategoryComponent implements OnInit {
   /* TABLE */
   public displayedColumns: string[] = [
     'name',
-    'category',
-    'subcategory',
+    'users',
+    'interactions',
     'solutions',
     'ranking',
     'actions',
@@ -167,7 +167,7 @@ export class SingleSubcategoryComponent implements OnInit {
       data: {
         documentID: this.documentID,
         document: this.document,
-        categoryID: this.categoryID
+        categoryID: this.subcategoryID
       },
       disableClose: true
     });
@@ -180,7 +180,7 @@ export class SingleSubcategoryComponent implements OnInit {
   }
 
   linkTopic(id: string) {
-    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/temas/${id}`)
+    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/temas/${id}`)
   }
 
 }
@@ -190,8 +190,8 @@ export class SingleSubcategoryComponent implements OnInit {
 interface Category {
   _id: string;
   name: string;
-  category: string;
-  subcategory: string;
+  users: string;
+  interactions: string;
   solutions: number;
   ranking: number;
 }
