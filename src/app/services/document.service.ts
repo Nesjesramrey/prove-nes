@@ -30,6 +30,10 @@ export class DocumentService {
     return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.createDocumentLayoutEndPoint + `${data['documentID']}`, data['formData']);
   }
 
+  editDocumentData(data: any) {
+    return this.httpClient.put(this.endpointSrvc.apiEndPoint + this.endpointSrvc.editDocumentDataEndPoint + `${data['documentID']}`, data);
+  }
+
 
 
 

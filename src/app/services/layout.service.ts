@@ -23,4 +23,8 @@ export class LayoutService {
   createNewSubLayout(data: any) {
     return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.createNewSubLayoutEndPoint + `${data['category']}`, data['formData']);
   }
+
+  editLayoutData(data: any) {
+    return this.httpClient.put(this.endpointSrvc.apiEndPoint + this.endpointSrvc.editLayoutDataEndPoint + `${data['layoutID']}`, data);
+  }
 }

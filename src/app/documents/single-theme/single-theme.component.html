@@ -8,6 +8,8 @@
       <li class="breadcrumb-item">Perfil</li>
       <li>Documentos</li>
       <li>{{ document.title }}</li>
+      <li>{{ category.category.name }}</li>
+      <li>{{ subcategory.category.name }}</li>
     </breadcrumbs-component>
 
     <div class="actions-rigth">
@@ -57,19 +59,9 @@
 
   <div class="body">
     <mat-card class="images-card">
-      <carousel-component [contentSize]="carouselContentSize">
+      <slider-images [images]="sliderImages"></slider-images>
+      <!-- <carousel-component [contentSize]="carouselContentSize">
         <div class="render-images" [style.width]="carouselContentSize + 'px'">
-          <label class="item">
-            <mat-icon color="primary">add_circle</mat-icon>
-            <input
-              type="file"
-              accept="image/*"
-              id="addImageInput"
-              (change)="handleSelectImage($event)"
-              multiple
-            />
-          </label>
-
           <img
             *ngFor="let image of imageToUpload"
             class="item"
@@ -84,34 +76,79 @@
             [src]="image"
           />
         </div>
-      </carousel-component>
+      </carousel-component> -->
+      <div class="footer">
+        <label class="item">
+          <mat-icon color="primary">add_circle</mat-icon>
+          <input
+            type="file"
+            accept="image/*"
+            id="addImageInput"
+            (change)="handleSelectImage($event)"
+            multiple
+          />
+        </label>
+        <!-- <label> -->
+        <!-- <button
+            mat-icon-button
+            color="primary"
+            aria-label="Agregar imagen"
+            for="addImageInput"
+          >
+            <mat-icon color="primary">add_circle</mat-icon>
+          </button>
+          <input
+            type="file"
+            accept="image/*"
+            id="addImageInput"
+            (change)="handleSelectImage($event)"
+            multiple
+          />
+        </label> -->
+        <avatars-row></avatars-row>
+      </div>
     </mat-card>
 
     <mat-card class="about-card">
-      <mat-form-field class="example-full-width" appearance="outline">
+      <div class="box">
+        <p class="title">Título</p>
+        <p class="text">{{ themeData.title }}</p>
+      </div>
+
+      <div class="box">
+        <p class="title">Descripción</p>
+        <p class="text">{{ themeData.description }}</p>
+      </div>
+
+
+      <!-- <mat-form-field class="example-full-width" appearance="outline">
         <mat-label>Título</mat-label>
         <input
           matInput
           placeholder="Título del tema"
           [value]="themeData.title"
+          readonly
         />
-      </mat-form-field>
+      </mat-form-field> -->
 
-      <mat-form-field class="example-full-width" appearance="outline">
+      <!-- <mat-form-field class="example-full-width" appearance="outline">
         <mat-label>Descripción</mat-label>
-        <textarea matInput placeholder="Descripción del tema"></textarea>
-      </mat-form-field>
-
-      <avatars-row></avatars-row>
+        <textarea
+          matInput
+          placeholder="Descripción del tema"
+          [value]="themeData.description"
+          readonly
+        ></textarea>
+      </mat-form-field> -->
     </mat-card>
 
     <div class="table-card">
       <div>
         <mat-form-field appearance="outline">
           <mat-label>Cobertura</mat-label>
-          <mat-select multiple>
-            <mat-option *ngFor="let state of states">
-              <small>{{ state.name }}</small>
+          <mat-select [value]="document.coverage[0]._id">
+            <mat-option *ngFor="let option of document.coverage" [value]="option._id">
+              <small>{{ option.name | titlecase }}</small>
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -159,34 +196,48 @@
       </mat-card>
     </div>
 
-    <mat-card class="bars-card">
-      <canvas
-        class="donut-chart"
-        baseChart
-        [data]="simpletDoughnutData"
-        [type]="'doughnut'"
-        [options]="chartOptions"
-      ></canvas>
+    <!-- <mat-card class="card-chart bars">
+      <p class="title">Título de la gráfica</p>
+
+      <div class="content">
+        <canvas
+          class="donut-chart"
+          baseChart
+          [data]="simpletDoughnutData"
+          [type]="'doughnut'"
+          [options]="chartOptions"
+        ></canvas>
+        <div class="label">
+          Dato <br />
+          <b>14500</b>
+        </div>
+      </div>
+    </mat-card> -->
+
+    <mat-card class="card-chart donut">
+      <p class="title">Título de la gráfica</p>
+      <div class="content">
+        <canvas
+          class="donut-chart"
+          baseChart
+          [data]="data"
+          [type]="'doughnut'"
+          [options]="chartOptions"
+        ></canvas>
+      </div>
     </mat-card>
 
-    <mat-card class="donut-card">
-      <canvas
-        class="donut-chart"
-        baseChart
-        [data]="data"
-        [type]="'doughnut'"
-        [options]="chartOptions"
-      ></canvas>
-    </mat-card>
-
-    <mat-card class="circle-card">
-      <canvas
-        class="donut-chart"
-        baseChart
-        [data]="data"
-        [type]="'doughnut'"
-        [options]="chartOptions"
-      ></canvas>
+    <mat-card class="card-chart circle">
+      <p class="title">Título de la gráfica</p>
+      <div class="content">
+        <canvas
+          class="donut-chart"
+          baseChart
+          [data]="data"
+          [type]="'doughnut'"
+          [options]="chartOptions"
+        ></canvas>
+      </div>
     </mat-card>
   </div>
 </div>
