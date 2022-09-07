@@ -78,18 +78,8 @@ import { SpiderChartComponent } from './spider-chart/spider-chart.component';
     AddDocumentTestimonyComponent,
     CarouselComponent,
     MapBoxComponent,
-<<<<<<< HEAD
-    ModalPermissionComponent,
-    PanelCirclesComponent,
-    ExpandedTextComponent,
-    TestimonyCardComponent,
-    SolutionsCardComponent,
-    CircleCustomComponent,
     CircleChartComponent,
-=======
-    CircleChartComponent,
-    SpiderChartComponent
->>>>>>> 6386e5d9f57546da06dfe2a2bf9a82e139b139f3
+    SpiderChartComponent,
   ],
   exports: [
     AppPageletComponent,
@@ -109,18 +99,8 @@ import { SpiderChartComponent } from './spider-chart/spider-chart.component';
     CompleteRegistrationComponent,
     CarouselComponent,
     MapBoxComponent,
-<<<<<<< HEAD
-    ModalPermissionComponent,
-    PanelCirclesComponent,
-    ExpandedTextComponent,
-    TestimonyCardComponent,
-    SolutionsCardComponent,
-    CircleCustomComponent,
-    CircleChartComponent,
-=======
     SpiderChartComponent,
-    CircleChartComponent
->>>>>>> 6386e5d9f57546da06dfe2a2bf9a82e139b139f3
+    CircleChartComponent,
   ],
   entryComponents: [
     EmailValidationDialogComponent,
