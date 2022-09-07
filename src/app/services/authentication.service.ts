@@ -4,6 +4,8 @@ import { EndPointService } from './endpoint.service';
 
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { catchError, from, Observable, of, switchMap } from "rxjs";
+import { map, tap } from 'rxjs/operators';
 
 @Injectable()
 export class AuthenticationService {
@@ -18,7 +20,61 @@ export class AuthenticationService {
     public angularFireStore: AngularFirestore,
     public angularFireAuth: AngularFireAuth,
     public ngZone: NgZone
-  ) { }
+  ) { 
+    // this.angularFireAuth.idToken.subscribe({
+    //   next(value) {
+    //     console.log("IDToken:", value);        
+    //   },
+    // })
+
+    // this.angularFireAuth.idTokenResult.subscribe({
+    //   next(value) {
+    //     console.log("IDTokenResult:", value);        
+    //   },
+    // });
+
+    // this.angularFireAuth.user.subscribe({
+    //   next(value) {
+    //     console.log("RefreshToken", value?.refreshToken);        
+    //   },
+    // });    
+
+  }
+  
+  getCurrenUser() {
+    setTimeout(() => {
+      
+      this.angularFireAuth.currentUser.then(a => console.log(a));      
+    }, 1000);
+  }
+
+  currentUser() { 
+    return new Observable<firebase.default.User | null>((observer) => {
+      setTimeout(() => {
+        this.angularFireAuth.currentUser.then(value => {
+          observer.next(value);
+          observer.complete();
+        });        
+      }, 800);
+    });
+  }
+
+  refreshToken(user: firebase.default.User | null) {
+    return new Observable<firebase.default.auth.IdTokenResult | null>((observer) => {
+      if(!user) {
+        observer.error(new Error("user not found"));
+      } else {
+        user.getIdTokenResult(true).then(a => {
+          observer.next(a);
+          observer.complete();
+        });        
+      }
+    }).pipe(
+      tap(value => {
+        if(value) localStorage.setItem("accessToken", value.token);
+      })
+    );
+  }
 
   firebaseSignup(email: string, password: string) {
     return this.angularFireAuth.createUserWithEmailAndPassword(email, password)
@@ -58,8 +114,24 @@ export class AuthenticationService {
     return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.signupEndPoint, data);
   }
 
+  /**
+   * @deprecated
+   * @param data 
+   * @returns 
+   */
   signout(data: any) {
     return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.signoutEndPoint, data);
+  }
+
+  signoutv2(): any {
+    return this.angularFireAuth.signOut().then(() => {
+      localStorage.removeItem('accessToken');
+      window.location.reload();
+    });
+  }
+
+  set setAccessToken(token: string) {
+    localStorage.setItem("accessToken", token);
   }
 
   get fetchAccessToken() {
