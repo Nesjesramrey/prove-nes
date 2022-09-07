@@ -192,14 +192,14 @@
                   <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                  <button mat-menu-item>
+                  <button mat-menu-item disabled>
                     <mat-icon>edit</mat-icon>
                     <small>Editar</small>
                   </button>
-                  <button mat-menu-item (click)="popAddDocumentTheme(element._id)">
+                  <!-- <button mat-menu-item (click)="popAddDocumentTheme(element._id)">
                     <mat-icon>report_problem</mat-icon>
                     <small>Agregar problemática</small>
-                  </button>
+                  </button> -->
                   <button mat-menu-item (click)="linkCategories(element._id)">
                     <mat-icon>visibility</mat-icon>
                     <small>Abrir</small>
