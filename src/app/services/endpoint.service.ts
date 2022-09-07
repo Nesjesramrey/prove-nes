@@ -50,6 +50,7 @@ export class EndPointService {
 
   // topics
   public createNewTopicEndPoint: string = '/topic/layout/';
+  public fetchSingleTopicByIdEndPoint: string = '/topic/';
 
   // solutions
   public fetchSingleSolutionByIdEndPoint: string = '/solution/';
