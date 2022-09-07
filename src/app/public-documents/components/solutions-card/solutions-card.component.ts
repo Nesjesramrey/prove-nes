@@ -16,8 +16,9 @@ export class SolutionsCardComponent implements OnInit {
   }
 
   redirect(id: string) {
+    console.log(id);
     // const path = `documentos/publico/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/tema/${id}`;
-    const path = 'documentos/publico/solucion';
+    const path = 'documentos-publicos/solucion';
     this.utilityService.linkMe(path);
   }
 }

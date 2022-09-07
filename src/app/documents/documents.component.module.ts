@@ -10,12 +10,6 @@ import { SingleDocumentComponent } from './single-document/single-document.compo
 import { ComponentsModule } from '../components/components.module';
 import { SingleCategoryComponent } from './single-category/single-category.component';
 import { SingleThemeComponent } from './single-theme/single-theme.component';
-import { PublicDocumentComponent } from './public-document/public-document.component';
-import { SelectedPublicDocumentComponent } from './selected-public-document/selected-public-document.component';
-import { CategoryPublicDocumentComponent } from './category-public-document/category-public-document.component';
-import { SubcategoryDocumentComponent } from './subcategory-document/subcategory-document.component';
-import { SolutionPublicComponent } from './solution-public-document/solution-public.component';
-import { TopicPublicComponent } from './topic-public/topic-public.component';
 import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
@@ -34,12 +28,6 @@ import { NgChartsModule } from 'ng2-charts';
     SingleDocumentComponent,
     SingleCategoryComponent,
     SingleThemeComponent,
-    PublicDocumentComponent,
-    SelectedPublicDocumentComponent,
-    CategoryPublicDocumentComponent,
-    SolutionPublicComponent,
-    TopicPublicComponent,
-    SubcategoryDocumentComponent,
   ],
 })
 export class DocumentsComponentModule { }

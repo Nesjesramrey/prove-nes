@@ -1,20 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { UtilityService } from 'src/app/services/utility.service';
+
 @Component({
-  selector: '.solution-public-page',
-  templateUrl: './solution-public.component.html',
-  styleUrls: ['./solution-public.component.scss'],
+  selector: '.topic-page',
+  templateUrl: './topic.component.html',
+  styleUrls: ['./topic.component.scss'],
 })
-export class SolutionPublicComponent implements OnInit {
+export class TopicComponent implements OnInit {
   public documentID: string = '';
   public categoryID: string = '';
   public subcategoryID: string = '';
   public themeID: string = '';
-  public document: any = null;
-
   public testimonials: any = TESTIMONIALS;
+  public solutions: any = SOLUTIONS_DATA;
 
-  constructor(public activatedRoute: ActivatedRoute) {
+  constructor(
+    public activatedRoute: ActivatedRoute,
+    public utilityService: UtilityService
+  ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
     this.subcategoryID =
@@ -23,6 +27,14 @@ export class SolutionPublicComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+}
+
+export interface DataTable {
+  title: string;
+  ranking: number;
+  users: number;
+  score: number;
 }
 
 export interface ITestimony {
@@ -96,5 +108,29 @@ const TESTIMONIALS: ITestimony[] = [
     created: '01/03/2022',
     avatarUrl: 'books.png',
     avatarUser: '16393769364132.jpeg',
+  },
+];
+
+const SOLUTIONS_DATA: DataTable[] = [
+  {
+    title:
+      'Incorporar informales a través de cuotas únicas de ISR y Seguridad Social',
+    ranking: 10,
+    users: 255,
+    score: 1.2,
+  },
+  {
+    title: 'Tipificar la actividad económica ilegal como delito grave',
+    ranking: 10,
+    users: 255,
+    score: 2,
+  },
+  { title: 'Crear padrón de informales', ranking: 10, users: 255, score: 3 },
+  {
+    title:
+      'Publicar estudio de pérdidas económicas por actividad económica informal',
+    ranking: 10,
+    users: 255,
+    score: 1.3,
   },
 ];

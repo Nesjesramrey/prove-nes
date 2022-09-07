@@ -8,15 +8,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { UtilityService } from 'src/app/services/utility.service';
-import { Section } from 'src/app/components/top10-list/top10-list.component';
-import { ICategory } from '../subcategory-document/subcategory-document.component';
+import { Section } from 'src/app/public-documents/components/top10-list/top10-list.component';
+import { ICategory } from '../subcategory/subcategory.component';
 
 @Component({
-  selector: '.selected-public-document-page',
-  templateUrl: './selected-public-document.component.html',
-  styleUrls: ['./selected-public-document.component.scss'],
+  selector: '.selected-category-page',
+  templateUrl: './selected-category.component.html',
+  styleUrls: ['./selected-category.component.scss'],
 })
-export class SelectedPublicDocumentComponent implements OnInit {
+export class SelectedCategoryComponent implements OnInit {
   public documentID: string = '';
   public token: any = null;
   public user: any = null;

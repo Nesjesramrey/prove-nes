@@ -29,23 +29,13 @@
     </div>
   </div>
 
-  <div class="set-12" style="padding-bottom: 100px">
+  <div class="set-12" style="padding-bottom: 100px;margin-top: 20px;">
     <div class="set-8 col-rgt-3">
       <div class="set-12">
         <card-document-public></card-document-public>
       </div>
       <div class="set-12 mt-2">
-        <mat-card class="doc-description" style="height: 480px;padding: 30px;">
-          <div class="set-12 mt-2">
-            <div class="set-6 col-rgt-2">
-              <spider-chart [withBorder]="false"></spider-chart>
-            </div>
-            <div class="set-6 col-rgt-2">
-              <circle-chart></circle-chart>
-            </div>
-            <div class="set-6"></div>
-          </div>
-        </mat-card>
+        <solutions-card [data]="solutions"></solutions-card>
       </div>
     </div>
     <div class="set-4">

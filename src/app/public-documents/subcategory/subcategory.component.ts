@@ -7,11 +7,11 @@ import { LayoutService } from 'src/app/services/layout.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
-  selector: '.subcategory-document-page',
-  templateUrl: './subcategory-document.component.html',
-  styleUrls: ['./subcategory-document.component.scss'],
+  selector: '.subcategory-page',
+  templateUrl: './subcategory.component.html',
+  styleUrls: ['./subcategory.component.scss'],
 })
-export class SubcategoryDocumentComponent implements OnInit {
+export class SubcategoryComponent implements OnInit {
   public documentID: string = '';
   public categoryID: string = '';
   public subcategoryID: string = '';
@@ -65,7 +65,7 @@ export class SubcategoryDocumentComponent implements OnInit {
   }
 
   redirect(id: string) {
-    const path = `documentos/publico/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/tema/${id}`;
+    const path = `documentos-publicos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/tema/${id}`;
 
     this.utilityService.linkMe(path);
   }
