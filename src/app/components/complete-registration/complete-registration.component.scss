@@ -1,5 +1,21 @@
 :host {
+  h1 {
+    margin-bottom: 10px;
+  }
+
+  h3 {
+    margin-bottom: 5px;
+  }
+
   form {
     margin-top: 20px;
+  }
+
+  .set-6:nth-child(odd) {
+    padding-right: 10px;
+  }
+
+  .set-6:nth-child(even) {
+    padding-left: 10px;
   }
 }

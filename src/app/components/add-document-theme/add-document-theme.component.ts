@@ -20,8 +20,7 @@ export class AddDocumentThemeComponent implements OnInit {
   public showSolutionForm: boolean = false;
 
   public canAddSolution: boolean = false;
-  public isSubmitted: boolean = false;
-  public isSolSubmitted: boolean = false;
+  public submitted: boolean = false;
   @ViewChild('stepper') public stepper!: MatStepper;
   public topic: any = null;
   public fileNames: any = [];
@@ -66,7 +65,7 @@ export class AddDocumentThemeComponent implements OnInit {
   }
 
   onCreateTopic(form: FormGroup) {
-    this.isSubmitted = true;
+    this.submitted = true;
     let data: any = {
       layout_id: this.dialogData['categoryID'],
       formData: new FormData()
@@ -80,20 +79,24 @@ export class AddDocumentThemeComponent implements OnInit {
     this.topicService.createNewTopic(data).subscribe({
       error: (error) => {
         this.utilityService.openErrorSnackBar('¡Oops!... Ocurrió un error, inténtalo más tarde.');
-        this.isSubmitted = false;
+        this.submitted = false;
       },
       next: (reply: any) => {
+        // console.log(reply);
         this.canAddSolution = true;
+        this.submitted = false;
+        this.fileNames = []
         this.topic = reply['topics'][0];
+        // console.log(this.topic);
       },
       complete: () => { },
     });
   }
 
   onCreateSolution(form: FormGroup) {
-    this.isSolSubmitted = true;
+    this.submitted = true;
     let data: any = {
-      category: this.dialogData['categoryID'],
+      topic: this.topic['_id'],
       formData: new FormData()
     }
 
@@ -105,12 +108,14 @@ export class AddDocumentThemeComponent implements OnInit {
     this.solutionService.createNewSolution(data).subscribe({
       error: (error) => {
         this.utilityService.openErrorSnackBar('¡Oops!... Ocurrió un error, inténtalo más tarde.');
-        this.isSolSubmitted = false;
+        this.submitted = false;
       },
       next: (reply: any) => {
+        // console.log(reply);
+        this.submitted = false;
         this.dialogRef.close(this.topic);
       },
       complete: () => { },
-    });  
+    });
   }
 }

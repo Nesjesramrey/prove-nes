@@ -1,0 +1,230 @@
+:host {
+  width: 100%;
+  height: 100%;
+  padding-top: 80px;
+
+  .ds-page {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .ds-page:not(:first-child) {
+    border-top: 11px solid #ffffff;
+  }
+
+  .ds-page:nth-child(1) {
+    background: url('../../assets/images/1200x-1.jpeg') no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .ds-page:nth-child(2) {
+    background: url('../../assets/images/andrea-leopardi-N17c03GJGKc-unsplash.png') no-repeat;
+    background-size: 70% auto;
+
+    .info {
+      width: 45%;
+      margin-left: 40%;
+      height: calc(100% + 90px);
+      background: #262626;
+      color: #ffffff;
+      padding: 40px;
+      position: absolute;
+      top: -90px;
+      right: 0;
+
+      .titles {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        * {
+          margin: 0;
+        }
+      }
+
+      .line {
+        width: 30%;
+        height: 1px;
+        background: #306EFF;
+        margin-left: -45px !important;
+      }
+
+      .title {
+        color: #306EFF;
+        text-transform: uppercase;
+        letter-spacing: 10px;
+        margin-left: 20px !important;
+      }
+
+      p:first-child {
+        margin-top: 40px;
+      }
+
+      p {
+        margin-top: 30px;
+        font-size: 11pt;
+        text-align: justify;
+      }
+    }
+  }
+
+  .ds-page:nth-child(3) {
+    background: url('../../assets/images/jezael-melgoza-KbR06h9dNQw-unsplash.png') no-repeat;
+    background-size: 70% auto;
+    background-position: right;
+
+    .info {
+      width: 45%;
+      // margin-left: 40%;
+      height: calc(100% + 90px);
+      background: #20C588;
+      color: #ffffff;
+      padding: 40px;
+      position: absolute;
+      top: -90px;
+      left: 0;
+
+      .titles {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        * {
+          margin: 0;
+        }
+      }
+
+      .line {
+        width: 30%;
+        height: 1px;
+        background: #306EFF;
+        margin-left: -45px !important;
+      }
+
+      .title {
+        color: #306EFF;
+        text-transform: uppercase;
+        letter-spacing: 10px;
+        margin-left: 20px !important;
+      }
+
+      p:first-child {
+        margin-top: 40px;
+      }
+
+      p {
+        margin-top: 30px;
+        font-size: 11pt;
+        text-align: justify;
+      }
+    }
+  }
+
+  .ds-page:nth-child(4) {
+    background: url('../../assets/images/Rectangle-511.png') no-repeat;
+    background-size: cover;
+
+    .info {
+      width: 45%;
+      margin-left: 40%;
+      height: calc(100% + 90px);
+      background: #ffcf02;
+      color: #ffffff;
+      padding: 40px;
+      position: absolute;
+      top: -90px;
+      right: 0;
+
+      .titles {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        * {
+          margin: 0;
+        }
+      }
+
+      .line {
+        width: 30%;
+        height: 1px;
+        background: #306EFF;
+        margin-left: -45px !important;
+      }
+
+      .title {
+        color: #306EFF;
+        text-transform: uppercase;
+        letter-spacing: 10px;
+        margin-left: 20px !important;
+      }
+
+      p:first-child {
+        margin-top: 40px;
+      }
+
+      p {
+        margin-top: 30px;
+        font-size: 11pt;
+        text-align: justify;
+      }
+    }
+  }
+
+  .mailing-list {
+    padding: 70px;
+    text-align: right;
+    background: #306eff;
+    border-top: 11px solid #ffffff;
+    color: #ffffff;
+
+    p {
+      font-size: 17pt;
+      font-weight: bold;
+    }
+
+    form {
+      padding-top: 20px;
+
+      button {
+        padding: 20px;
+        border: 1px solid rgba($color: #ffffff, $alpha: 0.3);
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        color: #ffffff;
+      }
+
+      button:disabled {
+        cursor: not-allowed;
+      }
+    }
+
+    input[type="text"] {
+      width: 40%;
+      padding: 20px;
+      border: 1px solid rgba($color: #ffffff, $alpha: 0.3);
+      // border-radius: 5px;
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+      color: #ffffff;
+    }
+
+    input[type="text"]::-webkit-input-placeholder {
+      color: #ffffff;
+    }
+
+    input[type="text"]::-moz-placeholder {
+      color: #ffffff;
+    }
+
+    input[type="text"]:-ms-input-placeholder {
+      color: #ffffff;
+    }
+
+    input[type="text"]:-moz-placeholder {
+      color: #ffffff;
+    }
+  }
+}

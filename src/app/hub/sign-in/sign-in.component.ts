@@ -38,11 +38,12 @@ export class SignInComponent implements OnInit {
           // console.log('user: ', data['multiFactor']['user']);
           this.submitted = false;
           localStorage.setItem('accessToken', data['multiFactor']['user']['accessToken']);
-          window.location.reload();
+          // window.location.reload();
+          this.utilitySrvc.linkMe('/');
         });
       })
       .catch((error) => {
-        console.log(error['code']);
+        // console.log(error['code']);
         this.submitted = false;
 
         switch (error['code']) {

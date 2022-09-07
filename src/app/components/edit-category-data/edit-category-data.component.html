@@ -1,0 +1,33 @@
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+
+<div class="set-12" *ngIf="isDataAvailable">
+  <div class="set-12 dialog-head">
+    <div class="set-9">
+      <h3>Categoría: {{layout.category.name}}</h3>
+    </div>
+
+    <div class="set-3 txt-right">
+      <button type="button" mat-icon-button color="primary" (click)="killDialog()" [disabled]="submitted"
+        matTooltip="Cerrar" matTooltipClass="tooltip">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="set-12 dialog-body">
+    <form [formGroup]="formGroup" (submit)="editLayout(formGroup)">
+      <mat-form-field appearance="outline">
+        <mat-label>Descripción</mat-label>
+        <textarea matInput cdkTextareaAutosize formControlName="description"></textarea>
+      </mat-form-field>
+
+      <div class="set-12 ctrls">
+        <button type="submit" mat-raised-button color="primary"
+          [disabled]="formGroup.invalid || submitted">Guardar</button>
+        <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
+      </div>
+    </form>
+  </div>
+</div>

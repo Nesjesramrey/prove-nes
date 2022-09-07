@@ -17,7 +17,7 @@ export class SolutionService {
   }
 
   createNewSolution(data: any) {
-    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.createNewSolutionEndPoint + `${data['category']}`, data['formData']);
+    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.createNewSolutionEndPoint + `${data['topic']}`, data['formData']);
   }
   
 }
