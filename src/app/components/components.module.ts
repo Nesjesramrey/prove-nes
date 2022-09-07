@@ -35,8 +35,8 @@ import { CompleteRegistrationComponent } from './complete-registration/complete-
 import { AddDocumentSolutionComponent } from './add-document-solution/add-document-solution.component';
 import { AddDocumentTestimonyComponent } from './add-document-testimony/add-document-testimony.component';
 import { CarouselComponent } from './carousel/carousel.component';
-import { EditDocumentDataComponent } from "./edit-document-data/edit-document-data.component";
-import { EditCategoryDataComponent } from "./edit-category-data/edit-category-data.component";
+import { EditDocumentDataComponent } from './edit-document-data/edit-document-data.component';
+import { EditCategoryDataComponent } from './edit-category-data/edit-category-data.component';
 import { SliderImagesComponent } from './slider-images/slider-images.component';
 import { MapBoxComponent } from './map-box/map-box.component';
 import { CircleChartComponent } from './circle-chart/circle-chart.component';
@@ -110,6 +110,7 @@ import { SpiderChartComponent } from './spider-chart/spider-chart.component';
     MapBoxComponent,
     SpiderChartComponent,
     CircleChartComponent,
+    AddDocumentSolutionComponent,
   ],
   entryComponents: [
     EmailValidationDialogComponent,

@@ -7,21 +7,41 @@
 
         <li>Empleo</li>
       </breadcrumbs-component>
+      <div class="favorite-button">
+        <button
+          class="favorite"
+          mat-mini-fab
+          aria-label="Example icon-button with a heart icon"
+        >
+          <mat-icon>favorite</mat-icon>
+        </button>
+      </div>
     </div>
+
     <div class="set-4 featured-users">
       <featured-users [inputAmount]="5"></featured-users>
     </div>
     <div class="set-2">
       <div class="header-buttons">
         <div class="button-box">
-          <button type="button" mat-mini-fab color="warn" class="add-button green">
+          <button
+            type="button"
+            mat-mini-fab
+            color="warn"
+            class="add-button green"
+          >
             <mat-icon>create_new_folder</mat-icon>
           </button>
           <p>Agregar solución</p>
         </div>
         <div class="button-box">
-          <button type="button" mat-mini-fab color="warn" class="add-button purple">
-            <mat-icon style="color:white">create_new_folder</mat-icon>
+          <button
+            type="button"
+            mat-mini-fab
+            color="warn"
+            class="add-button purple"
+          >
+            <mat-icon style="color: white">create_new_folder</mat-icon>
           </button>
           <p>Agregar Testimonios</p>
         </div>
@@ -29,7 +49,7 @@
     </div>
   </div>
 
-  <div class="set-12" style="padding-bottom: 100px;margin-top: 20px;">
+  <div class="set-12" style="padding-bottom: 100px; margin-top: 20px">
     <div class="set-8 col-rgt-3">
       <div class="set-12">
         <card-document-public></card-document-public>

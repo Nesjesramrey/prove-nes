@@ -13,7 +13,8 @@ import { CategoryComponent } from './category/category.component';
 import { TopicComponent } from './topic/topic.component';
 import { SubcategoryComponent } from './subcategory/subcategory.component';
 import { SolutionComponent } from './solution/solution.component';
-import { ComponentsModule as PublicComponentsModule}  from './components/components.module'
+import { ComponentsModule as PublicComponentsModule } from './components/components.module';
+
 @NgModule({
   declarations: [
     PublicDocumentsComponent,
@@ -25,7 +26,7 @@ import { ComponentsModule as PublicComponentsModule}  from './components/compone
     CategoryComponent,
     TopicComponent,
     SubcategoryComponent,
-    SolutionComponent
+    SolutionComponent,
   ],
   imports: [
     CommonModule,
@@ -33,7 +34,6 @@ import { ComponentsModule as PublicComponentsModule}  from './components/compone
     ComponentsModule,
     AppMaterialModule,
     PublicComponentsModule,
-
   ],
 })
 export class PublicDocumentsModule {}

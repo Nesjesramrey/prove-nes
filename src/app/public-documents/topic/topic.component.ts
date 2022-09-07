@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: '.topic-page',
