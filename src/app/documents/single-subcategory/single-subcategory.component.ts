@@ -180,7 +180,7 @@ export class SingleSubcategoryComponent implements OnInit {
   }
 
   linkTopic(id: string) {
-    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/temas/${id}`)
+    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/temas/${id}`)
   }
 
 }
