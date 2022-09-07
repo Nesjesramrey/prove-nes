@@ -11,6 +11,7 @@ import { SubcategoryDocumentComponent } from './subcategory-document/subcategory
 import { SolutionPublicComponent } from './solution-public-document/solution-public.component';
 import { TopicPublicComponent } from './topic-public/topic-public.component';
 import { ModalPermissionComponent } from '../components/modal-permission/modal-permission.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -26,6 +27,7 @@ const routes: Routes = [
         path: 'publico/test-modal',
         component: ModalPermissionComponent,
       },
+
       {
         path: 'publico/solucion',
         component: SolutionPublicComponent,

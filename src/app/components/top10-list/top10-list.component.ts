@@ -20,6 +20,7 @@ export class Top10ListComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkColor(this.color);
+    console.log({ color: this.color });
   }
   checkColor(color: any) {
     if (color.bg === '#FF6D00') {

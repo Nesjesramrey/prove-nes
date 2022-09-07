@@ -32,7 +32,7 @@ import { AddDocumentCollaboratorComponent } from './add-document-collaborator/ad
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { AvatarsRowComponent } from './avatars-row/avatars-row.component';
 import { AddDocumentThemeComponent } from './add-document-theme/add-document-theme.component';
-import { CompleteRegistrationComponent } from "./complete-registration/complete-registration.component";
+import { CompleteRegistrationComponent } from './complete-registration/complete-registration.component';
 import { AddDocumentSolutionComponent } from './add-document-solution/add-document-solution.component';
 import { AddDocumentTestimonyComponent } from './add-document-testimony/add-document-testimony.component';
 import { CarouselComponent } from './carousel/carousel.component';
@@ -101,7 +101,7 @@ import { CircleChartComponent } from './circle-chart/circle-chart.component';
     TestimonyCardComponent,
     SolutionsCardComponent,
     CircleCustomComponent,
-    CircleChartComponent
+    CircleChartComponent,
   ],
   exports: [
     AppPageletComponent,
@@ -134,7 +134,7 @@ import { CircleChartComponent } from './circle-chart/circle-chart.component';
     TestimonyCardComponent,
     SolutionsCardComponent,
     CircleCustomComponent,
-    CircleChartComponent
+    CircleChartComponent,
   ],
   entryComponents: [
     EmailValidationDialogComponent,
@@ -148,4 +148,4 @@ import { CircleChartComponent } from './circle-chart/circle-chart.component';
   ],
   providers: [],
 })
-export class ComponentsModule { }
+export class ComponentsModule {}
