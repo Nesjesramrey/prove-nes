@@ -47,7 +47,7 @@ export class SingleThemeComponent implements OnInit {
   ];
   public solutionsList: Solution[] = _mockSolutions;
   public collaborators: any = null;
-  public solutions: any = null;
+  public solutions: any[] = [];
   public sliderImages: string[] = [..._mockTheme.images];
 
   // simplet doughnut
@@ -110,7 +110,19 @@ export class SingleThemeComponent implements OnInit {
         this.topic = reply[3];   
         console.log(this.topics); 
         console.log("topic " + JSON.stringify(this.topic));
+        this.sliderImages = this.topic.images;
+
+        let sols = this.topic.solutions;
+        for(let j=0; j<sols.length; j++){
+          let sol: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.topic.solutions[j] });
+          forkJoin([sol]).subscribe((reply: any) => {
+            this.solutions.push(reply[0]);
+            console.log(reply[0]);
+          })
+        }
         
+
+
       }
     );
     this.documentService
@@ -190,10 +202,7 @@ export class SingleThemeComponent implements OnInit {
       {
         width: '640px',
         data: {
-          documentID: this.documentID,
-          document: this.document,
-          categoryID: this.categoryID,
-          type: 'sublayout',
+          themeID: this.themeID,
         },
         disableClose: true,
       }
