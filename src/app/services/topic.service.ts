@@ -15,4 +15,7 @@ export class TopicService {
   createNewTopic(data: any) {
     return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.createNewTopicEndPoint + `${data['layout_id']}`, data['formData']);
   }
+  fetchSingleTopicById(data: any) {
+    return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchSingleTopicByIdEndPoint + `${data['_id']}`, {});
+  }  
 }

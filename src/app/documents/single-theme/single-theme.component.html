@@ -3,17 +3,28 @@
 </div>
 
 <div *ngIf="isDataAvailable">
+  <div class="set-12">
+    <div class="set-6">
+      <breadcrumbs-component>
+        <li class="breadcrumb-item">Perfil</li>
+        <li>Documentos</li>
+        <li>{{ document.title }}</li>
+        <li>{{ category.category.name }}</li>
+        <li>{{ subcategory.category.name }}</li>
+      </breadcrumbs-component>
+    </div>
+    <div class="set-6 txt-right">
+      <span class="created-by">
+        Autor: <span class="author">{{category.createdBy.firstname}}
+          {{category.createdBy.lastname}}</span>
+      </span>
+    </div>
+  </div>  
+  
   <div class="header">
     <breadcrumbs-component>
-      <li class="breadcrumb-item">Perfil</li>
-      <li>Documentos</li>
-      <li>{{ document.title }}</li>
-      <li>{{ category.category.name }}</li>
-      <li>{{ subcategory.category.name }}</li>
     </breadcrumbs-component>
-
     <div class="actions-rigth">
-      <button mat-raised-button disabled>Guardar cambios</button>
 
       <div class="button-group">
         <button
@@ -56,27 +67,18 @@
       </div>
     </div>
   </div>
+  
 
   <div class="body">
-    <mat-card class="images-card">
-      <slider-images [images]="sliderImages"></slider-images>
-      <!-- <carousel-component [contentSize]="carouselContentSize">
-        <div class="render-images" [style.width]="carouselContentSize + 'px'">
-          <img
-            *ngFor="let image of imageToUpload"
-            class="item"
-            alt="img-list"
-            [src]="image"
-          />
 
-          <img
-            *ngFor="let image of themeData.images"
-            class="item"
-            alt="img-list"
-            [src]="image"
-          />
-        </div>
-      </carousel-component> -->
+    <mat-card class="images-card">
+
+      <div class="set-12 imghldr" *ngIf="subcategory.images.length == 0">
+        <mat-icon >panorama</mat-icon>
+      </div>
+
+      <slider-images [images]="sliderImages" *ngIf="topic.images.length != 0"></slider-images>
+
       <div class="footer">
         <label class="item">
           <mat-icon color="primary">add_circle</mat-icon>
@@ -88,58 +90,21 @@
             multiple
           />
         </label>
-        <!-- <label> -->
-        <!-- <button
-            mat-icon-button
-            color="primary"
-            aria-label="Agregar imagen"
-            for="addImageInput"
-          >
-            <mat-icon color="primary">add_circle</mat-icon>
-          </button>
-          <input
-            type="file"
-            accept="image/*"
-            id="addImageInput"
-            (change)="handleSelectImage($event)"
-            multiple
-          />
-        </label> -->
-        <avatars-row></avatars-row>
+        <avatars-row [users]="collaborators"></avatars-row>
       </div>
     </mat-card>
 
     <mat-card class="about-card">
       <div class="box">
         <p class="title">Título</p>
-        <p class="text">{{ themeData.title }}</p>
+        <p class="text">{{ topic.title }}</p>
       </div>
 
       <div class="box">
         <p class="title">Descripción</p>
-        <p class="text">{{ themeData.description }}</p>
+        <p class="text">{{ topic.description }}</p>
       </div>
 
-
-      <!-- <mat-form-field class="example-full-width" appearance="outline">
-        <mat-label>Título</mat-label>
-        <input
-          matInput
-          placeholder="Título del tema"
-          [value]="themeData.title"
-          readonly
-        />
-      </mat-form-field> -->
-
-      <!-- <mat-form-field class="example-full-width" appearance="outline">
-        <mat-label>Descripción</mat-label>
-        <textarea
-          matInput
-          placeholder="Descripción del tema"
-          [value]="themeData.description"
-          readonly
-        ></textarea>
-      </mat-form-field> -->
     </mat-card>
 
     <div class="table-card">
@@ -195,24 +160,6 @@
         </table>
       </mat-card>
     </div>
-
-    <!-- <mat-card class="card-chart bars">
-      <p class="title">Título de la gráfica</p>
-
-      <div class="content">
-        <canvas
-          class="donut-chart"
-          baseChart
-          [data]="simpletDoughnutData"
-          [type]="'doughnut'"
-          [options]="chartOptions"
-        ></canvas>
-        <div class="label">
-          Dato <br />
-          <b>14500</b>
-        </div>
-      </div>
-    </mat-card> -->
 
     <mat-card class="card-chart donut">
       <p class="title">Título de la gráfica</p>

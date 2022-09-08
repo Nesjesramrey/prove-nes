@@ -12,6 +12,7 @@ import { AddDocumentTestimonyComponent } from '../../components/add-document-tes
 import { ChartData, ChartOptions } from 'chart.js';
 import { LayoutService } from 'src/app/services/layout.service';
 import { SolutionService } from 'src/app/services/solution.service';
+import { TopicService } from 'src/app/services/topic.service';
 
 @Component({
   selector: 'app-single-theme',
@@ -30,6 +31,8 @@ export class SingleThemeComponent implements OnInit {
   public document: any = null;
   public category: any = null;
   public subcategory: any = null;
+  public topics: any = null;
+  public topic: any = null;
   public layout: any = [];
   public isDataAvailable: boolean = false;
   public layouts: any[] = [];
@@ -78,7 +81,8 @@ export class SingleThemeComponent implements OnInit {
     public dialog: MatDialog,
     public utilityService: UtilityService,
     public layoutService: LayoutService,
-    public solutionService: SolutionService
+    public solutionService: SolutionService,
+    public topicService: TopicService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
@@ -91,19 +95,21 @@ export class SingleThemeComponent implements OnInit {
     let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
     let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID,});
     let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID,});
-    let categories: Observable<any> = this.utilityService.fetchAllCategories();
-    let solutions: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.themeID });
+    let topic: Observable<any> = this.topicService.fetchSingleTopicById({ _id: this.themeID });
     
     //forkJoin([categories, document, solutions, category, subcategory]).subscribe((reply: any) => {
-    forkJoin([document, category, subcategory]).subscribe((reply: any) => {  
+    forkJoin([document, category, subcategory, topic]).subscribe((reply: any) => {  
         
-        //this.states = reply[1]['states'];
         this.collaborators = reply[0].collaborators;
-        //this.solutions = reply[2];
         this.category = reply[1];
-        console.log("categoria " + JSON.stringify(this.category));
+        // console.log("categoria " + JSON.stringify(this.category));
         this.subcategory = reply[2];
-        console.log("subcategoria " + JSON.stringify(this.subcategory));
+        // console.log("subcategoria " + JSON.stringify(this.subcategory));
+        this.topics = this.subcategory['topics'];    
+        // console.log(this.topics);
+        this.topic = reply[3];   
+        console.log(this.topics); 
+        console.log("topic " + JSON.stringify(this.topic));
         
       }
     );
