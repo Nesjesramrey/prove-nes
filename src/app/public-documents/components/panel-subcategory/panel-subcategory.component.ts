@@ -33,7 +33,7 @@ export class PanelSubcategoryComponent implements OnInit {
     let maxY = 700;
 
     this.categories = this.data.map((item) => {
-      item.size = sizes[(Math.random() * sizes.length) | 0];
+      item.size = item._id === this.selectedID ? 44 : 35;
       item.opacity = item._id === this.selectedID ? 1 : 0.4;
       item.name = item.category.name;
       if (item.category.name.length > 12) {
