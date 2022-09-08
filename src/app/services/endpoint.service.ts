@@ -28,6 +28,7 @@ export class EndPointService {
   public fetchDocumentsByCollaboratorEndPoint: string = '/document/collaborator/';
   public createDocumentLayoutEndPoint: string = '/layout/document/';
   public editDocumentDataEndPoint: string = '/document/';
+  public fetchCoverDocumentEndPoint: string = '/document/public/home';
 
   // public createNewDocumentEndPoint: string = '/document/create-new-document';
   public fetchMyDocumentsEndPoint: string = '/document/fetch-my-documents';

@@ -34,6 +34,10 @@ export class DocumentService {
     return this.httpClient.put(this.endpointSrvc.apiEndPoint + this.endpointSrvc.editDocumentDataEndPoint + `${data['documentID']}`, data);
   }
 
+  fetchCoverDocument() {
+    return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchCoverDocumentEndPoint, {});
+  }
+
 
 
 
