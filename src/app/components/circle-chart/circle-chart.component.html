@@ -1,1 +1,7 @@
-<canvas baseChart [data]="circleChartData" [type]="circleChartType"></canvas>
+<div class="chart-container">
+  <div class="chart-data">
+    <p>Data</p>
+    <p>{{data}}%</p>
+  </div>
+  <canvas baseChart #circleChart [data]="circleChartData"  [options]="circleChartOptions" [type]="circleChartType" ></canvas>
+</div>
