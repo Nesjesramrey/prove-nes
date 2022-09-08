@@ -26,6 +26,7 @@ import { PanelCirclesComponent } from './panel-circles/panel-circles.component';
 import { SolutionsCardComponent } from './solutions-card/solutions-card.component';
 import { TestimonyCardComponent } from './testimony-card/testimony-card.component';
 import { VerticalStatsComponent } from './vertical-stats/vertical-stats.component';
+import { ModalPermissionsComponent } from './modal-permissions/modal-permissions.component';
 
 @NgModule({
   imports: [
@@ -58,6 +59,7 @@ import { VerticalStatsComponent } from './vertical-stats/vertical-stats.componen
     SolutionsCardComponent,
     TestimonyCardComponent,
     VerticalStatsComponent,
+    ModalPermissionsComponent
   ],
   exports: [
     Top10ListComponent,
@@ -72,6 +74,7 @@ import { VerticalStatsComponent } from './vertical-stats/vertical-stats.componen
     SolutionsCardComponent,
     TestimonyCardComponent,
     VerticalStatsComponent,
+    ModalPermissionsComponent
   ],
   entryComponents: [],
   providers: [],

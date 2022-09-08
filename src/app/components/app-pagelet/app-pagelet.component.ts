@@ -7,6 +7,11 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { SocketService } from 'src/app/services/socket.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
+// btn 
+import { MatDialog } from '@angular/material/dialog';
+import { ModalPermissionsComponent } from 'src/app/public-documents/components/modal-permissions/modal-permissions.component'; 
+
+
 @Component({
   selector: '.app-pagelet',
   templateUrl: './app-pagelet.component.html',
@@ -19,14 +24,20 @@ export class AppPageletComponent implements OnInit {
   public isDataAvailable: boolean = false;
   public userActivities: any = [];
 
+  public path : any ;
+
   constructor(
     public router: Router,
     public authenticationSrvc: AuthenticationService,
     public notificationSrvc: NotificationService,
     public socketSrvc: SocketService,
     public utilitySrvc: UtilityService,
-    public angularFireAuth: AngularFireAuth
-  ) { }
+    public angularFireAuth: AngularFireAuth,
+ 
+    public dialog : MatDialog   
+  ) { 
+    this.path = this.router.url.indexOf('documentos-publicos');
+  }
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -86,4 +97,16 @@ export class AppPageletComponent implements OnInit {
       window.location.reload();
     });
   }
+
+    btnPermissions(){
+    const dialogRef = this.dialog.open<ModalPermissionsComponent>(ModalPermissionsComponent, {
+      width: '640px',
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+     console.log( 'cerrando modal')
+    });
+  }  
+
 }
