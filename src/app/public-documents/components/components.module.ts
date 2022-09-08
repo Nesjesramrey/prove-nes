@@ -28,6 +28,10 @@ import { TestimonyCardComponent } from './testimony-card/testimony-card.componen
 import { VerticalStatsComponent } from './vertical-stats/vertical-stats.component';
 import { ModalPermissionsComponent } from './modal-permissions/modal-permissions.component';
 
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { ModalSolutionComponent } from './modal-solution/modal-solution.component';
+import { ModalTestimonyComponent } from './modal-testimony/modal-testimony.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -45,6 +49,7 @@ import { ModalPermissionsComponent } from './modal-permissions/modal-permissions
     LyIconModule,
     NgChartsModule,
     AppSharedModule,
+    MatDialogModule,
   ],
   declarations: [
     Top10ListComponent,
@@ -59,7 +64,9 @@ import { ModalPermissionsComponent } from './modal-permissions/modal-permissions
     SolutionsCardComponent,
     TestimonyCardComponent,
     VerticalStatsComponent,
-    ModalPermissionsComponent
+    ModalPermissionsComponent,
+    ModalSolutionComponent,
+    ModalTestimonyComponent,
   ],
   exports: [
     Top10ListComponent,
@@ -74,7 +81,9 @@ import { ModalPermissionsComponent } from './modal-permissions/modal-permissions
     SolutionsCardComponent,
     TestimonyCardComponent,
     VerticalStatsComponent,
-    ModalPermissionsComponent
+    ModalPermissionsComponent,
+    ModalSolutionComponent,
+    ModalTestimonyComponent,
   ],
   entryComponents: [],
   providers: [],

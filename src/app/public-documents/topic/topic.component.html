@@ -21,6 +21,7 @@
     <div class="set-4 featured-users">
       <featured-users [inputAmount]="5"></featured-users>
     </div>
+
     <div class="set-2">
       <div class="header-buttons">
         <div class="button-box">
@@ -29,6 +30,7 @@
             mat-mini-fab
             color="warn"
             class="add-button green"
+            (click)="openModalSolution()"
           >
             <mat-icon>create_new_folder</mat-icon>
           </button>
@@ -40,6 +42,7 @@
             mat-mini-fab
             color="warn"
             class="add-button purple"
+            (click)="openModalTestimony()"
           >
             <mat-icon style="color: white">create_new_folder</mat-icon>
           </button>

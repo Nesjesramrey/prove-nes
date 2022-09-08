@@ -6,13 +6,16 @@ import { forkJoin, Observable } from 'rxjs';
 import { LayoutService } from 'src/app/services/layout.service';
 import { DocumentService } from 'src/app/services/document.service';
 import { TopicService } from 'src/app/services/topic.service';
-
+import { MatDialog } from '@angular/material/dialog';
+import { ModalSolutionComponent } from '../components/modal-solution/modal-solution.component';
+import { ModalTestimonyComponent } from '../components/modal-testimony/modal-testimony.component';
 @Component({
   selector: '.topic-page',
   templateUrl: './topic.component.html',
   styleUrls: ['./topic.component.scss'],
 })
 export class TopicComponent implements OnInit {
+  public user: any = null;
   public documentID: string = '';
   public categoryID: string = '';
   public subcategoryID: string = '';
@@ -25,6 +28,7 @@ export class TopicComponent implements OnInit {
   public testimonials: any = TESTIMONIALS;
   public solutionsData: any = [];
   constructor(
+    public dialog: MatDialog,
     public activatedRoute: ActivatedRoute,
     public utilityService: UtilityService,
     public documentService: DocumentService,
@@ -42,6 +46,21 @@ export class TopicComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadTopic();
+  }
+  openModalSolution() {
+    const dialogRef = this.dialog.open(ModalSolutionComponent, {
+      width: '640px',
+
+      disableClose: true,
+    });
+  }
+  openModalTestimony() {
+    const dialogRef = this.dialog.open(ModalTestimonyComponent, {
+      width: '640px',
+      maxHeight: '700px',
+
+      disableClose: true,
+    });
   }
 
   loadTopic() {
