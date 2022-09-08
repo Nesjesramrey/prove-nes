@@ -27,6 +27,8 @@ import { SolutionsCardComponent } from './solutions-card/solutions-card.componen
 import { TestimonyCardComponent } from './testimony-card/testimony-card.component';
 import { VerticalStatsComponent } from './vertical-stats/vertical-stats.component';
 
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -44,6 +46,7 @@ import { VerticalStatsComponent } from './vertical-stats/vertical-stats.componen
     LyIconModule,
     NgChartsModule,
     AppSharedModule,
+    MatDialogModule,
   ],
   declarations: [
     Top10ListComponent,
