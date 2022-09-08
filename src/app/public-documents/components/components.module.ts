@@ -28,6 +28,8 @@ import { TestimonyCardComponent } from './testimony-card/testimony-card.componen
 import { VerticalStatsComponent } from './vertical-stats/vertical-stats.component';
 
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { ModalSolutionComponent } from './modal-solution/modal-solution.component';
+import { ModalTestimonyComponent } from './modal-testimony/modal-testimony.component';
 
 @NgModule({
   imports: [
@@ -61,6 +63,8 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
     SolutionsCardComponent,
     TestimonyCardComponent,
     VerticalStatsComponent,
+    ModalSolutionComponent,
+    ModalTestimonyComponent,
   ],
   exports: [
     Top10ListComponent,
@@ -75,6 +79,7 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
     SolutionsCardComponent,
     TestimonyCardComponent,
     VerticalStatsComponent,
+    ModalSolutionComponent,
   ],
   entryComponents: [],
   providers: [],

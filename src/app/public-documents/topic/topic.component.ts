@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalSolutionComponent } from '../components/modal-solution/modal-solution.component';
+import { ModalTestimonyComponent } from '../components/modal-testimony/modal-testimony.component';
 
 @Component({
   selector: '.topic-page',
@@ -9,14 +12,17 @@ import {MatButtonModule} from '@angular/material/button';
   styleUrls: ['./topic.component.scss'],
 })
 export class TopicComponent implements OnInit {
+  public user: any = null;
   public documentID: string = '';
   public categoryID: string = '';
   public subcategoryID: string = '';
   public themeID: string = '';
   public testimonials: any = TESTIMONIALS;
   public solutions: any = SOLUTIONS_DATA;
+  public ok: boolean = false;
 
   constructor(
+    public dialog: MatDialog,
     public activatedRoute: ActivatedRoute,
     public utilityService: UtilityService
   ) {
@@ -28,7 +34,19 @@ export class TopicComponent implements OnInit {
   }
 
   ngOnInit(): void {}
-
+  openModalSolution() {
+    const dialogRef = this.dialog.open(ModalSolutionComponent, {
+      width: '640px',
+      disableClose: true,
+    });
+  }
+  openModalTestimony() {
+    const dialogRef = this.dialog.open(ModalTestimonyComponent, {
+      width: '640px',
+      maxHeight: '640px',
+      disableClose: true,
+    });
+  }
 }
 
 export interface DataTable {
