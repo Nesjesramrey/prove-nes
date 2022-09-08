@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { forkJoin, Observable } from 'rxjs';
+import { DocumentService } from 'src/app/services/document.service';
+import { LayoutService } from 'src/app/services/layout.service';
+import { SolutionService } from 'src/app/services/solution.service';
+import { TopicService } from 'src/app/services/topic.service';
+import { UtilityService } from 'src/app/services/utility.service';
 @Component({
   selector: '.solution-page',
   templateUrl: './solution.component.html',
@@ -9,20 +15,71 @@ export class SolutionComponent implements OnInit {
   public documentID: string = '';
   public categoryID: string = '';
   public subcategoryID: string = '';
-  public themeID: string = '';
+  public topicID: string = '';
+  public solutionID: string = '';
+
   public document: any = null;
+  public solution: any = null;
+  public category: any = null;
+  public subcategory: any = null;
+  public topic: any = null;
 
   public testimonials: any = TESTIMONIALS;
 
-  constructor(public activatedRoute: ActivatedRoute) {
+  constructor(
+    public activatedRoute: ActivatedRoute,
+    public utilityService: UtilityService,
+    public documentService: DocumentService,
+    public layoutService: LayoutService,
+    public topicService: TopicService,
+    public solutionService: SolutionService
+  ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
     this.subcategoryID =
       this.activatedRoute['snapshot']['params']['subcategoryID'];
-    this.themeID = this.activatedRoute['snapshot']['params']['themeID'];
+    this.topicID = this.activatedRoute['snapshot']['params']['topicID'];
+    this.solutionID = this.activatedRoute['snapshot']['params']['solutionID'];
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadSolution();
+  }
+
+  loadSolution() {
+    let document: Observable<any> =
+      this.documentService.fetchSingleDocumentById({ _id: this.documentID });
+
+    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({
+      _id: this.categoryID,
+    });
+
+    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById(
+      {
+        _id: this.subcategoryID,
+      }
+    );
+
+    let topic: Observable<any> = this.topicService.fetchSingleTopicById({
+      _id: this.topicID,
+    });
+
+    let solution: Observable<any> =
+      this.solutionService.fetchSingleSolutionById({
+        _id: this.solutionID,
+      });
+
+    forkJoin([document, category, subcategory, topic, solution]).subscribe(
+      (reply: any) => {
+        console.log('##', reply);
+        this.document = reply[0];
+        this.category = reply[1];
+        this.subcategory = reply[2];
+        this.topic = reply[3];
+        this.solution = reply[4];
+      }
+    );
+  }
 }
 
 export interface ITestimony {

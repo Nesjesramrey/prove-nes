@@ -49,6 +49,7 @@ export class EndPointService {
   public createNewSubLayoutEndPoint: string = '/sublayout/layout/';
 
   // topics
+  public fetchSingleTopicByIdEndPoint: string = '/topic/';
   public createNewTopicEndPoint: string = '/topic/layout/';
 
   // solutions

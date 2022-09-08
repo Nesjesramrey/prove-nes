@@ -18,6 +18,7 @@ export interface ICategoryFormat {
 export class PanelSubcategoryComponent implements OnInit {
   public categories: ICategoryFormat[] = [];
   @Input() data: any[] = [];
+  @Input() selectedID: string = '';
 
   constructor() {}
 
@@ -26,14 +27,14 @@ export class PanelSubcategoryComponent implements OnInit {
   }
 
   loadSubcategories() {
-    const sizes = [15, 25, 34];
+    const sizes = [25, 35, 44];
     const opacities = [0.5, 1];
     let maxX = 600;
     let maxY = 700;
 
     this.categories = this.data.map((item) => {
       item.size = sizes[(Math.random() * sizes.length) | 0];
-      item.opacity = opacities[(Math.random() * opacities.length) | 0];
+      item.opacity = item._id === this.selectedID ? 1 : 0.4;
       item.name = item.category.name;
       if (item.category.name.length > 12) {
         maxX = 400;

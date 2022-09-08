@@ -26,6 +26,7 @@ import { PanelCirclesComponent } from './panel-circles/panel-circles.component';
 import { SolutionsCardComponent } from './solutions-card/solutions-card.component';
 import { TestimonyCardComponent } from './testimony-card/testimony-card.component';
 import { VerticalStatsComponent } from './vertical-stats/vertical-stats.component';
+import { ModalPermissionsComponent } from './modal-permissions/modal-permissions.component';
 
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ModalSolutionComponent } from './modal-solution/modal-solution.component';
@@ -63,6 +64,7 @@ import { ModalTestimonyComponent } from './modal-testimony/modal-testimony.compo
     SolutionsCardComponent,
     TestimonyCardComponent,
     VerticalStatsComponent,
+    ModalPermissionsComponent,
     ModalSolutionComponent,
     ModalTestimonyComponent,
   ],
@@ -79,7 +81,9 @@ import { ModalTestimonyComponent } from './modal-testimony/modal-testimony.compo
     SolutionsCardComponent,
     TestimonyCardComponent,
     VerticalStatsComponent,
+    ModalPermissionsComponent,
     ModalSolutionComponent,
+    ModalTestimonyComponent,
   ],
   entryComponents: [],
   providers: [],

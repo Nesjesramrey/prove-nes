@@ -17,12 +17,12 @@ const routes: Routes = [
         component: SelectedCategoryComponent,
       },
       {
-        path: 'solucion',
+        path: ':documentID/categoria/:categoryID/subcategoria/:subcategoryID/tema/:topicID/solucion/:solutionID',
         component: SolutionComponent,
       },
       {
         // path: 'publico/tema',
-        path: ':documentID/categoria/:categoryID/subcategoria/:subcategoryID/tema/:themeID',
+        path: ':documentID/categoria/:categoryID/subcategoria/:subcategoryID/tema/:topicID',
         component: TopicComponent,
       },
       { path: ':documentID', component: PublicComponent },

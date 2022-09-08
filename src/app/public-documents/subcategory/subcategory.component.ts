@@ -18,13 +18,13 @@ export class SubcategoryComponent implements OnInit {
 
   public document: any = null;
   public category: any;
-  public subcategorySelected: any = null;
+  public subcategory: any = null;
 
   public isDataAvailable: boolean = false;
 
   public displayedColumns: string[] = ['name', 'ranking', 'users'];
-  public problemsDataSource = PROBLEMS_DATA;
-  public solutionsDataSource = SOLUTIONS_DATA;
+  public problemsDataSource = [];
+  public solutionsDataSource = [];
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -51,12 +51,24 @@ export class SubcategoryComponent implements OnInit {
       _id: this.categoryID,
     });
 
-    forkJoin([document, category]).subscribe((reply: any) => {
+    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById(
+      {
+        _id: this.subcategoryID,
+      }
+    );
+
+    forkJoin([document, category, subcategory]).subscribe((reply: any) => {
+      console.log('##', reply);
       this.document = reply[0];
       this.category = reply[1];
-      this.subcategorySelected = reply[1].subLayouts.filter(
-        (item: any) => item._id === this.subcategoryID
+      this.subcategory = reply[2];
+
+      this.problemsDataSource = this.subcategory.topics;
+      this.solutionsDataSource = this.subcategory.topics.map(
+        (item: any) => [...item.solutions]
       )[0];
+
+      console.log(this.solutionsDataSource);
 
       setTimeout(() => {
         this.isDataAvailable = true;
@@ -79,17 +91,3 @@ export interface DataTable {
 export interface ICategory {
   name: string;
 }
-
-const SOLUTIONS_DATA: DataTable[] = [
-  { name: 'Solución A', ranking: 10, users: 255 },
-  { name: 'Solución A', ranking: 10, users: 255 },
-  { name: 'Solución A', ranking: 10, users: 255 },
-  { name: 'Solución A', ranking: 10, users: 255 },
-];
-
-const PROBLEMS_DATA: DataTable[] = [
-  { name: 'Problema A', ranking: 10, users: 255 },
-  { name: 'Problema A', ranking: 10, users: 255 },
-  { name: 'Problema A', ranking: 10, users: 255 },
-  { name: 'Problema A', ranking: 10, users: 255 },
-];

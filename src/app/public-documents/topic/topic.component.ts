@@ -2,10 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
 import { MatButtonModule } from '@angular/material/button';
+import { forkJoin, Observable } from 'rxjs';
+import { LayoutService } from 'src/app/services/layout.service';
+import { DocumentService } from 'src/app/services/document.service';
+import { TopicService } from 'src/app/services/topic.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalSolutionComponent } from '../components/modal-solution/modal-solution.component';
 import { ModalTestimonyComponent } from '../components/modal-testimony/modal-testimony.component';
-
 @Component({
   selector: '.topic-page',
   templateUrl: './topic.component.html',
@@ -16,36 +19,78 @@ export class TopicComponent implements OnInit {
   public documentID: string = '';
   public categoryID: string = '';
   public subcategoryID: string = '';
-  public themeID: string = '';
-  public testimonials: any = TESTIMONIALS;
-  public solutions: any = SOLUTIONS_DATA;
-  public ok: boolean = false;
+  public topicID: string = '';
+  public document: any = null;
+  public category: any = null;
+  public subcategory: any = null;
+  public topic: any = null;
 
+  public testimonials: any = TESTIMONIALS;
+  public solutionsData: any = [];
   constructor(
     public dialog: MatDialog,
     public activatedRoute: ActivatedRoute,
-    public utilityService: UtilityService
+    public utilityService: UtilityService,
+    public documentService: DocumentService,
+    public layoutService: LayoutService,
+    public topicService: TopicService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
     this.subcategoryID =
       this.activatedRoute['snapshot']['params']['subcategoryID'];
-    this.themeID = this.activatedRoute['snapshot']['params']['themeID'];
+    this.topicID = this.activatedRoute['snapshot']['params']['topicID'];
+
+    console.log(this.topicID);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadTopic();
+  }
   openModalSolution() {
     const dialogRef = this.dialog.open(ModalSolutionComponent, {
       width: '640px',
+
       disableClose: true,
     });
   }
   openModalTestimony() {
     const dialogRef = this.dialog.open(ModalTestimonyComponent, {
       width: '640px',
-      maxHeight: '640px',
+      maxHeight: '700px',
+
       disableClose: true,
     });
+  }
+
+  loadTopic() {
+    let document: Observable<any> =
+      this.documentService.fetchSingleDocumentById({ _id: this.documentID });
+
+    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({
+      _id: this.categoryID,
+    });
+
+    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById(
+      {
+        _id: this.subcategoryID,
+      }
+    );
+
+    let topic: Observable<any> = this.topicService.fetchSingleTopicById({
+      _id: this.topicID,
+    });
+
+    forkJoin([document, category, subcategory, topic]).subscribe(
+      (reply: any) => {
+        console.log('##', reply);
+        this.document = reply[0];
+        this.category = reply[1];
+        this.subcategory = reply[2];
+        this.topic = reply[3];
+        this.solutionsData = this.topic.solutions;
+      }
+    );
   }
 }
 

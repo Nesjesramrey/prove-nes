@@ -3,12 +3,12 @@
     <p class="title">Soluciones</p>
     <table class="mt-2">
       <tbody>
-        <tr *ngFor="let item of data" (click)="redirect(item.title)" style="cursor: pointer;">
+        <tr *ngFor="let item of data" (click)="redirect(item._id)" style="cursor: pointer;">
           <td>
             <p>{{ item.title }}</p>
           </td>
           <td>
-            <p>{{ item.score }}</p>
+            <p>{{ 0 }}</p>
           </td>
         </tr>
       </tbody>

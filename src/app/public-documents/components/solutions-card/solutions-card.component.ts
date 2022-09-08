@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
@@ -7,9 +8,23 @@ import { UtilityService } from 'src/app/services/utility.service';
   styleUrls: ['./solutions-card.component.scss'],
 })
 export class SolutionsCardComponent implements OnInit {
+  public documentID: string = '';
+  public categoryID: string = '';
+  public subcategoryID: string = '';
+  public topicID: string = '';
+
   @Input() data: any = [];
 
-  constructor(private utilityService: UtilityService) {}
+  constructor(
+    private utilityService: UtilityService,
+    public activatedRoute: ActivatedRoute
+  ) {
+    this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
+    this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
+    this.subcategoryID =
+      this.activatedRoute['snapshot']['params']['subcategoryID'];
+    this.topicID = this.activatedRoute['snapshot']['params']['topicID'];
+  }
 
   ngOnInit(): void {
     console.log(this.data);
@@ -17,8 +32,7 @@ export class SolutionsCardComponent implements OnInit {
 
   redirect(id: string) {
     console.log(id);
-    // const path = `documentos/publico/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/tema/${id}`;
-    const path = 'documentos-publicos/solucion';
+    const path = `documentos-publicos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/tema/${this.topicID}/solucion/${id}`;
     this.utilityService.linkMe(path);
   }
 }
