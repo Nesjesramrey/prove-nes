@@ -21,13 +21,16 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.documentService.fetchCoverDocument()
-      .subscribe((reply: any) => {
-        // console.log(reply);
-        this.document = reply;
-        console.log('document: ', this.document);
-        this.isDataAvailable = true;
-      });
+    // this.documentService.fetchCoverDocument()
+    //   .subscribe((reply: any) => {
+    //     this.document = reply;
+    //     console.log('document: ', this.document);
+    //     this.isDataAvailable = true;
+    //   });
+
+    setTimeout(() => {
+      this.isDataAvailable = true;
+    }, 1000);
 
     this.mailingListFormGroup = this.formBuilder.group({
       email: ['', [Validators.required, Validators.pattern(this.utilitySrvc.emailPattern), this.utilitySrvc.emailDomainValidator]]
@@ -39,7 +42,7 @@ export class DashboardComponent implements OnInit {
     let data: any = {
       email: formGroup['value']['email']
     };
-    console.log(data);
+    // console.log(data);
   }
 
   linkMe(url: string) {
