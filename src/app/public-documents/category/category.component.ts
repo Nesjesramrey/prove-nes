@@ -18,6 +18,9 @@ export class CategoryComponent implements OnInit {
   public documentID: string = '';
   public categoryID: string = '';
 
+  public topicsCount: number = 0;
+  public solutionsCount: number = 0;
+
   public items: Section[] = top10;
 
   constructor(
@@ -42,10 +45,12 @@ export class CategoryComponent implements OnInit {
     });
 
     forkJoin([document, category]).subscribe((reply: any) => {
-      console.log(reply);
       this.document = reply[0];
       this.selectedCategory = reply[1];
 
+      this.topicsCount = reply[1].topics.length;
+
+      console.log(reply);
       setTimeout(() => {
         this.isDataAvailable = true;
       }, 300);

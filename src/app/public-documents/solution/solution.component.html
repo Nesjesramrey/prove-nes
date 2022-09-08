@@ -1,11 +1,13 @@
-<div class="container">
+<div class="container" *ngIf="solution">
   <div class="set-12">
     <div class="set-6">
       <breadcrumbs-component>
-        <li class="breadcrumb-item">Documento madre</li>
-        <li class="breadcrumb-item">Economia</li>
+        <li class="breadcrumb-item">{{document.title}}</li>
+        <li class="breadcrumb-item">{{category.category.name}}</li>
+        <li class="breadcrumb-item">{{subcategory.category.name}}</li>
+        <li class="breadcrumb-item">{{topic.title}}</li>
 
-        <li>Empleo</li>
+        <li>{{solution.title}}</li>
       </breadcrumbs-component>
     </div>
     <div class="set-4 featured-users">
@@ -14,14 +16,24 @@
     <div class="set-2">
       <div class="header-buttons">
         <div class="button-box">
-          <button type="button" mat-mini-fab color="warn" class="add-button green">
+          <button
+            type="button"
+            mat-mini-fab
+            color="warn"
+            class="add-button green"
+          >
             <mat-icon>create_new_folder</mat-icon>
           </button>
           <p>Agregar solución</p>
         </div>
         <div class="button-box">
-          <button type="button" mat-mini-fab color="warn" class="add-button purple">
-            <mat-icon style="color:white">create_new_folder</mat-icon>
+          <button
+            type="button"
+            mat-mini-fab
+            color="warn"
+            class="add-button purple"
+          >
+            <mat-icon style="color: white">create_new_folder</mat-icon>
           </button>
           <p>Agregar Testimonios</p>
         </div>
@@ -31,11 +43,39 @@
 
   <div class="set-12" style="padding-bottom: 100px">
     <div class="set-8 col-rgt-3">
-      <div class="set-12">
-        <card-document-public></card-document-public>
+      <div class="set-12 header-card">
+        <mat-card>
+          <!-- IMAGE -->
+          <div class="image-box">
+            <img
+              src="https://images.pexels.com/photos/1117452/pexels-photo-1117452.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              alt="doc-image"
+            />
+
+            <div class="info">
+              <button class="custom-circle">
+                <mat-icon>thumb_up</mat-icon>
+              </button>
+
+              <div class="actions">
+                <p>
+                  Relevancia ciudadana
+                  <br />
+                  <b>8</b>
+                </p>
+                <button mat-raised-button color="primary">Vota</button>
+              </div>
+            </div>
+          </div>
+          <!-- DATA -->
+          <div class="data-box">
+            <p class="title">{{ solution.title }}</p>
+            <expanded-text [text]="solution.description"> </expanded-text>
+          </div>
+        </mat-card>
       </div>
       <div class="set-12 mt-2">
-        <mat-card class="doc-description" style="height: 480px;padding: 30px;">
+        <mat-card class="doc-description" style="height: 480px; padding: 30px">
           <div class="set-12 mt-2">
             <div class="set-6 col-rgt-2">
               <spider-chart [withBorder]="false"></spider-chart>
