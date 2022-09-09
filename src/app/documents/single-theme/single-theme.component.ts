@@ -209,7 +209,8 @@ export class SingleThemeComponent implements OnInit {
           documentID: this.documentID,
           document: this.document,
           categoryID: this.categoryID,
-          type: 'sublayout',
+          topicID: this.themeID,
+          type: 'topic',
         },
         disableClose: true,
       }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
+import { AddDocumentTestimonyComponent } from 'src/app/components/add-document-testimony/add-document-testimony.component';
 import { DocumentService } from 'src/app/services/document.service';
 import { LayoutService } from 'src/app/services/layout.service';
 import { SolutionService } from 'src/app/services/solution.service';
@@ -27,6 +29,7 @@ export class SolutionComponent implements OnInit {
   public testimonials: any = TESTIMONIALS;
 
   constructor(
+    public dialog: MatDialog,
     public activatedRoute: ActivatedRoute,
     public utilityService: UtilityService,
     public documentService: DocumentService,
@@ -49,25 +52,11 @@ export class SolutionComponent implements OnInit {
   loadSolution() {
     let document: Observable<any> =
       this.documentService.fetchSingleDocumentById({ _id: this.documentID });
-
-    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({
-      _id: this.categoryID,
-    });
-
-    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById(
-      {
-        _id: this.subcategoryID,
-      }
-    );
-
-    let topic: Observable<any> = this.topicService.fetchSingleTopicById({
-      _id: this.topicID,
-    });
-
+    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({_id: this.categoryID,});
+    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({_id: this.subcategoryID,});
+    let topic: Observable<any> = this.topicService.fetchSingleTopicById({_id: this.topicID,});
     let solution: Observable<any> =
-      this.solutionService.fetchSingleSolutionById({
-        _id: this.solutionID,
-      });
+      this.solutionService.fetchSingleSolutionById({ _id: this.solutionID,});
 
     forkJoin([document, category, subcategory, topic, solution]).subscribe(
       (reply: any) => {
@@ -79,6 +68,27 @@ export class SolutionComponent implements OnInit {
         this.solution = reply[4];
       }
     );
+  }
+
+  openModalTestimony() {
+    const dialogRef = this.dialog.open<AddDocumentTestimonyComponent>(
+      AddDocumentTestimonyComponent,
+      {
+        width: '640px',
+        data: {
+          documentID: this.documentID,
+          document: this.document,
+          categoryID: this.categoryID,
+          topicID: this.solutionID,
+          type: 'solution',
+        },
+        disableClose: true,
+      }
+    );
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      this.solution.testimonials.push(reply.testimonials[0])
+    });
   }
 }
 

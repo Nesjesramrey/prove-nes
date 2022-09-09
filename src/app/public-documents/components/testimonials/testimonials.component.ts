@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'public-documents-testimonials',
@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./testimonials.component.scss'],
 })
 export class TestimonialsComponent implements OnInit {
-  public testimonials: Testimonial[] = _testimonials;
+  @Input() data: any = [];
+
   constructor() {}
 
   ngOnInit(): void {}

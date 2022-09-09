@@ -15,11 +15,11 @@
 </div>
 
 <div class="set-12 dialog-body">
-  <form [formGroup]="addTestimonyFormGroup">
+  <form [formGroup]="addTestimonyFormGroup" (submit)="createTestimony(addTestimonyFormGroup)">
     <div class="form-body">
       <mat-form-field class="example-full-width" appearance="outline">
         <mat-label>Nombre</mat-label>
-        <input matInput placeholder="Nombre"  />
+        <input matInput placeholder="Nombre" formControlName="name" />
       </mat-form-field>
 
       <mat-form-field class="example-full-width" appearance="outline">
@@ -56,8 +56,8 @@
       <button
         type="submit"
         mat-raised-button
-        color="primary"
         [disabled]="addTestimonyFormGroup.invalid"
+        color="primary"
         class="submit-button"
       >
         Agregar problematica
@@ -65,3 +65,5 @@
     </div>
   </form>
 </div>
+
+
