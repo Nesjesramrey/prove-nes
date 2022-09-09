@@ -5,6 +5,7 @@ import { SingleDocumentComponent } from './single-document/single-document.compo
 import { SingleCategoryComponent } from './single-category/single-category.component';
 import { SingleThemeComponent } from './single-theme/single-theme.component';
 import { SingleSubcategoryComponent } from './single-subcategory/single-subcategory.component';
+import { SingleSolutionComponent } from './single-solution/single-solution.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
       { path: ':documentID/categoria/:categoryID', component: SingleCategoryComponent, canActivate: [] },
       { path: ':documentID/categoria/:categoryID/subcategoria/:subcategoryID', component: SingleSubcategoryComponent, canActivate: [] },
       { path: ':documentID/categoria/:categoryID/subcategoria/:subcategoryID/temas/:themeID', component: SingleThemeComponent, canActivate: [] },
+      { path: ':documentID/categoria/:categoryID/subcategoria/:subcategoryID/temas/:themeID/solucion/:solutionID', component: SingleSolutionComponent, canActivate: [] },
     ]
   }
 ];

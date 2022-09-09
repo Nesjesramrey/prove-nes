@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
+import { environment } from "src/environments/environment";
 
 @Injectable()
 export class EndPointService {
-  public apiEndPoint: string = 'http://localhost:4040/api/v1';
-  // public apiEndPoint: string = 'http://pando-backend-dev-env.eba-zk3eys8d.us-east-1.elasticbeanstalk.com/api/v1';
-
+  public apiEndPoint: string = environment.apiEndPoint;
 
   // authentication
   public validateEmailEndPoint: string = '/authentication/validate-email';
@@ -29,6 +28,7 @@ export class EndPointService {
   public fetchDocumentsByCollaboratorEndPoint: string = '/document/collaborator/';
   public createDocumentLayoutEndPoint: string = '/layout/document/';
   public editDocumentDataEndPoint: string = '/document/';
+  public fetchCoverDocumentEndPoint: string = '/document/public/home';
 
   // public createNewDocumentEndPoint: string = '/document/create-new-document';
   public fetchMyDocumentsEndPoint: string = '/document/fetch-my-documents';

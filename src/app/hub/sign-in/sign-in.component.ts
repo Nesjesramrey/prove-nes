@@ -38,8 +38,8 @@ export class SignInComponent implements OnInit {
           // console.log('user: ', data['multiFactor']['user']);
           this.submitted = false;
           localStorage.setItem('accessToken', data['multiFactor']['user']['accessToken']);
-          // window.location.reload();
-          this.utilitySrvc.linkMe('/');
+          window.location.reload();
+          // this.utilitySrvc.linkMe('/');
         });
       })
       .catch((error) => {

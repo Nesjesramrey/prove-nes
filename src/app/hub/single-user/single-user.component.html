@@ -9,48 +9,29 @@
         <img src="../../../assets/images/Aspens_Ed_Moss.jpeg" alt="" />
       </div>
 
-      <input
-        #fileInput
-        type="file"
-        (change)="openCropperDialog($event)"
-        accept="image/*"
-        hidden
-      />
+      <input #fileInput type="file" (change)="openCropperDialog($event)" accept="image/*" hidden />
       <button type="button" class="avatar" (click)="fileInput.click()">
-        <img
-          src="{{ user.avatarImage }}"
-          alt="{{ user.firstname }} {{ user.lastname }}"
-          *ngIf="user.avatarImage != null"
-        />
+        <img src="{{ user.avatarImage }}" alt="{{ user.firstname }} {{ user.lastname }}"
+          *ngIf="user.avatarImage != null" />
         <span *ngIf="user.avatarImage == null">
-          {{ user.firstname | firstword | firstletter
-          }}{{ user.lastname | firstword | firstletter }}
+          {{ user.firstname | firstword | firstletter }}{{ user.lastname | firstword | firstletter }}
         </span>
       </button>
 
       <div class="set-12 cardbody">
-        <button
-          type="button"
-          class="roundblue cardmore"
-          (click)="linkMe('/hub/configuracion')"
-          matTooltip="Configuración"
-          matTooltipClass="tooltip"
-        >
+        <button type="button" class="roundblue cardmore" (click)="linkMe('/hub/configuracion')"
+          matTooltip="Configuración" matTooltipClass="tooltip">
           <mat-icon>settings</mat-icon>
         </button>
         <h3 class="txt-center">{{ user.firstname }} {{ user.lastname }}</h3>
         <div class="set-12 usrinfo">
           <p class="set-12">
             <small class="set-6">Documentos:</small>
-            <small class="set-6 txt-right"
-              ><strong class="txt-blue">0</strong></small
-            >
+            <small class="set-6 txt-right"><strong class="txt-blue">0</strong></small>
           </p>
           <p class="set-12">
             <small class="set-6">Colaboradores:</small>
-            <small class="set-6 txt-right"
-              ><strong class="txt-blue">0</strong></small
-            >
+            <small class="set-6 txt-right"><strong class="txt-blue">0</strong></small>
           </p>
         </div>
       </div>
