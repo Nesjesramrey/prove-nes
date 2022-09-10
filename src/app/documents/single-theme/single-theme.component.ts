@@ -5,7 +5,7 @@ import { UserService } from '../../services/user.service';
 import { DocumentService } from '../../services/document.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UtilityService } from '../../services/utility.service';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable, forkJoin, ConnectableObservable } from 'rxjs';
 import { AddDocumentThemeComponent } from '../../components/add-document-theme/add-document-theme.component';
 import { AddDocumentSolutionComponent } from '../../components/add-document-solution/add-document-solution.component';
 import { AddDocumentTestimonyComponent } from '../../components/add-document-testimony/add-document-testimony.component';
@@ -209,8 +209,10 @@ export class SingleThemeComponent implements OnInit {
     );
 
     dialogRef.afterClosed().subscribe((reply: any) => {
+      console.log("pepe" + reply);
       if (reply != undefined) {
-        console.log(reply);
+        this.solutions.push(reply[0]);
+        //this.dataSource = new MatTableDataSource(this.layouts);
       }
     });
   }
