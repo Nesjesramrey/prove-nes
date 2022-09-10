@@ -97,10 +97,10 @@ export class SingleSubcategoryComponent implements OnInit {
         let sols = this.topics[i].solutions;
         for(let j=0; j<sols.length; j++){
           //this.solutions.push(this.topics[i].solutions[j]);
-          console.log("la sol id " + this.topics[i].solutions[j])
+          // console.log("la sol id " + this.topics[i].solutions[j])
           let sol: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.topics[i].solutions[j] });
           forkJoin([sol]).subscribe((reply: any) => {
-            console.log("elreply" + JSON.stringify(reply[0]));
+            // console.log("elreply" + JSON.stringify(reply[0]));
             this.solutions.push(reply[0]);
           })    
         }

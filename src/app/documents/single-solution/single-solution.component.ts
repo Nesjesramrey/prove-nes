@@ -15,16 +15,17 @@ import { SolutionService } from 'src/app/services/solution.service';
 import { TopicService } from 'src/app/services/topic.service';
 
 @Component({
-  selector: 'app-single-theme',
-  templateUrl: './single-theme.component.html',
-  styleUrls: ['./single-theme.component.scss'],
+  selector: 'app-single-solution',
+  templateUrl: './single-solution.component.html',
+  styleUrls: ['./single-solution.component.scss'],
 })
-export class SingleThemeComponent implements OnInit {
+export class SingleSolutionComponent implements OnInit {
   public documentID: string = '';
   public accessToken: any = null;
   public categoryID: string = '';
   public subcategoryID: string = '';
   public themeID: string = '';
+  public solutionID: string = '';
   public carouselContentSize: number = 150;
   public selectedCategory: any = null;
   public user: any = null;
@@ -33,6 +34,7 @@ export class SingleThemeComponent implements OnInit {
   public subcategory: any = null;
   public topics: any = null;
   public topic: any = null;
+  public solution: any = null;
   public layout: any = [];
   public isDataAvailable: boolean = false;
   public layouts: any[] = [];
@@ -88,6 +90,7 @@ export class SingleThemeComponent implements OnInit {
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
     this.subcategoryID = this.activatedRoute['snapshot']['params']['subcategoryID'];
     this.themeID = this.activatedRoute['snapshot']['params']['themeID'];
+    this.solutionID = this.activatedRoute['snapshot']['params']['solutionID'];
     this.accessToken = this.authenticationService.fetchAccessToken;
   }
 
@@ -96,9 +99,10 @@ export class SingleThemeComponent implements OnInit {
     let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID,});
     let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID,});
     let topic: Observable<any> = this.topicService.fetchSingleTopicById({ _id: this.themeID });
+    let solution: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.solutionID });
     
     //forkJoin([categories, document, solutions, category, subcategory]).subscribe((reply: any) => {
-    forkJoin([document, category, subcategory, topic]).subscribe((reply: any) => {  
+    forkJoin([document, category, subcategory, topic, solution]).subscribe((reply: any) => {  
         
         this.collaborators = reply[0].collaborators;
         this.category = reply[1];
@@ -108,18 +112,22 @@ export class SingleThemeComponent implements OnInit {
         this.topics = this.subcategory['topics'];    
         // console.log(this.topics);
         this.topic = reply[3];   
-        console.log(this.topics); 
-        console.log("topic " + JSON.stringify(this.topic));
-        this.sliderImages = this.topic.images;
+        // console.log(this.topics); 
+        // console.log("topic " + JSON.stringify(this.topic));
 
         let sols = this.topic.solutions;
         for(let j=0; j<sols.length; j++){
           let sol: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.topic.solutions[j] });
           forkJoin([sol]).subscribe((reply: any) => {
             this.solutions.push(reply[0]);
-            console.log(reply[0]);
           })
         }
+
+        this.solution = reply[4];
+        console.log(this.solution);
+
+        this.sliderImages = this.solution.images;
+
         
 
 
@@ -224,8 +232,7 @@ export class SingleThemeComponent implements OnInit {
           documentID: this.documentID,
           document: this.document,
           categoryID: this.categoryID,
-          topicID: this.themeID,
-          type: 'topic',
+          type: 'sublayout',
         },
         disableClose: true,
       }
@@ -240,7 +247,8 @@ export class SingleThemeComponent implements OnInit {
 
   linkSolution(id: string) {
     this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/temas/${this.themeID}/solucion/${id}`)
-  }  
+  }
+
 }
 
 // simplet doughnut

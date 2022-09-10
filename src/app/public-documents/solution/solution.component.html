@@ -33,6 +33,7 @@
             mat-mini-fab
             color="warn"
             class="add-button purple"
+            (click)="openModalTestimony()"
           >
             <mat-icon style="color: white">create_new_folder</mat-icon>
           </button>
@@ -90,7 +91,7 @@
       </div>
     </div>
     <div class="set-4">
-      <public-documents-testimonials></public-documents-testimonials>
+      <public-documents-testimonials [data]="solution.testimonials"></public-documents-testimonials>
     </div>
   </div>
 </div>

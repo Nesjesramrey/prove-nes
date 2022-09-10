@@ -17,11 +17,66 @@
     background: url('../../assets/images/1200x-1.jpeg') no-repeat;
     background-size: cover;
     background-position: center;
+    z-index: 9;
+
+    .cover {
+      width: 100%;
+      height: 100%;
+      background: rgba($color: #000000, $alpha: 0.6);
+      position: absolute;
+      top: 0;
+      z-index: 4;
+      left: 0;
+    }
+
+    .info {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 7;
+      color: #ffffff;
+    }
+
+    button {
+      margin-top: 90px;
+      margin-bottom: 30px;
+      font-size: 40pt;
+    }
+
+    .layouts {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 70px;
+
+      * {
+        margin: 0;
+      }
+
+      .cat {
+        width: 130px;
+        height: 130px;
+        border-radius: 100%;
+        overflow: hidden;
+        margin: 0 30px;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11pt;
+        font-weight: bold;
+        border: 3px solid rgba($color: #306eff, $alpha: 1.0);
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+    }
   }
 
   .ds-page:nth-child(2) {
     background: url('../../assets/images/andrea-leopardi-N17c03GJGKc-unsplash.png') no-repeat;
     background-size: 70% auto;
+    z-index: 11;
 
     .info {
       width: 45%;
@@ -74,6 +129,7 @@
     background: url('../../assets/images/jezael-melgoza-KbR06h9dNQw-unsplash.png') no-repeat;
     background-size: 70% auto;
     background-position: right;
+    z-index: 13;
 
     .info {
       width: 45%;
@@ -125,6 +181,7 @@
   .ds-page:nth-child(4) {
     background: url('../../assets/images/Rectangle-511.png') no-repeat;
     background-size: cover;
+    z-index: 14;
 
     .info {
       width: 45%;
@@ -194,10 +251,12 @@
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px;
         color: #ffffff;
+        font-size: 13pt;
       }
 
       button:disabled {
         cursor: not-allowed;
+        opacity: 0.6;
       }
     }
 
@@ -208,23 +267,49 @@
       // border-radius: 5px;
       border-top-left-radius: 5px;
       border-bottom-left-radius: 5px;
-      color: #ffffff;
+      color: #000000;
+      background: #ffffff;
+      font-size: 13pt;
     }
 
     input[type="text"]::-webkit-input-placeholder {
-      color: #ffffff;
+      color: rgba($color: #000000, $alpha: 0.4);
+      font-style: italic;
     }
 
     input[type="text"]::-moz-placeholder {
-      color: #ffffff;
+      color: rgba($color: #000000, $alpha: 0.4);
+      font-style: italic;
     }
 
     input[type="text"]:-ms-input-placeholder {
-      color: #ffffff;
+      color: rgba($color: #000000, $alpha: 0.4);
+      font-style: italic;
     }
 
     input[type="text"]:-moz-placeholder {
-      color: #ffffff;
+      color: rgba($color: #000000, $alpha: 0.4);
+      font-style: italic;
     }
+  }
+
+  .loading {
+    mat-spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .grad-txt {
+    background: linear-gradient(to right, hsl(98 100% 62%), hsl(204 100% 59%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+  }
+
+  .desc {
+    font-size: 15pt;
   }
 }
