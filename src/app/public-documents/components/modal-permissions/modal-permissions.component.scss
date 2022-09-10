@@ -35,10 +35,11 @@
 .modalContainer {
   background-color: #ffffff;
   width: 708px;
-  height: 432px;
+  height: 365px;
   position: absolute;
   left: -5%;
   top: -200%;
+  border-radius: 5px;
 }
 
 .titleContainer {
@@ -136,4 +137,9 @@ img {
 
 .alingCenter{
   text-align: end;
+}
+
+.btnEnabled{
+  background-color: #306EFF !important;
+  color: #ffffff !important;
 }

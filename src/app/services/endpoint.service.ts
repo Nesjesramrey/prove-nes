@@ -52,6 +52,9 @@ export class EndPointService {
   public fetchSingleTopicByIdEndPoint: string = '/topic/';
   public createNewTopicEndPoint: string = '/topic/layout/';
 
+  // permission
+  public createNewPermissionEndPoint: string = '/permission/';
+
   // solutions
   public fetchSingleSolutionByIdEndPoint: string = '/solution/';
   public createNewSolutionEndPoint: string = '/solution/topic/';
