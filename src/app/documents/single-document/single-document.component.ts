@@ -13,6 +13,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { UtilityService } from 'src/app/services/utility.service';
 import { EditDocumentDataComponent } from 'src/app/components/edit-document-data/edit-document-data.component';
+import { AddDocumentCoverTextComponent } from 'src/app/components/add-document-cover-text/add-document-cover-text.component';
+import { WindowAlertComponent } from 'src/app/components/window-alert/window-alert.component';
 
 @Component({
   selector: '.single-document-page',
@@ -34,6 +36,7 @@ export class SingleDocumentComponent implements OnInit {
   public editingRowId: string | null = null;
   @ViewChild('editRowName') editRowName!: ElementRef<HTMLInputElement>;
   public collaborators: any = null;
+  public published: boolean = false;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -155,7 +158,58 @@ export class SingleDocumentComponent implements OnInit {
     });
   }
 
+  popAddCoverTextDialog() {
+    const dialogRef = this.dialog.open<AddDocumentCoverTextComponent>(AddDocumentCoverTextComponent, {
+      width: '640px',
+      data: {
+        document: this.document
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        this.document['coverDescription'] = reply['coverDescription'];
+      }
+    });
+  }
+
+  popWindowAlertDialog() {
+    const dialogRef = this.dialog.open<WindowAlertComponent>(WindowAlertComponent, {
+      width: '420px',
+      data: {
+        windowType: 'useAsCover',
+        document: this.document
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        this.document['inCover'] = reply['inCover'];
+      }
+    });
+  }
+
   linkCategories(id: string) {
     this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${id}`)
+  }
+
+  setDocumentAsPublicPrivate() {
+    this.document['isPublic'] = !this.document['isPublic'];
+    let data: any = {
+      document_id: this.document['_id'],
+      isPublic: this.document['isPublic']
+    };
+
+    this.documentService.setDocumentAsPublicPrivate(data).subscribe({
+      error: (error: any) => {
+        this.utilityService.openErrorSnackBar('Oops!... Ocurrió un error, inténtalo más tarde.');
+      },
+      next: (reply: any) => {
+        this.utilityService.openSuccessSnackBar('El documento se actualizó correctamente.');
+      },
+      complete: () => { }
+    });
   }
 }

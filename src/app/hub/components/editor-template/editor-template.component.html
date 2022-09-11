@@ -1,4 +1,19 @@
-<div class="set-12 carousel-hldr" *ngIf="documents.length != 0">
+<!-- empty documents -->
+<div class="set-12 carousel-hldr" *ngIf="documents.length == 0 && isDataAvailable">
+  <carousel [cellsToShow]="1" [arrows]="false">
+    <div class="carousel-cell">
+      <mat-card class="emptycard">
+        <div class="set-12 txt-center">
+          <mat-icon>folder</mat-icon>
+          <h4>No hay documentos que mostar</h4>
+        </div>
+      </mat-card>
+    </div>
+  </carousel>
+</div>
+
+<!-- available documents -->
+<div class="set-12 carousel-hldr" *ngIf="documents.length != 0 && isDataAvailable">
   <carousel [cellsToShow]="2" [arrows]="documents.length > 2 ? true : false">
     <div class="carousel-cell" *ngFor="let document of documents">
       <mat-card>
@@ -64,4 +79,53 @@
       </mat-card>
     </div>
   </carousel>
+</div>
+
+<div class="set-12 tabs">
+  <mat-card class="set-12">
+    <mat-tab-group [disableRipple]="true" [@.disabled]="true">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>analytics</mat-icon>
+          <span>BI</span>
+        </ng-template>
+
+        <div class="set-12 top-cards">
+          <div class="set-6">
+            <mat-card class="set-12 inner-card">
+              <span class="roundico-green">
+                <mat-icon>groups</mat-icon>
+              </span>
+              <span>Usuarios</span>
+            </mat-card>
+          </div>
+
+          <div class="set-6">
+            <mat-card class="set-12 inner-card">
+              <span class="roundico-orange">
+                <mat-icon>front_hand</mat-icon>
+              </span>
+              <span>Interacciones</span>
+            </mat-card>
+          </div>
+        </div>
+
+        <!-- <div class="set-12 category-list" *ngIf="selectedDocument != null">
+          <div class="set-12 list" *ngIf="selectedDocument.layout.length != 0">
+            <div class="set-12 category" *ngFor="let layer of selectedDocument.layout">
+              <small>{{layer.name}}</small>
+            </div>
+          </div>
+        </div> -->
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>rss_feed</mat-icon>
+          <span>Activity center</span>
+        </ng-template>
+        <div class="set-12">Hello</div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
 </div>

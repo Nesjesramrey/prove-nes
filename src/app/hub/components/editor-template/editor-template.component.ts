@@ -10,6 +10,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 })
 export class EditorTemplateComponent implements OnInit {
   @Input('documents') public documents: any = [];
+  public isDataAvailable: boolean = false;
 
   constructor(
     public dialog: MatDialog,
@@ -19,6 +20,7 @@ export class EditorTemplateComponent implements OnInit {
   ngOnInit(): void {
     setTimeout(() => {
       // console.log(this.documents);
+      this.isDataAvailable = true;
     });
   }
 

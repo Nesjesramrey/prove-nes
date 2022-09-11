@@ -38,6 +38,9 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { EditDocumentDataComponent } from "./edit-document-data/edit-document-data.component";
 import { EditCategoryDataComponent } from "./edit-category-data/edit-category-data.component";
 import { SliderImagesComponent } from './slider-images/slider-images.component';
+import { AddDocumentCoverTextComponent } from "./add-document-cover-text/add-document-cover-text.component";
+import { WindowAlertComponent } from "./window-alert/window-alert.component";
+import { AddRootCategoryComponent } from "./add-root-category/add-root-category.component";
 
 @NgModule({
   imports: [
@@ -79,7 +82,10 @@ import { SliderImagesComponent } from './slider-images/slider-images.component';
     CarouselComponent,
     EditDocumentDataComponent,
     EditCategoryDataComponent,
-    SliderImagesComponent
+    SliderImagesComponent,
+    AddDocumentCoverTextComponent,
+    WindowAlertComponent,
+    AddRootCategoryComponent
   ],
   exports: [
     AppPageletComponent,
@@ -100,7 +106,10 @@ import { SliderImagesComponent } from './slider-images/slider-images.component';
     CarouselComponent,
     EditDocumentDataComponent,
     EditCategoryDataComponent,
-    SliderImagesComponent
+    SliderImagesComponent,
+    AddDocumentCoverTextComponent,
+    WindowAlertComponent,
+    AddRootCategoryComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
@@ -112,7 +121,10 @@ import { SliderImagesComponent } from './slider-images/slider-images.component';
     AddDocumentCollaboratorComponent,
     CompleteRegistrationComponent,
     EditDocumentDataComponent,
-    EditCategoryDataComponent
+    EditCategoryDataComponent,
+    AddDocumentCoverTextComponent,
+    WindowAlertComponent,
+    AddRootCategoryComponent
   ],
   providers: [],
 })

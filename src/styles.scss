@@ -297,6 +297,7 @@ table {
 }
 
 .carousel-cells {
+  width: 100% !important;
   float: left;
   // will-change: auto !important;
 
@@ -437,6 +438,13 @@ mat-form-field {
   }
 }
 
+.catbtn {
+  background: #CEDDFF;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 1px solid #306EFF;
+}
+
 .networks {
   display: flex;
   justify-content: flex-end;
@@ -467,5 +475,44 @@ mat-form-field {
   .instagram-net {
     background: url('./assets/images/iconfinder_social_media_applications_3-instagram_4102579.png') no-repeat;
     background-size: 100%;
+  }
+}
+
+.imghldr {
+  position: relative;
+
+  .overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: all .3s linear;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .cover {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: rgba($color: #000000, $alpha: 0.2);
+      z-index: 3;
+    }
+
+    mat-icon {
+      position: relative;
+      font-size: 30pt !important;
+      color: #ffffff !important;
+      z-index: 4;
+    }
+  }
+
+  .overlay:hover {
+    opacity: 1;
   }
 }

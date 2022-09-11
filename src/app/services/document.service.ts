@@ -38,6 +38,14 @@ export class DocumentService {
     return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchCoverDocumentEndPoint, {});
   }
 
+  setDocumentAsCover(data: any) {
+    return this.httpClient.put(this.endpointSrvc.apiEndPoint + this.endpointSrvc.setDocumentAsCoverEndPoint + `${data['document_id']}` + '/mark_as_cover', {});
+  }
+
+  setDocumentAsPublicPrivate(data: any) {
+    return this.httpClient.put(this.endpointSrvc.apiEndPoint + this.endpointSrvc.setDocumentAsPublicPrivateEndPoint + `${data['document_id']}` + '/mark_as_public', data);
+  }
+
 
 
 

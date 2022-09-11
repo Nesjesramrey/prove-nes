@@ -1,0 +1,52 @@
+:host {
+  min-height: 170px;
+
+  .dialog-head {
+    display: flex;
+    align-items: center;
+  }
+
+  .dialog-body {
+    margin-top: 20px;
+
+    form {
+      margin-top: 20px;
+    }
+
+    textarea {
+      min-height: 100px;
+      max-height: 100px;
+    }
+
+    .ctrls {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      * {
+        margin: 0;
+      }
+
+      mat-spinner {
+        margin-left: 20px;
+      }
+
+      button {
+        margin-left: 10px;
+      }
+
+      button:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+
+  .loading {
+    mat-spinner {
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}

@@ -29,6 +29,8 @@ export class EndPointService {
   public createDocumentLayoutEndPoint: string = '/layout/document/';
   public editDocumentDataEndPoint: string = '/document/';
   public fetchCoverDocumentEndPoint: string = '/document/public/home';
+  public setDocumentAsCoverEndPoint: string = '/document/';
+  public setDocumentAsPublicPrivateEndPoint: string = '/document/';
 
   // public createNewDocumentEndPoint: string = '/document/create-new-document';
   public fetchMyDocumentsEndPoint: string = '/document/fetch-my-documents';
