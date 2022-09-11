@@ -126,15 +126,9 @@
             </p>
 
             <ol class="top-list">
-              <!--li class="top-list-item">
-                <span>Inseguridad</span>
-              </li-->
-              <!--li class="top-list-item">
-                <span>Inseguridad</span>
+              <li class="top-list-item" *ngFor="let solution of solutions.slice(0, 4);" (click)="linkSolution(solution._id, solution.subcategory._id, solution.topic._id)">
+                <span>{{solution.title}}</span>
               </li>
-              <li class="top-list-item">
-                <span>Inseguridad</span>
-              </li-->
             </ol>
           </div>
 
@@ -145,7 +139,7 @@
             </p>
 
             <ol class="top-list">
-              <li class="top-list-item" *ngFor="let topic of topics.slice(0, 4);">
+              <li class="top-list-item" *ngFor="let topic of topics.slice(0, 4);" (click)="linkTopic(topic._id, topic.subcategory._id)">
                 <span>{{topic.title}}</span>
               </li>
             </ol>

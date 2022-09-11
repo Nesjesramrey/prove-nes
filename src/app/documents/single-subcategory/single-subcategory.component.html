@@ -100,7 +100,7 @@
             </p>
 
             <ol class="top-list">
-              <li class="top-list-item" *ngFor="let solution of solutions.slice(0, 4);">
+              <li class="top-list-item" *ngFor="let solution of solutions.slice(0, 4);" (click)="linkSolution(solution._id, solution.theme._id)">
                 <span>{{solution.title}}</span>
               </li>
             </ol>
@@ -117,7 +117,7 @@
             </p>
 
             <ol class="top-list">
-              <li class="top-list-item" *ngFor="let topic of topics.slice(0, 4);">
+              <li class="top-list-item" *ngFor="let topic of topics.slice(0, 4);" (click)="linkTopic(topic._id)">
                 <span>{{topic.title}}</span>
               </li>
             </ol>

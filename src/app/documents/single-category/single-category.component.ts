@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { UtilityService } from '../../services/utility.service';
 import { LayoutService } from 'src/app/services/layout.service';
 import { SolutionService } from 'src/app/services/solution.service';
+import { TopicService } from 'src/app/services/topic.service';
 import { AddDocumentCategoryComponent } from 'src/app/components/add-document-category/add-document-category.component';
 // import { FormBuilder, FormGroup } from "@angular/forms";
 import { AddDocumentThemeComponent } from '../../components/add-document-theme/add-document-theme.component';
@@ -38,6 +39,7 @@ export class SingleCategoryComponent implements OnInit {
   public imageUrl!: string;
   public collaborators: any = null;
   public topics: any = null;
+  public solutions: any = null;
 
   /* TABLE */
   public displayedColumns: string[] = [
@@ -60,7 +62,8 @@ export class SingleCategoryComponent implements OnInit {
     public dialog: MatDialog,
     public utilityService: UtilityService,
     public layoutService: LayoutService,
-    public solutionService: SolutionService
+    public solutionService: SolutionService,
+    public topicService: TopicService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
@@ -79,10 +82,42 @@ export class SingleCategoryComponent implements OnInit {
       this.selectedCategory = reply[1];
       this.collaborators = reply[0].collaborators;
       // console.log('category: ', this.selectedCategory);
-      this.topics = this.selectedCategory['topics'];
       this.subcategories = this.selectedCategory['subLayouts'];
-      // console.log('subcategories: ', this.subcategories);
       this.dataSource = new MatTableDataSource(this.subcategories);
+      // console.log('subcategories: ', this.subcategories);
+
+      let themes:any[] = [];
+      let solutions:any[] = [];
+
+      for(let i = 0; i<this.subcategories.length; i++){
+
+        for(let j=0; j<this.subcategories[i].topics.length; j++){
+          
+          let topic_service: Observable<any> = this.topicService.fetchSingleTopicById({ _id: this.subcategories[i].topics[j] });
+          forkJoin([topic_service]).subscribe((reply: any) => {
+            let topic_obj = reply[0];
+            topic_obj.subcategory = this.subcategories[i];
+            themes.push(topic_obj); 
+            for(let k=0; k<reply[0].solutions.length; k++){
+              let solution_service: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: reply[0].solutions[k] });
+              forkJoin([solution_service]).subscribe((reply: any) => {
+                let sol = reply[0];
+                sol.topic = topic_obj;
+                sol.subcategory = topic_obj.subcategory;
+                solutions.push(sol);
+                //console.log(sol);
+              })              
+            }
+
+          })
+
+        }
+
+      }
+      this.topics = themes;
+      this.solutions = solutions;
+
+
 
       setTimeout(() => {
         this.isDataAvailable = true;
@@ -172,12 +207,16 @@ export class SingleCategoryComponent implements OnInit {
     });
   }
 
-  linkTopic(id: string) {
-    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/temas/${id}`)
+  linkTopic(id: string, subcategory_id:string){
+    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${subcategory_id}/temas/${id}`)
   }
 
-  linkSubcategory(id: string) {
-    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${id}`)
+  linkSubcategory(id: string){
+    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${id}`);
+  }  
+
+  linkSolution(id: string, subcategory_id:string, theme_id:string) {
+    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${subcategory_id}/temas/${theme_id}/solucion/${id}`)  
   }
 
 }

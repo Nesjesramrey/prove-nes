@@ -101,7 +101,10 @@ export class SingleSubcategoryComponent implements OnInit {
           let sol: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.topics[i].solutions[j] });
           forkJoin([sol]).subscribe((reply: any) => {
             // console.log("elreply" + JSON.stringify(reply[0]));
-            this.solutions.push(reply[0]);
+            let complete_solution = reply[0];
+            complete_solution.theme = this.topics[i];
+            console.log(complete_solution);
+            this.solutions.push(complete_solution);
           })    
         }
       }
@@ -181,6 +184,10 @@ export class SingleSubcategoryComponent implements OnInit {
 
   linkTopic(id: string) {
     this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/temas/${id}`)
+  }
+
+  linkSolution(id: string, theme_id:string) {
+    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/temas/${theme_id}/solucion/${id}`)  
   }
 
 }

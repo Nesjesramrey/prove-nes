@@ -1,0 +1,190 @@
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="isDataAvailable">
+  <div class="set-12">
+    <div class="set-6">
+      <breadcrumbs-component>
+        <li class="breadcrumb-item">Perfil</li>
+        <li>Documentos</li>
+        <li>{{ document.title }}</li>
+        <li>{{ category.category.name }}</li>
+        <li>{{ subcategory.category.name }}</li>
+        <li>{{ solution.title }}</li>
+      </breadcrumbs-component>
+    </div>
+    <div class="set-6 txt-right">
+      <span class="created-by">
+        Autor: <span class="author">{{category.createdBy.firstname}}
+          {{category.createdBy.lastname}}</span>
+      </span>
+    </div>
+  </div>  
+  
+  <div class="header">
+    <breadcrumbs-component>
+    </breadcrumbs-component>
+    <div class="actions-rigth">
+
+      <div class="button-group">
+        <button
+          type="button"
+          mat-mini-fab
+          class="mini test"
+          matTooltip="Agregar testimonio"
+          (click)="popAddDocumentTestimony()"
+        >
+          <mat-icon>forum</mat-icon>
+        </button>
+        <p>Agregar testimonio</p>
+      </div>
+      <!--div class="button-group">
+        <button
+          type="button"
+          mat-mini-fab
+          class="mini warn"
+          matTooltip="Agregar problema"
+          (click)="popAddDocumentTheme()"
+        >
+          <mat-icon>warning</mat-icon>
+        </button>
+
+        <p>Agregar Problema</p>
+      </div-->
+
+      <!--div class="button-group">
+        <button
+          type="button"
+          mat-mini-fab
+          class="mini insights"
+          matTooltip="Agregar Solución"
+          (click)="popAddDocumentSolution()"
+        >
+          <mat-icon>insights</mat-icon>
+        </button>
+
+        <p>Agregar Solución</p>
+      </div-->
+    </div>
+  </div>
+  
+
+  <div class="body">
+
+    <mat-card class="images-card">
+
+      <div class="set-12 imghldr" *ngIf="solution.images.length == 0">
+        <mat-icon >panorama</mat-icon>
+      </div>
+
+      <slider-images [images]="sliderImages" *ngIf="solution.images.length != 0"></slider-images>
+
+      <div class="footer">
+        <label class="item">
+          <mat-icon color="primary">add_circle</mat-icon>
+          <input
+            type="file"
+            accept="image/*"
+            id="addImageInput"
+            (change)="handleSelectImage($event)"
+            multiple
+          />
+        </label>
+        <avatars-row [users]="collaborators"></avatars-row>
+      </div>
+    </mat-card>
+
+    <mat-card class="about-card">
+      <div class="box">
+        <p class="title">Título</p>
+        <p class="text">{{ solution.title }}</p>
+      </div>
+
+      <div class="box">
+        <p class="title">Descripción</p>
+        <p class="text">{{ solution.description }}</p>
+      </div>
+
+    </mat-card>
+
+    <!--div class="table-card">
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>Cobertura</mat-label>
+          <mat-select [value]="document.coverage[0]._id">
+            <mat-option *ngFor="let option of document.coverage" [value]="option._id">
+              <small>{{ option.name | titlecase }}</small>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <mat-card>
+        <div>
+          <p class="list-title">
+            <small>Soluciones</small>
+            <mat-icon class="icon-insights">insights</mat-icon>
+          </p>
+        </div>
+
+        <table mat-table [dataSource]="solutions" class="problems-table">
+          
+          <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+          </ng-container>
+
+          
+          <ng-container matColumnDef="ranking">
+            <th mat-header-cell *matHeaderCellDef>Ranking</th>
+            <td mat-cell *matCellDef="let element">0</td>
+          </ng-container>
+
+          
+          <ng-container matColumnDef="users">
+            <th mat-header-cell *matHeaderCellDef>Usuarios</th>
+            <td mat-cell *matCellDef="let element">0</td>
+          </ng-container>
+
+          
+          <ng-container matColumnDef="interactions">
+            <th mat-header-cell *matHeaderCellDef>Interacciones</th>
+            <td mat-cell *matCellDef="let element">
+              0
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </mat-card>
+    </div-->
+
+    <!--mat-card class="card-chart donut">
+      <p class="title">Título de la gráfica</p>
+      <div class="content">
+        <canvas
+          class="donut-chart"
+          baseChart
+          [data]="data"
+          [type]="'doughnut'"
+          [options]="chartOptions"
+        ></canvas>
+      </div>
+    </mat-card-->
+
+    <mat-card class="card-chart circle">
+      <p class="title">Título de la gráfica</p>
+      <div class="content">
+        <canvas
+          class="donut-chart"
+          baseChart
+          [data]="data"
+          [type]="'doughnut'"
+          [options]="chartOptions"
+        ></canvas>
+      </div>
+    </mat-card>
+  </div>
+</div>
