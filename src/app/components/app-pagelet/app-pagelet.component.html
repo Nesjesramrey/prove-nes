@@ -10,7 +10,7 @@
 
   <div class="set-6 navigation">
 
-    <button *ngIf="path === 1" type="button" class="btn-permissios" (click)="btnPermissions()">
+    <button *ngIf="token !== null && path > 0" type="button" class="btn-permissios" (click)="btnPermissions()">
       Permiso para editar
    </button> 
 
