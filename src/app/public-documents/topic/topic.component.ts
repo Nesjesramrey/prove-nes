@@ -7,9 +7,10 @@ import { LayoutService } from 'src/app/services/layout.service';
 import { DocumentService } from 'src/app/services/document.service';
 import { TopicService } from 'src/app/services/topic.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalSolutionComponent } from '../components/modal-solution/modal-solution.component';
+// import { ModalSolutionComponent } from '../components/modal-solution/modal-solution.component';
 import { ModalTestimonyComponent } from '../components/modal-testimony/modal-testimony.component';
 import { AddDocumentTestimonyComponent } from 'src/app/components/add-document-testimony/add-document-testimony.component';
+import { AddDocumentSolutionComponent } from 'src/app/components/add-document-solution/add-document-solution.component';
 @Component({
   selector: '.topic-page',
   templateUrl: './topic.component.html',
@@ -48,21 +49,19 @@ export class TopicComponent implements OnInit {
   ngOnInit(): void {
     this.loadTopic();
   }
-  openModalSolution() {
-    const dialogRef = this.dialog.open(ModalSolutionComponent, {
-      width: '640px',
-
-      disableClose: true,
-    });
-  }
-
 
   loadTopic() {
     let document: Observable<any> =
       this.documentService.fetchSingleDocumentById({ _id: this.documentID });
-    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({_id: this.categoryID,});
-    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({_id: this.subcategoryID,});
-    let topic: Observable<any> = this.topicService.fetchSingleTopicById({_id: this.topicID,});
+    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({
+      _id: this.categoryID,
+    });
+    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById(
+      { _id: this.subcategoryID }
+    );
+    let topic: Observable<any> = this.topicService.fetchSingleTopicById({
+      _id: this.topicID,
+    });
 
     forkJoin([document, category, subcategory, topic]).subscribe(
       (reply: any) => {
@@ -93,7 +92,32 @@ export class TopicComponent implements OnInit {
     );
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      this.topic.testimonials.push(reply.testimonials[0])
+      if (reply != undefined) {
+        this.topic.testimonials.unshift(reply.testimonials[0]);
+      }
+    });
+  }
+
+  openModalSolution() {
+    const dialogRef = this.dialog.open<AddDocumentSolutionComponent>(
+      AddDocumentSolutionComponent,
+      {
+        width: '640px',
+        data: {
+          documentID: this.documentID,
+          document: this.document,
+          categoryID: this.categoryID,
+          topicID: this.topicID,
+          type: 'sublayout',
+        },
+        disableClose: true,
+      }
+    );
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        console.log(reply);
+      }
     });
   }
 }

@@ -1,6 +1,6 @@
 <div class="set-12 dialog-head">
   <div class="set-9">
-    <h3>Agregar Solucion</h3>
+    <h3>Agregar Solución</h3>
   </div>
   <div class="set-3 txt-right">
     <button
@@ -15,8 +15,14 @@
 </div>
 
 <div class="set-12 dialog-body">
-  <form [formGroup]="addSolutionFormGroup">
+  <form [formGroup]="addSolutionFormGroup" (submit)="onCreateSolution(addSolutionFormGroup)">
     <div class="form-body">
+
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Título</mat-label>
+        <input matInput placeholder="Título" formControlName="title" />
+      </mat-form-field>
+
       <mat-form-field class="example-full-width" appearance="outline">
         <mat-label>Escribe una descripción o carga un documento</mat-label>
         <textarea matInput placeholder="Descripción" formControlName="description"></textarea>

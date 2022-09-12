@@ -9,6 +9,6 @@
     }"
     *ngFor="let item of categories"
   >
-    <span>{{ item.name }}</span>
+    <span (click)="redirect(item._id)" style="cursor:pointer">{{ item.title }}</span>
   </div>
 </div>

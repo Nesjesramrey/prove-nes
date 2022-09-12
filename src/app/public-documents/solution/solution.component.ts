@@ -87,7 +87,10 @@ export class SolutionComponent implements OnInit {
     );
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      this.solution.testimonials.push(reply.testimonials[0])
+      if (reply != undefined) {
+        console.log(reply);
+        this.solution.testimonials.unshift(reply.testimonials[0])
+      }
     });
   }
 }

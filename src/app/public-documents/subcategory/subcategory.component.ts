@@ -23,7 +23,7 @@ export class SubcategoryComponent implements OnInit {
   public isDataAvailable: boolean = false;
 
   public displayedColumns: string[] = ['name', 'ranking', 'users'];
-  public problemsDataSource = [];
+  public topicsDataSource = [];
   public solutionsDataSource = [];
 
   constructor(
@@ -58,12 +58,11 @@ export class SubcategoryComponent implements OnInit {
     );
 
     forkJoin([document, category, subcategory]).subscribe((reply: any) => {
-      console.log('##', reply);
       this.document = reply[0];
       this.category = reply[1];
       this.subcategory = reply[2];
 
-      this.problemsDataSource = this.subcategory.topics;
+      this.topicsDataSource = this.subcategory.topics;
       this.solutionsDataSource = this.subcategory.topics.map(
         (item: any) => [...item.solutions]
       )[0];

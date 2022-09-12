@@ -1,9 +1,7 @@
 :host {
   .form-body {
     margin-top: 20pt;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+   
 
     > * {
       margin: 0;
@@ -17,12 +15,11 @@
       border-color: #636363;
       border-style: dashed;
       border-width: 2px;
-      width: 30%;
+      width: 100%;
       min-height: 100pt;
       height: auto;
       margin-bottom: 50pt;
       position: relative;
-      margin-left: 10pt;
       border-radius: 5px;
 
       label {

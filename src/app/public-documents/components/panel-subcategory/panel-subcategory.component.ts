@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { UtilityService } from 'src/app/services/utility.service';
 
 export interface ICategoryFormat {
-  name: string;
+  title: string;
   pos: {
     x: number;
     y: number;
@@ -16,11 +18,22 @@ export interface ICategoryFormat {
   styleUrls: ['./panel-subcategory.component.scss'],
 })
 export class PanelSubcategoryComponent implements OnInit {
-  public categories: ICategoryFormat[] = [];
+  public categories: any = [];
+  public documentID: string = '';
+  public categoryID: string = '';
+  public subcategoryID: string = '';
   @Input() data: any[] = [];
   @Input() selectedID: string = '';
 
-  constructor() {}
+  constructor(
+    public utilityService: UtilityService,
+    public activatedRoute: ActivatedRoute
+  ) {
+    this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
+    this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
+    this.subcategoryID =
+      this.activatedRoute['snapshot']['params']['subcategoryID'];
+  }
 
   ngOnInit(): void {
     this.loadSubcategories();
@@ -33,10 +46,10 @@ export class PanelSubcategoryComponent implements OnInit {
     let maxY = 700;
 
     this.categories = this.data.map((item) => {
-      item.size = item._id === this.selectedID ? 44 : 35;
+      console.log(item);
+      item.size = item._id === this.selectedID ? 38 : 30;
       item.opacity = item._id === this.selectedID ? 1 : 0.4;
-      item.name = item.category.name;
-      if (item.category.name.length > 12) {
+      if (item.title.length > 12) {
         maxX = 400;
       } else {
         maxX = 600;
@@ -48,5 +61,11 @@ export class PanelSubcategoryComponent implements OnInit {
       };
       return item;
     });
+  }
+
+  redirect(id: string) {
+    const path = `documentos-publicos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/tema/${id}`;
+
+    this.utilityService.linkMe(path);
   }
 }
