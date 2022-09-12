@@ -2,10 +2,10 @@
   <div class="set-12">
     <div class="set-6">
       <breadcrumbs-component>
-        <li class="breadcrumb-item">{{document.title}}</li>
-        <li class="breadcrumb-item">{{category.category.name}}</li>
-        <li class="breadcrumb-item">{{subcategory.category.name}}</li>
-        <li>{{topic.title}}</li>
+        <li class="breadcrumb-item">{{ document.title }}</li>
+        <li class="breadcrumb-item">{{ category.category.name }}</li>
+        <li class="breadcrumb-item">{{ subcategory.category.name }}</li>
+        <li>{{ topic.title }}</li>
       </breadcrumbs-component>
       <div class="favorite-button">
         <button
@@ -74,14 +74,18 @@
                   <br />
                   <b>8</b>
                 </p>
-                <button mat-raised-button color="primary">Vota</button>
+                <button mat-raised-button color="primary" (click)="vote()">
+                  Vota
+                </button>
+                <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
               </div>
             </div>
           </div>
           <!-- DATA -->
           <div class="data-box">
             <p class="title">{{ topic.title }}</p>
-            <expanded-text [text]="topic.description"[minLength]="400"> </expanded-text>
+            <expanded-text [text]="topic.description" [minLength]="400">
+            </expanded-text>
           </div>
         </mat-card>
       </div>
@@ -90,7 +94,9 @@
       </div>
     </div>
     <div class="set-4">
-      <public-documents-testimonials [data]="topic.testimonials"></public-documents-testimonials>
+      <public-documents-testimonials
+        [data]="topic.testimonials"
+      ></public-documents-testimonials>
     </div>
   </div>
 </div>

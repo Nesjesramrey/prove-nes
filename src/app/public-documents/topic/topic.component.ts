@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ModalSolutionComponent } from '../components/modal-solution/modal-solution.component';
 import { ModalTestimonyComponent } from '../components/modal-testimony/modal-testimony.component';
 import { AddDocumentTestimonyComponent } from 'src/app/components/add-document-testimony/add-document-testimony.component';
+import { VoteService } from 'src/app/services/vote.service';
 @Component({
   selector: '.topic-page',
   templateUrl: './topic.component.html',
@@ -25,6 +26,7 @@ export class TopicComponent implements OnInit {
   public category: any = null;
   public subcategory: any = null;
   public topic: any = null;
+  public submitted: boolean = false;
 
   public testimonials: any = TESTIMONIALS;
   public solutionsData: any = [];
@@ -34,7 +36,8 @@ export class TopicComponent implements OnInit {
     public utilityService: UtilityService,
     public documentService: DocumentService,
     public layoutService: LayoutService,
-    public topicService: TopicService
+    public topicService: TopicService,
+    public voteService: VoteService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
@@ -55,14 +58,36 @@ export class TopicComponent implements OnInit {
       disableClose: true,
     });
   }
-
+  vote() {
+    this.submitted = true;
+    let data = {};
+    this.voteService.createNewVoto(data).subscribe({
+      error: (error) => {
+        this.utilityService.openErrorSnackBar(
+          '¡Oops!... Ocurrió un error, inténtalo más tarde.'
+        );
+        this.submitted = false;
+      },
+      next: (reply: any) => {
+        // console.log(reply);
+        this.submitted = false;
+      },
+      complete: () => {},
+    });
+  }
 
   loadTopic() {
     let document: Observable<any> =
       this.documentService.fetchSingleDocumentById({ _id: this.documentID });
-    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({_id: this.categoryID,});
-    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({_id: this.subcategoryID,});
-    let topic: Observable<any> = this.topicService.fetchSingleTopicById({_id: this.topicID,});
+    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({
+      _id: this.categoryID,
+    });
+    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById(
+      { _id: this.subcategoryID }
+    );
+    let topic: Observable<any> = this.topicService.fetchSingleTopicById({
+      _id: this.topicID,
+    });
 
     forkJoin([document, category, subcategory, topic]).subscribe(
       (reply: any) => {
@@ -93,7 +118,7 @@ export class TopicComponent implements OnInit {
     );
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      this.topic.testimonials.push(reply.testimonials[0])
+      this.topic.testimonials.push(reply.testimonials[0]);
     });
   }
 }
