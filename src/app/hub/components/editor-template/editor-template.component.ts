@@ -19,7 +19,6 @@ export class EditorTemplateComponent implements OnInit {
 
   ngOnInit(): void {
     setTimeout(() => {
-      // console.log(this.documents);
       this.isDataAvailable = true;
     });
   }
@@ -28,6 +27,7 @@ export class EditorTemplateComponent implements OnInit {
     let document: any = this.documents.filter((x: any) => {
       return x['_id'] == documentID
     });
+
     const dialogRef = this.dialog.open(AddDocumentLayoutComponent, {
       width: '640px',
       data: {

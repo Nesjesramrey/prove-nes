@@ -38,121 +38,50 @@ export class SingleUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.userSrvc.fetchFireUser().subscribe({
-      error: (error) => {
-        switch (error['status']) {
-          case 401:
-            // this.utilityService.openErrorSnackBar('Tu token de acceso ha caducado, intenta ingresar otra vez.');
-            // localStorage.removeItem('accessToken');
-            break;
-        }
+      error: (error: any) => {
         setTimeout(() => {
           this.isDataAvailable = true;
-        });
+        }, 1000);
       },
       next: (reply: any) => {
         this.user = reply;
+        console.log('user: ', this.user);
+
         this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
+        console.log(this.userActivities);
+
         if (this.userActivities.length != 0) {
           this.haveRootPermissions = true;
+
           if (this.userActivities.includes('moderator')) {
             setTimeout(() => {
               this.isDataAvailable = true;
-            });
+            }, 1000);
           }
+
           if (this.userActivities.includes('administrator')) {
             let documents: Observable<any> = this.documentSrvc.fetchMyDocuments({ createdBy: this.userID });
             forkJoin([documents]).subscribe((reply: any) => {
               this.documents = reply[0];
-              // console.log('documents: ', this.documents);
+              console.log('documents: ', this.documents);
+
               setTimeout(() => {
                 this.isDataAvailable = true;
-              });
+              }, 1000);
             });
           }
         } else {
           this.documentSrvc.fetchDocumentsByCollaborator({ _id: this.user['_id'] }).subscribe((reply: any) => {
             this.documents = reply;
-            // console.log(this.documents);
+            console.log('documents: ', this.documents);
+
             setTimeout(() => {
               this.isDataAvailable = true;
-            });
+            }, 1000);
           });
         }
       },
       complete: () => { }
-    });
-
-
-
-    // this.userSrvc.fetchFireUser().subscribe((reply: any) => {
-    //   this.user = reply;
-    //   this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
-    //   if (this.userActivities.length != 0) {
-    //     this.haveRootPermissions = true;
-
-    //     if (this.userActivities.includes('moderator')) {
-    //       setTimeout(() => {
-    //         this.isDataAvailable = true;
-    //       });
-    //     }
-    //     if (this.userActivities.includes('administrator')) {
-    //       let documents: Observable<any> = this.documentSrvc.fetchMyDocuments({ createdBy: this.userID });
-    //       forkJoin([documents]).subscribe((reply: any) => {
-    //         // console.log(reply);
-    //         this.documents = reply[0];
-    //         console.log('documents: ', this.documents);
-    //         setTimeout(() => {
-    //           this.isDataAvailable = true;
-    //         });
-    //       });
-    //       // let documents: Observable<any> = this.documentSrvc.fetchMyDocuments({ created_by: this.userID });
-    //       // forkJoin([documents]).subscribe((reply: any) => {
-    //       //   this.documents = reply[0]['documents'];
-    //       // });
-    //     }
-    //   }
-    // });
-    return;
-
-    this.userSrvc.fetchUserById({ _id: this.userID }).subscribe((reply: any) => {
-      console.log(reply);
-      this.user = reply['user'];
-      this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
-
-      // root activities
-      if (this.userActivities.length != 0) {
-        this.haveRootPermissions = true;
-
-        // moderator
-        if (this.userActivities.includes('moderator')) {
-          setTimeout(() => {
-            this.isDataAvailable = true;
-          });
-        }
-        // administrator
-        if (this.userActivities.includes('administrator')) {
-          let documents: Observable<any> = this.documentSrvc.fetchMyDocuments({ created_by: this.userID });
-          forkJoin([documents]).subscribe((reply: any) => {
-            this.documents = reply[0]['documents'];
-
-            setTimeout(() => {
-              this.isDataAvailable = true;
-            });
-          });
-        }
-      }
-      // inner activities
-      else {
-        this.haveRootPermissions = false;
-
-        this.documentSrvc.fetchEditorDocuments({ userID: this.userID }).subscribe((reply: any) => {
-          this.documents = reply['documents'];
-
-          setTimeout(() => {
-            this.isDataAvailable = true;
-          });
-        });
-      }
     });
   }
 
