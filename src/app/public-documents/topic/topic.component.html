@@ -1,28 +1,20 @@
 <div class="container" *ngIf="topic">
   <div class="set-12">
-    <div class="set-6">
+    <div class="set-5">
       <breadcrumbs-component>
         <li class="breadcrumb-item">{{ document.title }}</li>
         <li class="breadcrumb-item">{{ category.category.name }}</li>
         <li class="breadcrumb-item">{{ subcategory.category.name }}</li>
         <li>{{ topic.title }}</li>
       </breadcrumbs-component>
-      <div class="favorite-button">
-        <button
-          class="favorite"
-          mat-mini-fab
-          aria-label="Example icon-button with a heart icon"
-        >
-          <mat-icon>favorite</mat-icon>
-        </button>
-      </div>
+      
     </div>
 
     <div class="set-4 featured-users">
       <featured-users [inputAmount]="5"></featured-users>
     </div>
 
-    <div class="set-2">
+    <div class="set-3">
       <div class="header-buttons">
         <div class="button-box">
           <button
@@ -35,6 +27,17 @@
             <mat-icon>create_new_folder</mat-icon>
           </button>
           <p>Agregar solución</p>
+        </div>
+        <div class="button-box">
+          <button
+            type="button"
+            mat-mini-fab
+            color="warn"
+            class="add-button red"
+          >
+            <mat-icon>create_new_folder</mat-icon>
+          </button>
+          <p>Agregar Comentario</p>
         </div>
         <div class="button-box">
           <button

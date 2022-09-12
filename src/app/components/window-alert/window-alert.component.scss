@@ -1,0 +1,66 @@
+:host {
+  min-height: 170px;
+
+  .dialog-head {
+    display: flex;
+    align-items: center;
+  }
+
+  .dialog-body {
+    margin-top: 20px;
+
+    p {
+      text-align: center;
+      margin-top: 5px;
+    }
+
+    .ctrls {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-top: 20px;
+
+      * {
+        margin: 0;
+      }
+
+      mat-spinner {
+        margin-left: 20px;
+      }
+
+      button {
+        margin-left: 10px;
+      }
+
+      button:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+
+  .loading {
+    mat-spinner {
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .alert-txt {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ff0000;
+    text-align: center;
+    margin-bottom: 15px;
+
+    * {
+      margin: 0;
+    }
+
+    mat-icon {
+      margin-left: 20px;
+    }
+  }
+}

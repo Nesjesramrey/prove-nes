@@ -105,7 +105,7 @@ export class SingleCategoryComponent implements OnInit {
                 sol.topic = topic_obj;
                 sol.subcategory = topic_obj.subcategory;
                 solutions.push(sol);
-                console.log(sol);
+                //console.log(sol);
               })              
             }
 
@@ -217,10 +217,6 @@ export class SingleCategoryComponent implements OnInit {
 
   linkSolution(id: string, subcategory_id:string, theme_id:string) {
     this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${subcategory_id}/temas/${theme_id}/solucion/${id}`)  
-    //Correcta
-    //http://localhost:4200/documentos/63123eca2e5774fd96aebc25/categoria/63123edd2e5774fd96aebc3f/subcategoria/63123eee2e5774fd96aebc5b/temas/6316d63160f4e48cfc666813/solucion/63199db960f4e48cfc668ee8
-    //Incorrecta
-    //http://localhost:4200/documentos/63123eca2e5774fd96aebc25/categoria/63123edd2e5774fd96aebc3f/subcategoria/6316d63160f4e48cfc666813/temas/63123eee2e5774fd96aebc5b/solucion/63199db960f4e48cfc668ee8
   }
 
 }

@@ -23,7 +23,6 @@ export class AppPageletComponent implements OnInit {
   public notifications: any = null;
   public isDataAvailable: boolean = false;
   public userActivities: any = [];
-
   public path : any ;
 
   constructor(
@@ -36,7 +35,10 @@ export class AppPageletComponent implements OnInit {
  
     public dialog : MatDialog   
   ) { 
-    this.path = this.router.url.indexOf('documentos-publicos');
+    if(this.router.url.indexOf('documentos-publicos') !== -1){
+         this.path = this.router.url.indexOf('documentos-publicos');
+    }
+    this. token = this.authenticationSrvc.fetchAccessToken;
   }
 
   ngOnInit(): void {
@@ -99,6 +101,7 @@ export class AppPageletComponent implements OnInit {
   }
 
     btnPermissions(){
+      console.log("token",this.token)
     const dialogRef = this.dialog.open<ModalPermissionsComponent>(ModalPermissionsComponent, {
       width: '640px',
       disableClose: true

@@ -6,9 +6,9 @@
   <div class="set-12 ds-page">
     <div class="cover"></div>
 
-    <!-- <div class="set-12 info">
+    <div class="set-12 info">
       <div class="set-12 txt-center">
-        <button type="button" class="grad-txt" (click)="linkMe('/documentos/' + document._id)">
+        <button type="button" class="grad-txt" (click)="linkMe('/documentos-publicos/' + document._id)">
           {{document.title}}
         </button>
 
@@ -19,15 +19,13 @@
           </div>
         </div>
 
-        <div class="set-12 layouts">
-          <button type="button" class="cat" *ngFor="let layout of document.layouts"
-            [style.background-image]="'url('+layout.images[0]+')'"
-            (click)="linkMe('/documentos/' + document._id + '/categoria/' + layout._id)">
-            <span class="grad-txt">{{layout.category.name}}</span>
+        <div class="set-12 txt-center">
+          <button type="button" mat-raised-button color="primary" (click)="linkMe('/documentos/' + document._id)">
+            Visitar Documento
           </button>
         </div>
       </div>
-    </div> -->
+    </div>
   </div>
 
   <div class="set-12 ds-page">

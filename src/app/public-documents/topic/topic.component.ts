@@ -7,9 +7,10 @@ import { LayoutService } from 'src/app/services/layout.service';
 import { DocumentService } from 'src/app/services/document.service';
 import { TopicService } from 'src/app/services/topic.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalSolutionComponent } from '../components/modal-solution/modal-solution.component';
+// import { ModalSolutionComponent } from '../components/modal-solution/modal-solution.component';
 import { ModalTestimonyComponent } from '../components/modal-testimony/modal-testimony.component';
 import { AddDocumentTestimonyComponent } from 'src/app/components/add-document-testimony/add-document-testimony.component';
+import { AddDocumentSolutionComponent } from 'src/app/components/add-document-solution/add-document-solution.component';
 import { VoteService } from 'src/app/services/vote.service';
 @Component({
   selector: '.topic-page',
@@ -50,30 +51,6 @@ export class TopicComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadTopic();
-  }
-  openModalSolution() {
-    const dialogRef = this.dialog.open(ModalSolutionComponent, {
-      width: '640px',
-
-      disableClose: true,
-    });
-  }
-  vote() {
-    this.submitted = true;
-    let data = {};
-    this.voteService.createNewVoto(data).subscribe({
-      error: (error) => {
-        this.utilityService.openErrorSnackBar(
-          '¡Oops!... Ocurrió un error, inténtalo más tarde.'
-        );
-        this.submitted = false;
-      },
-      next: (reply: any) => {
-        // console.log(reply);
-        this.submitted = false;
-      },
-      complete: () => {},
-    });
   }
 
   loadTopic() {
@@ -118,7 +95,32 @@ export class TopicComponent implements OnInit {
     );
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      this.topic.testimonials.push(reply.testimonials[0]);
+      if (reply != undefined) {
+        this.topic.testimonials.unshift(reply.testimonials[0]);
+      }
+    });
+  }
+
+  openModalSolution() {
+    const dialogRef = this.dialog.open<AddDocumentSolutionComponent>(
+      AddDocumentSolutionComponent,
+      {
+        width: '640px',
+        data: {
+          documentID: this.documentID,
+          document: this.document,
+          categoryID: this.categoryID,
+          themeID: this.topicID,
+          type: 'sublayout',
+        },
+        disableClose: true,
+      }
+    );
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        console.log(reply);
+      }
     });
   }
 }

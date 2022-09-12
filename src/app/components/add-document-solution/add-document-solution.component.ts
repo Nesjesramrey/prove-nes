@@ -64,17 +64,10 @@ export class AddDocumentSolutionComponent implements OnInit {
     data['formData'].append('title', form['value']['title']);
     data['formData'].append('description', form['value']['description']);
 
-    this.solutionService.createNewSolution(data).subscribe({
-      error: (error) => {
-        this.utilityService.openErrorSnackBar('¡Oops!... Ocurrió un error, inténtalo más tarde.');
-        this.submitted = false;
-      },
-      next: (reply: any) => {
-        // console.log(reply);
-        this.submitted = false;
-        this.dialogRef.close();
-      },
-      complete: () => { },
+    this.solutionService.createNewSolution(data).subscribe((reply:any) => {
+      console.log("reply 0 " + reply);
+      this.submitted = false;
+      this.dialogRef.close(reply);
     });
   }
 

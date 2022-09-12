@@ -1,0 +1,31 @@
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+
+<div class="set-12" *ngIf="isDataAvailable && windowType == 'useAsCover'">
+  <div class="set-12 dialog-head">
+    <div class="set-12">
+      <h3 class="txt-left">{{document.title}}</h3>
+      <p class="bycopy">
+        <i>
+          <small>By: {{document.createdBy.firstname}} {{document.createdBy.lastname}}</small>
+        </i>
+      </p>
+    </div>
+  </div>
+
+  <div class="set-12 dialog-body">
+    <div class="set-12 alert-txt">
+      <h1>¡Alerta!</h1>
+      <mat-icon>warning</mat-icon>
+    </div>
+    <div class="set-12">
+      <p>Se usará el documento como portada</p>
+      <p>¿Deseas continuar?</p>
+    </div>
+    <div class="set-12 ctrls">
+      <button type="button" mat-raised-button color="accent" (click)="killDialog()">Cancelar</button>
+      <button type="button" mat-raised-button color="primary" (click)="setAsCover()">Continuar</button>
+    </div>
+  </div>
+</div>

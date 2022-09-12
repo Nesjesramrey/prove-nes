@@ -1,0 +1,40 @@
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+
+<div class="set-12" *ngIf="isDataAvailable">
+  <div class="set-12 dialog-head">
+    <div class="set-10">
+      <h3 class="txt-left">{{document.title}}</h3>
+      <p class="bycopy">
+        <i>
+          <small>By: {{document.createdBy.firstname}} {{document.createdBy.lastname}}</small>
+        </i>
+      </p>
+    </div>
+    <div class="set-2 txt-right">
+      <button type="button" mat-icon-button color="primary" matTooltip="Salir" matTooltipClass="tooltip"
+        (click)="killDialog()">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="set-12 dialog-body">
+    <p>
+      <small>Agrega un texto de bienvenida de tu documento</small>
+    </p>
+    <form class="set-12" [formGroup]="formGroup" (submit)="addDocumentCoverText(formGroup)">
+      <mat-form-field appearance="outline">
+        <mat-label>Descripción</mat-label>
+        <textarea matInput cdkTextareaAutosize formControlName="description"></textarea>
+      </mat-form-field>
+
+      <div class="set-12 ctrls">
+        <button type="submit" mat-raised-button color="primary" [disabled]="formGroup.invalid">
+          Guardar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

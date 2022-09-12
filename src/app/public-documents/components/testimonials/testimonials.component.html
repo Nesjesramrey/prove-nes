@@ -8,17 +8,17 @@
     <mat-card class="testimonial-item" *ngFor="let testimonial of data">
       <!-- IMAGE -->
       <div class="leading">
-        <img class="image" src="https://images.pexels.com/photos/2726111/pexels-photo-2726111.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"/>
+        <img class="image" [src]="testimonial.images[0]" />
       </div>
       <!-- CONTENT -->
       <div class="info">
         <p class="title">{{ testimonial.name }}</p>
-        <p class="description">{{ testimonial.description }}</p>
+        <!-- <p class="description">{{ testimonial.description }}</p> -->
 
         <div class="about">
           <!-- AVATAR -->
 
-          <img class="avatar" [src]="testimonial.images[0]" />
+          <img class="avatar" src="https://images.pexels.com/photos/2726111/pexels-photo-2726111.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"  />
 
           <p>Fecha de creación: {{  testimonial.createdAt | date}}</p>
         </div>

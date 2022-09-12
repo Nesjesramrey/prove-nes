@@ -40,7 +40,7 @@
     button {
       margin-top: 90px;
       margin-bottom: 30px;
-      font-size: 40pt;
+      // font-size: 40pt;
     }
 
     .layouts {
@@ -302,8 +302,12 @@
     }
   }
 
+  button.grad-txt {
+    font-size: 40pt;
+  }
+
   .grad-txt {
-    background: linear-gradient(to right, hsl(98 100% 62%), hsl(204 100% 59%));
+    background: linear-gradient(to right, hsl(98 100% 62%), #cf0821);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-align: center;

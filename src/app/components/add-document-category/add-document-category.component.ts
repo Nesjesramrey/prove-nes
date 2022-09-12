@@ -1,17 +1,6 @@
-import {
-  Component,
-  ElementRef,
-  Inject,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { forkJoin, Observable } from 'rxjs';
 import { UtilityService } from 'src/app/services/utility.service';
 import { map, startWith } from 'rxjs/operators';
@@ -19,6 +8,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { LayoutService } from 'src/app/services/layout.service';
+import { AddRootCategoryComponent } from '../add-root-category/add-root-category.component';
 
 @Component({
   selector: '.add-document-category',
@@ -52,7 +42,9 @@ export class AddDocumentCategoryComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public utilityService: UtilityService,
     public formBuilder: FormBuilder,
-    public layoutService: LayoutService
+    public layoutService: LayoutService,
+    public dialog: MatDialog,
+    public utilityservice: UtilityService
   ) {
     // console.log(this.dialogData);
     this.dialogData['document']['layouts'].filter((x: any) => {
@@ -76,7 +68,7 @@ export class AddDocumentCategoryComponent implements OnInit {
       });
 
       this.stepTwoFormGroup = this.formBuilder.group({
-        category: ['', [Validators.required]],
+        layout: ['', [Validators.required]],
       });
 
       // remove
@@ -157,7 +149,7 @@ export class AddDocumentCategoryComponent implements OnInit {
     }
 
     this.selectedCategoryId = category[0]['_id'];
-    this.stepTwoFormGroup.patchValue({ category: category[0]['_id'] });
+    this.stepTwoFormGroup.patchValue({ layout: category[0]['_id'] });
     this.selectedCategories.push(event.option.value);
     this.categoryInput.nativeElement.value = '';
     this.categoryCtrl.setValue(null);
@@ -190,6 +182,26 @@ export class AddDocumentCategoryComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  popAddRootCategoryDialog() {
+    const dialogRef = this.dialog.open<AddRootCategoryComponent>(AddRootCategoryComponent, {
+      width: '420px',
+      data: {},
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        this.utilityservice.openSuccessSnackBar('¡Se agrego correctamente!');
+        this.categories.push(reply);
+        this.layout.push(reply['_id']);
+        this.categoriesString.push(reply['name']);
+        this.selectedCategories.push(reply['name']);
+        this.stepTwoFormGroup.patchValue({ layout: this.layout });
+        this.setFilteredCategories();
+      }
+    });
+  }
+
   onAddLayout() {
     this.isSubmitted = true;
     let data: any;
@@ -212,7 +224,7 @@ export class AddDocumentCategoryComponent implements OnInit {
         );
         data['formData'].append(
           'category',
-          this.stepTwoFormGroup.value.category
+          this.stepTwoFormGroup.value.layout
         );
 
         this.layoutService.createNewSubLayout(data).subscribe((reply: any) => {

@@ -1,6 +1,6 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { forkJoin, Observable } from 'rxjs';
 import { UtilityService } from 'src/app/services/utility.service';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
@@ -8,6 +8,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { map, startWith } from 'rxjs/operators';
 import { DocumentService } from 'src/app/services/document.service';
+import { AddRootCategoryComponent } from '../add-root-category/add-root-category.component';
 
 @Component({
   selector: '.add-document-layout',
@@ -37,7 +38,8 @@ export class AddDocumentLayoutComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public utilityservice: UtilityService,
     public formBuilder: FormBuilder,
-    public documentService: DocumentService
+    public documentService: DocumentService,
+    public dialog: MatDialog
   ) {
     // console.log(this.dialogData);
     this.document = this.dialogData['document'];
@@ -167,21 +169,23 @@ export class AddDocumentLayoutComponent implements OnInit {
     );
   }
 
-  onCreateCategory(form: FormGroup) {
-    let data: any = {
-      name: this.addCategoryFormGroup.value.name
-    }
+  popAddRootCategoryDialog() {
+    const dialogRef = this.dialog.open<AddRootCategoryComponent>(AddRootCategoryComponent, {
+      width: '420px',
+      data: {},
+      disableClose: true
+    });
 
-    this.utilityservice.createNewCategory(data).subscribe((reply: any) => {
-      // console.log(reply);
-      this.utilityservice.openSuccessSnackBar('¡Se agrego correctamente!');
-      this.categories.push(reply);
-      this.categoriesString.push(reply['name']);
-      this.selectedCategories.push(reply['name']);
-      this.stepTwoFormGroup.patchValue({ layout: this.selectedCategories });
-      this.setFilteredCategories();
-      this.addCategoryFormGroup.reset();
-      this.addNewCategory = false;
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        this.utilityservice.openSuccessSnackBar('¡Se agrego correctamente!');
+        this.categories.push(reply);
+        this.categoriesString.push(reply['name']);
+        this.selectedCategories.push(reply['name']);
+        this.stepTwoFormGroup.patchValue({ layout: this.selectedCategories });
+        this.setFilteredCategories();
+        this.layout.push(reply['_id']);
+      }
     });
   }
 }
