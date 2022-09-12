@@ -516,3 +516,55 @@ mat-form-field {
     opacity: 1;
   }
 }
+
+.viewer-dialog {
+  height: 100%;
+  right: 0;
+  overflow: auto;
+
+  .mat-dialog-container {
+    border-radius: 0 !important;
+    padding: 0;
+  }
+}
+
+.viewer-dialog {
+  width: 100% !important;
+  max-width: 100vw !important;
+
+  .mat-dialog-container {
+    padding: 0;
+    background: #e5e5e5;
+  }
+
+  .dialog-viewer,
+  .dialog-body {
+    height: 100vh;
+  }
+
+  .dialog-viewer {
+    width: 75%;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba($color: #000000, $alpha: 1.0);
+
+    .viewer-display {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+    }
+  }
+
+  .dialog-body {
+    width: 25%;
+    overflow: auto;
+    position: absolute;
+    top: 0;
+    left: 75%;
+  }
+}

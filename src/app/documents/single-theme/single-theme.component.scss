@@ -11,12 +11,15 @@
     flex-direction: column;
     // background-color: orange;
   }
-  .doc-description{
+
+  .doc-description {
     padding: 10px;
   }
-  .mat-card{
+
+  .mat-card {
     padding: 10px;
   }
+
   .imghldr {
     min-height: 150px;
     max-height: 150px;
@@ -46,10 +49,11 @@
     align-items: flex-start;
     justify-content: space-between;
 
-    > * {
+    >* {
       margin: 0;
     }
   }
+
   .about-card {
     grid-column: 5 / 13;
     width: 100%;
@@ -74,11 +78,13 @@
       }
     }
   }
+
   .actions-rigth {
     display: flex;
     justify-content: center;
     align-items: flex-start;
   }
+
   .button-group {
     float: left;
     display: flex;
@@ -113,7 +119,7 @@
       font-size: 14pt !important;
       color: #fff;
     }
-  }  
+  }
 
   .body {
     //display: grid;
@@ -139,7 +145,7 @@
         justify-content: space-between;
         align-items: center;
 
-        > * {
+        >* {
           margin: 0;
         }
       }
@@ -158,7 +164,7 @@
         display: flex;
         align-items: center;
 
-        > * {
+        >* {
           margin: 0;
         }
 
@@ -231,6 +237,7 @@
     &.donut {
       grid-area: 2 / 1 / 3 / 5;
     }
+
     // &.bars {
     //   grid-column: 4 / 12;
     // }
@@ -257,5 +264,5 @@
     //   max-width: 100px;
     // }
     // }
-  }  
+  }
 }

@@ -15,6 +15,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 import { EditDocumentDataComponent } from 'src/app/components/edit-document-data/edit-document-data.component';
 import { AddDocumentCoverTextComponent } from 'src/app/components/add-document-cover-text/add-document-cover-text.component';
 import { WindowAlertComponent } from 'src/app/components/window-alert/window-alert.component';
+import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 
 @Component({
   selector: '.single-document-page',
@@ -210,6 +211,21 @@ export class SingleDocumentComponent implements OnInit {
         this.utilityService.openSuccessSnackBar('El documento se actualizó correctamente.');
       },
       complete: () => { }
+    });
+  }
+
+  popImageViewer() {
+    const dialogRef = this.dialog.open<ImageViewerComponent>(ImageViewerComponent, {
+      width: '640px',
+      data: {
+        document: this.document
+      },
+      disableClose: true,
+      panelClass: 'viewer-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
     });
   }
 }

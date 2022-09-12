@@ -1,0 +1,30 @@
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+  <mat-spinner></mat-spinner>
+</div>
+
+
+<div class="set-12 dialog-viewer" *ngIf="isDataAvailable">
+  <input type="file" #file (change)="onFileSelected($event)" multiple>
+  <div class="viewer-display">
+    <div class="set-12 txt-center" *ngIf="document.images.length == 0">
+      <button type="button" (click)="file.click()" [disabled]="submitted">
+        <mat-icon>add_a_photo</mat-icon>
+        <p>Cargar imágenes</p>
+      </button>
+      <mat-spinner color="accent" diameter="70" *ngIf="submitted"></mat-spinner>
+      <p class="txt-center" *ngIf="submitted">Cargando...</p>
+    </div>
+    <img [src]="document.images[0]" alt="" *ngIf="document.images != 0">
+  </div>
+</div>
+
+<div class="set-12 dialog-body" *ngIf="isDataAvailable">
+  <mat-toolbar color="primary">
+    <button mat-icon-button (click)="killDialog()">
+      <mat-icon>cancel</mat-icon>
+    </button>
+    <button mat-icon-button>
+      <mat-icon>menu</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>

@@ -41,6 +41,7 @@ import { SliderImagesComponent } from './slider-images/slider-images.component';
 import { AddDocumentCoverTextComponent } from "./add-document-cover-text/add-document-cover-text.component";
 import { WindowAlertComponent } from "./window-alert/window-alert.component";
 import { AddRootCategoryComponent } from "./add-root-category/add-root-category.component";
+import { ImageViewerComponent } from "./image-viewer/image-viewer.component";
 
 @NgModule({
   imports: [
@@ -85,7 +86,8 @@ import { AddRootCategoryComponent } from "./add-root-category/add-root-category.
     SliderImagesComponent,
     AddDocumentCoverTextComponent,
     WindowAlertComponent,
-    AddRootCategoryComponent
+    AddRootCategoryComponent,
+    ImageViewerComponent
   ],
   exports: [
     AppPageletComponent,
@@ -109,7 +111,8 @@ import { AddRootCategoryComponent } from "./add-root-category/add-root-category.
     SliderImagesComponent,
     AddDocumentCoverTextComponent,
     WindowAlertComponent,
-    AddRootCategoryComponent
+    AddRootCategoryComponent,
+    ImageViewerComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
@@ -124,7 +127,8 @@ import { AddRootCategoryComponent } from "./add-root-category/add-root-category.
     EditCategoryDataComponent,
     AddDocumentCoverTextComponent,
     WindowAlertComponent,
-    AddRootCategoryComponent
+    AddRootCategoryComponent,
+    ImageViewerComponent
   ],
   providers: [],
 })

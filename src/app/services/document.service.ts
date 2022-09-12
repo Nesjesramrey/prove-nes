@@ -46,6 +46,10 @@ export class DocumentService {
     return this.httpClient.put(this.endpointSrvc.apiEndPoint + this.endpointSrvc.setDocumentAsPublicPrivateEndPoint + `${data['document_id']}` + '/mark_as_public', data);
   }
 
+  uploadDocumentFiles(data: any) {
+    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.uploadDocumentFilesEndPoint + `${data['document_id']}` + '/images', data['formData']);
+  }
+
 
 
 

@@ -15,6 +15,7 @@
         <li>{{ selectedCategory.category.name }}</li>
       </breadcrumbs-component>
     </div>
+
     <div class="set-6 txt-right">
       <span class="created-by" *ngIf="selectedCategory.createdBy != null">
         Autor: <span class="author">{{selectedCategory.createdBy.firstname}}
@@ -29,6 +30,10 @@
         <div class="set-12 imghldr">
           <mat-icon *ngIf="document.images.length == 0">panorama</mat-icon>
           <img [src]="document.images[0]" alt="" *ngIf="document.images.length != 0">
+          <div class="overlay" *ngIf="document.images.length == 0">
+            <mat-icon>photo_camera</mat-icon>
+            <div class="cover"></div>
+          </div>
         </div>
 
         <div class="set-12 infohldr">
@@ -43,14 +48,14 @@
                   <mat-icon>edit</mat-icon>
                   <span>Editar</span>
                 </button>
-                <button mat-menu-item disabled="">
+                <!-- <button mat-menu-item disabled="">
                   <mat-icon>cloud_upload</mat-icon>
                   <span>Cargar template</span>
                 </button>
                 <button mat-menu-item disabled="">
                   <mat-icon>cloud_download</mat-icon>
                   <span>Descargar template</span>
-                </button>
+                </button> -->
               </mat-menu>
             </div>
           </div>
@@ -126,7 +131,8 @@
             </p>
 
             <ol class="top-list">
-              <li class="top-list-item" *ngFor="let solution of solutions.slice(0, 4);" (click)="linkSolution(solution._id, solution.subcategory._id, solution.topic._id)">
+              <li class="top-list-item" *ngFor="let solution of solutions.slice(0, 4);"
+                (click)="linkSolution(solution._id, solution.subcategory._id, solution.topic._id)">
                 <span>{{solution.title}}</span>
               </li>
             </ol>
@@ -139,7 +145,8 @@
             </p>
 
             <ol class="top-list">
-              <li class="top-list-item" *ngFor="let topic of topics.slice(0, 4);" (click)="linkTopic(topic._id, topic.subcategory._id)">
+              <li class="top-list-item" *ngFor="let topic of topics.slice(0, 4);"
+                (click)="linkTopic(topic._id, topic.subcategory._id)">
                 <span>{{topic.title}}</span>
               </li>
             </ol>
