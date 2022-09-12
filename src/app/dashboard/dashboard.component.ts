@@ -21,12 +21,12 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.documentService.fetchCoverDocument()
-    //   .subscribe((reply: any) => {
-    //     this.document = reply;
-    //     console.log('document: ', this.document);
-    //     this.isDataAvailable = true;
-    //   });
+    this.documentService.fetchCoverDocument()
+      .subscribe((reply: any) => {
+        this.document = reply;
+        console.log('document: ', this.document);
+        this.isDataAvailable = true;
+      });
 
     setTimeout(() => {
       this.isDataAvailable = true;
