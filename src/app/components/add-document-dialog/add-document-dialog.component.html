@@ -3,7 +3,7 @@
 </div>
 
 <div class="set-12" *ngIf="isDataAvailable">
-  <h3 ly-dialog-title class="txt-center">Nuevo Documento</h3>
+  <h3 ly-dialog-title>Nuevo Documento</h3>
 
   <div ly-dialog-content class="set-12 dialog-body">
     <form class="set-12" [formGroup]="documentFormGroup" (submit)="onCreateDocument(documentFormGroup)">
@@ -52,8 +52,8 @@
                   <mat-label>Tipo</mat-label>
                   <mat-select formControlName="activity">
                     <mat-option [value]="collaboratorType.type" *ngFor="let collaboratorType of collaboratorTypes"
-                      [disabled]="collaboratorType.disabled">
-                      <small>{{collaboratorType.displayName}}</small>
+                      [disabled]="collaboratorType.disabled" [value]="collaboratorType._id">
+                      <small>{{collaboratorType.viewValue}}</small>
                     </mat-option>
                   </mat-select>
                 </mat-form-field>

@@ -82,7 +82,7 @@ export class SingleCategoryComponent implements OnInit {
       // console.log('document: ', this.document);
       this.selectedCategory = reply[1];
       this.collaborators = reply[0].collaborators;
-      // console.log('category: ', this.selectedCategory);
+      console.log('category: ', this.selectedCategory);
       this.subcategories = this.selectedCategory['subLayouts'];
       this.dataSource = new MatTableDataSource(this.subcategories);
       // console.log('subcategories: ', this.subcategories);

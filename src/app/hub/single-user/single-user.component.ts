@@ -45,10 +45,10 @@ export class SingleUserComponent implements OnInit {
       },
       next: (reply: any) => {
         this.user = reply;
-        console.log('user: ', this.user);
+        // console.log('user: ', this.user);
 
         this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
-        console.log(this.userActivities);
+        // console.log(this.userActivities);
 
         if (this.userActivities.length != 0) {
           this.haveRootPermissions = true;
@@ -63,7 +63,7 @@ export class SingleUserComponent implements OnInit {
             let documents: Observable<any> = this.documentSrvc.fetchMyDocuments({ createdBy: this.userID });
             forkJoin([documents]).subscribe((reply: any) => {
               this.documents = reply[0];
-              console.log('documents: ', this.documents);
+              // console.log('documents: ', this.documents);
 
               setTimeout(() => {
                 this.isDataAvailable = true;
@@ -73,13 +73,14 @@ export class SingleUserComponent implements OnInit {
         } else {
           this.documentSrvc.fetchDocumentsByCollaborator({ _id: this.user['_id'] }).subscribe((reply: any) => {
             this.documents = reply;
-            console.log('documents: ', this.documents);
+            // console.log('documents: ', this.documents);
 
             setTimeout(() => {
               this.isDataAvailable = true;
             }, 1000);
           });
         }
+        // console.log(this.haveRootPermissions);
       },
       complete: () => { }
     });
@@ -110,7 +111,7 @@ export class SingleUserComponent implements OnInit {
 
     dialogRef.afterClosed.subscribe((reply: any) => {
       if (reply != undefined) {
-        console.log(reply);
+        window.location.reload();
       }
     });
   }

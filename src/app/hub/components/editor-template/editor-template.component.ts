@@ -9,6 +9,7 @@ import { UtilityService } from 'src/app/services/utility.service';
   styleUrls: ['./editor-template.component.scss']
 })
 export class EditorTemplateComponent implements OnInit {
+  @Input('user') public user: any = null;
   @Input('documents') public documents: any = [];
   public isDataAvailable: boolean = false;
 

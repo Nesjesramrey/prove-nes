@@ -83,7 +83,7 @@ export class AppPageletComponent implements OnInit {
   onSignOut() {
     return this.angularFireAuth.signOut().then(() => {
       localStorage.removeItem('accessToken');
-      window.location.reload();
+      this.router.navigateByUrl('/', { state: { status: 'logout' } });
     });
   }
 }

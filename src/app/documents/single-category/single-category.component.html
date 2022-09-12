@@ -28,8 +28,8 @@
     <div class="set-3 col-lft">
       <mat-card class="set-12 doc-description">
         <div class="set-12 imghldr">
-          <mat-icon *ngIf="document.images.length == 0">panorama</mat-icon>
-          <img [src]="document.images[0]" alt="" *ngIf="document.images.length != 0">
+          <mat-icon *ngIf="selectedCategory.images.length == 0">panorama</mat-icon>
+          <img [src]="selectedCategory.images[0]" alt="" *ngIf="selectedCategory.images.length != 0">
           <div class="overlay" (click)="popImageViewer()">
             <mat-icon>photo_camera</mat-icon>
             <div class="cover"></div>

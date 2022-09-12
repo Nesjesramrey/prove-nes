@@ -27,7 +27,7 @@
     <span class="sep">|</span>
 
     <!-- user not available -->
-    <button type="button" (click)="linkMe('join')" *ngIf="user == null" matTooltip="Rigistro" matTooltipClass="tooltip">
+    <button type="button" (click)="linkMe('join')" *ngIf="user == null" matTooltip="Registro" matTooltipClass="tooltip">
       <mat-icon>app_registration</mat-icon>
     </button>
     <button type="button" (click)="linkMe('login')" *ngIf="user == null" matTooltip="Ingreso" matTooltipClass="tooltip">
@@ -35,17 +35,20 @@
     </button>
 
     <!-- user available -->
-    <button type="button" class="avatar" (click)="linkMe('profile')" *ngIf="user != null">
+    <button type="button" class="avatar" (click)="linkMe('profile')" *ngIf="user != null"
+      [matTooltip]="user.firstname + ' ' + user.lastname" matTooltipClass="tooltip">
       <img src="{{user.avatarImage}}" alt="{{user.firstname}}" *ngIf="user.avatarImage != null">
       <span *ngIf="user.avatarImage == null">
         {{ user.firstname | firstword | firstletter }}{{ user.lastname | firstword | firstletter }}
       </span>
     </button>
-    <button type="button" class="btn-ico" *ngIf="user != null" (click)="linkMe('notifications')">
+    <button type="button" class="btn-ico" *ngIf="user != null" (click)="linkMe('notifications')"
+      matTooltip="Notificaciones" matTooltipClass="tooltip">
       <mat-icon [matBadge]="notifications" matBadgeColor="warn" *ngIf="notifications != 0">notifications</mat-icon>
       <mat-icon *ngIf="notifications == 0">notifications</mat-icon>
     </button>
-    <button type="button" class="btn-ico" *ngIf="user != null" (click)="onSignOut()">
+    <button type="button" class="btn-ico" *ngIf="user != null" (click)="onSignOut()" matTooltip="Salir"
+      matTooltipClass="tooltip">
       <mat-icon>power_settings_new</mat-icon>
     </button>
 

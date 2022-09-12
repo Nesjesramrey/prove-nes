@@ -77,6 +77,10 @@ export class UtilityService {
     return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAllCategoriesEndPoint, {});
   }
 
+  fetchAllActivities() {
+    return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAllActivitiesEndPoint, {});
+  }
+
   dataURIToBlob(dataURI: string) {
     const splitDataURI = dataURI.split(',');
     const byteString = splitDataURI[0].indexOf('base64') >= 0 ? atob(splitDataURI[1]) : decodeURI(splitDataURI[1]);

@@ -1,4 +1,5 @@
 :host {
+  width: 100%;
   margin-top: 80px;
   margin-bottom: 100px;
   float: left;
@@ -66,6 +67,8 @@
       height: 100%;
       object-fit: cover;
       border-radius: 50%;
+      position: relative;
+      z-index: 4;
     }
 
     span {
@@ -75,6 +78,32 @@
       justify-content: center;
       height: 100%;
       background: #f1f1f1;
+    }
+
+    .overlay {
+      width: 100%;
+      height: 100%;
+      background: rgba($color: #000000, $alpha: 0.4);
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 7;
+      opacity: 0;
+      transition: all .2s linear;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      mat-icon {
+        position: relative;
+        z-index: 4;
+        color: #ffffff;
+        font-size: 30pt;
+      }
+    }
+
+    .overlay:hover {
+      opacity: 1;
     }
   }
 

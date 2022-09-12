@@ -17,13 +17,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 export class AddDocumentDialogComponent implements OnInit {
   public documentFormGroup!: FormGroup;
   public collaboratorsFormArray!: FormArray;
-  public collaboratorTypes: any = [
-    { type: 'administrator', displayName: 'Administrador', disabled: true },
-    { type: 'editor', displayName: 'Editor', disabled: false },
-    { type: 'collaborator', displayName: 'Colaborador', disabled: true },
-    { type: 'citizen', displayName: 'Ciudadano', disabled: true },
-    { type: 'D', displayName: 'D', disabled: true }
-  ];
+  public collaboratorTypes: any = [];
   public states: any = [];
   public activities: any = [];
   public submitted: boolean = false;
@@ -44,14 +38,12 @@ export class AddDocumentDialogComponent implements OnInit {
 
   ngOnInit(): void {
     let states: Observable<any> = this.utilitySrvc.fetchAllStates();
-    // let activities: Observable<any> = this.utilitySrvc.fetchAllCategories();
+    let activities: Observable<any> = this.utilitySrvc.fetchAllActivities();
 
-    forkJoin([states]).subscribe((reply: any) => {
+    forkJoin([states, activities]).subscribe((reply: any) => {
       // console.log(reply);
       this.states = reply[0];
-      // console.log('states: ', this.states);
-      // this.activities = reply[1];
-      // console.log('activities: ', this.activities);
+      this.collaboratorTypes = reply[1].filter((x: any) => { return x['value'] == 'editor'; });
 
       this.documentFormGroup = this.formBuilder.group({
         title: ['', [Validators.required]],
@@ -60,7 +52,7 @@ export class AddDocumentDialogComponent implements OnInit {
       });
 
       this.collaboratorsFormArray = this.documentFormGroup.get('collaborators') as FormArray;
-      this.collaboratorsFormArray.push(this.createCollaboratorField('editor'));
+      this.collaboratorsFormArray.push(this.createCollaboratorField(this.collaboratorTypes[0]['_id']));
 
       setTimeout(() => {
         this.isDataAvailable = true;
@@ -76,7 +68,7 @@ export class AddDocumentDialogComponent implements OnInit {
     return this.formBuilder.group({
       email: ['', [Validators.required]],
       activity: [activity, [Validators.required]],
-      _id: '62fcebae6d498ad2bf077c4f'
+      _id: this.collaboratorTypes[0]['_id']
     });
   }
 

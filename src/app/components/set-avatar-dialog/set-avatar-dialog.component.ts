@@ -77,7 +77,7 @@ export class SetAvatarDialogComponent implements OnInit, WithStyles, AfterViewIn
 
   ngOnInit(): void {
     this.userSrvc.fetchFireUser().subscribe({
-      error: (error) => { },
+      error: (error: any) => { },
       next: (reply: any) => {
         this.user = reply;
       },
@@ -116,14 +116,17 @@ export class SetAvatarDialogComponent implements OnInit, WithStyles, AfterViewIn
   uploadAvatarImage() {
     this.submitted = true;
     this.cropper.crop();
+
     let file = this.utilityService.dataURIToBlob(this.uploadFormGroup['controls']['file']['value']);
+
     let data: any = {
       user_id: this.user['_id'],
       formData: new FormData()
     };
+
     data['formData'].append('file', file, 'avatar.jpg');
+
     this.userSrvc.uploadAvatarImageEndPoint(data).subscribe((reply: any) => {
-      console.log(reply);
       this.submitted = false;
       this.dialogRef.close(reply);
     });

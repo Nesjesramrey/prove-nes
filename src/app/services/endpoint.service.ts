@@ -64,6 +64,7 @@ export class EndPointService {
   public fetchAllStatesEndPoint: string = '/state';
   public createNewCategoryEndPoint: string = '/category';
   public fetchAllCategoriesEndPoint: string = '/category/';
+  public fetchAllActivitiesEndPoint: string = '/activity';
 
   public fetchAllStatesMexEndPoint: string = '/utility/fetch-all-states-mex';
   // public createNewCategoryEndPoint: string = '/utility/create-new-category';

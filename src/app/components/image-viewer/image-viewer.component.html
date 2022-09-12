@@ -20,11 +20,12 @@
 
 <div class="set-12 dialog-body" *ngIf="isDataAvailable">
   <mat-toolbar color="primary">
-    <button mat-icon-button (click)="killDialog()">
+    <span class="example-spacer"></span>
+    <button mat-icon-button (click)="killDialog()" matTooltip="Salir" matTooltipClass="tooltip">
       <mat-icon>cancel</mat-icon>
     </button>
-    <button mat-icon-button>
+    <!-- <button mat-icon-button>
       <mat-icon>menu</mat-icon>
-    </button>
+    </button> -->
   </mat-toolbar>
 </div>

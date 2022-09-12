@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 import { DocumentService } from '../services/document.service';
 import { UtilityService } from '../services/utility.service';
@@ -20,12 +21,15 @@ export class DashboardComponent implements OnInit {
     public documentService: DocumentService,
     public formBuilder: FormBuilder,
     public utilitySrvc: UtilityService,
-    public authenticationService: AuthenticationService
+    public authenticationService: AuthenticationService,
+    public router: Router
   ) {
     this.isAuthenticated = this.authenticationService.isAuthenticated;
   }
 
   ngOnInit(): void {
+    if (history.state.status != undefined) { window.location.reload(); };
+
     this.documentService.fetchCoverDocument()
       .subscribe((reply: any) => {
         this.document = reply;

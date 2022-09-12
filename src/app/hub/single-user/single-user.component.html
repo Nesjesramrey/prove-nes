@@ -16,6 +16,9 @@
         <span *ngIf="user.avatarImage == null">
           {{ user.firstname | firstword | firstletter }}{{ user.lastname | firstword | firstletter }}
         </span>
+        <div class="overlay" matTooltip="Cargar imágen" matTooltipClass="tooltip">
+          <mat-icon>photo_camera</mat-icon>
+        </div>
       </button>
 
       <div class="set-12 cardbody">
@@ -37,7 +40,6 @@
       </div>
     </mat-card>
 
-    <!-- MAPA -->
     <mat-card class="set-12">
       <div class="app-map-box"></div>
     </mat-card>
@@ -51,7 +53,7 @@
     </div>
 
     <div class="set-12" *ngIf="!haveRootPermissions">
-      <div class="editor-template" [documents]="documents"></div>
+      <div class="editor-template" [user]="user" [documents]="documents"></div>
     </div>
   </div>
 </div>
