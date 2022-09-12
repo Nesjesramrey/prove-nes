@@ -123,6 +123,13 @@ export class TopicComponent implements OnInit {
       }
     });
   }
+  vote() {
+    this.submitted = true;
+    let data = {};
+    this.voteService.createNewVoto(data).subscribe((reply: any) => {
+      this.submitted = false;
+    });
+  }
 }
 
 export interface DataTable {
