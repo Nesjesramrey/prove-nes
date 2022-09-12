@@ -107,7 +107,7 @@ export class TopicComponent implements OnInit {
           documentID: this.documentID,
           document: this.document,
           categoryID: this.categoryID,
-          topicID: this.topicID,
+          themeID: this.topicID,
           type: 'sublayout',
         },
         disableClose: true,
