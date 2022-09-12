@@ -14,12 +14,13 @@
     .imagebox {
       border-color: #636363;
       border-style: dashed;
-      border-width: 2px;
-      width: 100%;
+      border-width: 1px;
+      width: 30%;
       min-height: 100pt;
       height: auto;
       margin-bottom: 50pt;
       position: relative;
+      margin-left: 10pt;
       border-radius: 5px;
 
       label {
@@ -80,4 +81,86 @@
     margin: 0 auto;
     margin-top: 10pt;
   }
+
+  .step-content {
+    margin-top: 5px;
+
+    form {
+      .inpts {
+        display: flex;
+        flex: 1;
+      }
+    }
+
+    textarea {
+      min-height: 100px;
+      max-height: 100px;
+    }
+
+    .set-9 {
+      padding-right: 20px;
+    }
+
+    .upload-img {
+      display: flex;
+      width: 100%;
+      min-height: 100px;
+      height: calc(100% - 20px);
+      align-items: center;
+      justify-content: center;
+      border: 1px dashed rgba($color: #000000, $alpha: 0.1);
+      border-radius: 5px;
+    }
+
+    .tools {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      button {
+        margin: 0;
+        display: flex;
+        align-items: center;
+
+        * {
+          margin: 0;
+        }
+
+        mat-icon {
+          margin-left: 5px;
+          font-size: 15pt;
+          color: #306EFF;
+        }
+      }
+    }
+
+    .ctrls {
+      text-align: right;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      * {
+        margin: 0;
+      }
+
+      mat-spinner {
+        margin-left: 20px;
+      }
+
+      button {
+        margin-left: 10px;
+      }
+
+      button:first-child {
+        margin-left: 0;
+      }
+    }
+  }  
+
+  .file-hldr {
+    font-weight: bold;
+    font-style: italic;
+  }  
 }

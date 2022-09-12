@@ -16,10 +16,11 @@
         <div>
           <textarea class="descriptionInput" type="text" formControlName="description" placeholder="Escribe una descripción"></textarea>
         </div>
-        <div>
-          <input class="emailInput" type="text"  placeholder="Escribe tu email" formControlName="email"/>
-        </div>
-        <button type="submit" (click)="sendrequest()">Solicita permiso</button>
+        <p *ngIf="isDataAvailableLoading">cargando...</p>
+        <button type="submit" 
+        [disabled]="descriptionLength === 0" 
+        [class.btnEnabled]="descriptionLength > 0"
+        (click)="sendrequest()">Solicita permiso</button>
       </form>
     </div>
   </div>

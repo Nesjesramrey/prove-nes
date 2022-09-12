@@ -6,6 +6,7 @@ import { UserService } from './services/user.service';
 import { UtilityService } from './services/utility.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CompleteRegistrationComponent } from './components/complete-registration/complete-registration.component';
+import { environment } from 'src/environments/environment';
 
 const STYLES = (theme: ThemeVariables, ref: ThemeRef) => {
   const __ = ref.selectorsOf(STYLES);
@@ -57,6 +58,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("Project version", environment.version);    
+
     if (this.accessToken != null) {
       this.userService.fetchFireUser().subscribe({
         error: (error) => {

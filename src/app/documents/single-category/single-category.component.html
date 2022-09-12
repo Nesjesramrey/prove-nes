@@ -55,7 +55,8 @@
             </div>
           </div>
           <p class="card-description" *ngIf="selectedCategory.description != null">{{selectedCategory.description}}</p>
-          <button type="button" class="toolbtn" *ngIf="selectedCategory.description == null">
+          <button type="button" class="toolbtn" *ngIf="selectedCategory.description == null"
+            (click)="popEditCategoryDialog()">
             <small>Agregar descripción</small>
           </button>
           <avatars-row [users]="collaborators"></avatars-row>
@@ -125,15 +126,9 @@
             </p>
 
             <ol class="top-list">
-              <!--li class="top-list-item">
-                <span>Inseguridad</span>
-              </li-->
-              <!--li class="top-list-item">
-                <span>Inseguridad</span>
+              <li class="top-list-item" *ngFor="let solution of solutions.slice(0, 4);" (click)="linkSolution(solution._id, solution.subcategory._id, solution.topic._id)">
+                <span>{{solution.title}}</span>
               </li>
-              <li class="top-list-item">
-                <span>Inseguridad</span>
-              </li-->
             </ol>
           </div>
 
@@ -144,8 +139,8 @@
             </p>
 
             <ol class="top-list">
-              <li class="top-list-item" *ngFor="let topic of topics.slice(0, 4);">
-                <span (click)="linkTopic(topic._id)">{{topic.title}}</span>
+              <li class="top-list-item" *ngFor="let topic of topics.slice(0, 4);" (click)="linkTopic(topic._id, topic.subcategory._id)">
+                <span>{{topic.title}}</span>
               </li>
             </ol>
           </div>
@@ -209,19 +204,18 @@
                 <button mat-icon-button [matMenuTriggerFor]="menu">
                   <mat-icon>more_vert</mat-icon>
                 </button>
-
                 <mat-menu #menu="matMenu">
+                  <button mat-menu-item disabled>
+                    <mat-icon>edit</mat-icon>
+                    <span>Editar</span>
+                  </button>
                   <button mat-menu-item (click)="popAddDocumentTheme(element._id)">
                     <mat-icon>add_circle</mat-icon>
                     <span>Agregar problematica</span>
                   </button>
-                  <button mat-menu-item>
-                    <mat-icon>edit</mat-icon>
-                    <span>Editar problematica</span>
-                  </button>
                   <button mat-menu-item (click)="linkSubcategory(element._id)">
                     <mat-icon>visibility</mat-icon>
-                    <span>Abrir problematica</span>
+                    <span>Abrir</span>
                   </button>
                 </mat-menu>
 
