@@ -51,7 +51,7 @@ export class DocumentService {
   }
 
   killDocumentImage(data: any) {
-    return this.httpClient.delete(this.endpointSrvc.apiEndPoint + this.endpointSrvc.killDocumentImageEndPoint + `${data['document_id']}` + '/images', data);
+    return this.httpClient.delete(this.endpointSrvc.apiEndPoint + this.endpointSrvc.killDocumentImageEndPoint + `${data['document_id']}` + '/images', {body: data});
   }
 
 
