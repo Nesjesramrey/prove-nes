@@ -32,6 +32,7 @@ export class EndPointService {
   public setDocumentAsCoverEndPoint: string = '/document/';
   public setDocumentAsPublicPrivateEndPoint: string = '/document/';
   public uploadDocumentFilesEndPoint: string = '/document/';
+  public killDocumentImageEndPoint: string = '/document/';
 
   // public createNewDocumentEndPoint: string = '/document/create-new-document';
   public fetchMyDocumentsEndPoint: string = '/document/fetch-my-documents';

@@ -15,6 +15,7 @@ import { AddDocumentCategoryComponent } from 'src/app/components/add-document-ca
 // import { FormBuilder, FormGroup } from "@angular/forms";
 import { AddDocumentThemeComponent } from '../../components/add-document-theme/add-document-theme.component';
 import { EditCategoryDataComponent } from 'src/app/components/edit-category-data/edit-category-data.component';
+import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 
 @Component({
   selector: '.app-single-category',
@@ -86,19 +87,19 @@ export class SingleCategoryComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.subcategories);
       // console.log('subcategories: ', this.subcategories);
 
-      let themes:any[] = [];
-      let solutions:any[] = [];
+      let themes: any[] = [];
+      let solutions: any[] = [];
 
-      for(let i = 0; i<this.subcategories.length; i++){
+      for (let i = 0; i < this.subcategories.length; i++) {
 
-        for(let j=0; j<this.subcategories[i].topics.length; j++){
-          
+        for (let j = 0; j < this.subcategories[i].topics.length; j++) {
+
           let topic_service: Observable<any> = this.topicService.fetchSingleTopicById({ _id: this.subcategories[i].topics[j] });
           forkJoin([topic_service]).subscribe((reply: any) => {
             let topic_obj = reply[0];
             topic_obj.subcategory = this.subcategories[i];
-            themes.push(topic_obj); 
-            for(let k=0; k<reply[0].solutions.length; k++){
+            themes.push(topic_obj);
+            for (let k = 0; k < reply[0].solutions.length; k++) {
               let solution_service: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: reply[0].solutions[k] });
               forkJoin([solution_service]).subscribe((reply: any) => {
                 let sol = reply[0];
@@ -106,7 +107,7 @@ export class SingleCategoryComponent implements OnInit {
                 sol.subcategory = topic_obj.subcategory;
                 solutions.push(sol);
                 //console.log(sol);
-              })              
+              })
             }
 
           })
@@ -207,18 +208,34 @@ export class SingleCategoryComponent implements OnInit {
     });
   }
 
-  linkTopic(id: string, subcategory_id:string){
+  linkTopic(id: string, subcategory_id: string) {
     this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${subcategory_id}/temas/${id}`)
   }
 
-  linkSubcategory(id: string){
+  linkSubcategory(id: string) {
     this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${id}`);
-  }  
-
-  linkSolution(id: string, subcategory_id:string, theme_id:string) {
-    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${subcategory_id}/temas/${theme_id}/solucion/${id}`)  
   }
 
+  linkSolution(id: string, subcategory_id: string, theme_id: string) {
+    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${subcategory_id}/temas/${theme_id}/solucion/${id}`)
+  }
+
+  popImageViewer() {
+    const dialogRef = this.dialog.open<ImageViewerComponent>(ImageViewerComponent, {
+      width: '640px',
+      data: {
+        location: 'layout',
+        document: this.document,
+        layout: this.selectedCategory
+      },
+      disableClose: true,
+      panelClass: 'viewer-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
 }
 
 

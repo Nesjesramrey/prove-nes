@@ -16,6 +16,7 @@ import { AddDocumentThemeComponent } from '../../components/add-document-theme/a
 import { ThemeService } from 'ng2-charts';
 import { throws } from 'assert';
 import { EditCategoryDataComponent } from 'src/app/components/edit-category-data/edit-category-data.component';
+import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 
 @Component({
   selector: '.app-single-subcategory',
@@ -207,6 +208,22 @@ export class SingleSubcategoryComponent implements OnInit {
     this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/temas/${theme_id}/solucion/${id}`)
   }
 
+  popImageViewer() {
+    const dialogRef = this.dialog.open<ImageViewerComponent>(ImageViewerComponent, {
+      width: '640px',
+      data: {
+        location: 'layout',
+        document: this.document,
+        layout: this.subcategory
+      },
+      disableClose: true,
+      panelClass: 'viewer-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
 }
 
 

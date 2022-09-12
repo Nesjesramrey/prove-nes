@@ -218,6 +218,7 @@ export class SingleDocumentComponent implements OnInit {
     const dialogRef = this.dialog.open<ImageViewerComponent>(ImageViewerComponent, {
       width: '640px',
       data: {
+        location: 'document',
         document: this.document
       },
       disableClose: true,

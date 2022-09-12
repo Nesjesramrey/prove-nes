@@ -14,7 +14,7 @@
       <mat-spinner color="accent" diameter="70" *ngIf="submitted"></mat-spinner>
       <p class="txt-center" *ngIf="submitted">Cargando...</p>
     </div>
-    <img [src]="document.images[0]" alt="" *ngIf="document.images != 0">
+    <slider-images [images]="document.images" [document]="document" *ngIf="document.images != 0"></slider-images>
   </div>
 </div>
 

@@ -50,6 +50,10 @@ export class DocumentService {
     return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.uploadDocumentFilesEndPoint + `${data['document_id']}` + '/images', data['formData']);
   }
 
+  killDocumentImage(data: any) {
+    return this.httpClient.delete(this.endpointSrvc.apiEndPoint + this.endpointSrvc.killDocumentImageEndPoint + `${data['document_id']}` + '/images', data);
+  }
+
 
 
 
