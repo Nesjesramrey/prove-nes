@@ -333,6 +333,7 @@ table {
 }
 
 .carousel-cells {
+  width: 100% !important;
   float: left;
   // will-change: auto !important;
 
@@ -473,6 +474,13 @@ mat-form-field {
   }
 }
 
+.catbtn {
+  background: #CEDDFF;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 1px solid #306EFF;
+}
+
 .networks {
   display: flex;
   justify-content: flex-end;
@@ -507,4 +515,95 @@ mat-form-field {
 }
 .shadow {
   box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+}
+
+.imghldr {
+  position: relative;
+
+  .overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: all .3s linear;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .cover {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: rgba($color: #000000, $alpha: 0.2);
+      z-index: 3;
+    }
+
+    mat-icon {
+      position: relative;
+      font-size: 30pt !important;
+      color: #ffffff !important;
+      z-index: 4;
+    }
+  }
+
+  .overlay:hover {
+    opacity: 1;
+  }
+}
+
+.viewer-dialog {
+  height: 100%;
+  right: 0;
+  overflow: auto;
+
+  .mat-dialog-container {
+    border-radius: 0 !important;
+    padding: 0;
+  }
+}
+
+.viewer-dialog {
+  width: 100% !important;
+  max-width: 100vw !important;
+
+  .mat-dialog-container {
+    padding: 0;
+    background: #e5e5e5;
+  }
+
+  .dialog-viewer,
+  .dialog-body {
+    height: 100vh;
+  }
+
+  .dialog-viewer {
+    width: 75%;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba($color: #000000, $alpha: 1.0);
+
+    .viewer-display {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+    }
+  }
+
+  .dialog-body {
+    width: 25%;
+    overflow: auto;
+    position: absolute;
+    top: 0;
+    left: 75%;
+  }
 }

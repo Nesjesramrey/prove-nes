@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthenticationService } from '../services/authentication.service';
 import { DocumentService } from '../services/document.service';
 import { UtilityService } from '../services/utility.service';
 
@@ -13,18 +14,22 @@ export class DashboardComponent implements OnInit {
   public document: any = null;
   public mailingListFormGroup!: FormGroup;
   public submitted: boolean = false;
+  public isAuthenticated: boolean = false;
 
   constructor(
     public documentService: DocumentService,
     public formBuilder: FormBuilder,
-    public utilitySrvc: UtilityService
-  ) { }
+    public utilitySrvc: UtilityService,
+    public authenticationService: AuthenticationService
+  ) {
+    this.isAuthenticated = this.authenticationService.isAuthenticated;
+  }
 
   ngOnInit(): void {
     this.documentService.fetchCoverDocument()
       .subscribe((reply: any) => {
         this.document = reply;
-        console.log('document: ', this.document);
+        // console.log('document: ', this.document);
         this.isDataAvailable = true;
       });
 
@@ -46,6 +51,10 @@ export class DashboardComponent implements OnInit {
   }
 
   linkMe(url: string) {
-    this.utilitySrvc.linkMe(url);
+    if (this.isAuthenticated) {
+      this.utilitySrvc.linkMe(url);
+    } else {
+      this.utilitySrvc.linkMe('/hub/ingresar');
+    }
   }
 }

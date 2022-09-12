@@ -38,6 +38,10 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { EditDocumentDataComponent } from './edit-document-data/edit-document-data.component';
 import { EditCategoryDataComponent } from './edit-category-data/edit-category-data.component';
 import { SliderImagesComponent } from './slider-images/slider-images.component';
+import { AddDocumentCoverTextComponent } from "./add-document-cover-text/add-document-cover-text.component";
+import { WindowAlertComponent } from "./window-alert/window-alert.component";
+import { AddRootCategoryComponent } from "./add-root-category/add-root-category.component";
+import { ImageViewerComponent } from "./image-viewer/image-viewer.component";
 import { MapBoxComponent } from './map-box/map-box.component';
 import { CircleChartComponent } from './circle-chart/circle-chart.component';
 import { SpiderChartComponent } from './spider-chart/spider-chart.component';
@@ -83,6 +87,10 @@ import { SpiderChartComponent } from './spider-chart/spider-chart.component';
     EditDocumentDataComponent,
     EditCategoryDataComponent,
     SliderImagesComponent,
+    AddDocumentCoverTextComponent,
+    WindowAlertComponent,
+    AddRootCategoryComponent,
+    ImageViewerComponent,
     MapBoxComponent,
     CircleChartComponent,
     SpiderChartComponent,
@@ -107,6 +115,10 @@ import { SpiderChartComponent } from './spider-chart/spider-chart.component';
     EditDocumentDataComponent,
     EditCategoryDataComponent,
     SliderImagesComponent,
+    AddDocumentCoverTextComponent,
+    WindowAlertComponent,
+    AddRootCategoryComponent,
+    ImageViewerComponent,
     MapBoxComponent,
     SpiderChartComponent,
     CircleChartComponent,
@@ -123,7 +135,11 @@ import { SpiderChartComponent } from './spider-chart/spider-chart.component';
     CompleteRegistrationComponent,
     EditDocumentDataComponent,
     EditCategoryDataComponent,
+    AddDocumentCoverTextComponent,
+    WindowAlertComponent,
+    AddRootCategoryComponent,
+    ImageViewerComponent,
   ],
   providers: [],
 })
-export class ComponentsModule {}
+export class ComponentsModule { }

@@ -1,7 +1,6 @@
 :host {
   .carousel-hldr {
     margin-bottom: 20px;
-    height: 430px;
 
     mat-card {
       padding: 0 !important;
@@ -42,6 +41,19 @@
 
     small {
       margin-right: 30px;
+    }
+  }
+
+  .emptycard {
+    width: 100% !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    mat-icon {
+      margin-bottom: 20px;
+      color: #306EFF;
+      font-size: 40pt;
     }
   }
 
@@ -100,5 +112,82 @@
 
   .infohldr {
     padding: 20px;
+  }
+
+  .tabs {
+    .set-6:nth-child(odd) {
+      padding-right: 10px;
+    }
+
+    .set-6:nth-child(even) {
+      padding-left: 10px;
+    }
+
+    mat-card {
+      padding: 20px !important;
+    }
+
+    .top-cards {
+      padding: 15px;
+
+      .inner-card {
+        display: flex;
+        align-items: center;
+
+        * {
+          margin: 0;
+        }
+
+        .roundico-green,
+        .roundico-orange {
+          width: 70px;
+          height: 70px;
+          border-radius: 100%;
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-right: 20px;
+        }
+
+        .roundico-green {
+          background: #E1F2EC;
+
+          mat-icon {
+            color: #20C588;
+          }
+        }
+
+        .roundico-orange {
+          background: #FCDBC3;
+
+          mat-icon {
+            color: #FF6D00;
+          }
+        }
+
+        mat-icon {
+          font-size: 30pt;
+        }
+      }
+    }
+
+    .card-list {
+      margin-top: 30px;
+
+      .list-title {
+        display: flex;
+        align-items: center;
+
+        * {
+          margin: 0;
+        }
+
+        mat-icon {
+          font-size: 11pt;
+          margin-left: 10px;
+        }
+      }
+    }
   }
 }

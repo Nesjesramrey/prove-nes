@@ -15,6 +15,7 @@ import { AddDocumentCategoryComponent } from 'src/app/components/add-document-ca
 import { AddDocumentThemeComponent } from '../../components/add-document-theme/add-document-theme.component';
 import { ThemeService } from 'ng2-charts';
 import { throws } from 'assert';
+import { EditCategoryDataComponent } from 'src/app/components/edit-category-data/edit-category-data.component';
 
 @Component({
   selector: '.app-single-subcategory',
@@ -38,10 +39,10 @@ export class SingleSubcategoryComponent implements OnInit {
   public selection = new SelectionModel<any>(true, []);
   public editingTitle: boolean = false;
   public imageUrl!: string;
-  public collaborators: any = null; 
-  public topics: any = null; 
-  public subcategory: any = null; 
-  public solutions: any[] = []; 
+  public collaborators: any = null;
+  public topics: any = null;
+  public subcategory: any = null;
+  public solutions: any[] = [];
 
   /* TABLE */
   public displayedColumns: string[] = [
@@ -77,7 +78,7 @@ export class SingleSubcategoryComponent implements OnInit {
     let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
     let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID });
     let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID });
-    
+
     forkJoin([document, category, subcategory]).subscribe((reply: any) => {
       this.document = reply[0];
       //console.log('document: ', this.document);
@@ -87,28 +88,31 @@ export class SingleSubcategoryComponent implements OnInit {
       //this.subcategories = this.selectedCategory['subLayouts'];
       //console.log('subcategories: ', this.subcategories);
       //this.dataSource = new MatTableDataSource(this.subcategories);
-      this.subcategory =  reply[2];
+      this.subcategory = reply[2];
       //console.log(this.subcategory);
-      this.topics = this.subcategory['topics'];    
+      this.topics = this.subcategory['topics'];
       console.log(this.topics);
       this.dataSource = new MatTableDataSource(this.topics);
 
-      for(let i=0; i<this.topics.length; i++){
+      for (let i = 0; i < this.topics.length; i++) {
         let sols = this.topics[i].solutions;
-        for(let j=0; j<sols.length; j++){
+        for (let j = 0; j < sols.length; j++) {
           //this.solutions.push(this.topics[i].solutions[j]);
           // console.log("la sol id " + this.topics[i].solutions[j])
           let sol: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.topics[i].solutions[j] });
           forkJoin([sol]).subscribe((reply: any) => {
             // console.log("elreply" + JSON.stringify(reply[0]));
-            this.solutions.push(reply[0]);
-          })    
+            let complete_solution = reply[0];
+            complete_solution.theme = this.topics[i];
+            console.log(complete_solution);
+            this.solutions.push(complete_solution);
+          })
         }
       }
 
       setTimeout(() => {
         this.isDataAvailable = true;
-      }, 300); 
+      }, 300);
     });
 
   }
@@ -179,8 +183,28 @@ export class SingleSubcategoryComponent implements OnInit {
     });
   }
 
+  popEditCategoryDialog() {
+    const dialogRef = this.dialog.open<EditCategoryDataComponent>(EditCategoryDataComponent, {
+      width: '640px',
+      data: {
+        layout: this.subcategory
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        this.subcategory['description'] = reply['description'];
+      }
+    });
+  }
+
   linkTopic(id: string) {
     this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/temas/${id}`)
+  }
+
+  linkSolution(id: string, theme_id: string) {
+    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/temas/${theme_id}/solucion/${id}`)
   }
 
 }
@@ -248,7 +272,7 @@ const _mockSubcategories = [
 ];
 const _mockTemas = [
   {
-    _id:"adasd",
+    _id: "adasd",
     name: 'Solución',
     category: 'Categoría',
     subcategory: "subcategoría",

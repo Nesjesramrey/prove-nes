@@ -1,12 +1,13 @@
 <div class="set-12 toptools">
   <strong><small>DOCUMENTOS</small></strong>
-  <button type="button" class="roundgreen" *ngIf="documents.length != 0" (click)="openAddDocumentDialog()">
+  <button type="button" class="roundgreen" *ngIf="documents.length != 0" (click)="openAddDocumentDialog()"
+    matTooltip="Agregar Documento" matTooltipClass="tooltip">
     <mat-icon>note_add</mat-icon>
   </button>
 </div>
 
 <!-- empty documents -->
-<div class="set-12 carousel-hldr" *ngIf="documents.length == 0">
+<div class="set-12 carousel-hldr" *ngIf="documents.length == 0 && isDataAvailable">
   <carousel [cellsToShow]="1" [arrows]="false">
     <div class="carousel-cell">
       <mat-card class="emptycard">
@@ -130,5 +131,3 @@
     </mat-tab-group>
   </mat-card>
 </div>
-<!-- MAPA -->
-<!-- <div class="app-map-box"></div> -->
