@@ -96,42 +96,42 @@ export class SingleSolutionComponent implements OnInit {
 
   ngOnInit(): void {
     let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
-    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID,});
-    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID,});
+    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID, });
+    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID, });
     let topic: Observable<any> = this.topicService.fetchSingleTopicById({ _id: this.themeID });
     let solution: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.solutionID });
-    
+
     //forkJoin([categories, document, solutions, category, subcategory]).subscribe((reply: any) => {
-    forkJoin([document, category, subcategory, topic, solution]).subscribe((reply: any) => {  
-        
-        this.collaborators = reply[0].collaborators;
-        this.category = reply[1];
-        // console.log("categoria " + JSON.stringify(this.category));
-        this.subcategory = reply[2];
-        // console.log("subcategoria " + JSON.stringify(this.subcategory));
-        this.topics = this.subcategory['topics'];    
-        // console.log(this.topics);
-        this.topic = reply[3];   
-        // console.log(this.topics); 
-        // console.log("topic " + JSON.stringify(this.topic));
+    forkJoin([document, category, subcategory, topic, solution]).subscribe((reply: any) => {
 
-        let sols = this.topic.solutions;
-        for(let j=0; j<sols.length; j++){
-          let sol: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.topic.solutions[j] });
-          forkJoin([sol]).subscribe((reply: any) => {
-            this.solutions.push(reply[0]);
-          })
-        }
+      this.collaborators = reply[0].collaborators;
+      this.category = reply[1];
+      // console.log("categoria " + JSON.stringify(this.category));
+      this.subcategory = reply[2];
+      // console.log("subcategoria " + JSON.stringify(this.subcategory));
+      this.topics = this.subcategory['topics'];
+      // console.log(this.topics);
+      this.topic = reply[3];
+      // console.log(this.topics); 
+      // console.log("topic " + JSON.stringify(this.topic));
 
-        this.solution = reply[4];
-        console.log(this.solution);
-
-        this.sliderImages = this.solution.images;
-
-        
-
-
+      let sols = this.topic.solutions;
+      for (let j = 0; j < sols.length; j++) {
+        let sol: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.topic.solutions[j] });
+        forkJoin([sol]).subscribe((reply: any) => {
+          this.solutions.push(reply[0]);
+        })
       }
+
+      this.solution = reply[4];
+      console.log(this.solution);
+
+      this.sliderImages = this.solution.images;
+
+
+
+
+    }
     );
     this.documentService
       .fetchSingleDocumentById({ _id: this.documentID })
@@ -157,7 +157,7 @@ export class SingleSolutionComponent implements OnInit {
             this.isDataAvailable = true;
           }, 1000);
         },
-        complete: () => {},
+        complete: () => { },
       });
     }
   }
@@ -178,7 +178,7 @@ export class SingleSolutionComponent implements OnInit {
         reader.readAsDataURL(file);
       });
 
-      this.sliderImages = [ ...this.imagesToUpload, ...this.sliderImages ];
+      this.sliderImages = [...this.imagesToUpload, ...this.sliderImages];
     }
   }
 

@@ -108,8 +108,8 @@ export class SingleThemeComponent implements OnInit {
       this.topics = this.subcategory['topics'];
       // console.log(this.topics);
       this.topic = reply[3];
-      console.log(this.topics);
-      console.log("topic " + JSON.stringify(this.topic));
+      // console.log(this.topics);
+      // console.log("topic " + JSON.stringify(this.topic));
       this.sliderImages = this.topic.images;
 
       let sols = this.topic.solutions;
@@ -117,12 +117,8 @@ export class SingleThemeComponent implements OnInit {
         let sol: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.topic.solutions[j] });
         forkJoin([sol]).subscribe((reply: any) => {
           this.solutions.push(reply[0]);
-          console.log(reply[0]);
         })
       }
-
-
-
     }
     );
     this.documentService

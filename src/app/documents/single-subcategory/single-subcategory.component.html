@@ -6,13 +6,16 @@
   <div class="set-12">
     <div class="set-6">
       <breadcrumbs-component>
-        <li class="breadcrumb-item">Perfil</li>
         <li>Documentos</li>
-        <li *ngIf="!!document.title; else noTitle">{{ document.title }}</li>
+        <li *ngIf="!!document.title; else noTitle" (click)="utilityService.linkMe('/documentos/' + document._id)">
+          {{ document.title }}
+        </li>
         <ng-template #noTitle>
           <div>categoria</div>
         </ng-template>
-        <li>{{ selectedCategory.category.name }}</li>
+        <li (click)="utilityService.linkMe('/documentos/' + document._id + '/categoria/' + selectedCategory._id)">
+          {{ selectedCategory.category.name }}
+        </li>
         <li>{{ subcategory.category.name }}</li>
       </breadcrumbs-component>
     </div>
