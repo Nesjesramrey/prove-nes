@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SolutionComponent } from './solution.component';
+import { ModalSolutionComponent } from './modal-solution.component';
 
-describe('SolutionComponent', () => {
-  let component: SolutionComponent;
-  let fixture: ComponentFixture<SolutionComponent>;
+describe('ModalSolutionComponent', () => {
+  let component: ModalSolutionComponent;
+  let fixture: ComponentFixture<ModalSolutionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SolutionComponent ]
+      declarations: [ ModalSolutionComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SolutionComponent);
+    fixture = TestBed.createComponent(ModalSolutionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

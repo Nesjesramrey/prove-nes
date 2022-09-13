@@ -1,0 +1,105 @@
+<div class="container" *ngIf="topic">
+  <div class="set-12">
+    <div class="set-5">
+      <breadcrumbs-component>
+        <li class="breadcrumb-item">{{ document.title }}</li>
+        <li class="breadcrumb-item">{{ category.category.name }}</li>
+        <li class="breadcrumb-item">{{ subcategory.category.name }}</li>
+        <li>{{ topic.title }}</li>
+      </breadcrumbs-component>
+      
+    </div>
+
+    <div class="set-4 featured-users">
+      <featured-users [inputAmount]="5"></featured-users>
+    </div>
+
+    <div class="set-3">
+      <div class="header-buttons">
+        <div class="button-box">
+          <button
+            type="button"
+            mat-mini-fab
+            color="warn"
+            class="add-button green"
+            (click)="openModalSolution()"
+          >
+            <mat-icon>create_new_folder</mat-icon>
+          </button>
+          <p>Agregar solución</p>
+        </div>
+        <div class="button-box">
+          <button
+            type="button"
+            mat-mini-fab
+            color="warn"
+            class="add-button red"
+          >
+            <mat-icon>create_new_folder</mat-icon>
+          </button>
+          <p>Agregar Comentario</p>
+        </div>
+        <div class="button-box">
+          <button
+            type="button"
+            mat-mini-fab
+            color="warn"
+            class="add-button purple"
+            (click)="openModalTestimony()"
+          >
+            <mat-icon style="color: white">create_new_folder</mat-icon>
+          </button>
+          <p>Agregar Testimonios</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="set-12" style="padding-bottom: 100px; margin-top: 20px">
+    <div class="set-8 col-rgt-3">
+      <div class="set-12 header-card">
+        <mat-card>
+          <!-- IMAGE -->
+          <div class="image-box">
+            <img
+              src="https://images.pexels.com/photos/1117452/pexels-photo-1117452.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              alt="doc-image"
+            />
+
+            <div class="info">
+              <button class="custom-circle">
+                <mat-icon>thumb_up</mat-icon>
+              </button>
+
+              <div class="actions">
+                <p>
+                  Relevancia ciudadana
+                  <br />
+                  <b>8</b>
+                </p>
+                <button mat-raised-button color="primary" (click)="vote()">
+                  Vota
+                </button>
+                <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
+              </div>
+            </div>
+          </div>
+          <!-- DATA -->
+          <div class="data-box">
+            <p class="title">{{ topic.title }}</p>
+            <expanded-text [text]="topic.description" [minLength]="400">
+            </expanded-text>
+          </div>
+        </mat-card>
+      </div>
+      <div class="set-12 mt-2">
+        <solutions-card [data]="solutionsData"></solutions-card>
+      </div>
+    </div>
+    <div class="set-4">
+      <public-documents-testimonials
+        [data]="topic.testimonials"
+      ></public-documents-testimonials>
+    </div>
+  </div>
+</div>

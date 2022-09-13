@@ -34,4 +34,4 @@ import { NgChartsModule } from 'ng2-charts';
     SingleSolutionComponent
   ],
 })
-export class DocumentsComponentModule {}
+export class DocumentsComponentModule { }

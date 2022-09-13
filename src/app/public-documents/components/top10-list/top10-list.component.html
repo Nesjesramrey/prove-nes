@@ -1,0 +1,25 @@
+<mat-list class="container shadow">
+  <p class="title">Top 10 Soluciones</p>
+  <mat-list-item *ngFor="let item of data">
+    <span mat-line style="font-size: 5px">
+      <div mat-line>
+        <p class="name">{{ item.name }}</p>
+      </div>
+    </span>
+    <div mat-line class="progress-bar">
+      <div
+        *ngIf="!isColor"
+        id="progress"
+        class="progress"
+        [style.width.%]="item.value"
+      ></div>
+      <div
+        *ngIf="isColor"
+        id="progress"
+        class="progress"
+        [style.width.%]="item.value"
+        [style.background]="color.bg"
+      ></div>
+    </div>
+  </mat-list-item>
+</mat-list>

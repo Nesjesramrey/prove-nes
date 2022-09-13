@@ -5,20 +5,22 @@
   <div class="content">
     <!-- ITEM -->
 
-    <mat-card class="testimonial-item" *ngFor="let testimonial of testimonials">
+    <mat-card class="testimonial-item" *ngFor="let testimonial of data">
       <!-- IMAGE -->
       <div class="leading">
-        <img class="image" [src]="testimonial.image" />
+        <img class="image" [src]="testimonial.images[0]" />
       </div>
       <!-- CONTENT -->
       <div class="info">
-        <p class="title">{{ testimonial.title }}</p>
+        <p class="title">{{ testimonial.name }}</p>
+        <!-- <p class="description">{{ testimonial.description }}</p> -->
+
         <div class="about">
           <!-- AVATAR -->
 
-          <img class="avatar" [src]="testimonial.avatar" />
+          <img class="avatar" src="https://images.pexels.com/photos/2726111/pexels-photo-2726111.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"  />
 
-          <p>Fecha de creación: {{ testimonial.creation }}</p>
+          <p>Fecha de creación: {{  testimonial.createdAt | date}}</p>
         </div>
       </div>
     </mat-card>
