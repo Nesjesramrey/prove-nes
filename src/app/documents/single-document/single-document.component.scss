@@ -218,6 +218,34 @@
     }
   }
 
+  .table-head {
+    display: flex;
+    align-items: center;
+
+    * {
+      margin: 0;
+    }
+
+    p.title {
+      margin-right: 70px;
+    }
+
+    ::ng-deep .mat-form-field-wrapper {
+      padding-bottom: 0 !important;
+    }
+
+    input[type="text"] {
+      padding: 15px;
+      border: 1px solid rgba($color: #000000, $alpha: 0.1);
+      border-radius: 5px;
+      width: 100%;
+    }
+
+    input[type="text"]:focus {
+      box-shadow: inset 0 0 0 2px #306EFF;
+    }
+  }
+
   .loading {
     mat-spinner {
       position: absolute;

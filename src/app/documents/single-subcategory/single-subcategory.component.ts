@@ -95,21 +95,21 @@ export class SingleSubcategoryComponent implements OnInit {
       console.log(this.topics);
       this.dataSource = new MatTableDataSource(this.topics);
 
-      for (let i = 0; i < this.topics.length; i++) {
-        let sols = this.topics[i].solutions;
-        for (let j = 0; j < sols.length; j++) {
-          //this.solutions.push(this.topics[i].solutions[j]);
-          // console.log("la sol id " + this.topics[i].solutions[j])
-          let sol: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.topics[i].solutions[j] });
-          forkJoin([sol]).subscribe((reply: any) => {
-            // console.log("elreply" + JSON.stringify(reply[0]));
-            let complete_solution = reply[0];
-            complete_solution.theme = this.topics[i];
-            console.log(complete_solution);
-            this.solutions.push(complete_solution);
-          })
-        }
-      }
+      // for (let i = 0; i < this.topics.length; i++) {
+      //   let sols = this.topics[i].solutions;
+      //   for (let j = 0; j < sols.length; j++) {
+      //     //this.solutions.push(this.topics[i].solutions[j]);
+      //     // console.log("la sol id " + this.topics[i].solutions[j])
+      //     let sol: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.topics[i].solutions[j] });
+      //     forkJoin([sol]).subscribe((reply: any) => {
+      //       // console.log("elreply" + JSON.stringify(reply[0]));
+      //       let complete_solution = reply[0];
+      //       complete_solution.theme = this.topics[i];
+      //       console.log(complete_solution);
+      //       this.solutions.push(complete_solution);
+      //     })
+      //   }
+      // }
 
       setTimeout(() => {
         this.isDataAvailable = true;

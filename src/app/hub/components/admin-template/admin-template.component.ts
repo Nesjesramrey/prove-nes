@@ -56,6 +56,8 @@ export class AdminTemplateComponent implements OnInit {
   }
 
   displayDocumentData(documentID: string) {
+    console.log(documentID);
+    return;
     let document: any = this.documents.filter((doc: any) => { return doc['_id'] == documentID; });
     this.selectedDocument = null;
     this.selectedDocument = document[0];

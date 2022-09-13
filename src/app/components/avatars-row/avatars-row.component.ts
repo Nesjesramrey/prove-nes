@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DocumentUserListComponent } from '../document-user-list/document-user-list.component';
 
 @Component({
   selector: 'avatars-row',
@@ -10,9 +12,25 @@ export class AvatarsRowComponent implements OnInit {
   @Input() showIcon: boolean = true;
   @Input() users: any = [];
 
-  constructor() { }
+  constructor(
+    public dialog: MatDialog
+  ) { }
 
-  ngOnInit(): void {
-    //console.log(this.users); 
-   }
+  ngOnInit(): void { }
+
+  popDocumentUserListDialog() {
+    const dialogRef = this.dialog.open<DocumentUserListComponent>(DocumentUserListComponent, {
+      width: '640px',
+      data: {
+        users: this.users,
+        location: 'document'
+      },
+      disableClose: true,
+      panelClass: 'full-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
 }

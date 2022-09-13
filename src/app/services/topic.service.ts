@@ -17,6 +17,6 @@ export class TopicService {
   }
 
   fetchSingleTopicById(data: any) {
-    return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchSingleTopicByIdEndPoint + `${data['_id']}`, data['formData']);
+    return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchSingleTopicByIdEndPoint + `${data['_id']}`);
   }
 }

@@ -7,9 +7,16 @@
     <div class="set-6">
       <breadcrumbs-component>
         <li>Documentos</li>
-        <li>{{ document.title }}</li>
-        <li>{{ category.category.name }}</li>
-        <li>{{ subcategory.category.name }}</li>
+        <li (click)="utilityService.linkMe('/documentos/' + document._id)">
+          {{ document.title }}
+        </li>
+        <li (click)="utilityService.linkMe('/documentos/' + document._id + '/categoria/' + category._id)">
+          {{ category.category.name }}
+        </li>
+        <li (click)="utilityService.linkMe('/documentos/' + document._id + '/categoria/' + category._id + '/subcategoria/' + subcategory._id)">
+          {{ subcategory.category.name }}
+        </li>
+        <li>{{ topic.title }}</li>
       </breadcrumbs-component>
     </div>
 
@@ -25,9 +32,17 @@
   <div class="set-12">
     <div class="set-3 col-lft">
       <mat-card class="set-12 doc-description">
-        <div class="set-12 imghldr" *ngIf="topic.images.length == 0">
-          <mat-icon>panorama</mat-icon>
+        <div class="set-12 imghldr">
+          <mat-icon *ngIf="topic.images.length == 0">panorama</mat-icon>
+          <img [src]="topic.images[0]" alt="" *ngIf="topic.images.length != 0">
+          <div class="overlay">
+            <mat-icon>photo_camera</mat-icon>
+            <div class="cover"></div>
+          </div>
         </div>
+        <!-- <div class="set-12 imghldr" *ngIf="topic.images.length == 0">
+          <mat-icon>panorama</mat-icon>
+        </div> -->
 
         <!-- <slider-images [images]="sliderImages" *ngIf="topic.images.length != 0">
         </slider-images> -->

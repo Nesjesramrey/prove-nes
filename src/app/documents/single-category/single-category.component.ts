@@ -16,6 +16,7 @@ import { AddDocumentCategoryComponent } from 'src/app/components/add-document-ca
 import { AddDocumentThemeComponent } from '../../components/add-document-theme/add-document-theme.component';
 import { EditCategoryDataComponent } from 'src/app/components/edit-category-data/edit-category-data.component';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
+import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
 
 @Component({
   selector: '.app-single-category',
@@ -87,36 +88,33 @@ export class SingleCategoryComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.subcategories);
       // console.log('subcategories: ', this.subcategories);
 
-      let themes: any[] = [];
-      let solutions: any[] = [];
+      // let themes: any[] = [];
+      // let solutions: any[] = [];
+      // for (let i = 0; i < this.subcategories.length; i++) {
+      //   for (let j = 0; j < this.subcategories[i].topics.length; j++) {
 
-      for (let i = 0; i < this.subcategories.length; i++) {
+      //     let topic_service: Observable<any> = this.topicService.fetchSingleTopicById({ _id: this.subcategories[i].topics[j] });
+      //     forkJoin([topic_service]).subscribe((reply: any) => {
+      //       let topic_obj = reply[0];
+      //       topic_obj.subcategory = this.subcategories[i];
+      //       themes.push(topic_obj);
+      //       for (let k = 0; k < reply[0].solutions.length; k++) {
+      //         let solution_service: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: reply[0].solutions[k] });
+      //         forkJoin([solution_service]).subscribe((reply: any) => {
+      //           let sol = reply[0];
+      //           sol.topic = topic_obj;
+      //           sol.subcategory = topic_obj.subcategory;
+      //           solutions.push(sol);
+      //           //console.log(sol);
+      //         })
+      //       }
 
-        for (let j = 0; j < this.subcategories[i].topics.length; j++) {
+      //     })
 
-          let topic_service: Observable<any> = this.topicService.fetchSingleTopicById({ _id: this.subcategories[i].topics[j] });
-          forkJoin([topic_service]).subscribe((reply: any) => {
-            let topic_obj = reply[0];
-            topic_obj.subcategory = this.subcategories[i];
-            themes.push(topic_obj);
-            for (let k = 0; k < reply[0].solutions.length; k++) {
-              let solution_service: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: reply[0].solutions[k] });
-              forkJoin([solution_service]).subscribe((reply: any) => {
-                let sol = reply[0];
-                sol.topic = topic_obj;
-                sol.subcategory = topic_obj.subcategory;
-                solutions.push(sol);
-                //console.log(sol);
-              })
-            }
-
-          })
-
-        }
-
-      }
-      this.topics = themes;
-      this.solutions = solutions;
+      //   }
+      // }
+      // this.topics = themes;
+      // this.solutions = solutions;
 
 
 
@@ -230,6 +228,21 @@ export class SingleCategoryComponent implements OnInit {
       },
       disableClose: true,
       panelClass: 'viewer-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  popAddCommentsDialog() {
+    const dialogRef = this.dialog.open<AddCommentsComponent>(AddCommentsComponent, {
+      width: '640px',
+      data: {
+        location: 'category',
+        document: this.document
+      },
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
