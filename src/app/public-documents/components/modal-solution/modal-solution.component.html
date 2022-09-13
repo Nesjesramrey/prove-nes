@@ -1,0 +1,62 @@
+<div class="set-12 dialog-head">
+  <div class="set-9">
+    <h3>Agregar Solucion</h3>
+  </div>
+  <div class="set-3 txt-right">
+    <button
+      type="button"
+      mat-icon-button
+      color="primary"
+      (click)="killDialog()"
+    >
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div class="set-12 dialog-body">
+  <form [formGroup]="addSolutionFormGroup">
+    <div class="form-body">
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Escribe una descripción o carga un documento</mat-label>
+        <textarea
+          matInput
+          placeholder="Descripción"
+          formControlName="description"
+        ></textarea>
+      </mat-form-field>
+
+      <div class="imagebox">
+        <label [ngClass]="imageUrl ? 'data' : 'empty'">
+          <mat-icon>photo_camera</mat-icon>
+          <span>Subir imagen</span>
+          <input
+            type="file"
+            accept="image/*"
+            (change)="handleSelectImage($event)"
+            formControlName="image"
+          />
+        </label>
+
+        <img
+          class="preview"
+          [src]="imageUrl"
+          alt="img_upload"
+          [ngClass]="imageUrl ? 'data' : 'empty'"
+        />
+      </div>
+    </div>
+
+    <div class="set-12 ctrls">
+      <button
+        type="submit"
+        mat-raised-button
+        color="primary"
+        [disabled]="addSolutionFormGroup.invalid"
+        class="submit-button"
+      >
+        Agregar problematica
+      </button>
+    </div>
+  </form>
+</div>

@@ -9,7 +9,12 @@
   </div>
 
   <div class="set-6 navigation">
-    <!-- <button type="button">
+
+    <button *ngIf="token !== null && path > 0" type="button" class="btn-permissios" (click)="btnPermissions()">
+      Permiso para editar
+   </button> 
+
+    <button type="button">
       <span>Ciudadanos</span>
     </button>
 

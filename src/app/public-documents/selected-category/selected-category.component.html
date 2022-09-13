@@ -1,0 +1,100 @@
+<div class="set-12">
+  <breadcrumbs-component>
+    <li class="breadcrumb-item">Perfil</li>
+
+    <li>Documentos</li>
+  </breadcrumbs-component>
+
+  <div class="set-12" style="padding-bottom: 100px">
+    <div class="set-4 col-rgt-3">
+      <mat-card class="doc-description">
+        <div class="imghldr">
+          <!-- <mat-icon>panorama</mat-icon> -->
+          <img
+            src="../../../assets/images/Rectangle 531.png"
+            alt=""
+            style="width: 100%"
+          />
+        </div>
+        <div class="infohldr">
+          <p class="card-title">Documento madre 00</p>
+          <expanded-text
+            [text]="
+              'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'
+            "
+            [minLength]="200"
+          ></expanded-text>
+        </div>
+      </mat-card>
+      <div class="horizontal-stats mt-2"></div>
+      <div class="mt-2">
+        <app-map-box class="mt-2"></app-map-box>
+      </div>
+    </div>
+    <div class="set-8">
+      <panel-circles
+        style="width: 100%"
+        [data]="categoriesData"
+      ></panel-circles>
+      <div class="mt-2 set-12">
+        <div class="set-2">
+          <div class="title">Derechos humanos</div>
+        </div>
+        <div class="set-2 col-rgt-2">
+          <div class="select">
+            <select required>
+              <option value="volvo">Municipio 1</option>
+              <option value="saab">Municipio 2</option>
+              <option value="mercedes">Municipio 3</option>
+              <option value="audi">Municipio 4</option>
+            </select>
+          </div>
+        </div>
+        <div class="set-8">
+          <div class="button">
+            <button type="button">Ver Subcategorías</button>
+          </div>
+        </div>
+      </div>
+      <div class="set-12 mt-2">
+        <div class="set-6 col-rgt-2">
+          <spider-chart></spider-chart>
+        </div>
+        <div class="set-6">
+          <top10-list [data]="items" [color]="colors"></top10-list>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="set-3 col-lft">
+    <mat-card class="set-12 doc-description">
+      <div class="set-12 imghldr">
+        <mat-icon>panorama</mat-icon>
+        <img src="../../../assets/images/Rectangle 531.png" alt="" style="width: 100%;">
+      </div>
+      <div class="set-12 infohldr">
+        <p class="card-title">Documento madre 00</p>
+        <p class="card-description">Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+        <span class="card-description link">Leer más</span>
+      </div>
+    </mat-card>
+    <div class="set-12" style="margin-top: 10px;">
+      <div class="horizontal-stats"></div>
+    </div>
+  </div> -->
+  <!-- <div class="set-3 inner-container">
+    <div class="spider-chart chart" ></div>
+  </div>
+
+  <div class="set-6 inner-container">
+    <div class="vertical-stats"></div>
+  </div>
+
+  <div class="set-6 inner-container">
+    <div class="top10-list"></div>
+  </div> -->
+  <!-- <top10-list></top10-list> -->
+  <!-- <vertical-stats-component ></vertical-stats-component> -->
+  <!-- <horizontal-stats-component></horizontal-stats-component> -->
+</div>

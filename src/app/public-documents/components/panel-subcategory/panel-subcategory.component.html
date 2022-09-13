@@ -1,0 +1,14 @@
+<div class="main shadow">
+  <div
+    class="random-text"
+    [ngStyle]="{
+      left: item.pos.x + 'px',
+      right: item.pos.y + 'px',
+      'font-size': item.size + 'px',
+      opacity: item.opacity
+    }"
+    *ngFor="let item of categories"
+  >
+    <span (click)="redirect(item._id)" style="cursor:pointer">{{ item.title }}</span>
+  </div>
+</div>

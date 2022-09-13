@@ -1,6 +1,7 @@
 :host {
   //position: fixed;
   z-index: 99;
+  width: 100%;
 
   mat-toolbar {
     height: 80px;
@@ -25,6 +26,7 @@
       width: 20%;
       float: left;
       cursor: pointer;
+      max-width: 55px;
     }
 
     input {
@@ -101,3 +103,12 @@
     }
   }
 }
+
+
+ .btn-permissios{
+  background-color: #306EFF;
+  width: 224px;
+  height: 35px;
+  color: #fff;
+  border-radius: 5px;
+} 

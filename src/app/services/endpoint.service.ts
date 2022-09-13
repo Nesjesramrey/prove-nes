@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import { environment } from "src/environments/environment";
+import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class EndPointService {
@@ -19,13 +19,15 @@ export class EndPointService {
 
   // public fetchAllUsersEndPoint: string = '/user/fetch-all-users';
   public fetchUserByIdEndPoint: string = '/user/fetch-user-by-id';
-  public fetchUserByFirebaseUIDEndPoint: string = '/user/fetch-user-by-firebase-uid';
+  public fetchUserByFirebaseUIDEndPoint: string =
+    '/user/fetch-user-by-firebase-uid';
   // public addUserPermissionsEndPoint: string = '/user/add-permissions';
 
   // documents
   public createNewDocumentEndPoint: string = '/document';
   public fetchSingleDocumentByIdEndPoint: string = '/document/';
-  public fetchDocumentsByCollaboratorEndPoint: string = '/document/collaborator/';
+  public fetchDocumentsByCollaboratorEndPoint: string =
+    '/document/collaborator/';
   public createDocumentLayoutEndPoint: string = '/layout/document/';
   public editDocumentDataEndPoint: string = '/document/';
   public fetchCoverDocumentEndPoint: string = '/document/public/home';
@@ -37,11 +39,12 @@ export class EndPointService {
   // public createNewDocumentEndPoint: string = '/document/create-new-document';
   public fetchMyDocumentsEndPoint: string = '/document/fetch-my-documents';
   // public fetchSingleDocumentByngIdEndPoint: string = '/document/fetch-single-document-by-id';
-  public fetchEditorDocumentsEndPoint: string = '/document/fetch-editor-documents';
+  public fetchEditorDocumentsEndPoint: string =
+    '/document/fetch-editor-documents';
   public addDocumentLayoutEndPoint: string = '/document/add-document-layout';
 
-
-  public addDocumentCollaboratorEndPoint: string = '/document/add-document-collaborator';
+  public addDocumentCollaboratorEndPoint: string =
+    '/document/add-document-collaborator';
   public addDocumentColumnEndPoint: string = '/document/add-document-column';
 
   // layouts
@@ -53,8 +56,11 @@ export class EndPointService {
   public createNewSubLayoutEndPoint: string = '/sublayout/layout/';
 
   // topics
-  public createNewTopicEndPoint: string = '/topic/layout/';
   public fetchSingleTopicByIdEndPoint: string = '/topic/';
+  public createNewTopicEndPoint: string = '/topic/layout/';
+
+  // permission
+  public createNewPermissionEndPoint: string = '/permission/';
 
   // solutions
   public fetchSingleSolutionByIdEndPoint: string = '/solution/';
@@ -74,17 +80,31 @@ export class EndPointService {
   public uploadUserAvatarEndPoint: string = '/upload/upload-avatar-file';
 
   // notifications
-  public createNewNotificationEndPoint: string = '/notification/create-new-notification';
-  public fetchMyNotificationsLengthEndPoint: string = '/notification/fetch-my-notifications-length';
+  public createNewNotificationEndPoint: string =
+    '/notification/create-new-notification';
+  public fetchMyNotificationsLengthEndPoint: string =
+    '/notification/fetch-my-notifications-length';
   // public fetchMyNotificationsContentEndPoint: string = '/notification/fetch-my-notifications-content';
   public fetchMyNotificationsContentEndPoint: string = '/notification';
 
   // support
-  public sendSupportMessageEndPoint: string = '/support/init-support-conversation';
-  public injectConversationMessageEndPoint: string = '/support/inject-conversation-message';
-  public fetchSupportConversationsEndPoint: string = '/support/fetch-support-conversations';
-  public killSupportConversationEndPoint: string = '/support/kill-support-conversation';
-  public searchConversationsByDateEndPoint: string = '/support/search-conversations-by-date';
+  public sendSupportMessageEndPoint: string =
+    '/support/init-support-conversation';
+  public injectConversationMessageEndPoint: string =
+    '/support/inject-conversation-message';
+  public fetchSupportConversationsEndPoint: string =
+    '/support/fetch-support-conversations';
+  public killSupportConversationEndPoint: string =
+    '/support/kill-support-conversation';
+  public searchConversationsByDateEndPoint: string =
+    '/support/search-conversations-by-date';
 
-  constructor() { }
+  // testimony
+  public fetchSingleTestimonyByIdEndPoint: string = '/testimony/';
+  public createNewTestimonyEndPoint: string = '/testimony/';
+
+  // vote
+  public createNewVoteEndPonint: string = '/vote/';
+
+  constructor() {}
 }

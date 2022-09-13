@@ -1,0 +1,55 @@
+<div class="set-12" style="padding-bottom: 100px">
+  <div class="container" *ngIf="selectedCategory">
+    <breadcrumbs-component>
+      <li class="breadcrumb-item">{{ document.title }}</li>
+      <li>{{ selectedCategory.category.name }}</li>
+    </breadcrumbs-component>
+    <div class="set-4 col-rgt-3">
+      <mat-card class="doc-description">
+        <div class="imghldr">
+          <img
+            src="../../../assets/images/books.png"
+            alt=""
+            style="width: 100%"
+          />
+        </div>
+        <div class="infohldr">
+          <p class="card-title">{{ selectedCategory.category.name }}</p>
+          <expanded-text
+            [text]="selectedCategory.description"
+            [minLength]="200"
+          ></expanded-text>
+        </div>
+      </mat-card>
+      <div class="horizontal-stats mt-2"></div>
+    </div>
+    <div class="set-8">
+      <panel-circles
+        [data]="selectedCategory.subLayouts"
+        [withBorder]="true"
+        [redirectTo]="'SUBCATEGORY'"
+      ></panel-circles>
+      <div class="mt-2">
+        <div class="select">
+          <select required>
+            <option value="volvo">Municipio 1</option>
+            <option value="saab">Municipio 2</option>
+            <option value="mercedes">Municipio 3</option>
+            <option value="audi">Municipio 4</option>
+          </select>
+        </div>
+      </div>
+      <div class="set-12 mt-2">
+        <div class="set-3 col-rgt-2">
+          <vertical-stats></vertical-stats>
+        </div>
+        <div class="set-5 col-rgt-2">
+          <spider-chart></spider-chart>
+        </div>
+        <div class="set-4">
+          <top10-list [data]="items"></top10-list>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
