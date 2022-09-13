@@ -7,7 +7,6 @@
         <li class="breadcrumb-item">{{ subcategory.category.name }}</li>
         <li>{{ topic.title }}</li>
       </breadcrumbs-component>
-      
     </div>
 
     <div class="set-4 featured-users">
@@ -77,7 +76,12 @@
                   <br />
                   <b>8</b>
                 </p>
-                <button mat-raised-button color="primary" (click)="vote()">
+                <button
+                  mat-raised-button
+                  color="primary"
+                  [style.background-color]="color"
+                  (click)="openModalVote()"
+                >
                   Vota
                 </button>
                 <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
