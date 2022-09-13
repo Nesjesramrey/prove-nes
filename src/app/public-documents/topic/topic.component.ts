@@ -30,6 +30,7 @@ export class TopicComponent implements OnInit {
   public topic: any = null;
   public submitted: boolean = false;
   public color: any = 'primary';
+  public votes: number = 0;
 
   public testimonials: any = TESTIMONIALS;
   public solutionsData: any = [];
@@ -68,13 +69,16 @@ export class TopicComponent implements OnInit {
       _id: this.topicID,
     });
 
-    forkJoin([document, category, subcategory, topic]).subscribe(
+    let votes: Observable<any> = this.voteService.fetchVotesByTopicID({ _id: this.topicID });
+
+    forkJoin([document, category, subcategory, topic, votes]).subscribe(
       (reply: any) => {
         console.log('##', reply);
         this.document = reply[0];
         this.category = reply[1];
         this.subcategory = reply[2];
         this.topic = reply[3];
+        this.votes = reply[4].length
         this.solutionsData = this.topic.solutions;
       }
     );
@@ -120,9 +124,7 @@ export class TopicComponent implements OnInit {
     );
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) {
-        console.log(reply);
-      }
+      this.loadTopic()
     });
   }
   openModalVote() {
@@ -131,8 +133,14 @@ export class TopicComponent implements OnInit {
       {
         width: '500px',
         disableClose: true,
+        data: { topic: this.topicID },
       }
     );
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        this.color = reply;
+      }
+    });
   }
   // vote() {
   //   this.submitted = true;
