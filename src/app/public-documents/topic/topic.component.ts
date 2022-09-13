@@ -12,6 +12,7 @@ import { ModalTestimonyComponent } from '../components/modal-testimony/modal-tes
 import { AddDocumentTestimonyComponent } from 'src/app/components/add-document-testimony/add-document-testimony.component';
 import { AddDocumentSolutionComponent } from 'src/app/components/add-document-solution/add-document-solution.component';
 import { VoteService } from 'src/app/services/vote.service';
+import { ModalVotesComponent } from '../components/modal-votes/modal-votes.component';
 @Component({
   selector: '.topic-page',
   templateUrl: './topic.component.html',
@@ -28,6 +29,7 @@ export class TopicComponent implements OnInit {
   public subcategory: any = null;
   public topic: any = null;
   public submitted: boolean = false;
+  public color: any = 'primary';
 
   public testimonials: any = TESTIMONIALS;
   public solutionsData: any = [];
@@ -123,12 +125,36 @@ export class TopicComponent implements OnInit {
       }
     });
   }
-  vote() {
-    this.submitted = true;
-    let data = {};
-    this.voteService.createNewVoto(data).subscribe((reply: any) => {
-      this.submitted = false;
-    });
+  openModalVote() {
+    const dialogRef = this.dialog.open<ModalVotesComponent>(
+      ModalVotesComponent,
+      {
+        width: '500px',
+        disableClose: true,
+      }
+    );
+  }
+  // vote() {
+  //   this.submitted = true;
+  //   let data = {
+  //     topic: this.topicID,
+  //   };
+  //   this.voteService.createNewVoto(data).subscribe((reply: any) => {
+  //     this.submitted = false;
+  //     console.log({ reply: reply });
+  //     if (reply.message == 'create success') {
+  //       this.color = '#D9D9D9';
+  //       console.log('yes');
+  //     }
+  //     if (reply.message == 'removed success') {
+  //       this.color = 'primary';
+  //       console.log('no');
+  //     }
+  //     this.ngOnInit();
+  //   });
+  // }
+  checkVote() {
+    this.color = '';
   }
 }
 

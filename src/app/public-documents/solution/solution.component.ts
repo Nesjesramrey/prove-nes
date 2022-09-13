@@ -8,6 +8,7 @@ import { LayoutService } from 'src/app/services/layout.service';
 import { SolutionService } from 'src/app/services/solution.service';
 import { TopicService } from 'src/app/services/topic.service';
 import { UtilityService } from 'src/app/services/utility.service';
+import { VoteService } from 'src/app/services/vote.service';
 @Component({
   selector: '.solution-page',
   templateUrl: './solution.component.html',
@@ -19,6 +20,7 @@ export class SolutionComponent implements OnInit {
   public subcategoryID: string = '';
   public topicID: string = '';
   public solutionID: string = '';
+  public submitted: boolean = false;
 
   public document: any = null;
   public solution: any = null;
@@ -35,7 +37,8 @@ export class SolutionComponent implements OnInit {
     public documentService: DocumentService,
     public layoutService: LayoutService,
     public topicService: TopicService,
-    public solutionService: SolutionService
+    public solutionService: SolutionService,
+    public voteService: VoteService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
@@ -52,11 +55,17 @@ export class SolutionComponent implements OnInit {
   loadSolution() {
     let document: Observable<any> =
       this.documentService.fetchSingleDocumentById({ _id: this.documentID });
-    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({_id: this.categoryID,});
-    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({_id: this.subcategoryID,});
-    let topic: Observable<any> = this.topicService.fetchSingleTopicById({_id: this.topicID,});
+    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({
+      _id: this.categoryID,
+    });
+    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById(
+      { _id: this.subcategoryID }
+    );
+    let topic: Observable<any> = this.topicService.fetchSingleTopicById({
+      _id: this.topicID,
+    });
     let solution: Observable<any> =
-      this.solutionService.fetchSingleSolutionById({ _id: this.solutionID,});
+      this.solutionService.fetchSingleSolutionById({ _id: this.solutionID });
 
     forkJoin([document, category, subcategory, topic, solution]).subscribe(
       (reply: any) => {
@@ -89,8 +98,17 @@ export class SolutionComponent implements OnInit {
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
         console.log(reply);
-        this.solution.testimonials.unshift(reply.testimonials[0])
+        this.solution.testimonials.unshift(reply.testimonials[0]);
       }
+    });
+  }
+  vote() {
+    this.submitted = true;
+    let data = {
+      solution: this.solutionID,
+    };
+    this.voteService.createNewVoto(data).subscribe((reply: any) => {
+      this.submitted = false;
     });
   }
 }

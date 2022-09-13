@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CategoryComponent } from './category/category.component';
+import { ModalVotesComponent } from './components/modal-votes/modal-votes.component';
 import { PublicComponent } from './public/public.component';
 import { SelectedCategoryComponent } from './selected-category/selected-category.component';
 import { SolutionComponent } from './solution/solution.component';
@@ -15,6 +16,10 @@ const routes: Routes = [
       {
         path: 'selected',
         component: SelectedCategoryComponent,
+      },
+      {
+        path: 'test',
+        component: ModalVotesComponent,
       },
       {
         path: ':documentID/categoria/:categoryID/subcategoria/:subcategoryID/tema/:topicID/solucion/:solutionID',

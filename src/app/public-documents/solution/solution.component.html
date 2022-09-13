@@ -2,12 +2,12 @@
   <div class="set-12">
     <div class="set-6">
       <breadcrumbs-component>
-        <li class="breadcrumb-item">{{document.title}}</li>
-        <li class="breadcrumb-item">{{category.category.name}}</li>
-        <li class="breadcrumb-item">{{subcategory.category.name}}</li>
-        <li class="breadcrumb-item">{{topic.title}}</li>
+        <li class="breadcrumb-item">{{ document.title }}</li>
+        <li class="breadcrumb-item">{{ category.category.name }}</li>
+        <li class="breadcrumb-item">{{ subcategory.category.name }}</li>
+        <li class="breadcrumb-item">{{ topic.title }}</li>
 
-        <li>{{solution.title}}</li>
+        <li>{{ solution.title }}</li>
       </breadcrumbs-component>
     </div>
     <div class="set-4 featured-users">
@@ -65,7 +65,9 @@
                   <br />
                   <b>8</b>
                 </p>
-                <button mat-raised-button color="primary">Vota</button>
+                <button mat-raised-button color="primary" (click)="vote()">
+                  Vota
+                </button>
               </div>
             </div>
           </div>
@@ -91,7 +93,9 @@
       </div>
     </div>
     <div class="set-4">
-      <public-documents-testimonials [data]="solution.testimonials"></public-documents-testimonials>
+      <public-documents-testimonials
+        [data]="solution.testimonials"
+      ></public-documents-testimonials>
     </div>
   </div>
 </div>

@@ -31,6 +31,7 @@ import { ModalPermissionsComponent } from './modal-permissions/modal-permissions
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ModalSolutionComponent } from './modal-solution/modal-solution.component';
 import { ModalTestimonyComponent } from './modal-testimony/modal-testimony.component';
+import { ModalVotesComponent } from './modal-votes/modal-votes.component';
 
 @NgModule({
   imports: [
@@ -67,6 +68,7 @@ import { ModalTestimonyComponent } from './modal-testimony/modal-testimony.compo
     ModalPermissionsComponent,
     ModalSolutionComponent,
     ModalTestimonyComponent,
+    ModalVotesComponent,
   ],
   exports: [
     Top10ListComponent,
