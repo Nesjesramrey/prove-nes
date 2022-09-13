@@ -16,6 +16,7 @@ import { EditDocumentDataComponent } from 'src/app/components/edit-document-data
 import { AddDocumentCoverTextComponent } from 'src/app/components/add-document-cover-text/add-document-cover-text.component';
 import { WindowAlertComponent } from 'src/app/components/window-alert/window-alert.component';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
+import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
 
 @Component({
   selector: '.single-document-page',
@@ -55,10 +56,9 @@ export class SingleDocumentComponent implements OnInit {
   ngOnInit(): void {
     this.documentService.fetchSingleDocumentById({ _id: this.documentID }).subscribe((reply: any) => {
       this.document = reply;
-      // console.log('document: ', this.document);
       this.layouts = this.document['layouts'];
       this.collaborators = this.document.collaborators;
-      // console.log('layouts: ', this.layouts);
+      this.layouts.filter((layout: any) => { layout['categoryName'] = layout['category']['name']; });
       this.dataSource = new MatTableDataSource(this.layouts);
     });
 
@@ -140,7 +140,20 @@ export class SingleDocumentComponent implements OnInit {
     });
   }
 
-  popAddDocumentLayout() { }
+  popAddCommentsDialog() {
+    const dialogRef = this.dialog.open<AddCommentsComponent>(AddCommentsComponent, {
+      width: '640px',
+      data: {
+        location: 'document',
+        document: this.document
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
 
   popEditDocumentDialog() {
     const dialogRef = this.dialog.open<EditDocumentDataComponent>(EditDocumentDataComponent, {
@@ -228,5 +241,10 @@ export class SingleDocumentComponent implements OnInit {
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) { }
     });
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }

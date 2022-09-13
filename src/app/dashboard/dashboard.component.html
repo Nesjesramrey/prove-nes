@@ -12,15 +12,16 @@
           {{document.title}}
         </button>
 
-        <div class="set-12">
+        <div class="set-12" *ngIf="document.coverDescription != null">
           <div class="set-3">&nbsp;</div>
           <div class="set-6 desc">
-            <p class="grad-txt">{{document.description}}</p>
+            <p class="grad-txt">{{document.coverDescription}}</p>
           </div>
         </div>
 
         <div class="set-12 txt-center">
-          <button type="button" mat-raised-button color="primary" (click)="linkMe('/documentos-publicos/' + document._id)">
+          <button type="button" mat-raised-button color="primary"
+            (click)="linkMe('/documentos-publicos/' + document._id)">
             Visitar Documento
           </button>
         </div>

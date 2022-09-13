@@ -45,6 +45,8 @@ import { ImageViewerComponent } from "./image-viewer/image-viewer.component";
 import { MapBoxComponent } from './map-box/map-box.component';
 import { CircleChartComponent } from './circle-chart/circle-chart.component';
 import { SpiderChartComponent } from './spider-chart/spider-chart.component';
+import { DocumentUserListComponent } from './document-user-list/document-user-list.component';
+import { AddCommentsComponent } from './add-comments/add-comments.component';
 
 @NgModule({
   imports: [
@@ -94,6 +96,8 @@ import { SpiderChartComponent } from './spider-chart/spider-chart.component';
     MapBoxComponent,
     CircleChartComponent,
     SpiderChartComponent,
+    DocumentUserListComponent,
+    AddCommentsComponent
   ],
   exports: [
     AppPageletComponent,
@@ -123,6 +127,8 @@ import { SpiderChartComponent } from './spider-chart/spider-chart.component';
     SpiderChartComponent,
     CircleChartComponent,
     AddDocumentSolutionComponent,
+    DocumentUserListComponent,
+    AddCommentsComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
@@ -139,6 +145,8 @@ import { SpiderChartComponent } from './spider-chart/spider-chart.component';
     WindowAlertComponent,
     AddRootCategoryComponent,
     ImageViewerComponent,
+    DocumentUserListComponent,
+    AddCommentsComponent
   ],
   providers: [],
 })

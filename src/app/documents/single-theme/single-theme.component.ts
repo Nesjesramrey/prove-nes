@@ -112,13 +112,13 @@ export class SingleThemeComponent implements OnInit {
       // console.log("topic " + JSON.stringify(this.topic));
       this.sliderImages = this.topic.images;
 
-      let sols = this.topic.solutions;
-      for (let j = 0; j < sols.length; j++) {
-        let sol: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.topic.solutions[j] });
-        forkJoin([sol]).subscribe((reply: any) => {
-          this.solutions.push(reply[0]);
-        })
-      }
+      // let sols = this.topic.solutions;
+      // for (let j = 0; j < sols.length; j++) {
+      //   let sol: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.topic.solutions[j] });
+      //   forkJoin([sol]).subscribe((reply: any) => {
+      //     this.solutions.push(reply[0]);
+      //   })
+      // }
     }
     );
     this.documentService

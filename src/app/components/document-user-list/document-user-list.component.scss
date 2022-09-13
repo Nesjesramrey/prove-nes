@@ -1,0 +1,13 @@
+:host {
+  mat-toolbar {
+    justify-content: flex-end;
+
+    * {
+      margin: 0 !important;
+    }
+
+    button {
+      margin-left: 20px !important;
+    }
+  }
+}

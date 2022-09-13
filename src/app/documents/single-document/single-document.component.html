@@ -10,6 +10,7 @@
         <li>{{document.title}}</li>
       </breadcrumbs-component>
     </div>
+
     <div class="set-6 txt-right">
       <span class="created-by">
         Autor: <span class="author">{{document.createdBy.firstname}} {{document.createdBy.lastname}}</span>
@@ -87,9 +88,9 @@
         </div>
 
         <div class="set-8 txt-right">
-          <button type="button" mat-mini-fab color="accent" class="mini" matTooltip="Agregar Esquema"
-            (click)="popAddDocumentLayout()" disabled>
-            <mat-icon>group_add</mat-icon>
+          <button type="button" mat-mini-fab color="accent" class="mini" matTooltip="Agregar Comentario"
+            (click)="popAddCommentsDialog()">
+            <mat-icon>add_comment</mat-icon>
           </button>
           <button type="button" mat-mini-fab color="primary" class="mini" matTooltip="Agregar Colaborador"
             (click)="popAddDocumentCollaborator()">
@@ -166,13 +167,21 @@
 
       <div class="set-12 category-list">
         <mat-card class="set-12">
-          <p class="title">Categorías</p>
+          <div class="set-12 table-head">
+            <p class="title">Categorías</p>
+            <!-- <mat-form-field appearance="outline">
+              <mat-label>Filtrar</mat-label>
+              <input matInput (keyup)="applyFilter($event)">
+            </mat-form-field> -->
+            <input type="text" (keyup)="applyFilter($event)" placeholder="Búscar en categorías...">
+          </div>
+
           <table mat-table [dataSource]="dataSource" class="categories-table">
             <ng-container matColumnDef="name">
               <th mat-header-cell *matHeaderCellDef>Categoría</th>
               <td mat-cell *matCellDef=" let element">
                 <button type="button" class="catbtn" (click)="linkCategories(element._id)">
-                  {{element.category.name}}
+                  {{element.categoryName}}
                 </button>
               </td>
             </ng-container>

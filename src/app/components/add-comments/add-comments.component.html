@@ -1,0 +1,21 @@
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+
+<div class="set-12" *ngIf="isDataAvailable">
+  <h3>Agregar comentario</h3>
+  <form class="set-12" [formGroup]="commentFormGroup" (submit)="onComment(commentFormGroup)">
+    <mat-form-field appearance="outline">
+      <mat-label>Comentario</mat-label>
+      <textarea matInput cdkTextareaAutosize formControlName="comment"></textarea>
+    </mat-form-field>
+
+    <div class="set-12 ctrls">
+      <button type="button" mat-raised-button color="accent" (click)="killDialog()"
+        [disabled]="submitted">Cancelar</button>
+      <button type="submit" mat-raised-button color="primary"
+        [disabled]="commentFormGroup.invalid || submitted">Comentar</button>
+      <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
+    </div>
+  </form>
+</div>

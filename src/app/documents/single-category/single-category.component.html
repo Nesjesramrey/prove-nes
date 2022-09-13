@@ -84,10 +84,11 @@
         </div>
 
         <div class="set-8 txt-right">
-          <button type="button" mat-mini-fab color="accent" class="mini" matTooltip="Agregar Esquema" disabled>
-            <mat-icon>group_add</mat-icon>
+          <button type="button" mat-mini-fab color="accent" class="mini" matTooltip="Agregar Comentario"
+            (click)="popAddCommentsDialog()">
+            <mat-icon>add_comment</mat-icon>
           </button>
-          <button type="button" mat-mini-fab color="primary" class="mini" matTooltip="Agregar Colaborador" disabled>
+          <button type="button" mat-mini-fab color="primary" class="mini" matTooltip="Agregar Colaborador">
             <mat-icon>person_add</mat-icon>
           </button>
           <button type="button" mat-mini-fab color="warn" class="mini" matTooltip="Agregar Categoría"
@@ -131,12 +132,12 @@
               <mat-icon class="icon-insights">insights</mat-icon>
             </p>
 
-            <ol class="top-list">
+            <!-- <ol class="top-list">
               <li class="top-list-item" *ngFor="let solution of solutions.slice(0, 4);"
                 (click)="linkSolution(solution._id, solution.subcategory._id, solution.topic._id)">
                 <span>{{solution.title}}</span>
               </li>
-            </ol>
+            </ol> -->
           </div>
 
           <div class="set-4">
@@ -145,12 +146,12 @@
               <mat-icon class="icon-warnings">warning</mat-icon>
             </p>
 
-            <ol class="top-list">
+            <!-- <ol class="top-list">
               <li class="top-list-item" *ngFor="let topic of topics.slice(0, 4);"
                 (click)="linkTopic(topic._id, topic.subcategory._id)">
                 <span>{{topic.title}}</span>
               </li>
-            </ol>
+            </ol> -->
           </div>
         </mat-card>
       </div>
