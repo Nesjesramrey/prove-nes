@@ -2,10 +2,6 @@
   margin: 120px 40px;
   margin-bottom: 100px;
 
-  .main-box {
-    background-color: white;
-  }
-
   .container-titles {
     background-color: white;
     .title {
@@ -24,13 +20,21 @@
       }
     }
   }
+
+  .tables {
+    .title {
+      font-weight: 500;
+      text-align: start;
+    }
+  }
+
   .users-container {
     p {
       font-size: 14px;
       font-weight: 500;
     }
   }
-  .featured-users{
+  .featured-users {
     height: min-content;
   }
   .doc-description {

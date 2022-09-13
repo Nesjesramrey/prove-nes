@@ -12,19 +12,13 @@ export interface Section {
 })
 export class Top10ListComponent implements OnInit {
   @Input() data: Section[] = [];
-  @Input() color: any;
 
   isColor: boolean = false;
 
   constructor() {}
 
   ngOnInit(): void {
-    this.checkColor(this.color);
-    console.log({ color: this.color });
   }
-  checkColor(color: any) {
-    if (color && color.bg === '#FF6D00') {
-      this.isColor = true;
-    }
-  }
+
+
 }

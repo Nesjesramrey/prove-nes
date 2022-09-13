@@ -1,6 +1,6 @@
 <div class="container" *ngIf="topic">
   <div class="set-12">
-    <div class="set-5">
+    <div class="set-6">
       <breadcrumbs-component>
         <li class="breadcrumb-item">{{ document.title }}</li>
         <li class="breadcrumb-item">{{ category.category.name }}</li>
@@ -9,8 +9,8 @@
       </breadcrumbs-component>
     </div>
 
-    <div class="set-4 featured-users">
-      <featured-users [inputAmount]="5"></featured-users>
+    <div class="set-3 featured-users">
+      <featured-users [inputAmount]="3"></featured-users>
     </div>
 
     <div class="set-3">
@@ -46,7 +46,7 @@
             class="add-button purple"
             (click)="openModalTestimony()"
           >
-            <mat-icon style="color: white">create_new_folder</mat-icon>
+            <mat-icon>create_new_folder</mat-icon>
           </button>
           <p>Agregar Testimonios</p>
         </div>
@@ -71,10 +71,9 @@
               </button>
 
               <div class="actions">
-                <p>
-                  Relevancia ciudadana
-                  <br />
-                  <b>{{votes}}</b>
+                <p>Relevancia ciudadana</p>
+                <p class="votes">
+                  {{ votes }}
                 </p>
                 <button
                   mat-raised-button

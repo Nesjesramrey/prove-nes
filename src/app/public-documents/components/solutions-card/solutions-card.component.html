@@ -1,14 +1,23 @@
 <mat-card class="doc-description" style="min-height: 280px">
   <div class="solutions-box" style="text-align: start">
     <p class="title">Soluciones</p>
+    <p
+      class="txt-right title-column"
+    >
+    Calificación
+    </p>
     <table class="mt-2">
       <tbody>
-        <tr *ngFor="let item of data" (click)="redirect(item._id)" style="cursor: pointer;">
+        <tr
+          *ngFor="let item of data"
+          (click)="redirect(item._id)"
+          style="cursor: pointer"
+        >
           <td>
             <p>{{ item.title }}</p>
           </td>
-          <td>
-            <p>{{ 0 }}</p>
+          <td style="width: 300px">
+            <p class="txt-center">{{ 0 }}</p>
           </td>
         </tr>
       </tbody>
