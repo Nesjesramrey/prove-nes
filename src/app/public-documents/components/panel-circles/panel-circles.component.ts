@@ -11,7 +11,7 @@ export interface ICategoryFormat {
   out_circle_color: string;
   opacity: number;
   size: string;
-  position: string;
+  position: number;
   pos?: {
     x: number;
     y: number;
@@ -52,12 +52,10 @@ export class PanelCirclesComponent implements OnInit {
   loadCategories() {
     const sizes = ['small', 'medium', 'large'];
     const opacities = [0.75, 1];
-    const positions = ['first', 'second', 'third'];
     let maxX = 20;
     let maxY = 20;
 
     const data = this.document ? this.document.layouts : this.data;
-
     this.categories = data.map((item: any, index: any) => {
       const background = this.withBorder
         ? '#ff6d00'
@@ -73,8 +71,8 @@ export class PanelCirclesComponent implements OnInit {
         overlay: 'transparent',
         // opacity: 1,
         opacity: opacities[(Math.random() * opacities.length) | 0],
-        size: sizes[index],
-        position: positions[index],
+        size: sizes[Math.floor(Math.random() * 3)],
+        position: index,
         pos: {
           x: maxX,
           y: maxY,
@@ -88,16 +86,11 @@ export class PanelCirclesComponent implements OnInit {
   }
 
   redirect(id: string) {
-    let path = '';
+    const isCategory = this.redirectTo === 'CATEGORY';
+    const type = isCategory ? id : `${this.categoryID}/subcategoria/${id}`;
 
-    if (this.redirectTo === 'CATEGORY') {
-      path = `documentos-publicos/${this.documentID}/categoria/${id}`;
-    }
-
-    if (this.redirectTo === 'SUBCATEGORY') {
-      path = `documentos-publicos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${id}`;
-    }
-
-    this.utilityService.linkMe(path);
+    this.utilityService.linkMe(
+      `documentos-publicos/${this.documentID}/categoria/${type}`
+    );
   }
 }

@@ -2,9 +2,13 @@
   width: 100%;
   //   background-color: orange;
 
+  .title-card{
+    font-size: 13pt;
+    font-weight: 600;
+  }
   .title {
     margin: 0;
-    font-size: 14pt;
+    font-size: 11pt;
     font-weight: 500;
     text-align: left;
   }
@@ -38,12 +42,12 @@
     .testimonial-item {
       padding: 0;
       display: flex;
-      height: 120px;
+      height: 100px;
       overflow: hidden;
-      margin-bottom: 15pt;
+      margin-bottom: 9pt;
 
       .leading {
-        width: 30%;
+        width: 15%;
 
         img {
           width: 100%;
@@ -53,7 +57,7 @@
       }
 
       .info {
-        width: 70%;
+        width: 85%;
         padding: 10pt;
         display: flex;
         align-items: flex-start;
@@ -75,7 +79,7 @@
 
           p {
             color: #b3b3b3;
-            font-size: 11pt;
+            font-size: 10pt;
             margin-left: 10pt;
           }
         }

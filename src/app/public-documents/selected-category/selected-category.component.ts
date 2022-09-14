@@ -46,7 +46,6 @@ export class SelectedCategoryComponent implements OnInit {
   public editingRowId: string | null = null;
   public items: Section[] = [];
   public categoriesData = CATEGORIES;
-  public colors: any = COLORS;
   @ViewChild('editRowName') editRowName!: ElementRef<HTMLInputElement>;
 
   constructor(
@@ -141,6 +140,4 @@ const _categories_mock = [
     ranking: 700,
   },
 ];
-const COLORS = {
-  bg: '#FF6D00',
-};
+

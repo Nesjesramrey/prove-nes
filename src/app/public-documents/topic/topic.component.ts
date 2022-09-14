@@ -13,6 +13,9 @@ import { AddDocumentTestimonyComponent } from 'src/app/components/add-document-t
 import { AddDocumentSolutionComponent } from 'src/app/components/add-document-solution/add-document-solution.component';
 import { VoteService } from 'src/app/services/vote.service';
 import { ModalVotesComponent } from '../components/modal-votes/modal-votes.component';
+import { ThisReceiver } from '@angular/compiler';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: '.topic-page',
   templateUrl: './topic.component.html',
@@ -29,8 +32,8 @@ export class TopicComponent implements OnInit {
   public subcategory: any = null;
   public topic: any = null;
   public submitted: boolean = false;
-  public color: any = 'primary';
   public votes: number = 0;
+  public userVoted: number = 0;
 
   public testimonials: any = TESTIMONIALS;
   public solutionsData: any = [];
@@ -41,15 +44,24 @@ export class TopicComponent implements OnInit {
     public documentService: DocumentService,
     public layoutService: LayoutService,
     public topicService: TopicService,
-    public voteService: VoteService
+    public voteService: VoteService,
+    public UserService: UserService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
     this.subcategoryID =
       this.activatedRoute['snapshot']['params']['subcategoryID'];
     this.topicID = this.activatedRoute['snapshot']['params']['topicID'];
+    this.user = this.UserService.fetchFireUser().subscribe({
+      error: (error: any) => {
+        console.log(error);
+      },
+      next: (reply: any) => {
+        this.user = reply;
+        console.log({ user: this.user });
 
-    console.log(this.topicID);
+      },
+    });
   }
 
   ngOnInit(): void {
@@ -74,6 +86,7 @@ export class TopicComponent implements OnInit {
     forkJoin([document, category, subcategory, topic, votes]).subscribe(
       (reply: any) => {
         console.log('##', reply);
+        this.userVoted = this.checkUserVote(reply[4]);
         this.document = reply[0];
         this.category = reply[1];
         this.subcategory = reply[2];
@@ -82,6 +95,11 @@ export class TopicComponent implements OnInit {
         this.solutionsData = this.topic.solutions;
       }
     );
+  }
+
+  checkUserVote(votes: any[]) {
+    console.log({ votes, find: votes.find(vote => vote.createdBy === this.user._id) })
+    return votes.find(vote => vote.createdBy === this.user._id)?._id || 0;
   }
 
   openModalTestimony() {
@@ -124,7 +142,9 @@ export class TopicComponent implements OnInit {
     );
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      this.loadTopic()
+      if (reply != undefined) {
+        console.log(reply);
+      }
     });
   }
   openModalVote() {
@@ -137,32 +157,19 @@ export class TopicComponent implements OnInit {
       }
     );
     dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) {
-        this.color = reply;
-      }
+      this.loadTopic()
     });
   }
-  // vote() {
-  //   this.submitted = true;
-  //   let data = {
-  //     topic: this.topicID,
-  //   };
-  //   this.voteService.createNewVoto(data).subscribe((reply: any) => {
-  //     this.submitted = false;
-  //     console.log({ reply: reply });
-  //     if (reply.message == 'create success') {
-  //       this.color = '#D9D9D9';
-  //       console.log('yes');
-  //     }
-  //     if (reply.message == 'removed success') {
-  //       this.color = 'primary';
-  //       console.log('no');
-  //     }
-  //     this.ngOnInit();
-  //   });
-  // }
-  checkVote() {
-    this.color = '';
+
+  unVote() {
+    this.voteService.deleteVote({ _id: this.userVoted }).subscribe({
+      error: (error: any) => {
+        console.log(error);
+      },
+      next: (reply: any) => {
+        this.loadTopic()
+      },
+    });
   }
 }
 

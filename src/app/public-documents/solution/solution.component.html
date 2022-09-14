@@ -1,6 +1,6 @@
 <div class="container" *ngIf="solution">
   <div class="set-12">
-    <div class="set-6">
+    <div class="set-7">
       <breadcrumbs-component>
         <li class="breadcrumb-item">{{ document.title }}</li>
         <li class="breadcrumb-item">{{ category.category.name }}</li>
@@ -10,8 +10,8 @@
         <li>{{ solution.title }}</li>
       </breadcrumbs-component>
     </div>
-    <div class="set-4 featured-users">
-      <featured-users [inputAmount]="5"></featured-users>
+    <div class="set-3 featured-users">
+      <featured-users [inputAmount]="3"></featured-users>
     </div>
     <div class="set-2">
       <div class="header-buttons">
@@ -60,10 +60,9 @@
               </button>
 
               <div class="actions">
-                <p>
-                  Relevancia ciudadana
-                  <br />
-                  <b>8</b>
+                <p>Relevancia ciudadana</p>
+                <p class="votes">
+                  8
                 </p>
                 <button mat-raised-button color="primary" (click)="vote()">
                   Vota

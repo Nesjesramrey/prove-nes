@@ -12,6 +12,7 @@ export class PublicComponent implements OnInit {
   public documentID: string = '';
   public document: any = null;
   public items: Section[] = ITEMS;
+  public isDataAvailable: boolean = false;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -29,6 +30,7 @@ export class PublicComponent implements OnInit {
       .fetchSingleDocumentById({ _id: this.documentID })
       .subscribe((reply: any) => {
         this.document = reply;
+        this.isDataAvailable = true;
       });
   }
 }

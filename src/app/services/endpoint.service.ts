@@ -105,6 +105,7 @@ export class EndPointService {
 
   // vote
   public createNewVoteEndPonint: string = '/vote/';
+  public deleteVoteEndPonint: string = '/vote/';
   public fetchVotesFromTopicEndPonint: string = '/vote/topic/';
   public fetchVotesFromSolutionEndPonint: string = '/vote/solution/';
 
