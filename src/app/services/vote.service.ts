@@ -21,6 +21,11 @@ export class VoteService {
       data
     );
   }
+  deleteVote(data: any) {
+    return this.httpClient.delete(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.deleteVoteEndPonint + data['_id']
+    );
+  }
   fetchVotesByTopicID(data: any) {
     return this.httpClient.get(
       this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchVotesFromTopicEndPonint + data['_id']);
