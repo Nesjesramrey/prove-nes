@@ -10,12 +10,14 @@ import { TopicService } from 'src/app/services/topic.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { VoteService } from 'src/app/services/vote.service';
 import { ModalVotesComponent } from '../components/modal-votes/modal-votes.component';
+import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: '.solution-page',
   templateUrl: './solution.component.html',
   styleUrls: ['./solution.component.scss'],
 })
 export class SolutionComponent implements OnInit {
+  public user: any = null;
   public documentID: string = '';
   public categoryID: string = '';
   public subcategoryID: string = '';
@@ -23,12 +25,14 @@ export class SolutionComponent implements OnInit {
   public solutionID: string = '';
   public submitted: boolean = false;
   public color: any;
+  public userVoted: number = 0;
 
   public document: any = null;
   public solution: any = null;
   public category: any = null;
   public subcategory: any = null;
   public topic: any = null;
+  public votes: number = 0;
 
   public testimonials: any = TESTIMONIALS;
 
@@ -40,7 +44,8 @@ export class SolutionComponent implements OnInit {
     public layoutService: LayoutService,
     public topicService: TopicService,
     public solutionService: SolutionService,
-    public voteService: VoteService
+    public voteService: VoteService,
+    public UserService: UserService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
@@ -48,6 +53,15 @@ export class SolutionComponent implements OnInit {
       this.activatedRoute['snapshot']['params']['subcategoryID'];
     this.topicID = this.activatedRoute['snapshot']['params']['topicID'];
     this.solutionID = this.activatedRoute['snapshot']['params']['solutionID'];
+    this.user = this.UserService.fetchFireUser().subscribe({
+      error: (error: any) => {
+        console.log(error);
+      },
+      next: (reply: any) => {
+        this.user = reply;
+        console.log({ user: this.user });
+      },
+    });
   }
 
   ngOnInit(): void {
@@ -69,16 +83,35 @@ export class SolutionComponent implements OnInit {
     let solution: Observable<any> =
       this.solutionService.fetchSingleSolutionById({ _id: this.solutionID });
 
-    forkJoin([document, category, subcategory, topic, solution]).subscribe(
-      (reply: any) => {
-        console.log('##', reply);
-        this.document = reply[0];
-        this.category = reply[1];
-        this.subcategory = reply[2];
-        this.topic = reply[3];
-        this.solution = reply[4];
-      }
-    );
+    let votes: Observable<any> = this.voteService.fetchVotesBySolutionID({
+      _id: this.solutionID,
+    });
+
+    forkJoin([
+      document,
+      category,
+      subcategory,
+      topic,
+      solution,
+      votes,
+    ]).subscribe((reply: any) => {
+      console.log('##', reply);
+      this.userVoted = this.checkUserVote(reply[5]);
+      this.document = reply[0];
+      this.category = reply[1];
+      this.subcategory = reply[2];
+      this.topic = reply[3];
+      this.solution = reply[4];
+      this.votes = reply[5].length;
+    });
+  }
+
+  checkUserVote(votes: any[]) {
+    console.log({
+      votes,
+      find: votes.find((vote) => vote.createdBy === this.user._id),
+    });
+    return votes.find((vote) => vote.createdBy === this.user._id)?._id || 0;
   }
 
   openModalTestimony() {
@@ -104,28 +137,28 @@ export class SolutionComponent implements OnInit {
       }
     });
   }
-  // vote() {
-  //   this.submitted = true;
-  //   let data = {
-  //     solution: this.solutionID,
-  //   };
-  //   this.voteService.createNewVoto(data).subscribe((reply: any) => {
-  //     this.submitted = false;
-  //   });
-  // }
+
   openModalVote() {
     const dialogRef = this.dialog.open<ModalVotesComponent>(
       ModalVotesComponent,
       {
         width: '500px',
         disableClose: true,
-        data: { topic: this.topicID },
+        data: { solution: this.solutionID },
       }
     );
     dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) {
-        this.color = reply;
-      }
+      this.loadSolution();
+    });
+  }
+  unVote() {
+    this.voteService.deleteVote({ _id: this.userVoted }).subscribe({
+      error: (error: any) => {
+        console.log(error);
+      },
+      next: (reply: any) => {
+        this.loadSolution();
+      },
     });
   }
 }

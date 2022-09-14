@@ -83,6 +83,7 @@ export class TopicComponent implements OnInit {
     let votes: Observable<any> = this.voteService.fetchVotesByTopicID({
       _id: this.topicID,
     });
+    console.log({ v: votes });
 
     forkJoin([document, category, subcategory, topic, votes]).subscribe(
       (reply: any) => {

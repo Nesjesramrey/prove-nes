@@ -61,13 +61,26 @@
 
               <div class="actions">
                 <p>Relevancia ciudadana</p>
-                <p class="votes">8</p>
+                <p class="votes">
+                  {{ votes }}
+                </p>
                 <button
+                  *ngIf="userVoted"
                   mat-raised-button
                   color="primary"
+                  style="background-color: #d9d9d9"
+                  (click)="unVote()"
+                >
+                  Ya votaste
+                </button>
+                <button
+                  *ngIf="!userVoted"
+                  mat-raised-button
+                  color="primary"
+                  style="background-color: primary"
                   (click)="openModalVote()"
                 >
-                  Vota
+                  Votar
                 </button>
               </div>
             </div>
