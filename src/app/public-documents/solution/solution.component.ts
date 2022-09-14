@@ -119,6 +119,7 @@ export class SolutionComponent implements OnInit {
       AddDocumentTestimonyComponent,
       {
         width: '640px',
+        maxHeight: '600px',
         data: {
           documentID: this.documentID,
           document: this.document,
