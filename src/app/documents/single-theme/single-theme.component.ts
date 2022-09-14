@@ -13,6 +13,7 @@ import { ChartData, ChartOptions } from 'chart.js';
 import { LayoutService } from 'src/app/services/layout.service';
 import { SolutionService } from 'src/app/services/solution.service';
 import { TopicService } from 'src/app/services/topic.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-single-theme',
@@ -45,6 +46,7 @@ export class SingleThemeComponent implements OnInit {
     'users',
     'interactions',
   ];
+  public dataSource = new MatTableDataSource<any>();
   public solutionsList: Solution[] = _mockSolutions;
   public collaborators: any = null;
   public solutions: any[] = [];
@@ -99,7 +101,10 @@ export class SingleThemeComponent implements OnInit {
 
     //forkJoin([categories, document, solutions, category, subcategory]).subscribe((reply: any) => {
     forkJoin([document, category, subcategory, topic]).subscribe((reply: any) => {
-
+      // console.log(reply);
+      this.document = reply[0];
+      // console.log(this.document);
+      this.layouts = this.document['layouts'];
       this.collaborators = reply[0].collaborators;
       this.category = reply[1];
       // console.log("categoria " + JSON.stringify(this.category));
@@ -108,9 +113,11 @@ export class SingleThemeComponent implements OnInit {
       this.topics = this.subcategory['topics'];
       // console.log(this.topics);
       this.topic = reply[3];
-      // console.log(this.topics);
+      // console.log(this.topic);
       // console.log("topic " + JSON.stringify(this.topic));
       this.sliderImages = this.topic.images;
+      this.solutions = this.topic['solutions'];
+      this.dataSource = new MatTableDataSource(this.solutions);
 
       // let sols = this.topic.solutions;
       // for (let j = 0; j < sols.length; j++) {
@@ -119,14 +126,13 @@ export class SingleThemeComponent implements OnInit {
       //     this.solutions.push(reply[0]);
       //   })
       // }
-    }
-    );
-    this.documentService
-      .fetchSingleDocumentById({ _id: this.documentID })
-      .subscribe((reply: any) => {
-        this.document = reply;
-        this.layouts = this.document['layouts'];
-      });
+    });
+    // this.documentService
+    //   .fetchSingleDocumentById({ _id: this.documentID })
+    //   .subscribe((reply: any) => {
+    //     this.document = reply;
+    //     this.layouts = this.document['layouts'];
+    //   });
 
     if (this.accessToken != null) {
       this.userService.fetchFireUser().subscribe({
@@ -205,10 +211,9 @@ export class SingleThemeComponent implements OnInit {
     );
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      console.log("pepe" + reply);
       if (reply != undefined) {
-        this.solutions.push(reply[0]);
-        //this.dataSource = new MatTableDataSource(this.layouts);
+        this.solutions.push(reply['solutions'][0]);
+        this.dataSource = new MatTableDataSource(this.solutions);
       }
     });
   }

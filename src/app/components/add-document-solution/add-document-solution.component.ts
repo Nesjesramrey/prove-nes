@@ -12,7 +12,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 export class AddDocumentSolutionComponent implements OnInit {
   public imageUrl: string | null = null;
   public addSolutionFormGroup!: FormGroup;
-  public submitted: boolean = false;  
+  public submitted: boolean = false;
   public fileNames: any = [];
 
   constructor(
@@ -21,12 +21,12 @@ export class AddDocumentSolutionComponent implements OnInit {
     public solutionService: SolutionService,
     public utilityService: UtilityService,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.addSolutionFormGroup = this.formBuilder.group({
       title: ['', [Validators.required]],
-      description: ['', [Validators.required]],
+      description: ['', []],
       files: ['', []],
     });
   }
@@ -50,7 +50,7 @@ export class AddDocumentSolutionComponent implements OnInit {
     Array.from(event.target.files).forEach((file: any) => { this.fileNames.push(file['name']); });
     this.addSolutionFormGroup.patchValue({ files: event.target.files });
     this.addSolutionFormGroup.updateValueAndValidity();
-  }  
+  }
 
   onCreateSolution(form: FormGroup) {
     this.submitted = true;
@@ -64,8 +64,7 @@ export class AddDocumentSolutionComponent implements OnInit {
     data['formData'].append('title', form['value']['title']);
     data['formData'].append('description', form['value']['description']);
 
-    this.solutionService.createNewSolution(data).subscribe((reply:any) => {
-      console.log("reply 0 " + reply);
+    this.solutionService.createNewSolution(data).subscribe((reply: any) => {
       this.submitted = false;
       this.dialogRef.close(reply);
     });
