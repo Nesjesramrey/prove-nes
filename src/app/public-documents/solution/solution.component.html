@@ -61,10 +61,12 @@
 
               <div class="actions">
                 <p>Relevancia ciudadana</p>
-                <p class="votes">
-                  8
-                </p>
-                <button mat-raised-button color="primary" (click)="vote()">
+                <p class="votes">8</p>
+                <button
+                  mat-raised-button
+                  color="primary"
+                  (click)="openModalVote()"
+                >
                   Vota
                 </button>
               </div>

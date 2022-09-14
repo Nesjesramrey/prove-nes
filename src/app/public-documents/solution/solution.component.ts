@@ -9,6 +9,7 @@ import { SolutionService } from 'src/app/services/solution.service';
 import { TopicService } from 'src/app/services/topic.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { VoteService } from 'src/app/services/vote.service';
+import { ModalVotesComponent } from '../components/modal-votes/modal-votes.component';
 @Component({
   selector: '.solution-page',
   templateUrl: './solution.component.html',
@@ -21,6 +22,7 @@ export class SolutionComponent implements OnInit {
   public topicID: string = '';
   public solutionID: string = '';
   public submitted: boolean = false;
+  public color: any;
 
   public document: any = null;
   public solution: any = null;
@@ -102,13 +104,28 @@ export class SolutionComponent implements OnInit {
       }
     });
   }
-  vote() {
-    this.submitted = true;
-    let data = {
-      solution: this.solutionID,
-    };
-    this.voteService.createNewVoto(data).subscribe((reply: any) => {
-      this.submitted = false;
+  // vote() {
+  //   this.submitted = true;
+  //   let data = {
+  //     solution: this.solutionID,
+  //   };
+  //   this.voteService.createNewVoto(data).subscribe((reply: any) => {
+  //     this.submitted = false;
+  //   });
+  // }
+  openModalVote() {
+    const dialogRef = this.dialog.open<ModalVotesComponent>(
+      ModalVotesComponent,
+      {
+        width: '500px',
+        disableClose: true,
+        data: { topic: this.topicID },
+      }
+    );
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        this.color = reply;
+      }
     });
   }
 }
