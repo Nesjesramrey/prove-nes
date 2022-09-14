@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DocumentService } from 'src/app/services/document.service';
+import { LayoutService } from 'src/app/services/layout.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
@@ -22,7 +23,8 @@ export class ImageViewerComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public formBuilder: FormBuilder,
     public documentService: DocumentService,
-    public utilityService: UtilityService
+    public utilityService: UtilityService,
+    public layoutService: LayoutService
   ) {
     // console.log(this.dialogData);
     this.document = this.dialogData['document'];
@@ -30,11 +32,11 @@ export class ImageViewerComponent implements OnInit {
 
     switch (this.dialogData['location']) {
       case 'document':
-        console.log('document: ', this.document);
+        // console.log('document: ', this.document);
         break;
 
       case 'layout':
-        console.log('layout: ', this.layout);
+        // console.log('layout: ', this.layout);
         break;
     }
   }
@@ -60,29 +62,48 @@ export class ImageViewerComponent implements OnInit {
 
   onUploadFiles() {
     this.submitted = true;
-
-    let data = {
-      formData: new FormData(),
-      document_id: this.document['_id']
-    };
+    let data: any = {
+      formData: new FormData()
+    }
 
     Array.from(this.filesFormGroup.controls['files']['value'])
       .forEach((file: any) => { data['formData'].append('files', file); });
 
-    this.documentService.uploadDocumentFiles(data).subscribe({
-      error: (error: any) => {
-        console.log(error);
-        this.utilityService.openErrorSnackBar('Oops!... Ocurrió un error, inténtalo más tarde.');
-      },
-      next: (reply: any) => {
-        console.log(reply);
-        this.utilityService.openSuccessSnackBar('El documento se actualizó correctamente.');
-        this.document['images'] = reply['images'];
-      },
-      complete: () => {
-        this.submitted = false;
-      }
-    });
+    switch (this.dialogData['location']) {
+      case 'document':
+        data.document_id = this.document['_id'];
+        this.documentService.uploadDocumentFiles(data).subscribe({
+          error: (error: any) => {
+            // console.log(error);
+            this.utilityService.openErrorSnackBar('Oops!... Ocurrió un error, inténtalo más tarde.');
+          },
+          next: (reply: any) => {
+            // console.log(reply);
+            this.utilityService.openSuccessSnackBar('El documento se actualizó correctamente.');
+            this.document['images'] = reply['images'];
+          },
+          complete: () => {
+            this.submitted = false;
+          }
+        });
+        break;
+
+      case 'layout':
+        data.layout_id = this.layout['_id'];
+        this.layoutService.uploadLayoutFiles(data).subscribe({
+          error: (error: any) => {
+            // console.log(error);
+            this.utilityService.openErrorSnackBar('Oops!... Ocurrió un error, inténtalo más tarde.');
+          },
+          next: (reply: any) => {
+            // console.log(reply);
+            this.utilityService.openSuccessSnackBar('La categoría se actualizó correctamente.');
+            this.layout['images'] = reply['images'];
+          },
+          complete: () => { }
+        });
+        break;
+    };
   }
 
   killDialog() {

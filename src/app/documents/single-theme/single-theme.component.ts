@@ -244,6 +244,11 @@ export class SingleThemeComponent implements OnInit {
   linkSolution(id: string) {
     this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/temas/${this.themeID}/solucion/${id}`)
   }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 }
 
 // simplet doughnut

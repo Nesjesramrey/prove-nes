@@ -17,6 +17,7 @@ import { ThemeService } from 'ng2-charts';
 import { throws } from 'assert';
 import { EditCategoryDataComponent } from 'src/app/components/edit-category-data/edit-category-data.component';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
+import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
 
 @Component({
   selector: '.app-single-subcategory',
@@ -224,6 +225,26 @@ export class SingleSubcategoryComponent implements OnInit {
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) { }
     });
+  }
+
+  popAddCommentsDialog() {
+    const dialogRef = this.dialog.open<AddCommentsComponent>(AddCommentsComponent, {
+      width: '640px',
+      data: {
+        location: 'category',
+        document: this.document
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }
 

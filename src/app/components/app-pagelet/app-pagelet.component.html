@@ -48,11 +48,14 @@
         {{ user.firstname | firstword | firstletter }}{{ user.lastname | firstword | firstletter }}
       </span>
     </button>
+
     <button type="button" class="btn-ico" *ngIf="user != null" (click)="linkMe('notifications')"
       matTooltip="Notificaciones" matTooltipClass="tooltip">
-      <mat-icon [matBadge]="notifications" matBadgeColor="warn" *ngIf="notifications != 0">notifications</mat-icon>
-      <mat-icon *ngIf="notifications == 0">notifications</mat-icon>
+      <mat-icon [matBadge]="unreadNotifications" matBadgeColor="warn" *ngIf="unreadNotifications != 0">notifications</mat-icon>
+      <mat-icon *ngIf="unreadNotifications == 0">notifications</mat-icon>
     </button>
+
+
     <button type="button" class="btn-ico" *ngIf="user != null" (click)="onSignOut()" matTooltip="Salir"
       matTooltipClass="tooltip">
       <mat-icon>power_settings_new</mat-icon>

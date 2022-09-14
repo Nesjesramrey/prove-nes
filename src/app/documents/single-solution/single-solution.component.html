@@ -4,16 +4,27 @@
 
 <div class="set-12" *ngIf="isDataAvailable">
   <div class="set-12">
-    <div class="set-6">
+    <div class="set-9">
       <breadcrumbs-component>
         <li>Documentos</li>
-        <li>{{ document.title }}</li>
-        <li>{{ category.category.name }}</li>
-        <li>{{ subcategory.category.name }}</li>
+        <li (click)="utilityService.linkMe('/documentos/' + document._id)">
+          {{ document.title }}
+        </li>
+        <li (click)="utilityService.linkMe('/documentos/' + document._id + '/categoria/' + category._id)">
+          {{ category.category.name }}
+        </li>
+        <li
+          (click)="utilityService.linkMe('/documentos/' + document._id + '/categoria/' + category._id + '/subcategoria/' + subcategory._id)">
+          {{ subcategory.category.name }}
+        </li>
+        <li
+          (click)="utilityService.linkMe('/documentos/' + document._id + '/categoria/' + category._id + '/subcategoria/' + subcategory._id + '/temas/' + topic._id)">
+          {{ topic.title }}
+        </li>
         <li>{{ solution.title }}</li>
       </breadcrumbs-component>
     </div>
-    <div class="set-6 txt-right">
+    <div class="set-3 txt-right">
       <span class="created-by">
         Autor: <span class="author">{{category.createdBy.firstname}}
           {{category.createdBy.lastname}}</span>
@@ -43,27 +54,15 @@
               <mat-menu #menu="matMenu">
                 <button mat-menu-item>
                   <mat-icon>edit</mat-icon>
-                  <span>Editar documento</span>
-                </button>
-                <button mat-menu-item [disabled]="solution.inCover">
-                  <mat-icon>home</mat-icon>
-                  <span>Usar como portada</span>
-                </button>
-                <button mat-menu-item>
-                  <mat-icon>edit_note</mat-icon>
-                  <span>{{solution.coverDescription ? 'Editar' : 'Agregar'}} texto portada</span>
-                </button>
-                <button mat-menu-item>
-                  <mat-icon>lock</mat-icon>
-                  <span>Marcar como {{solution.isPublic ? 'Privado' : 'Público'}}</span>
+                  <span>Editar</span>
                 </button>
               </mat-menu>
             </div>
           </div>
-          <p class="card-description" *ngIf="document.description != null">{{document.description}}</p>
+          <!-- <p class="card-description" *ngIf="document.description != null">{{document.description}}</p>
           <button type="button" class="toolbtn" *ngIf="document.description == null">
             <small>Agregar descripción</small>
-          </button>
+          </button> -->
           <avatars-row [users]="collaborators"></avatars-row>
         </div>
       </mat-card>
@@ -71,10 +70,10 @@
 
     <div class="set-9 col-rgt">
       <div class="set-12">
-        <div class="set-4">&nbsp;
+        <div class="set-4">
           <mat-form-field appearance="outline">
             <mat-label>Cobertura</mat-label>
-            <mat-select disabled="">
+            <mat-select disabled>
               <!-- <mat-option *ngFor="let option of solution.coverage" [value]="option._id">
                 <small>{{ option.name | titlecase }}</small>
               </mat-option> -->

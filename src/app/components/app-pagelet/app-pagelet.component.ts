@@ -9,7 +9,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 
 // btn 
 import { MatDialog } from '@angular/material/dialog';
-import { ModalPermissionsComponent } from 'src/app/public-documents/components/modal-permissions/modal-permissions.component'; 
+import { ModalPermissionsComponent } from 'src/app/public-documents/components/modal-permissions/modal-permissions.component';
 
 
 @Component({
@@ -23,7 +23,8 @@ export class AppPageletComponent implements OnInit {
   public notifications: any = null;
   public isDataAvailable: boolean = false;
   public userActivities: any = [];
-  public path : any ;
+  public path: any;
+  public unreadNotifications: any = null;
 
   constructor(
     public router: Router,
@@ -32,20 +33,33 @@ export class AppPageletComponent implements OnInit {
     public socketSrvc: SocketService,
     public utilitySrvc: UtilityService,
     public angularFireAuth: AngularFireAuth,
- 
-    public dialog : MatDialog   
-  ) { 
-    if(this.router.url.indexOf('documentos-publicos') !== -1){
-         this.path = this.router.url.indexOf('documentos-publicos');
+
+    public dialog: MatDialog
+  ) {
+    if (this.router.url.indexOf('documentos-publicos') !== -1) {
+      this.path = this.router.url.indexOf('documentos-publicos');
     }
-    this. token = this.authenticationSrvc.fetchAccessToken;
+    this.token = this.authenticationSrvc.fetchAccessToken;
   }
 
   ngOnInit(): void {
     setTimeout(() => {
       if (this.user != null) {
         this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
-        let notifications: Observable<any> = this.notificationSrvc.fetchMyNotificationsLength({ user_id: this.user['_id'] });
+        // let notifications: Observable<any> = this.notificationSrvc.fetchMyNotificationsLength({ user_id: this.user['_id'] });
+
+        this.notificationSrvc.fetchMyNotificationUnread({ userID: this.user['_id'] }).subscribe((reply: any) => {
+          this.unreadNotifications = reply['count'];
+        });
+
+        // this.socketSrvc.putNotification({
+        //   message: 'hello world',
+        //   message_to: this.user['_id']
+        // });
+        
+        // this.socketSrvc.getNotification().subscribe((reply: any) => {
+        //   console.log(reply);
+        // });
 
         // forkJoin([notifications]).subscribe((reply: any) => {
         //   this.notifications = reply[0]['notifications'];
@@ -100,16 +114,16 @@ export class AppPageletComponent implements OnInit {
     });
   }
 
-    btnPermissions(){
-      console.log("token",this.token)
+  btnPermissions() {
+    console.log("token", this.token)
     const dialogRef = this.dialog.open<ModalPermissionsComponent>(ModalPermissionsComponent, {
       width: '640px',
       disableClose: true
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-     console.log( 'cerrando modal')
+      console.log('cerrando modal')
     });
-  }  
+  }
 
 }

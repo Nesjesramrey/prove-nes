@@ -7,6 +7,8 @@ import { UtilityService } from './services/utility.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CompleteRegistrationComponent } from './components/complete-registration/complete-registration.component';
 import { environment } from 'src/environments/environment';
+import { SocketService } from './services/socket.service';
+import { BehaviorSubject } from 'rxjs';
 
 const STYLES = (theme: ThemeVariables, ref: ThemeRef) => {
   const __ = ref.selectorsOf(STYLES);
@@ -37,6 +39,8 @@ export class AppComponent implements OnInit {
   public isDataAvailable: boolean = false;
   public user: any = null;
   public accessToken: any = null;
+  public socketID: any = null;
+
 
   constructor(
     readonly sRenderer: StyleRenderer,
@@ -44,7 +48,8 @@ export class AppComponent implements OnInit {
     public authenticationSrvc: AuthenticationService,
     public userService: UserService,
     public utilityService: UtilityService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public socketService: SocketService
   ) {
     this.accessToken = this.authenticationSrvc.fetchAccessToken;
     // console.log('accessToken: ', this.accessToken);
@@ -58,7 +63,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("Project version", environment.version);    
+    console.log("Project version", environment.version);
 
     if (this.accessToken != null) {
       this.userService.fetchFireUser().subscribe({
@@ -76,11 +81,21 @@ export class AppComponent implements OnInit {
         },
         next: (reply: any) => {
           this.user = reply;
-          // console.log(this.user);
-          if (!this.user['isFullRegister']) {
-            this.openAddDocumentDialog();
-          }
+
+          if (!this.user['isFullRegister']) { this.openAddDocumentDialog(); }
+
           setTimeout(() => {
+            this.socketService.socketSubject.subscribe((reply: any) => {
+              this.socketID = reply;
+              if (reply != null) {
+                this.socketService.updateSocketID({
+                  user_id: this.user['_id'],
+                  socketUID: this.socketID
+                }).subscribe((reply: any) => {
+                  // console.log(reply);
+                });
+              }
+            });
             this.isDataAvailable = true;
           });
         },

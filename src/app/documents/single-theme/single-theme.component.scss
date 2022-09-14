@@ -213,6 +213,10 @@
       letter-spacing: 2pt;
     }
 
+    .empty-layouts {
+      margin-top: 40px;
+    }
+
     .problems-table {
       th.mat-header-cell:first-of-type {
         padding: 0 !important;
@@ -233,6 +237,41 @@
         padding-right: 0;
         text-align: right;
       }
+    }
+  }
+
+  .table-head {
+    display: flex;
+    align-items: center;
+
+    * {
+      margin: 0;
+    }
+
+    p.title {
+      margin-right: 70px;
+    }
+
+    ::ng-deep .mat-form-field-wrapper {
+      padding-bottom: 0 !important;
+    }
+
+    input[type="text"] {
+      padding: 15px;
+      // border: 1px solid rgba($color: #000000, $alpha: 0.1);
+      box-shadow: inset 0 0 0 1px rgba($color: #000000, $alpha: 0.1);
+      border-radius: 5px;
+      // width: 40%;
+      flex: 1;
+    }
+
+    input[type="text"]:focus {
+      box-shadow: inset 0 0 0 2px #306EFF;
+    }
+
+    input[type="text"]:disabled {
+      cursor: not-allowed;
+      opacity: 0.7;
     }
   }
 

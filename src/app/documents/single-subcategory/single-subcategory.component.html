@@ -82,14 +82,16 @@
         </div>
 
         <div class="set-8 txt-right">
-          <button type="button" mat-mini-fab color="accent" class="mini" matTooltip="Agregar Esquema" disabled>
-            <mat-icon>group_add</mat-icon>
+          <button type="button" mat-mini-fab color="accent" class="mini" matTooltip="Agregar Comentario"
+            matTooltipClass="tooltip" (click)="popAddCommentsDialog()">
+            <mat-icon>add_comment</mat-icon>
           </button>
-          <button type="button" mat-mini-fab color="primary" class="mini" matTooltip="Agregar Colaborador" disabled>
+          <button type="button" mat-mini-fab color="primary" class="mini" matTooltip="Agregar Colaborador"
+            matTooltipClass="tooltip">
             <mat-icon>person_add</mat-icon>
           </button>
-          <button type="button" mat-mini-fab color="primary" class="mini roundgreen" matTooltip="Agregar Tema"
-            (click)="popAddDocumentTheme()">
+          <button type="button" mat-mini-fab color="warn" class="mini" matTooltip="Agregar Tema"
+            matTooltipClass="tooltip" (click)="popAddDocumentTheme()">
             <mat-icon>list</mat-icon>
           </button>
         </div>
@@ -132,28 +134,21 @@
         </div>
       </div>
 
-      <div class="set-12 empty-subs category-list" *ngIf="topics.length == 0">
-        <mat-card class="set-12">
-          <div class="set-12 txt-center">
-            <p>
-              <mat-icon color="primary">folder</mat-icon>
-            </p>
-            <p>
-              <strong>
-                <small>Tu subcategoría esta vacía</small>
-              </strong>
-            </p>
-            <!--button type="button" mat-raised-button color="primary" (click)="popAddDocumentCategory()">
-              Agregar sub categoría
-            </button-->
-          </div>
-        </mat-card>
-      </div>
 
-      <div class="set-12 category-list" *ngIf="topics.length != 0">
-        <mat-card>
-          <p class="title">Temas</p>
-          <table mat-table [dataSource]="dataSource" class="categories-table">
+
+      <div class="set-12 category-list">
+        <mat-card class="set-12">
+          <div class="set-12 table-head">
+            <p class="title">Temas</p>
+            <input type="text" (keyup)="applyFilter($event)" placeholder="Búscar en temas..."
+              [disabled]="topics.length == 0">
+          </div>
+
+          <div class="set-12 empty-layouts" *ngIf="topics.length == 0">
+            <p>Sin temas disponibles.</p>
+          </div>
+
+          <table mat-table [dataSource]="dataSource" class="categories-table" *ngIf="topics.length != 0">
             <ng-container matColumnDef="name">
               <th mat-header-cell *matHeaderCellDef></th>
               <td mat-cell *matCellDef="let element" (click)="linkTopic(element._id)">
