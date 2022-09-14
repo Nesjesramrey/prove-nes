@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
 import { MatButtonModule } from '@angular/material/button';
@@ -34,6 +34,8 @@ export class TopicComponent implements OnInit {
   public submitted: boolean = false;
   public votes: number = 0;
   public userVoted: number = 0;
+  public permission: any;
+  // @Input('user') public user: any = null;
 
   public testimonials: any = TESTIMONIALS;
   public solutionsData: any = [];
@@ -59,11 +61,18 @@ export class TopicComponent implements OnInit {
       next: (reply: any) => {
         this.user = reply;
         console.log({ user: this.user });
+        if (this.user.activities[0].value == ('administrator' || 'Editor')) {
+          this.permission = true;
+        } else {
+          this.permission = false;
+        }
       },
     });
   }
 
   ngOnInit(): void {
+    console.log({ userHere: this.user });
+    // this.checkPermission();
     this.loadTopic();
   }
 
@@ -83,7 +92,6 @@ export class TopicComponent implements OnInit {
     let votes: Observable<any> = this.voteService.fetchVotesByTopicID({
       _id: this.topicID,
     });
-    console.log({ v: votes });
 
     forkJoin([document, category, subcategory, topic, votes]).subscribe(
       (reply: any) => {
