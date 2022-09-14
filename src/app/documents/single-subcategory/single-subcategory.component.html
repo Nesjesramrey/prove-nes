@@ -69,7 +69,7 @@
     </div>
 
     <div class="set-9 col-rgt">
-      <div class="set-12 item-card">
+      <div class="set-12">
         <div class="set-4">
           <mat-form-field appearance="outline">
             <mat-label>Cobertura</mat-label>
@@ -95,39 +95,41 @@
         </div>
       </div>
 
-      <div class="set-6 item-card">
-        <mat-card class="set-12 info-lists">
-          <div class="set-12">
-            <p class="list-title">
-              <small>Soluciones</small>
-              <mat-icon class="icon-insights">insights</mat-icon>
-            </p>
+      <div class="set-12 item-card">
+        <div class="set-6">
+          <mat-card class="set-12 info-lists">
+            <div class="set-12">
+              <p class="list-title">
+                <small>Soluciones</small>
+                <mat-icon class="icon-insights">insights</mat-icon>
+              </p>
 
-            <ol class="top-list">
-              <li class="top-list-item" *ngFor="let solution of solutions.slice(0, 4);"
-                (click)="linkSolution(solution._id, solution.theme._id)">
-                <span>{{solution.title}}</span>
-              </li>
-            </ol>
-          </div>
-        </mat-card>
-      </div>
+              <ol class="top-list">
+                <li class="top-list-item" *ngFor="let solution of solutions.slice(0, 4);"
+                  (click)="linkSolution(solution._id, solution.theme._id)">
+                  <span>{{solution.title}}</span>
+                </li>
+              </ol>
+            </div>
+          </mat-card>
+        </div>
 
-      <div class="set-6 item-card">
-        <mat-card class="set-12 info-lists">
-          <div class="set-12">
-            <p class="list-title">
-              <small>Problemas</small>
-              <mat-icon class="icon-warnings">warning</mat-icon>
-            </p>
+        <div class="set-6">
+          <mat-card class="set-12 info-lists">
+            <div class="set-12">
+              <p class="list-title">
+                <small>Problemas</small>
+                <mat-icon class="icon-warnings">warning</mat-icon>
+              </p>
 
-            <ol class="top-list">
-              <li class="top-list-item" *ngFor="let topic of topics.slice(0, 4);" (click)="linkTopic(topic._id)">
-                <span>{{topic.title}}</span>
-              </li>
-            </ol>
-          </div>
-        </mat-card>
+              <ol class="top-list">
+                <li class="top-list-item" *ngFor="let topic of topics.slice(0, 4);" (click)="linkTopic(topic._id)">
+                  <span>{{topic.title}}</span>
+                </li>
+              </ol>
+            </div>
+          </mat-card>
+        </div>
       </div>
 
       <div class="set-12 empty-subs category-list" *ngIf="topics.length == 0">
@@ -148,7 +150,7 @@
         </mat-card>
       </div>
 
-      <div class="set-12 category-list item-card" *ngIf="topics.length != 0">
+      <div class="set-12 category-list" *ngIf="topics.length != 0">
         <mat-card>
           <p class="title">Temas</p>
           <table mat-table [dataSource]="dataSource" class="categories-table">

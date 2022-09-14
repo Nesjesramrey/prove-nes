@@ -66,9 +66,9 @@
             </div>
           </div>
           <p class="card-description" *ngIf="document.description != null">{{document.description}}</p>
-          <button type="button" class="toolbtn" *ngIf="document.description == null">
+          <!-- <button type="button" class="toolbtn" *ngIf="document.description == null">
             <small>Agregar descripción</small>
-          </button>
+          </button> -->
           <avatars-row [users]="collaborators"></avatars-row>
         </div>
       </mat-card>
@@ -169,14 +169,15 @@
         <mat-card class="set-12">
           <div class="set-12 table-head">
             <p class="title">Categorías</p>
-            <!-- <mat-form-field appearance="outline">
-              <mat-label>Filtrar</mat-label>
-              <input matInput (keyup)="applyFilter($event)">
-            </mat-form-field> -->
-            <input type="text" (keyup)="applyFilter($event)" placeholder="Búscar en categorías...">
+            <input type="text" (keyup)="applyFilter($event)" placeholder="Búscar en categorías..."
+              [disabled]="layouts.length == 0">
           </div>
 
-          <table mat-table [dataSource]="dataSource" class="categories-table">
+          <div class="set-12 empty-layouts" *ngIf="layouts.length == 0">
+            <p>Sin categorías disponibles.</p>
+          </div>
+
+          <table mat-table [dataSource]="dataSource" class="categories-table" *ngIf="layouts.length != 0">
             <ng-container matColumnDef="name">
               <th mat-header-cell *matHeaderCellDef>Categoría</th>
               <td mat-cell *matCellDef=" let element">

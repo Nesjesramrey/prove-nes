@@ -39,7 +39,7 @@ export class AddDocumentThemeComponent implements OnInit {
   ngOnInit(): void {
     this.addThemeFormGroup = this.formBuilder.group({
       title: ['', [Validators.required]],
-      description: ['', [Validators.required]],
+      description: ['', []],
       files: ['', []]
     });
 
@@ -105,7 +105,7 @@ export class AddDocumentThemeComponent implements OnInit {
     data['formData'].append('title', form['value']['title']);
     data['formData'].append('description', form['value']['description']);
 
-    this.solutionService.createNewSolution(data).subscribe((reply: any)=>{
+    this.solutionService.createNewSolution(data).subscribe((reply: any) => {
       console.log("reply 1 " + reply);
       this.submitted = false;
       this.dialogRef.close(reply);

@@ -249,6 +249,11 @@ export class SingleCategoryComponent implements OnInit {
       if (reply != undefined) { }
     });
   }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 }
 
 
