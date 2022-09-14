@@ -59,7 +59,6 @@ export class TopicComponent implements OnInit {
       next: (reply: any) => {
         this.user = reply;
         console.log({ user: this.user });
-
       },
     });
   }
@@ -81,7 +80,10 @@ export class TopicComponent implements OnInit {
       _id: this.topicID,
     });
 
-    let votes: Observable<any> = this.voteService.fetchVotesByTopicID({ _id: this.topicID });
+    let votes: Observable<any> = this.voteService.fetchVotesByTopicID({
+      _id: this.topicID,
+    });
+    console.log({ v: votes });
 
     forkJoin([document, category, subcategory, topic, votes]).subscribe(
       (reply: any) => {
@@ -91,15 +93,18 @@ export class TopicComponent implements OnInit {
         this.category = reply[1];
         this.subcategory = reply[2];
         this.topic = reply[3];
-        this.votes = reply[4].length
+        this.votes = reply[4].length;
         this.solutionsData = this.topic.solutions;
       }
     );
   }
 
   checkUserVote(votes: any[]) {
-    console.log({ votes, find: votes.find(vote => vote.createdBy === this.user._id) })
-    return votes.find(vote => vote.createdBy === this.user._id)?._id || 0;
+    console.log({
+      votes,
+      find: votes.find((vote) => vote.createdBy === this.user._id),
+    });
+    return votes.find((vote) => vote.createdBy === this.user._id)?._id || 0;
   }
 
   openModalTestimony() {
@@ -107,6 +112,7 @@ export class TopicComponent implements OnInit {
       AddDocumentTestimonyComponent,
       {
         width: '640px',
+        maxHeight: '600px',
         data: {
           documentID: this.documentID,
           document: this.document,
@@ -157,7 +163,7 @@ export class TopicComponent implements OnInit {
       }
     );
     dialogRef.afterClosed().subscribe((reply: any) => {
-      this.loadTopic()
+      this.loadTopic();
     });
   }
 
@@ -167,7 +173,7 @@ export class TopicComponent implements OnInit {
         console.log(error);
       },
       next: (reply: any) => {
-        this.loadTopic()
+        this.loadTopic();
       },
     });
   }

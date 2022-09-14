@@ -16,13 +16,14 @@ export class ModalVotesComponent implements OnInit {
   constructor(
     public voteService: VoteService,
     public dialogRef: MatDialogRef<ModalVotesComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { topic: string | null, solution: string | null }
+    @Inject(MAT_DIALOG_DATA)
+    public data: { topic: string | null; solution: string | null }
   ) {
     this.topicID = data.topic;
     this.solutionID = data.solution;
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
   valueQualification(value: any) {
     console.log({ event: value });
     this.qualification = value;
