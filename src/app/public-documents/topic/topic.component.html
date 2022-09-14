@@ -75,13 +75,24 @@
                 <p class="votes">
                   {{ votes }}
                 </p>
+                
                 <button
+                  *ngIf="userVoted"
                   mat-raised-button
                   color="primary"
-                  [style.background-color]="color"
+                  style="background-color: #D9D9D9;"
+                  (click)="unVote()"
+                >
+                  Ya votaste
+                </button>
+                <button
+                  *ngIf="!userVoted"
+                  mat-raised-button
+                  color="primary"
+                  style="background-color: primary;"
                   (click)="openModalVote()"
                 >
-                  Vota
+                  Votar
                 </button>
                 <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
               </div>
