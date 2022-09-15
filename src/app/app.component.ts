@@ -84,20 +84,18 @@ export class AppComponent implements OnInit {
 
           if (!this.user['isFullRegister']) { this.openAddDocumentDialog(); }
 
-          setTimeout(() => {
-            this.socketService.socketSubject.subscribe((reply: any) => {
-              this.socketID = reply;
-              if (reply != null) {
-                this.socketService.updateSocketID({
-                  user_id: this.user['_id'],
-                  socketUID: this.socketID
-                }).subscribe((reply: any) => {
-                  // console.log(reply);
-                });
-              }
-            });
-            this.isDataAvailable = true;
-          });
+          // setTimeout(() => {
+          //   this.socketService.socketSubject.subscribe((reply: any) => {
+          //     this.socketID = reply;
+          //     if (reply != null) {
+          //       this.socketService.updateSocketID({
+          //         user_id: this.user['_id'],
+          //         socketUID: this.socketID
+          //       }).subscribe((reply: any) => { });
+          //     }
+          //   });
+          //   this.isDataAvailable = true;
+          // });
         },
         complete: () => { },
       });

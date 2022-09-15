@@ -15,6 +15,7 @@ export class SliderImagesComponent implements OnInit {
   @Input() images: string[] = [];
   @Input() document: any = null;
   @Input() layout: any = null;
+  @Input() topic: any = null;
   @ViewChild('contentScroll') public contentScroll!: ElementRef<HTMLDivElement>;
 
   constructor(
@@ -72,6 +73,13 @@ export class SliderImagesComponent implements OnInit {
         },
         complete: () => { }
       });
+    }
+
+    if (this.topic != null) {
+      data = {
+        topic_id: this.topic['_id'],
+        images: [image]
+      }
     }
   }
 }

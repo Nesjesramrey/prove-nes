@@ -12,7 +12,7 @@
 
     <button *ngIf="token !== null && path > 0" type="button" class="btn-permissios" (click)="btnPermissions()">
       Permiso para editar
-   </button> 
+    </button>
 
     <!-- <button type="button">
       <span>Ciudadanos</span>
@@ -51,7 +51,8 @@
 
     <button type="button" class="btn-ico" *ngIf="user != null" (click)="linkMe('notifications')"
       matTooltip="Notificaciones" matTooltipClass="tooltip">
-      <mat-icon [matBadge]="unreadNotifications" matBadgeColor="warn" *ngIf="unreadNotifications != 0">notifications</mat-icon>
+      <mat-icon [matBadge]="unreadNotifications" matBadgeColor="warn" *ngIf="unreadNotifications != 0">notifications
+      </mat-icon>
       <mat-icon *ngIf="unreadNotifications == 0">notifications</mat-icon>
     </button>
 

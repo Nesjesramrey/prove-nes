@@ -19,7 +19,7 @@
     <slider-images [images]="document.images" [document]="document" *ngIf="document.images != 0"></slider-images>
   </div>
 
-  <!-- layout  viewer -->
+  <!-- layout viewer -->
   <div class="viewer-display" *ngIf="dialogData.location == 'layout'">
     <div class="set-12 txt-center" *ngIf="layout.images.length == 0">
       <button type="button" (click)="file.click()" [disabled]="submitted">
@@ -30,6 +30,19 @@
       <p class="txt-center" *ngIf="submitted">Cargando...</p>
     </div>
     <slider-images [images]="layout.images" [layout]="layout" *ngIf="layout.images != 0"></slider-images>
+  </div>
+
+  <!-- topic viewer -->
+  <div class="viewer-display" *ngIf="dialogData.location == 'topic'">
+    <div class="set-12 txt-center" *ngIf="topic.images.length == 0">
+      <button type="button" (click)="file.click()" [disabled]="submitted">
+        <mat-icon>add_a_photo</mat-icon>
+        <p>Cargar imágenes</p>
+      </button>
+      <mat-spinner color="accent" diameter="70" *ngIf="submitted"></mat-spinner>
+      <p class="txt-center" *ngIf="submitted">Cargando...</p>
+    </div>
+    <slider-images [images]="topic.images" [topic]="topic" *ngIf="topic.images != 0"></slider-images>
   </div>
 </div>
 

@@ -36,7 +36,7 @@
         <div class="set-12 imghldr">
           <mat-icon *ngIf="topic.images.length == 0">panorama</mat-icon>
           <img [src]="topic.images[0]" alt="" *ngIf="topic.images.length != 0">
-          <div class="overlay">
+          <div class="overlay" (click)="popImageViewer()">
             <mat-icon>photo_camera</mat-icon>
             <div class="cover"></div>
           </div>

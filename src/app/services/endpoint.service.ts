@@ -60,6 +60,7 @@ export class EndPointService {
   // topics
   public fetchSingleTopicByIdEndPoint: string = '/topic/';
   public createNewTopicEndPoint: string = '/topic/layout/';
+  public uploadTopicFilesEndPoint: string = '/topic/';
 
   // permission
   public createNewPermissionEndPoint: string = '/permission/';

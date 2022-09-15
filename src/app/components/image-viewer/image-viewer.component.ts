@@ -14,6 +14,7 @@ export class ImageViewerComponent implements OnInit {
   public isDataAvailable: boolean = false;
   public document: any = null;
   public layout: any = null;
+  public topic: any = null;
   public filesFormGroup!: FormGroup;
   public fileNames: any = [];
   public submitted: boolean = false;
@@ -29,6 +30,7 @@ export class ImageViewerComponent implements OnInit {
     // console.log(this.dialogData);
     this.document = this.dialogData['document'];
     this.layout = this.dialogData['layout'];
+    this.topic = this.dialogData['topic']
 
     switch (this.dialogData['location']) {
       case 'document':
@@ -37,6 +39,10 @@ export class ImageViewerComponent implements OnInit {
 
       case 'layout':
         // console.log('layout: ', this.layout);
+        break;
+
+      case 'topic':
+        console.log('topic: ', this.topic);
         break;
     }
   }
