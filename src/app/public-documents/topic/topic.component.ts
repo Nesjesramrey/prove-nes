@@ -34,7 +34,8 @@ export class TopicComponent implements OnInit {
   public submitted: boolean = false;
   public votes: number = 0;
   public userVoted: number = 0;
-  public image : string = '../../../assets/images/not_fount.jpg';
+  public image: string = '../../../assets/images/not_fount.jpg';
+  public permission: any;
 
   public testimonials: any = TESTIMONIALS;
   public solutionsData: any = [];
@@ -58,8 +59,14 @@ export class TopicComponent implements OnInit {
         console.log(error);
       },
       next: (reply: any) => {
+        console.log({ activedRouter: this.activatedRoute });
         this.user = reply;
         console.log({ user: this.user });
+        if (this.user.activities[0].value == ('administrator' || 'editor')) {
+          this.permission = true;
+        } else {
+          this.permission = false;
+        }
       },
     });
   }
