@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+
+import { Component, Input, OnInit , Output} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
 
@@ -36,6 +37,7 @@ export class PanelCirclesComponent implements OnInit {
   @Input() document: any = '';
   @Input() withBorder: boolean = false;
   @Input() redirectTo: string | undefined = '';
+  @Output('categoryLength') categoryLength : number = 0;
 
   constructor(
     public utilityService: UtilityService,
@@ -57,6 +59,7 @@ export class PanelCirclesComponent implements OnInit {
 
     const data = this.document ? this.document.layouts : this.data;
     this.categories = data.map((item: any, index: any) => {
+      this.categoryLength = data.length;
       const background = this.withBorder
         ? '#ff6d00'
         : '../../../assets/images/books.png';

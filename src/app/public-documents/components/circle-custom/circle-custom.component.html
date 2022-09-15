@@ -3,11 +3,9 @@
   [ngStyle]="{
     width: data.size.box + 'px',
     height: data.size.box + 'px',
-    'margin-left': data.pos.x + 'px',
-    'margin-top': data.pos.y + 'px',
-    position: data.position.position,
-    left: data.position.left + '%',
-    top: data.position.top + 'px'
+    'margin-left': data.position.left + '%',
+    'margin-top': data.position.top + '%',
+    'margin-right': data.position.right + 'px'
   }"
 >
   <div class="out-circumference" [style.border-color]="data.out_circle_color">

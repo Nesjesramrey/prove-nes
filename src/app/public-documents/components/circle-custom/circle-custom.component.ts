@@ -9,6 +9,7 @@ export class CircleCustomComponent implements OnInit {
   @Input() data: any;
   @Input() size: string = 'medium';
   @Input() position: number = 0;
+  @Input('categoryLength') categoryLength : any;
 
   constructor() {}
 
@@ -23,25 +24,85 @@ export class CircleCustomComponent implements OnInit {
   }
 
   getSize(size: string): any {
-    if (size === 'small') return { box: 130, font: 11 };
-    if (size === 'medium') return { box: 170, font: 16 };
-    if (size === 'large') return { box: 230, font: 22 };
+    if (size === 'small') return { box: 134, font: 11  , 
+    left : 10 , top : 50};
+    if (size === 'medium') return { box: 154, font: 16 , 
+    left : 10 , top : 50 };
+    if (size === 'large') return { box: 249, font: 22  , 
+    left : 10 , top : 50};
+
   }
 
   getPosition(position :number): any {
-    const basePosition = [
-      { left : -14 , top: 80 , position : 'relative' },
-      { left : -42 , top: -84 ,position : 'relative' },
-      { left : -75 , top: 75 , position : 'relative' },
-  ];
 
-  for(let i = 0; i<10; i++){
+    const basePosition = [
+      { left : 0 , top : 30},
+      { left : 0 , top : 20},
+      { left : 0 , top : 20 , right : -90}
+    ]
+
+    let contador = 0;
+      for(let i = 0; i <= this.categoryLength; i++){
         if(i === position){
-          if(this.size === 'small' && i%2 === 0) basePosition[i].top = 118;
-          if(this.size !== 'large' && i%2 !== 0) basePosition[i].top = -70;
-          return basePosition[i];
-        }}
+            if(contador === 0){
+              switch(this.size){
+                case 'large' : 
+                basePosition[contador].left = 10;
+                basePosition[contador].top  = 15;
+                break;
+                case 'medium' : 
+                basePosition[contador].left = 7;
+                basePosition[contador].top  = 15;
+                break;
+                case 'small' : 
+                basePosition[contador].left = 10;
+                basePosition[contador].top  = 15;
+                break;
+              }
+              return basePosition[contador];
+            }else if(contador === 1){
+              switch(this.size){
+                case 'large' : 
+                basePosition[contador].left = 10;
+                basePosition[contador].top  = -3;
+                break;
+                case 'medium' : 
+                basePosition[contador].left = -2;
+                basePosition[contador].top  = 40;
+                break;
+                case 'small' : 
+                basePosition[contador].left = -15;
+                basePosition[contador].top  = 50;
+                break;
+              }
+              return basePosition[contador]; 
+            }else{
+              switch(this.size){
+                case 'large' : 
+                basePosition[contador].left = -19;
+                basePosition[contador].top  = 50;
+                basePosition[contador].right = -20;
+                break;
+                case 'medium' : 
+                basePosition[contador].left = 6;
+                basePosition[contador].top  = 128;
+                basePosition[contador].right = -50;
+                break;
+                case 'small' : 
+                basePosition[contador].left = -15;
+                basePosition[contador].top  = 370;
+                basePosition[contador].right = -90;
+                break;
+              }
+              return basePosition[contador]; 
+            }
+        }
+        contador++;
+        if(contador === 3) contador = 0;
       }
+     
+
+      } 
       
 }
 export interface Data {
