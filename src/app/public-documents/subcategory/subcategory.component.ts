@@ -67,8 +67,6 @@ export class SubcategoryComponent implements OnInit {
         (item: any) => [...item.solutions]
       )[0];
 
-      console.log(this.solutionsDataSource);
-
       setTimeout(() => {
         this.isDataAvailable = true;
       }, 300);

@@ -17,6 +17,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./solution.component.scss'],
 })
 export class SolutionComponent implements OnInit {
+  public isDataAvailable: boolean = false;
   public user: any = null;
   public documentID: string = '';
   public categoryID: string = '';
@@ -95,7 +96,7 @@ export class SolutionComponent implements OnInit {
       solution,
       votes,
     ]).subscribe((reply: any) => {
-      console.log('##', reply);
+      
       this.userVoted = this.checkUserVote(reply[5]);
       this.document = reply[0];
       this.category = reply[1];
@@ -103,6 +104,10 @@ export class SolutionComponent implements OnInit {
       this.topic = reply[3];
       this.solution = reply[4];
       this.votes = reply[5].length;
+
+      setTimeout(() => {
+        this.isDataAvailable = true;
+      }, 300);
     });
   }
 

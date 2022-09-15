@@ -22,6 +22,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./topic.component.scss'],
 })
 export class TopicComponent implements OnInit {
+  public isDataAvailable: boolean = false;
   public user: any = null;
   public documentID: string = '';
   public categoryID: string = '';
@@ -58,7 +59,6 @@ export class TopicComponent implements OnInit {
       },
       next: (reply: any) => {
         this.user = reply;
-        console.log({ user: this.user });
       },
     });
   }
@@ -83,11 +83,9 @@ export class TopicComponent implements OnInit {
     let votes: Observable<any> = this.voteService.fetchVotesByTopicID({
       _id: this.topicID,
     });
-    console.log({ v: votes });
 
     forkJoin([document, category, subcategory, topic, votes]).subscribe(
       (reply: any) => {
-        console.log('##', reply);
         this.userVoted = this.checkUserVote(reply[4]);
         this.document = reply[0];
         this.category = reply[1];
@@ -95,6 +93,9 @@ export class TopicComponent implements OnInit {
         this.topic = reply[3];
         this.votes = reply[4].length;
         this.solutionsData = this.topic.solutions;
+        setTimeout(() => {
+          this.isDataAvailable = true;
+        }, 300);
       }
     );
   }
@@ -149,7 +150,8 @@ export class TopicComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
-        console.log(reply);
+        const solution = reply.solutions[0];
+        this.solutionsData.unshift(solution);
       }
     });
   }

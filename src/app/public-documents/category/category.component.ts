@@ -49,8 +49,6 @@ export class CategoryComponent implements OnInit {
       this.selectedCategory = reply[1];
 
       this.topicsCount = reply[1].topics.length;
-
-      console.log(reply);
       setTimeout(() => {
         this.isDataAvailable = true;
       }, 300);

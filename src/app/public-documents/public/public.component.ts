@@ -30,7 +30,9 @@ export class PublicComponent implements OnInit {
       .fetchSingleDocumentById({ _id: this.documentID })
       .subscribe((reply: any) => {
         this.document = reply;
-        this.isDataAvailable = true;
+        setTimeout(() => {
+          this.isDataAvailable = true;
+        }, 300);
       });
   }
 }

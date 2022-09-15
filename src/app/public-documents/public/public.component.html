@@ -1,5 +1,18 @@
-<div class="container">
-  <div class="set-12" style="padding-bottom: 100px" *ngIf="document">
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="container" *ngIf="isDataAvailable">
+  <div class="set-12 txt-left">
+    <span class="created-by">
+      Autor:
+      <span class="author"
+        >{{ document.createdBy.firstname }}
+        {{ document.createdBy.lastname }}</span
+      >
+    </span>
+  </div>
+  <div class="set-12" style="padding-bottom: 100px; margin-top: 10px">
     <div class="set-4 col-rgt-3">
       <mat-card class="doc-description">
         <div class="imghldr">
