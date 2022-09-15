@@ -7,15 +7,14 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { SocketService } from 'src/app/services/socket.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
-// btn 
+// btn
 import { MatDialog } from '@angular/material/dialog';
 import { ModalPermissionsComponent } from 'src/app/public-documents/components/modal-permissions/modal-permissions.component';
-
 
 @Component({
   selector: '.app-pagelet',
   templateUrl: './app-pagelet.component.html',
-  styleUrls: ['./app-pagelet.component.scss']
+  styleUrls: ['./app-pagelet.component.scss'],
 })
 export class AppPageletComponent implements OnInit {
   public token: any = null;
@@ -43,20 +42,26 @@ export class AppPageletComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log({ path: this.path });
+    console.log({ r: this.router.url.indexOf('documentos-publicos') });
     setTimeout(() => {
       if (this.user != null) {
-        this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
+        this.user['activities'].filter((x: any) => {
+          this.userActivities.push(x['value']);
+        });
         // let notifications: Observable<any> = this.notificationSrvc.fetchMyNotificationsLength({ user_id: this.user['_id'] });
 
-        this.notificationSrvc.fetchMyNotificationUnread({ userID: this.user['_id'] }).subscribe((reply: any) => {
-          this.unreadNotifications = reply['count'];
-        });
+        this.notificationSrvc
+          .fetchMyNotificationUnread({ userID: this.user['_id'] })
+          .subscribe((reply: any) => {
+            this.unreadNotifications = reply['count'];
+          });
 
         // this.socketSrvc.putNotification({
         //   message: 'hello world',
         //   message_to: this.user['_id']
         // });
-        
+
         // this.socketSrvc.getNotification().subscribe((reply: any) => {
         //   console.log(reply);
         // });
@@ -115,15 +120,17 @@ export class AppPageletComponent implements OnInit {
   }
 
   btnPermissions() {
-    console.log("token", this.token)
-    const dialogRef = this.dialog.open<ModalPermissionsComponent>(ModalPermissionsComponent, {
-      width: '640px',
-      disableClose: true
-    });
+    console.log('token', this.token);
+    const dialogRef = this.dialog.open<ModalPermissionsComponent>(
+      ModalPermissionsComponent,
+      {
+        width: '640px',
+        disableClose: true,
+      }
+    );
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      console.log('cerrando modal')
+      console.log('cerrando modal');
     });
   }
-
 }
