@@ -34,6 +34,7 @@ export class TopicComponent implements OnInit {
   public submitted: boolean = false;
   public votes: number = 0;
   public userVoted: number = 0;
+  public image : string = '../../../assets/images/not_fount.jpg';
 
   public testimonials: any = TESTIMONIALS;
   public solutionsData: any = [];
@@ -95,6 +96,7 @@ export class TopicComponent implements OnInit {
         this.topic = reply[3];
         this.votes = reply[4].length;
         this.solutionsData = this.topic.solutions;
+        this.image = (reply[3].images.length > 0) ? reply[3].images[0] : this.image;
       }
     );
   }

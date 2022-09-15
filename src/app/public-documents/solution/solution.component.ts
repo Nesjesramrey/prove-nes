@@ -33,6 +33,8 @@ export class SolutionComponent implements OnInit {
   public subcategory: any = null;
   public topic: any = null;
   public votes: number = 0;
+  public image : string = '../../../assets/images/not_fount.jpg';
+
 
   public testimonials: any = TESTIMONIALS;
 
@@ -103,6 +105,7 @@ export class SolutionComponent implements OnInit {
       this.topic = reply[3];
       this.solution = reply[4];
       this.votes = reply[5].length;
+      this.image = (reply[3].images.length > 0) ? reply[3].images[0] : this.image;
     });
   }
 

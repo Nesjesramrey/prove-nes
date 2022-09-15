@@ -25,6 +25,7 @@ export class SubcategoryComponent implements OnInit {
   public displayedColumns: string[] = ['name', 'ranking', 'users'];
   public topicsDataSource = [];
   public solutionsDataSource = [];
+  public image : string = '../../../assets/images/not_fount.jpg';
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -61,7 +62,7 @@ export class SubcategoryComponent implements OnInit {
       this.document = reply[0];
       this.category = reply[1];
       this.subcategory = reply[2];
-
+      this.image = (reply[1].images.length > 0) ? reply[1].images[0] : this.image;
       this.topicsDataSource = this.subcategory.topics;
       this.solutionsDataSource = this.subcategory.topics.map(
         (item: any) => [...item.solutions]

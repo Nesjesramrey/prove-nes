@@ -17,6 +17,7 @@ export class CategoryComponent implements OnInit {
   public selectedCategory: any = null;
   public documentID: string = '';
   public categoryID: string = '';
+  public image : string = '../../../assets/images/not_fount.jpg';
 
   public topicsCount: number = 0;
   public solutionsCount: number = 0;
@@ -47,7 +48,7 @@ export class CategoryComponent implements OnInit {
     forkJoin([document, category]).subscribe((reply: any) => {
       this.document = reply[0];
       this.selectedCategory = reply[1];
-
+      this.image = (reply[1].images.length > 0) ? reply[1].images[0] : this.image;
       this.topicsCount = reply[1].topics.length;
 
       console.log(reply);
