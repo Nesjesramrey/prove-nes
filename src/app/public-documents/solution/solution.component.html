@@ -2,11 +2,56 @@
   <div class="set-12">
     <div class="set-7">
       <breadcrumbs-component>
-        <li class="breadcrumb-item">{{ document.title }}</li>
-        <li class="breadcrumb-item">{{ category.category.name }}</li>
-        <li class="breadcrumb-item">{{ subcategory.category.name }}</li>
-        <li class="breadcrumb-item">{{ topic.title }}</li>
-
+        <li>Documentos</li>
+        <li
+          (click)="
+            utilityService.linkMe('/documentos-publicos/' + document._id)
+          "
+        >
+          {{ document.title }}
+        </li>
+        <li
+          (click)="
+            utilityService.linkMe(
+              '/documentos-publicos/' +
+                document._id +
+                '/categoria/' +
+                category._id
+            )
+          "
+        >
+          {{ category.category.name }}
+        </li>
+        <li
+          (click)="
+            utilityService.linkMe(
+              '/documentos-publicos/' +
+                document._id +
+                '/categoria/' +
+                category._id +
+                '/subcategoria/' +
+                subcategory._id
+            )
+          "
+        >
+          {{ subcategory.category.name }}
+        </li>
+        <li
+          (click)="
+            utilityService.linkMe(
+              '/documentos-publicos/' +
+                document._id +
+                '/categoria/' +
+                category._id +
+                '/subcategoria/' +
+                subcategory._id +
+                '/tema/' +
+                topic._id
+            )
+          "
+        >
+          {{ topic.title }}
+        </li>
         <li>{{ solution.title }}</li>
       </breadcrumbs-component>
     </div>
@@ -49,10 +94,7 @@
         <mat-card>
           <!-- IMAGE -->
           <div class="image-box">
-            <img class="imgSolutions"
-              [src]="image"
-              alt=""
-            />
+            <img class="imgSolutions" [src]="image" alt="" />
 
             <div class="info">
               <button class="custom-circle">
@@ -68,8 +110,8 @@
                   *ngIf="userVoted"
                   mat-raised-button
                   color="primary"
-                  style="background-color: #d9d9d9"
-                  (click)="unVote()"
+                  disabled="true"
+                  style="background-color: #d9d9d9; color: #306eff"
                 >
                   Ya votaste
                 </button>

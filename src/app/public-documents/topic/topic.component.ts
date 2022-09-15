@@ -47,7 +47,7 @@ export class TopicComponent implements OnInit {
     public layoutService: LayoutService,
     public topicService: TopicService,
     public voteService: VoteService,
-    public UserService: UserService
+    public UserService: UserService,
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
@@ -59,10 +59,8 @@ export class TopicComponent implements OnInit {
         console.log(error);
       },
       next: (reply: any) => {
-        console.log({ activedRouter: this.activatedRoute });
         this.user = reply;
-        console.log({ user: this.user });
-        if (this.user.activities[0].value == ('administrator' || 'editor')) {
+        if (['administrator', 'editor'].includes(this.user.activities?.[0]?.value)) {
           this.permission = true;
         } else {
           this.permission = false;

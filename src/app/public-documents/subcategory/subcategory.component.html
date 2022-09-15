@@ -2,9 +2,26 @@
   <div class="set-12">
     <div class="set-8" *ngIf="isDataAvailable">
       <breadcrumbs-component>
-        <li class="breadcrumb-item">{{ document.title }}</li>
-        <li class="breadcrumb-item">{{ category.category.name }}</li>
-
+        <li>Documentos</li>
+        <li
+          (click)="
+            utilityService.linkMe('/documentos-publicos/' + document._id)
+          "
+        >
+          {{ document.title }}
+        </li>
+        <li
+          (click)="
+            utilityService.linkMe(
+              '/documentos-publicos/' +
+                document._id +
+                '/categoria/' +
+                category._id
+            )
+          "
+        >
+          {{ category.category.name }}
+        </li>
         <li>{{ subcategory.category.name }}</li>
       </breadcrumbs-component>
     </div>
@@ -18,17 +35,14 @@
     style="padding-bottom: 100px; margin-top: 20px"
     *ngIf="subcategory"
   >
-    <div class="set-4 col-rgt-3">
-      <mat-card class="doc-description">
-        <div class="imghldr">
-          <img
-          class="imageSubcategory"
-            [src]="image"
-            alt=""
-          />
+    <div class="set-3 col-lft">
+      <mat-card class="set-12 doc-description">
+        <div class="set-12 imghldr">
+          <mat-icon *ngIf="!image">panorama</mat-icon>
+          <img *ngIf="image" [src]="image" alt="" />
         </div>
-        <div class="infohldr">
-          <p class="card-title">{{ subcategory.category.name }}</p>
+        <div class="set-12 infohldr">
+          <p class="set-12 card-title">{{ subcategory.category.name }}</p>
           <expanded-text
             [text]="subcategory.description"
             [minLength]="200"
@@ -36,7 +50,7 @@
         </div>
       </mat-card>
     </div>
-    <div class="set-8" style="background-color: white">
+    <div class="set-9 col-rgt">
       <panel-subcategory
         [data]="subcategory.topics"
         [selectedID]="subcategory._id"
@@ -55,7 +69,7 @@
           </p>
         </div>
       </div>
-      <div class="set-12 tables">
+      <div class="set-12 tables" style="background-color: white">
         <div class="set-6">
           <table
             mat-table

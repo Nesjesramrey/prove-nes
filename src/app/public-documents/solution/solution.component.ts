@@ -33,7 +33,7 @@ export class SolutionComponent implements OnInit {
   public subcategory: any = null;
   public topic: any = null;
   public votes: number = 0;
-  public image : string = '../../../assets/images/not_fount.jpg';
+  public image: string = '../../../assets/images/not_fount.jpg';
 
 
   public testimonials: any = TESTIMONIALS;
@@ -155,16 +155,16 @@ export class SolutionComponent implements OnInit {
       this.loadSolution();
     });
   }
-  unVote() {
-    this.voteService.deleteVote({ _id: this.userVoted }).subscribe({
-      error: (error: any) => {
-        console.log(error);
-      },
-      next: (reply: any) => {
-        this.loadSolution();
-      },
-    });
-  }
+  // unVote() {
+  //   this.voteService.deleteVote({ _id: this.userVoted }).subscribe({
+  //     error: (error: any) => {
+  //       console.log(error);
+  //     },
+  //     next: (reply: any) => {
+  //       this.loadSolution();
+  //     },
+  //   });
+  // }
 }
 
 export interface ITestimony {
