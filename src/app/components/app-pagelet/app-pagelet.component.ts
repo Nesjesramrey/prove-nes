@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -24,6 +24,8 @@ export class AppPageletComponent implements OnInit {
   public userActivities: any = [];
   public path: any;
   public unreadNotifications: any = null;
+  public permission: any;
+  public redirectUrl: string = '';
 
   constructor(
     public router: Router,
@@ -32,18 +34,21 @@ export class AppPageletComponent implements OnInit {
     public socketSrvc: SocketService,
     public utilitySrvc: UtilityService,
     public angularFireAuth: AngularFireAuth,
+    public activatedRoute: ActivatedRoute,
 
     public dialog: MatDialog
   ) {
     if (this.router.url.indexOf('documentos-publicos') !== -1) {
       this.path = this.router.url.indexOf('documentos-publicos');
     }
+
     this.token = this.authenticationSrvc.fetchAccessToken;
   }
 
   ngOnInit(): void {
-    console.log({ path: this.path });
-    console.log({ r: this.router.url.indexOf('documentos-publicos') });
+    console.log({ w: window.location.pathname });
+    this.getRedirectUrl();
+
     setTimeout(() => {
       if (this.user != null) {
         this.user['activities'].filter((x: any) => {
@@ -77,6 +82,14 @@ export class AppPageletComponent implements OnInit {
         //   });
         //   this.isDataAvailable = true;
         // });
+        console.log({ user: this.user.activities[0].value });
+        if (this.user.activities[0].value == ('administrator' || 'editor')) {
+          this.permission = true;
+        } else {
+          this.permission = false;
+        }
+        console.log({ p: this.permission });
+
         this.isDataAvailable = true;
       } else {
         this.isDataAvailable = true;
@@ -132,5 +145,38 @@ export class AppPageletComponent implements OnInit {
     dialogRef.afterClosed().subscribe((reply: any) => {
       console.log('cerrando modal');
     });
+  }
+  getRedirectUrl() {
+    let params = window.location.pathname.split('/').filter((x) => x);
+
+    this.redirectUrl = params.reduce((acc, cur, index): string => {
+      if (
+        [
+          'documentos',
+          'documentos-publicos',
+          'categoria',
+          'subcategoria',
+          'tema',
+          'temas',
+          'solucion',
+        ].includes(cur)
+      ) {
+        if (cur === 'temas')
+          return (acc += 'tema' + '/' + params[index + 1] + '/');
+        if (cur === 'tema')
+          return (acc += 'temas' + '/' + params[index + 1] + '/');
+        if (cur === 'documentos-publicos')
+          return (acc += 'documentos' + '/' + params[index + 1] + '/');
+        if (cur === 'documentos')
+          return (acc += 'documentos-publicos' + '/' + params[index + 1] + '/');
+
+        return (acc += cur + '/' + params[index + 1] + '/');
+      }
+      return acc;
+    }, '/');
+  }
+  redirectEdition() {
+    this.router.navigate([this.redirectUrl]);
+    this.getRedirectUrl();
   }
 }

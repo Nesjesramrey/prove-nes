@@ -15,7 +15,7 @@
 
     <div class="set-3">
       <div class="header-buttons">
-        <div class="button-box">
+        <div *ngIf="permission == true" class="button-box">
           <button
             type="button"
             mat-mini-fab
@@ -75,13 +75,12 @@
                 <p class="votes">
                   {{ votes }}
                 </p>
-                
+
                 <button
                   *ngIf="userVoted"
                   mat-raised-button
                   color="primary"
-                  style="background-color: #D9D9D9;"
-                  (click)="unVote()"
+                  style="background-color: #d9d9d9"
                 >
                   Ya votaste
                 </button>
@@ -89,7 +88,7 @@
                   *ngIf="!userVoted"
                   mat-raised-button
                   color="primary"
-                  style="background-color: primary;"
+                  style="background-color: primary"
                   (click)="openModalVote()"
                 >
                   Votar
