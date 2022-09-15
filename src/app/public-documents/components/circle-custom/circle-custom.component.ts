@@ -42,6 +42,7 @@ export class CircleCustomComponent implements OnInit {
           return basePosition[i];
         }}
       }
+      
 }
 export interface Data {
   title: string;
