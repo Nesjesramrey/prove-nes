@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
@@ -18,7 +19,8 @@ export class SignInComponent implements OnInit {
     public formBuilder: FormBuilder,
     public authenticationSrvc: AuthenticationService,
     public utilitySrvc: UtilityService,
-    public angularFireAuth: AngularFireAuth
+    public angularFireAuth: AngularFireAuth,
+    public router: Router
   ) { }
 
   ngOnInit(): void {
@@ -38,8 +40,9 @@ export class SignInComponent implements OnInit {
           // console.log('user: ', data['multiFactor']['user']);
           this.submitted = false;
           localStorage.setItem('accessToken', data['multiFactor']['user']['accessToken']);
-          window.location.reload();
+          // window.location.reload();
           // this.utilitySrvc.linkMe('/');
+          this.router.navigateByUrl('/', { state: { status: 'logout' } });
         });
       })
       .catch((error) => {
