@@ -6,7 +6,7 @@
     'margin-left': data.pos.x + 'px',
     'margin-top': data.pos.y + 'px',
     position: data.position.position,
-    left: data.position.left + 'px',
+    left: data.position.left + '%',
     top: data.position.top + 'px'
   }"
 >
@@ -24,7 +24,8 @@
           <p
             class="title"
             [ngStyle]="{
-              'font-size': data.size.font + 'px'
+              'font-size': data.size.font + 'px',
+              'width' : '90%'
             }"
           >
             {{ data.title }}

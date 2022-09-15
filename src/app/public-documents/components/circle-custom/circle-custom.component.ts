@@ -23,20 +23,25 @@ export class CircleCustomComponent implements OnInit {
   }
 
   getSize(size: string): any {
-    if (size === 'small') return { box: 250, font: 28 };
+    if (size === 'small') return { box: 130, font: 11 };
     if (size === 'medium') return { box: 170, font: 16 };
-    if (size === 'large') return { box: 230, font: 26 };
+    if (size === 'large') return { box: 230, font: 22 };
   }
 
-  getPosition(position: number): any {
-    const leftBase = position % Math.floor(Math.random() * 2) == 0 ? -40 : 10;
+  getPosition(position :number): any {
+    const basePosition = [
+      { left : -14 , top: 80 , position : 'relative' },
+      { left : -42 , top: -84 ,position : 'relative' },
+      { left : -75 , top: 75 , position : 'relative' },
+  ];
 
-    return {
-      left: 50 + leftBase,
-      top: -60 + position * 10,
-      position: 'relative',
-    };
-  }
+  for(let i = 0; i<10; i++){
+        if(i === position){
+          if(this.size === 'small' && i%2 === 0) basePosition[i].top = 118;
+          if(this.size !== 'large' && i%2 !== 0) basePosition[i].top = -70;
+          return basePosition[i];
+        }}
+      }
 }
 export interface Data {
   title: string;
