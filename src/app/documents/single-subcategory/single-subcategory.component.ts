@@ -93,7 +93,7 @@ export class SingleSubcategoryComponent implements OnInit {
       this.subcategory = reply[2];
       //console.log(this.subcategory);
       this.topics = this.subcategory['topics'];
-      // console.log(this.topics);
+      console.log(this.topics);
       this.dataSource = new MatTableDataSource(this.topics);
 
       // for (let i = 0; i < this.topics.length; i++) {

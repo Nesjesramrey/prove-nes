@@ -81,6 +81,7 @@ export class AppComponent implements OnInit {
         },
         next: (reply: any) => {
           this.user = reply;
+          this.isDataAvailable = true;
 
           if (!this.user['isFullRegister']) { this.openAddDocumentDialog(); }
 
