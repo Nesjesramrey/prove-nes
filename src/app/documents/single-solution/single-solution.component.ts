@@ -115,24 +115,19 @@ export class SingleSolutionComponent implements OnInit {
       // console.log(this.topics); 
       // console.log("topic " + JSON.stringify(this.topic));
 
-      let sols = this.topic.solutions;
-      for (let j = 0; j < sols.length; j++) {
-        let sol: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.topic.solutions[j] });
-        forkJoin([sol]).subscribe((reply: any) => {
-          this.solutions.push(reply[0]);
-        })
-      }
+      // let sols = this.topic.solutions;
+      // for (let j = 0; j < sols.length; j++) {
+      //   let sol: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.topic.solutions[j] });
+      //   forkJoin([sol]).subscribe((reply: any) => {
+      //     this.solutions.push(reply[0]);
+      //   })
+      // }
 
       this.solution = reply[4];
-      console.log(this.solution);
+      // console.log(this.solution);
 
       this.sliderImages = this.solution.images;
-
-
-
-
-    }
-    );
+    });
     this.documentService
       .fetchSingleDocumentById({ _id: this.documentID })
       .subscribe((reply: any) => {

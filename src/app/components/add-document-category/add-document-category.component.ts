@@ -149,7 +149,7 @@ export class AddDocumentCategoryComponent implements OnInit {
     }
 
     this.selectedCategoryId = category[0]['_id'];
-    this.stepTwoFormGroup.patchValue({ layout: category[0]['_id'] });
+    this.stepTwoFormGroup.patchValue({ layout: this.selectedCategoryId });
     this.selectedCategories.push(event.option.value);
     this.categoryInput.nativeElement.value = '';
     this.categoryCtrl.setValue(null);
@@ -160,7 +160,7 @@ export class AddDocumentCategoryComponent implements OnInit {
       name: this.addCategoryFormGroup.value.category,
     };
 
-    console.log({ categori: this.addCategoryFormGroup.value.category });
+    console.log({ category: this.addCategoryFormGroup.value.category });
 
     this.utilityService.createNewCategory(data).subscribe((reply: any) => {
       // console.log(reply);
@@ -247,7 +247,7 @@ export class AddDocumentCategoryComponent implements OnInit {
         'description',
         this.stepOneFormGroup.value.description
       );
-      data['formData'].append('category', this.stepTwoFormGroup.value.category);
+      data['formData'].append('category', this.stepTwoFormGroup.value.layout);
 
       this.layoutService.createNewLayoutOnly(data).subscribe((reply: any) => {
         this.isSubmitted = false;

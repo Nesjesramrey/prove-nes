@@ -14,6 +14,7 @@ import { LayoutService } from 'src/app/services/layout.service';
 import { SolutionService } from 'src/app/services/solution.service';
 import { TopicService } from 'src/app/services/topic.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 
 @Component({
   selector: 'app-single-theme',
@@ -243,6 +244,28 @@ export class SingleThemeComponent implements OnInit {
 
   linkSolution(id: string) {
     this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/temas/${this.themeID}/solucion/${id}`)
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  popImageViewer() {
+    const dialogRef = this.dialog.open<ImageViewerComponent>(ImageViewerComponent, {
+      width: '640px',
+      data: {
+        location: 'topic',
+        document: this.document,
+        topic: this.topic
+      },
+      disableClose: true,
+      panelClass: 'viewer-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
   }
 }
 

@@ -27,4 +27,12 @@ export class LayoutService {
   editLayoutData(data: any) {
     return this.httpClient.put(this.endpointSrvc.apiEndPoint + this.endpointSrvc.editLayoutDataEndPoint + `${data['layoutID']}`, data);
   }
+
+  uploadLayoutFiles(data: any) {
+    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.uploadLayoutFilesEndPoint + `${data['layout_id']}` + '/images', data['formData']);
+  }
+
+  killLayoutImage(data: any) {
+    return this.httpClient.delete(this.endpointSrvc.apiEndPoint + this.endpointSrvc.killLayoutImageEndPoint + `${data['layout_id']}` + '/images', { body: data });
+  }
 }

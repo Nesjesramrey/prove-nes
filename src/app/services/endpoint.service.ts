@@ -51,6 +51,8 @@ export class EndPointService {
   public fetchSingleLayoutByIdEndPoint: string = '/layout/';
   public createNewLayoutOnlyEndPoint: string = '/layout/document/';
   public editLayoutDataEndPoint: string = '/layout/';
+  public uploadLayoutFilesEndPoint: string = '/layout/';
+  public killLayoutImageEndPoint: string = '/layout/';
 
   // sub layouts
   public createNewSubLayoutEndPoint: string = '/sublayout/layout/';
@@ -58,6 +60,7 @@ export class EndPointService {
   // topics
   public fetchSingleTopicByIdEndPoint: string = '/topic/';
   public createNewTopicEndPoint: string = '/topic/layout/';
+  public uploadTopicFilesEndPoint: string = '/topic/';
 
   // permission
   public createNewPermissionEndPoint: string = '/permission/';
@@ -84,8 +87,8 @@ export class EndPointService {
     '/notification/create-new-notification';
   public fetchMyNotificationsLengthEndPoint: string =
     '/notification/fetch-my-notifications-length';
-  // public fetchMyNotificationsContentEndPoint: string = '/notification/fetch-my-notifications-content';
   public fetchMyNotificationsContentEndPoint: string = '/notification';
+  public fetchMyNotificationUnreadEndPoint: string = '/notification/number_of_unread/user/';
 
   // support
   public sendSupportMessageEndPoint: string =
@@ -108,6 +111,9 @@ export class EndPointService {
   public deleteVoteEndPonint: string = '/vote/';
   public fetchVotesFromTopicEndPonint: string = '/vote/topic/';
   public fetchVotesFromSolutionEndPonint: string = '/vote/solution/';
+
+  // socket
+  public updateSocketIDEndPoint: string = '/user/';
 
 
   constructor() { }

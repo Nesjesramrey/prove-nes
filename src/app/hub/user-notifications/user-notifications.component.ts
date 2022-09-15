@@ -34,7 +34,7 @@ export class UserNotificationsComponent implements OnInit {
 
       this.notificationSrvc.fetchMyNotificationsContent({ userID: this.user['_id'] })
         .subscribe((reply: any) => {
-          console.log(reply);
+          // console.log(reply);
           this.notifications = reply;
         });
 

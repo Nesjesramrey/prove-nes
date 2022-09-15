@@ -36,17 +36,11 @@
         <div class="set-12 imghldr">
           <mat-icon *ngIf="topic.images.length == 0">panorama</mat-icon>
           <img [src]="topic.images[0]" alt="" *ngIf="topic.images.length != 0">
-          <div class="overlay">
+          <div class="overlay" (click)="popImageViewer()">
             <mat-icon>photo_camera</mat-icon>
             <div class="cover"></div>
           </div>
         </div>
-        <!-- <div class="set-12 imghldr" *ngIf="topic.images.length == 0">
-          <mat-icon>panorama</mat-icon>
-        </div> -->
-
-        <!-- <slider-images [images]="sliderImages" *ngIf="topic.images.length != 0">
-        </slider-images> -->
 
         <div class="set-12 infohldr">
           <div class="set-12 card-title">
@@ -63,14 +57,10 @@
               </mat-menu>
             </div>
           </div>
-          <p class="card-description" *ngIf="topic.description != null">{{topic.description}}</p>
-          <!-- <label class="item">
-            <mat-icon color="primary">add_circle</mat-icon>
-            <input type="file" accept="image/*" id="addImageInput" (change)="handleSelectImage($event)" multiple />
-          </label> -->
+          <!-- <p class="card-description" *ngIf="topic.description != null">{{topic.description}}</p>
           <button type="button" class="toolbtn" *ngIf="topic.description == null">
             <small>Agregar descripción</small>
-          </button>
+          </button> -->
           <avatars-row [users]="collaborators"></avatars-row>
         </div>
       </mat-card>
@@ -117,9 +107,17 @@
       </mat-card>
 
       <mat-card class="set-12 topic-list">
-        <p class="title">Soluciones</p>
+        <div class="set-12 table-head">
+          <p class="title">Soluciones</p>
+          <input type="text" (keyup)="applyFilter($event)" placeholder="Búscar en soluciones..."
+            [disabled]="solutions.length == 0">
+        </div>
 
-        <table mat-table [dataSource]="dataSource" class="problems-table">
+        <div class="set-12 empty-layouts" *ngIf="solutions.length == 0">
+          <p>Sin soluciones disponibles.</p>
+        </div>
+
+        <table mat-table [dataSource]="dataSource" class="problems-table" *ngIf="solutions.length != 0">
           <ng-container matColumnDef="title">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element">
