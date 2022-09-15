@@ -47,6 +47,7 @@ import { CircleChartComponent } from './circle-chart/circle-chart.component';
 import { SpiderChartComponent } from './spider-chart/spider-chart.component';
 import { DocumentUserListComponent } from './document-user-list/document-user-list.component';
 import { AddCommentsComponent } from './add-comments/add-comments.component';
+import { AddDocumentCommentComponent } from './add-document-comment/add-document-comment.component';
 
 @NgModule({
   imports: [
@@ -97,6 +98,7 @@ import { AddCommentsComponent } from './add-comments/add-comments.component';
     CircleChartComponent,
     SpiderChartComponent,
     DocumentUserListComponent,
+    AddDocumentCommentComponent,
     AddCommentsComponent
   ],
   exports: [
@@ -128,6 +130,7 @@ import { AddCommentsComponent } from './add-comments/add-comments.component';
     CircleChartComponent,
     AddDocumentSolutionComponent,
     DocumentUserListComponent,
+    AddDocumentCommentComponent,
     AddCommentsComponent
   ],
   entryComponents: [

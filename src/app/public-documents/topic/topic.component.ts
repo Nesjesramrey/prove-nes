@@ -16,6 +16,7 @@ import { ModalVotesComponent } from '../components/modal-votes/modal-votes.compo
 import { ThisReceiver } from '@angular/compiler';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
+import { AddDocumentCommentComponent } from 'src/app/components/add-document-comment/add-document-comment.component';
 @Component({
   selector: '.topic-page',
   templateUrl: './topic.component.html',
@@ -166,6 +167,29 @@ export class TopicComponent implements OnInit {
     );
     dialogRef.afterClosed().subscribe((reply: any) => {
       this.loadTopic();
+    });
+  }
+
+  openModalComment() {
+    const dialogRef = this.dialog.open<AddDocumentCommentComponent>(
+      AddDocumentCommentComponent,
+      {
+        width: '640px',
+        data: {
+          documentID: this.documentID,
+          document: this.document,
+          relationID: this.categoryID,
+          typeID: this.topicID,
+          type: 'topic',
+        },
+        disableClose: true,
+      }
+    );
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        console.log(reply);
+      }
     });
   }
 
