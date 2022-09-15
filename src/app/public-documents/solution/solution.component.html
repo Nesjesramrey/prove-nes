@@ -76,18 +76,17 @@
           <p>Agregar Comentario</p>
         </div>
 
-          <div class="button-box">
-            <button
-              type="button"
-              mat-mini-fab
-              color="warn"
-              class="add-button purple"
-              (click)="openModalTestimony()"
-            >
-              <mat-icon style="color: white">create_new_folder</mat-icon>
-            </button>
-            <p>Agregar Testimonios</p>
-          </div>
+        <div class="button-box">
+          <button
+            type="button"
+            mat-mini-fab
+            color="warn"
+            class="add-button purple"
+            (click)="openModalTestimony()"
+          >
+            <mat-icon style="color: white">create_new_folder</mat-icon>
+          </button>
+          <p>Agregar Testimonios</p>
         </div>
       </div>
     </div>
@@ -105,11 +104,9 @@
         <div class="set-12 header-card">
           <mat-card>
             <!-- IMAGE -->
-            <div class="image-box">
-              <img
-                src="https://images.pexels.com/photos/1117452/pexels-photo-1117452.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="doc-image"
-              />
+            <div class="set-12 image-box">
+              <mat-icon *ngIf="!image">panorama</mat-icon>
+              <img *ngIf="image" [src]="image" alt="" />
 
               <div class="info">
                 <button class="custom-circle">
@@ -125,8 +122,8 @@
                     *ngIf="userVoted"
                     mat-raised-button
                     color="primary"
+                    disabled
                     style="background-color: #d9d9d9"
-                    (click)="unVote()"
                   >
                     Ya votaste
                   </button>

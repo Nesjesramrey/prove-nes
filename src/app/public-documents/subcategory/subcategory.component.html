@@ -1,93 +1,93 @@
 <div class="set-12 loading" *ngIf="!isDataAvailable">
   <mat-spinner></mat-spinner>
 </div>
-<div class="set-12" *ngIf="isDataAvailable"></div>
-<div class="container">
-  <div class="set-12">
-    <div class="set-8" *ngIf="isDataAvailable">
-      <breadcrumbs-component>
-        <li>Documentos</li>
-        <li
-          (click)="
-            utilityService.linkMe('/documentos-publicos/' + document._id)
-          "
-        >
-          {{ document.title }}
-        </li>
-        <li
-          (click)="
-            utilityService.linkMe(
-              '/documentos-publicos/' +
-                document._id +
-                '/categoria/' +
-                category._id
-            )
-          "
-        >
-          {{ category.category.name }}
-        </li>
-        <li>{{ subcategory.category.name }}</li>
-      </breadcrumbs-component>
-    </div>
-    <div class="set-4 featured-users">
-      <featured-users [inputAmount]="5"></featured-users>
-    </div>
-  </div>
-
-  <div
-    class="set-12"
-    style="padding-bottom: 100px; margin-top: 20px"
-    *ngIf="subcategory"
-  >
-    <div class="set-3 col-lft">
-      <mat-card class="set-12 doc-description">
-        <div class="set-12 imghldr">
-          <mat-icon *ngIf="!image">panorama</mat-icon>
-          <img *ngIf="image" [src]="image" alt="" />
-        </div>
-        <div class="set-12 infohldr">
-          <p class="set-12 card-title">{{ subcategory.category.name }}</p>
-          <expanded-text
-            [text]="subcategory.description"
-            [minLength]="200"
-          ></expanded-text>
-        </div>
-      </mat-card>
-    </div>
-    <div class="set-9 col-rgt">
-      <panel-subcategory
-        [data]="subcategory.topics"
-        [selectedID]="subcategory._id"
-      ></panel-subcategory>
-      <div class="set-12 container-titles">
-        <div class="set-6 title">
-          <p>
-            Soluciones
-            <img src="../../../assets/images/row.png" alt="" width="22" />
-          </p>
-        </div>
-        <div class="set-6 title">
-          <p>
-            Problemas
-            <img src="../../../assets/images/alert.webp" alt="" width="20" />
-          </p>
-        </div>
-      </div>
-      <div class="set-12 tables" style="background-color: white">
-        <div class="set-6">
-          <table
-            mat-table
-            [dataSource]="solutionsDataSource"
-            class="mat-elevation-z8"
+<div class="set-12" *ngIf="isDataAvailable">
+  <div class="container">
+    <div class="set-12">
+      <div class="set-8" *ngIf="isDataAvailable">
+        <breadcrumbs-component>
+          <li>Documentos</li>
+          <li
+            (click)="
+              utilityService.linkMe('/documentos-publicos/' + document._id)
+            "
           >
-            <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef></th>
-              <td mat-cell *matCellDef="let element">
-                <p class="title">
-                  {{ element.title }}
-                </p>
-              </td>
-            </ng-container>
+            {{ document.title }}
+          </li>
+          <li
+            (click)="
+              utilityService.linkMe(
+                '/documentos-publicos/' +
+                  document._id +
+                  '/categoria/' +
+                  category._id
+              )
+            "
+          >
+            {{ category.category.name }}
+          </li>
+          <li>{{ subcategory.category.name }}</li>
+        </breadcrumbs-component>
+      </div>
+      <div class="set-4 featured-users">
+        <featured-users [inputAmount]="5"></featured-users>
+      </div>
+    </div>
+
+    <div
+      class="set-12"
+      style="padding-bottom: 100px; margin-top: 20px"
+      *ngIf="subcategory"
+    >
+      <div class="set-3 col-lft">
+        <mat-card class="set-12 doc-description">
+          <div class="set-12 imghldr">
+            <mat-icon *ngIf="!image">panorama</mat-icon>
+            <img *ngIf="image" [src]="image" alt="" />
+          </div>
+          <div class="set-12 infohldr">
+            <p class="set-12 card-title">{{ subcategory.category.name }}</p>
+            <expanded-text
+              [text]="subcategory.description"
+              [minLength]="200"
+            ></expanded-text>
+          </div>
+        </mat-card>
+      </div>
+      <div class="set-9 col-rgt">
+        <panel-subcategory
+          [data]="subcategory.topics"
+          [selectedID]="subcategory._id"
+        ></panel-subcategory>
+        <div class="set-12 container-titles">
+          <div class="set-6 title">
+            <p>
+              Soluciones
+              <img src="../../../assets/images/row.png" alt="" width="22" />
+            </p>
+          </div>
+          <div class="set-6 title">
+            <p>
+              Problemas
+              <img src="../../../assets/images/alert.webp" alt="" width="20" />
+            </p>
+          </div>
+        </div>
+        <div class="set-12 tables" style="background-color: white">
+          <div class="set-6">
+            <table
+              mat-table
+              [dataSource]="solutionsDataSource"
+              class="mat-elevation-z8"
+            >
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                  <p class="title">
+                    {{ element.title }}
+                  </p>
+                </td>
+              </ng-container>
 
               <ng-container matColumnDef="ranking">
                 <th mat-header-cell *matHeaderCellDef>Ranking</th>
@@ -141,6 +141,5 @@
         </div>
       </div>
     </div>
-  </div>
   </div>
 </div>

@@ -1,53 +1,51 @@
 <div class="set-12 loading" *ngIf="!isDataAvailable">
   <mat-spinner></mat-spinner>
 </div>
-<div class="set-12 " *ngIf="isDataAvailable"></div>
-<div class="container" *ngIf="topic">
-  <div class="set-12">
-    <div class="set-6">
-      <breadcrumbs-component>
-        <li>Documentos</li>
-        <li
-          (click)="
-            utilityService.linkMe('/documentos-publicos/' + document._id)
-          "
-        >
-          {{ document.title }}
-        </li>
-        <li
-          (click)="
-            utilityService.linkMe(
-              '/documentos-publicos/' +
-                document._id +
-                '/categoria/' +
-                category._id
-            )
-          "
-        >
-          {{ category.category.name }}
-        </li>
-        <li
-          (click)="
-            utilityService.linkMe(
-              '/documentos-publicos/' +
-                document._id +
-                '/categoria/' +
-                category._id +
-                '/subcategoria/' +
-                subcategory._id
-            )
-          "
-        >
-          {{ subcategory.category.name }}
-        </li>
-        <li>{{ topic.title }}</li>
-      </breadcrumbs-component>
-    </div>
-
+<div class="set-12" *ngIf="isDataAvailable">
+  <div class="container">
+    <div class="set-12">
+      <div class="set-6">
+        <breadcrumbs-component>
+          <li>Documentos</li>
+          <li
+            (click)="
+              utilityService.linkMe('/documentos-publicos/' + document._id)
+            "
+          >
+            {{ document.title }}
+          </li>
+          <li
+            (click)="
+              utilityService.linkMe(
+                '/documentos-publicos/' +
+                  document._id +
+                  '/categoria/' +
+                  category._id
+              )
+            "
+          >
+            {{ category.category.name }}
+          </li>
+          <li
+            (click)="
+              utilityService.linkMe(
+                '/documentos-publicos/' +
+                  document._id +
+                  '/categoria/' +
+                  category._id +
+                  '/subcategoria/' +
+                  subcategory._id
+              )
+            "
+          >
+            {{ subcategory.category.name }}
+          </li>
+          <li>{{ topic.title }}</li>
+        </breadcrumbs-component>
+      </div>
       <div class="set-3 featured-users">
         <featured-users [inputAmount]="3"></featured-users>
       </div>
-
       <div class="set-3">
         <div class="header-buttons">
           <div *ngIf="permission == true" class="button-box">
@@ -88,76 +86,73 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="set-12 txt-left" style="margin-top: 10px">
-      <span class="created-by">
-        Autor:
-        <span class="author"
-          >{{ topic.createdBy.firstname }}
-          {{ topic.createdBy.lastname }}</span
-        >
-      </span>
-    </div>
-    <div class="set-12" style="padding-bottom: 100px; margin-top: 10px">
-      <div class="set-8 col-rgt-3">
-        <div class="set-12 header-card">
-          <mat-card>
-            <!-- IMAGE -->
-            <div class="image-box">
-              <img
-                src="https://images.pexels.com/photos/1117452/pexels-photo-1117452.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                alt="doc-image"
-              />
+      <div class="set-12 txt-left" style="margin-top: 10px">
+        <span class="created-by">
+          Autor:
+          <span class="author">
+            {{ topic.createdBy.firstname }}
+            {{ topic.createdBy.lastname }}
+          </span>
+        </span>
+      </div>
+      <div class="set-12" style="padding-bottom: 100px; margin-top: 10px">
+        <div class="set-8 col-rgt-3">
+          <div class="set-12 header-card">
+            <mat-card>
+              <!-- IMAGE -->
+              <div class="image-box">
+                <mat-icon *ngIf="!image">panorama</mat-icon>
+                <img *ngIf="image" [src]="image" alt="" />
+                <div class="info">
+                  <button class="custom-circle">
+                    <mat-icon>thumb_up</mat-icon>
+                  </button>
+                  <div class="actions">
+                    <p>Relevancia ciudadana</p>
+                    <p class="votes">
+                      {{ votes }}
+                    </p>
 
-              <div class="info">
-                <button class="custom-circle">
-                  <mat-icon>thumb_up</mat-icon>
-                </button>
-
-              <div class="actions">
-                <p>Relevancia ciudadana</p>
-                <p class="votes">
-                  {{ votes }}
-                </p>
-
-                <button
-                  *ngIf="userVoted"
-                  mat-raised-button
-                  color="primary"
-                  style="background-color: #d9d9d9"
-                >
-                  Ya votaste
-                </button>
-                <button
-                  *ngIf="!userVoted"
-                  mat-raised-button
-                  color="primary"
-                  style="background-color: primary"
-                  (click)="openModalVote()"
-                >
-                  Votar
-                </button>
-                <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
+                    <button
+                      *ngIf="userVoted"
+                      mat-raised-button
+                      color="primary"
+                      disabled
+                      style="background-color: #d9d9d9"
+                    >
+                      Ya votaste
+                    </button>
+                    <button
+                      *ngIf="!userVoted"
+                      mat-raised-button
+                      color="primary"
+                      style="background-color: primary"
+                      (click)="openModalVote()"
+                    >
+                      Votar
+                    </button>
+                    <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
+                  </div>
+                </div>
               </div>
-            </div>
+              <!-- DATA -->
+              <div class="data-box">
+                <p class="title">{{ topic.title }}</p>
+                <expanded-text [text]="topic.description" [minLength]="400">
+                </expanded-text>
+              </div>
+            </mat-card>
           </div>
-          <!-- DATA -->
-          <div class="data-box">
-            <p class="title">{{ topic.title }}</p>
-            <expanded-text [text]="topic.description" [minLength]="400">
-            </expanded-text>
+          <div class="set-12 mt-2">
+            <solutions-card [data]="solutionsData"></solutions-card>
           </div>
-        </mat-card>
+        </div>
+        <div class="set-4">
+          <public-documents-testimonials
+            [data]="topic.testimonials"
+          ></public-documents-testimonials>
+        </div>
       </div>
-      <div class="set-12 mt-2">
-        <solutions-card [data]="solutionsData"></solutions-card>
-      </div>
-    </div>
-    <div class="set-4">
-      <public-documents-testimonials
-        [data]="topic.testimonials"
-      ></public-documents-testimonials>
     </div>
   </div>
-</div>
 </div>
