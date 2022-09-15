@@ -7,14 +7,15 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { SocketService } from 'src/app/services/socket.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
-// btn
+// btn 
 import { MatDialog } from '@angular/material/dialog';
 import { ModalPermissionsComponent } from 'src/app/public-documents/components/modal-permissions/modal-permissions.component';
+
 
 @Component({
   selector: '.app-pagelet',
   templateUrl: './app-pagelet.component.html',
-  styleUrls: ['./app-pagelet.component.scss'],
+  styleUrls: ['./app-pagelet.component.scss']
 })
 export class AppPageletComponent implements OnInit {
   public token: any = null;
@@ -24,7 +25,6 @@ export class AppPageletComponent implements OnInit {
   public userActivities: any = [];
   public path: any;
   public unreadNotifications: any = null;
-  public permission: any;
 
   constructor(
     public router: Router,
@@ -43,27 +43,20 @@ export class AppPageletComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log({ user: this.user });
-
     setTimeout(() => {
-      this.checkPermission();
       if (this.user != null) {
-        this.user['activities'].filter((x: any) => {
-          this.userActivities.push(x['value']);
-        });
+        this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
         // let notifications: Observable<any> = this.notificationSrvc.fetchMyNotificationsLength({ user_id: this.user['_id'] });
 
-        this.notificationSrvc
-          .fetchMyNotificationUnread({ userID: this.user['_id'] })
-          .subscribe((reply: any) => {
-            this.unreadNotifications = reply['count'];
-          });
+        this.notificationSrvc.fetchMyNotificationUnread({ userID: this.user['_id'] }).subscribe((reply: any) => {
+          this.unreadNotifications = reply['count'];
+        });
 
         // this.socketSrvc.putNotification({
         //   message: 'hello world',
         //   message_to: this.user['_id']
         // });
-
+        
         // this.socketSrvc.getNotification().subscribe((reply: any) => {
         //   console.log(reply);
         // });
@@ -120,28 +113,17 @@ export class AppPageletComponent implements OnInit {
       this.router.navigateByUrl('/', { state: { status: 'logout' } });
     });
   }
-  redirectEdition() {}
-
-  checkPermission() {
-    if (this.user.activities[0].value == ('administrator' || 'Editor')) {
-      this.permission = true;
-    } else {
-      this.permission = false;
-    }
-  }
 
   btnPermissions() {
-    console.log('token', this.token);
-    const dialogRef = this.dialog.open<ModalPermissionsComponent>(
-      ModalPermissionsComponent,
-      {
-        width: '640px',
-        disableClose: true,
-      }
-    );
+    console.log("token", this.token)
+    const dialogRef = this.dialog.open<ModalPermissionsComponent>(ModalPermissionsComponent, {
+      width: '640px',
+      disableClose: true
+    });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      console.log('cerrando modal');
+      console.log('cerrando modal')
     });
   }
+
 }
