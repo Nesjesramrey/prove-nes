@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
@@ -19,10 +19,11 @@ import { ModalPermissionsComponent } from 'src/app/public-documents/components/m
 export class AppPageletComponent implements OnInit {
   public token: any = null;
   @Input('user') public user: any = null;
+  @Input('path') public path: any = null;
   public notifications: any = null;
   public isDataAvailable: boolean = false;
   public userActivities: any = [];
-  public path: any;
+  public isPublic: any;
   public unreadNotifications: any = null;
   public permission: any;
   public redirectUrl: string = '';
@@ -38,23 +39,18 @@ export class AppPageletComponent implements OnInit {
 
     public dialog: MatDialog
   ) {
-    if (this.router.url.indexOf('documentos-publicos') !== -1) {
-      this.path = this.router.url.indexOf('documentos-publicos');
-    }
-
     this.token = this.authenticationSrvc.fetchAccessToken;
   }
 
   ngOnInit(): void {
-    console.log({ w: window.location.pathname });
-    this.getRedirectUrl();
-
+    this.reset();
     setTimeout(() => {
-      if (this.user != null) {
+      if (this.user) {
+        console.log('user', this.user);
+
         this.user['activities'].filter((x: any) => {
           this.userActivities.push(x['value']);
         });
-        // let notifications: Observable<any> = this.notificationSrvc.fetchMyNotificationsLength({ user_id: this.user['_id'] });
 
         this.notificationSrvc
           .fetchMyNotificationUnread({ userID: this.user['_id'] })
@@ -62,28 +58,7 @@ export class AppPageletComponent implements OnInit {
             this.unreadNotifications = reply['count'];
           });
 
-        // this.socketSrvc.putNotification({
-        //   message: 'hello world',
-        //   message_to: this.user['_id']
-        // });
-
-        // this.socketSrvc.getNotification().subscribe((reply: any) => {
-        //   console.log(reply);
-        // });
-
-        // forkJoin([notifications]).subscribe((reply: any) => {
-        //   this.notifications = reply[0]['notifications'];
-        //   this.socketSrvc.getNotification().subscribe((reply: any) => {
-        //     if (reply['new_notification'] != undefined) {
-        //       this.notificationSrvc.fetchMyNotificationsLength({ user_id: this.user['_id'] }).subscribe((reply: any) => {
-        //         this.notifications = reply['notifications'];
-        //       });
-        //     }
-        //   });
-        //   this.isDataAvailable = true;
-        // });
-        console.log({ user: this.user.activities[0].value });
-        if (this.user.activities[0].value == ('administrator' || 'editor')) {
+        if (['administrator', 'editor'].includes(this.user.activities?.[0]?.value)) {
           this.permission = true;
         } else {
           this.permission = false;
@@ -95,6 +70,15 @@ export class AppPageletComponent implements OnInit {
         this.isDataAvailable = true;
       }
     });
+  }
+  ngOnChanges(changes: SimpleChanges) {
+    console.log('changes', changes);
+    if (changes['path']) this.reset();
+  }
+  reset() {
+    this.isPublic = this.router.url.indexOf('documentos-publicos');
+    console.log('isPublic', this.isPublic)
+    this.getRedirectUrl();
   }
 
   linkMe(url: string) {
@@ -162,21 +146,20 @@ export class AppPageletComponent implements OnInit {
         ].includes(cur)
       ) {
         if (cur === 'temas')
-          return (acc += 'tema' + '/' + params[index + 1] + '/');
+          return (acc += '/' + 'tema' + '/' + params[index + 1]);
         if (cur === 'tema')
-          return (acc += 'temas' + '/' + params[index + 1] + '/');
+          return (acc += '/' + 'temas' + '/' + params[index + 1]);
         if (cur === 'documentos-publicos')
-          return (acc += 'documentos' + '/' + params[index + 1] + '/');
+          return (acc += '/' + 'documentos' + '/' + params[index + 1]);
         if (cur === 'documentos')
-          return (acc += 'documentos-publicos' + '/' + params[index + 1] + '/');
+          return (acc += '/' + 'documentos-publicos' + '/' + params[index + 1]);
 
-        return (acc += cur + '/' + params[index + 1] + '/');
+        return (acc += '/' + cur + '/' + params[index + 1]);
       }
       return acc;
-    }, '/');
+    }, '');
   }
   redirectEdition() {
-    this.router.navigate([this.redirectUrl]);
-    this.getRedirectUrl();
+    this.router.navigateByUrl(this.redirectUrl);
   }
 }

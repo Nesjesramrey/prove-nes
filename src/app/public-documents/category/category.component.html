@@ -1,52 +1,65 @@
 <div class="set-12" style="padding-bottom: 100px">
   <div class="container" *ngIf="selectedCategory">
     <breadcrumbs-component>
-      <li class="breadcrumb-item">{{ document.title }}</li>
+      <li>Documentos</li>
+      <li
+        *ngIf="!!document.title; else noTitle"
+        (click)="utilityService.linkMe('/documentos-publicos/' + document._id)"
+      >
+        {{ document.title }}
+      </li>
+      <ng-template #noTitle>
+        <div>categoria</div>
+      </ng-template>
       <li>{{ selectedCategory.category.name }}</li>
     </breadcrumbs-component>
-    <div class="set-4 col-rgt-3">
-      <mat-card class="doc-description">
-        <div class="imghldr">
-          <img class="imgCategory"
-            [src]="image"
-            alt=""
-          />
-        </div>
-        <div class="infohldr">
-          <p class="card-title">{{ selectedCategory.category.name }}</p>
-          <expanded-text
-            [text]="selectedCategory.description"
-            [minLength]="200"
-          ></expanded-text>
-        </div>
-      </mat-card>
-      <div class="horizontal-stats mt-2"></div>
-    </div>
-    <div class="set-8">
-      <panel-circles
-        [data]="selectedCategory.subLayouts"
-        [withBorder]="true"
-        [redirectTo]="'SUBCATEGORY'"
-      ></panel-circles>
-      <div class="mt-2">
-        <div class="select">
-          <select required>
-            <option value="volvo">Municipio 1</option>
-            <option value="saab">Municipio 2</option>
-            <option value="mercedes">Municipio 3</option>
-            <option value="audi">Municipio 4</option>
-          </select>
-        </div>
+
+    <div class="set-12">
+      <div class="set-3 col-lft">
+        <mat-card class="set-12 doc-description">
+          <div class="set-12 imghldr">
+            <mat-icon *ngIf="!image">panorama</mat-icon>
+            <img *ngIf="image" [src]="image" alt="" />
+          </div>
+
+          <div class="set-12 infohldr">
+            <p class="set-12 card-title">
+              {{ selectedCategory.category.name }}
+            </p>
+            <expanded-text
+              [text]="selectedCategory.description"
+              [minLength]="200"
+            ></expanded-text>
+          </div>
+        </mat-card>
+        <div class="set-12 horizontal-stats mt-2"></div>
       </div>
-      <div class="set-12 mt-2">
-        <div class="set-3 col-rgt-2">
-          <vertical-stats></vertical-stats>
+      <div class="set-9 col-rgt">
+        <panel-circles
+          [data]="selectedCategory.subLayouts"
+          [withBorder]="true"
+          [redirectTo]="'SUBCATEGORY'"
+        ></panel-circles>
+        <div class="mt-2">
+          <div class="select">
+            <select required>
+              <option value="volvo">Municipio 1</option>
+              <option value="saab">Municipio 2</option>
+              <option value="mercedes">Municipio 3</option>
+              <option value="audi">Municipio 4</option>
+            </select>
+          </div>
         </div>
-        <div class="set-5 col-rgt-2">
-          <spider-chart></spider-chart>
-        </div>
-        <div class="set-4">
-          <top10-list [data]="items"></top10-list>
+        <div class="set-12 mt-2">
+          <div class="set-3 col-rgt-2">
+            <vertical-stats></vertical-stats>
+          </div>
+          <div class="set-5 col-rgt-2">
+            <spider-chart></spider-chart>
+          </div>
+          <div class="set-4">
+            <top10-list [data]="items"></top10-list>
+          </div>
         </div>
       </div>
     </div>

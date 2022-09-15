@@ -1,28 +1,25 @@
 <div class="container">
   <div class="set-12" style="padding-bottom: 100px" *ngIf="document">
-    <div class="set-4 col-rgt-3">
-      <mat-card class="doc-description">
-        <div class="imghldr">
-          <img
-          class="imageDocument"
-            [src]="image"
-            alt=""
-          />
+    <div class="set-3 col-lft">
+      <mat-card class="set-12 doc-description">
+        <div class="set-12 imghldr">
+          <mat-icon *ngIf="!image">panorama</mat-icon>
+          <img *ngIf="image" [src]="image" alt="" />
         </div>
-        <div class="infohldr">
-          <p class="card-title">{{ document.title }}</p>
+        <div class="set-12 infohldr">
+          <p class="set-12 card-title">{{ document.title }}</p>
           <expanded-text
             [text]="document.description"
             [minLength]="200"
           ></expanded-text>
         </div>
       </mat-card>
-      <div class="horizontal-stats mt-2"></div>
-      <div class="mt-2">
+      <div class="set-12 horizontal-stats mt-2"></div>
+      <div class="set-12 mt-2">
         <app-map-box [data]="document.coverage" class="mt-2"></app-map-box>
       </div>
     </div>
-    <div class="set-8">
+    <div class="set-9 col-rgt">
       <panel-circles
         [data]="document.layouts"
         [document]="document"

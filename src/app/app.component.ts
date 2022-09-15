@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ThemeVariables, ThemeRef, lyl, StyleRenderer } from '@alyle/ui';
-import { NavigationStart, Router } from '@angular/router';
+import { ResolveStart, Router } from '@angular/router';
 import { AuthenticationService } from './services/authentication.service';
 import { UserService } from './services/user.service';
 import { UtilityService } from './services/utility.service';
@@ -40,11 +40,11 @@ export class AppComponent implements OnInit {
   public user: any = null;
   public accessToken: any = null;
   public socketID: any = null;
-
+  public path: any = null;
 
   constructor(
     readonly sRenderer: StyleRenderer,
-    // public router: Router,
+    public router: Router,
     public authenticationSrvc: AuthenticationService,
     public userService: UserService,
     public utilityService: UtilityService,
@@ -54,12 +54,12 @@ export class AppComponent implements OnInit {
     this.accessToken = this.authenticationSrvc.fetchAccessToken;
     // console.log('accessToken: ', this.accessToken);
 
-    // this.router.events.subscribe((val) => {
-    //   if (val instanceof NavigationStart) {
-    //     let lastVal: any = val['url'].substring(val['url'].lastIndexOf('/') + 1);
-    //     if (lastVal == 'registro') { }
-    //   }
-    // });
+    this.router.events.subscribe((val) => {
+      if (val instanceof ResolveStart) {
+        console.log('ResolveStart: ', val.url);
+        this.path = val.url;
+      }
+    });
   }
 
   ngOnInit(): void {

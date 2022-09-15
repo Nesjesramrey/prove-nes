@@ -19,7 +19,7 @@
 
   <div class="set-6 navigation">
     <button
-      *ngIf="permission == false && path > 0"
+      *ngIf="permission == false && isPublic > 0"
       type="button"
       class="btn-permissios"
       (click)="btnPermissions()"
@@ -27,12 +27,20 @@
       Permiso para editar
     </button>
     <button
-      *ngIf="permission == true && path > 0"
+      *ngIf="permission == true && isPublic > 0"
       type="button"
       class="btn-permissios"
       (click)="redirectEdition()"
     >
       ir a edición
+    </button>
+    <button
+      *ngIf="permission == true && isPublic == -1"
+      type="button"
+      class="btn-permissios"
+      (click)="redirectEdition()"
+    >
+      Ver Publico
     </button>
 
     <!-- <button type="button">
