@@ -106,6 +106,11 @@ export class EndPointService {
   public fetchSingleTestimonyByIdEndPoint: string = '/testimony/';
   public createNewTestimonyEndPoint: string = '/testimony/';
 
+  // comment
+  public fetchSingleCommentByIdEndPoint: string = '/comment/';
+  public createNewCommentEndPoint: string = '/comment/';
+
+
   // vote
   public createNewVoteEndPonint: string = '/vote/';
   public deleteVoteEndPonint: string = '/vote/';

@@ -1,3 +1,7 @@
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+  <mat-spinner></mat-spinner>
+</div>
+<div class="set-12 " *ngIf="isDataAvailable"></div>
 <div class="container" *ngIf="topic">
   <div class="set-12">
     <div class="set-6">
@@ -40,62 +44,75 @@
       </breadcrumbs-component>
     </div>
 
-    <div class="set-3 featured-users">
-      <featured-users [inputAmount]="3"></featured-users>
-    </div>
+      <div class="set-3 featured-users">
+        <featured-users [inputAmount]="3"></featured-users>
+      </div>
 
-    <div class="set-3">
-      <div class="header-buttons">
-        <div *ngIf="permission == true" class="button-box">
-          <button
-            type="button"
-            mat-mini-fab
-            color="warn"
-            class="add-button green"
-            (click)="openModalSolution()"
-          >
-            <mat-icon>create_new_folder</mat-icon>
-          </button>
-          <p>Agregar solución</p>
-        </div>
-        <div class="button-box">
-          <button
-            type="button"
-            mat-mini-fab
-            color="warn"
-            class="add-button red"
-          >
-            <mat-icon>create_new_folder</mat-icon>
-          </button>
-          <p>Agregar Comentario</p>
-        </div>
-        <div class="button-box">
-          <button
-            type="button"
-            mat-mini-fab
-            color="warn"
-            class="add-button purple"
-            (click)="openModalTestimony()"
-          >
-            <mat-icon>create_new_folder</mat-icon>
-          </button>
-          <p>Agregar Testimonios</p>
+      <div class="set-3">
+        <div class="header-buttons">
+          <div *ngIf="permission == true" class="button-box">
+            <button
+              type="button"
+              mat-mini-fab
+              color="warn"
+              class="add-button green"
+              (click)="openModalSolution()"
+            >
+              <mat-icon>create_new_folder</mat-icon>
+            </button>
+            <p>Agregar solución</p>
+          </div>
+          <div class="button-box">
+            <button
+              type="button"
+              mat-mini-fab
+              color="warn"
+              class="add-button red"
+              (click)="openModalComment()"
+            >
+              <mat-icon>create_new_folder</mat-icon>
+            </button>
+            <p>Agregar Comentario</p>
+          </div>
+          <div class="button-box">
+            <button
+              type="button"
+              mat-mini-fab
+              color="warn"
+              class="add-button purple"
+              (click)="openModalTestimony()"
+            >
+              <mat-icon>create_new_folder</mat-icon>
+            </button>
+            <p>Agregar Testimonios</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+    <div class="set-12 txt-left" style="margin-top: 10px">
+      <span class="created-by">
+        Autor:
+        <span class="author"
+          >{{ topic.createdBy.firstname }}
+          {{ topic.createdBy.lastname }}</span
+        >
+      </span>
+    </div>
+    <div class="set-12" style="padding-bottom: 100px; margin-top: 10px">
+      <div class="set-8 col-rgt-3">
+        <div class="set-12 header-card">
+          <mat-card>
+            <!-- IMAGE -->
+            <div class="image-box">
+              <img
+                src="https://images.pexels.com/photos/1117452/pexels-photo-1117452.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                alt="doc-image"
+              />
 
-  <div class="set-12" style="padding-bottom: 100px; margin-top: 20px">
-    <div class="set-8 col-rgt-3">
-      <div class="set-12 header-card">
-        <mat-card>
-          <!-- IMAGE -->
-          <div class="image-box">
-            <img class="imgTopic" [src]="image" alt="" />
-            <div class="info">
-              <button class="custom-circle">
-                <mat-icon>thumb_up</mat-icon>
-              </button>
+              <div class="info">
+                <button class="custom-circle">
+                  <mat-icon>thumb_up</mat-icon>
+                </button>
 
               <div class="actions">
                 <p>Relevancia ciudadana</p>
@@ -142,4 +159,5 @@
       ></public-documents-testimonials>
     </div>
   </div>
+</div>
 </div>

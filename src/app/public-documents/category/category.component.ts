@@ -52,8 +52,6 @@ export class CategoryComponent implements OnInit {
       this.selectedCategory = reply[1];
       this.image = (reply[1].images.length > 0) ? reply[1].images[0] : this.image;
       this.topicsCount = reply[1].topics.length;
-
-      console.log(reply);
       setTimeout(() => {
         this.isDataAvailable = true;
       }, 300);

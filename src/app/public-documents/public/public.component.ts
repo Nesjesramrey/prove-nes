@@ -13,7 +13,7 @@ export class PublicComponent implements OnInit {
   public document: any = null;
   public items: Section[] = ITEMS;
   public isDataAvailable: boolean = false;
-  public image : string = '../../../assets/images/not_fount.jpg';
+  public image: string = '../../../assets/images/not_fount.jpg';
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -32,7 +32,9 @@ export class PublicComponent implements OnInit {
       .fetchSingleDocumentById({ _id: this.documentID })
       .subscribe((reply: any) => {
         this.document = reply;
-        this.isDataAvailable = true;
+        setTimeout(() => {
+          this.isDataAvailable = true;
+        }, 300);
         this.image = (reply.images.length > 0) ? reply.images[0] : this.image;
       });
   }

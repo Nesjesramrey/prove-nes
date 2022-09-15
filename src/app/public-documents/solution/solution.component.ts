@@ -11,12 +11,14 @@ import { UtilityService } from 'src/app/services/utility.service';
 import { VoteService } from 'src/app/services/vote.service';
 import { ModalVotesComponent } from '../components/modal-votes/modal-votes.component';
 import { UserService } from 'src/app/services/user.service';
+import { AddDocumentCommentComponent } from 'src/app/components/add-document-comment/add-document-comment.component';
 @Component({
   selector: '.solution-page',
   templateUrl: './solution.component.html',
   styleUrls: ['./solution.component.scss'],
 })
 export class SolutionComponent implements OnInit {
+  public isDataAvailable: boolean = false;
   public user: any = null;
   public documentID: string = '';
   public categoryID: string = '';
@@ -97,7 +99,6 @@ export class SolutionComponent implements OnInit {
       solution,
       votes,
     ]).subscribe((reply: any) => {
-      console.log('##', reply);
       this.userVoted = this.checkUserVote(reply[5]);
       this.document = reply[0];
       this.category = reply[1];
@@ -106,6 +107,10 @@ export class SolutionComponent implements OnInit {
       this.solution = reply[4];
       this.votes = reply[5].length;
       this.image = (reply[3].images.length > 0) ? reply[3].images[0] : this.image;
+
+      setTimeout(() => {
+        this.isDataAvailable = true;
+      }, 300);
     });
   }
 
@@ -138,6 +143,29 @@ export class SolutionComponent implements OnInit {
       if (reply != undefined) {
         console.log(reply);
         this.solution.testimonials.unshift(reply.testimonials[0]);
+      }
+    });
+  }
+
+  openModalComment() {
+    const dialogRef = this.dialog.open<AddDocumentCommentComponent>(
+      AddDocumentCommentComponent,
+      {
+        width: '640px',
+        data: {
+          documentID: this.documentID,
+          document: this.document,
+          categoryID: this.categoryID,
+          relationID: this.solutionID,
+          type: 'solution',
+        },
+        disableClose: true,
+      }
+    );
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        console.log(reply);
       }
     });
   }
