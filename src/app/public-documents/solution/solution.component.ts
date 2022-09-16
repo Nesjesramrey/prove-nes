@@ -57,19 +57,20 @@ export class SolutionComponent implements OnInit {
       this.activatedRoute['snapshot']['params']['subcategoryID'];
     this.topicID = this.activatedRoute['snapshot']['params']['topicID'];
     this.solutionID = this.activatedRoute['snapshot']['params']['solutionID'];
+
+  }
+
+  ngOnInit(): void {
     this.user = this.UserService.fetchFireUser().subscribe({
       error: (error: any) => {
         console.log(error);
       },
       next: (reply: any) => {
         this.user = reply;
+        this.loadSolution();
         console.log({ user: this.user });
       },
     });
-  }
-
-  ngOnInit(): void {
-    this.loadSolution();
   }
 
   loadSolution() {

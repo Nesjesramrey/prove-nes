@@ -56,23 +56,25 @@ export class TopicComponent implements OnInit {
     this.subcategoryID =
       this.activatedRoute['snapshot']['params']['subcategoryID'];
     this.topicID = this.activatedRoute['snapshot']['params']['topicID'];
+
+  }
+
+  ngOnInit(): void {
     this.user = this.UserService.fetchFireUser().subscribe({
       error: (error: any) => {
         console.log(error);
       },
       next: (reply: any) => {
         this.user = reply;
+        this.loadTopic();
         if (['administrator', 'editor'].includes(this.user.activities?.[0]?.value)) {
           this.permission = true;
         } else {
           this.permission = false;
         }
       },
-    });
-  }
 
-  ngOnInit(): void {
-    this.loadTopic();
+    });
   }
 
   loadTopic() {
