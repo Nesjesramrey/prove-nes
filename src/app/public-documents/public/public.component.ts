@@ -35,7 +35,7 @@ export class PublicComponent implements OnInit {
         setTimeout(() => {
           this.isDataAvailable = true;
         }, 300);
-        this.image = (reply.images.length > 0) ? reply.images[0] : this.image;
+        this.image = reply.images.length > 0 ? reply.images[0] : this.image;
       });
   }
 }

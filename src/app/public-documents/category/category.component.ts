@@ -22,7 +22,6 @@ export class CategoryComponent implements OnInit {
 
   public topicsCount: number = 0;
   public solutionsCount: number = 0;
-
   public items: Section[] = top10;
 
   constructor(
@@ -50,7 +49,7 @@ export class CategoryComponent implements OnInit {
     forkJoin([document, category]).subscribe((reply: any) => {
       this.document = reply[0];
       this.selectedCategory = reply[1];
-      this.image = (reply[1].images.length > 0) ? reply[1].images[0] : this.image;
+      this.image = reply[1].images.length > 0 ? reply[1].images[0] : this.image;
       this.topicsCount = reply[1].topics.length;
       setTimeout(() => {
         this.isDataAvailable = true;

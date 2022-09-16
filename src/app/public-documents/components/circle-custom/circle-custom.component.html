@@ -7,6 +7,7 @@
     'margin-top': data.position.top + '%',
     'margin-right': data.position.right + 'px'
   }"
+  *ngIf="data"
 >
   <div class="out-circumference" [style.border-color]="data.out_circle_color">
     <span class="overlay" [style.background-color]="data.overlay">
@@ -23,7 +24,7 @@
             class="title"
             [ngStyle]="{
               'font-size': data.size.font + 'px',
-              'width' : '90%'
+              width: '90%'
             }"
           >
             {{ data.title }}

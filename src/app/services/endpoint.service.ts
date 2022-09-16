@@ -117,6 +117,11 @@ export class EndPointService {
   public fetchVotesFromTopicEndPonint: string = '/vote/topic/';
   public fetchVotesFromSolutionEndPonint: string = '/vote/solution/';
 
+  //visit
+  public sendVisitEndPoint: string = '/visit/';
+  // public deleteVoteEndPonint: string = '/vote/';
+  
+
   // socket
   public updateSocketIDEndPoint: string = '/user/';
 
