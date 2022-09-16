@@ -46,7 +46,6 @@ export class AppPageletComponent implements OnInit {
     this.reset();
     setTimeout(() => {
       if (this.user) {
-        console.log('user', this.user);
 
         this.user['activities'].filter((x: any) => {
           this.userActivities.push(x['value']);
@@ -63,7 +62,6 @@ export class AppPageletComponent implements OnInit {
         } else {
           this.permission = false;
         }
-        console.log({ p: this.permission });
 
         this.isDataAvailable = true;
       } else {
@@ -72,12 +70,10 @@ export class AppPageletComponent implements OnInit {
     });
   }
   ngOnChanges(changes: SimpleChanges) {
-    console.log('changes', changes);
     if (changes['path']) this.reset();
   }
   reset() {
     this.isPublic = this.router.url.indexOf('documentos-publicos');
-    console.log('isPublic', this.isPublic)
     this.getRedirectUrl();
   }
 
@@ -117,7 +113,6 @@ export class AppPageletComponent implements OnInit {
   }
 
   btnPermissions() {
-    console.log('token', this.token);
     const dialogRef = this.dialog.open<ModalPermissionsComponent>(
       ModalPermissionsComponent,
       {
@@ -127,7 +122,6 @@ export class AppPageletComponent implements OnInit {
     );
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      console.log('cerrando modal');
     });
   }
   getRedirectUrl() {

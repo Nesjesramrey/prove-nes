@@ -89,7 +89,6 @@ export class AddDocumentTestimonyComponent implements OnInit {
       })
 
       dialogRef.afterClosed().subscribe((reply: any) => {
-        console.log('cerrando modal');
       });
   } 
 }

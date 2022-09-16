@@ -23,7 +23,6 @@ export class PublicComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log({ route: this.activatedRoute });
     this.loadDocument();
   }
 

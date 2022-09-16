@@ -52,7 +52,6 @@ export class AddPermissionsComponent implements OnInit {
     };
 
     this.userSrvc.addUserPermissions(data).subscribe((reply: any) => {
-      console.log(reply);
       // if (reply['status'] == false) {
       //   this.utilitySrvc.openErrorSnackBar(reply['error']);
       //   return;

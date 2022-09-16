@@ -63,12 +63,10 @@ export class SolutionComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.UserService.fetchFireUser().subscribe({
       error: (error: any) => {
-        console.log(error);
       },
       next: (reply: any) => {
         this.user = reply;
         this.loadSolution();
-        console.log({ user: this.user });
       },
     });
   }
@@ -116,10 +114,6 @@ export class SolutionComponent implements OnInit {
   }
 
   checkUserVote(votes: any[]) {
-    console.log({
-      votes,
-      find: votes.find((vote) => vote.createdBy === this.user._id),
-    });
     return votes.find((vote) => vote.createdBy === this.user._id)?._id || 0;
   }
 
@@ -142,7 +136,6 @@ export class SolutionComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
-        console.log(reply);
         this.solution.testimonials.unshift(reply.testimonials[0]);
       }
     });
@@ -166,7 +159,6 @@ export class SolutionComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
-        console.log(reply);
       }
     });
   }

@@ -57,7 +57,6 @@ export class ModalPermissionsComponent implements OnInit {
 
       this.formPermission.controls['description'].valueChanges.subscribe((valor : string) => {
              this.descriptionLength = valor.length;
-             console.log(this.descriptionLength)
       })
   }
 
@@ -99,7 +98,6 @@ export class ModalPermissionsComponent implements OnInit {
       })
 
       dialogRef.afterClosed().subscribe((reply: any) => {
-        console.log('cerrando modal');
       });
   } 
  

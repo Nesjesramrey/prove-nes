@@ -25,14 +25,11 @@ export class PermissionService {
       }
     }).pipe(
       map( (data : any) => {
-            console.log(data);
-            return data.payload;
+          return data.payload;
       }),
       catchError( (error:any) => {
         return throwError(() => { console.log("error controlado",error)})
       })
     )
   }
-
-
 }

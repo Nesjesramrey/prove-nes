@@ -112,10 +112,6 @@ export class TopicComponent implements OnInit {
   }
 
   checkUserVote(votes: any[]) {
-    console.log({
-      votes,
-      find: votes.find((vote) => vote.createdBy === this.user._id),
-    });
     return votes.find((vote) => vote.createdBy === this.user._id)?._id || 0;
   }
 
@@ -198,7 +194,6 @@ export class TopicComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
-        console.log(reply);
       }
     });
   }

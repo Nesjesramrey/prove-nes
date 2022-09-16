@@ -17,7 +17,6 @@ export class VisitService {
       type: type,
     };
     this.sendVisitOfCollection(data).subscribe((resp: any) => {
-      console.log('@1', resp);
     });
   }
 
