@@ -4,6 +4,7 @@ import { forkJoin, Observable } from 'rxjs';
 import { DocumentService } from 'src/app/services/document.service';
 import { Section } from 'src/app/public-documents/components/top10-list/top10-list.component';
 import { LayoutService } from 'src/app/services/layout.service';
+import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
   selector: 'app-category-page',
@@ -17,16 +18,17 @@ export class CategoryComponent implements OnInit {
   public selectedCategory: any = null;
   public documentID: string = '';
   public categoryID: string = '';
+  public image: string = '';
 
   public topicsCount: number = 0;
   public solutionsCount: number = 0;
-
   public items: Section[] = top10;
 
   constructor(
     public activatedRoute: ActivatedRoute,
     public documentService: DocumentService,
-    public layoutService: LayoutService
+    public layoutService: LayoutService,
+    public utilityService: UtilityService,
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
@@ -47,10 +49,8 @@ export class CategoryComponent implements OnInit {
     forkJoin([document, category]).subscribe((reply: any) => {
       this.document = reply[0];
       this.selectedCategory = reply[1];
-
+      this.image = reply[1].images.length > 0 ? reply[1].images[0] : this.image;
       this.topicsCount = reply[1].topics.length;
-
-      console.log(reply);
       setTimeout(() => {
         this.isDataAvailable = true;
       }, 300);

@@ -25,7 +25,6 @@ export class ModalVotesComponent implements OnInit {
 
   ngOnInit(): void {}
   valueQualification(value: any) {
-    console.log({ event: value });
     this.qualification = value;
   }
   killDialog() {
@@ -38,7 +37,6 @@ export class ModalVotesComponent implements OnInit {
       solution: this.solutionID,
       value: this.qualification,
     };
-    console.log({ data });
     this.voteService.createNewVoto(data).subscribe((reply: any) => {
       if (reply.message == 'create success') {
         this.result = '#D9D9D9';

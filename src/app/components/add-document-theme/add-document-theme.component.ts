@@ -106,7 +106,6 @@ export class AddDocumentThemeComponent implements OnInit {
     data['formData'].append('description', form['value']['description']);
 
     this.solutionService.createNewSolution(data).subscribe((reply: any) => {
-      console.log("reply 1 " + reply);
       this.submitted = false;
       this.dialogRef.close(reply);
     });

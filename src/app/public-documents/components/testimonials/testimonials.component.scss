@@ -1,7 +1,10 @@
 .testimonials {
   width: 100%;
   //   background-color: orange;
-
+  mat-icon {
+    font-size: 70pt;
+    color: rgba($color: #000000, $alpha: 0.1);
+  }
   .title-card{
     font-size: 13pt;
     font-weight: 600;

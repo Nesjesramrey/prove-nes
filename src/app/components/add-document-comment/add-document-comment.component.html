@@ -1,6 +1,6 @@
 <div class="set-12 dialog-head">
   <div class="set-9">
-    <h3>Agregar Testimonio</h3>
+    <h3>Agregar Comentario</h3>
   </div>
   <div class="set-3 txt-right">
     <button
@@ -15,15 +15,10 @@
 </div>
 
 <div class="set-12 dialog-body">
-  <form [formGroup]="addTestimonyFormGroup" (submit)="createTestimony(addTestimonyFormGroup)">
+  <form [formGroup]="addCommentFormGroup" (submit)="createComment(addCommentFormGroup)">
     <div class="form-body">
       <mat-form-field class="example-full-width" appearance="outline">
-        <mat-label>Nombre</mat-label>
-        <input matInput placeholder="Nombre" formControlName="name" />
-      </mat-form-field>
-
-      <mat-form-field class="example-full-width" appearance="outline">
-        <mat-label>Escribe una descripción o carga un documento</mat-label>
+        <mat-label>Escribe un comentario</mat-label>
         <textarea
           matInput
           placeholder="Descripción"
@@ -31,7 +26,7 @@
         ></textarea>
       </mat-form-field>
 
-      <div class="imagebox">
+      <!-- <div class="imagebox">
         <label [ngClass]="imageUrl ? 'data' : 'empty'">
           <mat-icon>photo_camera</mat-icon>
           <span>Subir imagen</span>
@@ -49,21 +44,18 @@
           alt="img_upload"
           [ngClass]="imageUrl ? 'data' : 'empty'"
         />
-      </div>
+      </div> -->
     </div>
-    <div class="messageError">
-      <span *ngIf="messageError" class="messageError">Titulo y descripción son requeridos.</span>
-    </div>
-    
+
     <div class="set-12 ctrls">
       <button
         type="submit"
         mat-raised-button
-        [disabled]="addTestimonyFormGroup.invalid"
+        [disabled]="addCommentFormGroup.invalid"
         color="primary"
         class="submit-button"
       >
-        Agregar testimonio
+        Enviar comentario
       </button>
     </div>
   </form>

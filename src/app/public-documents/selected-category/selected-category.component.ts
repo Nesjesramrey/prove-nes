@@ -84,7 +84,6 @@ export class SelectedCategoryComponent implements OnInit {
         value: 50,
       },
     ];
-    // console.log(this.documentID);
   }
 
   ngOnInit(): void {
@@ -95,7 +94,6 @@ export class SelectedCategoryComponent implements OnInit {
         _id: this.payload['sub'],
       });
       user.subscribe((reply: any) => {
-        console.log({ reply });
       });
     }
   }

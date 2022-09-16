@@ -16,12 +16,14 @@ import { ModalVotesComponent } from '../components/modal-votes/modal-votes.compo
 import { ThisReceiver } from '@angular/compiler';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
+import { AddDocumentCommentComponent } from 'src/app/components/add-document-comment/add-document-comment.component';
 @Component({
   selector: '.topic-page',
   templateUrl: './topic.component.html',
   styleUrls: ['./topic.component.scss'],
 })
 export class TopicComponent implements OnInit {
+  public isDataAvailable: boolean = false;
   public user: any = null;
   public documentID: string = '';
   public categoryID: string = '';
@@ -34,6 +36,8 @@ export class TopicComponent implements OnInit {
   public submitted: boolean = false;
   public votes: number = 0;
   public userVoted: number = 0;
+  public image: string = '../../../assets/images/not_fount.jpg';
+  public permission: any;
 
   public testimonials: any = TESTIMONIALS;
   public solutionsData: any = [];
@@ -45,26 +49,32 @@ export class TopicComponent implements OnInit {
     public layoutService: LayoutService,
     public topicService: TopicService,
     public voteService: VoteService,
-    public UserService: UserService
+    public UserService: UserService,
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
     this.subcategoryID =
       this.activatedRoute['snapshot']['params']['subcategoryID'];
     this.topicID = this.activatedRoute['snapshot']['params']['topicID'];
+
+  }
+
+  ngOnInit(): void {
     this.user = this.UserService.fetchFireUser().subscribe({
       error: (error: any) => {
         console.log(error);
       },
       next: (reply: any) => {
         this.user = reply;
-        console.log({ user: this.user });
+        this.loadTopic();
+        if (['administrator', 'editor'].includes(this.user.activities?.[0]?.value)) {
+          this.permission = true;
+        } else {
+          this.permission = false;
+        }
       },
-    });
-  }
 
-  ngOnInit(): void {
-    this.loadTopic();
+    });
   }
 
   loadTopic() {
@@ -83,11 +93,9 @@ export class TopicComponent implements OnInit {
     let votes: Observable<any> = this.voteService.fetchVotesByTopicID({
       _id: this.topicID,
     });
-    console.log({ v: votes });
 
     forkJoin([document, category, subcategory, topic, votes]).subscribe(
       (reply: any) => {
-        console.log('##', reply);
         this.userVoted = this.checkUserVote(reply[4]);
         this.document = reply[0];
         this.category = reply[1];
@@ -95,15 +103,15 @@ export class TopicComponent implements OnInit {
         this.topic = reply[3];
         this.votes = reply[4].length;
         this.solutionsData = this.topic.solutions;
+        this.image = (reply[3].images.length > 0) ? reply[3].images[0] : this.image;
+        setTimeout(() => {
+          this.isDataAvailable = true;
+        }, 300);
       }
     );
   }
 
   checkUserVote(votes: any[]) {
-    console.log({
-      votes,
-      find: votes.find((vote) => vote.createdBy === this.user._id),
-    });
     return votes.find((vote) => vote.createdBy === this.user._id)?._id || 0;
   }
 
@@ -149,7 +157,8 @@ export class TopicComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
-        console.log(reply);
+        const solution = reply.solutions[0];
+        this.solutionsData.unshift(solution);
       }
     });
   }
@@ -164,6 +173,28 @@ export class TopicComponent implements OnInit {
     );
     dialogRef.afterClosed().subscribe((reply: any) => {
       this.loadTopic();
+    });
+  }
+
+  openModalComment() {
+    const dialogRef = this.dialog.open<AddDocumentCommentComponent>(
+      AddDocumentCommentComponent,
+      {
+        width: '640px',
+        data: {
+          documentID: this.documentID,
+          document: this.document,
+          relationID: this.categoryID,
+          typeID: this.topicID,
+          type: 'topic',
+        },
+        disableClose: true,
+      }
+    );
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+      }
     });
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'vertical-stats',
@@ -6,10 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./vertical-stats.component.scss'],
 })
 export class VerticalStatsComponent implements OnInit {
-  public solutionsTotal: number = 2000;
-  public problemsTotal: number = 1200;
+  @Input() data: any = {
+    users: 0,
+    interactions: 0,
+  };
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 }

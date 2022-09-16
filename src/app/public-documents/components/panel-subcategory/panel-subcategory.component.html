@@ -1,4 +1,4 @@
-<div class="main shadow">
+<div class="main shadow" style="background-color: white">
   <div
     class="random-text"
     [ngStyle]="{
@@ -9,6 +9,8 @@
     }"
     *ngFor="let item of categories"
   >
-    <span (click)="redirect(item._id)" style="cursor:pointer">{{ item.title }}</span>
+    <span (click)="redirect(item._id)" style="cursor: pointer">{{
+      item.title
+    }}</span>
   </div>
 </div>

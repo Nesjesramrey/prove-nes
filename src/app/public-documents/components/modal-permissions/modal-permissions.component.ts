@@ -5,13 +5,14 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
- import { FormGroup , FormControl , Validators , FormBuilder } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+ import { FormGroup , FormControl , Validators , FormBuilder, MinLengthValidator, MinValidator } from '@angular/forms';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UtilityService } from 'src/app/services/utility.service';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { LayoutService } from 'src/app/services/layout.service';
 import { PermissionService } from 'src/app/services/permission.service';
 import { Router , ActivatedRoute } from '@angular/router';
+import { DialogErrorComponent } from 'src/app/components/dialog-error/dialog-error.component';
 
 
 @Component({
@@ -29,11 +30,13 @@ export class ModalPermissionsComponent implements OnInit {
   public addedLayouts: any = [];
   public documentID : any;
   public descriptionLength : number = 0;
+  public messageError : boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<ModalPermissionsComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public utilityService: UtilityService,
+    public dialog : MatDialog,
     public formBuilder: FormBuilder,
     public layoutService: LayoutService,
     private permissionService : PermissionService,
@@ -54,11 +57,15 @@ export class ModalPermissionsComponent implements OnInit {
 
       this.formPermission.controls['description'].valueChanges.subscribe((valor : string) => {
              this.descriptionLength = valor.length;
-             console.log(this.descriptionLength)
       })
   }
 
   sendrequest(){
+
+    if(this.formPermission.valid !== true){
+     this.messageError = true;
+    }
+  
     this.isDataAvailableLoading = true;
     const { description } = this.formPermission.value;
     const data = {
@@ -66,11 +73,14 @@ export class ModalPermissionsComponent implements OnInit {
       Authorization : localStorage.getItem('accessToken'),
       documentID : this.router.url.split('/')[2]
     }
+    
      this.permissionService.createNewPermission(data).subscribe( {next : (data) => {
       this.isDataAvailableLoading = false;
           this.descriptionLength = 0;
           this.formPermission.controls['description'].setValue('');
      } , error : (error) => {
+      this.diagloErrorOpen();
+      console.log(error)
       this.isDataAvailableLoading = false;
      }})
   }
@@ -79,5 +89,16 @@ export class ModalPermissionsComponent implements OnInit {
     this.dialogRef.close();
   }
 
+
+  
+  diagloErrorOpen(){
+    const dialogRef = this.dialog.open<DialogErrorComponent>(
+      DialogErrorComponent,{
+        width:'550px'
+      })
+
+      dialogRef.afterClosed().subscribe((reply: any) => {
+      });
+  } 
  
 }

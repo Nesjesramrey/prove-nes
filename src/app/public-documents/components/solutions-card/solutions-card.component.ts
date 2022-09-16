@@ -27,11 +27,9 @@ export class SolutionsCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data);
   }
 
   redirect(id: string) {
-    console.log(id);
     const path = `documentos-publicos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/tema/${this.topicID}/solucion/${id}`;
     this.utilityService.linkMe(path);
   }

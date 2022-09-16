@@ -1,8 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AddDocumentThemeComponent } from '../add-document-theme/add-document-theme.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TestimonyService } from 'src/app/services/testimony.service';
+import { DialogErrorComponent } from '../dialog-error/dialog-error.component';
 
 @Component({
   selector: 'app-add-document-testimony',
@@ -14,9 +15,11 @@ export class AddDocumentTestimonyComponent implements OnInit {
   public imageUrl: string | null = null;
   public submitted = false;
   public file: any = null;
+  public messageError : boolean = false;
   constructor(
     public formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<AddDocumentThemeComponent>,
+    public dialog       : MatDialog, 
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public testimonyService: TestimonyService
   ) {}
@@ -46,25 +49,46 @@ export class AddDocumentTestimonyComponent implements OnInit {
   }
 
   createTestimony(formGroup: FormGroup) {
-    this.submitted = true;
 
-    const { name, description } = formGroup.value;
-    const { topicID, type } = this.dialogData;
+    try{
+      if(this.addTestimonyFormGroup.valid){
+        this.submitted = true;
+
+        const { name, description } = formGroup.value;
+        const { topicID, type } = this.dialogData;
+        
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('description', description);
+        formData.append('files', this.file);
     
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('description', description);
-    formData.append('files', this.file);
-
-    const data = {
-      form: formData,
-      id: topicID,
-      type: type,
-    };
-
-    this.testimonyService.createNewTestimony(data).subscribe((reply: any) => {
-      this.submitted = false;
-      this.dialogRef.close(reply);
-    });
+        const data = {
+          form: formData,
+          id: topicID,
+          type: type,
+        };
+    
+        this.testimonyService.createNewTestimony(data).subscribe((reply: any) => {
+          this.submitted = false;
+          this.dialogRef.close(reply);
+        });
+      }else{
+        this.messageError = true;
+      }
+    }catch(error){
+      this.diagloErrorOpen();
+    }
+   
   }
+
+
+  diagloErrorOpen(){
+    const dialogRef = this.dialog.open<DialogErrorComponent>(
+      DialogErrorComponent,{
+        width:'550px'
+      })
+
+      dialogRef.afterClosed().subscribe((reply: any) => {
+      });
+  } 
 }

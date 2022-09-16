@@ -3,12 +3,11 @@
   [ngStyle]="{
     width: data.size.box + 'px',
     height: data.size.box + 'px',
-    'margin-left': data.pos.x + 'px',
-    'margin-top': data.pos.y + 'px',
-    position: data.position.position,
-    left: data.position.left + 'px',
-    top: data.position.top + 'px'
+    'margin-left': data.position.left + 'px',
+    'margin-top': data.position.top + '%',
+    'margin-right': data.position.right + 'px'
   }"
+  *ngIf="data"
 >
   <div class="out-circumference" [style.border-color]="data.out_circle_color">
     <span class="overlay" [style.background-color]="data.overlay">
@@ -24,7 +23,8 @@
           <p
             class="title"
             [ngStyle]="{
-              'font-size': data.size.font + 'px'
+              'font-size': data.size.font + 'px',
+              width: '90%'
             }"
           >
             {{ data.title }}
