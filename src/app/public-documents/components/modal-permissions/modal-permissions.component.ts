@@ -30,7 +30,7 @@ export class ModalPermissionsComponent implements OnInit {
   public addedLayouts: any = [];
   public documentID : any;
   public descriptionLength : number = 0;
-  public messageError : boolean = true;
+  public messageError : boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<ModalPermissionsComponent>,
