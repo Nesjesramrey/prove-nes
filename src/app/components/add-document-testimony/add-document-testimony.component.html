@@ -51,7 +51,10 @@
         />
       </div>
     </div>
-
+    <div class="messageError">
+      <span *ngIf="messageError" class="messageError">Titulo y descripción son requeridos.</span>
+    </div>
+    
     <div class="set-12 ctrls">
       <button
         type="submit"
