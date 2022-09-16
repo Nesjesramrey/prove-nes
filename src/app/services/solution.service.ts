@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError, map } from 'rxjs';
 import { EndPointService } from './endpoint.service';
 
 @Injectable({
@@ -17,7 +18,7 @@ export class SolutionService {
   }
 
   createNewSolution(data: any) {
-    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.createNewSolutionEndPoint + `${data['topic']}`, data['formData']);
+    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.createNewSolutionEndPoint + `${data['topic']}`, data['formData'])
   }
   
 }

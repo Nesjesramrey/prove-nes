@@ -135,18 +135,26 @@
       }
     }
 
+    .messageErrorBtn{
+      justify-content: center;
+    }
     .ctrls {
       text-align: right;
       display: flex;
       align-items: center;
       justify-content: flex-end;
 
+      .messageError{
+        color: red;
+           margin-right: 20%;
+      }
+
       * {
         margin: 0;
       }
 
       mat-spinner {
-        margin-left: 20px;
+        margin-left: 44px;
       }
 
       button {
