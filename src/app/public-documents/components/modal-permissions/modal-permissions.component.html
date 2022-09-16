@@ -16,6 +16,9 @@
         <div>
           <textarea class="descriptionInput" type="text" formControlName="description" placeholder="Escribe una descripción"></textarea>
         </div>
+        <div class="messageError">
+          <span *ngIf="messageError" class="messageError">La descripción es requerida para solicitar el permiso.</span>
+        </div>
         <p *ngIf="isDataAvailableLoading">cargando...</p>
         <button type="submit" 
         [disabled]="descriptionLength === 0" 
