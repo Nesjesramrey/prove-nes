@@ -19,6 +19,7 @@ export class SubcategoryComponent implements OnInit {
   public document: any = null;
   public category: any;
   public subcategory: any = null;
+  public panelTopicsData: any = [];
 
   public isDataAvailable: boolean = false;
 
@@ -32,7 +33,7 @@ export class SubcategoryComponent implements OnInit {
     public documentService: DocumentService,
     public dialog: MatDialog,
     public layoutService: LayoutService,
-    public utilityService: UtilityService,
+    public utilityService: UtilityService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
@@ -67,6 +68,8 @@ export class SubcategoryComponent implements OnInit {
       this.solutionsDataSource = this.subcategory.topics.map((item: any) => [
         ...item.solutions,
       ])[0];
+
+      this.panelTopicsData = this.subcategory.topics.slice(0, 9);
 
       setTimeout(() => {
         this.isDataAvailable = true;
