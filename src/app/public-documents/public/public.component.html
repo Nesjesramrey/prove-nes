@@ -38,15 +38,19 @@
         [document]="document"
         [redirectTo]="'CATEGORY'"
       ></panel-circles>
-      <div class="mt-2">
-        <div class="select">
-          <select required>
-            <option value="volvo">Municipio 1</option>
-            <option value="saab">Municipio 2</option>
-            <option value="mercedes">Municipio 3</option>
-            <option value="audi">Municipio 4</option>
-          </select>
-        </div>
+      <div class="mt-2 set-3">
+        <mat-form-field appearance="outline">
+          <mat-label>Cobertura</mat-label>
+          <mat-select formControlName="coverage" multiple>
+            <mat-option value="all">
+              <small>Nacional</small>
+            </mat-option>
+            <mat-option> Municipio 1 </mat-option>
+            <mat-option> Municipio 2 </mat-option>
+            <mat-option> Municipio 3 </mat-option>
+            <mat-option> Municipio 4 </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
       <div class="set-12 mt-2">
         <div class="set-3 col-rgt-2">
