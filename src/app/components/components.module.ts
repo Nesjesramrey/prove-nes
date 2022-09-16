@@ -48,6 +48,7 @@ import { SpiderChartComponent } from './spider-chart/spider-chart.component';
 import { DocumentUserListComponent } from './document-user-list/document-user-list.component';
 import { AddCommentsComponent } from './add-comments/add-comments.component';
 import { AddDocumentCommentComponent } from './add-document-comment/add-document-comment.component';
+import { DialogErrorComponent } from './dialog-error/dialog-error.component';
 
 @NgModule({
   imports: [
@@ -99,7 +100,8 @@ import { AddDocumentCommentComponent } from './add-document-comment/add-document
     SpiderChartComponent,
     DocumentUserListComponent,
     AddDocumentCommentComponent,
-    AddCommentsComponent
+    AddCommentsComponent,
+    DialogErrorComponent
   ],
   exports: [
     AppPageletComponent,

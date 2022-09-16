@@ -34,7 +34,8 @@
       </div>
     </div>
 
-    <div class="set-12 txt-right ctrls">
+    <div class="set-12 txt-right ctrls" [class.messageErrorBtn]="messageError" >
+      <span *ngIf="messageError" class="messageError">Titulo y descripción son requeridos.</span>
       <button type="submit" mat-raised-button color="primary"
         [disabled]="addSolutionFormGroup.invalid || submitted">Guardar</button>
       <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
@@ -46,3 +47,5 @@
     </p>
   </div>
 </div>
+
+
