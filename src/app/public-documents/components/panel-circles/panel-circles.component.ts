@@ -66,7 +66,7 @@ export class PanelCirclesComponent implements OnInit {
       const obj = {
         id: item._id,
         title: item.category?.name || item.name,
-        value: item.stats ? item.stats.interactions : 1500,
+        value: 1500,
         out_circle: this.withBorder,
         out_circle_color: '#ff6d00',
         in_circle_background: background,

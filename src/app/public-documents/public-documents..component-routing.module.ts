@@ -25,28 +25,28 @@ const routes: Routes = [
       {
         path: ':documentID/categoria/:categoryID/subcategoria/:subcategoryID/tema/:topicID/solucion/:solutionID',
         component: SolutionComponent,
-        canActivate: [CanActivateVisitGuard],
+        canActivate: [],
       },
       {
         // path: 'publico/tema',
         path: ':documentID/categoria/:categoryID/subcategoria/:subcategoryID/tema/:topicID',
         component: TopicComponent,
-        canActivate: [CanActivateVisitGuard],
+        canActivate: [],
       },
       {
         path: ':documentID',
         component: PublicComponent,
-        canActivate: [CanActivateVisitGuard],
+        canActivate: [],
       },
       {
         path: ':documentID/categoria/:categoryID',
         component: CategoryComponent,
-        canActivate: [CanActivateVisitGuard],
+        canActivate: [],
       },
       {
         path: ':documentID/categoria/:categoryID/subcategoria/:subcategoryID',
         component: SubcategoryComponent,
-        canActivate: [CanActivateVisitGuard],
+        canActivate: [],
       },
     ],
   },
