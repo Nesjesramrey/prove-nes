@@ -6,8 +6,11 @@
   mat-toolbar {
     height: 80px;
     padding: 0 40px;
-    background: rgba($color: #ffffff, $alpha: 0.9);
-    box-shadow: 0px 1px 11px rgba(0, 0, 0, 0.1);
+    // background: rgba($color: #ffffff, $alpha: 0.9);
+    background: rgb(0, 3, 29);
+    background: linear-gradient(360deg, rgba(0, 3, 29, 0) 0%, rgba(0, 3, 29, 1) 100%);
+    box-shadow: 0;
+    // background: transparent;
     position: fixed;
     z-index: 300;
     top: 0;
@@ -23,10 +26,9 @@
     }
 
     img {
-      width: 20%;
+      width: 100%;
       float: left;
       cursor: pointer;
-      max-width: 55px;
     }
 
     input {
@@ -54,10 +56,12 @@
     .sep {
       font-size: 20pt;
       padding: 0 20px;
+      color: #71f5ad;
     }
 
     button {
       margin-left: 20px;
+      color: #71f5ad;
     }
 
     button:first-child {
@@ -102,13 +106,18 @@
       }
     }
   }
+
+  .btn-menu {
+    mat-icon {
+      color: #71f5ad;
+    }
+  }
+
+  .btn-permissios {
+    background-color: #306EFF;
+    width: 224px;
+    height: 35px;
+    color: #fff;
+    border-radius: 5px;
+  }
 }
-
-
- .btn-permissios{
-  background-color: #306EFF;
-  width: 224px;
-  height: 35px;
-  color: #fff;
-  border-radius: 5px;
-} 

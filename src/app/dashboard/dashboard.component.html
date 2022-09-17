@@ -4,7 +4,7 @@
 
 <div class="set-12 page" *ngIf="isDataAvailable">
   <div class="set-12 ds-page">
-    <div class="cover"></div>
+    <!-- <div class="cover"></div>
 
     <div class="set-12 info" *ngIf="document != null">
       <div class="set-12 txt-center">
@@ -26,11 +26,59 @@
           </button>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 
   <div class="set-12 ds-page">
-    <div class="info">
+    <div class="set-6">
+      <div class="globe">
+        <img src="../../assets/images/text-globe.png" alt="">
+        <p>¿Quiénes Somos?</p>
+      </div>
+      <div class="section-txt">
+        <div class="set-2">&nbsp;</div>
+        <div class="set-8">
+          <p>
+            Somos un <strong>colectivo ciudadano</strong> diverso: lo que tenemos en común es querer que México salga
+            adelante de la crisis que hoy vive.
+          </p>
+          <p>
+            Somos una herramienta para que la sociedad civil que hoy está desorganizada, se organice para opinar
+            construir,
+            participar e incidir rumbo al 2024.
+          </p>
+          <p>
+            Somos una plataforma para activar y ejercer el poder ciudadano, más allá de los partidos.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="set-6">
+      <div class="globe">
+        <p>¿Qué Queremos?</p>
+        <img src="../../assets/images/text-globe.png" alt="">
+      </div>
+      <div class="section-txt">
+        <div class="set-2">&nbsp;</div>
+        <div class="set-8">
+          <p>
+            Queremos ser parte del cambio ciudadano que México necesita.
+          </p>
+          <p>
+            Queremos ser la plataforma más grande y activa para la participación de la sociedad civil rumbo al cambio
+            político que viene en 2024.
+          </p>
+          <p>
+            Queremos ser un semillero del talento que ya existe en México y que necesita espacios para colaborar y
+            hacerse
+            escuchar.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="info">
       <div class="titles">
         <span class="line">&nbsp;</span>
         <span class="title">Manifiesto</span>
@@ -55,11 +103,24 @@
         <p>Queremos ser parte de la comunidad internacional y estar a la vanguardia en tecnología y cuidado del
           medioambiente. Donde crezcamos como personas y dejemos a nuestros hijos un mejor México.</p>
       </div>
-    </div>
+    </div> -->
   </div>
 
   <div class="set-12 ds-page">
-    <div class="info">
+    <mat-icon>description</mat-icon>
+    <div class="contents">
+      <p>PENSAMIENTO</p>
+      <p>COLECTIVO</p>
+      <p>Un documento vivo <strong>100% ciudadano</strong> que se construye <strong>con tu participación</strong> y la
+        de especialistas.
+      </p>
+      <p>
+        Una declaración de principios y <strong>plan de acción</strong> para el México que queremos en colectivo.
+      </p>
+    </div>
+    <button type="button" (click)="linkMe('/documentos-publicos/' + document._id)">Entrar</button>
+
+    <!-- <div class="info">
       <div class="titles">
         <span class="line">&nbsp;</span>
         <span class="title">Mexicolectivo</span>
@@ -73,21 +134,22 @@
         <p>Que no está dispuesto a permitir que se nos arrebate el futuro.</p>
         <p>Que convoca a todos los mexicanos para trabajar juntos para lograrlo.</p>
       </div>
-    </div>
+    </div> -->
   </div>
 
   <div class="set-12 ds-page">
-    <div class="info">
+    <img src="../../assets/images/150922_MEXICOLECTIVO_LOGO_RESPONSIVO_VERDE.png" alt="">
+    <!-- <div class="info">
       <div class="titles">
         <span class="line">&nbsp;</span>
         <span class="title">Ideas</span>
       </div>
 
       <div class="set-12"></div>
-    </div>
+    </div> -->
   </div>
 
-  <div class="set-12 mailing-list">
+  <!-- <div class="set-12 mailing-list">
     <div class="set-12">
       <p>Suscríbete a nuestro newsletter</p>
     </div>
@@ -100,5 +162,5 @@
       <a href="#" class="facebook-net icon"></a>
       <a href="#" class="instagram-net icon"></a>
     </div>
-  </div>
+  </div> -->
 </div>
