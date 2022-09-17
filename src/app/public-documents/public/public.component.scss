@@ -2,7 +2,7 @@
   margin: 120px 40px;
   margin-bottom: 100px;
 
-  .select > select {
+  .select>select {
     background-color: white;
     width: 150px;
     padding: 0px 20px;
@@ -13,21 +13,31 @@
     border: 1px solid #a5a5a5;
     border-radius: 5px;
   }
+
   .doc-description {
     padding: 0 !important;
   }
 
   .imghldr {
-    // min-height: 150px;
+    min-height: 250px;
+    max-height: 250px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba($color: #ceddff, $alpha: 0.4);
+    background: rgba($color: #CEDDFF, $alpha: 0.4);
     border-bottom: 1px solid rgba($color: #000000, $alpha: 0.05);
+    overflow: hidden;
 
     mat-icon {
       font-size: 70pt;
       color: rgba($color: #000000, $alpha: 0.1);
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+      position: relative;
+      object-fit: contain;
     }
   }
 
@@ -70,7 +80,7 @@
   }
 }
 
-.imageDocument{
+.imageDocument {
   width: 100%;
   height: 208px;
 }

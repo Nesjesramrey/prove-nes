@@ -10,7 +10,7 @@ export class VerticalStatsComponent implements OnInit {
     users: 0,
     interactions: 0,
   };
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }

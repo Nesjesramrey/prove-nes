@@ -1,15 +1,23 @@
-.card-container {
-
+:host {
   width: 100%;
-  padding: 105px 2%;
-  background-color: white;
-  border-radius: 5px;
+  float: left;
+  margin-top: 20px;
+
+  .flex {
+    display: flex;
+    align-items: center;
+  }
+
+  .item:not(:first-child) {
+    margin-top: 20px;
+  }
+
   .images-box {
     width: 45px;
     padding: 10px;
     height: 45px;
-
     border-radius: 100%;
+
     img {
       width: 20px;
       height: 20px;
@@ -24,19 +32,29 @@
       font-weight: 400;
       letter-spacing: 0.5px;
     }
+
     .amount {
       font-size: 24px;
       font-weight: 500;
     }
   }
-}
 
-.green-icon-color {
-  border: 1.5px solid #20C588;
-  background-color: #E1F2EC;
-}
+  .green-icon-color {
+    border: 1.5px solid #20C588;
+    background-color: #E1F2EC;
 
-.red-icon-color {
-  border: 1.5px solid #FF6D00;
-  background-color: #FCDBC3;
+    mat-icon {
+      color: #20C588;
+    }
+  }
+
+  .red-icon-color {
+    border: 1.5px solid #FF6D00;
+    background-color: #FCDBC3;
+
+    mat-icon {
+      color: #FF6D00;
+    }
+  }
+
 }

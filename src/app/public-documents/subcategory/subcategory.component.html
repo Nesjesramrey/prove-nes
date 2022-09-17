@@ -1,29 +1,26 @@
 <div class="set-12 loading" *ngIf="!isDataAvailable">
   <mat-spinner></mat-spinner>
 </div>
+
 <div class="set-12" *ngIf="isDataAvailable">
   <div class="container">
     <div class="set-12">
       <div class="set-8" *ngIf="isDataAvailable">
         <breadcrumbs-component>
           <li>Documentos</li>
-          <li
-            (click)="
+          <li (click)="
               utilityService.linkMe('/documentos-publicos/' + document._id)
-            "
-          >
+            ">
             {{ document.title }}
           </li>
-          <li
-            (click)="
+          <li (click)="
               utilityService.linkMe(
                 '/documentos-publicos/' +
                   document._id +
                   '/categoria/' +
                   category._id
               )
-            "
-          >
+            ">
             {{ category.category.name }}
           </li>
           <li>{{ subcategory.category.name }}</li>
@@ -34,11 +31,7 @@
       </div>
     </div>
 
-    <div
-      class="set-12"
-      style="padding-bottom: 100px; margin-top: 20px"
-      *ngIf="subcategory"
-    >
+    <div class="set-12" style="padding-bottom: 100px; margin-top: 20px" *ngIf="subcategory">
       <div class="set-3 col-lft">
         <mat-card class="set-12 doc-description">
           <div class="set-12 imghldr">
@@ -47,18 +40,12 @@
           </div>
           <div class="set-12 infohldr">
             <p class="set-12 card-title">{{ subcategory.category.name }}</p>
-            <expanded-text
-              [text]="subcategory.description"
-              [minLength]="200"
-            ></expanded-text>
+            <expanded-text [text]="subcategory.description" [minLength]="200"></expanded-text>
           </div>
         </mat-card>
       </div>
       <div class="set-9 col-rgt">
-        <panel-subcategory
-          [data]="panelTopicsData"
-          [selectedID]="subcategory._id"
-        ></panel-subcategory>
+        <panel-subcategory [data]="panelTopicsData" [selectedID]="subcategory._id"></panel-subcategory>
         <div class="set-12 container-titles">
           <div class="set-6 title">
             <p>
@@ -75,11 +62,7 @@
         </div>
         <div class="set-12 tables" style="background-color: white">
           <div class="set-6">
-            <table
-              mat-table
-              [dataSource]="solutionsDataSource"
-              class="mat-elevation-z8"
-            >
+            <table mat-table [dataSource]="solutionsDataSource" class="mat-elevation-z8">
               <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let element">
@@ -108,19 +91,11 @@
             </table>
           </div>
           <div class="set-6">
-            <table
-              mat-table
-              [dataSource]="topicsDataSource"
-              class="mat-elevation-z8"
-            >
+            <table mat-table [dataSource]="topicsDataSource" class="mat-elevation-z8">
               <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let element">
-                  <a
-                    style="font-weight: 500; cursor: pointer"
-                    (click)="redirect(element._id)"
-                    >{{ element.title }}</a
-                  >
+                  <a style="font-weight: 500; cursor: pointer" (click)="redirect(element._id)">{{ element.title }}</a>
                 </td>
               </ng-container>
 

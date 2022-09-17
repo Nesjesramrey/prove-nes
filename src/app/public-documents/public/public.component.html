@@ -6,10 +6,8 @@
   <div class="set-12 txt-left">
     <span class="created-by">
       Autor:
-      <span class="author"
-        >{{ document.createdBy.firstname }}
-        {{ document.createdBy.lastname }}</span
-      >
+      <span class="author">{{ document.createdBy.firstname }}
+        {{ document.createdBy.lastname }}</span>
     </span>
   </div>
   <div class="set-12" style="padding-bottom: 100px; margin-top: 10px">
@@ -21,27 +19,27 @@
         </div>
         <div class="set-12 infohldr">
           <p class="set-12 card-title">{{ document.title }}</p>
-          <expanded-text
-            [text]="document.description"
-            [minLength]="200"
-          ></expanded-text>
+          <expanded-text [text]="document.description" [minLength]="200"></expanded-text>
         </div>
       </mat-card>
-      <horizontal-stats ></horizontal-stats>
+
+      <horizontal-stats></horizontal-stats>
+
+      <div class="set-12">
+        <vertical-stats></vertical-stats>
+      </div>
+
       <div class="set-12 mt-2">
         <app-map-box [data]="document.coverage" class="mt-2"></app-map-box>
       </div>
     </div>
+
     <div class="set-9 col-rgt">
-      <panel-circles
-        [data]="document.layouts"
-        [document]="document"
-        [redirectTo]="'CATEGORY'"
-      ></panel-circles>
+      <panel-circles [data]="document.layouts" [document]="document" [redirectTo]="'CATEGORY'"></panel-circles>
       <div class="mt-2 set-3">
         <mat-form-field appearance="outline">
           <mat-label>Cobertura</mat-label>
-          <mat-select formControlName="coverage" multiple>
+          <mat-select>
             <mat-option value="all">
               <small>Nacional</small>
             </mat-option>
@@ -53,13 +51,10 @@
         </mat-form-field>
       </div>
       <div class="set-12 mt-2">
-        <div class="set-3 col-rgt-2">
-          <vertical-stats></vertical-stats>
-        </div>
-        <div class="set-5 col-rgt-2">
+        <div class="set-6 col-rgt-2">
           <spider-chart></spider-chart>
         </div>
-        <div class="set-4">
+        <div class="set-6">
           <top10-list [data]="items"></top10-list>
         </div>
       </div>
