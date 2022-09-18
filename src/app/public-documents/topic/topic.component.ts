@@ -17,6 +17,7 @@ import { ThisReceiver } from '@angular/compiler';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
 import { AddDocumentCommentComponent } from 'src/app/components/add-document-comment/add-document-comment.component';
+import { MatTableDataSource } from '@angular/material/table';
 @Component({
   selector: '.topic-page',
   templateUrl: './topic.component.html',
@@ -38,6 +39,7 @@ export class TopicComponent implements OnInit {
   public userVoted: number = 0;
   public image: string = '../../../assets/images/not_fount.jpg';
   public permission: any;
+  public SolutionDataSource = new MatTableDataSource<any>();
 
   public testimonials: any = TESTIMONIALS;
   public solutionsData: any = [];
@@ -103,6 +105,8 @@ export class TopicComponent implements OnInit {
         this.topic = reply[3];
         this.votes = reply[4].length;
         this.solutionsData = this.topic.solutions;
+        this.SolutionDataSource = new MatTableDataSource(this.solutionsData);
+
         this.image = (reply[3].images.length > 0) ? reply[3].images[0] : this.image;
         setTimeout(() => {
           this.isDataAvailable = true;
@@ -159,6 +163,9 @@ export class TopicComponent implements OnInit {
       if (reply != undefined) {
         const solution = reply.solutions[0];
         this.solutionsData.unshift(solution);
+        this.SolutionDataSource = new MatTableDataSource(this.solutionsData);
+        // this.SolutionDataSource.setData(solution);
+
       }
     });
   }

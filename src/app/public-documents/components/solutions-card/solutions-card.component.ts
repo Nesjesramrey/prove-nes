@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
 
@@ -12,6 +13,8 @@ export class SolutionsCardComponent implements OnInit {
   public categoryID: string = '';
   public subcategoryID: string = '';
   public topicID: string = '';
+  public displayedColumns: string[] = ['name', 'ranking'];
+  public SolutionDataSource = new MatTableDataSource<any>();
 
   @Input() data: any = [];
 
@@ -27,10 +30,16 @@ export class SolutionsCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // this.SolutionDataSource = new MatTableDataSource(this.data);
   }
 
   redirect(id: string) {
     const path = `documentos-publicos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/tema/${this.topicID}/solucion/${id}`;
     this.utilityService.linkMe(path);
+  }
+
+  applyFilterSolution(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.data.filter = filterValue.trim().toLowerCase();
   }
 }

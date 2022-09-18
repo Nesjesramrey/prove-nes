@@ -4,6 +4,7 @@
     margin-bottom: 100px;
 
     .container-titles {
+      padding-top: 20px;
       background-color: white;
 
       .title {
@@ -12,7 +13,7 @@
         // align-items: flex-start;
         p {
           margin-left: 18%;
-          font-size: 14px;
+          font-size: 16px;
           font-weight: 500;
           margin-top: 10px;
         }
@@ -25,6 +26,7 @@
     }
 
     .tables {
+      padding-top: 10px;
       .title {
         font-weight: 500;
         text-align: start;
