@@ -46,7 +46,6 @@ export class AppPageletComponent implements OnInit {
     this.reset();
     setTimeout(() => {
       if (this.user) {
-
         this.user['activities'].filter((x: any) => {
           this.userActivities.push(x['value']);
         });
@@ -57,7 +56,9 @@ export class AppPageletComponent implements OnInit {
             this.unreadNotifications = reply['count'];
           });
 
-        if (['administrator', 'editor'].includes(this.user.activities?.[0]?.value)) {
+        if (
+          ['administrator', 'editor'].includes(this.user.activities?.[0]?.value)
+        ) {
           this.permission = true;
         } else {
           this.permission = false;
@@ -73,7 +74,11 @@ export class AppPageletComponent implements OnInit {
     if (changes['path']) this.reset();
   }
   reset() {
+    const isDocument = this.router.url.indexOf('documentos');
     this.isPublic = this.router.url.indexOf('documentos-publicos');
+    if (this.router.url === '/' || isDocument === -1) {
+      this.isPublic = 0;
+    }
     this.getRedirectUrl();
   }
 
@@ -121,8 +126,7 @@ export class AppPageletComponent implements OnInit {
       }
     );
 
-    dialogRef.afterClosed().subscribe((reply: any) => {
-    });
+    dialogRef.afterClosed().subscribe((reply: any) => {});
   }
   getRedirectUrl() {
     let params = window.location.pathname.split('/').filter((x) => x);

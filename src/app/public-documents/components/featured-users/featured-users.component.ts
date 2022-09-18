@@ -42,7 +42,7 @@ export class FeaturedUsersComponent implements OnInit {
   userQuantity:number = this.userData.length;
   constructor() { }
 
-  console = console.log(this.amountOfVisibleUsers);
+  console = '';
 
   trackByFn(index:number, userData:UserDataType):number{
     return index;

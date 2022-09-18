@@ -323,3 +323,12 @@
     transform: translate(-50%, -50%);
   }
 }
+
+button.mini {
+  margin-left: 20px;
+
+  mat-icon {
+    font-size: 14pt !important;
+    color: #fff;
+  }
+}

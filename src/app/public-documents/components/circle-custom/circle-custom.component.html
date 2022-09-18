@@ -1,11 +1,10 @@
 <section
   class="container"
   [ngStyle]="{
-    width: data.size.box + 'px',
-    height: data.size.box + 'px',
-    'margin-left': data.position.left + 'px',
-    'margin-top': data.position.top + '%',
-    'margin-right': data.position.right + 'px'
+    width: data.size.width + 'px',
+    height: data.size.height + 'px',
+    left: data.position.x + 'px',
+    'margin-top': data.position.y + 'px'
   }"
   *ngIf="data"
 >
@@ -15,7 +14,7 @@
         class="in-circumference"
         [ngStyle]="{
           'background-image': 'url(' + data.in_circle_background + ')',
-          'background-color': data.in_circle_background,
+          'background-color': 'white',
           opacity: data.opacity
         }"
       >
@@ -24,6 +23,9 @@
             class="title"
             [ngStyle]="{
               'font-size': data.size.font + 'px',
+              color: data.in_circle_background.includes('http')
+                ? 'white'
+                : 'rgba(75, 75, 75, 0.929)',
               width: '90%'
             }"
           >
@@ -32,7 +34,10 @@
           <p
             class="value"
             [ngStyle]="{
-              'font-size': data.size.font + 16 + 'px'
+              'font-size': data.size.font + 10 + 'px',
+              color: data.in_circle_background.includes('http')
+                ? 'white'
+                : 'rgba(75, 75, 75, 0.929)'
             }"
           >
             {{ data.value }}

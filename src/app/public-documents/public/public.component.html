@@ -14,8 +14,12 @@
     <div class="set-3 col-lft">
       <mat-card class="set-12 doc-description">
         <div class="set-12 imghldr">
-          <mat-icon *ngIf="!image">panorama</mat-icon>
-          <img *ngIf="image" [src]="image" alt="" />
+          <mat-icon *ngIf="document.images.length == 0">panorama</mat-icon>
+          <slider-images [images]="document.images" *ngIf="document.images.length != 0"></slider-images>
+          <div class="overlay" (click)="popImageViewer()">
+            <mat-icon>photo_camera</mat-icon>
+            <div class="cover"></div>
+          </div>
         </div>
         <div class="set-12 infohldr">
           <p class="set-12 card-title">{{ document.title }}</p>

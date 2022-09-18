@@ -227,6 +227,7 @@
               font-size: 13pt;
               color: #fff;
               text-shadow: 0 0 4px #4b4b4b;
+              -webkit-text-stroke: 0.1px rgb(35, 35, 35);
             }
     
             button {
@@ -235,7 +236,7 @@
             }
             
             .votes{
-              font-size: 16pt;
+              font-size: 20pt;
               font-weight: bold;
             }
           }
@@ -292,5 +293,14 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+  }
+}
+
+button.mini {
+  margin-left: 20px;
+
+  mat-icon {
+    font-size: 14pt !important;
+    color: #fff;
   }
 }

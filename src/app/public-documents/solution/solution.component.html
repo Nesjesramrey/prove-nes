@@ -62,33 +62,16 @@
     <div class="set-3 featured-users">
       <featured-users [inputAmount]="3"></featured-users>
     </div>
-    <div class="set-2">
-      <div class="header-buttons">
-        <div class="button-box">
-          <button
-            type="button"
-            mat-mini-fab
-            color="warn"
-            class="add-button green"
-          >
-            <mat-icon>create_new_folder</mat-icon>
-          </button>
-          <p>Agregar Comentario</p>
-        </div>
 
-        <div class="button-box">
-          <button
-            type="button"
-            mat-mini-fab
-            color="warn"
-            class="add-button purple"
-            (click)="openModalTestimony()"
-          >
-            <mat-icon style="color: white">create_new_folder</mat-icon>
-          </button>
-          <p>Agregar Testimonios</p>
-        </div>
-      </div>
+    <div class="set-2 txt-center">
+      <button type="button" mat-mini-fab color="primary" class="mini" matTooltip="Agregar Comentario"
+        (click)="openModalComment()">
+        <mat-icon>add_comment</mat-icon>
+      </button>
+      <button type="button" mat-mini-fab color="warn" class="mini" matTooltip="Agregar Testimonio"
+        (click)="openModalTestimony()">
+        <mat-icon>book</mat-icon>
+      </button>
     </div>
     <div class="set-12 txt-left" style="margin-bottom: 10px">
       <span class="created-by">

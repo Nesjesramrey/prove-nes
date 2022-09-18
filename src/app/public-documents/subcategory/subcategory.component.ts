@@ -5,6 +5,8 @@ import { DocumentService } from 'src/app/services/document.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LayoutService } from 'src/app/services/layout.service';
 import { UtilityService } from 'src/app/services/utility.service';
+import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: '.subcategory-page',
@@ -24,8 +26,10 @@ export class SubcategoryComponent implements OnInit {
   public isDataAvailable: boolean = false;
 
   public displayedColumns: string[] = ['name', 'ranking', 'users'];
-  public topicsDataSource = [];
-  public solutionsDataSource = [];
+  public TopicDataSource = new MatTableDataSource<any>();
+  public SolutionDataSource = new MatTableDataSource<any>();
+  public topicsDataSource: any = [];
+  public solutionsDataSource: any = [];
   public image: string = '../../../assets/images/not_fount.jpg';
 
   constructor(
@@ -65,11 +69,21 @@ export class SubcategoryComponent implements OnInit {
       this.subcategory = reply[2];
       this.image = reply[1].images.length > 0 ? reply[1].images[0] : this.image;
       this.topicsDataSource = this.subcategory.topics;
-      this.solutionsDataSource = this.subcategory.topics.map((item: any) => [
-        ...item.solutions,
-      ])[0];
+      this.TopicDataSource = new MatTableDataSource(this.subcategory.topics);
+      const dataSolution: any = [];
 
-      this.panelTopicsData = this.subcategory.topics.slice(0, 9);
+      this.subcategory.topics
+        .map((item: any) => [...item.solutions])
+        .forEach((_: any, index: number) => {
+          dataSolution.push(
+            ...this.subcategory.topics.map((item: any) => [...item.solutions])[
+              index
+            ]
+          );
+        });
+      this.solutionsDataSource = dataSolution;
+      this.SolutionDataSource = new MatTableDataSource(dataSolution);
+      this.panelTopicsData = this.subcategory.topics.slice(0, 7);
 
       setTimeout(() => {
         this.isDataAvailable = true;
@@ -77,10 +91,47 @@ export class SubcategoryComponent implements OnInit {
     });
   }
 
+  redirectSolution(id: string) {
+    const topic = this.topicsDataSource.filter((item: any) =>
+      item.solutions.filter((s: any) => (s._id === id ? item._id : ''))
+    )[0];
+    const path = `documentos-publicos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/tema/${topic._id}/solucion/${id}`;
+
+    this.utilityService.linkMe(path);
+  }
+
   redirect(id: string) {
     const path = `documentos-publicos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/tema/${id}`;
 
     this.utilityService.linkMe(path);
+  }
+
+  popImageViewer() {
+    const dialogRef = this.dialog.open<ImageViewerComponent>(
+      ImageViewerComponent,
+      {
+        width: '640px',
+        data: {
+          location: 'document',
+          document: this.subcategory,
+        },
+        disableClose: true,
+        panelClass: 'viewer-dialog',
+      }
+    );
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+      }
+    });
+  }
+  applyFilterTopic(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.TopicDataSource.filter = filterValue.trim().toLowerCase();
+  }
+  applyFilterSolution(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.SolutionDataSource.filter = filterValue.trim().toLowerCase();
   }
 }
 export interface DataTable {

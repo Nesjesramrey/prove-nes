@@ -31,7 +31,8 @@ export class PanelCirclesComponent implements OnInit {
 
   public categoryID: string = '';
   public documentID: string = '';
-
+  public image: string = '../../../assets/images/not_fount.jpg';
+  public slices: any[] = [];
   @Input() data: any[] = [];
   @Input() document: any = '';
   @Input() withBorder: boolean = false;
@@ -51,17 +52,20 @@ export class PanelCirclesComponent implements OnInit {
   }
 
   loadCategories() {
-    const sizes = ['small', 'medium', 'large'];
-    const opacities = [0.75, 1];
+    const sizes = ['medium', 'large'];
+    // const opacities = [0.75, 1];
     let maxX = 5;
     let maxY = 20;
 
     const data = this.document ? this.document.layouts : this.data;
     this.categories = data.map((item: any, index: any) => {
+      console.log(item);
       this.categoryLength = data.length;
       const background = this.withBorder
         ? '#ff6d00'
-        : '../../../assets/images/books.png';
+        : item.images.length > 0
+        ? item.images[0]
+        : this.image;
 
       const obj = {
         id: item._id,
@@ -72,9 +76,12 @@ export class PanelCirclesComponent implements OnInit {
         in_circle_background: background,
         overlay: 'transparent',
         // opacity: 1,
-        opacity: opacities[(Math.random() * opacities.length) | 0],
-        size: sizes[Math.floor(Math.random() * 3)],
-        position: index,
+        opacity: 1,
+        // size: sizes[Math.floor(Math.random() * 2)],
+        size: this.getSize(
+          item.category.name.split(' ').length > 1 ? 'large' : 'medium'
+        ),
+        position: this.getPosition(),
         pos: {
           x: maxX,
           y: maxY,
@@ -85,6 +92,67 @@ export class PanelCirclesComponent implements OnInit {
 
       return obj;
     });
+    const cLength = this.categoryLength;
+    //2 5 8 10
+
+    const setSizes = [6, 4, 2];
+    const set =
+      cLength < 6
+        ? setSizes[0]
+        : cLength < 9
+        ? setSizes[1]
+        : cLength < 11 && setSizes[2];
+
+    const dat = [
+      {
+        set: set,
+        margin: '30px',
+        data: this.categories.slice(0, 2),
+      },
+      {
+        set: set,
+        margin: '15px 40px',
+        data: this.categories.slice(2, 5),
+      },
+      {
+        set: set,
+        margin: '15px 30px',
+        data: this.categories.slice(5, 8),
+      },
+      {
+        set: set,
+        margin: '8px 40px',
+        data: this.categories.slice(8, 10),
+      },
+    ];
+
+    this.slices =
+      set == 6 ? dat.slice(0, 2) : set == 4 ? dat.slice(0, 3) : dat.slice(0, 4);
+    if (cLength > 10) {
+      this.categories = this.categories.slice(10, cLength);
+    }
+  }
+
+  getPosition() {
+    const xR = Math.floor(Math.random() * 20);
+    const yR = Math.floor(Math.random() * 5);
+
+    return { x: xR, y: yR };
+  }
+
+  getSize(size: string): any {
+    if (size === 'medium')
+      return {
+        width: 165,
+        height: 130,
+        font: 17,
+      };
+    if (size === 'large')
+      return {
+        width: 170,
+        height: 150,
+        font: 18,
+      };
   }
 
   redirect(id: string) {
