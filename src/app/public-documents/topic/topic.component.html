@@ -6,7 +6,7 @@
     <div class="set-12">
       <div class="set-7">
         <breadcrumbs-component>
-          <li>Documentos</li>
+          <li>...</li>
           <li
             (click)="
               utilityService.linkMe('/documentos-publicos/' + document._id)
@@ -40,7 +40,7 @@
           >
             {{ subcategory.category.name }}
           </li>
-          <li>{{ topic.title }}</li>
+          <li>{{ topic.shortTitle }}</li>
         </breadcrumbs-component>
       </div>
       <div class="set-3 featured-users">

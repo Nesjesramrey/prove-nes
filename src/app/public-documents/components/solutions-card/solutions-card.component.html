@@ -2,7 +2,7 @@
   <div class="solutions-box" style="text-align: start">
     <div class="set-12 table-head">
       <p class="title">Soluciones</p>
-      <input type="text" (keyup)="applyFilterSolution($event)" placeholder="Búscar en soluciones..."
+      <input type="text" (keyup)="applyFilterSolution($event)" placeholder="Buscar soluciones..."
         [disabled]="data.length == 0">
     </div>
     <table mat-table [dataSource]="data" class="">

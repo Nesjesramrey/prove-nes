@@ -109,6 +109,7 @@ export class TopicComponent implements OnInit {
 
         this.image = (reply[3].images.length > 0) ? reply[3].images[0] : this.image;
         setTimeout(() => {
+          this.getBreadcrumbsTitles();
           this.isDataAvailable = true;
         }, 300);
       }
@@ -214,6 +215,18 @@ export class TopicComponent implements OnInit {
         this.loadTopic();
       },
     });
+  }
+
+  getBreadcrumbsTitles() {
+    this.topic.shortTitle = this.getshortTitle(this.topic.title);
+  }
+
+  getshortTitle(title: string) {
+    const titleArr = title.split(' ');
+    if (titleArr.length > 3) {
+      return titleArr[0] + ' ' + titleArr[1] + ' ' + titleArr[2] + '...';
+    }
+    return title;
   }
 }
 
