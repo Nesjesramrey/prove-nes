@@ -8,13 +8,20 @@
   }"
   *ngIf="data"
 >
-  <div class="out-circumference" [style.border-color]="data.out_circle_color">
+  <div
+    class="out-circumference"
+    [ngStyle]="{
+      width: data.box + '%',
+      height: data.box + '%',
+      'border-color': data.out_circle_color
+    }"
+  >
     <span class="overlay" [style.background-color]="data.overlay">
       <div
         class="in-circumference"
         [ngStyle]="{
           'background-image': 'url(' + data.in_circle_background + ')',
-          'background-color': 'white',
+          'background-color': data.in_circle_background,
           opacity: data.opacity
         }"
       >

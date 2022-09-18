@@ -14,10 +14,11 @@ export class CircleCustomComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-
     if (this.data.out_circle == false) {
       this.data.out_circle_color = 'transparent';
+      // this.data.box = 85;
     }
+    // this.data.box = 100;
   }
 
   getPosition() {
@@ -28,7 +29,6 @@ export class CircleCustomComponent implements OnInit {
   }
 
   getSize(size: string): any {
-
     if (size === 'medium')
       return {
         width: 160,

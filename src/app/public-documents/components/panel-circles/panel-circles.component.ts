@@ -59,24 +59,20 @@ export class PanelCirclesComponent implements OnInit {
 
     const data = this.document ? this.document.layouts : this.data;
     this.categories = data.map((item: any, index: any) => {
-      console.log(item);
       this.categoryLength = data.length;
-      const background = this.withBorder
-        ? '#ff6d00'
-        : item.images.length > 0
-        ? item.images[0]
-        : this.image;
+      const background = item.images.length > 0 ? item.images[0] : this.image;
 
       const obj = {
         id: item._id,
         title: item.category?.name || item.name,
-        value: 1500,
+        value: Math.floor(Math.random() * 1500),
         out_circle: this.withBorder,
         out_circle_color: '#ff6d00',
         in_circle_background: background,
         overlay: 'transparent',
         // opacity: 1,
         opacity: 1,
+        box: this.withBorder ? 88 : 100,
         // size: sizes[Math.floor(Math.random() * 2)],
         size: this.getSize(
           item.category.name.split(' ').length > 1 ? 'large' : 'medium'
@@ -116,12 +112,12 @@ export class PanelCirclesComponent implements OnInit {
       },
       {
         set: set,
-        margin: '15px 30px',
+        margin: '15px 60px',
         data: this.categories.slice(5, 8),
       },
       {
         set: set,
-        margin: '8px 40px',
+        margin: '8px 60px',
         data: this.categories.slice(8, 10),
       },
     ];
@@ -134,8 +130,9 @@ export class PanelCirclesComponent implements OnInit {
   }
 
   getPosition() {
+    const d = this.withBorder ? 30 : 20;
     const xR = Math.floor(Math.random() * 20);
-    const yR = Math.floor(Math.random() * 5);
+    const yR = Math.floor(Math.random() * 2);
 
     return { x: xR, y: yR };
   }
@@ -143,15 +140,15 @@ export class PanelCirclesComponent implements OnInit {
   getSize(size: string): any {
     if (size === 'medium')
       return {
-        width: 165,
-        height: 130,
-        font: 17,
+        width: 150,
+        height: 150,
+        font: 15,
       };
     if (size === 'large')
       return {
-        width: 170,
-        height: 150,
-        font: 18,
+        width: 145,
+        height: 145,
+        font: 16,
       };
   }
 
