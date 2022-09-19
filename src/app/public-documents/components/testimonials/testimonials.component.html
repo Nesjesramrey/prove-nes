@@ -4,7 +4,9 @@
   <!-- TESTIMONIALS LIST -->
   <div class="content">
     <!-- ITEM -->
-
+    <div *ngIf="data.length === 0" class="txt-center"> 
+      <p>Sin testimonios</p>
+    </div>
     <mat-card class="testimonial-item" *ngFor="let testimonial of data">
       <!-- IMAGE -->
       <div class="leading">
@@ -20,9 +22,12 @@
           <!-- AVATAR -->
 
           <img
-            class="avatar"
-            src="https://images.pexels.com/photos/2726111/pexels-photo-2726111.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            class="avatar" 
+            *ngIf="testimonial.createdBy.avatarImage"
+            [src]="testimonial.createdBy.avatarImage"
+            [matTooltip]="testimonial.createdBy.firstname + ' ' + testimonial.createdBy.lastname"
           />
+          <mat-icon *ngIf="!testimonial.createdBy.avatarImage" style="font-size: 20px">panorama</mat-icon>
 
           <p>Fecha de creación: {{ testimonial.createdAt | date }}</p>
         </div>

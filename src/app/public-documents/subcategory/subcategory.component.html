@@ -35,8 +35,12 @@
       <div class="set-3 col-lft">
         <mat-card class="set-12 doc-description">
           <div class="set-12 imghldr">
-            <mat-icon *ngIf="!image">panorama</mat-icon>
-            <img *ngIf="image" [src]="image" alt="" />
+            <mat-icon *ngIf="subcategory.images.length == 0">panorama</mat-icon>
+            <slider-images [images]="subcategory.images" *ngIf="subcategory.images.length != 0"></slider-images>
+            <div class="overlay" (click)="popImageViewer()">
+              <mat-icon>photo_camera</mat-icon>
+              <div class="cover"></div>
+            </div>
           </div>
           <div class="set-12 infohldr">
             <p class="set-12 card-title">{{ subcategory.category.name }}</p>
@@ -47,35 +51,49 @@
       <div class="set-9 col-rgt">
         <panel-subcategory [data]="panelTopicsData" [selectedID]="subcategory._id"></panel-subcategory>
         <div class="set-12 container-titles">
-          <div class="set-6 title">
+          <div class="set-3 title">
             <p>
               Soluciones
               <img src="../../../assets/images/row.png" alt="" width="22" />
             </p>
+            
           </div>
-          <div class="set-6 title">
+          <div class="set-3 ">
+            <div class="set-4 table-head">
+              <input type="text" (keyup)="applyFilterSolution($event)" placeholder="Buscar soluciones..."
+                [disabled]="solutionsDataSource.length == 0">
+            </div>
+          </div>
+          <div class="set-3 title">
             <p>
               Problemas
               <img src="../../../assets/images/alert.webp" alt="" width="20" />
             </p>
           </div>
+          <div class="set-3">
+            <div class="set-4 table-head">
+              <input type="text" (keyup)="applyFilterTopic($event)" placeholder="Buscar temas..."
+                [disabled]="topicsDataSource.length == 0">
+            </div>
+          </div>
         </div>
         <div class="set-12 tables" style="background-color: white">
           <div class="set-6">
-            <table mat-table [dataSource]="solutionsDataSource" class="mat-elevation-z8">
+            
+            <table mat-table [dataSource]="SolutionDataSource" class="mat-elevation-z8">
               <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef></th>
+                <th mat-header-cell *matHeaderCellDef>Título</th>
                 <td mat-cell *matCellDef="let element">
-                  <p class="title">
-                    {{ element.title }}
-                  </p>
+                  <button type="button" class="catbtn-2" (click)="redirectSolution(element._id)">
+                    {{element.title}}
+                  </button>
                 </td>
               </ng-container>
 
               <ng-container matColumnDef="ranking">
                 <th mat-header-cell *matHeaderCellDef>Ranking</th>
                 <td mat-cell *matCellDef="let element">
-                  {{ 14 }}
+                  {{ 10 }}
                 </td>
               </ng-container>
 
@@ -91,18 +109,21 @@
             </table>
           </div>
           <div class="set-6">
-            <table mat-table [dataSource]="topicsDataSource" class="mat-elevation-z8">
+            
+            <table mat-table [dataSource]="TopicDataSource" class="mat-elevation-z8" >
               <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef></th>
+                <th mat-header-cell *matHeaderCellDef>Título</th>
                 <td mat-cell *matCellDef="let element">
-                  <a style="font-weight: 500; cursor: pointer" (click)="redirect(element._id)">{{ element.title }}</a>
+                  <button type="button" class="catbtn-2" (click)="redirect(element._id)">
+                    {{element.title}}
+                  </button>
                 </td>
               </ng-container>
 
               <ng-container matColumnDef="ranking">
                 <th mat-header-cell *matHeaderCellDef>Ranking</th>
                 <td mat-cell *matCellDef="let element">
-                  {{ 150 }}
+                  {{ 10 }}
                 </td>
               </ng-container>
 

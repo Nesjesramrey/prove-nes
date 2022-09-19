@@ -36,7 +36,7 @@ body {
 }
 
 body {
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: 'Montserrat', "Helvetica Neue", sans-serif !important;
 }
 
 button,
@@ -46,7 +46,7 @@ textarea {
   outline: none;
   border: none;
   background: none;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: 'Montserrat', "Helvetica Neue", sans-serif !important;
 }
 
 textarea {
@@ -619,4 +619,9 @@ mat-form-field {
     padding: 0;
     background: #e5e5e5;
   }
+}
+
+.mat-card, .mat-select, .mat-form-field, .mat-table, .mat-list-item{
+  font-family: 'Montserrat', "Helvetica Neue", sans-serif !important;
+
 }

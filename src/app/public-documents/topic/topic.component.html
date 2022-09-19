@@ -4,9 +4,9 @@
 <div class="set-12" *ngIf="isDataAvailable">
   <div class="container">
     <div class="set-12">
-      <div class="set-6">
+      <div class="set-7">
         <breadcrumbs-component>
-          <li>Documentos</li>
+          <li>...</li>
           <li
             (click)="
               utilityService.linkMe('/documentos-publicos/' + document._id)
@@ -40,51 +40,25 @@
           >
             {{ subcategory.category.name }}
           </li>
-          <li>{{ topic.title }}</li>
+          <li>{{ topic.shortTitle }}</li>
         </breadcrumbs-component>
       </div>
       <div class="set-3 featured-users">
         <featured-users [inputAmount]="3"></featured-users>
       </div>
-      <div class="set-3">
-        <div class="header-buttons">
-          <div *ngIf="permission == true" class="button-box">
-            <button
-              type="button"
-              mat-mini-fab
-              color="warn"
-              class="add-button green"
-              (click)="openModalSolution()"
-            >
-              <mat-icon>create_new_folder</mat-icon>
-            </button>
-            <p>Agregar solución</p>
-          </div>
-          <div class="button-box">
-            <button
-              type="button"
-              mat-mini-fab
-              color="warn"
-              class="add-button red"
-              (click)="openModalComment()"
-            >
-              <mat-icon>create_new_folder</mat-icon>
-            </button>
-            <p>Agregar Comentario</p>
-          </div>
-          <div class="button-box">
-            <button
-              type="button"
-              mat-mini-fab
-              color="warn"
-              class="add-button purple"
-              (click)="openModalTestimony()"
-            >
-              <mat-icon>create_new_folder</mat-icon>
-            </button>
-            <p>Agregar Testimonios</p>
-          </div>
-        </div>
+      <div class="set-2 txt-right">
+        <button *ngIf="permission" type="button" mat-mini-fab color="accent" class="mini" matTooltip="Agregar Solución"
+          (click)="openModalSolution()">
+          <mat-icon>feedback</mat-icon>
+        </button>
+        <button type="button" mat-mini-fab color="primary" class="mini" matTooltip="Agregar Comentario"
+          (click)="openModalComment()">
+          <mat-icon>add_comment</mat-icon>
+        </button>
+        <button type="button" mat-mini-fab color="warn" class="mini" matTooltip="Agregar Testimonio"
+          (click)="openModalTestimony()">
+          <mat-icon>book</mat-icon>
+        </button>
       </div>
       <div class="set-12 txt-left" style="margin-top: 10px">
         <span class="created-by">
@@ -125,8 +99,8 @@
                     <button
                       *ngIf="!userVoted"
                       mat-raised-button
-                      color="primary"
-                      style="background-color: primary"
+                      color="black"
+                      style="background-color: #71f5ad;font-weight: 600;font-size: 16px;"
                       (click)="openModalVote()"
                     >
                       Votar
@@ -144,7 +118,7 @@
             </mat-card>
           </div>
           <div class="set-12 mt-2">
-            <solutions-card [data]="solutionsData"></solutions-card>
+            <solutions-card [data]="SolutionDataSource"></solutions-card>
           </div>
         </div>
         <div class="set-4">
