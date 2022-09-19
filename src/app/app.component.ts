@@ -56,7 +56,7 @@ export class AppComponent implements OnInit {
 
     this.router.events.subscribe((val) => {
       if (val instanceof ResolveStart) {
-        console.log('ResolveStart: ', val.url);
+        // console.log('ResolveStart: ', val.url);
         this.path = val.url;
       }
     });
