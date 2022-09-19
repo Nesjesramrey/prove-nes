@@ -1,0 +1,15 @@
+<div class="avatars-row">
+  <button type="button" class="title" (click)="popDocumentUserListDialog()">
+    <span> {{ title }} </span>
+    <mat-icon *ngIf="showIcon"> manage_accounts</mat-icon>
+  </button>
+
+  <div class="avatars-list" *ngIf="users.length > 0">
+    <div class="avatar add">
+      <mat-icon>person_add</mat-icon>
+    </div>
+    <div class="avatar more" *ngFor="let avatar of users">
+      {{avatar.user.firstname[0] + avatar.user.lastname[0]}}
+    </div>
+  </div>
+</div>

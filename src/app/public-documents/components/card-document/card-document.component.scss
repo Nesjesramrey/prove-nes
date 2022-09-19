@@ -1,0 +1,79 @@
+mat-card {
+  padding: 0;
+  display: flex;
+
+  .image-box {
+    width: 40%;
+    position: relative;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .info {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15pt 10pt;
+
+      .custom-circle {
+        width: 70pt;
+        height: 70pt;
+        border-radius: 50%;
+        border: 2px solid #fff;
+        background-color: #ceddff;
+        cursor: auto;
+        margin: 0;
+        margin-right: 20pt;
+
+        mat-icon {
+          color: #306eff;
+          font-size: 24pt;
+        }
+      }
+
+      .actions {
+        margin: 0;
+        p {
+          font-size: 17pt;
+          color: #fff;
+          text-shadow: 0 0 4px #4b4b4b;
+        }
+
+        button {
+          width: 100%;
+          margin-top: 8pt;
+        }
+      }
+    }
+  }
+
+  .data-box {
+    width: 60%;
+    padding: 30px;
+
+    .title {
+      font-size: 16pt;
+      text-transform: uppercase;
+      margin-bottom: 25pt;
+      font-weight: 600;
+    }
+
+    .short-description {
+      color: #636363;
+      font-size: 13pt;
+      line-height: 19pt;
+    }
+
+    .show-more {
+      display: block;
+      margin-top: 20pt;
+      text-decoration: underline;
+      color: #306eff;
+    }
+  }
+}

@@ -1,0 +1,31 @@
+
+
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+ <div class="set-12 dialog-body" *ngIf="isDataAvailable">
+  <input type="file" #file   multiple>
+  <div class="modalContainer">
+    <div class="titleContainer">
+      <p>Permiso para editar</p>
+    </div>
+    <img src="/assets/images/closeIcon.png" alt="closeIcon" (click)="killDialog()" />
+    <div class="modalBody">
+      <p>CUÉNTANOS PORQUE QUISIERAS PARTICIPAR COMO EDITOR DEL PROYECTO</p>
+      <form [formGroup]="formPermission" class="Modalform">
+        <div>
+          <textarea class="descriptionInput" type="text" formControlName="description" placeholder="Escribe una descripción"></textarea>
+        </div>
+        <div class="messageError">
+          <span *ngIf="messageError" class="messageError">La descripción es requerida para solicitar el permiso.</span>
+        </div>
+        <p *ngIf="isDataAvailableLoading">cargando...</p>
+        <button type="submit" 
+        [disabled]="descriptionLength === 0" 
+        [class.btnEnabled]="descriptionLength > 0"
+        (click)="sendrequest()">Solicita permiso</button>
+      </form>
+    </div>
+  </div>
+  
+</div> 

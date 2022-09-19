@@ -1,0 +1,59 @@
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+  <mat-spinner></mat-spinner>
+</div>
+
+
+<div class="set-12 dialog-viewer" *ngIf="isDataAvailable">
+  <input type="file" #file (change)="onFileSelected($event)" multiple>
+
+  <!-- document viewer -->
+  <div class="viewer-display" *ngIf="dialogData.location == 'document'">
+    <div class="set-12 txt-center" *ngIf="document.images.length == 0">
+      <button type="button" (click)="file.click()" [disabled]="submitted">
+        <mat-icon>add_a_photo</mat-icon>
+        <p>Cargar imágenes</p>
+      </button>
+      <mat-spinner color="accent" diameter="70" *ngIf="submitted"></mat-spinner>
+      <p class="txt-center" *ngIf="submitted">Cargando...</p>
+    </div>
+    <slider-images [images]="document.images" [document]="document" *ngIf="document.images != 0"></slider-images>
+  </div>
+
+  <!-- layout viewer -->
+  <div class="viewer-display" *ngIf="dialogData.location == 'layout'">
+    <div class="set-12 txt-center" *ngIf="layout.images.length == 0">
+      <button type="button" (click)="file.click()" [disabled]="submitted">
+        <mat-icon>add_a_photo</mat-icon>
+        <p>Cargar imágenes</p>
+      </button>
+      <mat-spinner color="accent" diameter="70" *ngIf="submitted"></mat-spinner>
+      <p class="txt-center" *ngIf="submitted">Cargando...</p>
+    </div>
+    <slider-images [images]="layout.images" [layout]="layout" *ngIf="layout.images != 0"></slider-images>
+  </div>
+
+  <!-- topic viewer -->
+  <div class="viewer-display" *ngIf="dialogData.location == 'topic'">
+    <div class="set-12 txt-center" *ngIf="topic.images.length == 0">
+      <button type="button" (click)="file.click()" [disabled]="submitted">
+        <mat-icon>add_a_photo</mat-icon>
+        <p>Cargar imágenes</p>
+      </button>
+      <mat-spinner color="accent" diameter="70" *ngIf="submitted"></mat-spinner>
+      <p class="txt-center" *ngIf="submitted">Cargando...</p>
+    </div>
+    <slider-images [images]="topic.images" [topic]="topic" *ngIf="topic.images != 0"></slider-images>
+  </div>
+</div>
+
+<div class="set-12 dialog-body" *ngIf="isDataAvailable">
+  <mat-toolbar color="primary">
+    <span class="example-spacer"></span>
+    <button mat-icon-button (click)="killDialog()" matTooltip="Salir" matTooltipClass="tooltip">
+      <mat-icon>cancel</mat-icon>
+    </button>
+    <!-- <button mat-icon-button>
+      <mat-icon>menu</mat-icon>
+    </button> -->
+  </mat-toolbar>
+</div>

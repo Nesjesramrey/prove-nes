@@ -1,0 +1,29 @@
+<div class="ctrls txt-center">
+  <button type="button" mat-mini-fab color="accent" (click)="onBack()" matTooltip="Atras" matTooltipClass="tooltip">
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+  <button type="button" color="primary" mat-mini-fab (click)="killImage()" matTooltip="Eliminar imágen"
+    matTooltipClass="tooltip">
+    <mat-icon>delete_forever</mat-icon>
+  </button>
+  <button type="button" mat-mini-fab color="accent" (click)="onNext()" matTooltip="Siguiente" matTooltipClass="tooltip">
+    <mat-icon>chevron_right</mat-icon>
+  </button>
+</div>
+
+<div class="container">
+  <!-- <div class="actions left">
+    <button mat-mini-fab color="warn" aria-label="Back" (click)="onBack()">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+  </div> -->
+  <div class="content" #contentScroll>
+    <img *ngFor="let image of images; let i = index" class="item" [class.active]="activeIndex == i" alt="img-list"
+      [src]="image" />
+  </div>
+  <!-- <div class="actions right" [ngClass]="showNext ? 'show' : 'hide'">
+    <button mat-mini-fab color="warn" aria-label="Next" (click)="onNext()">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div> -->
+</div>

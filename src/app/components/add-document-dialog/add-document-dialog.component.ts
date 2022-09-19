@@ -1,7 +1,8 @@
-import { LyDialogRef, LY_DIALOG_DATA } from '@alyle/ui/dialog';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatOption } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSelect } from '@angular/material/select';
 import { forkJoin, Observable } from 'rxjs';
 import { DocumentService } from 'src/app/services/document.service';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -16,15 +17,12 @@ import { UtilityService } from 'src/app/services/utility.service';
 export class AddDocumentDialogComponent implements OnInit {
   public documentFormGroup!: FormGroup;
   public collaboratorsFormArray!: FormArray;
-  public collaboratorTypes: any = [
-    { type: 'administrator', displayName: 'Administrador', disabled: true },
-    { type: 'editor', displayName: 'Editor', disabled: false },
-    { type: 'collaborator', displayName: 'Colaborador', disabled: true },
-    { type: 'citizen', displayName: 'Ciudadano', disabled: true }
-  ];
-  public statesMex: any = [];
+  public collaboratorTypes: any = [];
+  public states: any = [];
+  public activities: any = [];
   public submitted: boolean = false;
   public isDataAvailable: boolean = false;
+  @ViewChild('coverageSelect') public coverageSelect!: MatSelect;
 
   constructor(
     public dialogRef: MatDialogRef<AddDocumentDialogComponent>,
@@ -39,19 +37,26 @@ export class AddDocumentDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let states: Observable<any> = this.utilitySrvc.fetchAllStatesMex();
-    forkJoin([states]).subscribe((reply) => {
+    let states: Observable<any> = this.utilitySrvc.fetchAllStates();
+    let activities: Observable<any> = this.utilitySrvc.fetchAllActivities();
+
+    forkJoin([states, activities]).subscribe((reply: any) => {
       // console.log(reply);
-      this.statesMex = reply[0]['states'];
-      // console.log(this.statesMex);
+      this.states = reply[0];
+      this.collaboratorTypes = reply[1].filter((x: any) => { return x['value'] == 'editor'; });
+
       this.documentFormGroup = this.formBuilder.group({
         title: ['', [Validators.required]],
         coverage: ['', []],
         collaborators: this.formBuilder.array([])
       });
+
       this.collaboratorsFormArray = this.documentFormGroup.get('collaborators') as FormArray;
-      this.collaboratorsFormArray.push(this.createCollaboratorField('editor'));
-      this.isDataAvailable = true;
+      this.collaboratorsFormArray.push(this.createCollaboratorField(this.collaboratorTypes[0]['_id']));
+
+      setTimeout(() => {
+        this.isDataAvailable = true;
+      }, 100);
     });
   }
 
@@ -62,7 +67,8 @@ export class AddDocumentDialogComponent implements OnInit {
   createCollaboratorField(activity: string): FormGroup {
     return this.formBuilder.group({
       email: ['', [Validators.required]],
-      activity: [activity, [Validators.required]]
+      activity: [activity, [Validators.required]],
+      _id: this.collaboratorTypes[0]['_id']
     });
   }
 
@@ -76,34 +82,34 @@ export class AddDocumentDialogComponent implements OnInit {
 
   onCreateDocument(formGroup: FormGroup) {
     this.submitted = true;
+    formGroup['value']['collaborators'].filter((x: any) => { x['activity'] = x['_id']; });
+    if (formGroup['value']['coverage'].includes('all')) {
+      const index = formGroup['value']['coverage'].indexOf('all');
+      if (index > -1) {
+        formGroup['value']['coverage'].splice(index, 1);
+      }
+    }
+
     let data: any = {
       created_by: this.dialogData['created_by'],
-      title: formGroup.value.title,
-      coverage: formGroup.value.coverage,
-      collaborators: formGroup.value.collaborators
-    }
+      title: formGroup['value']['title'],
+      coverage: formGroup['value']['coverage'],
+      collaborators: formGroup['value']['collaborators']
+    };
+
     this.documentSrvc.createNewDocument(data).subscribe((reply: any) => {
       // console.log(reply);
       this.submitted = false;
-      if (reply['status'] == false) {
-        this.utilitySrvc.openErrorSnackBar(reply['error']);
-        return;
-      }
-
-      this.notificationSrvc.createNewNotification({
-        type: 'document_invite',
-        message_to: reply['message_to'],
-        message_from: reply['message_from'],
-        document: reply['document']['_id'],
-        message: 'Te han invitado a colaborar'
-      }).subscribe((reply: any) => {
-        // console.log(reply);
-        this.socketSrvc.putNotification({ new_notification: true });
-      });
-
-      this.utilitySrvc.openSuccessSnackBar(reply['message']);
       this.dialogRef.close(reply);
     });
+  }
+
+  onSelectCoverage(evt: any) {
+    if (evt['value'].includes('all')) {
+      this.coverageSelect.options.forEach((item: MatOption) => item.select());
+    } else {
+      // this.coverageSelect.options.forEach((item: MatOption) => item.deselect());
+    }
   }
 
   killDialog() {

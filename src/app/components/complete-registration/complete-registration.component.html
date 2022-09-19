@@ -1,0 +1,31 @@
+<div class="set-12 dialog-head">
+  <h1>¡Hola!</h1>
+  <h3>¡Bienvenido a PANDO!</h3>
+  <p>Antes de continuar necesitamos algunos datos</p>
+</div>
+
+<div class="set-12 dialog-body">
+  <form class="set-12" [formGroup]="formGroup" (submit)="onCompleteRegistration(formGroup)">
+    <div class="set-12">
+      <div class="set-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre(s)</mat-label>
+          <input type="text" matInput formControlName="firstname">
+        </mat-form-field>
+      </div>
+
+      <div class="set-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Apellido(s)</mat-label>
+          <input type="text" matInput formControlName="lastname">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="set-12 ctrls txt-right">
+      <button type="submit" mat-raised-button color="primary" [disabled]="formGroup.invalid">
+        Guardar
+      </button>
+    </div>
+  </form>
+</div>

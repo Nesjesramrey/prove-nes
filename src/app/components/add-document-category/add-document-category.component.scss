@@ -1,13 +1,31 @@
 :host {
+  min-height: 170px;
+
   .dialog-head {
     display: flex;
     align-items: center;
   }
 
-  .dialog-body {
+  ::ng-deep .mat-step-header:hover,
+  ::ng-deep .mat-step-header {
+    background: transparent !important;
+  }
+
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 0;
+  }
+
+  .step-content {
+    margin-top: 20px;
+
+    form {
+      display: flex;
+      flex: 1;
+    }
+
     textarea {
-      // min-height: 100px;
-      max-height: 150px;
+      min-height: 100px;
+      max-height: 100px;
     }
 
     .set-9 {
@@ -17,52 +35,72 @@
     .upload-img {
       display: flex;
       width: 100%;
-      min-height: 59.5px;
+      min-height: 100px;
+      height: calc(100% - 20px);
       align-items: center;
       justify-content: center;
-      border: 1px dashed rgba(0, 0, 0, 0.1);
+      border: 1px dashed rgba($color: #000000, $alpha: 0.1);
       border-radius: 5px;
-      margin: 0.25em 0;
+    }
 
-      mat-icon {
-        color: #306EFF;
-        // opacity: 0.4;
-        transition: all .2s linear;
+    .tools {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      button {
+        margin: 0;
+        display: flex;
+        align-items: center;
+
+        * {
+          margin: 0;
+        }
+
+        mat-icon {
+          margin-left: 5px;
+          font-size: 15pt;
+          color: #306EFF;
+        }
       }
     }
 
-    // .upload-img:hover {
-    //   mat-icon {
-    //     opacity: 1;
-    //   }
-    // }
-
     .ctrls {
       text-align: right;
-      margin-top: 10px;
-    }
-  }
-
-  .tools {
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-
-    button {
-      margin: 0;
       display: flex;
       align-items: center;
+      justify-content: flex-end;
 
       * {
         margin: 0;
       }
 
-      mat-icon {
-        margin-left: 5px;
-        font-size: 15pt;
-        color: #306EFF;
+      mat-spinner {
+        margin-left: 20px;
       }
+
+      button {
+        margin-left: 10px;
+      }
+
+      button:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+
+  .file-hldr {
+    font-weight: bold;
+    font-style: italic;
+  }
+
+  .loading {
+    mat-spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
   }
 }

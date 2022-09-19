@@ -1,49 +1,130 @@
-<div class="set-12 carousel-hldr" *ngIf="documents.length != 0">
-  <carousel [cellsToShow]="2">
-    <div class="carousel-cell" *ngFor="let document of documents">
-      <mat-card>
-        <div class="set-12 imghldr">
-          <mat-icon *ngIf="document.coverImage == ''">panorama</mat-icon>
-        </div>
+<div class="set-12 toptools">
+  <strong><small>DOCUMENTOS</small></strong>
+</div>
 
-        <div class="set-12 infohldr">
-          <div class="set-12 card-row">
-            <div class="set-8">
-              <h4>{{document.title}}</h4>
-            </div>
-            <div class="set-4 txt-right">
-              <button type="button" matTooltip="Editar">
-                <mat-icon>edit</mat-icon>
-              </button>
-              <button type="button" matTooltip="Abrir" (click)="linkMe('/documentos/' + document._id)">
-                <mat-icon>file_open</mat-icon>
-              </button>
-            </div>
+<!-- empty documents -->
+<div class="set-12" *ngIf="documents.length == 0 && isDataAvailable">
+  <div class="set-12 carousel-hldr">
+    <carousel [cellsToShow]="1" [arrows]="false">
+      <div class="carousel-cell">
+        <mat-card class="emptycard">
+          <div class="set-12 txt-center">
+            <mat-icon>folder</mat-icon>
+            <h4>No hay documentos que mostar</h4>
+          </div>
+        </mat-card>
+      </div>
+    </carousel>
+  </div>
+</div>
+
+<!-- available documents -->
+<div class="set-12" *ngIf="documents.length != 0 && isDataAvailable">
+  <div class="set-12 carousel-hldr">
+    <carousel [cellsToShow]="2" [arrows]="documents.length > 2 ? true : false">
+      <div class="carousel-cell" *ngFor="let document of documents">
+        <mat-card>
+          <div class="set-12 imghldr">
+            <mat-icon *ngIf="document.images.length == 0">panorama</mat-icon>
+            <img [src]="document.images[0]" alt="" *ngIf="document.images.length != 0">
           </div>
 
-          <div class="set-12 card-row counts">
-            <mat-icon>person</mat-icon> <small>{{document.collaborators.length}} Usuarios</small>
-            <mat-icon>front_hand</mat-icon> <small>0 Interacciones</small>
+          <div class="set-12 infohldr">
+            <div class="set-12 card-row">
+              <div class="set-8">
+                <h4>{{document.title}}</h4>
+              </div>
+              <div class="set-4 txt-right">
+                <button type="button" matTooltip="Editar">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button type="button" matTooltip="Abrir" (click)="linkMe('/documentos/' + document._id)">
+                  <mat-icon>description</mat-icon>
+                </button>
+                <button type="button" matTooltip="Datos">
+                  <mat-icon>pie_chart</mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <div class="set-12 card-row counts">
+              <mat-icon>person</mat-icon> <small>{{document.collaborators.length}} Usuarios</small>
+              <mat-icon>front_hand</mat-icon> <small>0 Interacciones</small>
+            </div>
+
+            <div class="set-12 empty-layout" *ngIf="document.layouts.length == 0">
+              <div class="set-12 date">
+                <small>{{document.createdAt | date: 'mediumDate'}} - {{document.createdAt | date: 'mediumTime'}}</small>
+              </div>
+
+              <div class="set-12">
+                <mat-icon>folder</mat-icon>
+                <p><strong><small>Tu documento esta vacio</small></strong></p>
+              </div>
+
+              <div class="set-12 ctrls">
+                <button type="button" mat-raised-button color="primary" (click)="popLayoutDialog(document._id)">
+                  <span>Crear esquema</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="set-12 available-layout" *ngIf="document.layouts.length != 0">
+              <h4 class="category-title">Categorías</h4>
+              <div class="set-12" *ngFor="let layout of document.layouts">
+                <ul>
+                  <li>
+                    <button type="button" (click)="linkMe('/documentos/' + document._id + '/categoria/' + layout._id)"
+                      matTooltip="Abrir categoría" matTooltipClass="tooltip" matTooltipPosition="right">
+                      <span style="font-size: 14px">{{layout.category.name}}</span>
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
+        </mat-card>
+      </div>
+    </carousel>
+  </div>
 
-          <div class="set-12 empty-layout" *ngIf="document.layout.length == 0">
-            <div class="set-12 date">
-              <small>{{document.created_at | date: 'mediumDate'}} - {{document.created_at | date: 'mediumTime'}}</small>
+  <div class="set-12 tabs">
+    <mat-card class="set-12">
+      <mat-tab-group [disableRipple]="true" [@.disabled]="true">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>analytics</mat-icon>
+            <span>BI</span>
+          </ng-template>
+
+          <div class="set-12 top-cards">
+            <div class="set-6">
+              <mat-card class="set-12 inner-card">
+                <span class="roundico-green">
+                  <mat-icon>groups</mat-icon>
+                </span>
+                <span>Usuarios</span>
+              </mat-card>
             </div>
 
-            <div class="set-12">
-              <mat-icon>folder</mat-icon>
-              <p><strong><small>Tu documento esta vacio</small></strong></p>
-            </div>
-
-            <div class="set-12 ctrls">
-              <button type="button" mat-raised-button color="primary" (click)="popLayoutDialog(document._id)">
-                <span>Crear esquema</span>
-              </button>
+            <div class="set-6">
+              <mat-card class="set-12 inner-card">
+                <span class="roundico-orange">
+                  <mat-icon>front_hand</mat-icon>
+                </span>
+                <span>Interacciones</span>
+              </mat-card>
             </div>
           </div>
-        </div>
-      </mat-card>
-    </div>
-  </carousel>
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>rss_feed</mat-icon>
+            <span>Activity center</span>
+          </ng-template>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card>
+  </div>
 </div>

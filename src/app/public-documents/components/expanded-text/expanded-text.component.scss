@@ -1,0 +1,15 @@
+.card-description {
+    font-weight: 400;
+    font-size: 11pt;
+    text-align: justify;
+    color: #636363;
+    margin-bottom: 8px;
+
+    &.link {
+      display: inline-block;
+      text-decoration: underline;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  }

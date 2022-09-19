@@ -1,4 +1,7 @@
 :host {
+  width: 100%;
+  float: left;
+
   .toptools {
     text-align: right;
     display: flex;
@@ -56,6 +59,7 @@
   }
 
   .emptycard {
+    width: 100% !important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -67,11 +71,13 @@
 
   .imghldr {
     min-height: 150px;
+    max-height: 150px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: rgba($color: #CEDDFF, $alpha: 0.4);
     border-bottom: 1px solid rgba($color: #000000, $alpha: 0.05);
+    overflow: hidden;
 
     mat-icon {
       font-size: 70pt;
@@ -84,7 +90,7 @@
   }
 
   .counts {
-    margin: 10px 0 20px 0;
+    margin: 10px 0 0 0;
 
     mat-icon {
       margin-right: 5px;
@@ -109,6 +115,8 @@
     }
 
     .top-cards {
+      padding: 15px;
+
       .inner-card {
         display: flex;
         align-items: center;
@@ -182,6 +190,30 @@
 
     .category:last-child {
       border-bottom: 0;
+    }
+  }
+
+  .available-layout {
+    margin-top: 20px;
+
+    .category-title {
+      margin-bottom: 10px;
+    }
+
+    ul {
+      list-style-position: inside;
+    }
+
+    button {
+      small {
+        transition: all .2s linear;
+      }
+    }
+
+    button:hover {
+      small {
+        color: #306EFF;
+      }
     }
   }
 }

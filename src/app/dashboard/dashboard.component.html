@@ -1,0 +1,166 @@
+<div class="set-12 page loading" *ngIf="!isDataAvailable">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="set-12 page" *ngIf="isDataAvailable">
+  <div class="set-12 ds-page">
+    <!-- <div class="cover"></div>
+
+    <div class="set-12 info" *ngIf="document != null">
+      <div class="set-12 txt-center">
+        <button type="button" class="grad-txt" (click)="linkMe('/documentos-publicos/' + document._id)">
+          {{document.title}}
+        </button>
+
+        <div class="set-12" *ngIf="document.coverDescription != null">
+          <div class="set-3">&nbsp;</div>
+          <div class="set-6 desc">
+            <p class="grad-txt">{{document.coverDescription}}</p>
+          </div>
+        </div>
+
+        <div class="set-12 txt-center">
+          <button type="button" mat-raised-button color="primary"
+            (click)="linkMe('/documentos-publicos/' + document._id)">
+            Visitar Documento
+          </button>
+        </div>
+      </div>
+    </div> -->
+  </div>
+
+  <div class="set-12 ds-page">
+    <div class="set-6">
+      <div class="globe">
+        <img src="../../assets/images/text-globe.png" alt="">
+        <p>¿Quiénes Somos?</p>
+      </div>
+      <div class="section-txt">
+        <div class="set-2">&nbsp;</div>
+        <div class="set-8">
+          <p>
+            Somos un <strong>colectivo ciudadano</strong> diverso: lo que tenemos en común es querer que México salga
+            adelante de la crisis que hoy vive.
+          </p>
+          <p>
+            Somos una herramienta para que la sociedad civil que hoy está desorganizada, se organice para opinar
+            construir,
+            participar e incidir rumbo al 2024.
+          </p>
+          <p>
+            Somos una plataforma para activar y ejercer el poder ciudadano, más allá de los partidos.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="set-6">
+      <div class="globe">
+        <p>¿Qué Queremos?</p>
+        <img src="../../assets/images/text-globe.png" alt="">
+      </div>
+      <div class="section-txt">
+        <div class="set-2">&nbsp;</div>
+        <div class="set-8">
+          <p>
+            Queremos ser parte del cambio ciudadano que México necesita.
+          </p>
+          <p>
+            Queremos ser la plataforma más grande y activa para la participación de la sociedad civil rumbo al cambio
+            político que viene en 2024.
+          </p>
+          <p>
+            Queremos ser un semillero del talento que ya existe en México y que necesita espacios para colaborar y
+            hacerse
+            escuchar.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="info">
+      <div class="titles">
+        <span class="line">&nbsp;</span>
+        <span class="title">Manifiesto</span>
+      </div>
+
+      <div class="set-12">
+        <p>Un país donde exista la posibilidad de tener un empleo bien pagado y que nos permita un desarrollo personal y
+          profesional.</p>
+        <p>Queremos tener la seguridad de contar con una buena educación para nuestros hijos y los servicios de salud
+          necesarios para emergencias y nuestro buen desarrollo.</p>
+        <p>Queremos tener nuestra casa, nuestro barrio y nuestra ciudad donde podamos salir a la calle sin temor. Donde
+          las reglas sean claras y la justicia se imparta sin distinción.</p>
+        <p>Donde se elimine la corrupción y las oportunidades sean las mismas independientemente de sexo, religión,etnia
+          y
+          condición social.</p>
+        <p>Un país donde la democracia tenga su pleno desarrollo y todos podamos ser elegidos para puestos públicos.
+          Donde
+          las diferencias entre ricos y pobres cada vez sean menores y el progreso del país se refleje en el progreso de
+          las familias.</p>
+        <p>Donde retomemos nuestras tradiciones y las hagamos parte de nuestra futura cultura. Un país donde el espíritu
+          emprendedor que nos caracteriza sea apoyado.</p>
+        <p>Queremos ser parte de la comunidad internacional y estar a la vanguardia en tecnología y cuidado del
+          medioambiente. Donde crezcamos como personas y dejemos a nuestros hijos un mejor México.</p>
+      </div>
+    </div> -->
+  </div>
+
+  <div class="set-12 ds-page">
+    <mat-icon>description</mat-icon>
+    <div class="contents">
+      <p>PENSAMIENTO</p>
+      <p>COLECTIVO</p>
+      <p>Un documento vivo <strong>100% ciudadano</strong> que se construye <strong>con tu participación</strong> y la
+        de especialistas.
+      </p>
+      <p>
+        Una declaración de principios y <strong>plan de acción</strong> para el México que queremos en colectivo.
+      </p>
+    </div>
+    <button type="button" (click)="linkMe('/documentos-publicos/' + document._id)">Entrar</button>
+
+    <!-- <div class="info">
+      <div class="titles">
+        <span class="line">&nbsp;</span>
+        <span class="title">Mexicolectivo</span>
+      </div>
+
+      <div class="set-12">
+        <p>Somos un grupo de mexicanos plural que busca un mejor país.</p>
+        <p>Que está preocupado por rescatar el futuro que nos merecemos.</p>
+        <p>Que busca recuperar el desarrollo conseguido en siglos de trabajo y dedicación.</p>
+        <p>Que quiere erradicar los vicios y malos gobiernos que hemos tenido.</p>
+        <p>Que no está dispuesto a permitir que se nos arrebate el futuro.</p>
+        <p>Que convoca a todos los mexicanos para trabajar juntos para lograrlo.</p>
+      </div>
+    </div> -->
+  </div>
+
+  <div class="set-12 ds-page">
+    <img src="../../assets/images/150922_MEXICOLECTIVO_LOGO_RESPONSIVO_VERDE.png" alt="">
+    <!-- <div class="info">
+      <div class="titles">
+        <span class="line">&nbsp;</span>
+        <span class="title">Ideas</span>
+      </div>
+
+      <div class="set-12"></div>
+    </div> -->
+  </div>
+
+  <!-- <div class="set-12 mailing-list">
+    <div class="set-12">
+      <p>Suscríbete a nuestro newsletter</p>
+    </div>
+    <form class="set-12" [formGroup]="mailingListFormGroup" (submit)="onSubscribe(mailingListFormGroup)">
+      <input type="text" placeholder="nombre@ejemplo.com" formControlName="email">
+      <button type="submit" [disabled]="mailingListFormGroup.invalid || submitted">Suscribirme</button>
+    </form>
+    <div class="set-12 networks">
+      <span>Siguenos: </span>
+      <a href="#" class="facebook-net icon"></a>
+      <a href="#" class="instagram-net icon"></a>
+    </div>
+  </div> -->
+</div>

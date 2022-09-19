@@ -7,6 +7,12 @@ import { AppSharedModule } from '../app-shared.module';
 
 import { DocumentsComponent } from './documents.component';
 import { SingleDocumentComponent } from './single-document/single-document.component';
+import { ComponentsModule } from '../components/components.module';
+import { SingleCategoryComponent } from './single-category/single-category.component';
+import { SingleThemeComponent } from './single-theme/single-theme.component';
+import { SingleSubcategoryComponent } from './single-subcategory/single-subcategory.component';
+import { SingleSolutionComponent } from './single-solution/single-solution.component';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   imports: [
@@ -15,11 +21,17 @@ import { SingleDocumentComponent } from './single-document/single-document.compo
     ReactiveFormsModule,
     DocumentsComponentRoutingModule,
     AppMaterialModule,
-    AppSharedModule
+    AppSharedModule,
+    ComponentsModule,
+    NgChartsModule,
   ],
   declarations: [
     DocumentsComponent,
-    SingleDocumentComponent
-  ]
+    SingleDocumentComponent,
+    SingleCategoryComponent,
+    SingleSubcategoryComponent,
+    SingleThemeComponent,
+    SingleSolutionComponent
+  ],
 })
 export class DocumentsComponentModule { }

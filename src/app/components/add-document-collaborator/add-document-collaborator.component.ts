@@ -7,6 +7,9 @@ import { map, startWith } from 'rxjs/operators';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
+import { LayoutService } from 'src/app/services/layout.service';
 
 @Component({
   selector: '.add-document-collaborator',
@@ -14,6 +17,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
   styleUrls: ['./add-document-collaborator.component.scss']
 })
 export class AddDocumentCollaboratorComponent implements OnInit {
+  public isDataAvailable: boolean = false;
   public categories: any = [];
   public states: any = [];
   public selectedCategories: any = [];
@@ -23,34 +27,49 @@ export class AddDocumentCollaboratorComponent implements OnInit {
   @ViewChild('categoryInput') categoryInput!: ElementRef<HTMLInputElement>;
   public filteredCategories!: Observable<string[]>;
   public categoriesString: any = [];
-  public addCategoryFormGroup!: FormGroup;
+  public document: any = null;
+  public layouts: any = null;
+  public addCollaboratorFormGroup!: FormGroup;
+  public submitted: boolean = false;
+  @ViewChild('coverageSelect') public coverageSelect!: MatSelect;
+  public allActivities: any = [];
+  public editorAllowedActivities: any = ['type-a', 'type-b', 'type-c', 'type-d'];
 
   constructor(
     public dialogRef: MatDialogRef<AddDocumentCollaboratorComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public utilitiService: UtilityService,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public utilitySrvc: UtilityService,
+    public layoutService: LayoutService
   ) {
-    console.log(this.dialogData);
+    // console.log(this.dialogData);
+    this.document = this.dialogData['document'];
   }
 
   ngOnInit(): void {
-    let categories: Observable<any> = this.utilitiService.fetchAllCategories();
-    let states: Observable<any> = this.utilitiService.fetchAllStatesMex();
-    forkJoin([categories, states]).subscribe((reply: any) => {
+    this.layouts = this.document['layouts'];
+    this.layouts.filter((x: any) => { this.categories.push(x['category']); });
+
+    this.categories.filter((x: any) => { this.categoriesString.push(x['name']); });
+    this.states = this.document['coverage'];
+    this.setFilteredCategories();
+
+    this.utilitySrvc.fetchAllActivities().subscribe((reply: any) => {
       // console.log(reply);
-      this.categories = reply[0]['clasifications'];
-      this.categories.filter((x: any) => { this.categoriesString.push(x['name']); });
-      // console.log(this.categories);
-      this.states = reply[1]['states'];
-      // console.log(this.states);
-
-      this.addCategoryFormGroup = this.formBuilder.group({
-        name: ['', [Validators.required, Validators.minLength(2)]]
-      });
-
-      this.setFilteredCategories();
+      this.allActivities = reply;
     });
+
+    this.addCollaboratorFormGroup = this.formBuilder.group({
+      layouts: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.pattern(this.utilitySrvc.emailPattern), this.utilitySrvc.emailDomainValidator]],
+      activity: ['', [Validators.required]],
+      coverage: ['', [Validators.required]]
+    });
+
+    setTimeout(() => {
+      this.isDataAvailable = true;
+    }, 1000);
   }
 
   addCategory(event: MatChipInputEvent): void {
@@ -66,11 +85,23 @@ export class AddDocumentCollaboratorComponent implements OnInit {
   }
 
   categorySelected(event: MatAutocompleteSelectedEvent): void {
+    if (this.selectedCategories.length == 1) {
+      this.utilitiService.openErrorSnackBar('Solo se puede agregar 1 categoría.');
+      this.categoryInput.nativeElement.value = '';
+      this.categoryCtrl.setValue(null);
+      return;
+    }
+
     let category: any = this.categories.filter((x: any) => { return x['name'] == event['option']['value'] });
-    this.layout.push({ category: category[0]['_id'] });
+    let layout = this.layouts.filter((x: any) => {
+      return x['category']['_id'] == category[0]['_id']
+    });
+    // this.layout.push(category[0]['_id']);
+    this.layout = layout[0]['_id']
     this.selectedCategories.push(event.option.value);
     this.categoryInput.nativeElement.value = '';
     this.categoryCtrl.setValue(null);
+    this.addCollaboratorFormGroup.patchValue({ layouts: category[0]['_id'] });
   }
 
   filterCategories(value: any) {
@@ -85,6 +116,47 @@ export class AddDocumentCollaboratorComponent implements OnInit {
         category ? this.filterCategories(category) : this.categoriesString.slice()
       ))
     );
+  }
+
+  onSelectType(event: any) { }
+
+  onSelectCoverage(evt: any) {
+    if (evt['value'].includes('all')) {
+      this.coverageSelect.options.forEach((item: MatOption) => item.select());
+    } else {
+      // this.coverageSelect.options.forEach((item: MatOption) => item.deselect());
+    }
+    this.addCollaboratorFormGroup.patchValue({ coverage: evt.value });
+  }
+
+  addCollaborator(formGroup: FormGroup) {
+    this.submitted = true;
+
+    // if (formGroup['value']['coverage'].includes('all')) {
+    //   const index = formGroup['value']['coverage'].indexOf('all');
+    //   if (index > -1) {
+    //     formGroup['value']['coverage'].splice(index, 1);
+    //   }
+    // }
+
+    let data: any = {
+      layout: this.layout,
+      email: formGroup['value']['email'],
+      activity: formGroup['value']['activity'],
+      coverage: formGroup['value']['coverage']
+    };
+
+    this.layoutService.addLayoutCollaborator(data).subscribe({
+      error: (error: any) => {
+        // console.log(error);
+      },
+      next: (reply: any) => {
+        // console.log(reply);
+        this.utilitiService.openSuccessSnackBar('El usuario se agrego correctamente.');
+        this.dialogRef.close(reply)
+      },
+      complete: () => { }
+    });
   }
 
   killDialog() {

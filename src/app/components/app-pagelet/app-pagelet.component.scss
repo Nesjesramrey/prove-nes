@@ -1,12 +1,20 @@
 :host {
-  position: fixed;
+  //position: fixed;
   z-index: 99;
+  width: 100%;
 
   mat-toolbar {
     height: 80px;
     padding: 0 40px;
-    background: rgba($color: #ffffff, $alpha: 0.79);
-    box-shadow: 0px 1px 11px rgba(0, 0, 0, 0.1);
+    // background: rgba($color: #ffffff, $alpha: 0.9);
+    background: rgb(0, 3, 29);
+    background: linear-gradient(360deg, rgba(0, 3, 29, 0) 0%, rgba(0, 3, 29, 1) 100%);
+    box-shadow: 0;
+    // background: transparent;
+    position: fixed;
+    z-index: 300;
+    top: 0;
+    left: 0;
   }
 
   .logo {
@@ -18,7 +26,7 @@
     }
 
     img {
-      width: 30%;
+      width: 100%;
       float: left;
       cursor: pointer;
     }
@@ -29,6 +37,11 @@
       width: 100%;
       border-radius: 4px;
     }
+  }
+
+  .bar-search:disabled {
+    opacity: .6;
+    cursor: not-allowed;
   }
 
   .navigation {
@@ -43,10 +56,18 @@
     .sep {
       font-size: 20pt;
       padding: 0 20px;
+      color: #71f5ad;
     }
-
+    
     button {
       margin-left: 20px;
+      letter-spacing: 0.4px;
+      font-weight: 700;
+      font-size: 17px;
+      color: #71f5ad;
+    }
+    button:hover{
+      text-decoration: underline solid #71f5ad 4px;
     }
 
     button:first-child {
@@ -90,5 +111,24 @@
         float: left;
       }
     }
+  }
+
+  .btn-menu {
+    mat-icon {
+      color: #71f5ad;
+    }
+  }
+
+  .btn-permissios {
+    width: 204px;
+    height: 35px;
+    color: #fff;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .btn-permissios:hover {
+    text-decoration-line: underline;
   }
 }

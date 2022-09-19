@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
@@ -16,30 +18,46 @@ export class SignInComponent implements OnInit {
   constructor(
     public formBuilder: FormBuilder,
     public authenticationSrvc: AuthenticationService,
-    public utilitySrvc: UtilityService
+    public utilitySrvc: UtilityService,
+    public angularFireAuth: AngularFireAuth,
+    public router: Router
   ) { }
 
   ngOnInit(): void {
     this.signInFormGroup = this.formBuilder.group({
       email: ['', [Validators.required, Validators.pattern(this.utilitySrvc.emailPattern), this.utilitySrvc.emailDomainValidator]],
-      password: ['', [Validators.required, Validators.minLength(9)]]
+      password: ['', [Validators.required, Validators.minLength(3)]]
     });
   }
 
   onSignIn(form: FormGroup) {
     this.submitted = true;
-    let data: any = {
-      email: form.value.email,
-      password: form.value.password
-    }
-    this.authenticationSrvc.signin(data).subscribe((reply: any) => {
-      this.submitted = false;
-      if (reply['status'] == false) {
-        this.utilitySrvc.openErrorSnackBar(reply['error']);
-        return;
-      }
-      localStorage.setItem('token', reply['token']);
-      window.location.reload();
-    });
+
+    this.angularFireAuth.signInWithEmailAndPassword(form['value']['email'], form['value']['password'])
+      .then((reply: any) => {
+        // console.log('reply: ', reply);
+        this.angularFireAuth.authState.subscribe((data: any) => {
+          // console.log('user: ', data['multiFactor']['user']);
+          this.submitted = false;
+          localStorage.setItem('accessToken', data['multiFactor']['user']['accessToken']);
+          // window.location.reload();
+          // this.utilitySrvc.linkMe('/');
+          this.router.navigateByUrl('/', { state: { status: 'logout' } });
+        });
+      })
+      .catch((error) => {
+        // console.log(error['code']);
+        this.submitted = false;
+
+        switch (error['code']) {
+          case 'auth/wrong-password':
+            this.utilitySrvc.openErrorSnackBar('Tu contraseña es incorrecta.');
+            break;
+
+          case 'auth/user-not-found':
+            this.utilitySrvc.openErrorSnackBar('No se encontro el usuario.');
+            break;
+        }
+      });
   }
 }

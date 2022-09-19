@@ -25,22 +25,22 @@ export class UserNotificationsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.token != null) {
-      this.payload = JSON.parse(atob(this.token.split('.')[1]));
+    let user: Observable<any> = this.userSrvc.fetchFireUser();
 
-      let user: Observable<any> = this.userSrvc.fetchUserById({ _id: this.payload['sub'] });
-      let notifications: Observable<any> = this.notificationSrvc.fetchMyNotificationsContent({ user_id: this.payload['sub'] });
+    forkJoin([user]).subscribe((reply: any) => {
+      // console.log(reply);
+      this.user = reply[0];
+      // console.log('user: ', this.user);
 
-      forkJoin([user, notifications]).subscribe((reply: any) => {
-        // console.log(reply);
-        this.user = reply[0]['user'];
-        // console.log(this.user);
-        this.notifications = reply[1]['notifications'];
-        // console.log(this.notifications);
+      this.notificationSrvc.fetchMyNotificationsContent({ userID: this.user['_id'] })
+        .subscribe((reply: any) => {
+          // console.log(reply);
+          this.notifications = reply;
+        });
+
+      setTimeout(() => {
         this.isDataAvailable = true;
-      });
-    } else {
-      this.isDataAvailable = true;
-    }
+      }, 1000);
+    });
   }
 }

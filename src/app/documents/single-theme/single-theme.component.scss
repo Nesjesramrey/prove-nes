@@ -1,0 +1,286 @@
+:host {
+  padding: 40px;
+  margin-top: 80px;
+  float: left;
+  width: 100%;
+  height: auto;
+
+  .col-rgt {
+    padding-left: 30px;
+  }
+
+  .doc-description {
+    padding: 0 !important;
+  }
+
+  mat-card:not(:first-child) {
+    margin-top: 20px;
+  }
+
+  .imghldr {
+    min-height: 250px;
+    max-height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba($color: #CEDDFF, $alpha: 0.4);
+    border-bottom: 1px solid rgba($color: #000000, $alpha: 0.05);
+    overflow: hidden;
+
+    mat-icon {
+      font-size: 70pt;
+      color: rgba($color: #000000, $alpha: 0.1);
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      object-fit: contain;
+    }
+  }
+
+  .infohldr {
+    padding: 20px;
+
+    .toolbtn {
+      transition: all .2s linear;
+    }
+
+    .toolbtn:hover {
+      color: #306EFF;
+    }
+  }
+
+  .card-title {
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  .card-description {
+    text-align: justify;
+    font-size: 11pt;
+    color: #636363;
+
+    &.link {
+      margin-top: 10pt;
+      display: inline-block;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+
+  button.mini {
+    margin-left: 20px;
+
+    mat-icon {
+      font-size: 14pt !important;
+      color: #fff;
+    }
+  }
+
+  .inner-card {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+
+    * {
+      margin: 0;
+    }
+
+    .roundico-green,
+    .roundico-orange {
+      width: 70px;
+      height: 70px;
+      border-radius: 100%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 20px;
+
+      mat-icon {
+        font-size: 20pt !important;
+      }
+    }
+
+    .roundico-green {
+      background: #E1F2EC;
+
+      mat-icon {
+        color: #20C588;
+      }
+    }
+
+    .roundico-orange {
+      background: #FCDBC3;
+
+      mat-icon {
+        color: #FF6D00;
+      }
+    }
+
+    mat-icon {
+      font-size: 30pt;
+    }
+  }
+
+  .inner-card:last-child {
+    margin-bottom: 0;
+  }
+
+  .info-lists {
+    padding: 1.5em;
+
+    p.list-title {
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+
+      * {
+        margin: 0;
+      }
+
+      mat-icon {
+        margin-left: 10px;
+
+        &.icon-insights {
+          color: #20C588;
+        }
+
+        &.icon-warnings {
+          color: #E98282;
+        }
+      }
+    }
+
+    .top-list {
+      margin-top: 15pt;
+      counter-reset: orderedlist;
+
+      .top-list-item {
+        list-style: none;
+        font-weight: 600;
+        border-bottom: 1px solid #DBDBDB;
+        padding: 0.6em 0;
+
+        &:before {
+          counter-increment: orderedlist;
+          content: counter(orderedlist);
+          font-weight: 400;
+          margin-right: 15pt;
+          color: #131313
+        }
+      }
+    }
+
+    .set-4:nth-child(1) {
+      padding-right: 20px;
+    }
+
+    .set-4:nth-child(2) {
+      padding: 0 10px;
+    }
+
+    .set-4:nth-child(3) {
+      padding-left: 20px;
+    }
+  }
+
+  .about-card {
+    margin-top: 0 !important;
+
+    p.title {
+      font-weight: 600;
+      font-size: 13pt;
+      text-transform: uppercase;
+      letter-spacing: 2pt;
+    }
+
+    p.description {
+      margin-top: 20px;
+    }
+  }
+
+  .topic-list {
+    margin-top: 20px;
+
+    .title {
+      font-weight: 600;
+      font-size: 13pt;
+      text-transform: uppercase;
+      letter-spacing: 2pt;
+    }
+
+    .empty-layouts {
+      margin-top: 40px;
+    }
+
+    .problems-table {
+      th.mat-header-cell:first-of-type {
+        padding: 0 !important;
+      }
+
+      tr:last-child {
+        .mat-cell {
+          border: 0 !important;
+        }
+      }
+
+      .mat-cell {
+        padding: 0.5em 0;
+      }
+
+      .mat-column-actions {
+        width: 50px;
+        padding-right: 0;
+        text-align: right;
+      }
+    }
+  }
+
+  .table-head {
+    display: flex;
+    align-items: center;
+
+    * {
+      margin: 0;
+    }
+
+    p.title {
+      margin-right: 70px;
+    }
+
+    ::ng-deep .mat-form-field-wrapper {
+      padding-bottom: 0 !important;
+    }
+
+    input[type="text"] {
+      padding: 15px;
+      // border: 1px solid rgba($color: #000000, $alpha: 0.1);
+      box-shadow: inset 0 0 0 1px rgba($color: #000000, $alpha: 0.1);
+      border-radius: 5px;
+      // width: 40%;
+      flex: 1;
+    }
+
+    input[type="text"]:focus {
+      box-shadow: inset 0 0 0 2px #306EFF;
+    }
+
+    input[type="text"]:disabled {
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+  }
+
+  .loading {
+    mat-spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}

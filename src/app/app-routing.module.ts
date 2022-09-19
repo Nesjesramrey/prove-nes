@@ -19,13 +19,17 @@ const routes: Routes = [
       import('./documents/documents.component.module').then(module => module.DocumentsComponentModule)
   },
   {
+    path: 'documentos-publicos', loadChildren: () =>
+      import('./public-documents/public-documents.component.module').then(module => module.PublicDocumentsModule)
+  },
+  {
     path: 'legales', loadChildren: () =>
       import('./legal/legal.component.module').then(module => module.LegalComponentModule)
   },
-  {
-    path: '404', loadChildren: () =>
-      import('./not-found/not-found.component.module').then(module => module.NotFoundComponentModule)
-  }
+  // {
+  //   path: '404', loadChildren: () =>
+  //     import('./not-found/not-found.component.module').then(module => module.NotFoundComponentModule)
+  // }
 ];
 
 @NgModule({

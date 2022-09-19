@@ -1,5 +1,6 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { forkJoin, Observable } from 'rxjs';
@@ -10,7 +11,7 @@ import { UserService } from 'src/app/services/user.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
-  selector: '.support-conversations-page',
+  selector: '.support-conversations-page .set-12',
   templateUrl: './support-conversations.component.html',
   styleUrls: ['./support-conversations.component.scss']
 })
@@ -19,7 +20,7 @@ export class SupportConversationsComponent implements OnInit {
   public user: any = null;
   public payload: any = null;
   public conversations: any = [];
-  public displayedColumns: string[] = ['select', 'customer', 'email', 'support', 'date', 'menu'];
+  public displayedColumns: string[] = ['select', 'customer', 'email', 'support', 'date', 'status', 'menu'];
   public dataSource = new MatTableDataSource<any>();
   public paginator!: MatPaginator;
   @ViewChild('matPaginator') set matPaginator(mp: MatPaginator) {
@@ -29,18 +30,26 @@ export class SupportConversationsComponent implements OnInit {
   public selection = new SelectionModel<any>(true, []);
   public isDataAvailable: boolean = false;
   public conversation: any = null;
+  public today: Date = new Date();
+  public searchByDateFormGroup!: FormGroup;
 
   constructor(
     public authenticationService: AuthenticationService,
     public userService: UserService,
     public supportService: SupportService,
     public utilityService: UtilityService,
-    public socketServie: SocketService
+    public socketServie: SocketService,
+    public formBuilder: FormBuilder
   ) {
     this.token = this.authenticationService.fetchToken;
   }
 
   ngOnInit(): void {
+    this.searchByDateFormGroup = this.formBuilder.group({
+      fromDate: ['', [Validators.required]],
+      toDate: ['', [Validators.required]]
+    });
+
     if (this.token != null) {
       this.payload = JSON.parse(atob(this.token.split('.')[1]));
 
@@ -48,6 +57,7 @@ export class SupportConversationsComponent implements OnInit {
       let conversations: Observable<any> = this.supportService.fetchSupportConversations();
 
       forkJoin([user, conversations]).subscribe((reply: any) => {
+        console.log(reply);
         this.user = reply[0]['user'];
         this.conversations = reply[1]['conversations'];
 
@@ -65,11 +75,11 @@ export class SupportConversationsComponent implements OnInit {
           });
 
           this.socketServie.getSupportConversationMessage().subscribe((reply: any) => {
-            console.log(reply);
+            // console.log(reply);
             let conversation = this.conversations.filter((x: any) => {
               return x['_id'] == reply['conversation']['_id'];
             });
-            console.log(conversation);
+            // console.log(conversation);
             this.conversation = conversation;
           });
 
@@ -117,6 +127,7 @@ export class SupportConversationsComponent implements OnInit {
 
   onAttendMsg(conversatioID: string) {
     this.conversation = this.conversations.filter((x: any) => { return x['_id'] == conversatioID; });
+    this.conversation[0]['status'] = { value: 'process', viewValue: 'En proceso' };
     this.supportService.injectSupportMsg(this.conversation[0]);
   }
 
@@ -133,6 +144,28 @@ export class SupportConversationsComponent implements OnInit {
       this.conversations = this.conversations.filter((x: any) => { return x['_id'] != conversationID; });
       this.dataSource = new MatTableDataSource(this.conversations);
       this.setDataSourceAttributes();
+    });
+  }
+
+  onSearchByDate(form: FormGroup) {
+    let data: any = {
+      fromDate: form.value.fromDate,
+      toDate: form.value.toDate
+    };
+
+    this.supportService.searchConversationsByDate(data).subscribe((reply: any) => {
+      // console.log(reply);
+      if (reply['status'] == false) {
+        this.utilityService.openErrorSnackBar(reply['error']);
+        return;
+      }
+      this.conversations = [];
+      this.conversations = reply['conversations'];
+      this.dataSource = new MatTableDataSource(this.conversations);
+      this.setDataSourceAttributes();
+      if (this.conversations.length == 0) {
+        this.utilityService.openErrorSnackBar('No se econcntraron conversaciones.');
+      }
     });
   }
 }

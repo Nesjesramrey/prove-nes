@@ -1,0 +1,56 @@
+:host {
+  width: 100%;
+  float: left;
+  margin-top: 20px;
+
+  .card-container {
+    width: 100%;
+    // padding: 50px 10px;
+    margin: 0px auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .image-box {
+      width: 45px;
+      height: 45px;
+      padding: 10px;
+      border-radius: 100%;
+    }
+
+    .texts-box {
+      text-align: start;
+      margin-left: 10px;
+      margin: 10px 0px;
+      text-align: center;
+
+      .name {
+        font-size: 17px;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+      }
+
+      .amount {
+        font-size: 24px;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .gray-icon-color {
+    background-color: #E1F2EC;
+
+    mat-icon {
+      color: #20C588;
+    }
+  }
+
+  .red-icon-color {
+    background-color: #FCDBC3;
+
+    mat-icon {
+      color: #FF6D00;
+    }
+  }
+}

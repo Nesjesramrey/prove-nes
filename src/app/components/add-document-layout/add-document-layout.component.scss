@@ -1,8 +1,9 @@
 :host {
+  min-height: 170px;
+
   .dialog-head {
     display: flex;
     align-items: center;
-    // margin-bottom: 20px;
   }
 
   ::ng-deep .mat-step-header:hover,
@@ -17,6 +18,11 @@
   .step-content {
     margin-top: 20px;
 
+    form {
+      display: flex;
+      flex: 1;
+    }
+
     textarea {
       min-height: 100px;
       max-height: 100px;
@@ -30,6 +36,7 @@
       display: flex;
       width: 100%;
       min-height: 100px;
+      height: calc(100% - 20px);
       align-items: center;
       justify-content: center;
       border: 1px dashed rgba($color: #000000, $alpha: 0.1);
@@ -61,11 +68,39 @@
 
     .ctrls {
       text-align: right;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      * {
+        margin: 0;
+      }
+
+      mat-spinner {
+        margin-left: 20px;
+      }
+
+      button {
+        margin-left: 10px;
+      }
+
+      button:first-child {
+        margin-left: 0;
+      }
     }
   }
 
   .file-hldr {
     font-weight: bold;
     font-style: italic;
+  }
+
+  .loading {
+    mat-spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
   }
 }

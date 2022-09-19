@@ -2,43 +2,46 @@
   <mat-spinner></mat-spinner>
 </div>
 
-<div class="innerhldr" *ngIf="isDataAvailable">
+<div class="set-12 innerhldr" *ngIf="isDataAvailable">
   <div class="set-4 col-lft">
     <mat-card class="set-12">
       <div class="set-12 cardimg">
-        <img src="../../../assets/images/Aspens_Ed_Moss.jpeg" alt="">
+        <img src="../../../assets/images/Aspens_Ed_Moss.jpeg" alt="" />
       </div>
 
-      <input #fileInput type="file" (change)="openCropperDialog($event)" accept="image/*" hidden>
+      <input #fileInput type="file" (change)="openCropperDialog($event)" accept="image/*" hidden />
       <button type="button" class="avatar" (click)="fileInput.click()">
-        <img src="{{user.avatarImage}}" alt="{{user.firstname}} {{user.lastname}}" *ngIf="user.avatarImage != ''">
-        <span *ngIf="user.avatarImage == ''">
+        <img src="{{ user.avatarImage }}" alt="{{ user.firstname }} {{ user.lastname }}"
+          *ngIf="user.avatarImage != null" />
+        <span *ngIf="user.avatarImage == null">
           {{ user.firstname | firstword | firstletter }}{{ user.lastname | firstword | firstletter }}
         </span>
+        <div class="overlay" matTooltip="Cargar imágen" matTooltipClass="tooltip">
+          <mat-icon>photo_camera</mat-icon>
+        </div>
       </button>
 
       <div class="set-12 cardbody">
-        <button type="button" class="roundblue cardmore">
+        <button type="button" class="roundblue cardmore" (click)="linkMe('/hub/configuracion')"
+          matTooltip="Configuración" matTooltipClass="tooltip">
           <mat-icon>settings</mat-icon>
         </button>
-        <h3 class="txt-center">{{user.firstname}} {{user.lastname}}</h3>
+        <h3 class="txt-center">{{ user.firstname }} {{ user.lastname }}</h3>
         <div class="set-12 usrinfo">
           <p class="set-12">
-            <small class="set-6">Documentos:</small>
-            <small class="set-6 txt-right"><strong class="txt-blue">0</strong></small>
+            <span class="set-6">Documentos:</span>
+            <span class="set-6 txt-right"><strong class="txt-blue">0</strong></span>
           </p>
           <p class="set-12">
-            <small class="set-6">Colaboradores:</small>
-            <small class="set-6 txt-right"><strong class="txt-blue">0</strong></small>
+            <span class="set-6">Colaboradores:</span>
+            <span class="set-6 txt-right"><strong class="txt-blue">0</strong></span>
           </p>
         </div>
       </div>
     </mat-card>
 
-    <mat-card class="set-12 objectives">
-      <h3>Objetivos</h3>
-      <div class="pie-chart chart"></div>
-      <div class="line-chart chart"></div>
+    <mat-card class="set-12">
+      <div class="app-map-box"></div>
     </mat-card>
   </div>
 
@@ -50,7 +53,7 @@
     </div>
 
     <div class="set-12" *ngIf="!haveRootPermissions">
-      <div class="editor-template" [documents]="documents"></div>
+      <div class="editor-template" [user]="user" [documents]="documents"></div>
     </div>
   </div>
 </div>

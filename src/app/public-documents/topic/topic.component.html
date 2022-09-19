@@ -1,0 +1,132 @@
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+  <mat-spinner></mat-spinner>
+</div>
+<div class="set-12" *ngIf="isDataAvailable">
+  <div class="container">
+    <div class="set-12">
+      <div class="set-7">
+        <breadcrumbs-component>
+          <li>...</li>
+          <li
+            (click)="
+              utilityService.linkMe('/documentos-publicos/' + document._id)
+            "
+          >
+            {{ document.title }}
+          </li>
+          <li
+            (click)="
+              utilityService.linkMe(
+                '/documentos-publicos/' +
+                  document._id +
+                  '/categoria/' +
+                  category._id
+              )
+            "
+          >
+            {{ category.category.name }}
+          </li>
+          <li
+            (click)="
+              utilityService.linkMe(
+                '/documentos-publicos/' +
+                  document._id +
+                  '/categoria/' +
+                  category._id +
+                  '/subcategoria/' +
+                  subcategory._id
+              )
+            "
+          >
+            {{ subcategory.category.name }}
+          </li>
+          <li>{{ topic.shortTitle }}</li>
+        </breadcrumbs-component>
+      </div>
+      <div class="set-3 featured-users">
+        <featured-users [inputAmount]="3"></featured-users>
+      </div>
+      <div class="set-2 txt-right">
+        <button *ngIf="permission" type="button" mat-mini-fab color="accent" class="mini" matTooltip="Agregar Solución"
+          (click)="openModalSolution()">
+          <mat-icon>feedback</mat-icon>
+        </button>
+        <button type="button" mat-mini-fab color="primary" class="mini" matTooltip="Agregar Comentario"
+          (click)="openModalComment()">
+          <mat-icon>add_comment</mat-icon>
+        </button>
+        <button type="button" mat-mini-fab color="warn" class="mini" matTooltip="Agregar Testimonio"
+          (click)="openModalTestimony()">
+          <mat-icon>book</mat-icon>
+        </button>
+      </div>
+      <div class="set-12 txt-left" style="margin-top: 10px">
+        <span class="created-by">
+          Autor:
+          <span class="author">
+            {{ topic.createdBy.firstname }}
+            {{ topic.createdBy.lastname }}
+          </span>
+        </span>
+      </div>
+      <div class="set-12" style="padding-bottom: 100px; margin-top: 10px">
+        <div class="set-8 col-rgt-3">
+          <div class="set-12 header-card">
+            <mat-card>
+              <!-- IMAGE -->
+              <div class="image-box">
+                <mat-icon *ngIf="!image">panorama</mat-icon>
+                <img *ngIf="image" [src]="image" alt="" />
+                <div class="info">
+                  <button class="custom-circle">
+                    <mat-icon>thumb_up</mat-icon>
+                  </button>
+                  <div class="actions">
+                    <p>Relevancia ciudadana</p>
+                    <p class="votes">
+                      {{ votes }}
+                    </p>
+
+                    <button
+                      *ngIf="userVoted"
+                      mat-raised-button
+                      color="primary"
+                      disabled
+                      style="background-color: #d9d9d9"
+                    >
+                      Ya votaste
+                    </button>
+                    <button
+                      *ngIf="!userVoted"
+                      mat-raised-button
+                      color="black"
+                      style="background-color: #71f5ad;font-weight: 600;font-size: 16px;"
+                      (click)="openModalVote()"
+                    >
+                      Votar
+                    </button>
+                    <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
+                  </div>
+                </div>
+              </div>
+              <!-- DATA -->
+              <div class="data-box">
+                <p class="title">{{ topic.title }}</p>
+                <expanded-text [text]="topic.description" [minLength]="400">
+                </expanded-text>
+              </div>
+            </mat-card>
+          </div>
+          <div class="set-12 mt-2">
+            <solutions-card [data]="SolutionDataSource"></solutions-card>
+          </div>
+        </div>
+        <div class="set-4">
+          <public-documents-testimonials
+            [data]="topic.testimonials"
+          ></public-documents-testimonials>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

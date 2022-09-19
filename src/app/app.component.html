@@ -1,8 +1,13 @@
 <div class="set-12 mainhldr">
-  <div class="app-pagelet" [user]="user" *ngIf="isDataAvailable"></div>
+  <div
+    class="app-pagelet"
+    [user]="user"
+    [path]="path"
+    *ngIf="isDataAvailable"
+  ></div>
 
   <router-outlet></router-outlet>
-  <div class="message-box" [user]="user" *ngIf="isDataAvailable"></div>
+  <!-- <div class="message-box" [user]="user" *ngIf="isDataAvailable"></div> -->
 </div>
 
-<div class="set-12 app-footer"></div>
+<!-- <div class="set-12 app-footer"></div> -->

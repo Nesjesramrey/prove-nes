@@ -1,0 +1,18 @@
+<div class="modalContainer">
+  <div class="titleContainer">
+    <p>Permiso para editar</p>
+  </div>
+  <img src="/assets/images/closeIcon.png" alt="closeIcon" />
+  <div class="modalBody">
+    <p>CUÉNTANOS PORQUE QUISIERAS PARTICIPAR COMO EDITOR DEL PROYECTO</p>
+    <form [formGroup]="formPermission" class="Modalform">
+      <div>
+        <textarea class="descriptionInput" type="text" formControlName="description" placeholder="Escribe una descripción"></textarea>
+      </div>
+      <div>
+        <input class="emailInput" type="text"  placeholder="Escribe tu email" formControlName="email"/>
+      </div>
+      <button type="submit" (click)="sendrequest()">Solicita permiso</button>
+    </form>
+  </div>
+</div>

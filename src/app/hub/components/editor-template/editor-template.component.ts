@@ -9,7 +9,9 @@ import { UtilityService } from 'src/app/services/utility.service';
   styleUrls: ['./editor-template.component.scss']
 })
 export class EditorTemplateComponent implements OnInit {
+  @Input('user') public user: any = null;
   @Input('documents') public documents: any = [];
+  public isDataAvailable: boolean = false;
 
   constructor(
     public dialog: MatDialog,
@@ -18,7 +20,7 @@ export class EditorTemplateComponent implements OnInit {
 
   ngOnInit(): void {
     setTimeout(() => {
-      // console.log(this.documents);
+      this.isDataAvailable = true;
     });
   }
 
@@ -26,6 +28,7 @@ export class EditorTemplateComponent implements OnInit {
     let document: any = this.documents.filter((x: any) => {
       return x['_id'] == documentID
     });
+
     const dialogRef = this.dialog.open(AddDocumentLayoutComponent, {
       width: '640px',
       data: {
@@ -34,7 +37,10 @@ export class EditorTemplateComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) { }
+      if (reply != undefined) {
+        document[0]['images'] = reply['document']['images'];
+        document[0]['layouts'] = reply['layouts'];
+      }
     });
   }
 

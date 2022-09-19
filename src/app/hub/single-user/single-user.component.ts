@@ -7,6 +7,7 @@ import { SetAvatarDialogComponent } from 'src/app/components/set-avatar-dialog/s
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DocumentService } from 'src/app/services/document.service';
 import { UserService } from 'src/app/services/user.service';
+import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
   selector: '.single-user-page',
@@ -17,7 +18,6 @@ export class SingleUserComponent implements OnInit {
   public userID: string = '';
   public isDataAvailable: boolean = false;
   public isAuthenticated: boolean = false;
-  public token: any = null;
   public user: any = null;
   public userActivities: any = [];
   public documents: any = [];
@@ -29,52 +29,60 @@ export class SingleUserComponent implements OnInit {
     public dialog: LyDialog,
     public authenticationSrvc: AuthenticationService,
     public userSrvc: UserService,
-    public documentSrvc: DocumentService
+    public documentSrvc: DocumentService,
+    public utilityService: UtilityService
   ) {
     this.userID = this.activatedRoute['snapshot']['params']['userID'];
     this.isAuthenticated = this.authenticationSrvc['isAuthenticated'];
-    this.token = this.authenticationSrvc.fetchToken;
   }
 
   ngOnInit(): void {
-    this.userSrvc.fetchUserById({ _id: this.userID }).subscribe((reply: any) => {
-      this.user = reply['user'];
-      this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
+    this.userSrvc.fetchFireUser().subscribe({
+      error: (error: any) => {
+        setTimeout(() => {
+          this.isDataAvailable = true;
+        }, 1000);
+      },
+      next: (reply: any) => {
+        this.user = reply;
+        // console.log('user: ', this.user);
 
-      // root activities
-      if (this.userActivities.length != 0) {
-        this.haveRootPermissions = true;
+        this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
+        // console.log(this.userActivities);
 
-        // moderator
-        if (this.userActivities.includes('moderator')) {
-          setTimeout(() => {
-            this.isDataAvailable = true;
-          });
-        }
-        // administrator
-        if (this.userActivities.includes('administrator')) {
-          let documents: Observable<any> = this.documentSrvc.fetchMyDocuments({ created_by: this.userID });
-          forkJoin([documents]).subscribe((reply: any) => {
-            this.documents = reply[0]['documents'];
+        if (this.userActivities.length != 0) {
+          this.haveRootPermissions = true;
+
+          if (this.userActivities.includes('moderator')) {
+            setTimeout(() => {
+              this.isDataAvailable = true;
+            }, 1000);
+          }
+
+          if (this.userActivities.includes('administrator')) {
+            let documents: Observable<any> = this.documentSrvc.fetchMyDocuments({ createdBy: this.userID });
+            forkJoin([documents]).subscribe((reply: any) => {
+              this.documents = reply[0];
+              // console.log('documents: ', this.documents);
+
+              setTimeout(() => {
+                this.isDataAvailable = true;
+              }, 1000);
+            });
+          }
+        } else {
+          this.documentSrvc.fetchDocumentsByCollaborator({ _id: this.user['_id'] }).subscribe((reply: any) => {
+            this.documents = reply;
+            // console.log('documents: ', this.documents);
 
             setTimeout(() => {
               this.isDataAvailable = true;
-            });
+            }, 1000);
           });
         }
-      }
-      // inner activities
-      else {
-        this.haveRootPermissions = false;
-
-        this.documentSrvc.fetchEditorDocuments({ userID: this.userID }).subscribe((reply: any) => {
-          this.documents = reply['documents'];
-
-          setTimeout(() => {
-            this.isDataAvailable = true;
-          });
-        });
-      }
+        // console.log(this.haveRootPermissions);
+      },
+      complete: () => { }
     });
   }
 
@@ -103,8 +111,12 @@ export class SingleUserComponent implements OnInit {
 
     dialogRef.afterClosed.subscribe((reply: any) => {
       if (reply != undefined) {
-        console.log(reply);
+        window.location.reload();
       }
     });
+  }
+
+  linkMe(url: string) {
+    this.utilityService.linkMe(url);
   }
 }

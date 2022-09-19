@@ -1,0 +1,25 @@
+.container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 72px;
+    gap: 20px;
+
+    h3{
+        color: red;
+        margin-right: -24;
+    }
+
+    .modal{
+        display:flex;
+        margin-bottom: -13px;
+
+        button{
+            position: relative;
+            top: -39%;
+            left: 227%;
+            background: #dddbdb;
+            color: #306eff;
+        }
+    }
+}

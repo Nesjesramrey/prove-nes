@@ -1,0 +1,37 @@
+<div class="testimonials">
+  <p class="title-card">Testimonios</p>
+
+  <!-- TESTIMONIALS LIST -->
+  <div class="content">
+    <!-- ITEM -->
+    <div *ngIf="data.length === 0" class="txt-center"> 
+      <p>Sin testimonios</p>
+    </div>
+    <mat-card class="testimonial-item" *ngFor="let testimonial of data">
+      <!-- IMAGE -->
+      <div class="leading">
+        <mat-icon *ngIf="!testimonial.images[0]">panorama</mat-icon>
+        <img *ngIf="testimonial.images[0]" [src]="testimonial.images[0]" />
+      </div>
+      <!-- CONTENT -->
+      <div class="info">
+        <p class="title">{{ testimonial.name }}</p>
+        <!-- <p class="description">{{ testimonial.description }}</p> -->
+
+        <div class="about">
+          <!-- AVATAR -->
+
+          <img
+            class="avatar" 
+            *ngIf="testimonial.createdBy.avatarImage"
+            [src]="testimonial.createdBy.avatarImage"
+            [matTooltip]="testimonial.createdBy.firstname + ' ' + testimonial.createdBy.lastname"
+          />
+          <mat-icon *ngIf="!testimonial.createdBy.avatarImage" style="font-size: 20px">panorama</mat-icon>
+
+          <p>Fecha de creación: {{ testimonial.createdAt | date }}</p>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>

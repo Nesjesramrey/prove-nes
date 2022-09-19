@@ -1,0 +1,150 @@
+:host  {
+  .map-container {
+    width: 100%;
+    // margin-top: 2em;
+    padding: 0;
+
+    mat-card {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      // justify-content: space-between;
+      // align-items: stretch;
+      padding: 0;
+      height: 100%;
+    }
+
+    .map {
+      //   max-width: 730px;
+      width: 100%;
+      height: 450px;
+      display: block;
+      background-color: #ceddff;
+      margin: 0;
+      overflow: scroll;
+      overflow-x: scroll;
+    }
+
+    .aside-data {
+      width: 100%;
+      margin: 0;
+      padding: 15pt;
+      height: 100%;
+      min-width: 180px;
+
+      .select-full {
+        width: 100%;
+      }
+
+      .data-head {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 15pt;
+
+        > * {
+          margin: 0;
+        }
+
+        .row {
+          display: flex;
+          > * {
+            margin: 0;
+          }
+
+          p {
+            font-size: 12pt;
+          }
+
+          .dot-map {
+            width: 30pt;
+            height: 30pt;
+            border-radius: 50%;
+            border: 1px solid red;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 12pt;
+
+            &.green {
+              background-color: #e1f2ec;
+              border-color: #20c588;
+
+              mat-icon {
+                color: #20c588;
+                font-size: 14pt;
+              }
+            }
+
+            &.red {
+              background-color: #fcdbc3;
+              border-color: #ff6d00;
+
+              mat-icon {
+                color: #ff6d00;
+                font-size: 14pt;
+              }
+            }
+          }
+        }
+      }
+
+      .title {
+        font-size: 13pt;
+        color: #000000;
+        text-transform: uppercase;
+        font-weight: bold;
+      }
+
+      .data-box {
+        margin-top: 1em;
+
+        .subtitle {
+          font-size: 13pt;
+          color: #787878;
+        }
+
+        .text {
+          font-size: 12pt;
+          color: #000000;
+        }
+      }
+    }
+  }
+
+  svg.draw-map {
+    width: 850px;
+    height: 600px;
+    transform: scale(0.8);
+
+    .land {
+      fill: #f2f2f2;
+      fill-opacity: 1;
+      stroke: #ceddff;
+      stroke-opacity: 1;
+      stroke-width: 0.5;
+      &.active {
+        fill: #fcdbc3;
+      }
+    }
+  }
+
+  .chart-container {
+    width: 100%;
+    // background-color: orange;
+    display: flex;
+    flex-direction: column;
+    // justify-content: space-around;
+
+    p {
+      // margin: 0;
+      color: #20C588;
+      margin-top: 20px;
+      text-align: left;
+      font-size: 15pt;
+    
+    }
+    canvas.donut-chart {
+      margin-top: 30pt;
+    }
+  }
+}
