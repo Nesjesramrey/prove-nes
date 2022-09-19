@@ -157,13 +157,13 @@ export class PanelCirclesComponent implements OnInit {
     return {
       width: 145,
       height: 145,
-      font: 18,
+      font: 17,
     };
   if (size === 'large')
     return {
       width: 164,
       height: 164,
-      font: 19,
+      font: 17,
     };
   }
 

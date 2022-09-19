@@ -185,7 +185,7 @@
     mat-card {
       padding: 0;
       display: flex;
-      height: 250px;
+      min-height: 250px;
     
       .image-box {
         width: 40%;
@@ -226,8 +226,9 @@
           .actions {
             margin: 0;
             p {
-              font-size: 13pt;
+              font-size: 12pt;
               color: #fff;
+              font-weight: 800;
               text-shadow: 0 0 4px #919191;
             }
     
@@ -237,8 +238,8 @@
             }
             
             .votes{
-              margin-top: 8px;
-              font-size: 22pt;
+              margin-top: 4px;
+              font-size: 28pt;
               font-weight: bold;
             }
           }
@@ -251,9 +252,8 @@
     
         .title {
           font-size: 14pt;
-          text-transform: uppercase;
           margin-bottom: 12pt;
-          font-weight: 600;
+          font-weight: 700;
         }
     
         .short-description {

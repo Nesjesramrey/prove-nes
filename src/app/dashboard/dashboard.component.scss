@@ -89,6 +89,8 @@
       p {
         text-align: justify !important;
         margin-bottom: 20px;
+        font-size: 18pt;
+        line-height: 30px;
       }
 
       p:first-child {
@@ -203,7 +205,8 @@
 
     p:nth-child(3),
     p:nth-child(4) {
-      font-size: 17pt;
+      font-size: 19pt;
+      line-height: 36px;
     }
 
     button {

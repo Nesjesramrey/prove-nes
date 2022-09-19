@@ -58,12 +58,16 @@
       padding: 0 20px;
       color: #71f5ad;
     }
-
+    
     button {
       margin-left: 20px;
-      font-weight: 600;
-      font-size: 14px;
+      letter-spacing: 0.4px;
+      font-weight: 700;
+      font-size: 17px;
       color: #71f5ad;
+    }
+    button:hover{
+      text-decoration: underline solid #71f5ad 4px;
     }
 
     button:first-child {
@@ -116,7 +120,7 @@
   }
 
   .btn-permissios {
-    width: 224px;
+    width: 204px;
     height: 35px;
     color: #fff;
     border-radius: 5px;
