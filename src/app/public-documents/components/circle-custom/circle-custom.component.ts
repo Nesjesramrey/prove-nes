@@ -11,105 +11,37 @@ export class CircleCustomComponent implements OnInit {
   @Input() position: number = 0;
   @Input('categoryLength') categoryLength: any;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.data.position = this.getPosition(this.position);
-      this.data.size = this.getSize(this.size);
-    }, 200);
     if (this.data.out_circle == false) {
       this.data.out_circle_color = 'transparent';
+      // this.data.box = 85;
     }
+    // this.data.box = 100;
+  }
+
+  getPosition() {
+    const xR = Math.floor(Math.random() * 80);
+    const yR = Math.floor(Math.random() * 5);
+
+    return { x: xR, y: yR };
   }
 
   getSize(size: string): any {
-    if (size === 'small') return {
-      box: 134, font: 11,
-      left: 10, top: 50
-    };
-    if (size === 'medium') return {
-      box: 154, font: 16,
-      left: 10, top: 50
-    };
-    if (size === 'large') return {
-      box: 249, font: 22,
-      left: 10, top: 50
-    };
-
+    if (size === 'medium')
+      return {
+        width: 160,
+        height: 150,
+        font: 16,
+      };
+    if (size === 'large')
+      return {
+        width: 180,
+        height: 150,
+        font: 20,
+      };
   }
-
-  getPosition(position: number): any {
-
-    const basePosition = [
-      { left: 0, top: 30 },
-      { left: 0, top: 20 },
-      { left: 0, top: 20, right: -90 }
-    ]
-
-    let contador = 0;
-    for (let i = 0; i <= this.categoryLength; i++) {
-      if (i === position) {
-        if (contador === 0) {
-          switch (this.size) {
-            case 'large':
-              basePosition[contador].left = 10;
-              basePosition[contador].top = 15;
-              break;
-            case 'medium':
-              basePosition[contador].left = 7;
-              basePosition[contador].top = 15;
-              break;
-            case 'small':
-              basePosition[contador].left = 10;
-              basePosition[contador].top = 15;
-              break;
-          }
-          return basePosition[contador];
-        } else if (contador === 1) {
-          switch (this.size) {
-            case 'large':
-              basePosition[contador].left = 10;
-              basePosition[contador].top = -3;
-              break;
-            case 'medium':
-              basePosition[contador].left = -2;
-              basePosition[contador].top = 40;
-              break;
-            case 'small':
-              basePosition[contador].left = -15;
-              basePosition[contador].top = 50;
-              break;
-          }
-          return basePosition[contador];
-        } else {
-          switch (this.size) {
-            case 'large':
-              basePosition[contador].left = -19;
-              basePosition[contador].top = 50;
-              basePosition[contador].right = -20;
-              break;
-            case 'medium':
-              basePosition[contador].left = 6;
-              basePosition[contador].top = 128;
-              basePosition[contador].right = -50;
-              break;
-            case 'small':
-              basePosition[contador].left = -15;
-              basePosition[contador].top = 370;
-              basePosition[contador].right = -90;
-              break;
-          }
-          return basePosition[contador];
-        }
-      }
-      contador++;
-      if (contador === 3) contador = 0;
-    }
-
-
-  }
-
 }
 export interface Data {
   title: string;

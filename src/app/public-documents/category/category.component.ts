@@ -5,6 +5,8 @@ import { DocumentService } from 'src/app/services/document.service';
 import { Section } from 'src/app/public-documents/components/top10-list/top10-list.component';
 import { LayoutService } from 'src/app/services/layout.service';
 import { UtilityService } from 'src/app/services/utility.service';
+import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-category-page',
@@ -29,6 +31,7 @@ export class CategoryComponent implements OnInit {
     public documentService: DocumentService,
     public layoutService: LayoutService,
     public utilityService: UtilityService,
+    public dialog: MatDialog,
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
@@ -54,6 +57,22 @@ export class CategoryComponent implements OnInit {
       setTimeout(() => {
         this.isDataAvailable = true;
       }, 300);
+    });
+  }
+
+  popImageViewer() {
+    const dialogRef = this.dialog.open<ImageViewerComponent>(ImageViewerComponent, {
+      width: '640px',
+      data: {
+        location: 'document',
+        document: this.selectedCategory
+      },
+      disableClose: true,
+      panelClass: 'viewer-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
     });
   }
 }

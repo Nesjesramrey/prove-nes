@@ -27,8 +27,12 @@
       <div class="set-3 col-lft">
         <mat-card class="set-12 doc-description">
           <div class="set-12 imghldr">
-            <mat-icon *ngIf="!image">panorama</mat-icon>
-            <img *ngIf="image" [src]="image" alt="" />
+            <mat-icon *ngIf="selectedCategory.images.length == 0">panorama</mat-icon>
+            <slider-images [images]="selectedCategory.images" *ngIf="selectedCategory.images.length != 0"></slider-images>
+            <div class="overlay" (click)="popImageViewer()">
+              <mat-icon>photo_camera</mat-icon>
+              <div class="cover"></div>
+            </div>
           </div>
 
           <div class="set-12 infohldr">
@@ -49,7 +53,7 @@
 
         <div class="mt-2 set-3">
           <mat-form-field appearance="outline">
-            <mat-label>Cobertura</mat-label>
+            <mat-label>Cobertura</mat-label >
             <mat-select>
               <mat-option value="all">
                 <small>Nacional</small>

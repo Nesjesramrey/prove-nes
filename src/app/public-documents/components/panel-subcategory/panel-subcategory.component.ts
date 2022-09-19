@@ -46,7 +46,7 @@ export class PanelSubcategoryComponent implements OnInit {
     let maxY = 700;
 
     this.categories = this.data.map((item) => {
-      item.size = item._id === this.selectedID ? 38 : 30;
+      item.size = item._id === this.selectedID ? 38 : 20;
       item.opacity = item._id === this.selectedID ? 1 : 0.8;
       if (item.title.length > 12) {
         maxX = 400;

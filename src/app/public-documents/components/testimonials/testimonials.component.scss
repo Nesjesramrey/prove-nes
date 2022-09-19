@@ -1,5 +1,6 @@
 .testimonials {
   width: 100%;
+  overflow: auto;
   //   background-color: orange;
   mat-icon {
     font-size: 70pt;
@@ -7,7 +8,7 @@
   }
   .title-card{
     font-size: 13pt;
-    font-weight: 600;
+    font-weight: 700;
   }
   .title {
     margin: 0;
@@ -50,7 +51,7 @@
       margin-bottom: 9pt;
 
       .leading {
-        width: 15%;
+        width: 20%;
 
         img {
           width: 100%;
@@ -60,19 +61,19 @@
       }
 
       .info {
-        width: 85%;
+        width: 80%;
         padding: 10pt;
         display: flex;
         align-items: flex-start;
         justify-content: center;
         flex-direction: column;
+        margin-left: 20px;
         
         .about {
           display: flex;
           align-items: center;
           margin: 0;
           margin-top: 10pt;
-
           .avatar {
             margin: 0;
             width: 18pt;

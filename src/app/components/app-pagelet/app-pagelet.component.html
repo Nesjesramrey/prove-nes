@@ -12,13 +12,34 @@
     <button *ngIf="permission == false && isPublic > 0" type="button" class="btn-permissios" (click)="btnPermissions()">
       Permiso para editar
     </button>
-    <button *ngIf="permission == true && isPublic > 0" type="button" class="btn-permissios" (click)="redirectEdition()">
-      ir a edición
+    <button
+      *ngIf="permission == true && isPublic > 0"
+      type="button"
+      class="btn-permissios"
+      (click)="redirectEdition()"
+    >
+      Ir a edición
     </button>
-    <button *ngIf="permission == true && isPublic == -1" type="button" class="btn-permissios"
-      (click)="redirectEdition()">
-      Ver Publico
+    <button
+      *ngIf="permission == true && isPublic == -1"
+      type="button"
+      class="btn-permissios"
+      (click)="redirectEdition()"
+    >
+      Ver público
     </button>
+
+    <!-- <button type="button">
+      <span>Ciudadanos</span>
+    </button>
+
+    <button type="button">
+      <span>Candidatx Ideal</span>
+    </button>
+
+    <button type="button">
+      <span>Comité Ciudadano</span>
+    </button> -->
 
     <button type="button">
       <span>Pensamiento colectivo</span>

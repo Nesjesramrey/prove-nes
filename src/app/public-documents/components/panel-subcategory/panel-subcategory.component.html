@@ -1,4 +1,7 @@
-<div class="main shadow" style="background-color: white">
+<div class="main shadow">
+  <div *ngIf="categories.length === 0">
+    <p class="message">No cuenta con temas</p>
+  </div>
   <div
     class="random-text"
     [ngStyle]="{
@@ -9,8 +12,10 @@
     }"
     *ngFor="let item of categories"
   >
-    <span (click)="redirect(item._id)" style="cursor: pointer">{{
-      item.title
-    }}</span>
+    <!-- <div class="box sb4">I'm speech bubble</div> -->
+    <span (click)="redirect(item._id)" style="cursor: pointer"
+      >{{ item.title }}
+      <div class="sb4"></div>
+    </span>
   </div>
 </div>

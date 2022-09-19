@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DocumentService } from 'src/app/services/document.service';
 import { Section } from 'src/app/public-documents/components/top10-list/top10-list.component';
+import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: '.public-page',
@@ -17,7 +19,9 @@ export class PublicComponent implements OnInit {
 
   constructor(
     public activatedRoute: ActivatedRoute,
-    public documentService: DocumentService
+    public documentService: DocumentService,
+    public dialog: MatDialog,
+
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
   }
@@ -37,6 +41,23 @@ export class PublicComponent implements OnInit {
         this.image = reply.images.length > 0 ? reply.images[0] : this.image;
       });
   }
+
+  popImageViewer() {
+    const dialogRef = this.dialog.open<ImageViewerComponent>(ImageViewerComponent, {
+      width: '640px',
+      data: {
+        location: 'document',
+        document: this.document
+      },
+      disableClose: true,
+      panelClass: 'viewer-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
 }
 
 const ITEMS = [

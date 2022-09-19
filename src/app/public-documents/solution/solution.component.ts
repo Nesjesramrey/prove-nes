@@ -37,7 +37,6 @@ export class SolutionComponent implements OnInit {
   public votes: number = 0;
   public image: string = '../../../assets/images/not_fount.jpg';
 
-
   public testimonials: any = TESTIMONIALS;
 
   constructor(
@@ -57,13 +56,11 @@ export class SolutionComponent implements OnInit {
       this.activatedRoute['snapshot']['params']['subcategoryID'];
     this.topicID = this.activatedRoute['snapshot']['params']['topicID'];
     this.solutionID = this.activatedRoute['snapshot']['params']['solutionID'];
-
   }
 
   ngOnInit(): void {
     this.user = this.UserService.fetchFireUser().subscribe({
-      error: (error: any) => {
-      },
+      error: (error: any) => {},
       next: (reply: any) => {
         this.user = reply;
         this.loadSolution();
@@ -105,9 +102,10 @@ export class SolutionComponent implements OnInit {
       this.topic = reply[3];
       this.solution = reply[4];
       this.votes = reply[5].length;
-      this.image = (reply[3].images.length > 0) ? reply[3].images[0] : this.image;
+      this.image = reply[3].images.length > 0 ? reply[3].images[0] : this.image;
 
       setTimeout(() => {
+        this.getBreadcrumbsTitles();
         this.isDataAvailable = true;
       }, 300);
     });
@@ -186,6 +184,19 @@ export class SolutionComponent implements OnInit {
   //     },
   //   });
   // }
+
+  getBreadcrumbsTitles() {
+    this.topic.shortTitle = this.getshortTitle(this.topic.title);
+    this.solution.shortTitle = this.getshortTitle(this.solution.title);
+  }
+
+  getshortTitle(title: string) {
+    const titleArr = title.split(' ');
+    if (titleArr.length > 3) {
+      return titleArr[0] + ' ' + titleArr[1] + ' ' + titleArr[2] + '...';
+    }
+    return title;
+  }
 }
 
 export interface ITestimony {
