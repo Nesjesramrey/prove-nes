@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  version: "2022.9.12.1",
+  version: "2022.9.17.1",
   apiEndPoint: 'http://localhost:4040/api/v1',
   apiSocket: 'http://localhost:4040'
 };

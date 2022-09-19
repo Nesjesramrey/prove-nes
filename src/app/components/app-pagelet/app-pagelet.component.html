@@ -1,29 +1,15 @@
 <mat-toolbar *ngIf="isDataAvailable">
   <div class="set-6 logo">
-    <div class="set-3">
-      <img
-        src="assets/images/PANDOlogo.png"
-        alt="PANDO"
-        (click)="linkMe('home')"
-      />
+    <div class="set-4">
+      <img src="../../../assets/images/150922_MEXICOLECTIVO_LOGO_VERDE.png" (click)="linkMe('home')" />
     </div>
-    <div class="set-9">
-      <input
-        type="text"
-        placeholder="Búscar en Mexicolectivo..."
-        class="bar-search"
-        disabled
-      />
-    </div>
+    <!-- <div class="set-9">
+      <input type="text" placeholder="Búscar en Mexicolectivo..." class="bar-search" disabled />
+    </div> -->
   </div>
 
   <div class="set-6 navigation">
-    <button
-      *ngIf="permission == false && isPublic > 0"
-      type="button"
-      class="btn-permissios"
-      (click)="btnPermissions()"
-    >
+    <button *ngIf="permission == false && isPublic > 0" type="button" class="btn-permissios" (click)="btnPermissions()">
       Permiso para editar
     </button>
     <button
@@ -62,79 +48,41 @@
     <span class="sep">|</span>
 
     <!-- user not available -->
-    <button
-      type="button"
-      (click)="linkMe('join')"
-      *ngIf="user == null"
-      matTooltip="Registro"
-      matTooltipClass="tooltip"
-    >
+    <button type="button" (click)="linkMe('join')" *ngIf="user == null" matTooltip="Registro" matTooltipClass="tooltip">
       <mat-icon>app_registration</mat-icon>
     </button>
-    <button
-      type="button"
-      (click)="linkMe('login')"
-      *ngIf="user == null"
-      matTooltip="Ingreso"
-      matTooltipClass="tooltip"
-    >
+    <button type="button" (click)="linkMe('login')" *ngIf="user == null" matTooltip="Ingreso" matTooltipClass="tooltip">
       <mat-icon>account_box</mat-icon>
     </button>
 
     <!-- user available -->
-    <button
-      type="button"
-      class="avatar"
-      (click)="linkMe('profile')"
-      *ngIf="user != null"
-      [matTooltip]="user.firstname + ' ' + user.lastname"
-      matTooltipClass="tooltip"
-    >
-      <img
-        src="{{ user.avatarImage }}"
-        alt="{{ user.firstname }}"
-        *ngIf="user.avatarImage != null"
-      />
+    <button type="button" class="avatar" (click)="linkMe('profile')" *ngIf="user != null"
+      [matTooltip]="user.firstname + ' ' + user.lastname" matTooltipClass="tooltip">
+      <img src="{{ user.avatarImage }}" alt="{{ user.firstname }}" *ngIf="user.avatarImage != null" />
       <span *ngIf="user.avatarImage == null">
         {{ user.firstname | firstword | firstletter
         }}{{ user.lastname | firstword | firstletter }}
       </span>
     </button>
 
-    <button
-      type="button"
-      class="btn-ico"
-      *ngIf="user != null"
-      (click)="linkMe('notifications')"
-      matTooltip="Notificaciones"
-      matTooltipClass="tooltip"
-    >
-      <mat-icon
-        [matBadge]="unreadNotifications"
-        matBadgeColor="warn"
-        *ngIf="unreadNotifications != 0"
-        >notifications
+    <button type="button" class="btn-ico" *ngIf="user != null" (click)="linkMe('notifications')"
+      matTooltip="Notificaciones" matTooltipClass="tooltip">
+      <mat-icon [matBadge]="unreadNotifications" matBadgeColor="warn" *ngIf="unreadNotifications != 0">notifications
       </mat-icon>
       <mat-icon *ngIf="unreadNotifications == 0">notifications</mat-icon>
     </button>
 
-    <button
-      type="button"
-      class="btn-ico"
-      *ngIf="user != null"
-      (click)="onSignOut()"
-      matTooltip="Salir"
-      matTooltipClass="tooltip"
-    >
+    <button type="button" class="btn-ico" *ngIf="user != null" (click)="onSignOut()" matTooltip="Salir"
+      matTooltipClass="tooltip">
       <mat-icon>power_settings_new</mat-icon>
     </button>
 
-    <button
-      type="button"
-      class="btn-ico"
-      *ngIf="user != null && userActivities.includes('moderator')"
-      [matMenuTriggerFor]="menu"
-    >
+    <!-- <button type="button" class="btn-menu">
+      <mat-icon>menu</mat-icon>
+    </button> -->
+
+    <button type="button" class="btn-ico" *ngIf="user != null && userActivities.includes('moderator')"
+      [matMenuTriggerFor]="menu">
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
