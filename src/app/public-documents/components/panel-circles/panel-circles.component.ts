@@ -52,7 +52,7 @@ export class PanelCirclesComponent implements OnInit {
   }
 
   loadCategories() {
-    const sizes = ['medium', 'large'];
+    const sizes = ['small', 'medium', 'large'];
     // const opacities = [0.75, 1];
     let maxX = 5;
     let maxY = 20;
@@ -66,16 +66,20 @@ export class PanelCirclesComponent implements OnInit {
         id: item._id,
         title: item.category?.name || item.name,
         value: Math.floor(Math.random() * 1500),
-        out_circle: this.withBorder,
-        out_circle_color: '#ff6d00',
+        out_circle: false,
+        out_circle_color: '#71f5ad',
         in_circle_background: background,
+        // border: this.withBorder ? 'none' : '4px solid #71f5ad',
         overlay: 'transparent',
         // opacity: 1,
         opacity: 1,
         box: this.withBorder ? 88 : 100,
         // size: sizes[Math.floor(Math.random() * 2)],
         size: this.getSize(
-          item.category.name.split(' ').length > 1 ? 'large' : 'medium'
+          item.category.name.split(' ').length > 1 ||
+            item.category.name.length > 10
+            ? 'large'
+            : sizes[Math.floor(Math.random() * 2)]
         ),
         position: this.getPosition(),
         pos: {
@@ -83,8 +87,13 @@ export class PanelCirclesComponent implements OnInit {
           y: maxY,
         },
       };
+      const titleArr = obj.title.split(' ');
       maxX += 0;
       maxY += 10;
+      obj.title =
+        titleArr.length > 3
+          ? titleArr[0] + ' ' + titleArr[1] + ' ' + titleArr[2]
+          : obj.title;
 
       return obj;
     });
@@ -117,7 +126,7 @@ export class PanelCirclesComponent implements OnInit {
       },
       {
         set: set,
-        margin: '8px 60px',
+        margin: '8px 20px',
         data: this.categories.slice(8, 10),
       },
     ];
@@ -138,18 +147,24 @@ export class PanelCirclesComponent implements OnInit {
   }
 
   getSize(size: string): any {
-    if (size === 'medium')
-      return {
-        width: 150,
-        height: 150,
-        font: 15,
-      };
-    if (size === 'large')
-      return {
-        width: 145,
-        height: 145,
-        font: 16,
-      };
+    if (size === 'small')
+    return {
+      width: 140,
+      height: 140,
+      font: 17,
+    };
+  if (size === 'medium')
+    return {
+      width: 145,
+      height: 145,
+      font: 18,
+    };
+  if (size === 'large')
+    return {
+      width: 164,
+      height: 164,
+      font: 19,
+    };
   }
 
   redirect(id: string) {

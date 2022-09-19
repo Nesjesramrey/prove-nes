@@ -61,6 +61,8 @@
 
     button {
       margin-left: 20px;
+      font-weight: 600;
+      font-size: 14px;
       color: #71f5ad;
     }
 
@@ -114,10 +116,15 @@
   }
 
   .btn-permissios {
-    background-color: #306EFF;
     width: 224px;
     height: 35px;
     color: #fff;
     border-radius: 5px;
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .btn-permissios:hover {
+    text-decoration-line: underline;
   }
 }

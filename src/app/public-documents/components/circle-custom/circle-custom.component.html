@@ -11,44 +11,51 @@
   <div
     class="out-circumference"
     [ngStyle]="{
-      width: data.box + '%',
-      height: data.box + '%',
+    
       'border-color': data.out_circle_color
     }"
   >
+    <!-- 'background-image': 'url(' + data.in_circle_background + ')', -->
+
     <span class="overlay" [style.background-color]="data.overlay">
       <div
         class="in-circumference"
         [ngStyle]="{
-          'background-image': 'url(' + data.in_circle_background + ')',
-          'background-color': data.in_circle_background,
-          opacity: data.opacity
+          'background-color': data.in_circle_background
         }"
       >
+        <!-- <img
+          [src]="data.in_circle_background"
+          style="
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            border-radius: 100%;
+            z-index: -2;
+            /* filter: drop-shadow(16px 16px 10px black); */
+            filter: brightness(76%);
+          "
+          alt=""
+        /> -->
         <span>
           <p
             class="title"
             [ngStyle]="{
-              'font-size': data.size.font + 'px',
-              color: data.in_circle_background.includes('http')
-                ? 'white'
-                : 'rgba(75, 75, 75, 0.929)',
-              width: '90%'
+              'font-size': data.size.font + 'px'
             }"
           >
             {{ data.title }}
           </p>
-          <p
+          <!-- <p
             class="value"
             [ngStyle]="{
-              'font-size': data.size.font + 10 + 'px',
-              color: data.in_circle_background.includes('http')
-                ? 'white'
-                : 'rgba(75, 75, 75, 0.929)'
+              'font-size': data.size.font + 12 + 'px',
+              color: '#71f5ad'
             }"
           >
             {{ data.value }}
-          </p>
+          </p> -->
         </span>
       </div>
     </span>
