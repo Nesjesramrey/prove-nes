@@ -54,8 +54,10 @@
         <div class="set-3">
           <mat-form-field appearance="outline">
             <mat-label>Tipo</mat-label>
-            <mat-select>
-              <mat-option></mat-option>
+            <mat-select formControlName="activity" (selectionChange)="onSelectType($event)">
+              <mat-option *ngFor="let activity of allActivities" [value]="activity._id">
+                <small>{{activity.viewValue}}</small>
+              </mat-option>
             </mat-select>
           </mat-form-field>
         </div>
@@ -63,11 +65,10 @@
         <div class="set-3">
           <mat-form-field appearance="outline">
             <mat-label>Cobertura</mat-label>
-            <mat-select formControlName="coverage" multiple (selectionChange)="onSelectCoverage($event)"
-              #coverageSelect>
-              <mat-option value="all">
+            <mat-select formControlName="coverage" (selectionChange)="onSelectCoverage($event)" #coverageSelect>
+              <!-- <mat-option value="all">
                 <small>Todos</small>
-              </mat-option>
+              </mat-option> -->
               <mat-option *ngFor="let state of states" [value]="state._id">
                 <small>{{state.name}}</small>
               </mat-option>
@@ -79,6 +80,7 @@
       <div class="set-12 ctrls">
         <button type="submit" mat-raised-button color="primary"
           [disabled]="addCollaboratorFormGroup.invalid || submitted">Agregar</button>
+        <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
       </div>
     </form>
   </div>

@@ -18,7 +18,17 @@
     }
 
     .ctrls {
-      text-align: right;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      * {
+        margin: 0;
+      }
+
+      button {
+        margin-right: 20px;
+      }
     }
   }
 

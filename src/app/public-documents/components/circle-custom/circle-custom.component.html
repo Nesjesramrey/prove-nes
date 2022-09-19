@@ -1,40 +1,27 @@
-<section
-  class="container"
-  [ngStyle]="{
+<section class="container" [ngStyle]="{
     width: data.size.box + 'px',
     height: data.size.box + 'px',
     'margin-left': data.position.left + 'px',
     'margin-top': data.position.top + '%',
     'margin-right': data.position.right + 'px'
-  }"
-  *ngIf="data"
->
+  }" *ngIf="data">
   <div class="out-circumference" [style.border-color]="data.out_circle_color">
     <span class="overlay" [style.background-color]="data.overlay">
-      <div
-        class="in-circumference"
-        [ngStyle]="{
+      <div class="in-circumference" [ngStyle]="{
           'background-image': 'url(' + data.in_circle_background + ')',
           'background-color': data.in_circle_background,
           opacity: data.opacity
-        }"
-      >
+        }">
         <span>
-          <p
-            class="title"
-            [ngStyle]="{
+          <p class="title" [ngStyle]="{
               'font-size': data.size.font + 'px',
               width: '90%'
-            }"
-          >
+            }">
             {{ data.title }}
           </p>
-          <p
-            class="value"
-            [ngStyle]="{
+          <p class="value" [ngStyle]="{
               'font-size': data.size.font + 16 + 'px'
-            }"
-          >
+            }">
             {{ data.value }}
           </p>
         </span>

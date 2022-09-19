@@ -1,13 +1,8 @@
 <div class="main-box">
   <div class="main shadow">
     <div class="align" *ngFor="let item of categories">
-      <circle-custom
-        [data]="item"
-        [size]="item.size"
-        [position]="item.position"
-        [categoryLength]="categoryLength"
-        (click)="redirect(item.id)"
-      ></circle-custom>
+      <circle-custom [data]="item" [size]="item.size" [position]="item.position" [categoryLength]="categoryLength"
+        (click)="redirect(item.id)"></circle-custom>
     </div>
   </div>
 </div>

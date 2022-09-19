@@ -35,4 +35,8 @@ export class LayoutService {
   killLayoutImage(data: any) {
     return this.httpClient.delete(this.endpointSrvc.apiEndPoint + this.endpointSrvc.killLayoutImageEndPoint + `${data['layout_id']}` + '/images', { body: data });
   }
+
+  addLayoutCollaborator(data: any) {
+    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.addLayoutCollaboratorEndPoint + `${data['layout']}` + '/collaborator', data);
+  }
 }
