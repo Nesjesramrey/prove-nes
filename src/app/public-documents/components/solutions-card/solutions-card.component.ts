@@ -31,6 +31,7 @@ export class SolutionsCardComponent implements OnInit {
 
   ngOnInit(): void {
     // this.SolutionDataSource = new MatTableDataSource(this.data);
+    console.log(this.data)
   }
 
   redirect(id: string) {
