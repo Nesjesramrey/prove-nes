@@ -41,7 +41,7 @@
 
     mat-icon {
       font-size: 13pt;
-      color: #306EFF;
+      // color: #306EFF;
     }
 
     button {
@@ -73,7 +73,7 @@
 
     mat-icon {
       margin-bottom: 20px;
-      color: #306EFF;
+      // color: #306EFF;
       font-size: 40pt;
     }
   }
@@ -83,7 +83,7 @@
 
     mat-icon {
       font-size: 30pt;
-      color: #306EFF;
+      // color: #306EFF;
     }
 
     .date {
@@ -116,8 +116,8 @@
   }
 
   .imghldr {
-    min-height: 150px;
-    max-height: 150px;
+    min-height: 200px;
+    max-height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;

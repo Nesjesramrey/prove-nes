@@ -71,10 +71,10 @@
 
       <div class="set-12 ctrls">
         <button type="button" mat-raised-button color="accent" (click)="killDialog()" [disabled]="submitted">
-          Cancelar
+          <small>Cancelar</small>
         </button>
         <button type="submit" mat-raised-button color="primary" [disabled]="documentFormGroup.invalid || submitted">
-          Crear Documento
+          <small>Crear Documento</small>
         </button>
         <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
       </div>

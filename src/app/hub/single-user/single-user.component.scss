@@ -83,7 +83,7 @@
     .overlay {
       width: 100%;
       height: 100%;
-      background: rgba($color: #000000, $alpha: 0.4);
+      background: rgba($color: #000000, $alpha: 0.7);
       position: absolute;
       top: 0;
       left: 0;
@@ -97,7 +97,7 @@
       mat-icon {
         position: relative;
         z-index: 4;
-        color: #ffffff;
+        // color: #ffffff;
         font-size: 30pt;
       }
     }
