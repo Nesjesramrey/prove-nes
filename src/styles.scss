@@ -264,7 +264,7 @@ table {
   border: 1px solid rgba($color: #000000, $alpha: 0.1);
 
   mat-icon {
-    color: #306EFF !important;
+    // color: #306EFF !important;
     font-size: 14pt;
   }
 }
@@ -330,7 +330,8 @@ table {
 .carousel {
   z-index: 19 !important;
   min-height: 300px;
-  height: 430px !important;
+  // height: 430px !important;
+  height: 540px !important;
 }
 
 .carousel-cells {
@@ -548,7 +549,7 @@ mat-form-field {
     mat-icon {
       position: relative;
       font-size: 30pt !important;
-      color: #ffffff !important;
+      // color: #ffffff !important;
       z-index: 4;
     }
   }
@@ -621,7 +622,11 @@ mat-form-field {
   }
 }
 
-.mat-card, .mat-select, .mat-form-field, .mat-table, .mat-list-item{
+.mat-card,
+.mat-select,
+.mat-form-field,
+.mat-table,
+.mat-list-item {
   font-family: 'Montserrat', "Helvetica Neue", sans-serif !important;
 
 }

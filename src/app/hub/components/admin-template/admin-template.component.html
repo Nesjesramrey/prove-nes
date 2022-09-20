@@ -1,21 +1,27 @@
-<div class="set-12 toptools">
-  <strong><small>DOCUMENTOS</small></strong>
+<div class="set-12 toptools" *ngIf="documents.length != 0">
+  <!-- <strong><small>DOCUMENTOS</small></strong>
   <button type="button" class="roundgreen" *ngIf="documents.length != 0" (click)="openAddDocumentDialog()"
     matTooltip="Agregar Documento" matTooltipClass="tooltip">
     <mat-icon>note_add</mat-icon>
+  </button> -->
+  <button type="button" mat-raised-button color="primary" (click)="openAddDocumentDialog()">
+    <small>Nuevo Documento</small>
   </button>
 </div>
 
 <!-- empty documents -->
 <div class="set-12" *ngIf="documents.length == 0 && isDataAvailable">
   <div class="set-12 carousel-hldr">
-    <carousel [cellsToShow]="1" [arrows]="false">
+    <carousel [cellsToShow]="2" [arrows]="false">
       <div class="carousel-cell">
         <mat-card class="emptycard">
           <div class="set-12 txt-center">
-            <h4>Agrega un documento</h4>
-            <button type="button" class="roundblue" (click)="openAddDocumentDialog()">
-              <mat-icon>note_add</mat-icon>
+            <h4>Sin documentos disponibles</h4>
+            <p class="icon">
+              <mat-icon color="primary">folder</mat-icon>
+            </p>
+            <button type="button" mat-raised-button color="primary" (click)="openAddDocumentDialog()">
+              <small>Nuevo Documento</small>
             </button>
           </div>
         </mat-card>
@@ -37,20 +43,37 @@
 
           <div class="set-12 infohldr">
             <div class="set-12 card-row">
-              <div class="set-8">
-                <!-- <h4>{{document.title}}</h4> -->
+              <div class="set-11">
                 {{(document.title.length > 20) ? (document.title | slice: 0:20) + '...' : (document.title)}}
               </div>
-              <div class="set-4 txt-right">
-                <button type="button" matTooltip="Editar">
-                  <mat-icon>edit</mat-icon>
+              <div class="set-1 txt-right">
+                <button [matMenuTriggerFor]="menu">
+                  <mat-icon color="primary">more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item type="button">
+                    <mat-icon color="primary">pie_chart</mat-icon>
+                    <span>Ver datos</span>
+                  </button>
+                  <button mat-menu-item type="button" (click)="linkMe('/documentos-publicos/' + document._id)">
+                    <mat-icon color="primary">groups</mat-icon>
+                    <span>Abrir público</span>
+                  </button>
+                  <button mat-menu-item type="button" (click)="linkMe('/documentos/' + document._id)">
+                    <mat-icon color="primary">lock</mat-icon>
+                    <span>Abrir privado</span>
+                  </button>
+                </mat-menu>
+
+                <!-- <button type="button" matTooltip="Editar">
+                  <mat-icon color="warn">edit</mat-icon>
                 </button>
                 <button type="button" matTooltip="Abrir" (click)="linkMe('/documentos/' + document._id)">
-                  <mat-icon>description</mat-icon>
+                  <mat-icon color="warn">description</mat-icon>
                 </button>
                 <button type="button" matTooltip="Datos" (click)="displayDocumentData(document._id)">
-                  <mat-icon>pie_chart</mat-icon>
-                </button>
+                  <mat-icon color="warn">pie_chart</mat-icon>
+                </button> -->
               </div>
             </div>
 
@@ -63,8 +86,8 @@
             </div>
 
             <div class="set-12 card-row counts">
-              <mat-icon>person</mat-icon> <small>{{document.collaborators.length}} Usuarios</small>
-              <mat-icon>front_hand</mat-icon> <small>0 Interacciones</small>
+              <mat-icon color="warn">person</mat-icon> <small>{{document.collaborators.length}} Usuarios</small>
+              <mat-icon color="warn">front_hand</mat-icon> <small>0 Interacciones</small>
             </div>
 
             <div class="set-12 available-layout" *ngIf="document.layouts.length != 0">

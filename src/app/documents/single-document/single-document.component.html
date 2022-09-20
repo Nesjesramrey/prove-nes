@@ -22,10 +22,10 @@
     <div class="set-3 col-lft">
       <mat-card class="set-12 doc-description">
         <div class="set-12 imghldr">
-          <mat-icon *ngIf="document.images.length == 0">panorama</mat-icon>
+          <mat-icon class="pano" *ngIf="document.images.length == 0">panorama</mat-icon>
           <slider-images [images]="document.images" *ngIf="document.images.length != 0"></slider-images>
           <div class="overlay" (click)="popImageViewer()">
-            <mat-icon>photo_camera</mat-icon>
+            <mat-icon color="accent">photo_camera</mat-icon>
             <div class="cover"></div>
           </div>
         </div>
