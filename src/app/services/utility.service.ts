@@ -96,7 +96,7 @@ export class UtilityService {
     const arrayTitle = reply[0].title.split(' ');
     reply[0].title = ( arrayTitle.length <= 3 ) 
     ? reply[0].title
-    : `... / ${arrayTitle[0]} ${arrayTitle[1]} ${arrayTitle[2]}`;
+    : `${arrayTitle[0]} ${arrayTitle[1]} ${arrayTitle[2]}...`;
     return reply[0];
   }
 
@@ -104,7 +104,7 @@ export class UtilityService {
     const arrayTitleCategory = reply[1].category.name.split(' ');
     reply[1].category.name = ( arrayTitleCategory.length <= 3 ) 
     ? reply[1].category.name
-    : `... / ${arrayTitleCategory[0]} ${arrayTitleCategory[1]} ${arrayTitleCategory[2]}`;
+    : `${arrayTitleCategory[0]} ${arrayTitleCategory[1]} ${arrayTitleCategory[2]}...`;
     return reply[1];
   }
 
@@ -112,7 +112,7 @@ export class UtilityService {
     const arrayTitleCategory = reply[2].category.name.split(' ');
     reply[2].category.name = ( arrayTitleCategory.length <= 3 ) 
     ? reply[2].category.name
-    : `... / ${arrayTitleCategory[0]} ${arrayTitleCategory[1]} ${arrayTitleCategory[2]}`;
+    : `${arrayTitleCategory[0]} ${arrayTitleCategory[1]} ${arrayTitleCategory[2]}...`;
     return reply[2];
   }
 
@@ -120,7 +120,7 @@ export class UtilityService {
     const arrayTitleCategory = reply[3].category.name.split(' ');
     reply[3].category.name = ( arrayTitleCategory.length <= 3 ) 
     ? reply[3].category.name
-    : `... / ${arrayTitleCategory[0]} ${arrayTitleCategory[1]} ${arrayTitleCategory[2]}`;
+    : `... ${arrayTitleCategory[0]} ${arrayTitleCategory[1]} ${arrayTitleCategory[2]}`;
     return reply[3];
   }
 }
