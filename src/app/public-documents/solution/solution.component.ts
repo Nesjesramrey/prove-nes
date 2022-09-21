@@ -98,7 +98,7 @@ export class SolutionComponent implements OnInit {
       this.userVoted = this.checkUserVote(reply[5]);
       this.document = reply[0];
       this.category = reply[1];
-      this.subcategory = reply[2];
+      this.subcategory = this.utilityService.formatSubCategoryBreadscrumbs(reply);
       this.topic = reply[3];
       this.solution = reply[4];
       this.votes = reply[5].length;

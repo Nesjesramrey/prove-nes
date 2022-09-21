@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
 import { MatButtonModule } from '@angular/material/button';
@@ -99,9 +99,9 @@ export class TopicComponent implements OnInit {
     forkJoin([document, category, subcategory, topic, votes]).subscribe(
       (reply: any) => {
         this.userVoted = this.checkUserVote(reply[4]);
-        this.document = reply[0];
-        this.category = reply[1];
-        this.subcategory = reply[2];
+        this.document = this.utilityService.formatDocumentBreadscrumbs(reply);
+        this.category = this.utilityService.formatCategoryBreadscrumbs(reply);
+        this.subcategory = this.utilityService.formatSubCategoryBreadscrumbs(reply);
         this.topic = reply[3];
         this.votes = reply[4].length;
         this.solutionsData = this.topic.solutions;
