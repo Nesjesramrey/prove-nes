@@ -115,4 +115,12 @@ export class UtilityService {
     : `... / ${arrayTitleCategory[0]} ${arrayTitleCategory[1]} ${arrayTitleCategory[2]}`;
     return reply[2];
   }
+
+  formatTopicBreadscrumbs(reply:any){
+    const arrayTitleCategory = reply[3].category.name.split(' ');
+    reply[3].category.name = ( arrayTitleCategory.length <= 3 ) 
+    ? reply[3].category.name
+    : `... / ${arrayTitleCategory[0]} ${arrayTitleCategory[1]} ${arrayTitleCategory[2]}`;
+    return reply[3];
+  }
 }
