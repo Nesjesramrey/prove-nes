@@ -1,12 +1,5 @@
 <div class="set-12 dialog-head">
-  <div class="set-9">
-    <h3>Agregar Solución</h3>
-  </div>
-  <div class="set-3 txt-right">
-    <button type="button" mat-icon-button color="primary" (click)="killDialog()">
-      <mat-icon>cancel</mat-icon>
-    </button>
-  </div>
+  <h3>Agregar Solución</h3>
 </div>
 
 <div class="set-12 step-content">
@@ -34,10 +27,14 @@
       </div>
     </div>
 
-    <div class="set-12 txt-right ctrls" [class.messageErrorBtn]="messageError" >
+    <div class="set-12 txt-right ctrls" [class.messageErrorBtn]="messageError">
       <span *ngIf="messageError" class="messageError">Titulo y descripción son requeridos.</span>
-      <button type="submit" mat-raised-button color="primary"
-        [disabled]="addSolutionFormGroup.invalid || submitted">Guardar</button>
+      <button type="button" mat-raised-button color="accent" [disabled]="submitted" (click)="killDialog()">
+        <small>Cancelar</small>
+      </button>
+      <button type="submit" mat-raised-button color="primary" [disabled]="addSolutionFormGroup.invalid || submitted">
+        <small>Guardar</small>
+      </button>
       <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
     </div>
   </form>
@@ -47,5 +44,3 @@
     </p>
   </div>
 </div>
-
-

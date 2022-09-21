@@ -116,8 +116,6 @@ export class SingleCategoryComponent implements OnInit {
       // this.topics = themes;
       // this.solutions = solutions;
 
-
-
       setTimeout(() => {
         this.isDataAvailable = true;
       }, 1000);
@@ -206,17 +204,13 @@ export class SingleCategoryComponent implements OnInit {
     });
   }
 
-  linkTopic(id: string, subcategory_id: string) {
-    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${subcategory_id}/temas/${id}`)
+  linkMe(url: string) {
+    this.utilityService.linkMe(url);
   }
 
-  linkSubcategory(id: string) {
-    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${id}`);
-  }
-
-  linkSolution(id: string, subcategory_id: string, theme_id: string) {
-    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${subcategory_id}/temas/${theme_id}/solucion/${id}`)
-  }
+  // linkSubcategory(id: string) {
+  //   this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${id}`);
+  // }
 
   popImageViewer() {
     const dialogRef = this.dialog.open<ImageViewerComponent>(ImageViewerComponent, {

@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ActivatedRoute, Router } from '@angular/router';
-import { forkJoin, Observable } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { SocketService } from 'src/app/services/socket.service';
@@ -36,7 +35,6 @@ export class AppPageletComponent implements OnInit {
     public utilitySrvc: UtilityService,
     public angularFireAuth: AngularFireAuth,
     public activatedRoute: ActivatedRoute,
-
     public dialog: MatDialog
   ) {
     this.token = this.authenticationSrvc.fetchAccessToken;
@@ -44,21 +42,18 @@ export class AppPageletComponent implements OnInit {
 
   ngOnInit(): void {
     this.reset();
+
     setTimeout(() => {
       if (this.user) {
         this.user['activities'].filter((x: any) => {
           this.userActivities.push(x['value']);
         });
 
-        this.notificationSrvc
-          .fetchMyNotificationUnread({ userID: this.user['_id'] })
-          .subscribe((reply: any) => {
-            this.unreadNotifications = reply['count'];
-          });
+        this.notificationSrvc.fetchMyNotificationUnread({ userID: this.user['_id'] }).subscribe((reply: any) => {
+          this.unreadNotifications = reply['count'];
+        });
 
-        if (
-          ['administrator', 'editor'].includes(this.user.activities?.[0]?.value)
-        ) {
+        if (['administrator', 'editor'].includes(this.user.activities?.[0]?.value)) {
           this.permission = true;
         } else {
           this.permission = false;
@@ -70,9 +65,11 @@ export class AppPageletComponent implements OnInit {
       }
     });
   }
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes['path']) this.reset();
   }
+
   reset() {
     const isDocument = this.router.url.indexOf('documentos');
     this.isPublic = this.router.url.indexOf('documentos-publicos');
@@ -126,8 +123,9 @@ export class AppPageletComponent implements OnInit {
       }
     );
 
-    dialogRef.afterClosed().subscribe((reply: any) => {});
+    dialogRef.afterClosed().subscribe((reply: any) => { });
   }
+
   getRedirectUrl() {
     let params = window.location.pathname.split('/').filter((x) => x);
 
@@ -157,6 +155,7 @@ export class AppPageletComponent implements OnInit {
       return acc;
     }, '');
   }
+
   redirectEdition() {
     this.router.navigateByUrl(this.redirectUrl);
   }

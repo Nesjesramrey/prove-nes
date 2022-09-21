@@ -102,7 +102,7 @@ export class SingleDocumentComponent implements OnInit {
       if (reply != undefined) {
         this.layouts.push(reply[0]);
         this.layouts.filter((layout: any) => { layout['categoryName'] = layout['category']['name']; });
-        this.dataSource = new MatTableDataSource(this.layouts); 
+        this.dataSource = new MatTableDataSource(this.layouts);
       }
     });
   }
@@ -206,8 +206,8 @@ export class SingleDocumentComponent implements OnInit {
     });
   }
 
-  linkCategories(id: string) {
-    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${id}`)
+  LinkMe(url: string) {
+    this.utilityService.linkMe(url);
   }
 
   setDocumentAsPublicPrivate() {

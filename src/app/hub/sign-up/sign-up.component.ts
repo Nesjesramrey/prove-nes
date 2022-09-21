@@ -7,6 +7,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Router } from '@angular/router';
 
 @Component({
   selector: '.sign-up-page',
@@ -25,7 +26,8 @@ export class SignUpComponent implements OnInit {
     public authenticationSrvc: AuthenticationService,
     public utilitySrvc: UtilityService,
     public angularFireAuth: AngularFireAuth,
-    public angularFireStore: AngularFirestore
+    public angularFireStore: AngularFirestore,
+    public router: Router
   ) { }
 
   ngOnInit(): void {
@@ -53,8 +55,8 @@ export class SignUpComponent implements OnInit {
         this.SendVerificationMail();
         // console.log('reply: ', reply);
         this.user = reply['user']['multiFactor']['user'];
-        console.log('user: ', this.user);
-        console.log(this.user['accessToken']);
+        // console.log('user: ', this.user);
+        // console.log(this.user['accessToken']);
 
         let signUpData: any = {
           firebaseUID: this.user['uid'],
@@ -63,39 +65,17 @@ export class SignUpComponent implements OnInit {
           email: formGroup['value']['email'],
           password: formGroup['value']['password']
         }
+
         this.authenticationSrvc.signup(signUpData).subscribe((reply: any) => {
-          console.log(reply);
+          // console.log(reply);
+          localStorage.setItem('accessToken', this.user['accessToken']);
+          this.router.navigateByUrl('/', { state: { status: 'logout' } });
         });
       })
       .catch((error: any) => {
+        console.log(error);
         this.submitted = false;
       });
-
-
-    // this.authenticationSrvc.validateEmail(
-    //   { email: formGroup.value.email }
-    // ).subscribe((reply: any) => {
-    //   this.submitted = false;
-
-    //   if (reply['status'] == false) {
-    //     this.utilitySrvc.openErrorSnackBar(reply['error']);
-    //     return;
-    //   }
-    //   this.utilitySrvc.openSuccessSnackBar(reply['message']);
-    //   signUpData['validationCode'] = reply['validationCode'];
-
-    //   const dialogRef = this.dialog.open<EmailValidationDialogComponent>(EmailValidationDialogComponent, {
-    //     width: 420,
-    //     data: {
-    //       signUpData: signUpData
-    //     },
-    //     disableClose: true
-    //   });
-
-    //   dialogRef.afterClosed.subscribe((reply: any) => {
-    //     if (reply != undefined) { }
-    //   });
-    // });
   }
 
   SendVerificationMail() {

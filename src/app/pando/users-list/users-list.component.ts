@@ -64,7 +64,7 @@ export class UsersListComponent implements OnInit {
       next: (reply: any) => {
         this.user = reply;
         this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
-        console.log(this.user);
+        // console.log(this.user);
         setTimeout(() => {
           this.isDataAvailable = true;
         });

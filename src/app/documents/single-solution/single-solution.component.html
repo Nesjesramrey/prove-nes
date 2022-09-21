@@ -4,32 +4,31 @@
 
 <div class="set-12" *ngIf="isDataAvailable">
   <div class="set-12">
-    <div class="set-9">
-      <breadcrumbs-component>
-        <li>Documentos</li>
-        <li (click)="utilityService.linkMe('/documentos/' + document._id)">
-          {{ document.title }}
-        </li>
-        <li (click)="utilityService.linkMe('/documentos/' + document._id + '/categoria/' + category._id)">
-          {{ category.category.name }}
-        </li>
-        <li
-          (click)="utilityService.linkMe('/documentos/' + document._id + '/categoria/' + category._id + '/subcategoria/' + subcategory._id)">
-          {{ subcategory.category.name }}
-        </li>
-        <li
-          (click)="utilityService.linkMe('/documentos/' + document._id + '/categoria/' + category._id + '/subcategoria/' + subcategory._id + '/temas/' + topic._id)">
-          {{ topic.title }}
-        </li>
-        <li>{{ solution.title }}</li>
-      </breadcrumbs-component>
-    </div>
-    <div class="set-3 txt-right">
-      <span class="created-by">
-        Autor: <span class="author">{{category.createdBy.firstname}}
-          {{category.createdBy.lastname}}</span>
-      </span>
-    </div>
+    <breadcrumbs-component>
+      <li>Documentos</li>
+      <li (click)="utilityService.linkMe('/documentos/' + document._id)">
+        {{ document.title }}
+      </li>
+      <li (click)="utilityService.linkMe('/documentos/' + document._id + '/categoria/' + category._id)">
+        {{ category.category.name }}
+      </li>
+      <li
+        (click)="utilityService.linkMe('/documentos/' + document._id + '/categoria/' + category._id + '/subcategoria/' + subcategory._id)">
+        {{ subcategory.category.name }}
+      </li>
+      <li
+        (click)="utilityService.linkMe('/documentos/' + document._id + '/categoria/' + category._id + '/subcategoria/' + subcategory._id + '/temas/' + topic._id)">
+        {{ topic.title }}
+      </li>
+      <li>{{ solution.title }}</li>
+    </breadcrumbs-component>
+  </div>
+
+  <div class="set-12 author-hldr">
+    <span class="created-by">
+      Autor: <span class="author">{{category.createdBy.firstname}}
+        {{category.createdBy.lastname}}</span>
+    </span>
   </div>
 
   <div class="set-12">
