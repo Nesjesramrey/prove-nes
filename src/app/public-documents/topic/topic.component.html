@@ -4,7 +4,7 @@
 <div class="set-12" *ngIf="isDataAvailable">
   <div class="container">
     <div class="set-12">
-      <div class="set-7">
+      <div class="set-10">
         <breadcrumbs-component>
           <li>...</li>
           <li
@@ -43,9 +43,9 @@
           <li>{{ topic.shortTitle }}</li>
         </breadcrumbs-component>
       </div>
-      <div class="set-3 featured-users">
+      <!-- <div class="set-3 featured-users">
         <featured-users [inputAmount]="3"></featured-users>
-      </div>
+      </div> -->
       <div class="set-2 txt-right">
         <button *ngIf="permission" type="button" mat-mini-fab color="accent" class="mini" matTooltip="Agregar Solución"
           (click)="openModalSolution()">
