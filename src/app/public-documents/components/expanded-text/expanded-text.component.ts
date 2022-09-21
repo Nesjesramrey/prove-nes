@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-
+import { MatDialog } from '@angular/material/dialog';
+import { ModalDesciptionComponent } from '../modal-desciption/modal-desciption.component';
 @Component({
   selector: 'expanded-text',
   templateUrl: './expanded-text.component.html',
@@ -8,19 +9,21 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ExpandedTextComponent implements OnInit {
   @Input() text: string = '';
   @Input() minLength: number = 200;
+  @Input() title: string = '';
 
   public expanded: boolean = false;
   public arrayText: string[] = [];
   public isShortText: boolean = false;
 
-  constructor() {}
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.processText();
+    console.log({ title: this.title });
   }
 
   processText() {
-    this.text = this.text || ' '
+    this.text = this.text || ' ';
     let length = this.minLength;
     const textLength = this.text.length;
 
@@ -38,5 +41,17 @@ export class ExpandedTextComponent implements OnInit {
 
   expandBox() {
     this.expanded = !this.expanded;
+  }
+  openModalDescription() {
+    const dialogRef = this.dialog.open<ModalDesciptionComponent>(
+      ModalDesciptionComponent,
+      {
+        data: {
+          title: this.title,
+          text: this.text,
+        },
+        disableClose: true,
+      }
+    );
   }
 }

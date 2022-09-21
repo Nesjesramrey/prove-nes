@@ -65,12 +65,24 @@
     </div> -->
 
     <div class="set-2 txt-center">
-      <button type="button" mat-mini-fab color="primary" class="mini" matTooltip="Agregar Comentario"
-        (click)="openModalComment()">
+      <button
+        type="button"
+        mat-mini-fab
+        color="primary"
+        class="mini"
+        matTooltip="Agregar Comentario"
+        (click)="openModalComment()"
+      >
         <mat-icon>add_comment</mat-icon>
       </button>
-      <button type="button" mat-mini-fab color="warn" class="mini" matTooltip="Agregar Testimonio"
-        (click)="openModalTestimony()">
+      <button
+        type="button"
+        mat-mini-fab
+        color="warn"
+        class="mini"
+        matTooltip="Agregar Testimonio"
+        (click)="openModalTestimony()"
+      >
         <mat-icon>book</mat-icon>
       </button>
     </div>
@@ -115,7 +127,11 @@
                     *ngIf="!userVoted"
                     mat-raised-button
                     color="black"
-                    style="background-color: #71f5ad;font-weight: 600;font-size: 16px;"
+                    style="
+                      background-color: #71f5ad;
+                      font-weight: 600;
+                      font-size: 16px;
+                    "
                     (click)="openModalVote()"
                   >
                     Votar
@@ -126,7 +142,11 @@
             <!-- DATA -->
             <div class="data-box">
               <p class="title">{{ solution.title }}</p>
-              <expanded-text [text]="solution.description"> </expanded-text>
+              <expanded-text
+                [text]="solution.description"
+                [title]="solution.title"
+              >
+              </expanded-text>
             </div>
           </mat-card>
         </div>
