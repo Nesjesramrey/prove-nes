@@ -1,6 +1,6 @@
 .main {
   height: 450px;
-  display: block;
+  display: flex;
   background: linear-gradient(360deg, rgba(0, 3, 79, 0) -40%, #00031d 100%);
   // background-image: radial-gradient(#71f5ac27 5%, transparent 5%);
   // background-position: 0 0, 20px 20px;
@@ -8,6 +8,8 @@
   // background-color: #00031d;
   border-radius: 5px 5px 0px 0px;
   padding: 25px;
+  flex-flow: column wrap;
+  justify-content: start;
   .random-text {
     margin-bottom: 32px;
     position: relative;
