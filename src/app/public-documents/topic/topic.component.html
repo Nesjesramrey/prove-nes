@@ -43,20 +43,39 @@
           <li>{{ topic.shortTitle }}</li>
         </breadcrumbs-component>
       </div>
-    <!--   <div class="set-3 featured-users">
+      <!-- <div class="set-3 featured-users">
         <featured-users [inputAmount]="3"></featured-users>
       </div> -->
       <div class="set-2 txt-right">
-        <button *ngIf="permission" type="button" mat-mini-fab color="accent" class="mini" matTooltip="Agregar Solución"
-          (click)="openModalSolution()">
+        <button
+          *ngIf="permission"
+          type="button"
+          mat-mini-fab
+          color="accent"
+          class="mini"
+          matTooltip="Agregar Solución"
+          (click)="openModalSolution()"
+        >
           <mat-icon>feedback</mat-icon>
         </button>
-        <button type="button" mat-mini-fab color="primary" class="mini" matTooltip="Agregar Comentario"
-          (click)="openModalComment()">
+        <button
+          type="button"
+          mat-mini-fab
+          color="primary"
+          class="mini"
+          matTooltip="Agregar Comentario"
+          (click)="openModalComment()"
+        >
           <mat-icon>add_comment</mat-icon>
         </button>
-        <button type="button" mat-mini-fab color="warn" class="mini" matTooltip="Agregar Testimonio"
-          (click)="openModalTestimony()">
+        <button
+          type="button"
+          mat-mini-fab
+          color="warn"
+          class="mini"
+          matTooltip="Agregar Testimonio"
+          (click)="openModalTestimony()"
+        >
           <mat-icon>book</mat-icon>
         </button>
       </div>
@@ -100,7 +119,11 @@
                       *ngIf="!userVoted"
                       mat-raised-button
                       color="black"
-                      style="background-color: #71f5ad;font-weight: 600;font-size: 16px;"
+                      style="
+                        background-color: #71f5ad;
+                        font-weight: 600;
+                        font-size: 16px;
+                      "
                       (click)="openModalVote()"
                     >
                       Votar
@@ -112,7 +135,11 @@
               <!-- DATA -->
               <div class="data-box">
                 <p class="title">{{ topic.title }}</p>
-                <expanded-text [text]="topic.description" [minLength]="400">
+                <expanded-text
+                  [text]="topic.description"
+                  [minLength]="400"
+                  [title]="topic.title"
+                >
                 </expanded-text>
               </div>
             </mat-card>

@@ -10,6 +10,7 @@ export class UtilityService {
   public emailPattern: any = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   public numberOnly: string = '^[0-9]*$';
   public image_extensions: any = ['jpg', 'jpeg', 'png', 'bmp'];
+  public errorOops: string = '¡Oops!... Ocurrió un error, inténtalo más tarde.';
 
   constructor(
     public snackbar: MatSnackBar,

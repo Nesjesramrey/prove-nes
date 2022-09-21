@@ -33,10 +33,14 @@ export class AddRootCategoryComponent implements OnInit {
   }
 
   onAddCategory(formGroup: FormGroup) {
+    this.submitted = true;
+
     let data: any = {
       name: formGroup['value']['name']
     };
+
     this.utilityService.createNewCategory(data).subscribe((reply: any) => {
+      this.submitted = false;
       this.dialogRef.close(reply);
     });
   }

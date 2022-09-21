@@ -1,9 +1,9 @@
 :host {
   .form-body {
     margin-top: 20pt;
-   
 
-    > * {
+
+    >* {
       margin: 0;
     }
 
@@ -76,6 +76,7 @@
       }
     }
   }
+
   .submit-button {
     display: block;
     margin: 0 auto;
@@ -135,18 +136,19 @@
       }
     }
 
-    .messageErrorBtn{
+    .messageErrorBtn {
       justify-content: center;
     }
+
     .ctrls {
       text-align: right;
       display: flex;
       align-items: center;
       justify-content: flex-end;
 
-      .messageError{
+      .messageError {
         color: red;
-           margin-right: 20%;
+        margin-right: 20%;
       }
 
       * {
@@ -165,10 +167,10 @@
         margin-left: 0;
       }
     }
-  }  
+  }
 
   .file-hldr {
     font-weight: bold;
     font-style: italic;
-  }  
+  }
 }

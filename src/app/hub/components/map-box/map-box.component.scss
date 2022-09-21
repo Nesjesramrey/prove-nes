@@ -1,4 +1,4 @@
-:host  {
+:host {
   .map-container {
     width: 100%;
     // margin-top: 2em;
@@ -41,13 +41,14 @@
         justify-content: space-around;
         margin-top: 15pt;
 
-        > * {
+        >* {
           margin: 0;
         }
 
         .row {
           display: flex;
-          > * {
+
+          >* {
             margin: 0;
           }
 
@@ -122,6 +123,7 @@
       stroke: #ceddff;
       stroke-opacity: 1;
       stroke-width: 0.5;
+
       &.active {
         fill: #fcdbc3;
       }
@@ -141,8 +143,9 @@
       margin-top: 20px;
       text-align: left;
       font-size: 15pt;
-    
+
     }
+
     canvas.donut-chart {
       margin-top: 30pt;
     }

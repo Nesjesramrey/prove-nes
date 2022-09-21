@@ -6,7 +6,7 @@
   <mat-form-field appearance="outline">
     <mat-label>Permisos</mat-label>
     <mat-select [formControl]="permissionsFormControl" multiple [compareWith]="compareWithFn">
-      <mat-option *ngFor="let permission of permissionList" [value]="permission">
+      <mat-option *ngFor="let permission of activities" [value]="permission">
         <small>{{ permission.viewValue }}</small>
       </mat-option>
     </mat-select>
@@ -25,7 +25,11 @@
       <mat-icon>cancel</mat-icon>
     </button>
   </div>
-  <button type="button" mat-raised-button color="accent" (click)="killDialog()">Cancelar</button>
+  <button type="button" mat-raised-button color="accent" (click)="killDialog()">
+    <small>Cancelar</small>
+  </button>
   <button type="button" mat-raised-button color="primary" (click)="onAddPermissions('add')"
-    [disabled]="permissionsFormControl.invalid">Agregar permisos</button>
+    [disabled]="permissionsFormControl.invalid">
+    <small>Agregar permisos</small>
+  </button>
 </div>

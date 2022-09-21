@@ -11,11 +11,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 })
 export class AddPermissionsComponent implements OnInit {
   public permissionsFormControl = new FormControl([], [Validators.required]);
-  public permissionList = [
-    { value: 'moderator', viewValue: 'Moderador', _id: '62fcebae6d498ad2bf077c50' },
-    { value: 'administrator', viewValue: 'Administrador', _id: '62fcebae6d498ad2bf077c4e' },
-    { value: 'support', viewValue: 'Soporte', _id: '62fcebae6d498ad2bf077c51' },
-  ];
+  public activities: any = [];
 
   constructor(
     public dialogRef: MatDialogRef<any>,
@@ -28,6 +24,18 @@ export class AddPermissionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.permissionsFormControl.setValue(this.dialogData['user'][0]['activities']);
+    this.utilitySrvc.fetchAllActivities().subscribe({
+      error: (error: any) => {
+        this.utilitySrvc.openErrorSnackBar(this.utilitySrvc.errorOops);
+        this.dialogRef.close();
+      },
+      next: (reply: any) => {
+        // console.log(reply);
+        this.activities = reply;
+        console.log(this.activities);
+      },
+      complete: () => { }
+    });
   }
 
   onAddPermissions(action: string) {

@@ -163,7 +163,7 @@ export class AddDocumentCategoryComponent implements OnInit {
     console.log({ category: this.addCategoryFormGroup.value.category });
 
     this.utilityService.createNewCategory(data).subscribe((reply: any) => {
-      // console.log(reply);
+      console.log(reply);
       if (reply['status'] == false) {
         this.utilityService.openErrorSnackBar(reply['error']);
         return;
@@ -191,11 +191,16 @@ export class AddDocumentCategoryComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
+        // console.log(reply);
         this.utilityservice.openSuccessSnackBar('¡Se agrego correctamente!');
+
         this.categories.push(reply);
+        this.layout = [];
         this.layout.push(reply['_id']);
         this.categoriesString.push(reply['name']);
+        this.selectedCategories = [];
         this.selectedCategories.push(reply['name']);
+
         this.stepTwoFormGroup.patchValue({ layout: this.layout });
         this.setFilteredCategories();
       }
