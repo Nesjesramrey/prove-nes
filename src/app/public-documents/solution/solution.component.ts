@@ -12,6 +12,7 @@ import { VoteService } from 'src/app/services/vote.service';
 import { ModalVotesComponent } from '../components/modal-votes/modal-votes.component';
 import { UserService } from 'src/app/services/user.service';
 import { AddDocumentCommentComponent } from 'src/app/components/add-document-comment/add-document-comment.component';
+import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 @Component({
   selector: '.solution-page',
   templateUrl: './solution.component.html',
@@ -38,7 +39,7 @@ export class SolutionComponent implements OnInit {
   public image: string = '../../../assets/images/not_fount.jpg';
 
   public testimonials: any = TESTIMONIALS;
-  public titles :any = [];
+  public titles: any = [];
 
   constructor(
     public dialog: MatDialog,
@@ -193,11 +194,32 @@ export class SolutionComponent implements OnInit {
 
   getshortTitle(title: string) {
     const titleArr = title.split(' ');
-    if (titleArr.length > 3) {
-      return titleArr[0] + ' ' + titleArr[1] + ' ' + titleArr[2] + '...';
+    if (titleArr.length > 4) {
+      return `${titleArr[0]} ${titleArr[1]} ${titleArr[2]} ${titleArr[3]}...`;
     }
     return title;
   }
+
+  popImageViewer() {
+    const dialogRef = this.dialog.open<ImageViewerComponent>(
+      ImageViewerComponent,
+      {
+        width: '640px',
+        data: {
+          location: 'document',
+          document: this.topic,
+        },
+        disableClose: true,
+        panelClass: 'viewer-dialog',
+      }
+    );
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+      }
+    });
+  }
+
 }
 
 export interface ITestimony {

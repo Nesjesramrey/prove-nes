@@ -71,13 +71,12 @@
         <div class="mt-2 set-3">
           <mat-form-field appearance="outline">
             <mat-label>Cobertura</mat-label>
-            <mat-select>
-              <mat-option value="all"> <small>nacional</small></mat-option>
+            <mat-select value="location.name">
               <mat-option
                 *ngFor="let location of coverage"
-                value="location.name"
-                >{{ location.name }}</mat-option
-              >
+                value="location.name"         
+                >{{ location.name }}
+              </mat-option>
             </mat-select>
           </mat-form-field>
         </div>

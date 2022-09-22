@@ -70,7 +70,6 @@ export class SubcategoryComponent implements OnInit {
       this.document = reply[0];
       this.category = reply[1];
       this.subcategory = reply[2];
-      console.log(this.subcategory)
       this.image = reply[1].images.length > 0 ? reply[1].images[0] : this.image;
       this.topicsDataSource = this.subcategory.topics;
       this.TopicDataSource = new MatTableDataSource(this.subcategory.topics);

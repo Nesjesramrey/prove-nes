@@ -113,7 +113,16 @@
             <!-- IMAGE -->
             <div class="set-12 image-box">
               <mat-icon *ngIf="!image">panorama</mat-icon>
-              <img *ngIf="image" [src]="image" alt="" />
+              <img *ngIf="image" [src]="image" alt="" (click)="popImageViewer()"/>
+
+              <slider-images
+              [images]="solution.image"
+              *ngIf="solution.images.length != 0"
+            ></slider-images>
+            <div class="overlay">
+              <mat-icon>photo_camera</mat-icon>
+              <div class="cover"></div>
+            </div>
 
               <div class="info">
                 <button class="custom-circle">
@@ -181,6 +190,7 @@
       <div class="set-4">
         <public-documents-testimonials
           [data]="solution.testimonials"
+          [image]="image"
         ></public-documents-testimonials>
       </div>
     </div>
