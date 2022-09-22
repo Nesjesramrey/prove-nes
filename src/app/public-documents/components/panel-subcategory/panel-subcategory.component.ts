@@ -55,7 +55,7 @@ export class PanelSubcategoryComponent implements OnInit {
       }
 
       item.pos = {
-        x: Math.floor(Math.random() * (maxX + 1) + 0),
+        x: Math.floor(Math.random() * (maxX + 1) - 350),
         y: Math.floor(Math.random() * (maxY + 1) + 0),
       };
       return item;

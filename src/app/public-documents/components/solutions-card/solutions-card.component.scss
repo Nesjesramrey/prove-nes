@@ -23,18 +23,17 @@
       }
     }
 
-    .catbtn-2 {
-      // background-color: #71f5ad;
-      // color: #00031d;
-      padding: 5px 20px;
-      // border: 3px solid #71f5ad;
-      font-size: 15px;
-      font-weight: 600;
-      border-radius: 4px;
-    }
-    .catbtn-2:hover {
-      text-decoration: underline solid #71f5ad 4px;
-    }
+  .catbtn-2 {
+    // background-color: #71f5ad;
+    // color: #00031d;
+    padding: 5px 20px;
+    // border: 3px solid #71f5ad;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 4px;
+  }
+  .catbtn-2:hover{
+    color: #71f5ad;
   }
   .table-head {
     display: flex;
