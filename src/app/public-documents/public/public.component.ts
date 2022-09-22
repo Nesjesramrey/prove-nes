@@ -4,6 +4,7 @@ import { DocumentService } from 'src/app/services/document.service';
 import { Section } from 'src/app/public-documents/components/top10-list/top10-list.component';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 import { MatDialog } from '@angular/material/dialog';
+import { FormGroup , Validators , FormBuilder } from '@angular/forms';
 
 @Component({
   selector: '.public-page',
@@ -21,7 +22,9 @@ export class PublicComponent implements OnInit {
   constructor(
     public activatedRoute: ActivatedRoute,
     public documentService: DocumentService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public formBuilder : FormBuilder
+
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
   }
