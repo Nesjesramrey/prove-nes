@@ -16,12 +16,12 @@ export class PublicComponent implements OnInit {
   public items: Section[] = ITEMS;
   public isDataAvailable: boolean = false;
   public image: string = '../../../assets/images/not_fount.jpg';
+  public coverage: any[] = [];
 
   constructor(
     public activatedRoute: ActivatedRoute,
     public documentService: DocumentService,
-    public dialog: MatDialog,
-
+    public dialog: MatDialog
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
   }
@@ -35,6 +35,7 @@ export class PublicComponent implements OnInit {
       .fetchSingleDocumentById({ _id: this.documentID })
       .subscribe((reply: any) => {
         this.document = reply;
+        this.coverage = this.document.coverage;
         setTimeout(() => {
           this.isDataAvailable = true;
         }, 300);
@@ -43,21 +44,24 @@ export class PublicComponent implements OnInit {
   }
 
   popImageViewer() {
-    const dialogRef = this.dialog.open<ImageViewerComponent>(ImageViewerComponent, {
-      width: '640px',
-      data: {
-        location: 'document',
-        document: this.document
-      },
-      disableClose: true,
-      panelClass: 'viewer-dialog'
-    });
+    const dialogRef = this.dialog.open<ImageViewerComponent>(
+      ImageViewerComponent,
+      {
+        width: '640px',
+        data: {
+          location: 'document',
+          document: this.document,
+        },
+        disableClose: true,
+        panelClass: 'viewer-dialog',
+      }
+    );
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) { }
+      if (reply != undefined) {
+      }
     });
   }
-
 }
 
 const ITEMS = [

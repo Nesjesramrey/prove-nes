@@ -29,10 +29,7 @@ export class SolutionsCardComponent implements OnInit {
     this.topicID = this.activatedRoute['snapshot']['params']['topicID'];
   }
 
-  ngOnInit(): void {
-    // this.SolutionDataSource = new MatTableDataSource(this.data);
-    console.log(this.data)
-  }
+  ngOnInit(): void {}
 
   redirect(id: string) {
     const path = `documentos-publicos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/tema/${this.topicID}/solucion/${id}`;

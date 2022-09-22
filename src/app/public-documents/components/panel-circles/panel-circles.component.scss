@@ -1,58 +1,60 @@
-.main-box {
-  height: 480px;
-  overflow: hidden;
-
-  .main {
+:host {
+  .main-box {
     height: 480px;
-    // width: 100%;
-    display: flex;
-    background-image: radial-gradient(#71f5ac2e 5%, transparent 5%);
-    background-position: 0 0, 20px 20px;
-    background-size: 30px 30px;
-    border-radius: 5px 5px 0px 0px;
-    // background-color: #00031d;
-    background: linear-gradient(360deg, rgba(0, 3, 79, 0) -20%, #00031d 100%);
-    //71f5ad
-    align-items: center;
+    overflow: hidden;
 
-    .align {
-      height: 100%;
-      // margin: 50px;
+    .main {
+      height: 480px;
+      // width: 100%;
+      display: flex;
+      background-image: radial-gradient(#71f5ac2e 5%, transparent 5%);
+      background-position: 0 0, 20px 20px;
+      background-size: 30px 30px;
+      border-radius: 5px 5px 0px 0px;
+      // background-color: #00031d;
+      background: linear-gradient(360deg, rgba(0, 3, 79, 0) -20%, #00031d 100%);
+      //71f5ad
+      align-items: center;
+
+      .align {
+        height: 100%;
+        // margin: 50px;
+      }
+
+      circle-custom {
+        display: block;
+        margin: 0px;
+      }
     }
 
-    circle-custom {
-      display: block;
-      margin: 0px;
+    .show-more-button {
+      position: absolute;
+      border-radius: 4px;
+      right: 60px;
+      margin-top: 10px;
+      color: #71f5ad;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .show-more-button:hover {
+      text-decoration: underline solid #71f5ad 4px;
+    }
+
+    .message {
+      color: #71f5ad;
+      font-weight: 600;
+      font-size: 20px;
     }
   }
 
-  .show-more-button {
-    position: absolute;
-    border-radius: 4px;
-    right: 60px;
-    margin-top: 10px;
-    color: #71f5ad;
-    font-weight: 700;
-    font-size: 15px;
+  *::-webkit-scrollbar-track {
+    background: rgb(230, 230, 230);
   }
 
-  .show-more-button:hover {
-    text-decoration: underline solid #71f5ad 4px;
+  *::-webkit-scrollbar-thumb {
+    background-color: rgb(131, 131, 131);
+    border-radius: 20px;
+    height: 2px;
   }
-
-  .message {
-    color: #71f5ad;
-    font-weight: 600;
-    font-size: 20px;
-  }
-}
-
-*::-webkit-scrollbar-track {
-  background: rgb(230, 230, 230);
-}
-
-*::-webkit-scrollbar-thumb {
-  background-color: rgb(131, 131, 131);
-  border-radius: 20px;
-  height: 2px;
 }
