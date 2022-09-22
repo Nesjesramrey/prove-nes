@@ -93,38 +93,6 @@ export class UtilityService {
     return new Blob([ia], { type: mimeString });
   }
 
-  formatDocumentBreadscrumbs(reply:any){
-    const arrayTitle = reply[0].title.split(' ');
-    reply[0].title = ( arrayTitle.length <= 3 ) 
-    ? reply[0].title
-    : `${arrayTitle[0]} ${arrayTitle[1]} ${arrayTitle[2]}...`;
-    return reply[0];
-  }
-
-  formatCategoryBreadscrumbs(reply:any){
-    const arrayTitleCategory = reply[1].category.name.split(' ');
-    reply[1].category.name = ( arrayTitleCategory.length <= 3 ) 
-    ? reply[1].category.name
-    : `${arrayTitleCategory[0]} ${arrayTitleCategory[1]} ${arrayTitleCategory[2]}...`;
-    return reply[1];
-  }
-
-  formatSubCategoryBreadscrumbs(reply:any){
-    const arrayTitleCategory = reply[2].category.name.split(' ');
-    reply[2].category.name = ( arrayTitleCategory.length <= 3 ) 
-    ? reply[2].category.name
-    : `${arrayTitleCategory[0]} ${arrayTitleCategory[1]} ${arrayTitleCategory[2]}...`;
-    return reply[2];
-  }
-
-  formatTopicBreadscrumbs(reply:any){
-    const arrayTitleCategory = reply[3].category.name.split(' ');
-    reply[3].category.name = ( arrayTitleCategory.length <= 3 ) 
-    ? reply[3].category.name
-    : `... ${arrayTitleCategory[0]} ${arrayTitleCategory[1]} ${arrayTitleCategory[2]}`;
-    return reply[3];
-  }
-
   formatBreadscrumbs(arrayTitles:any){
     let resultTitle = [];
     for(let title of arrayTitles){
