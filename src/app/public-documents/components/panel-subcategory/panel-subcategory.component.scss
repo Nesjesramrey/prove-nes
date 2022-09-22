@@ -1,7 +1,8 @@
 :host {
   .main {
     height: 450px;
-    display: block;
+    display: flex;
+    flex-flow: column wrap;
     background: linear-gradient(360deg, rgba(0, 3, 79, 0) -40%, #00031d 100%);
     // background-image: radial-gradient(#71f5ac27 5%, transparent 5%);
     // background-position: 0 0, 20px 20px;
