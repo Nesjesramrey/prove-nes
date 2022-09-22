@@ -111,6 +111,10 @@ export class TopicComponent implements OnInit {
         this.category = reply[1];
         this.subcategory = reply[2];
         this.topic = reply[3];
+<<<<<<< HEAD
+=======
+        console.log(reply[3]);
+>>>>>>> 334ddbee7685dff340d134bde57f2fb3f99374fb
         this.votes = reply[4].length;
         this.solutionsData = this.topic.solutions;
         this.SolutionDataSource = new MatTableDataSource(this.solutionsData);
@@ -141,7 +145,6 @@ export class TopicComponent implements OnInit {
           categoryID: this.categoryID,
           topicID: this.topicID,
           type: 'topic',
-          image: this.image,
         },
         disableClose: true,
       }
