@@ -12,7 +12,6 @@ export class TestimonialsComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    console.log({ image: this.image });
   }
 }
 

@@ -115,8 +115,8 @@ export class TopicComponent implements OnInit {
         this.solutionsData = this.topic.solutions;
         this.SolutionDataSource = new MatTableDataSource(this.solutionsData);
 
-        // this.image =
-        //   reply[3].images.length > 0 ? reply[3].images[0] : this.image;
+        this.image =
+          reply[3].images.length > 0 ? reply[3].images[0] : this.image;
         setTimeout(() => {
           this.getBreadcrumbsTitles();
           this.isDataAvailable = true;
