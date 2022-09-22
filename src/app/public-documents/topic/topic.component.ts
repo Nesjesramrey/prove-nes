@@ -18,6 +18,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
 import { AddDocumentCommentComponent } from 'src/app/components/add-document-comment/add-document-comment.component';
 import { MatTableDataSource } from '@angular/material/table';
+import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 @Component({
   selector: '.topic-page',
   templateUrl: './topic.component.html',
@@ -99,20 +100,23 @@ export class TopicComponent implements OnInit {
 
     forkJoin([document, category, subcategory, topic, votes]).subscribe(
       (reply: any) => {
-        this.titles = this.utilityService.formatTitles
-      (reply[0].title , reply[1].category.name , reply[2].category.name , reply[3].title);
+        this.titles = this.utilityService.formatTitles(
+          reply[0].title,
+          reply[1].category.name,
+          reply[2].category.name,
+          reply[3].title
+        );
         this.userVoted = this.checkUserVote(reply[4]);
         this.document = reply[0];
         this.category = reply[1];
         this.subcategory = reply[2];
         this.topic = reply[3];
-        console.log(reply[3])
         this.votes = reply[4].length;
         this.solutionsData = this.topic.solutions;
         this.SolutionDataSource = new MatTableDataSource(this.solutionsData);
 
-        this.image =
-          reply[3].images.length > 0 ? reply[3].images[0] : this.image;
+        // this.image =
+        //   reply[3].images.length > 0 ? reply[3].images[0] : this.image;
         setTimeout(() => {
           this.getBreadcrumbsTitles();
           this.isDataAvailable = true;
@@ -189,6 +193,26 @@ export class TopicComponent implements OnInit {
     });
   }
 
+  popImageViewer() {
+    const dialogRef = this.dialog.open<ImageViewerComponent>(
+      ImageViewerComponent,
+      {
+        width: '640px',
+        data: {
+          location: 'document',
+          document: this.topic,
+        },
+        disableClose: true,
+        panelClass: 'viewer-dialog',
+      }
+    );
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+      }
+    });
+  }
+
   openModalComment() {
     const dialogRef = this.dialog.open<AddDocumentCommentComponent>(
       AddDocumentCommentComponent,
@@ -229,7 +253,7 @@ export class TopicComponent implements OnInit {
   getshortTitle(title: string) {
     const titleArr = title.split(' ');
     if (titleArr.length > 3) {
-      return titleArr[0] + ' ' + titleArr[1] + ' ' + titleArr[2] + '...';
+      return `${titleArr[0]} ${titleArr[1]} ${titleArr[2]} ${titleArr[3]}...`;
     }
     return title;
   }

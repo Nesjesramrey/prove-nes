@@ -98,9 +98,9 @@ export class UtilityService {
     for(let title of arrayTitles){
       if(title.length > 0){
         const arrayTitle = title.split(' ');
-        title = ( arrayTitle.length <= 3 )
+        title = ( arrayTitle.length <= 4 )
         ? title 
-        : `... ${arrayTitle[0]} ${arrayTitle[1]} ${arrayTitle[2]}`;
+        : `${arrayTitle[0]} ${arrayTitle[1]} ${arrayTitle[2]} ${arrayTitle[3]}...`;
         resultTitle.push(title);
       }
     } 

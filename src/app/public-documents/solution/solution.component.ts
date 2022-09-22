@@ -38,7 +38,7 @@ export class SolutionComponent implements OnInit {
   public image: string = '../../../assets/images/not_fount.jpg';
 
   public testimonials: any = TESTIMONIALS;
-  public titles :any = [];
+  public titles: any = [];
 
   constructor(
     public dialog: MatDialog,
@@ -193,8 +193,8 @@ export class SolutionComponent implements OnInit {
 
   getshortTitle(title: string) {
     const titleArr = title.split(' ');
-    if (titleArr.length > 3) {
-      return titleArr[0] + ' ' + titleArr[1] + ' ' + titleArr[2] + '...';
+    if (titleArr.length > 4) {
+      return `${titleArr[0]} ${titleArr[1]} ${titleArr[2]} ${titleArr[3]}...`;
     }
     return title;
   }

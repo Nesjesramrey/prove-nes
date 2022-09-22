@@ -8,15 +8,18 @@
         <breadcrumbs-component>
           <li>...</li>
           <li
-          [matTooltip]="document.title" matTooltipClass="tooltip"
+            [matTooltip]="document.title"
+            matTooltipClass="tooltip"
             (click)="
               utilityService.linkMe('/documentos-publicos/' + document._id)
             "
-          >...
+          >
+            ...
             <!-- {{ document.title }} -->
           </li>
           <li
-          [matTooltip]="category.category.name" matTooltipClass="tooltip"
+            [matTooltip]="category.category.name"
+            matTooltipClass="tooltip"
             (click)="
               utilityService.linkMe(
                 '/documentos-publicos/' +
@@ -29,7 +32,8 @@
             {{ titles[1] }}
           </li>
           <li
-          [matTooltip]="subcategory.category.name" matTooltipClass="tooltip"
+            [matTooltip]="subcategory.category.name"
+            matTooltipClass="tooltip"
             (click)="
               utilityService.linkMe(
                 '/documentos-publicos/' +
@@ -43,9 +47,9 @@
           >
             {{ titles[2] }}
           </li>
-          <li
-          [matTooltip]="topic.shortTitle" matTooltipClass="tooltip"
-          >{{ topic.shortTitle }}</li>
+          <li [matTooltip]="topic.shortTitle" matTooltipClass="tooltip">
+            {{ topic.shortTitle }}
+          </li>
         </breadcrumbs-component>
       </div>
       <!-- <div class="set-3 featured-users">
@@ -99,8 +103,16 @@
             <mat-card>
               <!-- IMAGE -->
               <div class="image-box">
-                <mat-icon *ngIf="!image">panorama</mat-icon>
-                <img *ngIf="image" [src]="image" alt="" />
+                <mat-icon *ngIf="topic.images.length === 0">panorama</mat-icon>
+                <div class="overlay" (click)="popImageViewer()">
+                  <mat-icon>photo_camera</mat-icon>
+                  <div class="cover"></div>
+                </div>
+                <slider-images
+                  [images]="topic.images"
+                  *ngIf="topic.images.length !== 0"
+                ></slider-images>
+                <!-- <img *ngIf="image" [src]="image" alt="" /> -->
                 <div class="info">
                   <button class="custom-circle">
                     <mat-icon>thumb_up</mat-icon>

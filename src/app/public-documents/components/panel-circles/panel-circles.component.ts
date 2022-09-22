@@ -91,8 +91,8 @@ export class PanelCirclesComponent implements OnInit {
       maxX += 0;
       maxY += 10;
       obj.title =
-        titleArr.length > 3
-          ? titleArr[0] + ' ' + titleArr[1] + ' ' + titleArr[2]
+        titleArr.length > 4
+          ? `${titleArr[0]} ${titleArr[1]} ${titleArr[2]}`
           : obj.title;
 
       return obj;
@@ -151,19 +151,19 @@ export class PanelCirclesComponent implements OnInit {
     return {
       width: 140,
       height: 140,
-      font: 17,
+      font: 16,
     };
   if (size === 'medium')
     return {
       width: 145,
       height: 145,
-      font: 17,
+      font: 16,
     };
   if (size === 'large')
     return {
-      width: 164,
-      height: 164,
-      font: 17,
+      width: 168,
+      height: 168,
+      font: 16,
     };
   }
 
