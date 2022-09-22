@@ -31,6 +31,7 @@ export class SubcategoryComponent implements OnInit {
   public topicsDataSource: any = [];
   public solutionsDataSource: any = [];
   public image: string = '../../../assets/images/not_fount.jpg';
+  public titles : any = [];
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -64,10 +65,12 @@ export class SubcategoryComponent implements OnInit {
     );
 
     forkJoin([document, category, subcategory]).subscribe((reply: any) => {
-      this.document = this.utilityService.formatDocumentBreadscrumbs(reply);
-      this.category = this.utilityService.formatCategoryBreadscrumbs(reply);
-      this.subCategoryTitle = reply[2].category.name;
-      this.subcategory = this.utilityService.formatSubCategoryBreadscrumbs(reply);
+      this.titles = this.utilityService.formatTitles
+      (reply[0].title , reply[1].category.name , reply[2].category.name , '');
+      this.document = reply[0];
+      this.category = reply[1];
+      this.subcategory = reply[2];
+      console.log(this.subcategory)
       this.image = reply[1].images.length > 0 ? reply[1].images[0] : this.image;
       this.topicsDataSource = this.subcategory.topics;
       this.TopicDataSource = new MatTableDataSource(this.subcategory.topics);

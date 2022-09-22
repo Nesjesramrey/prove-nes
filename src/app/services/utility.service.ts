@@ -124,4 +124,23 @@ export class UtilityService {
     : `... ${arrayTitleCategory[0]} ${arrayTitleCategory[1]} ${arrayTitleCategory[2]}`;
     return reply[3];
   }
+
+  formatBreadscrumbs(arrayTitles:any){
+    let resultTitle = [];
+    for(let title of arrayTitles){
+      if(title.length > 0){
+        const arrayTitle = title.split(' ');
+        title = ( arrayTitle.length <= 3 )
+        ? title 
+        : `... ${arrayTitle[0]} ${arrayTitle[1]} ${arrayTitle[2]}`;
+        resultTitle.push(title);
+      }
+    } 
+    return resultTitle;
+  }
+
+  formatTitles(document:string , category:string , subCategory:string , topic:string){
+     const array = [ document , category , subCategory , topic ];
+     return this.formatBreadscrumbs(array);
+  }
 }
