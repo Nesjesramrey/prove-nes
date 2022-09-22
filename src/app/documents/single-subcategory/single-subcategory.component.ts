@@ -18,6 +18,7 @@ import { throws } from 'assert';
 import { EditCategoryDataComponent } from 'src/app/components/edit-category-data/edit-category-data.component';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
+import { WindowAlertComponent } from 'src/app/components/window-alert/window-alert.component';
 
 @Component({
   selector: '.app-single-subcategory',
@@ -249,6 +250,24 @@ export class SingleSubcategoryComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  killTopic(topic: any) {
+    const dialogRef = this.dialog.open<WindowAlertComponent>(WindowAlertComponent, {
+      width: '420px',
+      data: {
+        windowType: 'kill-topic',
+        topic: topic
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        // this.layouts = this.layouts.filter((x: any) => { return x['_id'] != reply['_id']; });
+        // this.dataSource = new MatTableDataSource(this.layouts);
+      }
+    });
   }
 }
 

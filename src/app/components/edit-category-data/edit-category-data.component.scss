@@ -4,7 +4,12 @@
   .dialog-head {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     margin-bottom: 20px;
+
+    * {
+      margin: 0;
+    }
   }
 
   textarea {
@@ -27,6 +32,14 @@
 
     mat-spinner {
       margin-left: 10px;
+    }
+  }
+
+  .catname {
+    margin-bottom: 15px;
+
+    ::ng-deep mat-hint {
+      color: #ff0000;
     }
   }
 
