@@ -100,11 +100,21 @@
       <div class="set-12" style="padding-bottom: 100px; margin-top: 10px">
         <div class="set-8 col-rgt-3">
           <div class="set-12 header-card">
-            <mat-card>
+            <mat-card >
               <!-- IMAGE -->
               <div class="image-box">
                 <mat-icon *ngIf="!image">panorama</mat-icon>
-                <img *ngIf="image" [src]="image" alt="" />
+                <img *ngIf="image" [src]="image" alt="" (click)="popImageViewer()" />
+
+                <slider-images
+                [images]="topic.image"
+                *ngIf="topic.images.length != 0"
+              ></slider-images>
+              <div class="overlay">
+                <mat-icon>photo_camera</mat-icon>
+                <div class="cover"></div>
+              </div>
+
                 <div class="info">
                   <button class="custom-circle">
                     <mat-icon>thumb_up</mat-icon>
