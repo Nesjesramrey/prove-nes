@@ -19,7 +19,6 @@ export class ExpandedTextComponent implements OnInit {
 
   ngOnInit(): void {
     this.processText();
-    console.log({ title: this.title });
   }
 
   processText() {

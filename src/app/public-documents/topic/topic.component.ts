@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
 import { MatButtonModule } from '@angular/material/button';
@@ -51,14 +51,13 @@ export class TopicComponent implements OnInit {
     public layoutService: LayoutService,
     public topicService: TopicService,
     public voteService: VoteService,
-    public UserService: UserService,
+    public UserService: UserService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
     this.subcategoryID =
       this.activatedRoute['snapshot']['params']['subcategoryID'];
     this.topicID = this.activatedRoute['snapshot']['params']['topicID'];
-
   }
 
   ngOnInit(): void {
@@ -69,13 +68,14 @@ export class TopicComponent implements OnInit {
       next: (reply: any) => {
         this.user = reply;
         this.loadTopic();
-        if (['administrator', 'editor'].includes(this.user.activities?.[0]?.value)) {
+        if (
+          ['administrator', 'editor'].includes(this.user.activities?.[0]?.value)
+        ) {
           this.permission = true;
         } else {
           this.permission = false;
         }
       },
-
     });
   }
 
@@ -101,13 +101,15 @@ export class TopicComponent implements OnInit {
         this.userVoted = this.checkUserVote(reply[4]);
         this.document = this.utilityService.formatDocumentBreadscrumbs(reply);
         this.category = this.utilityService.formatCategoryBreadscrumbs(reply);
-        this.subcategory = this.utilityService.formatSubCategoryBreadscrumbs(reply);
+        this.subcategory =
+          this.utilityService.formatSubCategoryBreadscrumbs(reply);
         this.topic = reply[3];
         this.votes = reply[4].length;
         this.solutionsData = this.topic.solutions;
         this.SolutionDataSource = new MatTableDataSource(this.solutionsData);
 
-        this.image = (reply[3].images.length > 0) ? reply[3].images[0] : this.image;
+        this.image =
+          reply[3].images.length > 0 ? reply[3].images[0] : this.image;
         setTimeout(() => {
           this.getBreadcrumbsTitles();
           this.isDataAvailable = true;
@@ -132,6 +134,7 @@ export class TopicComponent implements OnInit {
           categoryID: this.categoryID,
           topicID: this.topicID,
           type: 'topic',
+          image: this.image,
         },
         disableClose: true,
       }
@@ -166,7 +169,6 @@ export class TopicComponent implements OnInit {
         this.solutionsData.unshift(solution);
         this.SolutionDataSource = new MatTableDataSource(this.solutionsData);
         // this.SolutionDataSource.setData(solution);
-
       }
     });
   }

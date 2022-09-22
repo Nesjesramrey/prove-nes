@@ -1,52 +1,50 @@
 :host {
-  // min-width: 500px;
-}
-
-.mat-line {
-  font-size: small;
-}
-// solutions {
-//   font-size: 2px;
-// }
-
-.container {
-  background-color: white;
-  border-radius: 5px;
-  width: 100%;
-  height: 100%;
-}
-.container {
-  margin: 0;
-  padding: 25px 10px;
-  .title {
-    padding-left: 15px;
-    font-weight: 700;
-    font-size: 18px;
+  .mat-line {
+    font-size: small;
   }
-  .name {
-    font-size: 14px;
+  // solutions {
+  //   font-size: 2px;
+  // }
+
+  .container {
+    background-color: white;
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
   }
-}
-.progress-bar {
-  background-color: #dbdbdb;
-  width: 100%;
-  height: 10px;
-}
-.progress {
-  width: 100%;
-  height: 100%;
-  margin: 0px 0px;
-  background: linear-gradient(
-    270.1deg,
-    #71f5ad 50.09%,
-    #71f5ad 71.25%,
-    #71f5ad 97.89%
-  );
-}
-mat-list-item {
-  margin: 2px 2px 2px 2px;
-}
-.mat-list-base .mat-list-item.mat-3-line,
-.mat-list-base .mat-list-option.mat-3-line {
-  height: 45px;
+  .container {
+    margin: 0;
+    padding: 25px 10px;
+    .title {
+      padding-left: 15px;
+      font-weight: 700;
+      font-size: 18px;
+    }
+    .name {
+      font-size: 14px;
+    }
+  }
+  .progress-bar {
+    background-color: #dbdbdb;
+    width: 100%;
+    height: 10px;
+  }
+  .progress {
+    width: 100%;
+    height: 100%;
+    margin: 0px 0px;
+    background: linear-gradient(
+      270.1deg,
+      #71f5ad 50.09%,
+      #71f5ad 71.25%,
+      #71f5ad 97.89%
+    );
+  }
+  mat-list-item {
+    margin: 2px 2px 2px 2px;
+  }
+  .mat-list-base .mat-list-item.mat-3-line,
+  .mat-list-base .mat-list-option.mat-3-line {
+    height: 45px;
+  }
 }

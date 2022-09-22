@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class CategoryComponent implements OnInit {
   public document: any = null;
+  public coverage: any[] = [];
   public isDataAvailable: boolean = false;
 
   public selectedCategory: any = null;
@@ -25,14 +26,14 @@ export class CategoryComponent implements OnInit {
   public topicsCount: number = 0;
   public solutionsCount: number = 0;
   public items: Section[] = top10;
-  public selectedCategoryTitle : any = null;
+  public selectedCategoryTitle: any = null;
 
   constructor(
     public activatedRoute: ActivatedRoute,
     public documentService: DocumentService,
     public layoutService: LayoutService,
     public utilityService: UtilityService,
-    public dialog: MatDialog,
+    public dialog: MatDialog
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
@@ -53,9 +54,11 @@ export class CategoryComponent implements OnInit {
     forkJoin([document, category]).subscribe((reply: any) => {
       this.document = this.utilityService.formatDocumentBreadscrumbs(reply);
       this.selectedCategoryTitle = reply[1].category.name;
-      this.selectedCategory = this.utilityService.formatCategoryBreadscrumbs(reply);
+      this.selectedCategory =
+        this.utilityService.formatCategoryBreadscrumbs(reply);
       this.image = reply[1].images.length > 0 ? reply[1].images[0] : this.image;
       this.topicsCount = reply[1].topics.length;
+      this.coverage = this.document.coverage;
       setTimeout(() => {
         this.isDataAvailable = true;
       }, 300);
@@ -63,18 +66,22 @@ export class CategoryComponent implements OnInit {
   }
 
   popImageViewer() {
-    const dialogRef = this.dialog.open<ImageViewerComponent>(ImageViewerComponent, {
-      width: '640px',
-      data: {
-        location: 'document',
-        document: this.selectedCategory
-      },
-      disableClose: true,
-      panelClass: 'viewer-dialog'
-    });
+    const dialogRef = this.dialog.open<ImageViewerComponent>(
+      ImageViewerComponent,
+      {
+        width: '640px',
+        data: {
+          location: 'document',
+          document: this.selectedCategory,
+        },
+        disableClose: true,
+        panelClass: 'viewer-dialog',
+      }
+    );
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) { }
+      if (reply != undefined) {
+      }
     });
   }
 }
