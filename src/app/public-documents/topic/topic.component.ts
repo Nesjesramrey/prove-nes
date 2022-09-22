@@ -43,6 +43,7 @@ export class TopicComponent implements OnInit {
 
   public testimonials: any = TESTIMONIALS;
   public solutionsData: any = [];
+  public titles: any = [];
   constructor(
     public dialog: MatDialog,
     public activatedRoute: ActivatedRoute,
@@ -98,12 +99,14 @@ export class TopicComponent implements OnInit {
 
     forkJoin([document, category, subcategory, topic, votes]).subscribe(
       (reply: any) => {
+        this.titles = this.utilityService.formatTitles
+      (reply[0].title , reply[1].category.name , reply[2].category.name , reply[3].title);
         this.userVoted = this.checkUserVote(reply[4]);
-        this.document = this.utilityService.formatDocumentBreadscrumbs(reply);
-        this.category = this.utilityService.formatCategoryBreadscrumbs(reply);
-        this.subcategory =
-          this.utilityService.formatSubCategoryBreadscrumbs(reply);
+        this.document = reply[0];
+        this.category = reply[1];
+        this.subcategory = reply[2];
         this.topic = reply[3];
+        console.log(reply[3])
         this.votes = reply[4].length;
         this.solutionsData = this.topic.solutions;
         this.SolutionDataSource = new MatTableDataSource(this.solutionsData);
