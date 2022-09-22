@@ -4,14 +4,14 @@
   <!-- TESTIMONIALS LIST -->
   <div class="content">
     <!-- ITEM -->
-    <div *ngIf="data.length === 0" class="txt-center"> 
+    <div *ngIf="data.length === 0" class="txt-center">
       <p>Sin testimonios</p>
     </div>
     <mat-card class="testimonial-item" *ngFor="let testimonial of data">
       <!-- IMAGE -->
       <div class="leading">
-        <mat-icon *ngIf="!testimonial.images[0]">panorama</mat-icon>
-        <img *ngIf="testimonial.images[0]" [src]="testimonial.images[0]" />
+        <mat-icon *ngIf="!image">panorama</mat-icon>
+        <img *ngIf="image" [src]="image" />
       </div>
       <!-- CONTENT -->
       <div class="info">
@@ -22,12 +22,20 @@
           <!-- AVATAR -->
 
           <img
-            class="avatar" 
+            class="avatar"
             *ngIf="testimonial.createdBy.avatarImage"
             [src]="testimonial.createdBy.avatarImage"
-            [matTooltip]="testimonial.createdBy.firstname + ' ' + testimonial.createdBy.lastname"
+            [matTooltip]="
+              testimonial.createdBy.firstname +
+              ' ' +
+              testimonial.createdBy.lastname
+            "
           />
-          <mat-icon *ngIf="!testimonial.createdBy.avatarImage" style="font-size: 20px">panorama</mat-icon>
+          <mat-icon
+            *ngIf="!testimonial.createdBy.avatarImage"
+            style="font-size: 20px"
+            >panorama</mat-icon
+          >
 
           <p>Fecha de creación: {{ testimonial.createdAt | date }}</p>
         </div>

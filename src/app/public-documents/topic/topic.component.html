@@ -8,15 +8,18 @@
         <breadcrumbs-component>
           <li>...</li>
           <li
-          [matTooltip]="document.title" matTooltipClass="tooltip"
+            [matTooltip]="document.title"
+            matTooltipClass="tooltip"
             (click)="
               utilityService.linkMe('/documentos-publicos/' + document._id)
             "
-          >...
+          >
+            ...
             <!-- {{ document.title }} -->
           </li>
           <li
-          [matTooltip]="category.category.name" matTooltipClass="tooltip"
+            [matTooltip]="category.category.name"
+            matTooltipClass="tooltip"
             (click)="
               utilityService.linkMe(
                 '/documentos-publicos/' +
@@ -29,7 +32,8 @@
             {{ titles[1] }}
           </li>
           <li
-          [matTooltip]="subcategory.category.name" matTooltipClass="tooltip"
+            [matTooltip]="subcategory.category.name"
+            matTooltipClass="tooltip"
             (click)="
               utilityService.linkMe(
                 '/documentos-publicos/' +
@@ -43,9 +47,9 @@
           >
             {{ titles[2] }}
           </li>
-          <li
-          [matTooltip]="topic.shortTitle" matTooltipClass="tooltip"
-          >{{ topic.shortTitle }}</li>
+          <li [matTooltip]="topic.shortTitle" matTooltipClass="tooltip">
+            {{ topic.shortTitle }}
+          </li>
         </breadcrumbs-component>
       </div>
       <!-- <div class="set-3 featured-users">
@@ -156,6 +160,7 @@
         <div class="set-4">
           <public-documents-testimonials
             [data]="topic.testimonials"
+            [image]="image"
           ></public-documents-testimonials>
         </div>
       </div>

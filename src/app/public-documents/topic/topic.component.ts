@@ -99,14 +99,18 @@ export class TopicComponent implements OnInit {
 
     forkJoin([document, category, subcategory, topic, votes]).subscribe(
       (reply: any) => {
-        this.titles = this.utilityService.formatTitles
-      (reply[0].title , reply[1].category.name , reply[2].category.name , reply[3].title);
+        this.titles = this.utilityService.formatTitles(
+          reply[0].title,
+          reply[1].category.name,
+          reply[2].category.name,
+          reply[3].title
+        );
         this.userVoted = this.checkUserVote(reply[4]);
         this.document = reply[0];
         this.category = reply[1];
         this.subcategory = reply[2];
         this.topic = reply[3];
-        console.log(reply[3])
+        console.log(reply[3]);
         this.votes = reply[4].length;
         this.solutionsData = this.topic.solutions;
         this.SolutionDataSource = new MatTableDataSource(this.solutionsData);
@@ -137,7 +141,6 @@ export class TopicComponent implements OnInit {
           categoryID: this.categoryID,
           topicID: this.topicID,
           type: 'topic',
-          image: this.image,
         },
         disableClose: true,
       }
