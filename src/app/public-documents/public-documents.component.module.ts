@@ -14,7 +14,7 @@ import { TopicComponent } from './topic/topic.component';
 import { SubcategoryComponent } from './subcategory/subcategory.component';
 import { SolutionComponent } from './solution/solution.component';
 import { ComponentsModule as PublicComponentsModule } from './components/components.module';
-
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     PublicDocumentsComponent,
@@ -34,6 +34,7 @@ import { ComponentsModule as PublicComponentsModule } from './components/compone
     ComponentsModule,
     AppMaterialModule,
     PublicComponentsModule,
+    ReactiveFormsModule
   ],
 })
 export class PublicDocumentsModule {}
