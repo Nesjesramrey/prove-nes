@@ -38,6 +38,7 @@ export class SolutionComponent implements OnInit {
   public image: string = '../../../assets/images/not_fount.jpg';
 
   public testimonials: any = TESTIMONIALS;
+  public titles :any = [];
 
   constructor(
     public dialog: MatDialog,
@@ -98,7 +99,7 @@ export class SolutionComponent implements OnInit {
       this.userVoted = this.checkUserVote(reply[5]);
       this.document = reply[0];
       this.category = reply[1];
-      this.subcategory = this.utilityService.formatSubCategoryBreadscrumbs(reply);
+      this.subcategory = reply[2];
       this.topic = reply[3];
       this.solution = reply[4];
       this.votes = reply[5].length;
