@@ -33,13 +33,13 @@ export class AddDocumentTestimonyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log({ dialog: this.dialogData });
+    // console.log({ dialog: this.dialogData });
     this.addTestimonyFormGroup = this.formBuilder.group({
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
       image: ['', []],
     });
-    console.log({ img: this.dialogData.image });
+    // console.log({ img: this.dialogData.image });
     // this.addTestimonyFormGroup.patchValue({
     //   image: this.dialogData.image,
     // });
