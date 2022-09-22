@@ -37,7 +37,7 @@ export class AddDocumentTestimonyComponent implements OnInit {
     this.addTestimonyFormGroup = this.formBuilder.group({
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      image: ['', []],
+      // image: ['', []],
     });
     console.log({ img: this.dialogData.image });
     // this.addTestimonyFormGroup.patchValue({
