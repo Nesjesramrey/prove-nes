@@ -6,20 +6,24 @@
   <div class="container">
     <breadcrumbs-component>
       <li>Documentos</li>
-      <li *ngIf="!!document.title; else noTitle"
-        (click)="utilityService.linkMe('/documentos-publicos/' + document._id)">
-        {{ document.title }}
+      <li
+        *ngIf="!!document.title; else noTitle"
+        (click)="utilityService.linkMe('/documentos-publicos/' + document._id)"
+      >
+        {{ titles[0] }}
       </li>
       <ng-template #noTitle>
         <div>categoria</div>
       </ng-template>
-      <li>{{ selectedCategory.category.name }}</li>
+      <li>{{ titles[1] }}</li>
     </breadcrumbs-component>
     <div class="set-12 txt-left" style="margin-bottom: 10px">
       <span class="created-by">
         Autor:
-        <span class="author">{{ selectedCategory.createdBy.firstname }}
-          {{ selectedCategory.createdBy.lastname }}</span>
+        <span class="author"
+          >{{ selectedCategory.createdBy.firstname }}
+          {{ selectedCategory.createdBy.lastname }}</span
+        >
       </span>
     </div>
 
@@ -27,8 +31,13 @@
       <div class="set-3 col-lft">
         <mat-card class="set-12 doc-description">
           <div class="set-12 imghldr">
-            <mat-icon *ngIf="selectedCategory.images.length == 0">panorama</mat-icon>
-            <slider-images [images]="selectedCategory.images" *ngIf="selectedCategory.images.length != 0"></slider-images>
+            <mat-icon *ngIf="selectedCategory.images.length == 0"
+              >panorama</mat-icon
+            >
+            <slider-images
+              [images]="selectedCategory.images"
+              *ngIf="selectedCategory.images.length != 0"
+            ></slider-images>
             <div class="overlay" (click)="popImageViewer()">
               <mat-icon>photo_camera</mat-icon>
               <div class="cover"></div>
@@ -39,7 +48,11 @@
             <p class="set-12 card-title">
               {{ selectedCategory.category.name }}
             </p>
-            <expanded-text [text]="selectedCategory.description" [minLength]="200"></expanded-text>
+            <expanded-text
+              [text]="selectedCategory.description"
+              [minLength]="200"
+              [title]="selectedCategory.category.name"
+            ></expanded-text>
           </div>
         </mat-card>
         <horizontal-stats></horizontal-stats>
@@ -48,20 +61,22 @@
         </div>
       </div>
       <div class="set-9 col-rgt">
-        <panel-circles [data]="selectedCategory.subLayouts" [withBorder]="true" [redirectTo]="'SUBCATEGORY'">
+        <panel-circles
+          [data]="selectedCategory.subLayouts"
+          [withBorder]="true"
+          [redirectTo]="'SUBCATEGORY'"
+        >
         </panel-circles>
 
         <div class="mt-2 set-3">
           <mat-form-field appearance="outline">
-            <mat-label>Cobertura</mat-label >
-            <mat-select>
-              <mat-option value="all">
-                <small>Nacional</small>
+            <mat-label>Cobertura</mat-label>
+            <mat-select value="location.name">
+              <mat-option
+                *ngFor="let location of coverage"
+                value="location.name"         
+                >{{ location.name }}
               </mat-option>
-              <mat-option> Municipio 1 </mat-option>
-              <mat-option> Municipio 2 </mat-option>
-              <mat-option> Municipio 3 </mat-option>
-              <mat-option> Municipio 4 </mat-option>
             </mat-select>
           </mat-form-field>
         </div>

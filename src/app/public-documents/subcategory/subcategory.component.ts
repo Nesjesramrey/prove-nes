@@ -7,7 +7,6 @@ import { LayoutService } from 'src/app/services/layout.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 import { MatTableDataSource } from '@angular/material/table';
-
 @Component({
   selector: '.subcategory-page',
   templateUrl: './subcategory.component.html',
@@ -20,6 +19,7 @@ export class SubcategoryComponent implements OnInit {
 
   public document: any = null;
   public category: any;
+  public subCategoryTitle :any = null;
   public subcategory: any = null;
   public panelTopicsData: any = [];
 
@@ -31,6 +31,7 @@ export class SubcategoryComponent implements OnInit {
   public topicsDataSource: any = [];
   public solutionsDataSource: any = [];
   public image: string = '../../../assets/images/not_fount.jpg';
+  public titles : any = [];
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -64,6 +65,8 @@ export class SubcategoryComponent implements OnInit {
     );
 
     forkJoin([document, category, subcategory]).subscribe((reply: any) => {
+      this.titles = this.utilityService.formatTitles
+      (reply[0].title , reply[1].category.name , reply[2].category.name , '');
       this.document = reply[0];
       this.category = reply[1];
       this.subcategory = reply[2];

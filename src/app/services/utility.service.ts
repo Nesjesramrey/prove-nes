@@ -93,4 +93,23 @@ export class UtilityService {
     };
     return new Blob([ia], { type: mimeString });
   }
+
+  formatBreadscrumbs(arrayTitles:any){
+    let resultTitle = [];
+    for(let title of arrayTitles){
+      if(title.length > 0){
+        const arrayTitle = title.split(' ');
+        title = ( arrayTitle.length <= 4 )
+        ? title 
+        : `${arrayTitle[0]} ${arrayTitle[1]} ${arrayTitle[2]} ${arrayTitle[3]}...`;
+        resultTitle.push(title);
+      }
+    } 
+    return resultTitle;
+  }
+
+  formatTitles(document:string , category:string , subCategory:string , topic:string){
+     const array = [ document , category , subCategory , topic ];
+     return this.formatBreadscrumbs(array);
+  }
 }

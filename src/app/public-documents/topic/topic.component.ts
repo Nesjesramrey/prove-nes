@@ -18,6 +18,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
 import { AddDocumentCommentComponent } from 'src/app/components/add-document-comment/add-document-comment.component';
 import { MatTableDataSource } from '@angular/material/table';
+import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 @Component({
   selector: '.topic-page',
   templateUrl: './topic.component.html',
@@ -43,6 +44,7 @@ export class TopicComponent implements OnInit {
 
   public testimonials: any = TESTIMONIALS;
   public solutionsData: any = [];
+  public titles: any = [];
   constructor(
     public dialog: MatDialog,
     public activatedRoute: ActivatedRoute,
@@ -51,14 +53,13 @@ export class TopicComponent implements OnInit {
     public layoutService: LayoutService,
     public topicService: TopicService,
     public voteService: VoteService,
-    public UserService: UserService,
+    public UserService: UserService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
     this.subcategoryID =
       this.activatedRoute['snapshot']['params']['subcategoryID'];
     this.topicID = this.activatedRoute['snapshot']['params']['topicID'];
-
   }
 
   ngOnInit(): void {
@@ -69,13 +70,14 @@ export class TopicComponent implements OnInit {
       next: (reply: any) => {
         this.user = reply;
         this.loadTopic();
-        if (['administrator', 'editor'].includes(this.user.activities?.[0]?.value)) {
+        if (
+          ['administrator', 'editor'].includes(this.user.activities?.[0]?.value)
+        ) {
           this.permission = true;
         } else {
           this.permission = false;
         }
       },
-
     });
   }
 
@@ -98,6 +100,12 @@ export class TopicComponent implements OnInit {
 
     forkJoin([document, category, subcategory, topic, votes]).subscribe(
       (reply: any) => {
+        this.titles = this.utilityService.formatTitles(
+          reply[0].title,
+          reply[1].category.name,
+          reply[2].category.name,
+          reply[3].title
+        );
         this.userVoted = this.checkUserVote(reply[4]);
         this.document = reply[0];
         this.category = reply[1];
@@ -107,7 +115,8 @@ export class TopicComponent implements OnInit {
         this.solutionsData = this.topic.solutions;
         this.SolutionDataSource = new MatTableDataSource(this.solutionsData);
 
-        this.image = (reply[3].images.length > 0) ? reply[3].images[0] : this.image;
+        this.image =
+          reply[3].images.length > 0 ? reply[3].images[0] : this.image;
         setTimeout(() => {
           this.getBreadcrumbsTitles();
           this.isDataAvailable = true;
@@ -166,7 +175,6 @@ export class TopicComponent implements OnInit {
         this.solutionsData.unshift(solution);
         this.SolutionDataSource = new MatTableDataSource(this.solutionsData);
         // this.SolutionDataSource.setData(solution);
-
       }
     });
   }
@@ -181,6 +189,26 @@ export class TopicComponent implements OnInit {
     );
     dialogRef.afterClosed().subscribe((reply: any) => {
       this.loadTopic();
+    });
+  }
+
+  popImageViewer() {
+    const dialogRef = this.dialog.open<ImageViewerComponent>(
+      ImageViewerComponent,
+      {
+        width: '640px',
+        data: {
+          location: 'document',
+          document: this.topic,
+        },
+        disableClose: true,
+        panelClass: 'viewer-dialog',
+      }
+    );
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+      }
     });
   }
 
@@ -224,7 +252,7 @@ export class TopicComponent implements OnInit {
   getshortTitle(title: string) {
     const titleArr = title.split(' ');
     if (titleArr.length > 3) {
-      return titleArr[0] + ' ' + titleArr[1] + ' ' + titleArr[2] + '...';
+      return `${titleArr[0]} ${titleArr[1]} ${titleArr[2]} ${titleArr[3]}...`;
     }
     return title;
   }

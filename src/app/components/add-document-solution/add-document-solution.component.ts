@@ -1,5 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SolutionService } from 'src/app/services/solution.service';
 import { UtilityService } from 'src/app/services/utility.service';
@@ -23,8 +27,8 @@ export class AddDocumentSolutionComponent implements OnInit {
     public formBuilder: FormBuilder,
     public solutionService: SolutionService,
     public utilityService: UtilityService,
-    @Inject(MAT_DIALOG_DATA) public dialogData: any,
-  ) { }
+    @Inject(MAT_DIALOG_DATA) public dialogData: any
+  ) {}
 
   ngOnInit(): void {
     this.addSolutionFormGroup = this.formBuilder.group({
@@ -50,7 +54,9 @@ export class AddDocumentSolutionComponent implements OnInit {
   }
 
   onFileSelected(event: any) {
-    Array.from(event.target.files).forEach((file: any) => { this.fileNames.push(file['name']); });
+    Array.from(event.target.files).forEach((file: any) => {
+      this.fileNames.push(file['name']);
+    });
     this.addSolutionFormGroup.patchValue({ files: event.target.files });
     this.addSolutionFormGroup.updateValueAndValidity();
   }
@@ -62,11 +68,14 @@ export class AddDocumentSolutionComponent implements OnInit {
         this.submitted = true;
         let data: any = {
           topic: this.dialogData['themeID'],
-          formData: new FormData()
-        }
+          formData: new FormData(),
+        };
 
-        Array.from(this.addSolutionFormGroup.controls['files']['value'])
-          .forEach((file: any) => { data['formData'].append('files', file); });
+        Array.from(
+          this.addSolutionFormGroup.controls['files']['value']
+        ).forEach((file: any) => {
+          data['formData'].append('files', file);
+        });
         data['formData'].append('title', form['value']['title']);
         data['formData'].append('description', form['value']['description']);
 
@@ -78,17 +87,19 @@ export class AddDocumentSolutionComponent implements OnInit {
         this.messageError = true;
       }
     } catch (error) {
-      // console.log(error);
+      console.log(error);
       this.diagloErrorOpen();
     }
   }
 
   diagloErrorOpen() {
     const dialogRef = this.dialog.open<DialogErrorComponent>(
-      DialogErrorComponent, {
-      width: '550px'
-    })
+      DialogErrorComponent,
+      {
+        width: '550px',
+      }
+    );
 
-    dialogRef.afterClosed().subscribe((reply: any) => { });
+    dialogRef.afterClosed().subscribe((reply: any) => {});
   }
 }

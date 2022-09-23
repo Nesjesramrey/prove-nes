@@ -1,12 +1,13 @@
 @font-face {
-  font-family: 'Material Icons';
+  font-family: "Material Icons";
   font-style: normal;
   font-weight: 400;
-  src: url('./assets/fonts/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2') format('woff2');
+  src: url("./assets/fonts/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2")
+    format("woff2");
 }
 
 .material-icons {
-  font-family: 'Material Icons';
+  font-family: "Material Icons";
   font-weight: normal;
   font-style: normal;
   font-size: 24px;
@@ -33,10 +34,11 @@ body {
   height: 100%;
   cursor: default;
   background: #f1f1f1 !important;
+  overflow-wrap: break-word;
 }
 
 body {
-  font-family: 'Montserrat', "Helvetica Neue", sans-serif !important;
+  font-family: "Montserrat", "Helvetica Neue", sans-serif !important;
 }
 
 button,
@@ -46,7 +48,7 @@ textarea {
   outline: none;
   border: none;
   background: none;
-  font-family: 'Montserrat', "Helvetica Neue", sans-serif !important;
+  font-family: "Montserrat", "Helvetica Neue", sans-serif !important;
 }
 
 textarea {
@@ -205,7 +207,6 @@ table {
   padding-right: 30px;
 }
 
-
 .mt-1 {
   margin-top: 10px;
 }
@@ -257,7 +258,7 @@ table {
   width: 35px;
   height: 35px;
   border-radius: 100%;
-  background: #CEDDFF;
+  background: #ceddff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -273,7 +274,7 @@ table {
   width: 35px;
   height: 35px;
   border-radius: 100%;
-  background: #20C588;
+  background: #20c588;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -289,14 +290,14 @@ table {
   width: 30px;
   height: 30px;
   border-radius: 100%;
-  background: #CEDDFF;
+  background: #ceddff;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid rgba($color: #000000, $alpha: 0.1);
 
   mat-icon {
-    color: #306EFF !important;
+    color: #306eff !important;
     font-size: 14pt;
   }
 }
@@ -340,7 +341,8 @@ table {
   // will-change: auto !important;
 
   .carousel-cell {
-    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
+      0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
   }
 }
 
@@ -467,20 +469,20 @@ mat-form-field {
   color: rgba($color: #000000, $alpha: 0.4);
 
   .author {
-    transition: all .2s linear;
+    transition: all 0.2s linear;
     cursor: pointer;
   }
 
   .author:hover {
-    color: #306EFF;
+    color: #306eff;
   }
 }
 
 .catbtn {
-  background: #CEDDFF;
+  background: #ceddff;
   padding: 10px 20px;
   border-radius: 20px;
-  border: 1px solid #306EFF;
+  border: 1px solid #306eff;
 }
 
 .networks {
@@ -506,18 +508,21 @@ mat-form-field {
   }
 
   .facebook-net {
-    background: url('./assets/images/iconfinder_1_Facebook_colored_svg_copy_5296499.png') no-repeat;
+    background: url("./assets/images/iconfinder_1_Facebook_colored_svg_copy_5296499.png")
+      no-repeat;
     background-size: 100%;
   }
 
   .instagram-net {
-    background: url('./assets/images/iconfinder_social_media_applications_3-instagram_4102579.png') no-repeat;
+    background: url("./assets/images/iconfinder_social_media_applications_3-instagram_4102579.png")
+      no-repeat;
     background-size: 100%;
   }
 }
 
 .shadow {
-  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+  box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
+    0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
 }
 
 .imghldr {
@@ -530,7 +535,7 @@ mat-form-field {
     top: 0;
     left: 0;
     opacity: 0;
-    transition: all .3s linear;
+    transition: all 0.3s linear;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -591,7 +596,7 @@ mat-form-field {
     position: absolute;
     top: 0;
     left: 0;
-    background: rgba($color: #000000, $alpha: 1.0);
+    background: rgba($color: #000000, $alpha: 1);
 
     .viewer-display {
       width: 100%;

@@ -1,13 +1,17 @@
 <div>
   <p class="card-description">
     {{ arrayText[0] }}
-    <span *ngIf="!expanded && !isShortText" >...</span>
+    <span *ngIf="!expanded && !isShortText">...</span>
     <span *ngIf="expanded">
       {{ arrayText[1] }}
     </span>
   </p>
   <p class="card-description"></p>
-  <button class="card-description link" (click)="expandBox()" *ngIf="!isShortText">
+  <button
+    class="card-description link"
+    (click)="openModalDescription()"
+    *ngIf="!isShortText"
+  >
     {{ expanded ? "Leer menos" : "Leer más" }}
   </button>
 </div>
