@@ -1,3 +1,4 @@
+import { S } from '@angular/cdk/keycodes';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
@@ -46,6 +47,7 @@ export class PanelSubcategoryComponent implements OnInit {
     let maxY = 700;
 
     this.categories = this.data.map((item) => {
+      item.shortTitle = this.shortTitle(item.title, 4);
       item.size = item._id === this.selectedID ? 38 : 20;
       item.opacity = item._id === this.selectedID ? 1 : 0.8;
       if (item.title.length > 12) {
@@ -60,6 +62,18 @@ export class PanelSubcategoryComponent implements OnInit {
       };
       return item;
     });
+  }
+
+  shortTitle(title: string, size: number) {
+    const short = title.split(' ');
+    if (short.length > size) {
+      let shortTitle = '';
+      for (let i = 0; i < size; i++) {
+        shortTitle += short[i] + ' ';
+      }
+      return shortTitle + '...';
+    }
+    return title;
   }
 
   redirect(id: string) {
