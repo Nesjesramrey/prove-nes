@@ -40,7 +40,7 @@
   }
 
   .bar-search:disabled {
-    opacity: .6;
+    opacity: 0.6;
     cursor: not-allowed;
   }
 
@@ -69,7 +69,7 @@
 
     button:nth-child(1):hover,
     button:nth-child(2):hover {
-      text-decoration: underline solid #71f5ad 4px;
+      color: #2dff8b;
     }
 
     button:first-child {
