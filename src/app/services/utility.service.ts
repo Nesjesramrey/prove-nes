@@ -11,6 +11,7 @@ export class UtilityService {
   public numberOnly: string = '^[0-9]*$';
   public image_extensions: any = ['jpg', 'jpeg', 'png', 'bmp'];
   public errorOops: string = '¡Oops!... Ocurrió un error, inténtalo más tarde.';
+  public editedSuccess: string = 'Se actualizó correctamente.';
 
   constructor(
     public snackbar: MatSnackBar,

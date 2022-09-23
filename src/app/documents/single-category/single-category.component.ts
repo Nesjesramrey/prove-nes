@@ -17,6 +17,7 @@ import { AddDocumentThemeComponent } from '../../components/add-document-theme/a
 import { EditCategoryDataComponent } from 'src/app/components/edit-category-data/edit-category-data.component';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
+import { WindowAlertComponent } from 'src/app/components/window-alert/window-alert.component';
 
 @Component({
   selector: '.app-single-category',
@@ -199,7 +200,8 @@ export class SingleCategoryComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
-        this.selectedCategory['description'] = reply['description'];
+        this.selectedCategory['category']['name'] = reply[0]['name'];
+        this.selectedCategory['description'] = reply[1]['description'];
       }
     });
   }
@@ -247,6 +249,24 @@ export class SingleCategoryComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  killLayout(layout: any) {
+    const dialogRef = this.dialog.open<WindowAlertComponent>(WindowAlertComponent, {
+      width: '420px',
+      data: {
+        windowType: 'kill-layout',
+        layout: layout
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        this.subcategories = this.subcategories.filter((x: any) => { return x['_id'] != reply['_id']; });
+        this.dataSource = new MatTableDataSource(this.subcategories);
+      }
+    });
   }
 }
 

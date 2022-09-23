@@ -16,13 +16,23 @@
       <div class="set-12" *ngFor="let notification of notifications">
         <div class="set-12 notification">
           <div class="set-2">
-            <div class="avatar"></div>
+            <div class="avatar">
+              <strong>
+                <small *ngIf="notification.message_from.avatarImage == null">
+                  {{ user.firstname | firstword | firstletter }}{{ user.lastname | firstword | firstletter }}
+                </small>
+              </strong>
+              <img [src]="notification.message_from.avatarImage" alt=""
+                *ngIf="notification.message_from.avatarImage != null">
+            </div>
           </div>
 
           <div class="set-8">
             <p><small>{{notification.message}}</small></p>
             <p>
-              <strong><small>{{notification.document.title}}</small></strong>
+              <button type="button" (click)="linkMe('/documentos/' + notification.document._id)">
+                <strong>{{notification.document.title}}</strong>
+              </button>
             </p>
             <p>
               <small>{{notification.createdAt | date: 'mediumDate'}} - {{notification.createdAt | date:
@@ -31,9 +41,23 @@
           </div>
 
           <div class="set-2 txt-right">
-            <button type="button" mat-icon-button>
-              <mat-icon>cancel</mat-icon>
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon>more_vert</mat-icon>
             </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="linkMe('/documentos/' + notification.document._id)">
+                <mat-icon>launch</mat-icon>
+                <span>Abrir</span>
+              </button>
+              <button mat-menu-item (click)="markNotificationAsRead(notification)">
+                <mat-icon>mark_email_read</mat-icon>
+                <span>Marcar como leído</span>
+              </button>
+              <button mat-menu-item (click)="killNotification(notification)">
+                <mat-icon>delete</mat-icon>
+                <span>Eliminar</span>
+              </button>
+            </mat-menu>
           </div>
         </div>
       </div>

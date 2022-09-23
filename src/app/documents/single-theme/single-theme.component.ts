@@ -46,6 +46,7 @@ export class SingleThemeComponent implements OnInit {
     'ranking',
     'users',
     'interactions',
+    'menu'
   ];
   public dataSource = new MatTableDataSource<any>();
   public solutionsList: Solution[] = _mockSolutions;
@@ -242,8 +243,8 @@ export class SingleThemeComponent implements OnInit {
     });
   }
 
-  linkSolution(id: string) {
-    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/temas/${this.themeID}/solucion/${id}`)
+  linkMe(url: string) {
+    this.utilityService.linkMe(url);
   }
 
   applyFilter(event: Event) {

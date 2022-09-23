@@ -111,7 +111,6 @@ export class EndPointService {
   public fetchSingleCommentByIdEndPoint: string = '/comment/';
   public createNewCommentEndPoint: string = '/comment/';
 
-
   // vote
   public createNewVoteEndPonint: string = '/vote/';
   public deleteVoteEndPonint: string = '/vote/';
@@ -122,10 +121,11 @@ export class EndPointService {
   public sendVisitEndPoint: string = '/visit/';
   // public deleteVoteEndPonint: string = '/vote/';
 
-
   // socket
   public updateSocketIDEndPoint: string = '/user/';
 
+  // categories
+  public editCategoryEndPoint: string = '/category/';
 
   constructor() { }
 }

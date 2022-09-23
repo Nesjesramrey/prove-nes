@@ -547,7 +547,7 @@ mat-form-field {
       position: absolute;
       top: 0;
       left: 0;
-      background: rgba($color: #000000, $alpha: 0.2);
+      background: rgba($color: #000000, $alpha: 0.7);
       z-index: 3;
     }
 
@@ -632,7 +632,11 @@ mat-form-field {
 .mat-form-field,
 .mat-table,
 .mat-list-item {
-  font-family: "Montserrat", "Helvetica Neue", sans-serif !important;
+  font-family: 'Montserrat', "Helvetica Neue", sans-serif !important;
+}
+
+mat-card {
+  overflow: hidden;
 }
 
 .author-hldr {

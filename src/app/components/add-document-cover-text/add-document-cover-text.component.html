@@ -4,7 +4,15 @@
 
 <div class="set-12" *ngIf="isDataAvailable">
   <div class="set-12 dialog-head">
-    <div class="set-10">
+    <div class="set-12">
+      <h3 class="txt-left">{{document.title}}</h3>
+      <p class="bycopy">
+        <i>
+          <small>By: {{document.createdBy.firstname}} {{document.createdBy.lastname}}</small>
+        </i>
+      </p>
+    </div>
+    <!-- <div class="set-10">
       <h3 class="txt-left">{{document.title}}</h3>
       <p class="bycopy">
         <i>
@@ -17,7 +25,7 @@
         (click)="killDialog()">
         <mat-icon>cancel</mat-icon>
       </button>
-    </div>
+    </div> -->
   </div>
 
   <div class="set-12 dialog-body">
@@ -31,8 +39,12 @@
       </mat-form-field>
 
       <div class="set-12 ctrls">
+        <button type="button" mat-raised-button color="accent" (click)="killDialog()">
+          <small>Cancelar</small>
+        </button>
+
         <button type="submit" mat-raised-button color="primary" [disabled]="formGroup.invalid">
-          Guardar
+          <small>Guardar</small>
         </button>
       </div>
     </form>
