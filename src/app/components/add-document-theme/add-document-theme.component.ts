@@ -39,7 +39,7 @@ export class AddDocumentThemeComponent implements OnInit {
   ngOnInit(): void {
     this.addThemeFormGroup = this.formBuilder.group({
       title: ['', [Validators.required]],
-      description: ['', []],
+      description: ['', [Validators.required]],
       files: ['', []]
     });
 
@@ -107,7 +107,10 @@ export class AddDocumentThemeComponent implements OnInit {
 
     this.solutionService.createNewSolution(data).subscribe((reply: any) => {
       this.submitted = false;
-      this.dialogRef.close(reply);
+      this.dialogRef.close({
+        topic: this.topic,
+        solutions: reply['solutions']
+      });
     });
   }
 }

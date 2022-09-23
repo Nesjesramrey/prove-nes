@@ -17,7 +17,8 @@
   .ds-page:nth-child(1) {
     background: url('../../assets/images/mexiclectivo-top-bg.jpg') no-repeat;
     background-size: cover;
-    background-position: center;
+    background-position: bottom center;
+    object-fit: cover;
     z-index: 9;
 
     .cover {
@@ -271,7 +272,7 @@
     // background-size: cover;
     height: auto !important;
     background: #00031d;
-    padding: 70px 120px;
+    // padding: 70px 120px;
     z-index: 14;
     text-align: center;
 

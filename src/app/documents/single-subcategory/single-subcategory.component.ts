@@ -181,7 +181,8 @@ export class SingleSubcategoryComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
-        this.topics.push(reply);
+        reply['topic']['solutions'] = reply['solutions'];
+        this.topics.push(reply['topic']);
         this.dataSource = new MatTableDataSource(this.topics);
       }
     });

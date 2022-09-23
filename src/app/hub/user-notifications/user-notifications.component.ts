@@ -3,6 +3,7 @@ import { forkJoin, Observable } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { UserService } from 'src/app/services/user.service';
+import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
   selector: '.user-notifications-page',
@@ -19,7 +20,8 @@ export class UserNotificationsComponent implements OnInit {
   constructor(
     public authenticationSrvc: AuthenticationService,
     public userSrvc: UserService,
-    public notificationSrvc: NotificationService
+    public notificationSrvc: NotificationService,
+    public utilityService: UtilityService
   ) {
     this.token = this.authenticationSrvc.fetchToken;
   }
@@ -42,5 +44,13 @@ export class UserNotificationsComponent implements OnInit {
         this.isDataAvailable = true;
       }, 1000);
     });
+  }
+
+  markNotificationAsRead(notification: any) { }
+
+  killNotification(notification: any) { }
+
+  linkMe(url: string) {
+    this.utilityService.linkMe(url);
   }
 }

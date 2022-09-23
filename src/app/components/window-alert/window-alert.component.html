@@ -31,7 +31,7 @@
       <button type="button" mat-raised-button color="primary" (click)="setAsCover()" [disabled]="submitted">
         <small>Continuar</small>
       </button>
-      <mat-spinner diameter="20"></mat-spinner>
+      <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
     </div>
   </div>
 </div>

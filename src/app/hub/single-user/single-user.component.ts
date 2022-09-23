@@ -70,6 +70,12 @@ export class SingleUserComponent implements OnInit {
               }, 1000);
             });
           }
+
+          if (this.userActivities.includes('citizen')) {
+            setTimeout(() => {
+              this.isDataAvailable = true;
+            }, 1000);
+          }
         } else {
           this.documentSrvc.fetchDocumentsByCollaborator({ _id: this.user['_id'] }).subscribe((reply: any) => {
             this.documents = reply;
