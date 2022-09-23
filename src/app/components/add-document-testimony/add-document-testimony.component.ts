@@ -33,16 +33,11 @@ export class AddDocumentTestimonyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // console.log({ dialog: this.dialogData });
     this.addTestimonyFormGroup = this.formBuilder.group({
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      image: ['', []],
+      // image: ['', []],
     });
-    // console.log({ img: this.dialogData.image });
-    // this.addTestimonyFormGroup.patchValue({
-    //   image: this.dialogData.image,
-    // });
   }
 
   handleSelectImage(event: any) {
@@ -63,12 +58,12 @@ export class AddDocumentTestimonyComponent implements OnInit {
         this.submitted = true;
 
         const { name, description } = formGroup.value;
-        const { topicID, type } = this.dialogData;
+        const { topicID, type, image } = this.dialogData;
 
         const formData = new FormData();
         formData.append('name', name);
         formData.append('description', description);
-        formData.append('files', this.file);
+        formData.append('files', image);
 
         const data = {
           form: formData,
