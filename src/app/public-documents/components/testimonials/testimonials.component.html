@@ -10,8 +10,8 @@
     <mat-card class="testimonial-item" *ngFor="let testimonial of data">
       <!-- IMAGE -->
       <div class="leading">
-        <mat-icon *ngIf="!image">panorama</mat-icon>
-        <img *ngIf="image" [src]="image" />
+        <mat-icon *ngIf="!testimonial.images[0]">panorama</mat-icon>
+        <img *ngIf="testimonial.images[0]" [src]="testimonial.images[0]" />
       </div>
       <!-- CONTENT -->
       <div class="info">
