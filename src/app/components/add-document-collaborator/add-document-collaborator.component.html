@@ -4,7 +4,13 @@
 
 <div class="set-12" *ngIf="isDataAvailable">
   <div class="set-12 dialog-head">
-    <div class="set-9">
+    <div class="set-12">
+      <h3>Agregar Colaborador</h3>
+      <p class="created-by">
+        {{document.title}}
+      </p>
+    </div>
+    <!-- <div class="set-9">
       <h3>Agregar Colaborador</h3>
       <p class="created-by">
         {{document.title}}
@@ -14,7 +20,7 @@
       <button type="button" mat-icon-button color="primary" (click)="killDialog()" [disabled]="submitted">
         <mat-icon>cancel</mat-icon>
       </button>
-    </div>
+    </div> -->
   </div>
 
   <div class="set-12 dialog-body">
@@ -78,8 +84,13 @@
       </div>
 
       <div class="set-12 ctrls">
+        <button type="button" mat-raised-button color="accent" [disabled]="submitted" (click)="killDialog()">
+          <small>Cancelar</small>
+        </button>
         <button type="submit" mat-raised-button color="primary"
-          [disabled]="addCollaboratorFormGroup.invalid || submitted">Agregar</button>
+          [disabled]="addCollaboratorFormGroup.invalid || submitted">
+          <small>Agregar</small>
+        </button>
         <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
       </div>
     </form>

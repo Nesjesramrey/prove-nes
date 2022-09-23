@@ -6,7 +6,10 @@
   <div class="set-4 col-lft">
     <mat-card class="set-12">
       <div class="set-12 cardimg">
-        <img src="../../../assets/images/Aspens_Ed_Moss.jpeg" alt="" />
+        <!-- <img src="../../../assets/images/Aspens_Ed_Moss.jpeg" alt="" /> -->
+        <div class="set-12 empty-img">
+          <mat-icon>panorama</mat-icon>
+        </div>
       </div>
 
       <input #fileInput type="file" (change)="openCropperDialog($event)" accept="image/*" hidden />

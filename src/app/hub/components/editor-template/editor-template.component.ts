@@ -47,4 +47,8 @@ export class EditorTemplateComponent implements OnInit {
   linkMe(url: string) {
     this.utilityService.linkMe(url);
   }
+
+  viewDocument(document: any) {
+    console.log(document);
+  }
 }

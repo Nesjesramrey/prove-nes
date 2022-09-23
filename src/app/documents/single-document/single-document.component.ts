@@ -248,4 +248,22 @@ export class SingleDocumentComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+
+  killLayout(layout: any) {
+    const dialogRef = this.dialog.open<WindowAlertComponent>(WindowAlertComponent, {
+      width: '420px',
+      data: {
+        windowType: 'kill-layout',
+        layout: layout
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        this.layouts = this.layouts.filter((x: any) => { return x['_id'] != reply['_id']; });
+        this.dataSource = new MatTableDataSource(this.layouts);
+      }
+    });
+  }
 }

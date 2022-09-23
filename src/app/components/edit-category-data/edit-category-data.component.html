@@ -4,7 +4,8 @@
 
 <div class="set-12" *ngIf="isDataAvailable">
   <div class="set-12 dialog-head">
-    <div class="set-9">
+    <h3>{{category.name}}</h3>
+    <!-- <div class="set-9">
       <h3>Categoría: {{layout.category.name}}</h3>
     </div>
 
@@ -13,19 +14,31 @@
         matTooltip="Cerrar" matTooltipClass="tooltip">
         <mat-icon>cancel</mat-icon>
       </button>
-    </div>
+    </div> -->
   </div>
 
   <div class="set-12 dialog-body">
     <form [formGroup]="formGroup" (submit)="editLayout(formGroup)">
+      <div class="set-12 catname">
+        <mat-form-field appearance="outline">
+          <mat-label>Categoría</mat-label>
+          <input type="text" matInput formControlName="category">
+          <mat-hint>Editar el nombre de la categoría impactará en otros documentos</mat-hint>
+        </mat-form-field>
+      </div>
+
       <mat-form-field appearance="outline">
         <mat-label>Descripción</mat-label>
         <textarea matInput cdkTextareaAutosize formControlName="description"></textarea>
       </mat-form-field>
 
       <div class="set-12 ctrls">
-        <button type="submit" mat-raised-button color="primary"
-          [disabled]="formGroup.invalid || submitted">Guardar</button>
+        <button type="button" mat-raised-button color="accent" [disabled]="submitted" (click)="killDialog()">
+          <small>Cancelar</small>
+        </button>
+        <button type="submit" mat-raised-button color="primary" [disabled]="formGroup.invalid || submitted">
+          <small>Guardar</small>
+        </button>
         <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
       </div>
     </form>

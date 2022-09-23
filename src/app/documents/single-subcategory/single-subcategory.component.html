@@ -27,10 +27,10 @@
     <div class="set-3 col-lft">
       <mat-card class="set-12 doc-description">
         <div class="set-12 imghldr">
-          <mat-icon *ngIf="subcategory.images.length == 0">panorama</mat-icon>
+          <mat-icon class="pano" *ngIf="subcategory.images.length == 0">panorama</mat-icon>
           <img [src]="subcategory.images[0]" alt="" *ngIf="subcategory.images.length != 0">
           <div class="overlay" (click)="popImageViewer()">
-            <mat-icon>photo_camera</mat-icon>
+            <mat-icon color="accent">photo_camera</mat-icon>
             <div class="cover"></div>
           </div>
         </div>
@@ -221,7 +221,7 @@
                     <mat-icon>exit_to_app</mat-icon>
                     <small>Mover</small>
                   </button>
-                  <button mat-menu-item>
+                  <button mat-menu-item (click)="killTopic(element)">
                     <mat-icon>delete</mat-icon>
                     <small>Eliminar</small>
                   </button>
