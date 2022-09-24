@@ -15,10 +15,7 @@
 </div>
 
 <div class="set-12 dialog-body">
-  <form
-    [formGroup]="addTestimonyFormGroup"
-    (submit)="createTestimony(addTestimonyFormGroup)"
-  >
+  <form [formGroup]="addTestimonyFormGroup" (submit)="createTestimony(addTestimonyFormGroup)">
     <div class="form-body">
       <mat-form-field class="example-full-width" appearance="outline">
         <mat-label>Nombre</mat-label>
@@ -55,11 +52,9 @@
       </div> -->
     </div>
     <div class="messageError">
-      <span *ngIf="messageError" class="messageError"
-        >Titulo y descripción son requeridos.</span
-      >
+      <span *ngIf="messageError" class="messageError">Titulo y descripción son requeridos.</span>
     </div>
-
+    
     <div class="set-12 ctrls">
       <button
         type="submit"
