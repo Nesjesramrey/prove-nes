@@ -49,6 +49,7 @@ import { DocumentUserListComponent } from './document-user-list/document-user-li
 import { AddCommentsComponent } from './add-comments/add-comments.component';
 import { AddDocumentCommentComponent } from './add-document-comment/add-document-comment.component';
 import { DialogErrorComponent } from './dialog-error/dialog-error.component';
+import { DescriptionViewerComponent } from './description-viewer/description-viewer.component';
 
 @NgModule({
   imports: [
@@ -101,7 +102,8 @@ import { DialogErrorComponent } from './dialog-error/dialog-error.component';
     DocumentUserListComponent,
     AddDocumentCommentComponent,
     AddCommentsComponent,
-    DialogErrorComponent
+    DialogErrorComponent,
+    DescriptionViewerComponent
   ],
   exports: [
     AppPageletComponent,
@@ -133,7 +135,8 @@ import { DialogErrorComponent } from './dialog-error/dialog-error.component';
     AddDocumentSolutionComponent,
     DocumentUserListComponent,
     AddDocumentCommentComponent,
-    AddCommentsComponent
+    AddCommentsComponent,
+    DescriptionViewerComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
@@ -151,7 +154,8 @@ import { DialogErrorComponent } from './dialog-error/dialog-error.component';
     AddRootCategoryComponent,
     ImageViewerComponent,
     DocumentUserListComponent,
-    AddCommentsComponent
+    AddCommentsComponent,
+    DescriptionViewerComponent
   ],
   providers: [],
 })

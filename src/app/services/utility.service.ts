@@ -12,6 +12,7 @@ export class UtilityService {
   public image_extensions: any = ['jpg', 'jpeg', 'png', 'bmp'];
   public errorOops: string = '¡Oops!... Ocurrió un error, inténtalo más tarde.';
   public editedSuccess: string = 'Se actualizó correctamente.';
+  public userAddedSuccesss: string = 'El usuario se agrego correctamente.';
 
   constructor(
     public snackbar: MatSnackBar,
@@ -94,22 +95,22 @@ export class UtilityService {
     return new Blob([ia], { type: mimeString });
   }
 
-  formatBreadscrumbs(arrayTitles:any){
+  formatBreadscrumbs(arrayTitles: any) {
     let resultTitle = [];
-    for(let title of arrayTitles){
-      if(title.length > 0){
+    for (let title of arrayTitles) {
+      if (title.length > 0) {
         const arrayTitle = title.split(' ');
-        title = ( arrayTitle.length <= 4 )
-        ? title 
-        : `${arrayTitle[0]} ${arrayTitle[1]} ${arrayTitle[2]} ${arrayTitle[3]}...`;
+        title = (arrayTitle.length <= 4)
+          ? title
+          : `${arrayTitle[0]} ${arrayTitle[1]} ${arrayTitle[2]} ${arrayTitle[3]}...`;
         resultTitle.push(title);
       }
-    } 
+    }
     return resultTitle;
   }
 
-  formatTitles(document:string , category:string , subCategory:string , topic:string){
-     const array = [ document , category , subCategory , topic ];
-     return this.formatBreadscrumbs(array);
+  formatTitles(document: string, category: string, subCategory: string, topic: string) {
+    const array = [document, category, subCategory, topic];
+    return this.formatBreadscrumbs(array);
   }
 }
