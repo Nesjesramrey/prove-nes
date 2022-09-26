@@ -129,6 +129,7 @@ export class SolutionComponent implements OnInit {
           categoryID: this.categoryID,
           topicID: this.solutionID,
           type: 'solution',
+          image: this.image,
         },
         disableClose: true,
       }
@@ -219,7 +220,6 @@ export class SolutionComponent implements OnInit {
       }
     });
   }
-
 }
 
 export interface ITestimony {
