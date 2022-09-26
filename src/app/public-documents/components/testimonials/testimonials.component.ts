@@ -7,12 +7,11 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class TestimonialsComponent implements OnInit {
   @Input('data') data: any = [];
-  @Input('image') image: string = '';
+  // @Input('image') image: string = '';
 
   constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }
 
 interface Testimonial {

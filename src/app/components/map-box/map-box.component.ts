@@ -25,7 +25,9 @@ export class MapBoxComponent implements OnInit {
         const index = this.states.findIndex(
           (x) => x.title.toLowerCase() === item.name.toLowerCase()
         );
-        this.activeState.push(this.states[index].id)
+        if(index !== -1){
+          this.activeState.push(this.states[index].id)
+        }
       });
     }, 200);
   }

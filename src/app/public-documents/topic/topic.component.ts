@@ -141,6 +141,7 @@ export class TopicComponent implements OnInit {
           categoryID: this.categoryID,
           topicID: this.topicID,
           type: 'topic',
+          image: this.image,
         },
         disableClose: true,
       }
