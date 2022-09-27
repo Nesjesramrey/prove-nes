@@ -20,6 +20,7 @@ export class AddDocumentTestimonyComponent implements OnInit {
   public submitted = false;
   public file: any = null;
   public messageError: boolean = false;
+  public isAnonymous: boolean = true;
   constructor(
     public formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<AddDocumentThemeComponent>,
@@ -34,10 +35,13 @@ export class AddDocumentTestimonyComponent implements OnInit {
 
   ngOnInit(): void {
     this.addTestimonyFormGroup = this.formBuilder.group({
-      name: ['', [Validators.required]],
+      name: [''],
       description: ['', [Validators.required]],
       image: ['', []],
     });
+  }
+  visibility() {
+    this.isAnonymous = !this.isAnonymous;
   }
 
   handleSelectImage(event: any) {
@@ -58,10 +62,10 @@ export class AddDocumentTestimonyComponent implements OnInit {
         this.submitted = true;
 
         const { name, description } = formGroup.value;
-        const { topicID, type, image } = this.dialogData;
+        const { topicID, type, image, lastname, firstname } = this.dialogData;
 
         const formData = new FormData();
-        formData.append('name', name);
+        formData.append('name', firstname + '  ' + lastname);
         formData.append('description', description);
         formData.append('files', image);
 
@@ -69,6 +73,7 @@ export class AddDocumentTestimonyComponent implements OnInit {
           form: formData,
           id: topicID,
           type: type,
+          isAnonymous: this.isAnonymous,
         };
 
         this.testimonyService

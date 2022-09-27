@@ -70,6 +70,7 @@ export class TopicComponent implements OnInit {
       next: (reply: any) => {
         this.user = reply;
         this.loadTopic();
+
         if (
           ['administrator', 'editor'].includes(this.user.activities?.[0]?.value)
         ) {
@@ -142,6 +143,8 @@ export class TopicComponent implements OnInit {
           topicID: this.topicID,
           type: 'topic',
           image: this.image,
+          firstname: this.user.firstname,
+          lastname: this.user.lastname,
         },
         disableClose: true,
       }
