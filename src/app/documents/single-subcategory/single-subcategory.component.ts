@@ -19,6 +19,7 @@ import { EditCategoryDataComponent } from 'src/app/components/edit-category-data
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
 import { WindowAlertComponent } from 'src/app/components/window-alert/window-alert.component';
+import { isArray } from 'util';
 
 @Component({
   selector: '.app-single-subcategory',
@@ -29,13 +30,11 @@ export class SingleSubcategoryComponent implements OnInit {
   public documentID: string = '';
   public categoryID: string = '';
   public subcategoryID: string = '';
-  public token: any = null;
+  public accessToken: any = null;
   public user: any = null;
   public payload: any = null;
   public document: any = null;
   public layout: any = [];
-  // public category: Category = _categories_mock[0];
-
   public selectedCategory: any = null;
   public isDataAvailable: boolean = false;
   public dataSource = new MatTableDataSource<any>();
@@ -46,20 +45,10 @@ export class SingleSubcategoryComponent implements OnInit {
   public topics: any = null;
   public subcategory: any = null;
   public solutions: any[] = [];
-
-  /* TABLE */
-  public displayedColumns: string[] = [
-    'name',
-    'users',
-    'interactions',
-    'solutions',
-    'ranking',
-    'actions',
-  ];
-  //public subcategories: any[] = [];
+  public displayedColumns: string[] = ['name', 'users', 'interactions', 'solutions', 'ranking', 'actions'];
   public subcategories: any[] = [];
-
   @ViewChild('titleField') titleField!: ElementRef<HTMLInputElement>;
+  public actionControlActivityList: any[] = [];
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -74,48 +63,41 @@ export class SingleSubcategoryComponent implements OnInit {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
     this.subcategoryID = this.activatedRoute['snapshot']['params']['subcategoryID'];
-    this.token = this.authenticationService.accessToken;
+    this.accessToken = this.authenticationService.accessToken;
   }
 
   ngOnInit(): void {
+    this.actionControlActivityList = this.utilityService.actionControlActivityList;
+
     let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
     let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID });
     let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID });
+    let user: Observable<any> = this.userService.fetchFireUser();
 
-    forkJoin([document, category, subcategory]).subscribe((reply: any) => {
+    forkJoin([document, category, subcategory, user]).subscribe((reply: any) => {
       this.document = reply[0];
-      //console.log('document: ', this.document);
+      // console.log('document: ', this.document);
+
+      this.collaborators = this.document['collaborators'];
+      // console.log('collaborators: ', this.collaborators);
+
       this.selectedCategory = reply[1];
-      this.collaborators = reply[0].collaborators;
       // console.log('category: ', this.selectedCategory);
-      //this.subcategories = this.selectedCategory['subLayouts'];
-      //console.log('subcategories: ', this.subcategories);
-      //this.dataSource = new MatTableDataSource(this.subcategories);
+
       this.subcategory = reply[2];
-      //console.log(this.subcategory);
+      // console.log('subcategory: ', this.subcategory);
+
       this.topics = this.subcategory['topics'];
-      // console.log(this.topics);
+      // console.log('topics: ', this.topics);
       this.dataSource = new MatTableDataSource(this.topics);
 
-      // for (let i = 0; i < this.topics.length; i++) {
-      //   let sols = this.topics[i].solutions;
-      //   for (let j = 0; j < sols.length; j++) {
-      //     //this.solutions.push(this.topics[i].solutions[j]);
-      //     // console.log("la sol id " + this.topics[i].solutions[j])
-      //     let sol: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.topics[i].solutions[j] });
-      //     forkJoin([sol]).subscribe((reply: any) => {
-      //       // console.log("elreply" + JSON.stringify(reply[0]));
-      //       let complete_solution = reply[0];
-      //       complete_solution.theme = this.topics[i];
-      //       console.log(complete_solution);
-      //       this.solutions.push(complete_solution);
-      //     })
-      //   }
-      // }
+      this.user = reply[3];
+      this.user['activityName'] = this.user['activities'][0]['value'];
+      // console.log('user: ', this.user);
 
       setTimeout(() => {
         this.isDataAvailable = true;
-      }, 300);
+      }, 1000);
     });
 
   }
@@ -181,8 +163,12 @@ export class SingleSubcategoryComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
-        reply['topic']['solutions'] = reply['solutions'];
-        this.topics.push(reply['topic']);
+        if (reply.hasOwnProperty('topic')) {
+          reply['topic']['solutions'] = reply['solutions'];
+          this.topics.push(reply['topic']);
+        } else {
+          this.topics.push(reply);
+        }
         this.dataSource = new MatTableDataSource(this.topics);
       }
     });
@@ -271,75 +257,3 @@ export class SingleSubcategoryComponent implements OnInit {
     });
   }
 }
-
-
-
-interface Category {
-  _id: string;
-  name: string;
-  users: string;
-  interactions: string;
-  solutions: number;
-  ranking: number;
-}
-
-const _categories_mock = [
-  {
-    name: 'deporte',
-    id: 'uuid221a',
-    users: 500,
-    interactions: 6200,
-    solutions: 100,
-    problems: 700,
-    ranking: 700,
-  },
-  {
-    name: 'derechos humanos',
-    id: 'uuid221b',
-    users: 500,
-    interactions: 6200,
-    solutions: 100,
-    problems: 700,
-    ranking: 700,
-  },
-  {
-    name: 'económico',
-    id: 'uuid221c',
-    users: 500,
-    interactions: 6200,
-    solutions: 100,
-    problems: 700,
-    ranking: 700,
-  },
-];
-
-const _mockSubcategories = [
-  {
-    name: 'acceso a la educación',
-    id: 'uuid221ssc',
-    users: 500,
-    interactions: 6200,
-    solutions: 100,
-    problems: 700,
-    ranking: 700,
-  },
-  {
-    name: 'deporte',
-    id: 'uuid221src',
-    users: 500,
-    interactions: 6200,
-    solutions: 100,
-    problems: 700,
-    ranking: 700,
-  },
-];
-const _mockTemas = [
-  {
-    _id: "adasd",
-    name: 'Solución',
-    category: 'Categoría',
-    subcategory: "subcategoría",
-    solutions: "soluciones",
-    ranking: "ranking"
-  },
-]

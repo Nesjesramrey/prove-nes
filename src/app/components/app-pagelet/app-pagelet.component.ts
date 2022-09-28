@@ -6,7 +6,6 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { SocketService } from 'src/app/services/socket.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
-// btn
 import { MatDialog } from '@angular/material/dialog';
 import { ModalPermissionsComponent } from 'src/app/public-documents/components/modal-permissions/modal-permissions.component';
 
@@ -45,13 +44,15 @@ export class AppPageletComponent implements OnInit {
 
     setTimeout(() => {
       if (this.user) {
+        // console.log('user: ', this.user);
         this.user['activities'].filter((x: any) => {
           this.userActivities.push(x['value']);
         });
 
-        this.notificationSrvc.fetchMyNotificationUnread({ userID: this.user['_id'] }).subscribe((reply: any) => {
-          this.unreadNotifications = reply['count'];
-        });
+        this.notificationSrvc.fetchMyNotificationUnread({ userID: this.user['_id'] })
+          .subscribe((reply: any) => {
+            this.unreadNotifications = reply['count'];
+          });
 
         if (['administrator', 'editor'].includes(this.user.activities?.[0]?.value)) {
           this.permission = true;

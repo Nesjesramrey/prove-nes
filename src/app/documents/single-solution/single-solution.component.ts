@@ -74,6 +74,7 @@ export class SingleSolutionComponent implements OnInit {
       },
     },
   };
+  public actionControlActivityList: any[] = [];
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -95,66 +96,53 @@ export class SingleSolutionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.actionControlActivityList = this.utilityService.actionControlActivityList;
+
     let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
     let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID, });
     let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID, });
     let topic: Observable<any> = this.topicService.fetchSingleTopicById({ _id: this.themeID });
     let solution: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.solutionID });
+    let user: Observable<any> = this.userService.fetchFireUser();
 
     //forkJoin([categories, document, solutions, category, subcategory]).subscribe((reply: any) => {
-    forkJoin([document, category, subcategory, topic, solution]).subscribe((reply: any) => {
-
-      this.collaborators = reply[0].collaborators;
-      this.category = reply[1];
-      // console.log("categoria " + JSON.stringify(this.category));
-      this.subcategory = reply[2];
-      // console.log("subcategoria " + JSON.stringify(this.subcategory));
-      this.topics = this.subcategory['topics'];
-      // console.log(this.topics);
-      this.topic = reply[3];
-      // console.log(this.topics); 
-      // console.log("topic " + JSON.stringify(this.topic));
-
-      // let sols = this.topic.solutions;
-      // for (let j = 0; j < sols.length; j++) {
-      //   let sol: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.topic.solutions[j] });
-      //   forkJoin([sol]).subscribe((reply: any) => {
-      //     this.solutions.push(reply[0]);
-      //   })
-      // }
-
-      this.solution = reply[4];
-      // console.log(this.solution);
-
-      this.sliderImages = this.solution.images;
-    });
-    this.documentService
-      .fetchSingleDocumentById({ _id: this.documentID })
+    forkJoin([document, category, subcategory, topic, solution, user])
       .subscribe((reply: any) => {
-        this.document = reply;
-        this.layouts = this.document['layouts'];
-      });
+        // console.log(reply);
+        this.document = reply[0];
+        // console.log('document: ', this.document);
 
-    if (this.accessToken != null) {
-      this.userService.fetchFireUser().subscribe({
-        error: (error) => {
-          switch (error['status']) {
-            case 401:
-              break;
-          }
-          setTimeout(() => {
-            this.isDataAvailable = true;
-          }, 1000);
-        },
-        next: (reply: any) => {
-          this.user = reply;
-          setTimeout(() => {
-            this.isDataAvailable = true;
-          }, 1000);
-        },
-        complete: () => { },
+        this.layouts = this.document['layouts'];
+        // console.log('layouts: ', this.layouts);
+
+        this.collaborators = this.document['collaborators'];
+        // console.log('collaborators: ', this.collaborators);
+
+        this.category = reply[1];
+        // console.log('category: ', this.category);
+
+        this.subcategory = reply[2];
+        // console.log('subcategory: ', this.subcategory);
+
+        this.topics = this.subcategory['topics'];
+        // console.log('topics: ', this.topics);
+
+        this.topic = reply[3];
+        // console.log('topic: ', this.topic);
+
+        this.solution = reply[4];
+        // console.log('solution: ', this.solution);
+
+        this.sliderImages = this.solution['images'];
+
+        this.user = reply[5];
+        this.user['activityName'] = this.user['activities'][0]['value'];
+        // console.log('user: ', this.user);
+
+        setTimeout(() => {
+          this.isDataAvailable = true;
+        }, 1000);
       });
-    }
   }
 
   handleSelectImage(event: any) {

@@ -13,9 +13,9 @@ export class MapBoxComponent implements OnInit {
   @ViewChild('svgMapBox') svgMapBox!: ElementRef<HTMLDivElement>;
   @Input() data: any[] = [];
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   ngAfterViewInit() {
     this.svgMapBox.nativeElement.scrollLeft = 160;
@@ -25,7 +25,7 @@ export class MapBoxComponent implements OnInit {
         const index = this.states.findIndex(
           (x) => x.title.toLowerCase() === item.name.toLowerCase()
         );
-        if(index !== -1){
+        if (index !== -1) {
           this.activeState.push(this.states[index].id)
         }
       });

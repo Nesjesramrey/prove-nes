@@ -41,18 +41,13 @@ export class SingleThemeComponent implements OnInit {
   public themeData: Theme = _mockTheme;
   public imagesToUpload: string[] = [];
   public states: any = [];
-  public displayedColumns: string[] = [
-    'title',
-    'ranking',
-    'users',
-    'interactions',
-    'menu'
-  ];
+  public displayedColumns: string[] = ['title', 'ranking', 'users', 'interactions', 'menu'];
   public dataSource = new MatTableDataSource<any>();
   public solutionsList: Solution[] = _mockSolutions;
   public collaborators: any = null;
   public solutions: any[] = [];
   public sliderImages: string[] = [..._mockTheme.images];
+  public actionControlActivityList: any[] = [];
 
   // simplet doughnut
   public simpletDoughnutData: ChartData<'doughnut'> = _simpleDonuthData;
@@ -96,66 +91,50 @@ export class SingleThemeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.actionControlActivityList = this.utilityService.actionControlActivityList;
+    
     let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
     let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID, });
     let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID, });
     let topic: Observable<any> = this.topicService.fetchSingleTopicById({ _id: this.themeID });
+    let user: Observable<any> = this.userService.fetchFireUser();
 
-    //forkJoin([categories, document, solutions, category, subcategory]).subscribe((reply: any) => {
-    forkJoin([document, category, subcategory, topic]).subscribe((reply: any) => {
-      // console.log(reply);
+    forkJoin([document, category, subcategory, topic, user]).subscribe((reply: any) => {
       this.document = reply[0];
       // console.log(this.document);
+
+      this.collaborators = this.document['collaborators'];
+      // console.log('collaborators: ', this.collaborators);
+
       this.layouts = this.document['layouts'];
-      this.collaborators = reply[0].collaborators;
+      // console.log('layouts: ', this.layouts);
+
       this.category = reply[1];
-      // console.log("categoria " + JSON.stringify(this.category));
+      // console.log('category: ', this.category);
+
       this.subcategory = reply[2];
-      // console.log("subcategoria " + JSON.stringify(this.subcategory));
+      // console.log('subcategory: ', this.subcategory);
+
       this.topics = this.subcategory['topics'];
-      // console.log(this.topics);
+      // console.log('topics: ', this.topics);
+
       this.topic = reply[3];
-      // console.log(this.topic);
-      // console.log("topic " + JSON.stringify(this.topic));
-      this.sliderImages = this.topic.images;
+      // console.log('topic: ', this.topic);
+
+      this.sliderImages = this.topic['images'];
+
       this.solutions = this.topic['solutions'];
+      // console.log('solutions: ', this.solutions);
       this.dataSource = new MatTableDataSource(this.solutions);
 
-      // let sols = this.topic.solutions;
-      // for (let j = 0; j < sols.length; j++) {
-      //   let sol: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.topic.solutions[j] });
-      //   forkJoin([sol]).subscribe((reply: any) => {
-      //     this.solutions.push(reply[0]);
-      //   })
-      // }
-    });
-    // this.documentService
-    //   .fetchSingleDocumentById({ _id: this.documentID })
-    //   .subscribe((reply: any) => {
-    //     this.document = reply;
-    //     this.layouts = this.document['layouts'];
-    //   });
+      this.user = reply[4];
+      this.user['activityName'] = this.user['activities'][0]['value'];
+      // console.log('user: ', this.user);
 
-    if (this.accessToken != null) {
-      this.userService.fetchFireUser().subscribe({
-        error: (error) => {
-          switch (error['status']) {
-            case 401:
-              break;
-          }
-          setTimeout(() => {
-            this.isDataAvailable = true;
-          }, 1000);
-        },
-        next: (reply: any) => {
-          this.user = reply;
-          setTimeout(() => {
-            this.isDataAvailable = true;
-          }, 1000);
-        },
-        complete: () => { },
-      });
-    }
+      setTimeout(() => {
+        this.isDataAvailable = true;
+      }, 1000);
+    });
   }
 
   handleSelectImage(event: any) {

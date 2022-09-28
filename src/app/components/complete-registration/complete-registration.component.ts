@@ -9,7 +9,9 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./complete-registration.component.scss']
 })
 export class CompleteRegistrationComponent implements OnInit {
-  public formGroup!: FormGroup;
+  public stepOneFormGroup!: FormGroup;
+  public stepTwoFormGroup!: FormGroup;
+  public stepThreeFormGroup!: FormGroup;
   public user: any = null;
 
   constructor(
@@ -23,23 +25,33 @@ export class CompleteRegistrationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.formGroup = this.formBuilder.group({
+    this.stepOneFormGroup = this.formBuilder.group({
       firstname: ['', [Validators.required]],
       lastname: ['', [Validators.required]]
     });
+
+    this.stepTwoFormGroup = this.formBuilder.group({
+      phone: ['', []],
+      zipcode: ['', []]
+    });
+
+    this.stepThreeFormGroup = this.formBuilder.group({
+      type: ['', []],
+      organizationName: ['', []]
+    });
   }
 
-  onCompleteRegistration(form: FormGroup) {
+  onCompleteRegistration() {
     let data: any = {
       userID: this.user['_id'],
-      firstname: form['value']['firstname'],
-      lastname: form['value']['lastname'],
+      firstname: this.stepOneFormGroup.value['firstname'],
+      lastname: this.stepOneFormGroup.value['lastname'],
       isFullRegister: true
     };
+
     this.userService.addUserPermissions(data).subscribe({
       error: (error: any) => { },
       next: (reply: any) => {
-        // console.log(reply);
         this.dialogRef.close();
         window.location.reload();
       },

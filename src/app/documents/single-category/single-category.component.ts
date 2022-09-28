@@ -33,8 +33,6 @@ export class SingleCategoryComponent implements OnInit {
   public payload: any = null;
   public document: any = null;
   public layout: any = [];
-  // public category: Category = _categories_mock[0];
-
   public selectedCategory: any = null;
   public isDataAvailable: boolean = false;
   public dataSource = new MatTableDataSource<any>();
@@ -44,19 +42,10 @@ export class SingleCategoryComponent implements OnInit {
   public collaborators: any = null;
   public topics: any = null;
   public solutions: any = null;
-
-  /* TABLE */
-  public displayedColumns: string[] = [
-    'name',
-    'users',
-    'interactions',
-    'solutions',
-    'problems',
-    'actions',
-  ];
+  public displayedColumns: string[] = ['name', 'users', 'interactions', 'solutions', 'problems', 'actions'];
   public subcategories: any[] = [];
-
   @ViewChild('titleField') titleField!: ElementRef<HTMLInputElement>;
+  public actionControlActivityList: any[] = [];
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -75,32 +64,29 @@ export class SingleCategoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.actionControlActivityList = this.utilityService.actionControlActivityList;
+
     let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
     let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID });
-    // let solutions: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.categoryID });
+    let user: Observable<any> = this.userService.fetchFireUser();
 
-    if (this.accessToken != null) {
-      this.userService.fetchFireUser().subscribe({
-        error: (error) => {
-          switch (error['status']) { }
-        },
-        next: (reply: any) => {
-          this.user = reply;
-        },
-        complete: () => { },
-      });
-    }
-
-    forkJoin([document, category]).subscribe((reply: any) => {
-      // console.log(reply);
+    forkJoin([document, category, user]).subscribe((reply: any) => {
       this.document = reply[0];
       // console.log('document: ', this.document);
+
+      this.collaborators = this.document['collaborators'];
+      // console.log('collaborators: ', this.collaborators);
+
       this.selectedCategory = reply[1];
-      this.collaborators = reply[0].collaborators;
       // console.log('category: ', this.selectedCategory);
+
       this.subcategories = this.selectedCategory['subLayouts'];
       this.dataSource = new MatTableDataSource(this.subcategories);
       // console.log('subcategories: ', this.subcategories);
+
+      this.user = reply[2];
+      this.user['activityName'] = this.user['activities'][0]['value'];
+      // console.log('user: ', this.user);
 
       setTimeout(() => {
         this.isDataAvailable = true;
@@ -271,66 +257,3 @@ export class SingleCategoryComponent implements OnInit {
     });
   }
 }
-
-
-
-interface Category {
-  name: string;
-  id: string;
-  users: number;
-  interactions: number;
-  solutions: number;
-  problems: number;
-  ranking: number;
-}
-
-const _categories_mock = [
-  {
-    name: 'deporte',
-    id: 'uuid221a',
-    users: 500,
-    interactions: 6200,
-    solutions: 100,
-    problems: 700,
-    ranking: 700,
-  },
-  {
-    name: 'derechos humanos',
-    id: 'uuid221b',
-    users: 500,
-    interactions: 6200,
-    solutions: 100,
-    problems: 700,
-    ranking: 700,
-  },
-  {
-    name: 'económico',
-    id: 'uuid221c',
-    users: 500,
-    interactions: 6200,
-    solutions: 100,
-    problems: 700,
-    ranking: 700,
-  },
-];
-
-const _mockSubcategories = [
-  {
-    name: 'acceso a la educación',
-    id: 'uuid221ssc',
-    users: 500,
-    interactions: 6200,
-    solutions: 100,
-    problems: 700,
-    ranking: 700,
-  },
-  {
-    name: 'deporte',
-    id: 'uuid221src',
-    users: 500,
-    interactions: 6200,
-    solutions: 100,
-    problems: 700,
-    ranking: 700,
-  },
-];

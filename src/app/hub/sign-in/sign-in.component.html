@@ -23,11 +23,12 @@
         <small>¿No tienes cuenta? <a href="#" routerLink="/hub/registro">Registro</a></small>
       </div>
       <div class="set-6 txt-right">
-        <button type="submit" mat-raised-button color="primary"
-          [disabled]="signInFormGroup.invalid || submitted">Ingresar</button>
+        <button type="submit" mat-raised-button color="primary" [disabled]="signInFormGroup.invalid || submitted">
+          <small>Ingresar</small>
+        </button>
       </div>
     </div>
   </form>
 </div>
 
-<div class="cover"></div>
+<!-- <div class="cover"></div> -->

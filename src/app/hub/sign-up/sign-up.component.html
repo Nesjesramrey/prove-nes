@@ -80,11 +80,12 @@
         <small>¿Ya tienes cuenta? <a href="#" routerLink="/hub/ingresar">Ingresar</a></small>
       </div>
       <div class="set-6 txt-right">
-        <button type="submit" mat-raised-button color="primary"
-          [disabled]="signUpFormGroup.invalid || submitted">Registrarme</button>
+        <button type="submit" mat-raised-button color="primary" [disabled]="signUpFormGroup.invalid || submitted">
+          <small>Registrarme</small>
+        </button>
       </div>
     </div>
   </form>
 </div>
 
-<div class="cover"></div>
+<!-- <div class="cover"></div> -->

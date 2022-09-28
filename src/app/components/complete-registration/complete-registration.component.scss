@@ -18,4 +18,19 @@
   .set-6:nth-child(even) {
     padding-left: 10px;
   }
+
+  ::ng-deep .mat-step-header:hover,
+  ::ng-deep .mat-step-header {
+    background: transparent !important;
+  }
+
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 0;
+  }
+
+  .ctrls {
+    button {
+      margin-left: 10px;
+    }
+  }
 }

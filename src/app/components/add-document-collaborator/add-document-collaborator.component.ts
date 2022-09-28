@@ -38,6 +38,7 @@ export class AddDocumentCollaboratorComponent implements OnInit {
   public userActivity: string = '';
   public editorAllowedActivities: any = [];
   public selectedActivity: any = null;
+  public filteredActivities: any = [];
 
   constructor(
     public dialogRef: MatDialogRef<AddDocumentCollaboratorComponent>,
@@ -52,18 +53,20 @@ export class AddDocumentCollaboratorComponent implements OnInit {
     this.layout = this.dialogData['layout'];
     this.user = this.dialogData['user'];
 
-    if (this.user['activities'].length == 0) { this.userActivity = 'editor'; }
+    // if (this.user['activities'].length == 0) { this.userActivity = 'editor'; }
+    this.userActivity = this.user['activityName'];
 
     switch (this.userActivity) {
       case 'administrator':
         break;
       case 'editor':
-        this.editorAllowedActivities = [
-          { value: 'type-a', viewValue: 'Tipo A' },
-          { value: 'type-b', viewValue: 'Tipo B' },
-          { value: 'type-c', viewValue: 'Tipo C' },
-          { value: 'type-d', viewValue: 'Tipo D' }
-        ];
+        // this.editorAllowedActivities = [
+        //   { value: 'type-a', viewValue: 'Tipo A' },
+        //   { value: 'type-b', viewValue: 'Tipo B' },
+        //   { value: 'type-c', viewValue: 'Tipo C' },
+        //   { value: 'type-d', viewValue: 'Tipo D' }
+        // ];
+        this.editorAllowedActivities = ['type-a', 'type-b', 'type-c', 'type-d'];
         break;
     }
   }
@@ -80,6 +83,11 @@ export class AddDocumentCollaboratorComponent implements OnInit {
 
     this.availableLayouts.filter((x: any) => { this.categories.push(x['category']); });
     this.categories.filter((x: any) => { this.categoriesString.push(x['name']); });
+
+    this.utilitiService.fetchAllStates().subscribe((reply: any) => {
+      // console.log(reply);
+    });
+
     this.states = this.document['coverage'];
     this.setFilteredCategories();
 
@@ -90,7 +98,13 @@ export class AddDocumentCollaboratorComponent implements OnInit {
       coverage: ['', [Validators.required]]
     });
 
-    this.utilitySrvc.fetchAllActivities().subscribe((reply: any) => { this.allActivities = reply; });
+    this.utilitySrvc.fetchAllActivities().subscribe((reply: any) => {
+      this.allActivities = reply;
+      this.filteredActivities = this.allActivities.filter(
+        (e: any) => {
+          return this.editorAllowedActivities.includes(e['value']);
+        }, this.editorAllowedActivities);
+    });
 
     setTimeout(() => {
       this.isDataAvailable = true;
@@ -144,8 +158,9 @@ export class AddDocumentCollaboratorComponent implements OnInit {
   }
 
   onSelectType(event: any) {
-    this.selectedActivity = this.allActivities.filter((x: any) => { return x['value'] == event.value; });
-    this.addCollaboratorFormGroup.patchValue({ activity: this.selectedActivity[0]['_id'] });
+    // this.selectedActivity = this.allActivities.filter((x: any) => { return x['value'] == event.value; });
+    // this.addCollaboratorFormGroup.patchValue({ activity: this.selectedActivity[0]['_id'] });
+    this.addCollaboratorFormGroup.patchValue({ activity: event['value'] });
   }
 
   onSelectCoverage(evt: any) {
@@ -160,13 +175,6 @@ export class AddDocumentCollaboratorComponent implements OnInit {
   addCollaborator(formGroup: FormGroup) {
     this.submitted = true;
 
-    // if (formGroup['value']['coverage'].includes('all')) {
-    //   const index = formGroup['value']['coverage'].indexOf('all');
-    //   if (index > -1) {
-    //     formGroup['value']['coverage'].splice(index, 1);
-    //   }
-    // }
-
     let data: any = {
       layouts: this.layouts,
       collaborators: [{
@@ -175,8 +183,6 @@ export class AddDocumentCollaboratorComponent implements OnInit {
         coverage: formGroup['value']['coverage']
       }]
     };
-    console.log(data);
-    return;
 
     this.layoutService.addLayoutCollaborator(data).subscribe({
       error: (error: any) => {
@@ -185,7 +191,7 @@ export class AddDocumentCollaboratorComponent implements OnInit {
         this.utilitiService.openErrorSnackBar(this.utilitiService.errorOops);
       },
       next: (reply: any) => {
-        // console.log(reply);
+        console.log(reply);
         this.utilitiService.openSuccessSnackBar(this.utilitiService.userAddedSuccesss);
         this.dialogRef.close(reply)
       },

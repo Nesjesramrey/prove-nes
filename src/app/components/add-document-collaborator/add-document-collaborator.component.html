@@ -61,7 +61,7 @@
           <mat-form-field appearance="outline">
             <mat-label>Tipo</mat-label>
             <mat-select formControlName="activity" (selectionChange)="onSelectType($event)">
-              <mat-option *ngFor="let activity of editorAllowedActivities" [value]="activity.value">
+              <mat-option *ngFor="let activity of filteredActivities" [value]="activity._id">
                 <small>{{activity.viewValue}}</small>
               </mat-option>
             </mat-select>
