@@ -27,7 +27,8 @@ export class CategoryComponent implements OnInit {
   public solutionsCount: number = 0;
   public items: Section[] = top10;
   public selectedCategoryTitle: any = null;
-  public titles : any = [];
+  public titles: any = [];
+  public rank: any = {};
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -54,9 +55,10 @@ export class CategoryComponent implements OnInit {
 
     forkJoin([document, category]).subscribe((reply: any) => {
       this.titles = this.utilityService.formatTitles
-      (reply[0].title , reply[1].category.name , '' , '');
+        (reply[0].title, reply[1].category.name, '', '');
       this.document = reply[0];
       this.selectedCategory = reply[1];
+      this.rank = this.selectedCategory.rank
       this.image = reply[1].images.length > 0 ? reply[1].images[0] : this.image;
       this.topicsCount = reply[1].topics.length;
       this.coverage = this.document.coverage;

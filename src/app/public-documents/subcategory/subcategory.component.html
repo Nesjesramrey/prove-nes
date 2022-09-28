@@ -30,9 +30,6 @@
           <li>{{ titles[2] }}</li>
         </breadcrumbs-component>
       </div>
-      <!-- <div class="set-4 featured-users">
-        <featured-users [inputAmount]="5"></featured-users>
-      </div> -->
     </div>
 
     <div
@@ -62,6 +59,10 @@
             ></expanded-text>
           </div>
         </mat-card>
+        <horizontal-stats
+          [users]="rank.stats.uniqueVisitsInRelation"
+          [interactions]="rank.stats.AvgSubsecuentVisitsInRelation"
+        ></horizontal-stats>
       </div>
       <div class="set-9 col-rgt">
         <panel-subcategory
