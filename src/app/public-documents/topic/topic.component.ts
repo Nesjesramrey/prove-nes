@@ -41,6 +41,7 @@ export class TopicComponent implements OnInit {
   public image: string = '../../../assets/images/not_fount.jpg';
   public permission: any;
   public SolutionDataSource = new MatTableDataSource<any>();
+  public rank: any;
 
   public testimonials: any = TESTIMONIALS;
   public solutionsData: any = [];
@@ -111,6 +112,7 @@ export class TopicComponent implements OnInit {
         this.category = reply[1];
         this.subcategory = reply[2];
         this.topic = reply[3];
+        this.rank = this.topic.rank;
         this.votes = reply[4].length;
         this.solutionsData = this.topic.solutions;
         this.SolutionDataSource = new MatTableDataSource(this.solutionsData);
