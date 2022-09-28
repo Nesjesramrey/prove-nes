@@ -74,18 +74,19 @@ export class SingleDocumentComponent implements OnInit {
         this.layouts = this.document['layouts'];
         this.layouts.filter((layout: any) => {
           layout['categoryName'] = layout['category']['name'];
-          // console.log(layout);
           layout['accessControlList'].filter((acl: any) => {
             acl['collaborators'].filter((collaborator: any) => {
-              // console.log(collaborator);
-              if (collaborator['user']['_id'] == this.user['_id']) {
-                // console.log('access');
-                layout['access'] = true;
-              }
+              if (collaborator['user']['_id'] == this.user['_id']) { layout['access'] = true; }
             });
-            // console.log(layout);
           });
         });
+
+        switch (this.user['activityName']) {
+          case 'editor':
+            this.layouts.filter((layout: any) => { layout['access'] = true; });
+            break;
+        }
+
         this.dataSource = new MatTableDataSource(this.layouts);
         // console.log('layouts: ', this.layouts);
 
