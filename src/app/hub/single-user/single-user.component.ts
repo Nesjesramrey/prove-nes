@@ -97,11 +97,7 @@ export class SingleUserComponent implements OnInit {
             });
           }
 
-          if (this.userActivities.includes('editor')) {
-            this.haveRootPermissions = false;
-          }
-
-          if (this.userActivities.includes('citizen') || this.userActivities.includes('editor')) {
+          if (this.userActivities.includes('citizen')) {
             this.documentSrvc.fetchDocumentsByCollaborator({ _id: this.user['_id'] })
               .subscribe((reply: any) => {
                 // console.log(reply);
@@ -114,6 +110,24 @@ export class SingleUserComponent implements OnInit {
                         if (collaborator['user']['_id'] == this.user['_id']) { layout['access'] = true; }
                       });
                     });
+                  });
+                });
+                setTimeout(() => {
+                  this.isDataAvailable = true;
+                }, 1000);
+              });
+          }
+
+          if (this.userActivities.includes('editor')) {
+            this.haveRootPermissions = false;
+            this.documentSrvc.fetchDocumentsByCollaborator({ _id: this.user['_id'] })
+              .subscribe((reply: any) => {
+                // console.log(reply);
+                this.documents = reply;
+                this.documents.filter((doc: any) => {
+                  doc['layouts'].filter((layout: any) => {
+                    layout['access'] = true;
+                    console.log(layout);
                   });
                 });
                 setTimeout(() => {
