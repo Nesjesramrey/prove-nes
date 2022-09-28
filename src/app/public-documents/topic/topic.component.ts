@@ -41,6 +41,7 @@ export class TopicComponent implements OnInit {
   public image: string = '../../../assets/images/not_fount.jpg';
   public permission: any;
   public SolutionDataSource = new MatTableDataSource<any>();
+  public favorites: boolean = false;
   public rank: any;
 
   public testimonials: any = TESTIMONIALS;
@@ -71,6 +72,7 @@ export class TopicComponent implements OnInit {
       next: (reply: any) => {
         this.user = reply;
         this.loadTopic();
+
         if (
           ['administrator', 'editor'].includes(this.user.activities?.[0]?.value)
         ) {
@@ -80,6 +82,14 @@ export class TopicComponent implements OnInit {
         }
       },
     });
+  }
+  chekFavorites() {
+    this.favorites = !this.favorites;
+    let data = {
+      id: this.topicID,
+      favorites: this.favorites,
+    };
+    this.topicService.addFavorites(data).subscribe((reply: any) => { });
   }
 
   loadTopic() {
@@ -144,6 +154,8 @@ export class TopicComponent implements OnInit {
           topicID: this.topicID,
           type: 'topic',
           image: this.image,
+          firstname: this.user.firstname,
+          lastname: this.user.lastname,
         },
         disableClose: true,
       }

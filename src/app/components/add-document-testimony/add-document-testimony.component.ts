@@ -20,6 +20,7 @@ export class AddDocumentTestimonyComponent implements OnInit {
   public submitted = false;
   public file: any = null;
   public messageError: boolean = false;
+  public isAnonymous: boolean = true;
   constructor(
     public formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<AddDocumentThemeComponent>,
@@ -37,6 +38,9 @@ export class AddDocumentTestimonyComponent implements OnInit {
       description: ['', [Validators.required]],
       image: ['', []],
     });
+  }
+  visibility() {
+    this.isAnonymous = !this.isAnonymous;
   }
 
   handleSelectImage(event: any) {
@@ -67,6 +71,7 @@ export class AddDocumentTestimonyComponent implements OnInit {
           form: formData,
           id: topicID,
           type: type,
+          isAnonymous: this.isAnonymous,
         };
 
         this.testimonyService

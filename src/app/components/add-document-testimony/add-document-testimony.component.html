@@ -20,6 +20,25 @@
     (submit)="createTestimony(addTestimonyFormGroup)"
   >
     <div class="form-body">
+      <div *ngIf="isAnonymous" class="visibility-container">
+        <img
+          class="visibility"
+          src="../../../assets/images/VISIBILITY ICON.svg"
+          alt="imagen de usuario visible"
+          (click)="visibility()"
+        />
+        <small (click)="visibility()">Usuario Visible</small>
+      </div>
+      <div *ngIf="!isAnonymous" class="visibility-container">
+        <img
+          class="visibility"
+          src="../../../assets/images/VISIBILITY OFF ICON.svg"
+          alt="imagen de usuario visible"
+          (click)="visibility()"
+        />
+        <small (click)="visibility()">Usuario Anónimo</small>
+      </div>
+
       <mat-form-field class="example-full-width" appearance="outline">
         <mat-label>Escribe una descripción o carga un documento</mat-label>
         <textarea
