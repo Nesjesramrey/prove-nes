@@ -104,8 +104,18 @@ export class SingleUserComponent implements OnInit {
           if (this.userActivities.includes('citizen') || this.userActivities.includes('editor')) {
             this.documentSrvc.fetchDocumentsByCollaborator({ _id: this.user['_id'] })
               .subscribe((reply: any) => {
-                console.log(reply);
+                // console.log(reply);
                 this.documents = reply;
+                this.documents.filter((doc: any) => {
+                  doc['layouts'].filter((layout: any) => {
+                    layout['categoryName'] = layout['category']['name'];
+                    layout['accessControlList'].filter((acl: any) => {
+                      acl['collaborators'].filter((collaborator: any) => {
+                        if (collaborator['user']['_id'] == this.user['_id']) { layout['access'] = true; }
+                      });
+                    });
+                  });
+                });
                 setTimeout(() => {
                   this.isDataAvailable = true;
                 }, 1000);

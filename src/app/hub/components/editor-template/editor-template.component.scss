@@ -110,7 +110,7 @@
       transition: all .2s linear;
     }
 
-    button:hover {
+    button:hover:enabled {
       color: #1e7e7f;
     }
   }

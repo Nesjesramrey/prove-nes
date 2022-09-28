@@ -58,14 +58,9 @@ export class AddDocumentCollaboratorComponent implements OnInit {
 
     switch (this.userActivity) {
       case 'administrator':
+        this.editorAllowedActivities = ['editor', 'type-a', 'type-b', 'type-c', 'type-d'];
         break;
       case 'editor':
-        // this.editorAllowedActivities = [
-        //   { value: 'type-a', viewValue: 'Tipo A' },
-        //   { value: 'type-b', viewValue: 'Tipo B' },
-        //   { value: 'type-c', viewValue: 'Tipo C' },
-        //   { value: 'type-d', viewValue: 'Tipo D' }
-        // ];
         this.editorAllowedActivities = ['type-a', 'type-b', 'type-c', 'type-d'];
         break;
     }
@@ -84,9 +79,9 @@ export class AddDocumentCollaboratorComponent implements OnInit {
     this.availableLayouts.filter((x: any) => { this.categories.push(x['category']); });
     this.categories.filter((x: any) => { this.categoriesString.push(x['name']); });
 
-    this.utilitiService.fetchAllStates().subscribe((reply: any) => {
-      // console.log(reply);
-    });
+    // this.utilitiService.fetchAllStates().subscribe((reply: any) => {
+    //   console.log(reply);
+    // });
 
     this.states = this.document['coverage'];
     this.setFilteredCategories();
@@ -158,8 +153,6 @@ export class AddDocumentCollaboratorComponent implements OnInit {
   }
 
   onSelectType(event: any) {
-    // this.selectedActivity = this.allActivities.filter((x: any) => { return x['value'] == event.value; });
-    // this.addCollaboratorFormGroup.patchValue({ activity: this.selectedActivity[0]['_id'] });
     this.addCollaboratorFormGroup.patchValue({ activity: event['value'] });
   }
 
@@ -186,7 +179,6 @@ export class AddDocumentCollaboratorComponent implements OnInit {
 
     this.layoutService.addLayoutCollaborator(data).subscribe({
       error: (error: any) => {
-        // console.log(error);
         this.submitted = false;
         this.utilitiService.openErrorSnackBar(this.utilitiService.errorOops);
       },
