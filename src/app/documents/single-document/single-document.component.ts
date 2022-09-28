@@ -85,6 +85,9 @@ export class SingleDocumentComponent implements OnInit {
           case 'editor':
             this.layouts.filter((layout: any) => { layout['access'] = true; });
             break;
+          case 'administrator':
+            this.layouts.filter((layout: any) => { layout['access'] = true; });
+            break;
         }
 
         this.dataSource = new MatTableDataSource(this.layouts);
