@@ -60,11 +60,11 @@ export class AddDocumentTestimonyComponent implements OnInit {
       if (this.addTestimonyFormGroup.valid) {
         this.submitted = true;
         const { description } = formGroup.value;
-        const { topicID, type, image } = this.dialogData;
+        const { topicID, type } = this.dialogData;
 
         const formData = new FormData();
         formData.append('description', description);
-        formData.append('files', image);
+        formData.append('files', this.file);
         formData.append('isAnonymous', (!this.isAnonymous).toString());
 
         const data = {
