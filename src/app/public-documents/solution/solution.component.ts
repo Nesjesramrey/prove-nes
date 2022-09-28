@@ -29,6 +29,7 @@ export class SolutionComponent implements OnInit {
   public submitted: boolean = false;
   public color: any;
   public userVoted: number = 0;
+  public favorites: boolean = false;
 
   public document: any = null;
   public solution: any = null;
@@ -68,6 +69,14 @@ export class SolutionComponent implements OnInit {
         this.loadSolution();
       },
     });
+  }
+  chekFavorites() {
+    this.favorites = !this.favorites;
+    let data = {
+      id: this.topicID,
+      favorites: this.favorites,
+    };
+    console.log({ data });
   }
 
   loadSolution() {
