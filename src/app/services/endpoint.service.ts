@@ -62,6 +62,7 @@ export class EndPointService {
   public fetchSingleTopicByIdEndPoint: string = '/topic/';
   public createNewTopicEndPoint: string = '/topic/layout/';
   public uploadTopicFilesEndPoint: string = '/topic/';
+  public addFavoritesEndPoint: string = '/topic/favorites/';
 
   // permission
   public createNewPermissionEndPoint: string = '/permission/';
@@ -89,7 +90,8 @@ export class EndPointService {
   public fetchMyNotificationsLengthEndPoint: string =
     '/notification/fetch-my-notifications-length';
   public fetchMyNotificationsContentEndPoint: string = '/notification';
-  public fetchMyNotificationUnreadEndPoint: string = '/notification/number_of_unread/user/';
+  public fetchMyNotificationUnreadEndPoint: string =
+    '/notification/number_of_unread/user/';
 
   // support
   public sendSupportMessageEndPoint: string =
@@ -127,5 +129,5 @@ export class EndPointService {
   // categories
   public editCategoryEndPoint: string = '/category/';
 
-  constructor() { }
+  constructor() {}
 }

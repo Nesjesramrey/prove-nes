@@ -52,6 +52,7 @@
           </li>
         </breadcrumbs-component>
       </div>
+
       <!-- <div class="set-3 featured-users">
         <featured-users [inputAmount]="3"></featured-users>
       </div> -->
@@ -110,6 +111,7 @@
                   style="cursor: pointer"
                   (click)="popImageViewer()"
                 />
+
                 <div class="info">
                   <button class="custom-circle">
                     <mat-icon>thumb_up</mat-icon>
@@ -155,6 +157,16 @@
                   [title]="topic.title"
                 >
                 </expanded-text>
+              </div>
+              <div class="favorites-button">
+                <button
+                  mat-icon-button
+                  color="warn"
+                  aria-label="Example icon button with a heart icon"
+                  (click)="chekFavorites()"
+                >
+                  <mat-icon>favorite</mat-icon>
+                </button>
               </div>
             </mat-card>
           </div>
