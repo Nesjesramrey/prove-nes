@@ -17,6 +17,7 @@ import { AddDocumentCoverTextComponent } from 'src/app/components/add-document-c
 import { WindowAlertComponent } from 'src/app/components/window-alert/window-alert.component';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
+import { DescriptionViewerComponent } from 'src/app/components/description-viewer/description-viewer.component';
 
 @Component({
   selector: '.single-document-page',
@@ -65,20 +66,13 @@ export class SingleDocumentComponent implements OnInit {
     if (this.accessToken != null) {
       this.userService.fetchFireUser().subscribe({
         error: (error) => {
-          // console.log(error);
-          switch (error['status']) {
-            case 401:
-              // this.utilityService.openErrorSnackBar('Tu token de acceso ha caducado, intenta ingresar otra vez.');
-              // localStorage.removeItem('accessToken');
-              break;
-          }
+          switch (error['status']) { }
           setTimeout(() => {
             this.isDataAvailable = true;
           }, 1000);
         },
         next: (reply: any) => {
           this.user = reply;
-          // console.log(this.user);
           setTimeout(() => {
             this.isDataAvailable = true;
           }, 1000);
@@ -111,8 +105,9 @@ export class SingleDocumentComponent implements OnInit {
     const dialogRef = this.dialog.open<AddDocumentCollaboratorComponent>(AddDocumentCollaboratorComponent, {
       width: '640px',
       data: {
-        documentID: this.documentID,
-        document: this.document
+        document: this.document,
+        user: this.user,
+        location: 'document'
       },
       disableClose: true
     });
@@ -203,6 +198,22 @@ export class SingleDocumentComponent implements OnInit {
       if (reply != undefined) {
         this.document['inCover'] = reply['inCover'];
       }
+    });
+  }
+
+  popDescriptionViewerDialog() {
+    const dialogRef = this.dialog.open<DescriptionViewerComponent>(DescriptionViewerComponent, {
+      data: {
+        document: this.document,
+        user: this.user,
+        location: 'document'
+      },
+      disableClose: true,
+      panelClass: 'full-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
     });
   }
 

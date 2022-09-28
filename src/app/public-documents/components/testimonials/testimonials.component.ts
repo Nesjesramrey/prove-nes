@@ -9,9 +9,11 @@ export class TestimonialsComponent implements OnInit {
   @Input('data') data: any = [];
   // @Input('image') image: string = '';
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.data);
+  }
 }
 
 interface Testimonial {

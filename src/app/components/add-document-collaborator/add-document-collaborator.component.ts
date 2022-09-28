@@ -23,17 +23,21 @@ export class AddDocumentCollaboratorComponent implements OnInit {
   public selectedCategories: any = [];
   public categoryCtrl = new FormControl('');
   public separatorKeysCodes: number[] = [ENTER, COMMA];
-  public layout: any = [];
+  public layouts: any = [];
   @ViewChild('categoryInput') categoryInput!: ElementRef<HTMLInputElement>;
   public filteredCategories!: Observable<string[]>;
   public categoriesString: any = [];
   public document: any = null;
-  public layouts: any = null;
+  public layout: any = null;
+  public availableLayouts: any = null;
   public addCollaboratorFormGroup!: FormGroup;
   public submitted: boolean = false;
   @ViewChild('coverageSelect') public coverageSelect!: MatSelect;
+  public user: any = null;
   public allActivities: any = [];
-  public editorAllowedActivities: any = ['type-a', 'type-b', 'type-c', 'type-d'];
+  public userActivity: string = '';
+  public editorAllowedActivities: any = [];
+  public selectedActivity: any = null;
 
   constructor(
     public dialogRef: MatDialogRef<AddDocumentCollaboratorComponent>,
@@ -45,20 +49,39 @@ export class AddDocumentCollaboratorComponent implements OnInit {
   ) {
     // console.log(this.dialogData);
     this.document = this.dialogData['document'];
+    this.layout = this.dialogData['layout'];
+    this.user = this.dialogData['user'];
+
+    if (this.user['activities'].length == 0) { this.userActivity = 'editor'; }
+
+    switch (this.userActivity) {
+      case 'administrator':
+        break;
+      case 'editor':
+        this.editorAllowedActivities = [
+          { value: 'type-a', viewValue: 'Tipo A' },
+          { value: 'type-b', viewValue: 'Tipo B' },
+          { value: 'type-c', viewValue: 'Tipo C' },
+          { value: 'type-d', viewValue: 'Tipo D' }
+        ];
+        break;
+    }
   }
 
   ngOnInit(): void {
-    this.layouts = this.document['layouts'];
-    this.layouts.filter((x: any) => { this.categories.push(x['category']); });
+    switch (this.dialogData['location']) {
+      case 'document':
+        this.availableLayouts = this.document['layouts'];
+        break;
+      case 'layout':
+        this.availableLayouts = this.layout['subLayouts'];
+        break;
+    }
 
+    this.availableLayouts.filter((x: any) => { this.categories.push(x['category']); });
     this.categories.filter((x: any) => { this.categoriesString.push(x['name']); });
     this.states = this.document['coverage'];
     this.setFilteredCategories();
-
-    this.utilitySrvc.fetchAllActivities().subscribe((reply: any) => {
-      // console.log(reply);
-      this.allActivities = reply;
-    });
 
     this.addCollaboratorFormGroup = this.formBuilder.group({
       layouts: ['', [Validators.required]],
@@ -66,6 +89,8 @@ export class AddDocumentCollaboratorComponent implements OnInit {
       activity: ['', [Validators.required]],
       coverage: ['', [Validators.required]]
     });
+
+    this.utilitySrvc.fetchAllActivities().subscribe((reply: any) => { this.allActivities = reply; });
 
     setTimeout(() => {
       this.isDataAvailable = true;
@@ -85,19 +110,19 @@ export class AddDocumentCollaboratorComponent implements OnInit {
   }
 
   categorySelected(event: MatAutocompleteSelectedEvent): void {
-    if (this.selectedCategories.length == 1) {
-      this.utilitiService.openErrorSnackBar('Solo se puede agregar 1 categoría.');
-      this.categoryInput.nativeElement.value = '';
-      this.categoryCtrl.setValue(null);
-      return;
-    }
+    // if (this.selectedCategories.length == 1) {
+    //   this.utilitiService.openErrorSnackBar('Solo se puede agregar 1 categoría.');
+    //   this.categoryInput.nativeElement.value = '';
+    //   this.categoryCtrl.setValue(null);
+    //   return;
+    // }
 
     let category: any = this.categories.filter((x: any) => { return x['name'] == event['option']['value'] });
-    let layout = this.layouts.filter((x: any) => {
+    let layout = this.availableLayouts.filter((x: any) => {
       return x['category']['_id'] == category[0]['_id']
     });
     // this.layout.push(category[0]['_id']);
-    this.layout = layout[0]['_id']
+    this.layouts.push(layout[0]['_id']);
     this.selectedCategories.push(event.option.value);
     this.categoryInput.nativeElement.value = '';
     this.categoryCtrl.setValue(null);
@@ -118,14 +143,17 @@ export class AddDocumentCollaboratorComponent implements OnInit {
     );
   }
 
-  onSelectType(event: any) { }
+  onSelectType(event: any) {
+    this.selectedActivity = this.allActivities.filter((x: any) => { return x['value'] == event.value; });
+    this.addCollaboratorFormGroup.patchValue({ activity: this.selectedActivity[0]['_id'] });
+  }
 
   onSelectCoverage(evt: any) {
-    if (evt['value'].includes('all')) {
-      this.coverageSelect.options.forEach((item: MatOption) => item.select());
-    } else {
-      // this.coverageSelect.options.forEach((item: MatOption) => item.deselect());
-    }
+    // if (evt['value'].includes('all')) {
+    //   this.coverageSelect.options.forEach((item: MatOption) => item.select());
+    // } else {
+    //   this.coverageSelect.options.forEach((item: MatOption) => item.deselect());
+    // }
     this.addCollaboratorFormGroup.patchValue({ coverage: evt.value });
   }
 
@@ -140,22 +168,30 @@ export class AddDocumentCollaboratorComponent implements OnInit {
     // }
 
     let data: any = {
-      layout: this.layout,
-      email: formGroup['value']['email'],
-      activity: formGroup['value']['activity'],
-      coverage: formGroup['value']['coverage']
+      layouts: this.layouts,
+      collaborators: [{
+        email: formGroup['value']['email'],
+        activity: formGroup['value']['activity'],
+        coverage: formGroup['value']['coverage']
+      }]
     };
+    console.log(data);
+    return;
 
     this.layoutService.addLayoutCollaborator(data).subscribe({
       error: (error: any) => {
         // console.log(error);
+        this.submitted = false;
+        this.utilitiService.openErrorSnackBar(this.utilitiService.errorOops);
       },
       next: (reply: any) => {
         // console.log(reply);
-        this.utilitiService.openSuccessSnackBar('El usuario se agrego correctamente.');
+        this.utilitiService.openSuccessSnackBar(this.utilitiService.userAddedSuccesss);
         this.dialogRef.close(reply)
       },
-      complete: () => { }
+      complete: () => {
+        this.submitted = false;
+      }
     });
   }
 

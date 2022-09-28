@@ -18,6 +18,7 @@ import { EditCategoryDataComponent } from 'src/app/components/edit-category-data
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
 import { WindowAlertComponent } from 'src/app/components/window-alert/window-alert.component';
+import { AddDocumentCollaboratorComponent } from 'src/app/components/add-document-collaborator/add-document-collaborator.component';
 
 @Component({
   selector: '.app-single-category',
@@ -27,7 +28,7 @@ import { WindowAlertComponent } from 'src/app/components/window-alert/window-ale
 export class SingleCategoryComponent implements OnInit {
   public documentID: string = '';
   public categoryID: string = '';
-  public token: any = null;
+  public accessToken: any = null;
   public user: any = null;
   public payload: any = null;
   public document: any = null;
@@ -70,13 +71,25 @@ export class SingleCategoryComponent implements OnInit {
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
-    this.token = this.authenticationService.accessToken;
+    this.accessToken = this.authenticationService.accessToken;
   }
 
   ngOnInit(): void {
     let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
     let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID });
     // let solutions: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.categoryID });
+
+    if (this.accessToken != null) {
+      this.userService.fetchFireUser().subscribe({
+        error: (error) => {
+          switch (error['status']) { }
+        },
+        next: (reply: any) => {
+          this.user = reply;
+        },
+        complete: () => { },
+      });
+    }
 
     forkJoin([document, category]).subscribe((reply: any) => {
       // console.log(reply);
@@ -88,34 +101,6 @@ export class SingleCategoryComponent implements OnInit {
       this.subcategories = this.selectedCategory['subLayouts'];
       this.dataSource = new MatTableDataSource(this.subcategories);
       // console.log('subcategories: ', this.subcategories);
-
-      // let themes: any[] = [];
-      // let solutions: any[] = [];
-      // for (let i = 0; i < this.subcategories.length; i++) {
-      //   for (let j = 0; j < this.subcategories[i].topics.length; j++) {
-
-      //     let topic_service: Observable<any> = this.topicService.fetchSingleTopicById({ _id: this.subcategories[i].topics[j] });
-      //     forkJoin([topic_service]).subscribe((reply: any) => {
-      //       let topic_obj = reply[0];
-      //       topic_obj.subcategory = this.subcategories[i];
-      //       themes.push(topic_obj);
-      //       for (let k = 0; k < reply[0].solutions.length; k++) {
-      //         let solution_service: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: reply[0].solutions[k] });
-      //         forkJoin([solution_service]).subscribe((reply: any) => {
-      //           let sol = reply[0];
-      //           sol.topic = topic_obj;
-      //           sol.subcategory = topic_obj.subcategory;
-      //           solutions.push(sol);
-      //           //console.log(sol);
-      //         })
-      //       }
-
-      //     })
-
-      //   }
-      // }
-      // this.topics = themes;
-      // this.solutions = solutions;
 
       setTimeout(() => {
         this.isDataAvailable = true;
@@ -224,6 +209,23 @@ export class SingleCategoryComponent implements OnInit {
       },
       disableClose: true,
       panelClass: 'viewer-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  popAddDocumentCollaborator() {
+    const dialogRef = this.dialog.open<AddDocumentCollaboratorComponent>(AddDocumentCollaboratorComponent, {
+      width: '640px',
+      data: {
+        document: this.document,
+        layout: this.selectedCategory,
+        user: this.user,
+        location: 'layout'
+      },
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {

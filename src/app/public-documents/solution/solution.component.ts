@@ -38,6 +38,7 @@ export class SolutionComponent implements OnInit {
   public topic: any = null;
   public votes: number = 0;
   public image: string = '../../../assets/images/not_fount.jpg';
+  public rank: any = {};
 
   public testimonials: any = TESTIMONIALS;
   public titles: any = [];
@@ -63,7 +64,7 @@ export class SolutionComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.UserService.fetchFireUser().subscribe({
-      error: (error: any) => {},
+      error: (error: any) => { },
       next: (reply: any) => {
         this.user = reply;
         this.loadSolution();
@@ -106,12 +107,14 @@ export class SolutionComponent implements OnInit {
       solution,
       votes,
     ]).subscribe((reply: any) => {
+      console.log(reply[5])
       this.userVoted = this.checkUserVote(reply[5]);
       this.document = reply[0];
       this.category = reply[1];
       this.subcategory = reply[2];
       this.topic = reply[3];
       this.solution = reply[4];
+      this.rank = this.solution.rank;
       this.votes = reply[5].length;
       this.image = reply[3].images.length > 0 ? reply[3].images[0] : this.image;
 
