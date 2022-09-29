@@ -38,7 +38,6 @@ export class SubcategoryComponent implements OnInit {
   public rank: any = {};
   @ViewChild(MatSort) sort: MatSort = new MatSort();
 
-
   constructor(
     public activatedRoute: ActivatedRoute,
     public documentService: DocumentService,
@@ -75,12 +74,16 @@ export class SubcategoryComponent implements OnInit {
     );
 
     forkJoin([document, category, subcategory]).subscribe((reply: any) => {
-      this.titles = this.utilityService.formatTitles
-        (reply[0].title, reply[1].category.name, reply[2].category.name, '');
+      this.titles = this.utilityService.formatTitles(
+        reply[0].title,
+        reply[1].category.name,
+        reply[2].category.name,
+        ''
+      );
       this.document = reply[0];
       this.category = reply[1];
       this.subcategory = reply[2];
-      this.rank = this.subcategory.rank
+      this.rank = this.subcategory.rank;
       this.image = reply[1].images.length > 0 ? reply[1].images[0] : this.image;
       this.topicsDataSource = this.subcategory.topics;
       this.TopicDataSource = new CustomMatDataSource(this.subcategory.topics);
@@ -91,11 +94,10 @@ export class SubcategoryComponent implements OnInit {
         .forEach((_: any, index: number) => {
           dataSolution.push(
             ...this.subcategory.topics.map((item: any) => [...item.solutions])[
-            index
+              index
             ]
           );
         });
-      console.log({ dataSolution })
       this.solutionsDataSource = dataSolution;
       this.SolutionDataSource = new CustomMatDataSource(dataSolution);
       this.panelTopicsData = this.subcategory.topics.slice(0, 7);

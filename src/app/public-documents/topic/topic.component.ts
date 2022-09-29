@@ -95,7 +95,9 @@ export class TopicComponent implements OnInit {
     return false;
   }
   getUserFavorited() {
-    return this.allFavorites.filter((item: any) => item.createdBy === this.user._id)
+    return this.allFavorites.filter(
+      (item: any) => item.createdBy === this.user._id
+    );
   }
   addFavorites() {
     let favorited = this.getUserFavorited();
@@ -104,12 +106,9 @@ export class TopicComponent implements OnInit {
         _id: favorited[0]._id,
         favorites: true,
       };
-      console.log({ data });
       this.favoritesService.updateFavorites(data).subscribe((reply: any) => {
-        console.log({ reply });
         if (reply.message == 'favorite update success') {
           this.isFavorites = true;
-          console.log('es favorito');
         }
       });
     } else {
@@ -131,10 +130,8 @@ export class TopicComponent implements OnInit {
       favorites: false,
     };
     this.favoritesService.updateFavorites(data).subscribe((reply: any) => {
-      console.log({ reply });
       if (reply.message == 'favorite update success') {
         this.isFavorites = false;
-        console.log(' no es favorito');
       }
     });
   }
@@ -185,8 +182,8 @@ export class TopicComponent implements OnInit {
       this.votes = reply[4].length;
       this.solutionsData = this.topic.solutions;
       this.SolutionDataSource = new CustomMatDataSource(
-          this.sortSolutions(this.solutionsData)
-        );
+        this.sortSolutions(this.solutionsData)
+      );
 
       this.getRamdomImage();
       setTimeout(() => {
@@ -208,7 +205,6 @@ export class TopicComponent implements OnInit {
     }
   }
   checkUserVote(votes: any[]) {
-    console.log({ votes });
     return votes.find((vote) => vote.createdBy === this.user._id)?._id || 0;
   }
 

@@ -67,7 +67,7 @@ export class SolutionComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.UserService.fetchFireUser().subscribe({
-      error: (error: any) => { },
+      error: (error: any) => {},
       next: (reply: any) => {
         this.user = reply;
         this.loadSolution();
@@ -81,12 +81,9 @@ export class SolutionComponent implements OnInit {
         _id: favorited[0]._id,
         favorites: true,
       };
-      console.log({ data });
       this.favoritesService.updateFavorites(data).subscribe((reply: any) => {
-        console.log({ reply });
         if (reply.message == 'favorite update success') {
           this.isFavorites = true;
-          console.log('es favorito');
         }
       });
     } else {
@@ -109,7 +106,9 @@ export class SolutionComponent implements OnInit {
     return false;
   }
   getUserFavorited() {
-    return this.allFavorites.filter((item: any) => item.createdBy === this.user._id)
+    return this.allFavorites.filter(
+      (item: any) => item.createdBy === this.user._id
+    );
   }
   removeFavorites() {
     let favorited = this.getUserFavorited();
@@ -118,10 +117,8 @@ export class SolutionComponent implements OnInit {
       favorites: false,
     };
     this.favoritesService.updateFavorites(data).subscribe((reply: any) => {
-      console.log({ reply });
       if (reply.message == 'favorite update success') {
         this.isFavorites = false;
-        console.log(' no es favorito');
       }
     });
   }
@@ -159,7 +156,6 @@ export class SolutionComponent implements OnInit {
       votes,
       favorites,
     ]).subscribe((reply: any) => {
-      console.log(reply[5])
       this.userVoted = this.checkUserVote(reply[5]);
       this.document = reply[0];
       this.category = reply[1];
