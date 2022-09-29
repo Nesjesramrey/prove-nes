@@ -169,7 +169,7 @@ export class TopicComponent implements OnInit {
       this.solutionsData = this.topic.solutions;
       this.SolutionDataSource = new MatTableDataSource(this.solutionsData);
 
-      this.image = reply[3].images.length > 0 ? reply[3].images[0] : this.image;
+      this.getRamdomImage();
       setTimeout(() => {
         this.getBreadcrumbsTitles();
         this.isDataAvailable = true;
@@ -177,6 +177,17 @@ export class TopicComponent implements OnInit {
     });
   }
 
+  getRamdomImage() {
+    let testimonials_withs_images = this.topic.testimonials.filter(
+      (testimonial: any) => testimonial.images.length > 0
+    );
+    if (testimonials_withs_images.length > 0) {
+      let index = Math.floor(Math.random() * testimonials_withs_images.length);
+      this.image = testimonials_withs_images[index].images[0];
+    } else {
+      this.image = '';
+    }
+  }
   checkUserVote(votes: any[]) {
     console.log({ votes });
     return votes.find((vote) => vote.createdBy === this.user._id)?._id || 0;
@@ -276,7 +287,7 @@ export class TopicComponent implements OnInit {
         data: {
           documentID: this.documentID,
           document: this.document,
-          relationID: this.categoryID,
+          relationID: this.topicID,
           typeID: this.topicID,
           type: 'topic',
         },
