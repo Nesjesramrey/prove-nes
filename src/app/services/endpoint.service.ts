@@ -62,7 +62,6 @@ export class EndPointService {
   public fetchSingleTopicByIdEndPoint: string = '/topic/';
   public createNewTopicEndPoint: string = '/topic/layout/';
   public uploadTopicFilesEndPoint: string = '/topic/';
-  public addFavoritesEndPoint: string = '/topic/favorites/';
 
   // permission
   public createNewPermissionEndPoint: string = '/permission/';
@@ -112,12 +111,18 @@ export class EndPointService {
   // comment
   public fetchSingleCommentByIdEndPoint: string = '/comment/';
   public createNewCommentEndPoint: string = '/comment/';
+  public findRelationIdEndPoint: string = '/comment/document';
 
   // vote
   public createNewVoteEndPonint: string = '/vote/';
   public deleteVoteEndPonint: string = '/vote/';
   public fetchVotesFromTopicEndPonint: string = '/vote/topic/';
   public fetchVotesFromSolutionEndPonint: string = '/vote/solution/';
+  // favorites
+  public addFavoritesEndPoint: string = '/favorites/';
+  public updateFavoritesEndPoint: string = '/favorites/';
+  public fetchFavoritesFromTopicEndPonint: string = '/favorites/topic/';
+  public fetchFavoritesFromSolutionEndPonint: string = '/favorites/solution/';
 
   //visit
   public sendVisitEndPoint: string = '/visit/';
@@ -129,5 +134,5 @@ export class EndPointService {
   // categories
   public editCategoryEndPoint: string = '/category/';
 
-  constructor() {}
+  constructor() { }
 }

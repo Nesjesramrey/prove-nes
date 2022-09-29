@@ -111,7 +111,7 @@
         <div class="set-12 header-card">
           <mat-card>
             <!-- IMAGE -->
-            <div class="set-12 image-box">
+            <div class="set-12 image-box imghldr">
               <mat-icon *ngIf="!image">panorama</mat-icon>
               <img
                 *ngIf="image"
@@ -156,6 +156,28 @@
                 [title]="solution.title"
               >
               </expanded-text>
+            </div>
+            <div *ngIf="!isFavorites" class="favorites-button">
+              <button
+                mat-icon-button
+                style="background-color: #d9d9d9"
+                color="warn"
+                aria-label="Example icon button with a heart icon"
+                (click)="addFavorites()"
+              >
+                <mat-icon>favorite</mat-icon>
+              </button>
+            </div>
+            <div *ngIf="isFavorites" class="favorites-button">
+              <button
+                mat-icon-button
+                color="warn"
+                style="background-color: #e98282"
+                aria-label="Example icon button with a heart icon"
+                (click)="removeFavorites()"
+              >
+                <mat-icon>favorite</mat-icon>
+              </button>
             </div>
           </mat-card>
         </div>
