@@ -221,7 +221,7 @@ export class TopicComponent implements OnInit {
         data: {
           documentID: this.documentID,
           document: this.document,
-          relationID: this.categoryID,
+          relationID: this.topicID,
           typeID: this.topicID,
           type: 'topic',
         },

@@ -2,6 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddDocumentDialogComponent } from 'src/app/components/add-document-dialog/add-document-dialog.component';
 import { UtilityService } from 'src/app/services/utility.service';
+import { CommentService } from 'src/app/services/comment.service';
+import { DocumentService } from 'src/app/services/document.service';
+import { ComponentsModule } from 'src/app/components/components.module';
+
 
 @Component({
   selector: '.admin-template',
@@ -13,10 +17,14 @@ export class AdminTemplateComponent implements OnInit {
   @Input('documents') public documents: any = [];
   public isDataAvailable: boolean = false;
   public selectedDocument: any = null;
+  public commentUsers : any[] = [];
+  public documentSelectId : string = '';
 
   constructor(
     public dialog: MatDialog,
-    public utilityService: UtilityService
+    public utilityService: UtilityService,
+    public commentService  : CommentService,
+    public documentService : DocumentService
   ) { }
 
   ngOnInit(): void {
@@ -24,6 +32,7 @@ export class AdminTemplateComponent implements OnInit {
       this.setDocumentEditor();
       this.isDataAvailable = true;
     });
+    this.returnComment();
   }
 
   setDocumentEditor() {
@@ -56,7 +65,6 @@ export class AdminTemplateComponent implements OnInit {
   }
 
   displayDocumentData(documentID: string) {
-    console.log(documentID);
     return;
     let document: any = this.documents.filter((doc: any) => { return doc['_id'] == documentID; });
     this.selectedDocument = null;
@@ -67,4 +75,58 @@ export class AdminTemplateComponent implements OnInit {
   linkMe(url: string) {
     this.utilityService.linkMe(url);
   }
+
+
+  selectDocument(document:any){
+   this.documentSelectId = document._id;
+   this.returnComments(document);
+  }
+
+  returnComment(){
+    const comentarios = [
+      {
+        user : 'jose alfaro',
+        img  : 'https://us.123rf.com/450wm/koblizeek/koblizeek2001/koblizeek200100050/138262629-usuario-miembro-de-perfil-de-icono-de-hombre-vector-de-s%C3%ADmbolo-perconal-sobre-fondo-blanco-aislado-.jpg?ver=6' ,
+        comment: ' texto de prueba'
+      },
+      {
+        user : 'test alfaro',
+        img  : 'https://us.123rf.com/450wm/koblizeek/koblizeek2001/koblizeek200100050/138262629-usuario-miembro-de-perfil-de-icono-de-hombre-vector-de-s%C3%ADmbolo-perconal-sobre-fondo-blanco-aislado-.jpg?ver=6' ,
+        comment: ' texto de prueba 2'
+      },
+      {
+        user : 'test alfaro',
+        img  : 'https://us.123rf.com/450wm/koblizeek/koblizeek2001/koblizeek200100050/138262629-usuario-miembro-de-perfil-de-icono-de-hombre-vector-de-s%C3%ADmbolo-perconal-sobre-fondo-blanco-aislado-.jpg?ver=6' ,
+        comment: ' texto de prueba 2'
+      },
+      {
+        user : 'test alfaro',
+        img  : 'https://us.123rf.com/450wm/koblizeek/koblizeek2001/koblizeek200100050/138262629-usuario-miembro-de-perfil-de-icono-de-hombre-vector-de-s%C3%ADmbolo-perconal-sobre-fondo-blanco-aislado-.jpg?ver=6' ,
+        comment: ' texto de prueba 2'
+      },
+       {
+        user : 'test alfaro',
+        img  : 'https://us.123rf.com/450wm/koblizeek/koblizeek2001/koblizeek200100050/138262629-usuario-miembro-de-perfil-de-icono-de-hombre-vector-de-s%C3%ADmbolo-perconal-sobre-fondo-blanco-aislado-.jpg?ver=6' ,
+        comment: ' texto de prueba 2'
+      }
+    ];
+
+    /* this.commentUsers = comentarios; */
+  }
+
+
+  returnComments(document:any){
+    const data = {
+      documentId : document._id,
+      layouts : document.layouts 
+    }
+    this.commentService.finRelationIdComment(data).subscribe((data:any)=> {
+      let comments : any[] = [];
+      data.forEach( (element :any ) => {
+      comments.push(element);
+      })
+      this.commentUsers = comments;
+    })
+  }
+
 }

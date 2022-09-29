@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs';
+import { ComponentsModule } from '../components/components.module';
 import { EndPointService } from './endpoint.service';
 
 @Injectable({
@@ -28,5 +30,17 @@ export class CommentService {
         `/?type=${data.type}`,
       data.data
     );
+  }
+
+  finRelationIdComment(data:any) {
+    const body = data;
+    return this.httpClient.post(
+      this.endpointSrvc.apiEndPoint +
+        this.endpointSrvc.findRelationIdEndPoint, body)
+        .pipe(
+          map(data => {
+            return data;
+          })
+        )
   }
 }

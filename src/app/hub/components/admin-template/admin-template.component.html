@@ -34,7 +34,10 @@
 <div class="set-12" *ngIf="documents.length != 0 && isDataAvailable">
   <div class="set-12 carousel-hldr">
     <carousel [cellsToShow]="2" [arrows]="documents.length > 2 ? true : false">
-      <div class="carousel-cell" *ngFor="let document of documents">
+      <div class="carousel-cell" *ngFor="let document of documents" 
+          (click)="selectDocument(document)"
+          [class.select]="document._id === documentSelectId"
+          >
         <mat-card>
           <div class="set-12 imghldr">
             <mat-icon *ngIf="document.images.length == 0">panorama</mat-icon>
@@ -152,6 +155,28 @@
             <mat-icon>rss_feed</mat-icon>
             <span>Activity center</span>
           </ng-template>
+
+          <div class="set-12 top-cards">
+            <div [class.scroll]="commentUsers.length > 3" 
+              class="set-12 contentActivity"
+              >
+              <h3 class="titleComment">Comentarios</h3>
+              <div class="contentComment" *ngFor="let comment of commentUsers"
+              >
+                <div class="user">
+                  <img [src]="comment.data.createdBy.avatarImage" class="imgUser" *ngIf="comment.data.createdBy.avatarImage"/>
+                  <span class="imgUserNull" *ngIf="comment.data.createdBy.avatarImage === null">
+                    {{comment.data.createdBy.firstname.slice(0,1)}}{{comment.data.createdBy.lastname.slice(0,1)}}
+                  </span>
+                  <div class="userName">{{comment.data.createdBy.firstname}}</div>
+                </div>
+                <p>{{comment.data.description}}</p>
+                <a href="#" class="textRelations" >{{(comment.data.relation === 'topic') ? 'Problema' : 'Solución'}} - {{comment.title}}</a>
+                  <hr >
+              </div>
+            </div>
+          </div>
+
         </mat-tab>
       </mat-tab-group>
     </mat-card>

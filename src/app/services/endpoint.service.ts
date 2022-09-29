@@ -110,6 +110,7 @@ export class EndPointService {
   // comment
   public fetchSingleCommentByIdEndPoint: string = '/comment/';
   public createNewCommentEndPoint: string = '/comment/';
+  public findRelationIdEndPoint: string = '/comment/relation';
 
   // vote
   public createNewVoteEndPonint: string = '/vote/';
