@@ -35,7 +35,7 @@ export class SubcategoryComponent implements OnInit {
 
   public isDataAvailable: boolean = false;
 
-  public displayedColumns: string[] = ['title', 'stats.score', 'users'];
+  public displayedColumns: string[] = ['title', 'score', 'users'];
   public TopicDataSource: any;
   public SolutionDataSource: any;
   public topicsDataSource: any = [];

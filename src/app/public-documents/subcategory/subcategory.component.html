@@ -110,6 +110,7 @@
             <table
               *ngIf="solutionsDataSource.length > 0; else notsolutions"
               mat-table
+              matSort
               [dataSource]="SolutionDataSource"
               class="mat-elevation-z8"
             >
@@ -152,6 +153,7 @@
             <table
               *ngIf="panelTopicsData.length > 0; else nottopic"
               mat-table
+              matSort
               [dataSource]="TopicDataSource"
               class="mat-elevation-z8"
             >

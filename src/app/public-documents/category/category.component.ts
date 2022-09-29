@@ -86,7 +86,6 @@ export class CategoryComponent implements OnInit {
     this.layoutService
       .getTopSublayoutByLayout(this.categoryID)
       .subscribe((resp) => {
-        console.log(resp)
         this.topLayouts = resp;
       });
   }
