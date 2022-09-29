@@ -20,6 +20,7 @@ export class EditorTemplateComponent implements OnInit {
 
   ngOnInit(): void {
     setTimeout(() => {
+      // console.log(this.documents);
       this.isDataAvailable = true;
     });
   }

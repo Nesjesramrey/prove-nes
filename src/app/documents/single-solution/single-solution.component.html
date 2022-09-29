@@ -47,22 +47,20 @@
           <div class="set-12 card-title">
             <div class="set-10">{{solution.title}}</div>
             <div class="set-2 txt-right">
-              <button type="button" [matMenuTriggerFor]="menu">
+              <button type="button" [matMenuTriggerFor]="menu"
+                [disabled]="!actionControlActivityList.includes(user.activityName)">
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <button mat-menu-item>
+                <button type="button" mat-menu-item>
                   <mat-icon>edit</mat-icon>
                   <span>Editar</span>
                 </button>
               </mat-menu>
             </div>
           </div>
-          <!-- <p class="card-description" *ngIf="document.description != null">{{document.description}}</p>
-          <button type="button" class="toolbtn" *ngIf="document.description == null">
-            <small>Agregar descripción</small>
-          </button> -->
-          <avatars-row [users]="collaborators"></avatars-row>
+          <avatars-row [users]="collaborators" *ngIf="actionControlActivityList.includes(user.activityName)">
+          </avatars-row>
         </div>
       </mat-card>
     </div>

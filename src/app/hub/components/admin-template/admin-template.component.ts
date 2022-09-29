@@ -29,6 +29,7 @@ export class AdminTemplateComponent implements OnInit {
 
   ngOnInit(): void {
     setTimeout(() => {
+      console.log(this.user);
       this.setDocumentEditor();
       this.isDataAvailable = true;
     });
@@ -38,9 +39,10 @@ export class AdminTemplateComponent implements OnInit {
     this.documents.filter((x: any) => {
       let editors: any = [];
       x['collaborators'].filter((c: any) => {
-        if (c['activity']['value'] == 'editor') {
-          editors.push(c);
-        }
+        editors.push(c);
+        // if (c['activity']['value'] == 'editor') {
+        //   editors.push(c);
+        // }
       });
       x['editors'] = editors;
     });

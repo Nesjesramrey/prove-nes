@@ -54,8 +54,13 @@ export class PublicComponent implements OnInit {
   getDataCharts() {
     this.solutionService
       .getTopSolutionsByDocument(this.documentID)
-      .subscribe((resp) => {
+      .subscribe((resp: any) => {
         this.topSolutions = resp;
+      });
+    this.layoutService
+      .getTopLayoutByDocument(this.documentID)
+      .subscribe((resp) => {
+        this.topLayouts = resp;
       });
     this.layoutService
       .getTopLayoutByDocument(this.documentID)

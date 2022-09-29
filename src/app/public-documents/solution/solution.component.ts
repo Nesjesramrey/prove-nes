@@ -41,7 +41,6 @@ export class SolutionComponent implements OnInit {
   public votes: number = 0;
   public image: string = '../../../assets/images/not_fount.jpg';
   public stats: any = {};
-
   public testimonials: any = TESTIMONIALS;
   public titles: any = [];
 
@@ -95,6 +94,7 @@ export class SolutionComponent implements OnInit {
         if (reply.message == 'favorites add success') {
           this.isFavorites = true;
         }
+        this.allFavorites = [reply.data];
       });
     }
   }

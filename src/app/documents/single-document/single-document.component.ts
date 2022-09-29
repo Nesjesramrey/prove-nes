@@ -40,6 +40,7 @@ export class SingleDocumentComponent implements OnInit {
   @ViewChild('editRowName') editRowName!: ElementRef<HTMLInputElement>;
   public collaborators: any = null;
   public published: boolean = false;
+  public actionControlActivityList: any[] = [];
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -48,38 +49,59 @@ export class SingleDocumentComponent implements OnInit {
     public documentService: DocumentService,
     public dialog: MatDialog,
     public utilityService: UtilityService
-
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.accessToken = this.authenticationService.fetchAccessToken;
   }
 
   ngOnInit(): void {
-    this.documentService.fetchSingleDocumentById({ _id: this.documentID }).subscribe((reply: any) => {
-      this.document = reply;
-      this.layouts = this.document['layouts'];
-      this.collaborators = this.document.collaborators;
-      this.layouts.filter((layout: any) => { layout['categoryName'] = layout['category']['name']; });
-      this.dataSource = new MatTableDataSource(this.layouts);
-    });
+    this.actionControlActivityList = this.utilityService.actionControlActivityList;
 
-    if (this.accessToken != null) {
-      this.userService.fetchFireUser().subscribe({
-        error: (error) => {
-          switch (error['status']) { }
-          setTimeout(() => {
-            this.isDataAvailable = true;
-          }, 1000);
-        },
-        next: (reply: any) => {
-          this.user = reply;
-          setTimeout(() => {
-            this.isDataAvailable = true;
-          }, 1000);
-        },
-        complete: () => { },
-      });
-    }
+    let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
+    let user: Observable<any> = this.userService.fetchFireUser();
+    forkJoin([document, user]).subscribe({
+      error: (error: any) => {
+        this.utilityService.openErrorSnackBar(this.utilityService.errorOops);
+      },
+      next: (reply: any) => {
+        this.document = reply[0];
+        // console.log('document: ', this.document);
+
+        this.user = reply[1];
+        this.user['activityName'] = this.user['activities'][0]['value'];
+        // console.log('user: ', this.user);
+
+        this.layouts = this.document['layouts'];
+        this.layouts.filter((layout: any) => {
+          layout['categoryName'] = layout['category']['name'];
+          layout['accessControlList'].filter((acl: any) => {
+            acl['collaborators'].filter((collaborator: any) => {
+              if (collaborator['user']['_id'] == this.user['_id']) { layout['access'] = true; }
+            });
+          });
+        });
+
+        switch (this.user['activityName']) {
+          case 'editor':
+            this.layouts.filter((layout: any) => { layout['access'] = true; });
+            break;
+          case 'administrator':
+            this.layouts.filter((layout: any) => { layout['access'] = true; });
+            break;
+        }
+
+        this.dataSource = new MatTableDataSource(this.layouts);
+        // console.log('layouts: ', this.layouts);
+
+        this.collaborators = this.document['collaborators'];
+        // console.log('collaborators: ', this.collaborators);
+      },
+      complete: () => {
+        setTimeout(() => {
+          this.isDataAvailable = true;
+        }, 1000);
+      }
+    });
   }
 
   popAddDocumentCategory() {

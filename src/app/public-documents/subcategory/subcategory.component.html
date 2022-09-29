@@ -108,11 +108,10 @@
         <div class="set-12 tables" style="background-color: white">
           <div class="set-6">
             <table
+              *ngIf="solutionsDataSource.length > 0; else notsolutions"
               mat-table
               [dataSource]="SolutionDataSource"
               class="mat-elevation-z8"
-              matSort
-              *ngIf="solutionsDataSource.length > 0; else notsolutions"
             >
               <ng-container matColumnDef="title">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Título</th>
@@ -135,7 +134,7 @@
               </ng-container>
 
               <ng-container matColumnDef="users">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Usuarios</th>
+                <th mat-header-cell *matHeaderCellDef>Usuarios</th>
                 <td mat-cell *matCellDef="let element">
                   {{ element.stats.users }}
                 </td>
@@ -151,11 +150,10 @@
 
           <div class="set-6">
             <table
+              *ngIf="panelTopicsData.length > 0; else nottopic"
               mat-table
               [dataSource]="TopicDataSource"
               class="mat-elevation-z8"
-              *ngIf="panelTopicsData.length > 0; else nottopic"
-              matSort
             >
               <ng-container matColumnDef="title">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por título">Título</th>
@@ -178,7 +176,7 @@
               </ng-container>
 
               <ng-container matColumnDef="users">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Usuarios</th>
+                <th mat-header-cell *matHeaderCellDef>Usuarios</th>
                 <td mat-cell *matCellDef="let element">
                   {{ element.stats.users }}
                 </td>

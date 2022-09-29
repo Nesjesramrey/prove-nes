@@ -44,7 +44,8 @@
           <div class="set-12 card-title">
             <div class="set-10">{{topic.title}}</div>
             <div class="set-2 txt-right">
-              <button type="button" [matMenuTriggerFor]="menu">
+              <button type="button" [matMenuTriggerFor]="menu"
+                [disabled]="!actionControlActivityList.includes(user.activityName)">
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
@@ -55,11 +56,8 @@
               </mat-menu>
             </div>
           </div>
-          <!-- <p class="card-description" *ngIf="topic.description != null">{{topic.description}}</p>
-          <button type="button" class="toolbtn" *ngIf="topic.description == null">
-            <small>Agregar descripción</small>
-          </button> -->
-          <avatars-row [users]="collaborators"></avatars-row>
+          <avatars-row [users]="collaborators" *ngIf="actionControlActivityList.includes(user.activityName)">
+          </avatars-row>
         </div>
       </mat-card>
 
@@ -84,11 +82,12 @@
           </mat-form-field>
         </div>
         <div class="set-8 txt-right">
-          <button type="button" mat-mini-fab color="accent" class="mini test" matTooltip="Agregar Comentario">
+          <button type="button" mat-mini-fab color="accent" class="mini test" matTooltip="Agregar Comentario"
+            *ngIf="actionControlActivityList.includes(user.activityName)">
             <mat-icon>forum</mat-icon>
           </button>
           <button type="button" mat-mini-fab color="primary" class="mini test" matTooltip="Agregar Testimonio"
-            (click)="popAddDocumentTestimony()">
+            *ngIf="actionControlActivityList.includes(user.activityName)" (click)="popAddDocumentTestimony()">
             <mat-icon>forum</mat-icon>
           </button>
           <button type="button" mat-mini-fab color="warn" class="mini insights" matTooltip="Agregar Solución"
@@ -125,6 +124,7 @@
             <td mat-cell *matCellDef="let element">
               <button type="button" class="catbtn"
                 (click)="linkMe('/documentos/' + document._id + '/categoria/' + categoryID + '/subcategoria/' + subcategoryID + '/temas/' + topic._id + '/solucion/' + element._id)">
+                <mat-icon>question_answer</mat-icon>
                 <small>{{ element.title }}</small>
               </button>
             </td>
@@ -154,37 +154,33 @@
           <ng-container matColumnDef="menu">
             <th mat-header-cell *matHeaderCellDef>&nbsp;</th>
             <td mat-cell *matCellDef="let element">
-              <button mat-icon-button [matMenuTriggerFor]="menu">
+              <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <button mat-menu-item
+                <button type="button" mat-menu-item
                   (click)="linkMe('/documentos-publicos/' + document._id + '/categoria/' + categoryID + '/subcategoria/' + subcategoryID + '/tema/' + topic._id + '/solucion/' + element._id)">
                   <mat-icon>groups</mat-icon>
                   <small>Abrir público</small>
                 </button>
-                <button mat-menu-item
+                <button type="button" mat-menu-item
                   (click)="linkMe('/documentos/' + document._id + '/categoria/' + categoryID + '/subcategoria/' + subcategoryID + '/temas/' + topic._id + '/solucion/' + element._id)">
                   <mat-icon>lock</mat-icon>
                   <small>Abrir privado</small>
                 </button>
-                <button mat-menu-item>
+                <button type="button" mat-menu-item *ngIf="actionControlActivityList.includes(user.activityName)">
                   <mat-icon>settings</mat-icon>
                   <small>Editar</small>
                 </button>
-                <button mat-menu-item>
-                  <mat-icon>drag_handle</mat-icon>
-                  <small>Duplicar</small>
-                </button>
-                <button mat-menu-item>
+                <button type="button" mat-menu-item *ngIf="actionControlActivityList.includes(user.activityName)">
                   <mat-icon>file_copy</mat-icon>
                   <small>Copiar</small>
                 </button>
-                <button mat-menu-item>
+                <button type="button" mat-menu-item *ngIf="actionControlActivityList.includes(user.activityName)">
                   <mat-icon>exit_to_app</mat-icon>
                   <small>Mover</small>
                 </button>
-                <button mat-menu-item>
+                <button type="button" mat-menu-item>
                   <mat-icon>delete</mat-icon>
                   <small>Eliminar</small>
                 </button>

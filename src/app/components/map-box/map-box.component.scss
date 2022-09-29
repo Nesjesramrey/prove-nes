@@ -1,6 +1,7 @@
 .map-container {
   width: 100%;
   padding: 0;
+
   mat-card {
     width: 100%;
     display: flex;
@@ -61,6 +62,7 @@
       stroke: #ceddff;
       stroke-opacity: 1;
       stroke-width: 0.5;
+
       &.active {
         fill: #fcdbc3;
       }

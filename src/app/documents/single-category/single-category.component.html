@@ -39,7 +39,8 @@
           <div class="set-12 card-title">
             <div class="set-10">{{ selectedCategory.category.name }}</div>
             <div class="set-2 txt-right">
-              <button type="button" [matMenuTriggerFor]="menu">
+              <button type="button" [matMenuTriggerFor]="menu"
+                [disabled]="!actionControlActivityList.includes(user.activityName)">
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
@@ -63,7 +64,8 @@
             (click)="popEditCategoryDialog()">
             <small>Agregar descripción</small>
           </button> -->
-          <avatars-row [users]="collaborators"></avatars-row>
+          <avatars-row [users]="collaborators" *ngIf="actionControlActivityList.includes(user.activityName)">
+          </avatars-row>
         </div>
       </mat-card>
 
@@ -107,7 +109,7 @@
           </mat-form-field>
         </div>
 
-        <div class="set-8 txt-right">
+        <div class="set-8 txt-right" *ngIf="actionControlActivityList.includes(user.activityName)">
           <button type="button" mat-mini-fab color="accent" class="mini" matTooltip="Agregar Comentario"
             (click)="popAddCommentsDialog()">
             <mat-icon>add_comment</mat-icon>
@@ -213,7 +215,8 @@
             <p>
               <small>Sin sub categorías disponibles.</small>
             </p>
-            <button type="button" mat-raised-button color="primary" (click)="popAddDocumentCategory()">
+            <button type="button" mat-raised-button color="primary" (click)="popAddDocumentCategory()"
+              *ngIf="actionControlActivityList.includes(user.activityName)">
               <small>Agregar Sub Categoría</small>
             </button>
           </div>
@@ -224,6 +227,7 @@
               <td mat-cell *matCellDef="let element">
                 <button type="button" class="catbtn"
                   (click)="linkMe('/documentos/' + document._id + '/categoria/' + selectedCategory._id + '/subcategoria/' + element._id)">
+                  <mat-icon>question_answer</mat-icon>
                   <small>{{element.category.name}}</small>
                 </button>
               </td>
@@ -260,51 +264,34 @@
             <ng-container matColumnDef="actions">
               <th mat-header-cell *matHeaderCellDef></th>
               <td mat-cell *matCellDef="let element">
-                <button mat-icon-button [matMenuTriggerFor]="menu">
+                <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                   <mat-icon>more_vert</mat-icon>
                 </button>
-                <!-- <mat-menu #menu="matMenu">
-                  <button mat-menu-item disabled>
-                    <mat-icon>edit</mat-icon>
-                    <span>Editar</span>
-                  </button>
-                  <button mat-menu-item (click)="popAddDocumentTheme(element._id)">
-                    <mat-icon>add_circle</mat-icon>
-                    <span>Agregar problematica</span>
-                  </button>
-                  <button mat-menu-item (click)="linkSubcategory(element._id)">
-                    <mat-icon>visibility</mat-icon>
-                    <span>Abrir</span>
-                  </button>
-                </mat-menu> -->
                 <mat-menu #menu="matMenu">
-                  <button mat-menu-item
+                  <button type="button" mat-menu-item
                     (click)="linkMe('/documentos-publicos/' + document._id + '/categoria/' + selectedCategory._id + '/subcategoria/' + element._id)">
                     <mat-icon>groups</mat-icon>
                     <small>Abrir público</small>
                   </button>
-                  <button mat-menu-item
+                  <button type="button" mat-menu-item
                     (click)="linkMe('/documentos/' + document._id + '/categoria/' + selectedCategory._id + '/subcategoria/' + element._id)">
                     <mat-icon>lock</mat-icon>
                     <small>Abrir privado</small>
                   </button>
-                  <button mat-menu-item>
+                  <button type="button" mat-menu-item *ngIf="actionControlActivityList.includes(user.activityName)">
                     <mat-icon>settings</mat-icon>
                     <small>Editar</small>
                   </button>
-                  <button mat-menu-item>
+                  <button type="button" mat-menu-item *ngIf="actionControlActivityList.includes(user.activityName)">
                     <mat-icon>drag_handle</mat-icon>
                     <small>Duplicar</small>
                   </button>
-                  <button mat-menu-item>
-                    <mat-icon>file_copy</mat-icon>
-                    <small>Copiar</small>
-                  </button>
-                  <button mat-menu-item>
+                  <button type="button" mat-menu-item *ngIf="actionControlActivityList.includes(user.activityName)">
                     <mat-icon>exit_to_app</mat-icon>
                     <small>Mover</small>
                   </button>
-                  <button mat-menu-item (click)="killLayout(element)">
+                  <button type="button" mat-menu-item (click)="killLayout(element)"
+                    *ngIf="actionControlActivityList.includes(user.activityName)">
                     <mat-icon>delete</mat-icon>
                     <small>Eliminar</small>
                   </button>
