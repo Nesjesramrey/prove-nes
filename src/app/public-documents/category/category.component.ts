@@ -28,7 +28,7 @@ export class CategoryComponent implements OnInit {
   public items: Section[] = top10;
   public selectedCategoryTitle: any = null;
   public titles: any = [];
-  public rank: any = {};
+  public stats: any = {};
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -58,7 +58,7 @@ export class CategoryComponent implements OnInit {
         (reply[0].title, reply[1].category.name, '', '');
       this.document = reply[0];
       this.selectedCategory = reply[1];
-      this.rank = this.selectedCategory.rank
+      this.stats = this.selectedCategory.stats
       this.image = reply[1].images.length > 0 ? reply[1].images[0] : this.image;
       this.topicsCount = reply[1].topics.length;
       this.coverage = this.document.coverage;

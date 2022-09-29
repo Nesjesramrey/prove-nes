@@ -19,6 +19,7 @@ import { UserService } from 'src/app/services/user.service';
 import { AddDocumentCommentComponent } from 'src/app/components/add-document-comment/add-document-comment.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
+import { CustomMatDataSource } from '../custom-class/custom-table.component';
 @Component({
   selector: '.topic-page',
   templateUrl: './topic.component.html',
@@ -42,7 +43,7 @@ export class TopicComponent implements OnInit {
   public permission: any;
   public SolutionDataSource = new MatTableDataSource<any>();
   public favorites: boolean = false;
-  public rank: any;
+  public stats: any;
 
   public testimonials: any = TESTIMONIALS;
   public solutionsData: any = [];
@@ -89,7 +90,7 @@ export class TopicComponent implements OnInit {
       id: this.topicID,
       favorites: this.favorites,
     };
-    this.topicService.addFavorites(data).subscribe((reply: any) => { });
+    this.topicService.addFavorites(data).subscribe((reply: any) => {});
   }
 
   loadTopic() {
@@ -122,10 +123,12 @@ export class TopicComponent implements OnInit {
         this.category = reply[1];
         this.subcategory = reply[2];
         this.topic = reply[3];
-        this.rank = this.topic.rank;
+        this.stats = this.topic.stats;
         this.votes = reply[4].length;
         this.solutionsData = this.topic.solutions;
-        this.SolutionDataSource = new MatTableDataSource(this.solutionsData);
+        this.SolutionDataSource = new CustomMatDataSource(
+          this.sortSolutions(this.solutionsData)
+        );
 
         this.image =
           reply[3].images.length > 0 ? reply[3].images[0] : this.image;
@@ -235,7 +238,7 @@ export class TopicComponent implements OnInit {
         data: {
           documentID: this.documentID,
           document: this.document,
-          relationID: this.categoryID,
+          relationID: this.topicID,
           typeID: this.topicID,
           type: 'topic',
         },
@@ -270,6 +273,12 @@ export class TopicComponent implements OnInit {
       return `${titleArr[0]} ${titleArr[1]} ${titleArr[2]} ${titleArr[3]}...`;
     }
     return title;
+  }
+
+  sortSolutions(data: any) {
+    return data.sort((a: any, b: any) => {
+      return b.stats.score - a.stats.score;
+    });
   }
 }
 

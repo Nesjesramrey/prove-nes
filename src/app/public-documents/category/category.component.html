@@ -56,11 +56,14 @@
           </div>
         </mat-card>
         <horizontal-stats
-          [users]="rank.uniqueVisitsInRelation"
-          [interactions]="rank.AvgSubsecuentVisitsInRelation"
+          [users]="stats?.users"
+          [interactions]="stats?.interactions"
         ></horizontal-stats>
         <div class="set-12">
-          <vertical-stats></vertical-stats>
+          <vertical-stats
+            [topics]="stats?.topics"
+            [solutions]="stats?.solutions"
+          ></vertical-stats>
         </div>
       </div>
       <div class="set-9 col-rgt">

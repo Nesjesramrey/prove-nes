@@ -37,7 +37,7 @@ export class SolutionComponent implements OnInit {
   public topic: any = null;
   public votes: number = 0;
   public image: string = '../../../assets/images/not_fount.jpg';
-  public rank: any = {};
+  public stats: any = {};
 
   public testimonials: any = TESTIMONIALS;
   public titles: any = [];
@@ -105,7 +105,7 @@ export class SolutionComponent implements OnInit {
       this.subcategory = reply[2];
       this.topic = reply[3];
       this.solution = reply[4];
-      this.rank = this.solution.rank;
+      this.stats = this.solution.stats;
       this.votes = reply[5].length;
       this.image = reply[3].images.length > 0 ? reply[3].images[0] : this.image;
 

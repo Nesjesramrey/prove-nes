@@ -37,12 +37,15 @@
       </mat-card>
 
       <horizontal-stats
-        [users]="document.rank.uniqueVisitsInRelation"
-        [interactions]="document.rank.AvgSubsecuentVisitsInRelation"
+        [users]="document.stats.users"
+        [interactions]="document.stats.interactions"
       ></horizontal-stats>
 
       <div class="set-12">
-        <vertical-stats></vertical-stats>
+        <vertical-stats
+        [topics]="document.stats.topics"
+        [solutions]="document.stats.solutions"
+        ></vertical-stats>
       </div>
 
       <div class="set-12 mt-2">

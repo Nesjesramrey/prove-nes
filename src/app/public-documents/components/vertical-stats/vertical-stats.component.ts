@@ -6,10 +6,9 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./vertical-stats.component.scss'],
 })
 export class VerticalStatsComponent implements OnInit {
-  @Input() data: any = {
-    users: 0,
-    interactions: 0,
-  };
+  @Input() topics: number = 0;
+  @Input() solutions: number = 0;
+
   constructor() { }
 
   ngOnInit(): void { }

@@ -111,10 +111,11 @@
               mat-table
               [dataSource]="SolutionDataSource"
               class="mat-elevation-z8"
+              matSort
               *ngIf="solutionsDataSource.length > 0; else notsolutions"
             >
-              <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef>Título</th>
+              <ng-container matColumnDef="title">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Título</th>
                 <td mat-cell *matCellDef="let element">
                   <button
                     type="button"
@@ -126,17 +127,17 @@
                 </td>
               </ng-container>
 
-              <ng-container matColumnDef="ranking">
-                <th mat-header-cell *matHeaderCellDef>Ranking</th>
+              <ng-container matColumnDef="score">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Ranking</th>
                 <td mat-cell *matCellDef="let element">
-                  {{ 10 }}
+                  {{ element.stats.score }}
                 </td>
               </ng-container>
 
               <ng-container matColumnDef="users">
-                <th mat-header-cell *matHeaderCellDef>Usuarios</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Usuarios</th>
                 <td mat-cell *matCellDef="let element">
-                  {{ 200 }}
+                  {{ element.stats.users }}
                 </td>
               </ng-container>
 
@@ -154,9 +155,10 @@
               [dataSource]="TopicDataSource"
               class="mat-elevation-z8"
               *ngIf="panelTopicsData.length > 0; else nottopic"
+              matSort
             >
-              <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef>Título</th>
+              <ng-container matColumnDef="title">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por título">Título</th>
                 <td mat-cell *matCellDef="let element">
                   <button
                     type="button"
@@ -168,17 +170,17 @@
                 </td>
               </ng-container>
 
-              <ng-container matColumnDef="ranking">
-                <th mat-header-cell *matHeaderCellDef>Ranking</th>
+              <ng-container matColumnDef="score">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Ranking</th>
                 <td mat-cell *matCellDef="let element">
-                  {{ 10 }}
+                  {{ element.stats.score }}
                 </td>
               </ng-container>
 
               <ng-container matColumnDef="users">
-                <th mat-header-cell *matHeaderCellDef>Usuarios</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Usuarios</th>
                 <td mat-cell *matCellDef="let element">
-                  {{ 50 }}
+                  {{ element.stats.users }}
                 </td>
               </ng-container>
 
