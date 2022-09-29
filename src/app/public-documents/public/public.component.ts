@@ -26,6 +26,7 @@ export class PublicComponent implements OnInit {
     public dialog: MatDialog,
     public formBuilder: FormBuilder,
     public solutionService: SolutionService
+
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
   }
@@ -47,7 +48,7 @@ export class PublicComponent implements OnInit {
       });
     this.solutionService
       .getTopSolutionsByDocument(this.documentID)
-      .subscribe((resp) => {
+      .subscribe((resp: any) => {
         this.topSolutions = resp;
       });
   }

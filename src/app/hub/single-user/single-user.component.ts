@@ -45,6 +45,7 @@ export class SingleUserComponent implements OnInit {
       },
       next: (reply: any) => {
         this.user = reply;
+        // this.user['activityName'] = this.user['activities'][0]['value'];
         // console.log('user: ', this.user);
 
         this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
@@ -52,6 +53,33 @@ export class SingleUserComponent implements OnInit {
 
         if (this.userActivities.length != 0) {
           this.haveRootPermissions = true;
+
+          // switch (this.user['activityName']) {
+          //   case 'moderator':
+          //     setTimeout(() => {
+          //       this.isDataAvailable = true;
+          //     }, 1000);
+          //     break;
+
+          //   case 'administrator':
+          //     let documents: Observable<any> = this.documentSrvc.fetchMyDocuments({ createdBy: this.userID });
+          //     forkJoin([documents]).subscribe((reply: any) => {
+          //       this.documents = reply[0];
+          //       setTimeout(() => {
+          //         this.isDataAvailable = true;
+          //       }, 1000);
+          //     });
+          //     break;
+
+          //   case 'citizen':
+          //     this.documentSrvc.fetchDocumentsByCollaborator({ _id: this.user['_id'] }).subscribe((reply: any) => {
+          //       this.documents = reply;
+          //       setTimeout(() => {
+          //         this.isDataAvailable = true;
+          //       }, 1000);
+          //     });
+          //     break;
+          // }
 
           if (this.userActivities.includes('moderator')) {
             setTimeout(() => {
@@ -63,8 +91,6 @@ export class SingleUserComponent implements OnInit {
             let documents: Observable<any> = this.documentSrvc.fetchMyDocuments({ createdBy: this.userID });
             forkJoin([documents]).subscribe((reply: any) => {
               this.documents = reply[0];
-              // console.log('documents: ', this.documents);
-
               setTimeout(() => {
                 this.isDataAvailable = true;
               }, 1000);
@@ -72,21 +98,51 @@ export class SingleUserComponent implements OnInit {
           }
 
           if (this.userActivities.includes('citizen')) {
-            setTimeout(() => {
-              this.isDataAvailable = true;
-            }, 1000);
+            this.documentSrvc.fetchDocumentsByCollaborator({ _id: this.user['_id'] })
+              .subscribe((reply: any) => {
+                // console.log(reply);
+                this.documents = reply;
+                this.documents.filter((doc: any) => {
+                  doc['layouts'].filter((layout: any) => {
+                    layout['categoryName'] = layout['category']['name'];
+                    layout['accessControlList'].filter((acl: any) => {
+                      acl['collaborators'].filter((collaborator: any) => {
+                        if (collaborator['user']['_id'] == this.user['_id']) { layout['access'] = true; }
+                      });
+                    });
+                  });
+                });
+                setTimeout(() => {
+                  this.isDataAvailable = true;
+                }, 1000);
+              });
+          }
+
+          if (this.userActivities.includes('editor')) {
+            this.haveRootPermissions = false;
+            this.documentSrvc.fetchDocumentsByCollaborator({ _id: this.user['_id'] })
+              .subscribe((reply: any) => {
+                // console.log(reply);
+                this.documents = reply;
+                this.documents.filter((doc: any) => {
+                  doc['layouts'].filter((layout: any) => {
+                    layout['access'] = true;
+                    console.log(layout);
+                  });
+                });
+                setTimeout(() => {
+                  this.isDataAvailable = true;
+                }, 1000);
+              });
           }
         } else {
           this.documentSrvc.fetchDocumentsByCollaborator({ _id: this.user['_id'] }).subscribe((reply: any) => {
             this.documents = reply;
-            // console.log('documents: ', this.documents);
-
             setTimeout(() => {
               this.isDataAvailable = true;
             }, 1000);
           });
         }
-        // console.log(this.haveRootPermissions);
       },
       complete: () => { }
     });

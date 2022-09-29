@@ -478,10 +478,26 @@ mat-form-field {
 }
 
 .catbtn {
-  background: #ceddff;
+  background: #1e7e7f;
   padding: 10px 20px;
   border-radius: 20px;
-  border: 1px solid #306eff;
+  // border: 1px solid #1e7e7f;
+  color: #ffffff;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+
+  mat-icon {
+    font-size: 11pt;
+    margin-right: 15px;
+  }
+}
+
+.catbtn:disabled {
+  opacity: 0.6;
+  font-weight: normal;
+  background: #E1F2EC;
+  color: #1e7e7f;
 }
 
 .networks {

@@ -43,6 +43,10 @@ export class AddDocumentDialogComponent implements OnInit {
     forkJoin([states, activities]).subscribe((reply: any) => {
       // console.log(reply);
       this.states = reply[0];
+      let national = this.states.filter((state: any) => { return state['code'] == 'NAL'; });
+      this.states = this.states.filter((state: any) => { return state['code'] != 'NAL'; });
+      this.states.unshift(national[0]);
+      // console.log(this.states);
       this.collaboratorTypes = reply[1].filter((x: any) => { return x['value'] == 'editor'; });
 
       this.documentFormGroup = this.formBuilder.group({
@@ -80,6 +84,13 @@ export class AddDocumentDialogComponent implements OnInit {
     this.collaboratorsFormArray.push(this.createCollaboratorField('editor'));
   }
 
+  onSelectCoverage(evt: any) {
+    let national = this.states.filter((state: any) => { return state['_id'] == evt['value']; });
+    // if (evt['value'] == national[0]['_id']) {
+    //   this.coverageSelect.options.forEach((item: MatOption) => item.disabled = true);
+    // }
+  }
+
   onCreateDocument(formGroup: FormGroup) {
     this.submitted = true;
     formGroup['value']['collaborators'].filter((x: any) => { x['activity'] = x['_id']; });
@@ -102,14 +113,6 @@ export class AddDocumentDialogComponent implements OnInit {
       this.submitted = false;
       this.dialogRef.close(reply);
     });
-  }
-
-  onSelectCoverage(evt: any) {
-    if (evt['value'].includes('all')) {
-      this.coverageSelect.options.forEach((item: MatOption) => item.select());
-    } else {
-      // this.coverageSelect.options.forEach((item: MatOption) => item.deselect());
-    }
   }
 
   killDialog() {

@@ -13,6 +13,7 @@ export class UtilityService {
   public errorOops: string = '¡Oops!... Ocurrió un error, inténtalo más tarde.';
   public editedSuccess: string = 'Se actualizó correctamente.';
   public userAddedSuccesss: string = 'El usuario se agrego correctamente.';
+  public actionControlActivityList: any = ['administrator', 'editor'];
 
   constructor(
     public snackbar: MatSnackBar,
