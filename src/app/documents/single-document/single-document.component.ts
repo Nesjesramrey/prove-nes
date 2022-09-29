@@ -66,7 +66,7 @@ export class SingleDocumentComponent implements OnInit {
       },
       next: (reply: any) => {
         this.document = reply[0];
-        // console.log('document: ', this.document);
+        console.log('document: ', this.document);
 
         this.user = reply[1];
         this.user['activityName'] = this.user['activities'][0]['value'];
@@ -103,7 +103,7 @@ export class SingleDocumentComponent implements OnInit {
         // console.log('availableCoverage: ', this.availableCoverage);
 
         this.collaborators = this.document['collaborators'];
-        // console.log('collaborators: ', this.collaborators);
+        console.log('collaborators: ', this.collaborators);
       },
       complete: () => {
         setTimeout(() => {

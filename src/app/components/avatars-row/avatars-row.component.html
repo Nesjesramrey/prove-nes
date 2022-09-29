@@ -9,7 +9,8 @@
       <mat-icon>person_add</mat-icon>
     </div>
     <div class="avatar more" *ngFor="let avatar of users">
-      {{avatar.user.firstname[0] + avatar.user.lastname[0]}}
+      <span *ngIf="avatar.user.isFullRegister">{{avatar.user.firstname[0] + avatar.user.lastname[0]}}</span>
+      <span *ngIf="!avatar.user.isFullRegister">NA</span>
     </div>
   </div>
 </div>
