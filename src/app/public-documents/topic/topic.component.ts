@@ -21,6 +21,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 import { CustomMatDataSource } from '../custom-class/custom-table.component';
 import { FavoritesService } from 'src/app/services/favorites.service';
+import { runInThisContext } from 'vm';
 @Component({
   selector: '.topic-page',
   templateUrl: './topic.component.html',
@@ -120,6 +121,7 @@ export class TopicComponent implements OnInit {
         if (reply.message == 'favorites add success') {
           this.isFavorites = true;
         }
+        this.allFavorites = [reply.data];
       });
     }
   }

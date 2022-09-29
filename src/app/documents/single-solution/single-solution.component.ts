@@ -88,46 +88,56 @@ export class SingleSolutionComponent implements OnInit {
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
-    this.subcategoryID = this.activatedRoute['snapshot']['params']['subcategoryID'];
+    this.subcategoryID =
+      this.activatedRoute['snapshot']['params']['subcategoryID'];
     this.themeID = this.activatedRoute['snapshot']['params']['themeID'];
     this.solutionID = this.activatedRoute['snapshot']['params']['solutionID'];
     this.accessToken = this.authenticationService.fetchAccessToken;
   }
 
   ngOnInit(): void {
-    let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
-    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID, });
-    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID, });
-    let topic: Observable<any> = this.topicService.fetchSingleTopicById({ _id: this.themeID });
-    let solution: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.solutionID });
+    let document: Observable<any> =
+      this.documentService.fetchSingleDocumentById({ _id: this.documentID });
+    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({
+      _id: this.categoryID,
+    });
+    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById(
+      { _id: this.subcategoryID }
+    );
+    let topic: Observable<any> = this.topicService.fetchSingleTopicById({
+      _id: this.themeID,
+    });
+    let solution: Observable<any> =
+      this.solutionService.fetchSingleSolutionById({ _id: this.solutionID });
 
     //forkJoin([categories, document, solutions, category, subcategory]).subscribe((reply: any) => {
-    forkJoin([document, category, subcategory, topic, solution]).subscribe((reply: any) => {
+    forkJoin([document, category, subcategory, topic, solution]).subscribe(
+      (reply: any) => {
+        this.collaborators = reply[0].collaborators;
+        this.category = reply[1];
+        // console.log("categoria " + JSON.stringify(this.category));
+        this.subcategory = reply[2];
+        // console.log("subcategoria " + JSON.stringify(this.subcategory));
+        this.topics = this.subcategory['topics'];
+        // console.log(this.topics);
+        this.topic = reply[3];
+        // console.log(this.topics);
+        // console.log("topic " + JSON.stringify(this.topic));
 
-      this.collaborators = reply[0].collaborators;
-      this.category = reply[1];
-      // console.log("categoria " + JSON.stringify(this.category));
-      this.subcategory = reply[2];
-      // console.log("subcategoria " + JSON.stringify(this.subcategory));
-      this.topics = this.subcategory['topics'];
-      // console.log(this.topics);
-      this.topic = reply[3];
-      // console.log(this.topics); 
-      // console.log("topic " + JSON.stringify(this.topic));
+        // let sols = this.topic.solutions;
+        // for (let j = 0; j < sols.length; j++) {
+        //   let sol: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.topic.solutions[j] });
+        //   forkJoin([sol]).subscribe((reply: any) => {
+        //     this.solutions.push(reply[0]);
+        //   })
+        // }
 
-      // let sols = this.topic.solutions;
-      // for (let j = 0; j < sols.length; j++) {
-      //   let sol: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.topic.solutions[j] });
-      //   forkJoin([sol]).subscribe((reply: any) => {
-      //     this.solutions.push(reply[0]);
-      //   })
-      // }
+        this.solution = reply[4];
+        // console.log(this.solution);
 
-      this.solution = reply[4];
-      // console.log(this.solution);
-
-      this.sliderImages = this.solution.images;
-    });
+        this.sliderImages = this.solution.images;
+      }
+    );
     this.documentService
       .fetchSingleDocumentById({ _id: this.documentID })
       .subscribe((reply: any) => {
@@ -152,7 +162,7 @@ export class SingleSolutionComponent implements OnInit {
             this.isDataAvailable = true;
           }, 1000);
         },
-        complete: () => { },
+        complete: () => {},
       });
     }
   }
@@ -241,9 +251,10 @@ export class SingleSolutionComponent implements OnInit {
   }
 
   linkSolution(id: string) {
-    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/temas/${this.themeID}/solucion/${id}`)
+    this.utilityService.linkMe(
+      `documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/temas/${this.themeID}/solucion/${id}`
+    );
   }
-
 }
 
 // simplet doughnut

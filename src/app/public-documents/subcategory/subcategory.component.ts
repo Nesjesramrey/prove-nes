@@ -87,7 +87,7 @@ export class SubcategoryComponent implements OnInit {
         .forEach((_: any, index: number) => {
           dataSolution.push(
             ...this.subcategory.topics.map((item: any) => [...item.solutions])[
-            index
+              index
             ]
           );
         });
@@ -95,12 +95,9 @@ export class SubcategoryComponent implements OnInit {
 
       this.panelTopicsData = this.subcategory.topics.slice(0, 7);
       this.TopicDataSource = new CustomMatDataSource(this.topicsDataSource);
-      this.SolutionDataSource = new CustomMatDataSource(this.solutionsDataSource);
-
-      console.log({
-        topics: this.TopicDataSource,
-        solutions: this.SolutionDataSource,
-      })
+      this.SolutionDataSource = new CustomMatDataSource(
+        this.solutionsDataSource
+      );
       setTimeout(() => {
         this.isDataAvailable = true;
       }, 1000);
