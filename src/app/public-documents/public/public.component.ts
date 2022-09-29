@@ -4,7 +4,8 @@ import { DocumentService } from 'src/app/services/document.service';
 import { Section } from 'src/app/public-documents/components/top10-list/top10-list.component';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 import { MatDialog } from '@angular/material/dialog';
-import { FormGroup , Validators , FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { SolutionService } from 'src/app/services/solution.service';
 
 @Component({
   selector: '.public-page',
@@ -14,7 +15,7 @@ import { FormGroup , Validators , FormBuilder } from '@angular/forms';
 export class PublicComponent implements OnInit {
   public documentID: string = '';
   public document: any = null;
-  public items: Section[] = ITEMS;
+  public topSolutions: any = [];
   public isDataAvailable: boolean = false;
   public image: string = '../../../assets/images/not_fount.jpg';
   public coverage: any[] = [];
@@ -23,8 +24,8 @@ export class PublicComponent implements OnInit {
     public activatedRoute: ActivatedRoute,
     public documentService: DocumentService,
     public dialog: MatDialog,
-    public formBuilder : FormBuilder
-
+    public formBuilder: FormBuilder,
+    public solutionService: SolutionService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
   }
@@ -43,6 +44,11 @@ export class PublicComponent implements OnInit {
           this.isDataAvailable = true;
         }, 300);
         this.image = reply.images.length > 0 ? reply.images[0] : this.image;
+      });
+    this.solutionService
+      .getTopSolutionsByDocument(this.documentID)
+      .subscribe((resp) => {
+        this.topSolutions = resp;
       });
   }
 
@@ -66,30 +72,3 @@ export class PublicComponent implements OnInit {
     });
   }
 }
-
-const ITEMS = [
-  {
-    name: 'Construir escuelas en 2 años',
-    value: 88,
-  },
-  {
-    name: 'Construir 1000km de ancho de banda',
-    value: 50,
-  },
-  {
-    name: 'Estrategia de Combate al narcotrafico',
-    value: 50,
-  },
-  {
-    name: 'Camaras con IA en transporte',
-    value: 50,
-  },
-  {
-    name: 'Transporte publico gratis para estudiantes',
-    value: 50,
-  },
-  {
-    name: 'Subsidio a la familia por educacion',
-    value: 50,
-  },
-];

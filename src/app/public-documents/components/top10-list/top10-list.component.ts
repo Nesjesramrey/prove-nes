@@ -11,7 +11,7 @@ export interface Section {
   styleUrls: ['./top10-list.component.scss'],
 })
 export class Top10ListComponent implements OnInit {
-  @Input() data: Section[] = [];
+  @Input() data: any[] = [];
 
   isColor: boolean = false;
 

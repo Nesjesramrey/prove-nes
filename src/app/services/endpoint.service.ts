@@ -69,6 +69,9 @@ export class EndPointService {
   // solutions
   public fetchSingleSolutionByIdEndPoint: string = '/solution/';
   public createNewSolutionEndPoint: string = '/solution/topic/';
+  public getTopSolutionByDocumentEndPoint: string = '/solution/document/';
+  public getTopSolutionByLayoutEndPoint: string = '/solution/layout/';
+
 
   // utility
   public fetchAllStatesEndPoint: string = '/state';
