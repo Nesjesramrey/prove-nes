@@ -6,12 +6,10 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./horizontal-stats.component.scss'],
 })
 export class HorizontalStatsComponent implements OnInit {
-  @Input() data: any = {
-    users: 0,
-    interactions: 0,
-  };
+  @Input() users: number = 0;
+  @Input() interactions: number = 0;
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }

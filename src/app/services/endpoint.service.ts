@@ -69,6 +69,9 @@ export class EndPointService {
   // solutions
   public fetchSingleSolutionByIdEndPoint: string = '/solution/';
   public createNewSolutionEndPoint: string = '/solution/topic/';
+  public getTopSolutionByDocumentEndPoint: string = '/solution/document/';
+  public getTopSolutionByLayoutEndPoint: string = '/solution/layout/';
+
 
   // utility
   public fetchAllStatesEndPoint: string = '/state';
@@ -89,7 +92,8 @@ export class EndPointService {
   public fetchMyNotificationsLengthEndPoint: string =
     '/notification/fetch-my-notifications-length';
   public fetchMyNotificationsContentEndPoint: string = '/notification';
-  public fetchMyNotificationUnreadEndPoint: string = '/notification/number_of_unread/user/';
+  public fetchMyNotificationUnreadEndPoint: string =
+    '/notification/number_of_unread/user/';
 
   // support
   public sendSupportMessageEndPoint: string =
@@ -110,12 +114,18 @@ export class EndPointService {
   // comment
   public fetchSingleCommentByIdEndPoint: string = '/comment/';
   public createNewCommentEndPoint: string = '/comment/';
+  public findRelationIdEndPoint: string = '/comment/document';
 
   // vote
   public createNewVoteEndPonint: string = '/vote/';
   public deleteVoteEndPonint: string = '/vote/';
   public fetchVotesFromTopicEndPonint: string = '/vote/topic/';
   public fetchVotesFromSolutionEndPonint: string = '/vote/solution/';
+  // favorites
+  public addFavoritesEndPoint: string = '/favorites/';
+  public updateFavoritesEndPoint: string = '/favorites/';
+  public fetchFavoritesFromTopicEndPonint: string = '/favorites/topic/';
+  public fetchFavoritesFromSolutionEndPonint: string = '/favorites/solution/';
 
   //visit
   public sendVisitEndPoint: string = '/visit/';

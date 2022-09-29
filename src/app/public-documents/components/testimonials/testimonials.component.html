@@ -15,7 +15,11 @@
       </div>
       <!-- CONTENT -->
       <div class="info">
-        <p class="title">{{ testimonial.name }}</p>
+        <p class="title" *ngIf="!testimonial.isAnonymous">
+          {{ testimonial.createdBy.firstname }}
+          {{ testimonial.createdBy.lastname }}
+        </p>
+        <p class="title" *ngIf="testimonial.isAnonymous">Anónimo</p>
         <!-- <p class="description">{{ testimonial.description }}</p> -->
 
         <div class="about">

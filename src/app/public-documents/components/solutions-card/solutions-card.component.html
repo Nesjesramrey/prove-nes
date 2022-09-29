@@ -2,28 +2,52 @@
   <div class="solutions-box" style="text-align: start">
     <div class="set-12 table-head">
       <p class="title">Soluciones</p>
-      <input type="text" (keyup)="applyFilterSolution($event)" placeholder="Buscar soluciones..."
+      <input
+        type="text"
+        (keyup)="applyFilterSolution($event)"
+        placeholder="Buscar soluciones..."
         [disabled]="data.length == 0"
         [class.searchDisabled]="data.filteredData.length === 0"
-        >
+      />
     </div>
-    <table *ngIf="data.filteredData.length > 0 else notSolution" 
-            mat-table 
-            [dataSource]="data" 
-            class="">
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>Título</th>
+    <table
+      *ngIf="data.filteredData.length > 0; else notSolution"
+      mat-table
+      [dataSource]="data"
+      matSort
+      class=""
+    >
+      <ng-container matColumnDef="title">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="Ordenar por título"
+        >
+          Título
+        </th>
         <td mat-cell *matCellDef="let element">
-          <button type="button" class="catbtn-2 " (click)="redirect(element._id)">
+          <button
+            type="button"
+            class="catbtn-2"
+            (click)="redirect(element._id)"
+          >
             {{ element.title }}
-          </button> 
+          </button>
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="ranking">
-        <th mat-header-cell *matHeaderCellDef>Calificación</th>
+      <ng-container matColumnDef="stats.score">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="Ordenar por calificación"
+        >
+          Calificación
+        </th>
         <td mat-cell *matCellDef="let element">
-          {{ 14 }}
+          {{ element.stats.score }}
         </td>
       </ng-container>
 
@@ -33,6 +57,5 @@
     <ng-template #notSolution>
       <p class="notData">Sin soluciones</p>
     </ng-template>
-    
   </div>
 </mat-card>

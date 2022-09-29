@@ -20,5 +20,12 @@ export class SolutionService {
   createNewSolution(data: any) {
     return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.createNewSolutionEndPoint + `${data['topic']}`, data['formData'])
   }
-  
+
+  getTopSolutionsByDocument(id: any) {
+    return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.getTopSolutionByDocumentEndPoint + `${id}`, {})
+  }
+
+  getTopSolutionsByLayout(id: any) {
+    return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.getTopSolutionByLayoutEndPoint + `${id}`, {})
+  }
 }

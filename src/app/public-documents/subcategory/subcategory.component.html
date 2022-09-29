@@ -30,9 +30,6 @@
           <li>{{ titles[2] }}</li>
         </breadcrumbs-component>
       </div>
-      <!-- <div class="set-4 featured-users">
-        <featured-users [inputAmount]="5"></featured-users>
-      </div> -->
     </div>
 
     <div
@@ -62,6 +59,10 @@
             ></expanded-text>
           </div>
         </mat-card>
+        <horizontal-stats
+          [users]="rank.users"
+          [interactions]="rank.interactions"
+        ></horizontal-stats>
       </div>
       <div class="set-9 col-rgt">
         <panel-subcategory
@@ -107,12 +108,12 @@
         <div class="set-12 tables" style="background-color: white">
           <div class="set-6">
             <table
+              *ngIf="solutionsDataSource.length > 0; else notsolutions"
               mat-table
               [dataSource]="SolutionDataSource"
               class="mat-elevation-z8"
-              *ngIf="solutionsDataSource.length > 0; else notsolutions"
             >
-              <ng-container matColumnDef="name">
+              <ng-container matColumnDef="title">
                 <th mat-header-cell *matHeaderCellDef>Título</th>
                 <td mat-cell *matCellDef="let element">
                   <button
@@ -125,17 +126,17 @@
                 </td>
               </ng-container>
 
-              <ng-container matColumnDef="ranking">
+              <ng-container matColumnDef="stats.score">
                 <th mat-header-cell *matHeaderCellDef>Ranking</th>
                 <td mat-cell *matCellDef="let element">
-                  {{ 10 }}
+                  {{ element.stats.score }}
                 </td>
               </ng-container>
 
               <ng-container matColumnDef="users">
                 <th mat-header-cell *matHeaderCellDef>Usuarios</th>
                 <td mat-cell *matCellDef="let element">
-                  {{ 200 }}
+                  {{ element.stats.users }}
                 </td>
               </ng-container>
 
@@ -149,12 +150,12 @@
 
           <div class="set-6">
             <table
+              *ngIf="panelTopicsData.length > 0; else nottopic"
               mat-table
               [dataSource]="TopicDataSource"
               class="mat-elevation-z8"
-              *ngIf="panelTopicsData.length > 0; else nottopic"
             >
-              <ng-container matColumnDef="name">
+              <ng-container matColumnDef="title">
                 <th mat-header-cell *matHeaderCellDef>Título</th>
                 <td mat-cell *matCellDef="let element">
                   <button
@@ -167,17 +168,17 @@
                 </td>
               </ng-container>
 
-              <ng-container matColumnDef="ranking">
+              <ng-container matColumnDef="stats.score">
                 <th mat-header-cell *matHeaderCellDef>Ranking</th>
                 <td mat-cell *matCellDef="let element">
-                  {{ 10 }}
+                  {{ element.stats.score }}
                 </td>
               </ng-container>
 
               <ng-container matColumnDef="users">
                 <th mat-header-cell *matHeaderCellDef>Usuarios</th>
                 <td mat-cell *matCellDef="let element">
-                  {{ 50 }}
+                  {{ element.stats.users }}
                 </td>
               </ng-container>
 

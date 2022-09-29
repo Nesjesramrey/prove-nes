@@ -7,6 +7,7 @@ import { LayoutService } from 'src/app/services/layout.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SolutionService } from 'src/app/services/solution.service';
 
 @Component({
   selector: 'app-category-page',
@@ -25,16 +26,18 @@ export class CategoryComponent implements OnInit {
 
   public topicsCount: number = 0;
   public solutionsCount: number = 0;
-  public items: Section[] = top10;
+  public topSolutions: any = [];
   public selectedCategoryTitle: any = null;
-  public titles : any = [];
+  public titles: any = [];
+  public stats: any = {};
 
   constructor(
     public activatedRoute: ActivatedRoute,
     public documentService: DocumentService,
     public layoutService: LayoutService,
     public utilityService: UtilityService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public solutionService: SolutionService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
@@ -53,10 +56,15 @@ export class CategoryComponent implements OnInit {
     });
 
     forkJoin([document, category]).subscribe((reply: any) => {
-      this.titles = this.utilityService.formatTitles
-      (reply[0].title , reply[1].category.name , '' , '');
+      this.titles = this.utilityService.formatTitles(
+        reply[0].title,
+        reply[1].category.name,
+        '',
+        ''
+      );
       this.document = reply[0];
       this.selectedCategory = reply[1];
+      this.stats = this.selectedCategory.stats;
       this.image = reply[1].images.length > 0 ? reply[1].images[0] : this.image;
       this.topicsCount = reply[1].topics.length;
       this.coverage = this.document.coverage;
@@ -64,6 +72,12 @@ export class CategoryComponent implements OnInit {
         this.isDataAvailable = true;
       }, 300);
     });
+
+    this.solutionService
+      .getTopSolutionsByLayout(this.categoryID)
+      .subscribe((resp) => {
+        this.topSolutions = resp;
+      });
   }
 
   popImageViewer() {
@@ -86,30 +100,3 @@ export class CategoryComponent implements OnInit {
     });
   }
 }
-
-const top10 = [
-  {
-    name: 'Construir escuelas en 2 años',
-    value: 88,
-  },
-  {
-    name: 'Construir 1000km de ancho de banda',
-    value: 50,
-  },
-  {
-    name: 'Estrategia de Combate al narcotrafico',
-    value: 50,
-  },
-  {
-    name: 'Camaras con IA en transporte',
-    value: 50,
-  },
-  {
-    name: 'Transporte publico gratis para estudiantes',
-    value: 50,
-  },
-  {
-    name: 'Subsidio a la familia por educacion',
-    value: 50,
-  },
-];
