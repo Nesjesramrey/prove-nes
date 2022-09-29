@@ -41,6 +41,7 @@ export class SingleDocumentComponent implements OnInit {
   public collaborators: any = null;
   public published: boolean = false;
   public actionControlActivityList: any[] = [];
+  public availableCoverage: any[] = [];
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -93,6 +94,14 @@ export class SingleDocumentComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.layouts);
         // console.log('layouts: ', this.layouts);
 
+        // let availableLayouts: any = this.layouts.filter((layout: any) => { return layout['access'] == true; });
+        // availableLayouts.filter((x: any) => {
+        //   x['accessControlList'].filter((y: any) => {
+        //     this.availableCoverage.push(y['state']);
+        //   });
+        // });
+        // console.log('availableCoverage: ', this.availableCoverage);
+
         this.collaborators = this.document['collaborators'];
         // console.log('collaborators: ', this.collaborators);
       },
@@ -117,7 +126,10 @@ export class SingleDocumentComponent implements OnInit {
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
         this.layouts.push(reply[0]);
-        this.layouts.filter((layout: any) => { layout['categoryName'] = layout['category']['name']; });
+        this.layouts.filter((layout: any) => {
+          layout['categoryName'] = layout['category']['name'];
+          layout['access'] = true;
+        });
         this.dataSource = new MatTableDataSource(this.layouts);
       }
     });
@@ -266,7 +278,8 @@ export class SingleDocumentComponent implements OnInit {
       width: '640px',
       data: {
         location: 'document',
-        document: this.document
+        document: this.document,
+        user: this.user
       },
       disableClose: true,
       panelClass: 'viewer-dialog'

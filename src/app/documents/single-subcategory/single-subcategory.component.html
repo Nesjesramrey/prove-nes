@@ -89,7 +89,7 @@
             <mat-icon>add_comment</mat-icon>
           </button>
           <button type="button" mat-mini-fab color="primary" class="mini" matTooltip="Agregar Colaborador"
-            matTooltipClass="tooltip" *ngIf="actionControlActivityList.includes(user.activityName)">
+            matTooltipClass="tooltip" (click)="popAddDocumentCollaborator()">
             <mat-icon>person_add</mat-icon>
           </button>
           <button type="button" mat-mini-fab color="warn" class="mini" matTooltip="Agregar Tema"

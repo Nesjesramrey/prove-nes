@@ -20,6 +20,7 @@ import { ImageViewerComponent } from 'src/app/components/image-viewer/image-view
 import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
 import { WindowAlertComponent } from 'src/app/components/window-alert/window-alert.component';
 import { isArray } from 'util';
+import { AddDocumentCollaboratorComponent } from 'src/app/components/add-document-collaborator/add-document-collaborator.component';
 
 @Component({
   selector: '.app-single-subcategory',
@@ -187,6 +188,24 @@ export class SingleSubcategoryComponent implements OnInit {
       if (reply != undefined) {
         this.subcategory['description'] = reply['description'];
       }
+    });
+  }
+
+  popAddDocumentCollaborator() {
+    const dialogRef = this.dialog.open<AddDocumentCollaboratorComponent>(AddDocumentCollaboratorComponent, {
+      width: '640px',
+      data: {
+        document: this.document,
+        layout: this.selectedCategory,
+        subLayout: this.subcategory,
+        user: this.user,
+        location: 'layout'
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
     });
   }
 
