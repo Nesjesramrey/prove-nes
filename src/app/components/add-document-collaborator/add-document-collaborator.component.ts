@@ -48,7 +48,7 @@ export class AddDocumentCollaboratorComponent implements OnInit {
     public utilitySrvc: UtilityService,
     public layoutService: LayoutService
   ) {
-    // console.log(this.dialogData);
+    console.log(this.dialogData);
     this.document = this.dialogData['document'];
     this.layout = this.dialogData['layout'];
     this.user = this.dialogData['user'];
@@ -169,7 +169,7 @@ export class AddDocumentCollaboratorComponent implements OnInit {
     this.submitted = true;
 
     let data: any = {
-      // document: this.document['_id'],
+      document: this.document['_id'],
       layouts: this.layouts,
       collaborators: [{
         email: formGroup['value']['email'],
@@ -184,7 +184,7 @@ export class AddDocumentCollaboratorComponent implements OnInit {
         this.utilitiService.openErrorSnackBar(this.utilitiService.errorOops);
       },
       next: (reply: any) => {
-        console.log(reply);
+        // console.log(reply);
         this.utilitiService.openSuccessSnackBar(this.utilitiService.userAddedSuccesss);
         this.dialogRef.close(reply)
       },
