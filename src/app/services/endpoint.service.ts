@@ -54,6 +54,9 @@ export class EndPointService {
   public uploadLayoutFilesEndPoint: string = '/layout/';
   public killLayoutImageEndPoint: string = '/layout/';
   public addLayoutCollaboratorEndPoint: string = '/layout/collaborators';
+  public getTopLayoutByDocumentEndPoint: string = '/layout/top/document/';
+  public getTopSublayoutByLayoutEndPoint: string = '/layout/top/layout/';
+
 
   // sub layouts
   public createNewSubLayoutEndPoint: string = '/sublayout/layout/';

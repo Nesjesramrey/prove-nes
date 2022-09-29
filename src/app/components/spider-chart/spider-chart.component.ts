@@ -58,6 +58,7 @@ export class SpiderChartComponent implements OnInit {
   };
 
   @Input() withBorder: boolean = true;
+  @Input() data: any[] = [];
 
   public spiderData: ChartData<'radar'> = {
     labels: ['data', 'data', 'data', 'data', 'data', 'data', 'data', 'data'],
@@ -67,5 +68,34 @@ export class SpiderChartComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadChart()
+  }
+
+  loadChart() {
+    if (this.data.length === 0) {
+      this.spiderData = {
+        labels: [
+          'data',
+          'data',
+          'data',
+          'data',
+        ],
+        datasets: [{ data: [96, 65, 81, 26] }],
+      };
+      return;
+    }
+    const labels: any = [];
+    const datasets: any = [];
+
+    this.data.map((item) => {
+      labels.push(item.category.name);
+      datasets.push(item.stats.score);
+    });
+
+    this.spiderData = {
+      labels,
+      datasets: [{ data: datasets }],
+    };
+  }
 }

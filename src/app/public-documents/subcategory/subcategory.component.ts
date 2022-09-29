@@ -35,14 +35,15 @@ export class SubcategoryComponent implements OnInit {
 
   public isDataAvailable: boolean = false;
 
-  public displayedColumns: string[] = ['title', 'stats.score', 'users'];
+  public displayedColumns: string[] = ['title', 'score', 'users'];
   public TopicDataSource: any;
   public SolutionDataSource: any;
   public topicsDataSource: any = [];
   public solutionsDataSource: any = [];
   public image: string = '../../../assets/images/not_fount.jpg';
   public titles: any = [];
-  public rank: any = {};
+  public stats: any = {};
+  @ViewChild(MatSort) sort: MatSort = new MatSort();
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -84,7 +85,7 @@ export class SubcategoryComponent implements OnInit {
       this.document = reply[0];
       this.category = reply[1];
       this.subcategory = reply[2];
-      this.rank = this.subcategory.stats;
+      this.stats = this.subcategory.stats;
       this.image = reply[1].images.length > 0 ? reply[1].images[0] : this.image;
       this.topicsDataSource = this.subcategory.topics;
       const dataSolution: any = [];

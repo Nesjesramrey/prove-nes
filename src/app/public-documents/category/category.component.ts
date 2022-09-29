@@ -27,6 +27,7 @@ export class CategoryComponent implements OnInit {
   public topicsCount: number = 0;
   public solutionsCount: number = 0;
   public topSolutions: any = [];
+  public topLayouts: any = [];
   public selectedCategoryTitle: any = null;
   public titles: any = [];
   public stats: any = {};
@@ -73,10 +74,19 @@ export class CategoryComponent implements OnInit {
       }, 300);
     });
 
+    this.getDataCharts();
+  }
+
+  getDataCharts() {
     this.solutionService
       .getTopSolutionsByLayout(this.categoryID)
       .subscribe((resp) => {
         this.topSolutions = resp;
+      });
+    this.layoutService
+      .getTopSublayoutByLayout(this.categoryID)
+      .subscribe((resp) => {
+        this.topLayouts = resp;
       });
   }
 

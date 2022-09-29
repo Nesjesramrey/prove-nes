@@ -39,4 +39,12 @@ export class LayoutService {
   addLayoutCollaborator(data: any) {
     return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.addLayoutCollaboratorEndPoint, data);
   }
+
+  getTopLayoutByDocument(id: any) {
+    return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.getTopLayoutByDocumentEndPoint + id);
+  }
+
+  getTopSublayoutByLayout(id: any) {
+    return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.getTopSublayoutByLayoutEndPoint + id);
+  }
 }
