@@ -37,12 +37,4 @@ export class TopicService {
       data['formData']
     );
   }
-  addFavorites(data: any) {
-    return this.httpClient.put(
-      this.endpointSrvc.apiEndPoint +
-        this.endpointSrvc.addFavoritesEndPoint +
-        `${data['id']}`,
-      data
-    );
-  }
 }

@@ -62,7 +62,6 @@ export class EndPointService {
   public fetchSingleTopicByIdEndPoint: string = '/topic/';
   public createNewTopicEndPoint: string = '/topic/layout/';
   public uploadTopicFilesEndPoint: string = '/topic/';
-  public addFavoritesEndPoint: string = '/topic/favorites/';
 
   // permission
   public createNewPermissionEndPoint: string = '/permission/';
@@ -118,6 +117,11 @@ export class EndPointService {
   public deleteVoteEndPonint: string = '/vote/';
   public fetchVotesFromTopicEndPonint: string = '/vote/topic/';
   public fetchVotesFromSolutionEndPonint: string = '/vote/solution/';
+  // favorites
+  public addFavoritesEndPoint: string = '/favorites/';
+  public removeFavoritesEndPoint: string = '/favorites/';
+  public fetchFavoritesFromTopicEndPonint: string = '/favorites/topic/';
+  public fetchFavoritesFromSolutionEndPonint: string = '/favorites/solution/';
 
   //visit
   public sendVisitEndPoint: string = '/visit/';

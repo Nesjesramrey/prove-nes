@@ -19,6 +19,7 @@ import { UserService } from 'src/app/services/user.service';
 import { AddDocumentCommentComponent } from 'src/app/components/add-document-comment/add-document-comment.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
+import { FavoritesService } from 'src/app/services/favorites.service';
 @Component({
   selector: '.topic-page',
   templateUrl: './topic.component.html',
@@ -43,6 +44,7 @@ export class TopicComponent implements OnInit {
   public SolutionDataSource = new MatTableDataSource<any>();
   public favorites: boolean = false;
   public rank: any;
+  public isFavorites: boolean = false;
 
   public testimonials: any = TESTIMONIALS;
   public solutionsData: any = [];
@@ -55,7 +57,8 @@ export class TopicComponent implements OnInit {
     public layoutService: LayoutService,
     public topicService: TopicService,
     public voteService: VoteService,
-    public UserService: UserService
+    public UserService: UserService,
+    public favoritesService: FavoritesService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
@@ -83,13 +86,41 @@ export class TopicComponent implements OnInit {
       },
     });
   }
-  chekFavorites() {
-    this.favorites = !this.favorites;
+  checkFavorites(favorites: any[]) {
+    console.log({ favorites });
+    if (favorites.some((item) => item.createdBy === this.user._id)) {
+      console.log('aja');
+      return true;
+    }
+    return false;
+  }
+  addFavorites() {
+    this.favorites = true;
     let data = {
-      id: this.topicID,
+      topic: this.topicID,
       favorites: this.favorites,
     };
-    this.topicService.addFavorites(data).subscribe((reply: any) => { });
+    this.favoritesService.addFavorites(data).subscribe((reply: any) => {
+      if (reply.message == 'favorites add success') {
+        this.isFavorites = true;
+      }
+    });
+  }
+  removeFavorites() {
+    this.favorites = false;
+    let data = {
+      _id: this.user._id,
+      topic: this.topicID,
+      favorites: this.favorites,
+    };
+    console.log({ data });
+    this.favoritesService.removeFavorites(data).subscribe((reply: any) => {
+      console.log({ reply });
+      if (reply.message == 'favorite update success') {
+        this.isFavorites = false;
+        console.log(' no es favorito');
+      }
+    });
   }
 
   loadTopic() {
@@ -108,36 +139,46 @@ export class TopicComponent implements OnInit {
     let votes: Observable<any> = this.voteService.fetchVotesByTopicID({
       _id: this.topicID,
     });
+    let favorites: Observable<any> =
+      this.favoritesService.fetchFavoritesByTopicID({
+        _id: this.topicID,
+      });
 
-    forkJoin([document, category, subcategory, topic, votes]).subscribe(
-      (reply: any) => {
-        this.titles = this.utilityService.formatTitles(
-          reply[0].title,
-          reply[1].category.name,
-          reply[2].category.name,
-          reply[3].title
-        );
-        this.userVoted = this.checkUserVote(reply[4]);
-        this.document = reply[0];
-        this.category = reply[1];
-        this.subcategory = reply[2];
-        this.topic = reply[3];
-        this.rank = this.topic.rank;
-        this.votes = reply[4].length;
-        this.solutionsData = this.topic.solutions;
-        this.SolutionDataSource = new MatTableDataSource(this.solutionsData);
+    forkJoin([
+      document,
+      category,
+      subcategory,
+      topic,
+      votes,
+      favorites,
+    ]).subscribe((reply: any) => {
+      this.titles = this.utilityService.formatTitles(
+        reply[0].title,
+        reply[1].category.name,
+        reply[2].category.name,
+        reply[3].title
+      );
+      this.userVoted = this.checkUserVote(reply[4]);
+      this.isFavorites = this.checkFavorites(reply[5].data);
+      this.document = reply[0];
+      this.category = reply[1];
+      this.subcategory = reply[2];
+      this.topic = reply[3];
+      this.rank = this.topic.rank;
+      this.votes = reply[4].length;
+      this.solutionsData = this.topic.solutions;
+      this.SolutionDataSource = new MatTableDataSource(this.solutionsData);
 
-        this.image =
-          reply[3].images.length > 0 ? reply[3].images[0] : this.image;
-        setTimeout(() => {
-          this.getBreadcrumbsTitles();
-          this.isDataAvailable = true;
-        }, 300);
-      }
-    );
+      this.image = reply[3].images.length > 0 ? reply[3].images[0] : this.image;
+      setTimeout(() => {
+        this.getBreadcrumbsTitles();
+        this.isDataAvailable = true;
+      }, 300);
+    });
   }
 
   checkUserVote(votes: any[]) {
+    console.log({ votes });
     return votes.find((vote) => vote.createdBy === this.user._id)?._id || 0;
   }
 
