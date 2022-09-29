@@ -12,7 +12,7 @@ export class FavoritesService {
   constructor(
     public httpClient: HttpClient,
     public endpointSrvc: EndPointService
-  ) {}
+  ) { }
 
   addFavorites(data: any) {
     return this.httpClient.post(
@@ -20,17 +20,24 @@ export class FavoritesService {
       data
     );
   }
-  removeFavorites(data: any) {
+  updateFavorites(data: any) {
     return this.httpClient.put(
-      this.endpointSrvc.apiEndPoint + this.endpointSrvc.removeFavoritesEndPoint,
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.updateFavoritesEndPoint,
       data
     );
   }
   fetchFavoritesByTopicID(data: any) {
     return this.httpClient.get(
       this.endpointSrvc.apiEndPoint +
-        this.endpointSrvc.fetchFavoritesFromTopicEndPonint +
-        data['_id']
+      this.endpointSrvc.fetchFavoritesFromTopicEndPonint +
+      data['_id']
+    );
+  }
+  fetchFavoritesBySolutionID(data: any) {
+    return this.httpClient.get(
+      this.endpointSrvc.apiEndPoint +
+      this.endpointSrvc.fetchFavoritesFromSolutionEndPonint +
+      data['_id']
     );
   }
 }

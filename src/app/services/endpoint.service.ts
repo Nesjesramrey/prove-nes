@@ -120,7 +120,7 @@ export class EndPointService {
   public fetchVotesFromSolutionEndPonint: string = '/vote/solution/';
   // favorites
   public addFavoritesEndPoint: string = '/favorites/';
-  public removeFavoritesEndPoint: string = '/favorites/';
+  public updateFavoritesEndPoint: string = '/favorites/';
   public fetchFavoritesFromTopicEndPonint: string = '/favorites/topic/';
   public fetchFavoritesFromSolutionEndPonint: string = '/favorites/solution/';
 

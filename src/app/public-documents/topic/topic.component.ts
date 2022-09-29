@@ -42,9 +42,9 @@ export class TopicComponent implements OnInit {
   public image: string = '../../../assets/images/not_fount.jpg';
   public permission: any;
   public SolutionDataSource = new MatTableDataSource<any>();
-  public favorites: boolean = false;
   public rank: any;
   public isFavorites: boolean = false;
+  public allFavorites: any = null;
 
   public testimonials: any = TESTIMONIALS;
   public solutionsData: any = [];
@@ -86,35 +86,50 @@ export class TopicComponent implements OnInit {
       },
     });
   }
-  checkFavorites(favorites: any[]) {
-    console.log({ favorites });
-    if (favorites.some((item) => item.createdBy === this.user._id)) {
-      console.log('aja');
-      return true;
+  checkFavorites() {
+    let favorited = this.getUserFavorited();
+    if (favorited.length > 0) {
+      return favorited[0].favorites;
     }
     return false;
   }
+  getUserFavorited() {
+    return this.allFavorites.filter((item: any) => item.createdBy === this.user._id)
+  }
   addFavorites() {
-    this.favorites = true;
-    let data = {
-      topic: this.topicID,
-      favorites: this.favorites,
-    };
-    this.favoritesService.addFavorites(data).subscribe((reply: any) => {
-      if (reply.message == 'favorites add success') {
-        this.isFavorites = true;
-      }
-    });
+    let favorited = this.getUserFavorited();
+    if (favorited.length > 0) {
+      let data = {
+        _id: favorited[0]._id,
+        favorites: true,
+      };
+      console.log({ data });
+      this.favoritesService.updateFavorites(data).subscribe((reply: any) => {
+        console.log({ reply });
+        if (reply.message == 'favorite update success') {
+          this.isFavorites = true;
+          console.log('es favorito');
+        }
+      });
+    } else {
+      let data = {
+        topic: this.topicID,
+        favorites: true,
+      };
+      this.favoritesService.addFavorites(data).subscribe((reply: any) => {
+        if (reply.message == 'favorites add success') {
+          this.isFavorites = true;
+        }
+      });
+    }
   }
   removeFavorites() {
-    this.favorites = false;
+    let favorited = this.getUserFavorited();
     let data = {
-      _id: this.user._id,
-      topic: this.topicID,
-      favorites: this.favorites,
+      _id: favorited[0]._id,
+      favorites: false,
     };
-    console.log({ data });
-    this.favoritesService.removeFavorites(data).subscribe((reply: any) => {
+    this.favoritesService.updateFavorites(data).subscribe((reply: any) => {
       console.log({ reply });
       if (reply.message == 'favorite update success') {
         this.isFavorites = false;
@@ -159,7 +174,8 @@ export class TopicComponent implements OnInit {
         reply[3].title
       );
       this.userVoted = this.checkUserVote(reply[4]);
-      this.isFavorites = this.checkFavorites(reply[5].data);
+      this.allFavorites = reply[5].data;
+      this.isFavorites = this.checkFavorites();
       this.document = reply[0];
       this.category = reply[1];
       this.subcategory = reply[2];

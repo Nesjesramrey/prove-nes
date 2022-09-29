@@ -13,6 +13,7 @@ import { ModalVotesComponent } from '../components/modal-votes/modal-votes.compo
 import { UserService } from 'src/app/services/user.service';
 import { AddDocumentCommentComponent } from 'src/app/components/add-document-comment/add-document-comment.component';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
+import { FavoritesService } from 'src/app/services/favorites.service';
 @Component({
   selector: '.solution-page',
   templateUrl: './solution.component.html',
@@ -29,7 +30,8 @@ export class SolutionComponent implements OnInit {
   public submitted: boolean = false;
   public color: any;
   public userVoted: number = 0;
-  public favorites: boolean = false;
+  public isFavorites: boolean = false;
+  public allFavorites: any = null;
 
   public document: any = null;
   public solution: any = null;
@@ -52,7 +54,8 @@ export class SolutionComponent implements OnInit {
     public topicService: TopicService,
     public solutionService: SolutionService,
     public voteService: VoteService,
-    public UserService: UserService
+    public UserService: UserService,
+    public favoritesService: FavoritesService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
@@ -71,13 +74,56 @@ export class SolutionComponent implements OnInit {
       },
     });
   }
-  chekFavorites() {
-    this.favorites = !this.favorites;
+  addFavorites() {
+    let favorited = this.getUserFavorited();
+    if (favorited.length > 0) {
+      let data = {
+        _id: favorited[0]._id,
+        favorites: true,
+      };
+      console.log({ data });
+      this.favoritesService.updateFavorites(data).subscribe((reply: any) => {
+        console.log({ reply });
+        if (reply.message == 'favorite update success') {
+          this.isFavorites = true;
+          console.log('es favorito');
+        }
+      });
+    } else {
+      let data = {
+        solution: this.solutionID,
+        favorites: true,
+      };
+      this.favoritesService.addFavorites(data).subscribe((reply: any) => {
+        if (reply.message == 'favorites add success') {
+          this.isFavorites = true;
+        }
+      });
+    }
+  }
+  checkFavorites() {
+    let favorited = this.getUserFavorited();
+    if (favorited.length > 0) {
+      return favorited[0].favorites;
+    }
+    return false;
+  }
+  getUserFavorited() {
+    return this.allFavorites.filter((item: any) => item.createdBy === this.user._id)
+  }
+  removeFavorites() {
+    let favorited = this.getUserFavorited();
     let data = {
-      id: this.topicID,
-      favorites: this.favorites,
+      _id: favorited[0]._id,
+      favorites: false,
     };
-    console.log({ data });
+    this.favoritesService.updateFavorites(data).subscribe((reply: any) => {
+      console.log({ reply });
+      if (reply.message == 'favorite update success') {
+        this.isFavorites = false;
+        console.log(' no es favorito');
+      }
+    });
   }
 
   loadSolution() {
@@ -99,6 +145,11 @@ export class SolutionComponent implements OnInit {
       _id: this.solutionID,
     });
 
+    let favorites: Observable<any> =
+      this.favoritesService.fetchFavoritesBySolutionID({
+        _id: this.solutionID,
+      });
+
     forkJoin([
       document,
       category,
@@ -106,6 +157,7 @@ export class SolutionComponent implements OnInit {
       topic,
       solution,
       votes,
+      favorites,
     ]).subscribe((reply: any) => {
       console.log(reply[5])
       this.userVoted = this.checkUserVote(reply[5]);
@@ -116,6 +168,8 @@ export class SolutionComponent implements OnInit {
       this.solution = reply[4];
       this.rank = this.solution.rank;
       this.votes = reply[5].length;
+      this.allFavorites = reply[6].data;
+      this.isFavorites = this.checkFavorites();
       this.getRamdomImage();
 
       setTimeout(() => {
@@ -200,16 +254,6 @@ export class SolutionComponent implements OnInit {
       this.loadSolution();
     });
   }
-  // unVote() {
-  //   this.voteService.deleteVote({ _id: this.userVoted }).subscribe({
-  //     error: (error: any) => {
-  //       console.log(error);
-  //     },
-  //     next: (reply: any) => {
-  //       this.loadSolution();
-  //     },
-  //   });
-  // }
 
   getBreadcrumbsTitles() {
     this.topic.shortTitle = this.getshortTitle(this.topic.title);
