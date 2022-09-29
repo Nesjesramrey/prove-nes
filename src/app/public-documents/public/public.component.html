@@ -37,8 +37,8 @@
       </mat-card>
 
       <horizontal-stats
-        [users]="document.stats.users"
-        [interactions]="document.stats.interactions"
+        [users]="document.stats?.users"
+        [interactions]="document.stats?.interactions"
       ></horizontal-stats>
 
       <div class="set-12">
@@ -71,7 +71,7 @@
       </div>
       <div class="set-12 mt-2">
         <div class="set-6 col-rgt-2">
-          <spider-chart></spider-chart>
+          <spider-chart [data]="topLayouts"></spider-chart>
         </div>
         <div class="set-6">
           <top10-list [data]="topSolutions"></top10-list>

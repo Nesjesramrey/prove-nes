@@ -6,6 +6,7 @@ import { ImageViewerComponent } from 'src/app/components/image-viewer/image-view
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { SolutionService } from 'src/app/services/solution.service';
+import { LayoutService } from 'src/app/services/layout.service';
 
 @Component({
   selector: '.public-page',
@@ -16,6 +17,7 @@ export class PublicComponent implements OnInit {
   public documentID: string = '';
   public document: any = null;
   public topSolutions: any = [];
+  public topLayouts: any = [];
   public isDataAvailable: boolean = false;
   public image: string = '../../../assets/images/not_fount.jpg';
   public coverage: any[] = [];
@@ -25,7 +27,8 @@ export class PublicComponent implements OnInit {
     public documentService: DocumentService,
     public dialog: MatDialog,
     public formBuilder: FormBuilder,
-    public solutionService: SolutionService
+    public solutionService: SolutionService,
+    public layoutService: LayoutService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
   }
@@ -45,10 +48,19 @@ export class PublicComponent implements OnInit {
         }, 300);
         this.image = reply.images.length > 0 ? reply.images[0] : this.image;
       });
+    this.getDataCharts();
+  }
+
+  getDataCharts() {
     this.solutionService
       .getTopSolutionsByDocument(this.documentID)
       .subscribe((resp) => {
         this.topSolutions = resp;
+      });
+    this.layoutService
+      .getTopLayoutByDocument(this.documentID)
+      .subscribe((resp) => {
+        this.topLayouts = resp;
       });
   }
 

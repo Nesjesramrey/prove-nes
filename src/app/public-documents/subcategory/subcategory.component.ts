@@ -35,7 +35,7 @@ export class SubcategoryComponent implements OnInit {
   public solutionsDataSource: any = [];
   public image: string = '../../../assets/images/not_fount.jpg';
   public titles: any = [];
-  public rank: any = {};
+  public stats: any = {};
   @ViewChild(MatSort) sort: MatSort = new MatSort();
 
   constructor(
@@ -83,7 +83,7 @@ export class SubcategoryComponent implements OnInit {
       this.document = reply[0];
       this.category = reply[1];
       this.subcategory = reply[2];
-      this.rank = this.subcategory.rank;
+      this.stats = this.subcategory.stats;
       this.image = reply[1].images.length > 0 ? reply[1].images[0] : this.image;
       this.topicsDataSource = this.subcategory.topics;
       this.TopicDataSource = new CustomMatDataSource(this.subcategory.topics);
