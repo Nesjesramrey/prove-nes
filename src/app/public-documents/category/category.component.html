@@ -55,9 +55,15 @@
             ></expanded-text>
           </div>
         </mat-card>
-        <horizontal-stats></horizontal-stats>
+        <horizontal-stats
+          [users]="stats?.users"
+          [interactions]="stats?.interactions"
+        ></horizontal-stats>
         <div class="set-12">
-          <vertical-stats></vertical-stats>
+          <vertical-stats
+            [topics]="stats?.topics"
+            [solutions]="stats?.solutions"
+          ></vertical-stats>
         </div>
       </div>
       <div class="set-9 col-rgt">
@@ -74,7 +80,7 @@
             <mat-select value="location.name">
               <mat-option
                 *ngFor="let location of coverage"
-                value="location.name"         
+                value="location.name"
                 >{{ location.name }}
               </mat-option>
             </mat-select>
@@ -85,7 +91,7 @@
             <spider-chart></spider-chart>
           </div>
           <div class="set-6">
-            <top10-list [data]="items"></top10-list>
+            <top10-list [data]="topSolutions"></top10-list>
           </div>
         </div>
       </div>

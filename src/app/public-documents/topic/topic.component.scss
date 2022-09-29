@@ -60,6 +60,35 @@
         font-weight: 500;
       }
     }
+    .favorites-button {
+      position: relative;
+      top: 17px;
+      right: 17px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+
+      .mat-button.mat-warn,
+      .mat-icon-button.mat-warn,
+      .mat-stroked-button.mat-warn {
+        background: #e98282;
+        color: #ffffff;
+        font-size: 15px;
+        width: 32px;
+        height: 32px;
+        border: solid;
+        border-color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .mat-icon-button i,
+      .mat-icon-button .mat-icon {
+        line-height: 24px;
+        font-size: 14px;
+      }
+    }
 
     .users-container {
       p {
@@ -100,23 +129,25 @@
     }
 
     .imghldr {
-      // min-height: 150px;
-      // display: flex;
-      // align-items: center;
-
-      // justify-content: center;
-      // background: rgba($color: #ceddff, $alpha: 0.4);
-      // border-bottom: 1px solid rgba($color: #000000, $alpha: 0.05);
+      min-height: 250px;
+      max-height: 250px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba($color: #ceddff, $alpha: 0.4);
+      border-bottom: 1px solid rgba($color: #000000, $alpha: 0.05);
+      overflow: hidden;
 
       mat-icon {
         font-size: 70pt;
         color: rgba($color: #000000, $alpha: 0.1);
       }
+
       img {
-        width: 230px;
-        // height: 300px;
-        height: 280px;
-        object-fit: cover;
+        width: 100%;
+        height: auto;
+        position: relative;
+        object-fit: contain;
       }
     }
 
@@ -229,6 +260,7 @@
 
             .actions {
               margin: 0;
+              text-align: center;
               p {
                 font-size: 12pt;
                 color: #fff;
@@ -243,7 +275,7 @@
 
               .votes {
                 margin-top: 4px;
-                font-size: 28pt;
+                font-size: 16pt;
                 font-weight: bold;
               }
             }

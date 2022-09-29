@@ -20,13 +20,14 @@ export class AddDocumentTestimonyComponent implements OnInit {
   public submitted = false;
   public file: any = null;
   public messageError: boolean = false;
+  public isAnonymous: boolean = false;
   constructor(
     public formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<AddDocumentThemeComponent>,
     public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public testimonyService: TestimonyService
-  ) {}
+  ) { }
 
   killDialog() {
     this.dialogRef.close();
@@ -34,10 +35,12 @@ export class AddDocumentTestimonyComponent implements OnInit {
 
   ngOnInit(): void {
     this.addTestimonyFormGroup = this.formBuilder.group({
-      name: ['', [Validators.required]],
       description: ['', [Validators.required]],
       image: ['', []],
     });
+  }
+  visibility() {
+    this.isAnonymous = !this.isAnonymous;
   }
 
   handleSelectImage(event: any) {
@@ -56,19 +59,18 @@ export class AddDocumentTestimonyComponent implements OnInit {
     try {
       if (this.addTestimonyFormGroup.valid) {
         this.submitted = true;
-
-        const { name, description } = formGroup.value;
-        const { topicID, type, image } = this.dialogData;
+        const { description } = formGroup.value;
+        const { topicID, type } = this.dialogData;
 
         const formData = new FormData();
-        formData.append('name', name);
         formData.append('description', description);
-        formData.append('files', image);
+        formData.append('files', this.file);
+        formData.append('isAnonymous', (!this.isAnonymous).toString());
 
         const data = {
           form: formData,
           id: topicID,
-          type: type,
+          type: type
         };
 
         this.testimonyService
@@ -93,6 +95,6 @@ export class AddDocumentTestimonyComponent implements OnInit {
       }
     );
 
-    dialogRef.afterClosed().subscribe((reply: any) => {});
+    dialogRef.afterClosed().subscribe((reply: any) => { });
   }
 }

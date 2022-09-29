@@ -111,7 +111,7 @@
         <div class="set-12 header-card">
           <mat-card>
             <!-- IMAGE -->
-            <div class="set-12 image-box">
+            <div class="set-12 image-box imghldr">
               <mat-icon *ngIf="!image">panorama</mat-icon>
               <img
                 *ngIf="image"
@@ -120,15 +120,9 @@
                 (click)="popImageViewer()"
               />
               <div class="info">
-                <button class="custom-circle">
-                  <mat-icon>thumb_up</mat-icon>
-                </button>
-
                 <div class="actions">
                   <p>Relevancia ciudadana</p>
-                  <p class="votes">
-                    {{ votes }}
-                  </p>
+                  <p class="votes">{{ stats.score }} / 100</p>
                   <button
                     *ngIf="userVoted"
                     mat-raised-button
@@ -136,7 +130,7 @@
                     disabled
                     style="background-color: #d9d9d9"
                   >
-                    Ya votaste
+                    Votos: {{ votes }}
                   </button>
                   <button
                     *ngIf="!userVoted"
@@ -162,6 +156,28 @@
                 [title]="solution.title"
               >
               </expanded-text>
+            </div>
+            <div *ngIf="!isFavorites" class="favorites-button">
+              <button
+                mat-icon-button
+                style="background-color: #d9d9d9"
+                color="warn"
+                aria-label="Example icon button with a heart icon"
+                (click)="addFavorites()"
+              >
+                <mat-icon>favorite</mat-icon>
+              </button>
+            </div>
+            <div *ngIf="isFavorites" class="favorites-button">
+              <button
+                mat-icon-button
+                color="warn"
+                style="background-color: #e98282"
+                aria-label="Example icon button with a heart icon"
+                (click)="removeFavorites()"
+              >
+                <mat-icon>favorite</mat-icon>
+              </button>
             </div>
           </mat-card>
         </div>

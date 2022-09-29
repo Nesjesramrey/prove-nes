@@ -27,10 +27,10 @@
         </div>
       </mat-card>
 
-      <horizontal-stats></horizontal-stats>
+      <horizontal-stats [users]="document.stats.users" [interactions]="document.stats.interactions"></horizontal-stats>
 
       <div class="set-12">
-        <vertical-stats></vertical-stats>
+        <vertical-stats [topics]="document.stats.topics" [solutions]="document.stats.solutions"></vertical-stats>
       </div>
 
       <div class="set-12 mt-2">
@@ -54,7 +54,7 @@
           <spider-chart></spider-chart>
         </div>
         <div class="set-6">
-          <top10-list [data]="items"></top10-list>
+          <top10-list [data]="topSolutions"></top10-list>
         </div>
       </div>
     </div>

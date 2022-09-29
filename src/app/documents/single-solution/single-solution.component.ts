@@ -89,7 +89,8 @@ export class SingleSolutionComponent implements OnInit {
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
-    this.subcategoryID = this.activatedRoute['snapshot']['params']['subcategoryID'];
+    this.subcategoryID =
+      this.activatedRoute['snapshot']['params']['subcategoryID'];
     this.themeID = this.activatedRoute['snapshot']['params']['themeID'];
     this.solutionID = this.activatedRoute['snapshot']['params']['solutionID'];
     this.accessToken = this.authenticationService.fetchAccessToken;
@@ -229,9 +230,10 @@ export class SingleSolutionComponent implements OnInit {
   }
 
   linkSolution(id: string) {
-    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/temas/${this.themeID}/solucion/${id}`)
+    this.utilityService.linkMe(
+      `documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/temas/${this.themeID}/solucion/${id}`
+    );
   }
-
 }
 
 // simplet doughnut
