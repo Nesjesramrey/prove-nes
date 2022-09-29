@@ -214,15 +214,11 @@
     }
 
     button {
-      small {
-        transition: all .2s linear;
-      }
+      transition: all .2s linear;
     }
 
-    button:hover {
-      small {
-        color: #306EFF;
-      }
+    button:hover:enabled {
+      color: #1e7e7f;
     }
   }
 }

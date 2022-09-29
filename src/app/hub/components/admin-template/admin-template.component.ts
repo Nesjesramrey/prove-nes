@@ -21,7 +21,7 @@ export class AdminTemplateComponent implements OnInit {
 
   ngOnInit(): void {
     setTimeout(() => {
-      console.log(this.user);
+      // console.log(this.user);
       this.setDocumentEditor();
       this.isDataAvailable = true;
     });

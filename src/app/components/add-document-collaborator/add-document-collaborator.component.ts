@@ -169,6 +169,7 @@ export class AddDocumentCollaboratorComponent implements OnInit {
     this.submitted = true;
 
     let data: any = {
+      // document: this.document['_id'],
       layouts: this.layouts,
       collaborators: [{
         email: formGroup['value']['email'],

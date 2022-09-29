@@ -127,7 +127,6 @@ export class SingleUserComponent implements OnInit {
                 this.documents.filter((doc: any) => {
                   doc['layouts'].filter((layout: any) => {
                     layout['access'] = true;
-                    console.log(layout);
                   });
                 });
                 setTimeout(() => {

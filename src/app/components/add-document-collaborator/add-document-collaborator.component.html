@@ -73,9 +73,6 @@
             <mat-label>Cobertura</mat-label>
             <mat-select formControlName="coverage" (selectionChange)="onSelectCoverage($event)" #coverageSelect
               multiple>
-              <!-- <mat-option value="all">
-                <small>Todos</small>
-              </mat-option> -->
               <mat-option *ngFor="let state of states" [value]="state._id">
                 <small>{{state.name}}</small>
               </mat-option>
