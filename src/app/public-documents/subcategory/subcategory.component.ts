@@ -19,7 +19,7 @@ export class SubcategoryComponent implements OnInit {
 
   public document: any = null;
   public category: any;
-  public subCategoryTitle :any = null;
+  public subCategoryTitle: any = null;
   public subcategory: any = null;
   public panelTopicsData: any = [];
 
@@ -31,7 +31,8 @@ export class SubcategoryComponent implements OnInit {
   public topicsDataSource: any = [];
   public solutionsDataSource: any = [];
   public image: string = '../../../assets/images/not_fount.jpg';
-  public titles : any = [];
+  public titles: any = [];
+  public rank: any = {};
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -66,10 +67,11 @@ export class SubcategoryComponent implements OnInit {
 
     forkJoin([document, category, subcategory]).subscribe((reply: any) => {
       this.titles = this.utilityService.formatTitles
-      (reply[0].title , reply[1].category.name , reply[2].category.name , '');
+        (reply[0].title, reply[1].category.name, reply[2].category.name, '');
       this.document = reply[0];
       this.category = reply[1];
       this.subcategory = reply[2];
+      this.rank = this.subcategory.rank
       this.image = reply[1].images.length > 0 ? reply[1].images[0] : this.image;
       this.topicsDataSource = this.subcategory.topics;
       this.TopicDataSource = new MatTableDataSource(this.subcategory.topics);
@@ -80,10 +82,11 @@ export class SubcategoryComponent implements OnInit {
         .forEach((_: any, index: number) => {
           dataSolution.push(
             ...this.subcategory.topics.map((item: any) => [...item.solutions])[
-              index
+            index
             ]
           );
         });
+      console.log({ dataSolution })
       this.solutionsDataSource = dataSolution;
       this.SolutionDataSource = new MatTableDataSource(dataSolution);
       this.panelTopicsData = this.subcategory.topics.slice(0, 7);

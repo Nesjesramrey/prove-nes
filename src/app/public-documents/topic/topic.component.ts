@@ -41,6 +41,8 @@ export class TopicComponent implements OnInit {
   public image: string = '../../../assets/images/not_fount.jpg';
   public permission: any;
   public SolutionDataSource = new MatTableDataSource<any>();
+  public favorites: boolean = false;
+  public rank: any;
 
   public testimonials: any = TESTIMONIALS;
   public solutionsData: any = [];
@@ -70,6 +72,7 @@ export class TopicComponent implements OnInit {
       next: (reply: any) => {
         this.user = reply;
         this.loadTopic();
+
         if (
           ['administrator', 'editor'].includes(this.user.activities?.[0]?.value)
         ) {
@@ -79,6 +82,14 @@ export class TopicComponent implements OnInit {
         }
       },
     });
+  }
+  chekFavorites() {
+    this.favorites = !this.favorites;
+    let data = {
+      id: this.topicID,
+      favorites: this.favorites,
+    };
+    this.topicService.addFavorites(data).subscribe((reply: any) => { });
   }
 
   loadTopic() {
@@ -111,12 +122,13 @@ export class TopicComponent implements OnInit {
         this.category = reply[1];
         this.subcategory = reply[2];
         this.topic = reply[3];
+        this.rank = this.topic.rank;
         this.votes = reply[4].length;
         this.solutionsData = this.topic.solutions;
         this.SolutionDataSource = new MatTableDataSource(this.solutionsData);
 
-        this.image =
-          reply[3].images.length > 0 ? reply[3].images[0] : this.image;
+
+        this.getRamdomImage();
         setTimeout(() => {
           this.getBreadcrumbsTitles();
           this.isDataAvailable = true;
@@ -125,6 +137,13 @@ export class TopicComponent implements OnInit {
     );
   }
 
+  getRamdomImage() {
+    let testimonials_withs_images = this.topic.testimonials.filter(
+      (testimonial: any) => testimonial.images.length > 0
+    );
+    let index = Math.floor(Math.random() * testimonials_withs_images.length);
+    this.image = testimonials_withs_images[index].images[0];
+  }
   checkUserVote(votes: any[]) {
     return votes.find((vote) => vote.createdBy === this.user._id)?._id || 0;
   }
@@ -142,6 +161,8 @@ export class TopicComponent implements OnInit {
           topicID: this.topicID,
           type: 'topic',
           image: this.image,
+          firstname: this.user.firstname,
+          lastname: this.user.lastname,
         },
         disableClose: true,
       }

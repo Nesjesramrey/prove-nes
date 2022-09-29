@@ -37,6 +37,6 @@ export class LayoutService {
   }
 
   addLayoutCollaborator(data: any) {
-    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.addLayoutCollaboratorEndPoint + `${data['layout']}` + '/collaborator', data);
+    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.addLayoutCollaboratorEndPoint, data);
   }
 }

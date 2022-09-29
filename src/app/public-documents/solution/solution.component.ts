@@ -37,6 +37,7 @@ export class SolutionComponent implements OnInit {
   public topic: any = null;
   public votes: number = 0;
   public image: string = '../../../assets/images/not_fount.jpg';
+  public rank: any = {};
 
   public testimonials: any = TESTIMONIALS;
   public titles: any = [];
@@ -62,7 +63,7 @@ export class SolutionComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.UserService.fetchFireUser().subscribe({
-      error: (error: any) => {},
+      error: (error: any) => { },
       next: (reply: any) => {
         this.user = reply;
         this.loadSolution();
@@ -97,14 +98,16 @@ export class SolutionComponent implements OnInit {
       solution,
       votes,
     ]).subscribe((reply: any) => {
+      console.log(reply[5])
       this.userVoted = this.checkUserVote(reply[5]);
       this.document = reply[0];
       this.category = reply[1];
       this.subcategory = reply[2];
       this.topic = reply[3];
       this.solution = reply[4];
+      this.rank = this.solution.rank;
       this.votes = reply[5].length;
-      this.image = reply[3].images.length > 0 ? reply[3].images[0] : this.image;
+      this.getRamdomImage();
 
       setTimeout(() => {
         this.getBreadcrumbsTitles();
@@ -113,6 +116,13 @@ export class SolutionComponent implements OnInit {
     });
   }
 
+  getRamdomImage() {
+    let testimonials_withs_images = this.solution.testimonials.filter(
+      (testimonial: any) => testimonial.images.length > 0
+    );
+    let index = Math.floor(Math.random() * testimonials_withs_images.length);
+    this.image = testimonials_withs_images[index].images[0];
+  }
   checkUserVote(votes: any[]) {
     return votes.find((vote) => vote.createdBy === this.user._id)?._id || 0;
   }

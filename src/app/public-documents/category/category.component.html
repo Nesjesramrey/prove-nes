@@ -55,7 +55,10 @@
             ></expanded-text>
           </div>
         </mat-card>
-        <horizontal-stats></horizontal-stats>
+        <horizontal-stats
+          [users]="rank.uniqueVisitsInRelation"
+          [interactions]="rank.AvgSubsecuentVisitsInRelation"
+        ></horizontal-stats>
         <div class="set-12">
           <vertical-stats></vertical-stats>
         </div>
@@ -74,7 +77,7 @@
             <mat-select value="location.name">
               <mat-option
                 *ngFor="let location of coverage"
-                value="location.name"         
+                value="location.name"
                 >{{ location.name }}
               </mat-option>
             </mat-select>

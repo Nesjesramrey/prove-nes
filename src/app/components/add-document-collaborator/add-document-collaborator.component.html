@@ -61,7 +61,7 @@
           <mat-form-field appearance="outline">
             <mat-label>Tipo</mat-label>
             <mat-select formControlName="activity" (selectionChange)="onSelectType($event)">
-              <mat-option *ngFor="let activity of allActivities" [value]="activity._id">
+              <mat-option *ngFor="let activity of editorAllowedActivities" [value]="activity.value">
                 <small>{{activity.viewValue}}</small>
               </mat-option>
             </mat-select>
@@ -71,7 +71,8 @@
         <div class="set-3">
           <mat-form-field appearance="outline">
             <mat-label>Cobertura</mat-label>
-            <mat-select formControlName="coverage" (selectionChange)="onSelectCoverage($event)" #coverageSelect>
+            <mat-select formControlName="coverage" (selectionChange)="onSelectCoverage($event)" #coverageSelect
+              multiple>
               <!-- <mat-option value="all">
                 <small>Todos</small>
               </mat-option> -->

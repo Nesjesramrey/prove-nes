@@ -60,6 +60,35 @@
         font-weight: 500;
       }
     }
+    .favorites-button {
+      position: relative;
+      top: 17px;
+      right: 17px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+
+      .mat-button.mat-warn,
+      .mat-icon-button.mat-warn,
+      .mat-stroked-button.mat-warn {
+        background: #e98282;
+        color: #ffffff;
+        font-size: 15px;
+        width: 32px;
+        height: 32px;
+        border: solid;
+        border-color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .mat-icon-button i,
+      .mat-icon-button .mat-icon {
+        line-height: 24px;
+        font-size: 14px;
+      }
+    }
 
     .users-container {
       p {
@@ -229,6 +258,7 @@
 
             .actions {
               margin: 0;
+              text-align: center;
               p {
                 font-size: 12pt;
                 color: #fff;
@@ -243,7 +273,7 @@
 
               .votes {
                 margin-top: 4px;
-                font-size: 28pt;
+                font-size: 16pt;
                 font-weight: bold;
               }
             }
