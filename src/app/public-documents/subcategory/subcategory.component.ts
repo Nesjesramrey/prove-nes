@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { DocumentService } from 'src/app/services/document.service';
@@ -7,7 +13,9 @@ import { LayoutService } from 'src/app/services/layout.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 import { CustomMatDataSource } from '../custom-class/custom-table.component';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { MatTable } from '@angular/material/table';
 
 @Component({
   selector: '.subcategory-page',
@@ -48,7 +56,6 @@ export class SubcategoryComponent implements OnInit {
     this.subcategoryID =
       this.activatedRoute['snapshot']['params']['subcategoryID'];
   }
-
   ngOnInit(): void {
     this.loadSubcategory();
   }
@@ -98,6 +105,7 @@ export class SubcategoryComponent implements OnInit {
       this.SolutionDataSource = new CustomMatDataSource(
         this.solutionsDataSource
       );
+
       setTimeout(() => {
         this.isDataAvailable = true;
       }, 1000);

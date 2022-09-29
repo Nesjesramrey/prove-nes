@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
 import { MatSort, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { CustomMatDataSource } from '../../custom-class/custom-table.component';
 @Component({
   selector: 'solutions-card',
   templateUrl: './solutions-card.component.html',
@@ -15,7 +16,6 @@ export class SolutionsCardComponent implements OnInit {
   public subcategoryID: string = '';
   public topicID: string = '';
   public displayedColumns: string[] = ['title', 'stats.score'];
-  public SolutionDataSource = new MatTableDataSource<any>();
 
   @Input() data: any = [];
   @ViewChild(MatSort) sort: MatSort = new MatSort();
@@ -31,7 +31,8 @@ export class SolutionsCardComponent implements OnInit {
     this.topicID = this.activatedRoute['snapshot']['params']['topicID'];
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   ngAfterViewInit() {
     this.data.sort = this.sort;
