@@ -250,8 +250,8 @@
       .user {
         display: flex;
         flex-flow: row wrap;
-        align-items: start;
-        justify-content: start;
+        align-items: flex-start;
+        justify-content: flex-start;
         width: 100%;
 
         .imgUser {
@@ -271,8 +271,9 @@
           background-color: rgba(0, 0, 0, 0.08);
           width: 32px;
           height: 32px;
-          padding: 7px;
+          padding: 5px;
           font-weight: normal;
+          line-height: 18pt;
         }
         .userName {
           margin: 0px;

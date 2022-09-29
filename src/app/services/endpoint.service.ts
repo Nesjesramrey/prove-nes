@@ -112,7 +112,7 @@ export class EndPointService {
   // comment
   public fetchSingleCommentByIdEndPoint: string = '/comment/';
   public createNewCommentEndPoint: string = '/comment/';
-  public findRelationIdEndPoint: string = '/comment/relation';
+  public findRelationIdEndPoint: string = '/comment/document';
 
   // vote
   public createNewVoteEndPonint: string = '/vote/';
@@ -130,5 +130,5 @@ export class EndPointService {
   // categories
   public editCategoryEndPoint: string = '/category/';
 
-  constructor() {}
+  constructor() { }
 }

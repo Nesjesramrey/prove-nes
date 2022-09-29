@@ -11,13 +11,13 @@ export class CommentService {
   constructor(
     public httpClient: HttpClient,
     public endpointSrvc: EndPointService
-  ) {}
+  ) { }
 
   fetchSingleCommentById(data: any) {
     return this.httpClient.get(
       this.endpointSrvc.apiEndPoint +
-        this.endpointSrvc.fetchSingleCommentByIdEndPoint +
-        `${data['_id']}`,
+      this.endpointSrvc.fetchSingleCommentByIdEndPoint +
+      `${data['_id']}`,
       {}
     );
   }
@@ -25,22 +25,16 @@ export class CommentService {
   createNewComment(data: any) {
     return this.httpClient.post(
       this.endpointSrvc.apiEndPoint +
-        this.endpointSrvc.createNewCommentEndPoint +
-        `${data.id}` +
-        `/?type=${data.type}`,
+      this.endpointSrvc.createNewCommentEndPoint +
+      `${data.id}` +
+      `/?type=${data.type}`,
       data.data
     );
   }
 
-  finRelationIdComment(data:any) {
-    const body = data;
-    return this.httpClient.post(
+  finRelationIdComment(data: any) {
+    return this.httpClient.get(
       this.endpointSrvc.apiEndPoint +
-        this.endpointSrvc.findRelationIdEndPoint, body)
-        .pipe(
-          map(data => {
-            return data;
-          })
-        )
+      this.endpointSrvc.findRelationIdEndPoint + '/' + data.documentId);
   }
 }

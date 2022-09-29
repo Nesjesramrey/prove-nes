@@ -17,14 +17,14 @@ export class AdminTemplateComponent implements OnInit {
   @Input('documents') public documents: any = [];
   public isDataAvailable: boolean = false;
   public selectedDocument: any = null;
-  public commentUsers : any[] = [];
-  public documentSelectId : string = '';
+  public commentUsers: any[] = [];
+  public documentSelectId: string = '';
 
   constructor(
     public dialog: MatDialog,
     public utilityService: UtilityService,
-    public commentService  : CommentService,
-    public documentService : DocumentService
+    public commentService: CommentService,
+    public documentService: DocumentService
   ) { }
 
   ngOnInit(): void {
@@ -32,7 +32,6 @@ export class AdminTemplateComponent implements OnInit {
       this.setDocumentEditor();
       this.isDataAvailable = true;
     });
-    this.returnComment();
   }
 
   setDocumentEditor() {
@@ -77,55 +76,17 @@ export class AdminTemplateComponent implements OnInit {
   }
 
 
-  selectDocument(document:any){
-   this.documentSelectId = document._id;
-   this.returnComments(document);
+  selectDocument(document: any) {
+    this.documentSelectId = document._id;
+    this.returnComments(document);
   }
 
-  returnComment(){
-    const comentarios = [
-      {
-        user : 'jose alfaro',
-        img  : 'https://us.123rf.com/450wm/koblizeek/koblizeek2001/koblizeek200100050/138262629-usuario-miembro-de-perfil-de-icono-de-hombre-vector-de-s%C3%ADmbolo-perconal-sobre-fondo-blanco-aislado-.jpg?ver=6' ,
-        comment: ' texto de prueba'
-      },
-      {
-        user : 'test alfaro',
-        img  : 'https://us.123rf.com/450wm/koblizeek/koblizeek2001/koblizeek200100050/138262629-usuario-miembro-de-perfil-de-icono-de-hombre-vector-de-s%C3%ADmbolo-perconal-sobre-fondo-blanco-aislado-.jpg?ver=6' ,
-        comment: ' texto de prueba 2'
-      },
-      {
-        user : 'test alfaro',
-        img  : 'https://us.123rf.com/450wm/koblizeek/koblizeek2001/koblizeek200100050/138262629-usuario-miembro-de-perfil-de-icono-de-hombre-vector-de-s%C3%ADmbolo-perconal-sobre-fondo-blanco-aislado-.jpg?ver=6' ,
-        comment: ' texto de prueba 2'
-      },
-      {
-        user : 'test alfaro',
-        img  : 'https://us.123rf.com/450wm/koblizeek/koblizeek2001/koblizeek200100050/138262629-usuario-miembro-de-perfil-de-icono-de-hombre-vector-de-s%C3%ADmbolo-perconal-sobre-fondo-blanco-aislado-.jpg?ver=6' ,
-        comment: ' texto de prueba 2'
-      },
-       {
-        user : 'test alfaro',
-        img  : 'https://us.123rf.com/450wm/koblizeek/koblizeek2001/koblizeek200100050/138262629-usuario-miembro-de-perfil-de-icono-de-hombre-vector-de-s%C3%ADmbolo-perconal-sobre-fondo-blanco-aislado-.jpg?ver=6' ,
-        comment: ' texto de prueba 2'
-      }
-    ];
-
-    /* this.commentUsers = comentarios; */
-  }
-
-
-  returnComments(document:any){
+  returnComments(document: any) {
     const data = {
-      documentId : document._id,
-      layouts : document.layouts 
+      documentId: document._id
     }
-    this.commentService.finRelationIdComment(data).subscribe((data:any)=> {
-      let comments : any[] = [];
-      data.forEach( (element :any ) => {
-      comments.push(element);
-      })
-      this.commentUsers = comments;
+    this.commentService.finRelationIdComment(data).subscribe((data: any) => {
+      this.commentUsers = data;
     })
   }
 

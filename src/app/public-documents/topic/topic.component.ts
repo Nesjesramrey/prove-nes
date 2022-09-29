@@ -141,8 +141,12 @@ export class TopicComponent implements OnInit {
     let testimonials_withs_images = this.topic.testimonials.filter(
       (testimonial: any) => testimonial.images.length > 0
     );
-    let index = Math.floor(Math.random() * testimonials_withs_images.length);
-    this.image = testimonials_withs_images[index].images[0];
+    if (testimonials_withs_images.length > 0) {
+      let index = Math.floor(Math.random() * testimonials_withs_images.length);
+      this.image = testimonials_withs_images[index].images[0];
+    } else {
+      this.image = '';
+    }
   }
   checkUserVote(votes: any[]) {
     return votes.find((vote) => vote.createdBy === this.user._id)?._id || 0;
