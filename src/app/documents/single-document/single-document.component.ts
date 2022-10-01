@@ -77,7 +77,9 @@ export class SingleDocumentComponent implements OnInit {
           layout['categoryName'] = layout['category']['name'];
           layout['accessControlList'].filter((acl: any) => {
             acl['collaborators'].filter((collaborator: any) => {
-              if (collaborator['user']['_id'] == this.user['_id']) { layout['access'] = true; }
+              if(collaborator['user'] != null) {
+                if (collaborator['user']['_id'] == this.user['_id']) { layout['access'] = true; }
+              }              
             });
           });
         });
