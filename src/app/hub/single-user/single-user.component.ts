@@ -45,7 +45,7 @@ export class SingleUserComponent implements OnInit {
       },
       next: (reply: any) => {
         this.user = reply;
-        // this.user['activityName'] = this.user['activities'][0]['value'];
+        this.user['activityName'] = this.user['activities'][0]['value'];
         // console.log('user: ', this.user);
 
         this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
@@ -107,7 +107,9 @@ export class SingleUserComponent implements OnInit {
                     layout['categoryName'] = layout['category']['name'];
                     layout['accessControlList'].filter((acl: any) => {
                       acl['collaborators'].filter((collaborator: any) => {
-                        if (collaborator['user']['_id'] == this.user['_id']) { layout['access'] = true; }
+                        if (collaborator['user'] != null) {
+                          if (collaborator['user']['_id'] == this.user['_id']) { layout['access'] = true; }
+                        }
                       });
                     });
                   });
