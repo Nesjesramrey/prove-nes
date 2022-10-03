@@ -8,9 +8,11 @@
     <div class="avatar add">
       <mat-icon>person_add</mat-icon>
     </div>
-    <div class="avatar more" *ngFor="let avatar of users">
-      <span *ngIf="avatar.user.isFullRegister">{{avatar.user.firstname[0] + avatar.user.lastname[0]}}</span>
-      <span *ngIf="!avatar.user.isFullRegister">NA</span>
+    <div *ngFor="let avatar of users; let i = index">
+      <div class="avatar more" *ngIf="i < 4">
+        <span *ngIf="avatar.user.isFullRegister">{{avatar.user.firstname[0] + avatar.user.lastname[0]}}</span>
+        <span *ngIf="!avatar.user.isFullRegister">NA</span>
+      </div>
     </div>
   </div>
 </div>

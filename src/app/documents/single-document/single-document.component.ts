@@ -60,52 +60,51 @@ export class SingleDocumentComponent implements OnInit {
 
     let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
     let user: Observable<any> = this.userService.fetchFireUser();
-    forkJoin([document, user]).subscribe({
+    let acl: Observable<any> = this.documentService.fetchAccessControlList({ document_id: this.documentID });
+
+    forkJoin([document, user, acl]).subscribe({
       error: (error: any) => {
         this.utilityService.openErrorSnackBar(this.utilityService.errorOops);
       },
       next: (reply: any) => {
+        console.log(reply);
         this.document = reply[0];
-        console.log('document: ', this.document);
-
+        // console.log('document: ', this.document);
         this.user = reply[1];
         this.user['activityName'] = this.user['activities'][0]['value'];
         // console.log('user: ', this.user);
 
-        this.layouts = this.document['layouts'];
-        this.layouts.filter((layout: any) => {
-          layout['categoryName'] = layout['category']['name'];
-          layout['accessControlList'].filter((acl: any) => {
-            acl['collaborators'].filter((collaborator: any) => {
-              if(collaborator['user'] != null) {
-                if (collaborator['user']['_id'] == this.user['_id']) { layout['access'] = true; }
-              }              
-            });
-          });
-        });
-
         switch (this.user['activityName']) {
           case 'editor':
+            this.layouts = reply[2]['layouts'];
             this.layouts.filter((layout: any) => { layout['access'] = true; });
             break;
+
           case 'administrator':
+            this.layouts = this.document['layouts'];
             this.layouts.filter((layout: any) => { layout['access'] = true; });
+            break;
+
+          case 'citizen':
+            console.log('here!');
+            this.layouts = reply[2]['layouts'];
+            this.layouts.filter((x: any) => {
+              if (x['states'].length == 0) {
+                x['access'] = false
+              } else {
+                x['access'] = true;
+              }
+            });
             break;
         }
-
         this.dataSource = new MatTableDataSource(this.layouts);
         // console.log('layouts: ', this.layouts);
-
-        // let availableLayouts: any = this.layouts.filter((layout: any) => { return layout['access'] == true; });
-        // availableLayouts.filter((x: any) => {
-        //   x['accessControlList'].filter((y: any) => {
-        //     this.availableCoverage.push(y['state']);
-        //   });
-        // });
-        // console.log('availableCoverage: ', this.availableCoverage);
-
         this.collaborators = this.document['collaborators'];
-        console.log('collaborators: ', this.collaborators);
+        this.collaborators = this.collaborators.filter((value: any, index: any, self: any) =>
+          index === self.findIndex((t: any) =>
+            (t['user']['_id'] === value['user']['_id']))
+        );
+        // console.log('collaborators: ', this.collaborators);
       },
       complete: () => {
         setTimeout(() => {

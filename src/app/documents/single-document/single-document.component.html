@@ -41,14 +41,6 @@
                   <mat-icon>edit</mat-icon>
                   <span>Editar documento</span>
                 </button>
-                <!-- <button mat-menu-item disabled>
-                  <mat-icon>cloud_upload</mat-icon>
-                  <span>Cargar template</span>
-                </button>
-                <button mat-menu-item disabled>
-                  <mat-icon>cloud_download</mat-icon>
-                  <span>Descargar template</span>
-                </button> -->
                 <button mat-menu-item (click)="popWindowAlertDialog()" [disabled]="document.inCover">
                   <mat-icon>home</mat-icon>
                   <span>Usar como portada</span>
@@ -184,9 +176,17 @@
               <th mat-header-cell *matHeaderCellDef>Categoría</th>
               <td mat-cell *matCellDef=" let element">
                 <button type="button" class="catbtn" [disabled]="!element.access"
-                  (click)="LinkMe('/documentos/' + document._id + '/categoria/' + element._id)">
+                  (click)="LinkMe('/documentos/' + document._id + '/categoria/' + element.id)"
+                  *ngIf="user.activityName != 'administrator'">
                   <mat-icon>question_answer</mat-icon>
-                  <small>{{element.categoryName}}</small>
+                  <small>{{element.name}}</small>
+                </button>
+
+                <button type="button" class="catbtn" [disabled]="!element.access"
+                  (click)="LinkMe('/documentos/' + document._id + '/categoria/' + element.category._id)"
+                  *ngIf="user.activityName == 'administrator'">
+                  <mat-icon>question_answer</mat-icon>
+                  <small>{{element.category.name}}</small>
                 </button>
               </td>
             </ng-container>
@@ -194,7 +194,7 @@
             <ng-container matColumnDef="users">
               <th mat-header-cell *matHeaderCellDef> Usuarios </th>
               <td mat-cell *matCellDef="let element">
-                <small>{{element.users || 'NA'}}</small>
+                <!-- <small>{{element.accessControlList.length || 'NA'}}</small> -->
               </td>
             </ng-container>
 
@@ -215,7 +215,7 @@
             <ng-container matColumnDef="problems">
               <th mat-header-cell *matHeaderCellDef> Problemas</th>
               <td mat-cell *matCellDef="let element">
-                <small>{{element.problems || 'NA'}}</small>
+                <!-- <small>{{ element.topics.length }}</small> -->
               </td>
             </ng-container>
 

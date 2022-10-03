@@ -69,8 +69,10 @@ export class SingleCategoryComponent implements OnInit {
     let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
     let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID });
     let user: Observable<any> = this.userService.fetchFireUser();
+    let acl: Observable<any> = this.documentService.fetchAccessControlList({ document_id: this.documentID });
 
-    forkJoin([document, category, user]).subscribe((reply: any) => {
+    forkJoin([document, category, user, acl]).subscribe((reply: any) => {
+      console.log(reply);
       this.document = reply[0];
       // console.log('document: ', this.document);
 

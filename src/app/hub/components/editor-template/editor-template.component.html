@@ -22,7 +22,8 @@
 <div class="set-12" *ngIf="documents.length != 0 && isDataAvailable">
   <div class="set-12 carousel-hldr">
     <carousel [cellsToShow]="2" [arrows]="documents.length > 2 ? true : false">
-      <div class="carousel-cell" *ngFor="let document of documents">
+      <div class="carousel-cell" *ngFor="let document of documents" (click)="selectDocument(document)"
+        [class.select]="document._id === documentSelectId">
         <mat-card>
           <div class="set-12 imghldr">
             <mat-icon *ngIf="document.images.length == 0">panorama</mat-icon>
@@ -84,7 +85,8 @@
                 <ul>
                   <li>
                     <button type="button" (click)="linkMe('/documentos/' + document._id + '/categoria/' + layout._id)"
-                      matTooltip="Abrir categoría" matTooltipClass="tooltip" matTooltipPosition="right" [disabled]="!layout.access">
+                      matTooltip="Abrir categoría" matTooltipClass="tooltip" matTooltipPosition="right"
+                      [disabled]="!layout.access">
                       <span style="font-size: 14px">{{layout.category.name}}</span>
                     </button>
                   </li>

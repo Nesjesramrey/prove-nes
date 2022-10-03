@@ -38,12 +38,6 @@
 
 <!-- disable layout in document -->
 <div class="set-12" *ngIf="isDataAvailable && windowType == 'kill-layout'">
-  <!-- <div class="set-12 dialog-head">
-    <div class="set-12">
-      <h3 class="txt-left">{{layout.category.name}}</h3>
-    </div>
-  </div> -->
-
   <div class="set-12 dialog-body">
     <div class="set-12 alert-txt">
       <h1>¡Alerta!</h1>
@@ -59,6 +53,31 @@
         <small>Cancelar</small>
       </button>
       <button type="button" mat-raised-button color="primary" [disabled]="submitted" (click)="killLayout()">
+        <small>Continuar</small>
+      </button>
+      <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
+    </div>
+  </div>
+</div>
+
+<!-- kill document collaborator -->
+<div class="set-12" *ngIf="isDataAvailable && windowType == 'kill-collaborator'">
+  <div class="set-12 dialog-body">
+    <div class="set-12 alert-txt">
+      <h1>¡Alerta!</h1>
+      <mat-icon>warning</mat-icon>
+    </div>
+    <div class="set-12">
+      <p>Se eliminará el usuario:</p>
+      <h1 class="txt-center">{{collaborator.firstname}} {{collaborator.lastname}}</h1>
+      <p>¿Deseas continuar?</p>
+    </div>
+    <div class="set-12 ctrls">
+      <button type="button" mat-raised-button color="accent" (click)="killDialog()" [disabled]="submitted">
+        <small>Cancelar</small>
+      </button>
+      <button type="button" mat-raised-button color="primary" [disabled]="submitted"
+        (click)="killDocumentCollaborator()">
         <small>Continuar</small>
       </button>
       <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>

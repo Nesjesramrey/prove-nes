@@ -63,6 +63,9 @@ export class AddDocumentCollaboratorComponent implements OnInit {
       case 'editor':
         this.editorAllowedActivities = ['type-a', 'type-b', 'type-c', 'type-d'];
         break;
+      case 'citizen':
+        this.editorAllowedActivities = ['type-c', 'type-d'];
+        break;
     }
   }
 
@@ -184,7 +187,7 @@ export class AddDocumentCollaboratorComponent implements OnInit {
         this.utilitiService.openErrorSnackBar(this.utilitiService.errorOops);
       },
       next: (reply: any) => {
-        // console.log(reply);
+        console.log(reply);
         this.utilitiService.openSuccessSnackBar(this.utilitiService.userAddedSuccesss);
         this.dialogRef.close(reply)
       },

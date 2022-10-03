@@ -46,6 +46,7 @@ export class EndPointService {
   public addDocumentCollaboratorEndPoint: string =
     '/document/add-document-collaborator';
   public addDocumentColumnEndPoint: string = '/document/add-document-column';
+  public fetchAccessControlListEndPoint: string = '/access_control_list';
 
   // layouts
   public fetchSingleLayoutByIdEndPoint: string = '/layout/';
@@ -81,6 +82,7 @@ export class EndPointService {
   public createNewCategoryEndPoint: string = '/category';
   public fetchAllCategoriesEndPoint: string = '/category/';
   public fetchAllActivitiesEndPoint: string = '/activity';
+  public fetchAssociationTypologyEndPoint: string = '/association_typology';
 
   public fetchAllStatesMexEndPoint: string = '/utility/fetch-all-states-mex';
   // public createNewCategoryEndPoint: string = '/utility/create-new-category';
@@ -94,9 +96,14 @@ export class EndPointService {
     '/notification/create-new-notification';
   public fetchMyNotificationsLengthEndPoint: string =
     '/notification/fetch-my-notifications-length';
-  public fetchMyNotificationsContentEndPoint: string = '/notification';
+  public fetchMyNotificationsContentEndPoint: string =
+    '/notification';
   public fetchMyNotificationUnreadEndPoint: string =
     '/notification/number_of_unread/user/';
+  public markAsReadNotificationEndPoint: string =
+    '/notification/';
+  public killNotificationEndPoint: string
+    = '/notification/';
 
   // support
   public sendSupportMessageEndPoint: string =

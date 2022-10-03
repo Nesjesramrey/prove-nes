@@ -4,6 +4,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { WindowAlertComponent } from '../window-alert/window-alert.component';
 
 @Component({
   selector: '.document-user-list',
@@ -26,6 +27,7 @@ export class DocumentUserListComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<DocumentUserListComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
+    public dialog: MatDialog
   ) {
     // console.log(this.dialogData);
     this.users = this.dialogData['users'];
@@ -66,6 +68,27 @@ export class DocumentUserListComponent implements OnInit {
     if (this.isDataAvailable == true) {
       this.dataSource.paginator = this.paginator;
     }
+  }
+
+  configUser(user: any) {
+    let data: any = {
+      user_id: user['_id']
+    };
+  }
+
+  KillUser(user: any) {
+    const dialogRef = this.dialog.open<WindowAlertComponent>(WindowAlertComponent, {
+      width: '420px',
+      data: {
+        windowType: 'kill-collaborator',
+        user: user
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
   }
 
   killDialog() {

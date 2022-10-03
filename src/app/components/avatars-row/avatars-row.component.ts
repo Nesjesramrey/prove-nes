@@ -20,7 +20,6 @@ export class AvatarsRowComponent implements OnInit {
 
   popDocumentUserListDialog() {
     const dialogRef = this.dialog.open<DocumentUserListComponent>(DocumentUserListComponent, {
-      width: '640px',
       data: {
         users: this.users,
         location: 'document'

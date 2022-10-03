@@ -11,8 +11,6 @@ import { UtilityService } from 'src/app/services/utility.service';
   styleUrls: ['./user-notifications.component.scss']
 })
 export class UserNotificationsComponent implements OnInit {
-  public token: any = null;
-  public payload: any = null;
   public user: any = null;
   public notifications: any = [];
   public isDataAvailable: boolean = false;
@@ -22,21 +20,16 @@ export class UserNotificationsComponent implements OnInit {
     public userSrvc: UserService,
     public notificationSrvc: NotificationService,
     public utilityService: UtilityService
-  ) {
-    this.token = this.authenticationSrvc.fetchToken;
-  }
+  ) { }
 
   ngOnInit(): void {
     let user: Observable<any> = this.userSrvc.fetchFireUser();
 
     forkJoin([user]).subscribe((reply: any) => {
-      // console.log(reply);
       this.user = reply[0];
       // console.log('user: ', this.user);
-
       this.notificationSrvc.fetchMyNotificationsContent({ userID: this.user['_id'] })
         .subscribe((reply: any) => {
-          // console.log(reply);
           this.notifications = reply;
         });
 
@@ -46,11 +39,40 @@ export class UserNotificationsComponent implements OnInit {
     });
   }
 
-  markNotificationAsRead(notification: any) { }
+  markNotificationAsRead(notification: any) {
+    let data: any = { notification_id: notification['_id'] };
+    this.notificationSrvc.markAsReadNotification(data).subscribe({
+      error: (error: any) => {
+        this.utilityService.openErrorSnackBar(this.utilityService.errorOops);
+      },
+      next: (reply: any) => {
+        this.notifications.filter((x: any) => {
+          if (x['_id'] == notification['_id']) { notification['viewed'] = true; }
+        });
+        this.notificationSrvc.notificationCountSubject.next({ reload: true });
+      },
+      complete: () => { }
+    });
+  }
 
-  killNotification(notification: any) { }
+  killNotification(notification: any) {
+    let data: any = { notification_id: notification['_id'] };
+    this.notificationSrvc.killNotification(data).subscribe({
+      error: (error: any) => {
+        this.utilityService.openErrorSnackBar(this.utilityService.errorOops);
+      },
+      next: (reply: any) => {
+        this.notifications = this.notifications.filter((x: any) => {
+          return x['_id'] != notification['_id'];
+        });
+        this.notificationSrvc.notificationCountSubject.next({ reload: true });
+      },
+      complete: () => { }
+    });
+  }
 
-  linkMe(url: string) {
+  linkMe(url: string, notification: any) {
+    this.markNotificationAsRead(notification);
     this.utilityService.linkMe(url);
   }
 }

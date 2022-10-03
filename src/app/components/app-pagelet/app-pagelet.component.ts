@@ -15,7 +15,6 @@ import { ModalPermissionsComponent } from 'src/app/public-documents/components/m
   styleUrls: ['./app-pagelet.component.scss'],
 })
 export class AppPageletComponent implements OnInit {
-  public token: any = null;
   @Input('user') public user: any = null;
   @Input('path') public path: any = null;
   public notifications: any = null;
@@ -35,14 +34,23 @@ export class AppPageletComponent implements OnInit {
     public angularFireAuth: AngularFireAuth,
     public activatedRoute: ActivatedRoute,
     public dialog: MatDialog
-  ) {
-    this.token = this.authenticationSrvc.fetchAccessToken;
-  }
+  ) { }
 
   ngOnInit(): void {
     this.reset();
 
     setTimeout(() => {
+      this.notificationSrvc.notificationCountSubject.subscribe((reply: any) => {
+        if (reply != null) {
+          if (reply['reload']) {
+            this.notificationSrvc.fetchMyNotificationUnread({ userID: this.user['_id'] })
+              .subscribe((reply: any) => {
+                this.unreadNotifications = reply['count'];
+              });
+          }
+        }
+      });
+
       if (this.user) {
         // console.log('user: ', this.user);
         this.user['activities'].filter((x: any) => {
@@ -60,9 +68,13 @@ export class AppPageletComponent implements OnInit {
           this.permission = false;
         }
 
-        this.isDataAvailable = true;
+        setTimeout(() => {
+          this.isDataAvailable = true;
+        });
       } else {
-        this.isDataAvailable = true;
+        setTimeout(() => {
+          this.isDataAvailable = true;
+        });
       }
     });
   }
@@ -111,7 +123,11 @@ export class AppPageletComponent implements OnInit {
   onSignOut() {
     return this.angularFireAuth.signOut().then(() => {
       localStorage.removeItem('accessToken');
-      this.router.navigateByUrl('/', { state: { status: 'logout' } });
+      if (this.path == '/') {
+        window.location.reload();
+      } else {
+        this.router.navigateByUrl('/', { state: { status: 'logout' } });
+      }
     });
   }
 
