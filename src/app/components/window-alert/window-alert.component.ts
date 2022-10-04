@@ -15,6 +15,7 @@ export class WindowAlertComponent implements OnInit {
   public isDataAvailable: boolean = false;
   public document: any = null;
   public layout: any = null;
+  public collaborator: any = null;
   public submitted: boolean = false;
 
   constructor(
@@ -32,6 +33,9 @@ export class WindowAlertComponent implements OnInit {
         break;
       case 'kill-layout':
         this.layout = this.dialogData['layout'];
+        break;
+      case 'kill-collaborator':
+        this.collaborator = this.dialogData['user'];
         break;
     }
   }
@@ -87,6 +91,13 @@ export class WindowAlertComponent implements OnInit {
         this.submitted = false;
       }
     });
+  }
+
+  killDocumentCollaborator() {
+    this.submitted = true;
+    let data: any = {
+      user_id: this.collaborator['_id']
+    };
   }
 
   killDialog() {

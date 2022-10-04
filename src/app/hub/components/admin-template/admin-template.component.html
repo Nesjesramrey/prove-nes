@@ -1,15 +1,5 @@
 <div class="set-12 toptools" *ngIf="documents.length != 0">
-  <!-- <strong><small>DOCUMENTOS</small></strong>
-  <button type="button" class="roundgreen" *ngIf="documents.length != 0" (click)="openAddDocumentDialog()"
-    matTooltip="Agregar Documento" matTooltipClass="tooltip">
-    <mat-icon>note_add</mat-icon>
-  </button> -->
-  <button
-    type="button"
-    mat-raised-button
-    color="primary"
-    (click)="openAddDocumentDialog()"
-  >
+  <button type="button" mat-raised-button color="primary" (click)="openAddDocumentDialog()">
     <small>Nuevo Documento</small>
   </button>
 </div>
@@ -25,12 +15,7 @@
             <p class="icon">
               <mat-icon color="primary">folder</mat-icon>
             </p>
-            <button
-              type="button"
-              mat-raised-button
-              color="primary"
-              (click)="openAddDocumentDialog()"
-            >
+            <button type="button" mat-raised-button color="primary" (click)="openAddDocumentDialog()">
               <small>Nuevo Documento</small>
             </button>
           </div>
@@ -44,29 +29,21 @@
 <div class="set-12" *ngIf="documents.length != 0 && isDataAvailable">
   <div class="set-12 carousel-hldr">
     <carousel [cellsToShow]="2" [arrows]="documents.length > 2 ? true : false">
-      <div
-        class="carousel-cell"
-        *ngFor="let document of documents"
-        (click)="selectDocument(document)"
-        [class.select]="document._id === documentSelectId"
-      >
+      <div class="carousel-cell" *ngFor="let document of documents" (click)="selectDocument(document)"
+        [class.select]="document._id === documentSelectId">
         <mat-card>
           <div class="set-12 imghldr">
             <mat-icon *ngIf="document.images.length == 0">panorama</mat-icon>
-            <img
-              [src]="document.images[0]"
-              alt=""
-              *ngIf="document.images.length != 0"
-            />
+            <img [src]="document.images[0]" alt="" *ngIf="document.images.length != 0" />
           </div>
 
           <div class="set-12 infohldr">
             <div class="set-12 card-row">
               <div class="set-11">
                 {{
-                  document.title.length > 20
-                    ? (document.title | slice: 0:20) + "..."
-                    : document.title
+                document.title.length > 20
+                ? (document.title | slice: 0:20) + "..."
+                : document.title
                 }}
               </div>
               <div class="set-1 txt-right">
@@ -78,33 +55,15 @@
                     <mat-icon color="primary">pie_chart</mat-icon>
                     <span>Ver datos</span>
                   </button>
-                  <button
-                    mat-menu-item
-                    type="button"
-                    (click)="linkMe('/documentos-publicos/' + document._id)"
-                  >
+                  <button mat-menu-item type="button" (click)="linkMe('/documentos-publicos/' + document._id)">
                     <mat-icon color="primary">groups</mat-icon>
                     <span>Abrir público</span>
                   </button>
-                  <button
-                    mat-menu-item
-                    type="button"
-                    (click)="linkMe('/documentos/' + document._id)"
-                  >
+                  <button mat-menu-item type="button" (click)="linkMe('/documentos/' + document._id)">
                     <mat-icon color="primary">lock</mat-icon>
                     <span>Abrir privado</span>
                   </button>
                 </mat-menu>
-
-                <!-- <button type="button" matTooltip="Editar">
-                  <mat-icon color="warn">edit</mat-icon>
-                </button>
-                <button type="button" matTooltip="Abrir" (click)="linkMe('/documentos/' + document._id)">
-                  <mat-icon color="warn">description</mat-icon>
-                </button>
-                <button type="button" matTooltip="Datos" (click)="displayDocumentData(document._id)">
-                  <mat-icon color="warn">pie_chart</mat-icon>
-                </button> -->
               </div>
             </div>
 
@@ -124,31 +83,39 @@
               <small>0 Interacciones</small>
             </div>
 
-            <div
-              class="set-12 available-layout"
-              *ngIf="document.layouts.length != 0"
-            >
+            <div class="set-12 empty-layout" *ngIf="document.layouts.length == 0">
+              <div class="set-12 date">
+                <small>{{document.createdAt | date: 'mediumDate'}} - {{document.createdAt | date: 'mediumTime'}}</small>
+              </div>
+
+              <div class="set-12">
+                <mat-icon color="primary">folder</mat-icon>
+                <p><strong><small>Tu documento esta vacio</small></strong></p>
+              </div>
+
+              <!-- <div class="set-12 ctrls">
+                <button type="button" mat-raised-button color="primary">
+                  <small>Crear esquema</small>
+                </button>
+              </div> -->
+            </div>
+
+            <div class="set-12 available-layout" *ngIf="document.layouts.length != 0">
               <h4 class="category-title">Categorías</h4>
               <div class="set-12" *ngFor="let layout of document.layouts">
                 <ul>
                   <li>
-                    <button
-                      type="button"
-                      (click)="
+                    <button type="button" (click)="
                         linkMe(
                           '/documentos/' +
                             document._id +
                             '/categoria/' +
                             layout._id
                         )
-                      "
-                      matTooltip="Abrir categoría"
-                      matTooltipClass="tooltip"
-                      matTooltipPosition="right"
-                    >
+                      " matTooltip="Abrir categoría" matTooltipClass="tooltip" matTooltipPosition="right">
                       <span style="font-size: 14px">{{
                         layout.category.name
-                      }}</span>
+                        }}</span>
                     </button>
                   </li>
                 </ul>
@@ -190,14 +157,8 @@
           </div>
 
           <div class="set-12 category-list" *ngIf="selectedDocument != null">
-            <div
-              class="set-12 list"
-              *ngIf="selectedDocument.layout.length != 0"
-            >
-              <div
-                class="set-12 category"
-                *ngFor="let layer of selectedDocument.layout"
-              >
+            <div class="set-12 list" *ngIf="selectedDocument.layout.length != 0">
+              <div class="set-12 category" *ngFor="let layer of selectedDocument.layout">
                 <small>{{ layer.name }}</small>
               </div>
             </div>
@@ -211,26 +172,13 @@
           </ng-template>
 
           <div class="set-12 top-cards">
-            <div
-              [class.scroll]="commentUsers.length > 3"
-              class="set-12 contentActivity"
-            >
+            <div [class.scroll]="commentUsers.length > 3" class="set-12 contentActivity">
               <h3 class="titleComment">Comentarios</h3>
               <div *ngFor="let comments of commentUsers">
-                <div
-                  class="contentComment"
-                  *ngFor="let comment of comments.comments"
-                >
+                <div class="contentComment" *ngFor="let comment of comments.comments">
                   <div class="user">
-                    <img
-                      [src]="comment.createdBy.avatarImage"
-                      class="imgUser"
-                      *ngIf="comment.createdBy.avatarImage"
-                    />
-                    <span
-                      class="imgUserNull"
-                      *ngIf="comment.createdBy.avatarImage === null"
-                    >
+                    <img [src]="comment.createdBy.avatarImage" class="imgUser" *ngIf="comment.createdBy.avatarImage" />
+                    <span class="imgUserNull" *ngIf="comment.createdBy.avatarImage === null">
                       {{ comment.createdBy.firstname.slice(0, 1)
                       }}{{ comment.createdBy.lastname.slice(0, 1) }}
                     </span>
@@ -239,8 +187,7 @@
                     </div>
                   </div>
                   <p>{{ comment.description }}</p>
-                  <a
-                    href="{{
+                  <a href="{{
                       comment.relation === 'topic'
                         ? '/documentos-publicos/' +
                           documentSelectId +
@@ -260,9 +207,7 @@
                           comments.topicID +
                           '/solucion/' +
                           comments.solutionId
-                    }}"
-                    class="textRelations"
-                  >
+                    }}" class="textRelations">
                     {{ comment.relation === "topic" ? "Problema" : "Solución" }}
                     - {{ comments.title }}
                   </a>

@@ -52,11 +52,11 @@
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #moreMenu="matMenu">
-            <button mat-menu-item>
+            <button mat-menu-item (click)="configUser(users.user)">
               <mat-icon>manage_accounts</mat-icon>
               <span>Configurar</span>
             </button>
-            <button mat-menu-item>
+            <button mat-menu-item (click)="KillUser(users.user)">
               <mat-icon>delete</mat-icon>
               <span>Eliminar</span>
             </button>

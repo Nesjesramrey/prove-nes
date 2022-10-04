@@ -74,8 +74,8 @@
         <div class="set-4">
           <mat-form-field appearance="outline">
             <mat-label>Cobertura</mat-label>
-            <mat-select [value]="document.coverage[0]._id">
-              <mat-option *ngFor="let option of document.coverage" [value]="option._id">
+            <mat-select (selectionChange)="onSelectCoberage($event)">
+              <mat-option *ngFor="let option of document.coverage" [value]="option._id" [disabled]="!option.enabled">
                 <small>{{ option.name | titlecase }}</small>
               </mat-option>
             </mat-select>

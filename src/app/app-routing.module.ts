@@ -26,10 +26,11 @@ const routes: Routes = [
     path: 'legales', loadChildren: () =>
       import('./legal/legal.component.module').then(module => module.LegalComponentModule)
   },
-  // {
-  //   path: '404', loadChildren: () =>
-  //     import('./not-found/not-found.component.module').then(module => module.NotFoundComponentModule)
-  // }
+  {
+    path: '404', loadChildren: () =>
+      import('./not-found/not-found.component.module').then(module => module.NotFoundComponentModule)
+  },
+  { path: '**', redirectTo: '404' }
 ];
 
 @NgModule({

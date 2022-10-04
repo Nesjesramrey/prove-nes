@@ -48,6 +48,9 @@ export class SingleThemeComponent implements OnInit {
   public solutions: any[] = [];
   public sliderImages: string[] = [..._mockTheme.images];
   public actionControlActivityList: any[] = [];
+  public accesibleLayouts: any[] = [];
+  public userCoverageObj: any[] = [];
+  public userCoverageStr: any[] = [];
 
   // simplet doughnut
   public simpletDoughnutData: ChartData<'doughnut'> = _simpleDonuthData;
@@ -98,16 +101,14 @@ export class SingleThemeComponent implements OnInit {
     let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID, });
     let topic: Observable<any> = this.topicService.fetchSingleTopicById({ _id: this.themeID });
     let user: Observable<any> = this.userService.fetchFireUser();
+    let acl: Observable<any> = this.documentService.fetchAccessControlList({ document_id: this.documentID });
 
-    forkJoin([document, category, subcategory, topic, user]).subscribe((reply: any) => {
+    forkJoin([document, category, subcategory, topic, user, acl]).subscribe((reply: any) => {
       this.document = reply[0];
       // console.log(this.document);
 
       this.collaborators = this.document['collaborators'];
       // console.log('collaborators: ', this.collaborators);
-
-      this.layouts = this.document['layouts'];
-      // console.log('layouts: ', this.layouts);
 
       this.category = reply[1];
       // console.log('category: ', this.category);
@@ -130,6 +131,25 @@ export class SingleThemeComponent implements OnInit {
       this.user = reply[4];
       this.user['activityName'] = this.user['activities'][0]['value'];
       // console.log('user: ', this.user);
+
+      this.layouts = reply[5]['layouts'];
+      this.layouts.filter((x: any) => { x['states'].length == 0 ? x['access'] = false : x['access'] = true; });
+      this.accesibleLayouts = this.layouts.filter((x: any) => { return x['states'].length != 0; });
+      this.accesibleLayouts.filter((x: any) => {
+        x['states'].filter((y: any) => { this.userCoverageObj.push(y); });
+      });
+      this.userCoverageObj.filter((x: any) => { this.userCoverageStr.push(x['id']); });
+      this.document['coverage'].filter((x: any) => {
+        x['enabled'] = false;
+        if (this.userCoverageStr.includes(x['_id'])) { x['enabled'] = true; }
+      });
+      // console.log(this.layouts);
+
+      switch (this.user['activityName']) {
+        case 'editor':
+          this.document['coverage'].filter((x: any) => { x['enabled'] = true; });
+          break;
+      }
 
       setTimeout(() => {
         this.isDataAvailable = true;

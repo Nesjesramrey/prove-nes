@@ -8,12 +8,20 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class DescriptionViewerComponent implements OnInit {
   public isDataAvailable: boolean = false;
+  public document: any = null;
+  public description: any = null;
 
   constructor(
     public dialogRef: MatDialogRef<DescriptionViewerComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
   ) {
-    console.log(this.dialogData);
+    // console.log(this.dialogData);
+    switch (this.dialogData['location']) {
+      case 'document':
+        this.document = this.dialogData['document'];
+        this.description = this.document['description'];
+        break;
+    }
   }
 
   ngOnInit(): void {

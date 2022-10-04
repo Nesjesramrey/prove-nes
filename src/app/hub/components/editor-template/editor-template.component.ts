@@ -12,6 +12,7 @@ export class EditorTemplateComponent implements OnInit {
   @Input('user') public user: any = null;
   @Input('documents') public documents: any = [];
   public isDataAvailable: boolean = false;
+  public documentSelectId: string = '';
 
   constructor(
     public dialog: MatDialog,
@@ -20,9 +21,12 @@ export class EditorTemplateComponent implements OnInit {
 
   ngOnInit(): void {
     setTimeout(() => {
-      // console.log(this.documents);
       this.isDataAvailable = true;
     });
+  }
+
+  selectDocument(document: any) {
+    this.documentSelectId = document._id;
   }
 
   popLayoutDialog(documentID: string) {

@@ -14,7 +14,7 @@
 
     <mat-card class="set-12" *ngIf="notifications.length != 0">
       <div class="set-12" *ngFor="let notification of notifications">
-        <div class="set-12 notification">
+        <div class="set-12 notification" [class.unread]="!notification.viewed">
           <div class="set-2">
             <div class="avatar">
               <strong>
@@ -30,7 +30,7 @@
           <div class="set-8">
             <p><small>{{notification.message}}</small></p>
             <p>
-              <button type="button" (click)="linkMe('/documentos/' + notification.document._id)">
+              <button type="button" (click)="linkMe('/documentos/' + notification.document._id, notification)">
                 <strong>{{notification.document.title}}</strong>
               </button>
             </p>
@@ -45,7 +45,7 @@
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-              <button mat-menu-item (click)="linkMe('/documentos/' + notification.document._id)">
+              <button mat-menu-item (click)="linkMe('/documentos/' + notification.document._id, notification)">
                 <mat-icon>launch</mat-icon>
                 <span>Abrir</span>
               </button>

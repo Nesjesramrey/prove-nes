@@ -2,7 +2,8 @@
   <h1>¡Hola!</h1>
   <h3>¡Bienvenido a PANDO!</h3>
   <p>
-    <small>Antes de continuar necesitamos algunos datos</small>
+    <small>Antes de continuar necesitamos que compartas algunos datos e intereses para mejorar tu experiencia en
+      <strong>Mexicolectivo</strong></small>
   </p>
 </div>
 
@@ -49,19 +50,30 @@
         </p>
       </ng-template>
 
-      <form>
+      <form [formGroup]="stepTwoFormGroup">
         <div class="set-12">
           <div class="set-6">
             <mat-form-field appearance="outline">
               <mat-label>Teléfono</mat-label>
-              <input type="text" matInput>
+              <input type="text" matInput formControlName="phone">
             </mat-form-field>
           </div>
 
           <div class="set-6">
             <mat-form-field appearance="outline">
               <mat-label>Código postal</mat-label>
-              <input type="text" matInput>
+              <input type="text" matInput formControlName="zipcode">
+            </mat-form-field>
+          </div>
+
+          <div class="set-6">
+            <mat-form-field appearance="outline">
+              <mat-label>Genero</mat-label>
+              <mat-select formControlName="gender">
+                <mat-option *ngFor="let option of genderOptions" [value]="option">
+                  <small>{{option}}</small>
+                </mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
         </div>
@@ -82,28 +94,48 @@
         <small>Giro / Gremio</small>
       </ng-template>
 
-      <form>
+      <form [formGroup]="stepThreeFormGroup">
         <div class="set-12">
           <div class="set-6">
             <mat-form-field appearance="outline">
-              <mat-label>Tipo</mat-label>
-              <mat-select>
-                <mat-option></mat-option>
+              <mat-label>Ocupación / Giro</mat-label>
+              <mat-select formControlName="type">
+                <mat-option *ngFor="let option of associationTypology" [value]="option._id">
+                  <small>{{option.name}}</small>
+                </mat-option>
               </mat-select>
             </mat-form-field>
           </div>
 
           <div class="set-6">
             <mat-form-field appearance="outline">
-              <mat-label>Nombre</mat-label>
-              <input type="text" matInput>
+              <mat-label>Organización</mat-label>
+              <input type="text" matInput formControlName="organizationName">
             </mat-form-field>
           </div>
         </div>
 
-        <div class="set-12"></div>
+        <div class="set-12">
+          <mat-form-field appearance="outline">
+            <mat-label>Intereses</mat-label>
+            <mat-chip-list #chipList>
+              <mat-chip *ngFor="let fruit of fruits" (removed)="remove(fruit)">
+                {{fruit.name}}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip>
+              <input placeholder="..." [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+          </mat-form-field>
+        </div>
 
-        <div class="set-12"></div>
+        <div class="set-12">
+          <small>
+            <i>Presiona <strong class="footnote">ENTER</strong> después de escribir uno de tus intereses.</i>
+          </small>
+        </div>
 
         <div class="set-12 ctrls txt-right">
           <button type="button" mat-raised-button color="accent" matStepperPrevious>

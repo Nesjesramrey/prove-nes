@@ -640,6 +640,11 @@ mat-form-field {
   }
 }
 
+.reader-dialog {
+  width: 60vw;
+  height: 70vh;
+}
+
 .mat-card,
 .mat-select,
 .mat-form-field,
@@ -654,4 +659,8 @@ mat-card {
 
 .author-hldr {
   margin-bottom: 20px;
+}
+
+.footnote {
+  color: #1e7e7f;
 }
