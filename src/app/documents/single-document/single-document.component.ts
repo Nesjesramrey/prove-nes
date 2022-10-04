@@ -41,7 +41,9 @@ export class SingleDocumentComponent implements OnInit {
   public collaborators: any = null;
   public published: boolean = false;
   public actionControlActivityList: any[] = [];
-  public availableCoverage: any[] = [];
+  public accesibleLayouts: any[] = [];
+  public userCoverageObj: any[] = [];
+  public userCoverageStr: any[] = [];
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -67,7 +69,7 @@ export class SingleDocumentComponent implements OnInit {
         this.utilityService.openErrorSnackBar(this.utilityService.errorOops);
       },
       next: (reply: any) => {
-        console.log(reply);
+        // console.log(reply);
         this.document = reply[0];
         // console.log('document: ', this.document);
         this.user = reply[1];
@@ -78,6 +80,7 @@ export class SingleDocumentComponent implements OnInit {
           case 'editor':
             this.layouts = reply[2]['layouts'];
             this.layouts.filter((layout: any) => { layout['access'] = true; });
+            this.document['coverage'].filter((x: any) => { x['enabled'] = true; });
             break;
 
           case 'administrator':
@@ -86,19 +89,25 @@ export class SingleDocumentComponent implements OnInit {
             break;
 
           case 'citizen':
-            console.log('here!');
             this.layouts = reply[2]['layouts'];
-            this.layouts.filter((x: any) => {
-              if (x['states'].length == 0) {
-                x['access'] = false
-              } else {
-                x['access'] = true;
-              }
+            this.layouts.filter((x: any) => { x['states'].length == 0 ? x['access'] = false : x['access'] = true; });
+            this.accesibleLayouts = this.layouts.filter((x: any) => { return x['states'].length != 0; });
+
+            this.accesibleLayouts.filter((x: any) => {
+              x['states'].filter((y: any) => { this.userCoverageObj.push(y); });
+            });
+
+            this.userCoverageObj.filter((x: any) => { this.userCoverageStr.push(x['id']); });
+
+            this.document['coverage'].filter((x: any) => {
+              x['enabled'] = false;
+              if (this.userCoverageStr.includes(x['_id'])) { x['enabled'] = true; }
             });
             break;
         }
         this.dataSource = new MatTableDataSource(this.layouts);
         // console.log('layouts: ', this.layouts);
+
         this.collaborators = this.document['collaborators'];
         this.collaborators = this.collaborators.filter((value: any, index: any, self: any) =>
           index === self.findIndex((t: any) =>
@@ -126,12 +135,27 @@ export class SingleDocumentComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
-        this.layouts.push(reply[0]);
-        this.layouts.filter((layout: any) => {
-          layout['categoryName'] = layout['category']['name'];
-          layout['access'] = true;
-        });
-        this.dataSource = new MatTableDataSource(this.layouts);
+        if (this.user['activityName'] == 'administrator') {
+          this.layouts.push(reply[0]);
+          this.layouts.filter((layout: any) => { layout['access'] = true; });
+          this.dataSource = new MatTableDataSource(this.layouts);
+        } else {
+          this.documentService.fetchAccessControlList({ document_id: this.documentID })
+            .subscribe({
+              error: (error: any) => {
+                window.location.reload();
+              },
+              next: (reply: any) => {
+                this.layouts = [];
+                this.layouts = reply['layouts'];
+                this.layouts.filter((layout: any) => { layout['access'] = true; });
+              },
+              complete: () => {
+                this.dataSource = new MatTableDataSource(this.layouts);
+              }
+            });
+        }
+
       }
     });
   }

@@ -98,8 +98,8 @@
         <div class="set-4">
           <mat-form-field appearance="outline">
             <mat-label>Cobertura</mat-label>
-            <mat-select [value]="document.coverage[0]._id">
-              <mat-option *ngFor="let option of document.coverage" [value]="option._id">
+            <mat-select>
+              <mat-option *ngFor="let option of document.coverage" [value]="option._id" [disabled]="!option.enabled">
                 <small>{{option.name | titlecase}}</small>
               </mat-option>
             </mat-select>
@@ -183,7 +183,7 @@
                 </button>
 
                 <button type="button" class="catbtn" [disabled]="!element.access"
-                  (click)="LinkMe('/documentos/' + document._id + '/categoria/' + element.category._id)"
+                  (click)="LinkMe('/documentos/' + document._id + '/categoria/' + element._id)"
                   *ngIf="user.activityName == 'administrator'">
                   <mat-icon>question_answer</mat-icon>
                   <small>{{element.category.name}}</small>

@@ -46,6 +46,9 @@ export class SingleCategoryComponent implements OnInit {
   public subcategories: any[] = [];
   @ViewChild('titleField') titleField!: ElementRef<HTMLInputElement>;
   public actionControlActivityList: any[] = [];
+  public accesibleLayouts: any[] = [];
+  public userCoverageObj: any[] = [];
+  public userCoverageStr: any[] = [];
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -71,28 +74,73 @@ export class SingleCategoryComponent implements OnInit {
     let user: Observable<any> = this.userService.fetchFireUser();
     let acl: Observable<any> = this.documentService.fetchAccessControlList({ document_id: this.documentID });
 
-    forkJoin([document, category, user, acl]).subscribe((reply: any) => {
-      console.log(reply);
-      this.document = reply[0];
-      // console.log('document: ', this.document);
+    forkJoin([document, category, user, acl]).subscribe({
+      error: (error: any) => {
+        console.log(error);
+        // this.utilityService.linkMe('/404');
+      },
+      next: (reply: any) => {
+        // console.log(reply);
+        this.document = reply[0];
+        // console.log('document: ', this.document);
 
-      this.collaborators = this.document['collaborators'];
-      // console.log('collaborators: ', this.collaborators);
+        this.user = reply[2];
+        this.user['activityName'] = this.user['activities'][0]['value'];
+        // console.log('user: ', this.user);
 
-      this.selectedCategory = reply[1];
-      // console.log('category: ', this.selectedCategory);
+        this.collaborators = this.document['collaborators'];
+        // console.log('collaborators: ', this.collaborators);
 
-      this.subcategories = this.selectedCategory['subLayouts'];
-      this.dataSource = new MatTableDataSource(this.subcategories);
-      // console.log('subcategories: ', this.subcategories);
+        if (!reply[3]['isAdmin']) {
+          let selectedCategory = reply[3]['layouts'].filter((x: any) => { return x['id'] == this.categoryID });
+          this.selectedCategory = selectedCategory[0];
+        } else {
+          this.selectedCategory = reply[1];
+        }
 
-      this.user = reply[2];
-      this.user['activityName'] = this.user['activities'][0]['value'];
-      // console.log('user: ', this.user);
+        // this.selectedCategory = reply[1];
+        // console.log('category: ', this.selectedCategory);
 
-      setTimeout(() => {
-        this.isDataAvailable = true;
-      }, 1000);
+        this.subcategories = this.selectedCategory['subLayouts'];
+        switch (this.user['activityName']) {
+          case 'editor':
+            // this.subcategories = reply[2]['layouts'];
+            this.subcategories.filter((layout: any) => { layout['access'] = true; });
+            this.document['coverage'].filter((x: any) => { x['enabled'] = true; });
+            break;
+
+          case 'administrator':
+            this.subcategories = this.document['layouts'];
+            this.subcategories.filter((layout: any) => { layout['access'] = true; });
+            break;
+
+          case 'citizen':
+            // this.subcategories = reply[2]['layouts'];
+            this.subcategories.filter((x: any) => {
+              x['states'].length == 0 ? x['access'] = false : x['access'] = true;
+              this.accesibleLayouts = this.subcategories.filter((x: any) => { return x['states'].length != 0; });
+
+              this.accesibleLayouts.filter((x: any) => {
+                x['states'].filter((y: any) => { this.userCoverageObj.push(y); });
+              });
+
+              this.userCoverageObj.filter((x: any) => { this.userCoverageStr.push(x['id']); });
+
+              this.document['coverage'].filter((x: any) => {
+                x['enabled'] = false;
+                if (this.userCoverageStr.includes(x['_id'])) { x['enabled'] = true; }
+              });
+            });
+            break;
+        }
+        this.dataSource = new MatTableDataSource(this.subcategories);
+        console.log('subcategories: ', this.subcategories);
+      },
+      complete: () => {
+        setTimeout(() => {
+          this.isDataAvailable = true;
+        }, 1000);
+      }
     });
   }
 
@@ -138,8 +186,26 @@ export class SingleCategoryComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
+        console.log(reply);
         this.subcategories.push(reply[0]);
         this.dataSource = new MatTableDataSource(this.subcategories);
+
+        this.documentService.fetchAccessControlList({ document_id: this.documentID })
+          .subscribe({
+            error: (error: any) => {
+              window.location.reload();
+            },
+            next: (reply: any) => {
+              let selectedCategory = reply['layouts'].filter((x: any) => { return x['id'] == this.categoryID });
+              this.selectedCategory = selectedCategory[0];
+              this.subcategories = [];
+              this.subcategories = this.selectedCategory['subLayouts'];
+              this.subcategories.filter((layout: any) => { layout['access'] = true; });
+            },
+            complete: () => {
+              this.dataSource = new MatTableDataSource(this.subcategories);
+            }
+          });
       }
     });
   }
@@ -182,10 +248,6 @@ export class SingleCategoryComponent implements OnInit {
   linkMe(url: string) {
     this.utilityService.linkMe(url);
   }
-
-  // linkSubcategory(id: string) {
-  //   this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${id}`);
-  // }
 
   popImageViewer() {
     const dialogRef = this.dialog.open<ImageViewerComponent>(ImageViewerComponent, {

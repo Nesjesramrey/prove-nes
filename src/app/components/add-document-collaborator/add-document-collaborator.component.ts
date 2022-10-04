@@ -29,6 +29,7 @@ export class AddDocumentCollaboratorComponent implements OnInit {
   public categoriesString: any = [];
   public document: any = null;
   public layout: any = null;
+  public subLayout: any = null;
   public availableLayouts: any = null;
   public addCollaboratorFormGroup!: FormGroup;
   public submitted: boolean = false;
@@ -51,10 +52,12 @@ export class AddDocumentCollaboratorComponent implements OnInit {
     console.log(this.dialogData);
     this.document = this.dialogData['document'];
     this.layout = this.dialogData['layout'];
+    this.subLayout = this.dialogData['subLayout'];
     this.user = this.dialogData['user'];
 
     // if (this.user['activities'].length == 0) { this.userActivity = 'editor'; }
     this.userActivity = this.user['activityName'];
+    // console.log(this.userActivity);
 
     switch (this.userActivity) {
       case 'administrator':
@@ -77,10 +80,22 @@ export class AddDocumentCollaboratorComponent implements OnInit {
       case 'layout':
         this.availableLayouts = this.layout['subLayouts'];
         break;
+      case 'subLayout':
+        this.availableLayouts = this.dialogData['topics'];
+        break;
     }
 
-    this.availableLayouts.filter((x: any) => { this.categories.push(x['category']); });
-    this.categories.filter((x: any) => { this.categoriesString.push(x['name']); });
+    this.availableLayouts.filter((x: any) => { this.categories.push(x); });
+    this.categories.filter((x: any) => {
+      if (this.dialogData['location'] == 'document') {
+        this.categoriesString.push(x['category']['name']);
+      } else if (this.dialogData['location'] == 'subLayout') {
+        this.categoriesString.push(x['title']);
+      } else {
+        this.categoriesString.push(x['name']);
+      }
+    });
+    // console.log(this.categoriesString);
 
     // this.utilitiService.fetchAllStates().subscribe((reply: any) => {
     //   console.log(reply);
@@ -122,23 +137,30 @@ export class AddDocumentCollaboratorComponent implements OnInit {
   }
 
   categorySelected(event: MatAutocompleteSelectedEvent): void {
-    // if (this.selectedCategories.length == 1) {
-    //   this.utilitiService.openErrorSnackBar('Solo se puede agregar 1 categoría.');
-    //   this.categoryInput.nativeElement.value = '';
-    //   this.categoryCtrl.setValue(null);
-    //   return;
-    // }
+    let category: any;
 
-    let category: any = this.categories.filter((x: any) => { return x['name'] == event['option']['value'] });
-    let layout = this.availableLayouts.filter((x: any) => {
-      return x['category']['_id'] == category[0]['_id']
-    });
-    // this.layout.push(category[0]['_id']);
-    this.layouts.push(layout[0]['_id']);
+    if (this.dialogData['location'] == 'document') {
+      category = this.categories.filter((x: any) => { return x['category']['name'] == event['option']['value'] });
+      let layout = this.availableLayouts.filter((x: any) => { return x['category']['_id'] == category[0]['category']['_id']; });
+      this.layouts.push(layout[0]['_id']);
+    } else {
+      category = this.categories.filter((x: any) => { return x['name'] == event['option']['value'] });
+      let layout = this.availableLayouts.filter((x: any) => { return x['id'] == category[0]['id']; });
+      this.layouts.push(layout[0]['id']);
+    }
+
     this.selectedCategories.push(event.option.value);
     this.categoryInput.nativeElement.value = '';
     this.categoryCtrl.setValue(null);
-    this.addCollaboratorFormGroup.patchValue({ layouts: category[0]['_id'] });
+
+    switch (this.dialogData['location']) {
+      case 'document':
+        this.addCollaboratorFormGroup.patchValue({ layouts: category[0]['_id'] });
+        break;
+      case 'layout':
+        this.addCollaboratorFormGroup.patchValue({ layouts: category[0]['id'] });
+        break;
+    }
   }
 
   filterCategories(value: any) {

@@ -54,33 +54,6 @@ export class SingleUserComponent implements OnInit {
         if (this.userActivities.length != 0) {
           this.haveRootPermissions = true;
 
-          // switch (this.user['activityName']) {
-          //   case 'moderator':
-          //     setTimeout(() => {
-          //       this.isDataAvailable = true;
-          //     }, 1000);
-          //     break;
-
-          //   case 'administrator':
-          //     let documents: Observable<any> = this.documentSrvc.fetchMyDocuments({ createdBy: this.userID });
-          //     forkJoin([documents]).subscribe((reply: any) => {
-          //       this.documents = reply[0];
-          //       setTimeout(() => {
-          //         this.isDataAvailable = true;
-          //       }, 1000);
-          //     });
-          //     break;
-
-          //   case 'citizen':
-          //     this.documentSrvc.fetchDocumentsByCollaborator({ _id: this.user['_id'] }).subscribe((reply: any) => {
-          //       this.documents = reply;
-          //       setTimeout(() => {
-          //         this.isDataAvailable = true;
-          //       }, 1000);
-          //     });
-          //     break;
-          // }
-
           if (this.userActivities.includes('moderator')) {
             setTimeout(() => {
               this.isDataAvailable = true;

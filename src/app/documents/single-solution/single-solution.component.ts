@@ -75,6 +75,9 @@ export class SingleSolutionComponent implements OnInit {
     },
   };
   public actionControlActivityList: any[] = [];
+  public accesibleLayouts: any[] = [];
+  public userCoverageObj: any[] = [];
+  public userCoverageStr: any[] = [];
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -105,45 +108,51 @@ export class SingleSolutionComponent implements OnInit {
     let topic: Observable<any> = this.topicService.fetchSingleTopicById({ _id: this.themeID });
     let solution: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.solutionID });
     let user: Observable<any> = this.userService.fetchFireUser();
+    let acl: Observable<any> = this.documentService.fetchAccessControlList({ document_id: this.documentID });
 
-    //forkJoin([categories, document, solutions, category, subcategory]).subscribe((reply: any) => {
-    forkJoin([document, category, subcategory, topic, solution, user])
-      .subscribe((reply: any) => {
-        // console.log(reply);
-        this.document = reply[0];
-        // console.log('document: ', this.document);
-
-        this.layouts = this.document['layouts'];
-        // console.log('layouts: ', this.layouts);
-
-        this.collaborators = this.document['collaborators'];
-        // console.log('collaborators: ', this.collaborators);
-
-        this.category = reply[1];
-        // console.log('category: ', this.category);
-
-        this.subcategory = reply[2];
-        // console.log('subcategory: ', this.subcategory);
-
-        this.topics = this.subcategory['topics'];
-        // console.log('topics: ', this.topics);
-
-        this.topic = reply[3];
-        // console.log('topic: ', this.topic);
-
-        this.solution = reply[4];
-        // console.log('solution: ', this.solution);
-
-        this.sliderImages = this.solution['images'];
-
-        this.user = reply[5];
-        this.user['activityName'] = this.user['activities'][0]['value'];
-        // console.log('user: ', this.user);
-
-        setTimeout(() => {
-          this.isDataAvailable = true;
-        }, 1000);
+    forkJoin([document, category, subcategory, topic, solution, user, acl]).subscribe((reply: any) => {
+      // console.log(reply);
+      this.document = reply[0];
+      // console.log('document: ', this.document);
+      this.collaborators = this.document['collaborators'];
+      // console.log('collaborators: ', this.collaborators);
+      this.category = reply[1];
+      // console.log('category: ', this.category);
+      this.subcategory = reply[2];
+      // console.log('subcategory: ', this.subcategory);
+      this.topics = this.subcategory['topics'];
+      // console.log('topics: ', this.topics);
+      this.topic = reply[3];
+      // console.log('topic: ', this.topic);
+      this.solution = reply[4];
+      // console.log('solution: ', this.solution);
+      this.sliderImages = this.solution['images'];
+      this.user = reply[5];
+      this.user['activityName'] = this.user['activities'][0]['value'];
+      // console.log('user: ', this.user);
+      this.layouts = reply[6]['layouts'];
+      this.layouts.filter((x: any) => { x['states'].length == 0 ? x['access'] = false : x['access'] = true; });
+      this.accesibleLayouts = this.layouts.filter((x: any) => { return x['states'].length != 0; });
+      this.accesibleLayouts.filter((x: any) => {
+        x['states'].filter((y: any) => { this.userCoverageObj.push(y); });
       });
+      this.userCoverageObj.filter((x: any) => { this.userCoverageStr.push(x['id']); });
+      this.document['coverage'].filter((x: any) => {
+        x['enabled'] = false;
+        if (this.userCoverageStr.includes(x['_id'])) { x['enabled'] = true; }
+      });
+      // console.log(this.layouts);
+
+      switch (this.user['activityName']) {
+        case 'editor':
+          this.document['coverage'].filter((x: any) => { x['enabled'] = true; });
+          break;
+      }
+
+      setTimeout(() => {
+        this.isDataAvailable = true;
+      }, 1000);
+    });
   }
 
   handleSelectImage(event: any) {

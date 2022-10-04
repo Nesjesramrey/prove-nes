@@ -70,10 +70,10 @@
         <div class="set-4">
           <mat-form-field appearance="outline">
             <mat-label>Cobertura</mat-label>
-            <mat-select disabled>
-              <!-- <mat-option *ngFor="let option of solution.coverage" [value]="option._id">
+            <mat-select>
+              <mat-option *ngFor="let option of document.coverage" [value]="option._id" [disabled]="!option.enabled">
                 <small>{{ option.name | titlecase }}</small>
-              </mat-option> -->
+              </mat-option>
             </mat-select>
           </mat-form-field>
         </div>

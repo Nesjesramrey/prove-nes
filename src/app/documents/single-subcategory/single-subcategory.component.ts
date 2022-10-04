@@ -50,6 +50,11 @@ export class SingleSubcategoryComponent implements OnInit {
   public subcategories: any[] = [];
   @ViewChild('titleField') titleField!: ElementRef<HTMLInputElement>;
   public actionControlActivityList: any[] = [];
+  public accesibleLayouts: any[] = [];
+  public userCoverageObj: any[] = [];
+  public userCoverageStr: any[] = [];
+  public layouts: any = null;
+  public coverageSelected: any = null;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -74,27 +79,42 @@ export class SingleSubcategoryComponent implements OnInit {
     let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID });
     let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID });
     let user: Observable<any> = this.userService.fetchFireUser();
+    let acl: Observable<any> = this.documentService.fetchAccessControlList({ document_id: this.documentID });
 
-    forkJoin([document, category, subcategory, user]).subscribe((reply: any) => {
+    forkJoin([document, category, subcategory, user, acl]).subscribe((reply: any) => {
+      // console.log(reply);
       this.document = reply[0];
       // console.log('document: ', this.document);
-
       this.collaborators = this.document['collaborators'];
       // console.log('collaborators: ', this.collaborators);
-
       this.selectedCategory = reply[1];
       // console.log('category: ', this.selectedCategory);
-
       this.subcategory = reply[2];
       // console.log('subcategory: ', this.subcategory);
-
       this.topics = this.subcategory['topics'];
       // console.log('topics: ', this.topics);
       this.dataSource = new MatTableDataSource(this.topics);
-
       this.user = reply[3];
       this.user['activityName'] = this.user['activities'][0]['value'];
       // console.log('user: ', this.user);
+      this.layouts = reply[4]['layouts'];
+      this.layouts.filter((x: any) => { x['states'].length == 0 ? x['access'] = false : x['access'] = true; });
+      this.accesibleLayouts = this.layouts.filter((x: any) => { return x['states'].length != 0; });
+      this.accesibleLayouts.filter((x: any) => {
+        x['states'].filter((y: any) => { this.userCoverageObj.push(y); });
+      });
+      this.userCoverageObj.filter((x: any) => { this.userCoverageStr.push(x['id']); });
+      this.document['coverage'].filter((x: any) => {
+        x['enabled'] = false;
+        if (this.userCoverageStr.includes(x['_id'])) { x['enabled'] = true; }
+      });
+      // console.log(this.layouts);
+
+      switch (this.user['activityName']) {
+        case 'editor':
+          this.document['coverage'].filter((x: any) => { x['enabled'] = true; });
+          break;
+      }
 
       setTimeout(() => {
         this.isDataAvailable = true;
@@ -191,7 +211,18 @@ export class SingleSubcategoryComponent implements OnInit {
     });
   }
 
+  onSelectCoberage(event: any) {
+    this.coverageSelected = event['value'];
+    // console.log(this.coverageSelected);
+  }
+
   popAddDocumentCollaborator() {
+    let coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.coverageSelected });
+    if (coverage.length == 0) {
+      this.utilityService.openErrorSnackBar('Selecciona una cobertura.');
+      return;
+    }
+
     const dialogRef = this.dialog.open<AddDocumentCollaboratorComponent>(AddDocumentCollaboratorComponent, {
       width: '640px',
       data: {
@@ -199,7 +230,8 @@ export class SingleSubcategoryComponent implements OnInit {
         layout: this.selectedCategory,
         subLayout: this.subcategory,
         user: this.user,
-        location: 'layout'
+        topics: this.topics,
+        location: 'subLayout'
       },
       disableClose: true
     });
