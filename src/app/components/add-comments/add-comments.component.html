@@ -10,6 +10,14 @@
       <textarea matInput cdkTextareaAutosize formControlName="comment"></textarea>
     </mat-form-field>
 
+    <div class="set-12">
+      <button type="button" class="bwico" (click)="file.click()">
+        <mat-icon>attachment</mat-icon>
+        <small>Archivo</small>
+      </button>
+      <input type="file" #file (change)="onFileSelected($event)">
+    </div>
+
     <div class="set-12 ctrls">
       <button type="button" mat-raised-button color="accent" (click)="killDialog()" [disabled]="submitted">
         <small>Cancelar</small>

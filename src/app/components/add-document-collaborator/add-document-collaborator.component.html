@@ -57,13 +57,24 @@
           </mat-form-field>
         </div>
 
-        <div class="set-3">
+        <div class="set-3" *ngIf="coverage == null">
           <mat-form-field appearance="outline">
             <mat-label>Cobertura</mat-label>
             <mat-select formControlName="coverage" (selectionChange)="onSelectCoverage($event)" #coverageSelect
               multiple>
               <mat-option *ngFor="let state of states" [value]="state._id">
                 <small>{{state.name}}</small>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="set-3" *ngIf="coverage != null">
+          <mat-form-field appearance="outline">
+            <mat-label>Cobertura</mat-label>
+            <mat-select formControlName="coverage" (selectionChange)="onSelectCoverage($event)" #coverageSelect multiple>
+              <mat-option [value]="coverage._id">
+                <small>{{coverage.name}}</small>
               </mat-option>
             </mat-select>
           </mat-form-field>

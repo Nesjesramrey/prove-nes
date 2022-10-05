@@ -74,7 +74,7 @@
         <div class="set-4">
           <mat-form-field appearance="outline">
             <mat-label>Cobertura</mat-label>
-            <mat-select>
+            <mat-select (selectionChange)="onSelectCoverage($event)">
               <mat-option *ngFor="let option of document.coverage" [value]="option._id" [disabled]="!option.enabled">
                 <small>{{ option.name | titlecase }}</small>
               </mat-option>
@@ -82,15 +82,15 @@
           </mat-form-field>
         </div>
         <div class="set-8 txt-right">
-          <button type="button" mat-mini-fab color="accent" class="mini test" matTooltip="Agregar Comentario"
-            *ngIf="actionControlActivityList.includes(user.activityName)">
-            <mat-icon>forum</mat-icon>
+          <button type="button" mat-mini-fab color="primary" class="mini test" matTooltip="Agregar Comentario"
+            (click)="popAddCommentsDialog()">
+            <mat-icon>add_comment</mat-icon>
           </button>
-          <button type="button" mat-mini-fab color="primary" class="mini test" matTooltip="Agregar Testimonio"
+          <button type="button" mat-mini-fab color="warn" class="mini test" matTooltip="Agregar Testimonio"
             *ngIf="actionControlActivityList.includes(user.activityName)" (click)="popAddDocumentTestimony()">
             <mat-icon>forum</mat-icon>
           </button>
-          <button type="button" mat-mini-fab color="warn" class="mini insights" matTooltip="Agregar Solución"
+          <button type="button" mat-mini-fab color="accent" class="mini insights" matTooltip="Agregar Solución"
             (click)="popAddDocumentSolution()">
             <mat-icon>insights</mat-icon>
           </button>

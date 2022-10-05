@@ -17,9 +17,9 @@
   </div>
 
   <div class="set-12 author-hldr">
-    <span class="created-by" *ngIf="selectedCategory.createdBy != null">
-      Autor: <span class="author">{{selectedCategory.createdBy.firstname}}
-        {{selectedCategory.createdBy.lastname}}</span>
+    <span class="created-by" *ngIf="category.createdBy != null">
+      Autor: <span class="author">{{category.createdBy.firstname}}
+        {{category.createdBy.lastname}}</span>
     </span>
   </div>
 
@@ -109,17 +109,17 @@
           </mat-form-field>
         </div>
 
-        <div class="set-8 txt-right" *ngIf="actionControlActivityList.includes(user.activityName)">
-          <button type="button" mat-mini-fab color="accent" class="mini" matTooltip="Agregar Comentario"
+        <div class="set-8 txt-right">
+          <button type="button" mat-mini-fab color="primary" class="mini" matTooltip="Agregar Comentario"
             (click)="popAddCommentsDialog()">
             <mat-icon>add_comment</mat-icon>
           </button>
-          <button type="button" mat-mini-fab color="primary" class="mini" matTooltip="Agregar Colaborador"
-            (click)="popAddDocumentCollaborator()">
+          <button type="button" mat-mini-fab color="warn" class="mini" matTooltip="Agregar Colaborador"
+            (click)="popAddDocumentCollaborator()" *ngIf="actionControlActivityList.includes(user.activityName)">
             <mat-icon>person_add</mat-icon>
           </button>
-          <button type="button" mat-mini-fab color="warn" class="mini" matTooltip="Agregar Sub Categoría"
-            (click)="popAddDocumentCategory()">
+          <button type="button" mat-mini-fab color="accent" class="mini" matTooltip="Agregar Sub Categoría"
+            (click)="popAddDocumentCategory()" *ngIf="actionControlActivityList.includes(user.activityName)">
             <mat-icon>create_new_folder</mat-icon>
           </button>
         </div>
@@ -226,7 +226,7 @@
             <ng-container matColumnDef="actions">
               <th mat-header-cell *matHeaderCellDef></th>
               <td mat-cell *matCellDef="let element">
-                <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                <button type="button" mat-icon-button [matMenuTriggerFor]="menu" [disabled]="!element.access">
                   <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">

@@ -11,9 +11,10 @@
   </div>
 
   <div class="set-12 author-hldr">
-    <span class="created-by">
+    <!-- <span class="created-by">
       Autor: <span class="author">{{document.createdBy.firstname}} {{document.createdBy.lastname}}</span>
-    </span>
+    </span> -->
+    <span class="created-by">Autor: <span class="author">Mexicolectivo</span> </span>
   </div>
 
   <div class="set-12">
@@ -98,7 +99,7 @@
         <div class="set-4">
           <mat-form-field appearance="outline">
             <mat-label>Cobertura</mat-label>
-            <mat-select>
+            <mat-select disabled>
               <mat-option *ngFor="let option of document.coverage" [value]="option._id" [disabled]="!option.enabled">
                 <small>{{option.name | titlecase}}</small>
               </mat-option>
@@ -106,17 +107,17 @@
           </mat-form-field>
         </div>
 
-        <div class="set-8 txt-right" *ngIf="actionControlActivityList.includes(user.activityName)">
-          <button type="button" mat-mini-fab color="accent" class="mini" matTooltip="Agregar Comentario"
+        <div class="set-8 txt-right">
+          <button type="button" mat-mini-fab color="primary" class="mini" matTooltip="Agregar Comentario"
             (click)="popAddCommentsDialog()">
             <mat-icon>add_comment</mat-icon>
           </button>
-          <button type="button" mat-mini-fab color="primary" class="mini" matTooltip="Agregar Colaborador"
+          <!-- <button type="button" mat-mini-fab color="primary" class="mini" matTooltip="Agregar Colaborador"
             (click)="popAddDocumentCollaborator()">
             <mat-icon>person_add</mat-icon>
-          </button>
+          </button> -->
           <button type="button" mat-mini-fab color="warn" class="mini" matTooltip="Agregar Categoría"
-            (click)="popAddDocumentCategory()">
+            (click)="popAddDocumentCategory()" *ngIf="actionControlActivityList.includes(user.activityName)">
             <mat-icon>create_new_folder</mat-icon>
           </button>
         </div>

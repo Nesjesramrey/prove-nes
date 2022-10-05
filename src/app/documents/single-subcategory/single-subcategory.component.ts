@@ -82,7 +82,7 @@ export class SingleSubcategoryComponent implements OnInit {
     let acl: Observable<any> = this.documentService.fetchAccessControlList({ document_id: this.documentID });
 
     forkJoin([document, category, subcategory, user, acl]).subscribe((reply: any) => {
-      // console.log(reply);
+      console.log(reply);
       this.document = reply[0];
       // console.log('document: ', this.document);
       this.collaborators = this.document['collaborators'];
@@ -172,12 +172,19 @@ export class SingleSubcategoryComponent implements OnInit {
   }
 
   popAddDocumentTheme() {
+    let coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.coverageSelected });
+    if (coverage.length == 0) {
+      this.utilityService.openErrorSnackBar('Selecciona una cobertura.');
+      return;
+    }
+
     const dialogRef = this.dialog.open<AddDocumentThemeComponent>(AddDocumentThemeComponent, {
       width: '640px',
       data: {
         documentID: this.documentID,
         document: this.document,
-        categoryID: this.subcategoryID
+        categoryID: this.subcategoryID,
+        coverage: coverage[0]
       },
       disableClose: true
     });
@@ -211,9 +218,8 @@ export class SingleSubcategoryComponent implements OnInit {
     });
   }
 
-  onSelectCoberage(event: any) {
+  onSelectCoverage(event: any) {
     this.coverageSelected = event['value'];
-    // console.log(this.coverageSelected);
   }
 
   popAddDocumentCollaborator() {
@@ -231,6 +237,7 @@ export class SingleSubcategoryComponent implements OnInit {
         subLayout: this.subcategory,
         user: this.user,
         topics: this.topics,
+        coverage: coverage[0],
         location: 'subLayout'
       },
       disableClose: true

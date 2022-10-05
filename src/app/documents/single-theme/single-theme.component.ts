@@ -15,6 +15,7 @@ import { SolutionService } from 'src/app/services/solution.service';
 import { TopicService } from 'src/app/services/topic.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
+import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
 
 @Component({
   selector: 'app-single-theme',
@@ -74,6 +75,7 @@ export class SingleThemeComponent implements OnInit {
       },
     },
   };
+  public coverageSelected: any = null;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -95,7 +97,7 @@ export class SingleThemeComponent implements OnInit {
 
   ngOnInit(): void {
     this.actionControlActivityList = this.utilityService.actionControlActivityList;
-    
+
     let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
     let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID, });
     let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID, });
@@ -177,6 +179,10 @@ export class SingleThemeComponent implements OnInit {
     }
   }
 
+  onSelectCoverage(event: any) {
+    this.coverageSelected = event['value'];
+  }
+
   popAddDocumentTheme() {
     const dialogRef = this.dialog.open<AddDocumentThemeComponent>(
       AddDocumentThemeComponent,
@@ -200,16 +206,20 @@ export class SingleThemeComponent implements OnInit {
   }
 
   popAddDocumentSolution() {
-    const dialogRef = this.dialog.open<AddDocumentSolutionComponent>(
-      AddDocumentSolutionComponent,
-      {
-        width: '640px',
-        data: {
-          themeID: this.themeID,
-        },
-        disableClose: true,
-      }
-    );
+    let coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.coverageSelected });
+    if (coverage.length == 0) {
+      this.utilityService.openErrorSnackBar('Selecciona una cobertura.');
+      return;
+    }
+
+    const dialogRef = this.dialog.open<AddDocumentSolutionComponent>(AddDocumentSolutionComponent, {
+      width: '640px',
+      data: {
+        themeID: this.themeID,
+        coverage: coverage
+      },
+      disableClose: true,
+    });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
@@ -261,6 +271,21 @@ export class SingleThemeComponent implements OnInit {
       },
       disableClose: true,
       panelClass: 'viewer-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  popAddCommentsDialog() {
+    const dialogRef = this.dialog.open<AddCommentsComponent>(AddCommentsComponent, {
+      width: '640px',
+      data: {
+        location: 'topic',
+        document: this.document
+      },
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {

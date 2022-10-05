@@ -1,6 +1,7 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
   selector: '.add-comments-dialog',
@@ -15,19 +16,35 @@ export class AddCommentsComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<AddCommentsComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public utilityService: UtilityService
   ) {
     // console.log(this.dialogData);
   }
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.commentFormGroup = this.formBuilder.group({
-        comment: ['', [Validators.required]]
-      });
+    this.commentFormGroup = this.formBuilder.group({
+      comment: ['', [Validators.required]],
+      file: ['', []]
+    });
 
+    setTimeout(() => {
       this.isDataAvailable = true;
     }, 1000);
+  }
+
+  onFileSelected(event: any) {
+    this.validateSize(event.target);
+  }
+
+  validateSize(input: any) {
+    const fileSize = input.files[0].size / 1024 / 1024;
+    if (fileSize > 1) {
+      this.utilityService.openErrorSnackBar('File size exceeds 1 MiB');
+    } else {
+      this.commentFormGroup.patchValue({ file: input.files[0] });
+      this.commentFormGroup.updateValueAndValidity();
+    }
   }
 
   onComment(formGroup: FormGroup) {

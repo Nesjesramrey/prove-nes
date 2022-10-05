@@ -46,7 +46,7 @@ export class AddDocumentCategoryComponent implements OnInit {
     public dialog: MatDialog,
     public utilityservice: UtilityService
   ) {
-    // console.log(this.dialogData);
+    console.log(this.dialogData);
     this.dialogData['document']['layouts'].filter((x: any) => {
       this.addedLayouts.push(x['category']['_id']);
     });
@@ -131,6 +131,7 @@ export class AddDocumentCategoryComponent implements OnInit {
     let category: any = this.categories.filter((x: any) => {
       return x['name'] == event['option']['value'];
     });
+    console.log(category);
 
     if (this.addedLayouts.includes(category[0]['_id'])) {
       this.utilityService.openErrorSnackBar('La categoría ya esta en uso');
@@ -140,9 +141,7 @@ export class AddDocumentCategoryComponent implements OnInit {
     }
 
     if (this.selectedCategories.length == 1) {
-      this.utilityService.openErrorSnackBar(
-        'Solo se puede agregar 1 categoría.'
-      );
+      this.utilityService.openErrorSnackBar('Solo se puede agregar 1 categoría.');
       this.categoryInput.nativeElement.value = '';
       this.categoryCtrl.setValue(null);
       return;

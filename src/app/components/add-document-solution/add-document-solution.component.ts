@@ -28,7 +28,9 @@ export class AddDocumentSolutionComponent implements OnInit {
     public solutionService: SolutionService,
     public utilityService: UtilityService,
     @Inject(MAT_DIALOG_DATA) public dialogData: any
-  ) {}
+  ) { 
+    console.log(this.dialogData);
+  }
 
   ngOnInit(): void {
     this.addSolutionFormGroup = this.formBuilder.group({
@@ -100,6 +102,6 @@ export class AddDocumentSolutionComponent implements OnInit {
       }
     );
 
-    dialogRef.afterClosed().subscribe((reply: any) => {});
+    dialogRef.afterClosed().subscribe((reply: any) => { });
   }
 }

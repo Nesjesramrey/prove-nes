@@ -47,6 +47,14 @@
             </div>
           </div>
 
+          <div class="set-12" *ngIf="dialogData.coverage != undefined">
+            <p>
+              <small>
+                <i>Cobertura: <strong>{{dialogData.coverage.name}}</strong></i>
+              </small>
+            </p>
+          </div>
+
           <div class="set-12 topic" *ngIf="canAddSolution">
             <h3>{{topic.title}}</h3>
             <p>{{topic.description}}</p>

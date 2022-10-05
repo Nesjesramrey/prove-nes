@@ -33,6 +33,7 @@ export class SingleCategoryComponent implements OnInit {
   public payload: any = null;
   public document: any = null;
   public layout: any = [];
+  public category: any = null;
   public selectedCategory: any = null;
   public isDataAvailable: boolean = false;
   public dataSource = new MatTableDataSource<any>();
@@ -76,13 +77,16 @@ export class SingleCategoryComponent implements OnInit {
 
     forkJoin([document, category, user, acl]).subscribe({
       error: (error: any) => {
-        console.log(error);
-        // this.utilityService.linkMe('/404');
+        // console.log(error);
+        this.utilityService.linkMe('/404');
       },
       next: (reply: any) => {
         // console.log(reply);
         this.document = reply[0];
         // console.log('document: ', this.document);
+
+        this.category = reply[1];
+        console.log('category: ', this.category);
 
         this.user = reply[2];
         this.user['activityName'] = this.user['activities'][0]['value'];
@@ -134,7 +138,7 @@ export class SingleCategoryComponent implements OnInit {
             break;
         }
         this.dataSource = new MatTableDataSource(this.subcategories);
-        console.log('subcategories: ', this.subcategories);
+        // console.log('subcategories: ', this.subcategories);
       },
       complete: () => {
         setTimeout(() => {

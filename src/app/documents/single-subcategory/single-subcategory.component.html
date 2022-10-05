@@ -74,7 +74,7 @@
         <div class="set-4">
           <mat-form-field appearance="outline">
             <mat-label>Cobertura</mat-label>
-            <mat-select (selectionChange)="onSelectCoberage($event)">
+            <mat-select (selectionChange)="onSelectCoverage($event)">
               <mat-option *ngFor="let option of document.coverage" [value]="option._id" [disabled]="!option.enabled">
                 <small>{{ option.name | titlecase }}</small>
               </mat-option>
@@ -83,16 +83,15 @@
         </div>
 
         <div class="set-8 txt-right">
-          <button type="button" mat-mini-fab color="accent" class="mini" matTooltip="Agregar Comentario"
-            matTooltipClass="tooltip" (click)="popAddCommentsDialog()"
-            *ngIf="actionControlActivityList.includes(user.activityName)">
+          <button type="button" mat-mini-fab color="primary" class="mini" matTooltip="Agregar Comentario"
+            matTooltipClass="tooltip" (click)="popAddCommentsDialog()">
             <mat-icon>add_comment</mat-icon>
           </button>
-          <button type="button" mat-mini-fab color="primary" class="mini" matTooltip="Agregar Colaborador"
+          <button type="button" mat-mini-fab color="warn" class="mini" matTooltip="Agregar Colaborador"
             matTooltipClass="tooltip" (click)="popAddDocumentCollaborator()">
             <mat-icon>person_add</mat-icon>
           </button>
-          <button type="button" mat-mini-fab color="warn" class="mini" matTooltip="Agregar Tema"
+          <button type="button" mat-mini-fab color="accent" class="mini" matTooltip="Agregar Tema"
             matTooltipClass="tooltip" (click)="popAddDocumentTheme()">
             <mat-icon>list</mat-icon>
           </button>

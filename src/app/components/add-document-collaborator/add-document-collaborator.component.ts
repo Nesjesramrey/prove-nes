@@ -30,6 +30,7 @@ export class AddDocumentCollaboratorComponent implements OnInit {
   public document: any = null;
   public layout: any = null;
   public subLayout: any = null;
+  public coverage: any = null;
   public availableLayouts: any = null;
   public addCollaboratorFormGroup!: FormGroup;
   public submitted: boolean = false;
@@ -53,11 +54,9 @@ export class AddDocumentCollaboratorComponent implements OnInit {
     this.document = this.dialogData['document'];
     this.layout = this.dialogData['layout'];
     this.subLayout = this.dialogData['subLayout'];
+    this.coverage = this.dialogData['coverage'];
     this.user = this.dialogData['user'];
-
-    // if (this.user['activities'].length == 0) { this.userActivity = 'editor'; }
     this.userActivity = this.user['activityName'];
-    // console.log(this.userActivity);
 
     switch (this.userActivity) {
       case 'administrator':
@@ -81,7 +80,9 @@ export class AddDocumentCollaboratorComponent implements OnInit {
         this.availableLayouts = this.layout['subLayouts'];
         break;
       case 'subLayout':
-        this.availableLayouts = this.dialogData['topics'];
+        // this.availableLayouts = this.dialogData['topics'];
+        this.availableLayouts = [];
+        this.availableLayouts.push(this.dialogData['subLayout']);
         break;
     }
 
@@ -89,13 +90,15 @@ export class AddDocumentCollaboratorComponent implements OnInit {
     this.categories.filter((x: any) => {
       if (this.dialogData['location'] == 'document') {
         this.categoriesString.push(x['category']['name']);
-      } else if (this.dialogData['location'] == 'subLayout') {
-        this.categoriesString.push(x['title']);
-      } else {
+      }
+      else if (this.dialogData['location'] == 'subLayout') {
+        this.categoriesString.push(x['category']['name']);
+      }
+      else {
         this.categoriesString.push(x['name']);
       }
     });
-    // console.log(this.categoriesString);
+    // console.log(this.categories);
 
     // this.utilitiService.fetchAllStates().subscribe((reply: any) => {
     //   console.log(reply);
@@ -143,7 +146,13 @@ export class AddDocumentCollaboratorComponent implements OnInit {
       category = this.categories.filter((x: any) => { return x['category']['name'] == event['option']['value'] });
       let layout = this.availableLayouts.filter((x: any) => { return x['category']['_id'] == category[0]['category']['_id']; });
       this.layouts.push(layout[0]['_id']);
-    } else {
+    }
+    else if (this.dialogData['location'] == 'subLayout') {
+      category = this.categories.filter((x: any) => { return x['category']['name'] == event['option']['value'] });
+      let layout = this.availableLayouts.filter((x: any) => { return x['_id'] == category[0]['_id']; });
+      this.layouts.push(layout[0]['_id']);
+    }
+    else {
       category = this.categories.filter((x: any) => { return x['name'] == event['option']['value'] });
       let layout = this.availableLayouts.filter((x: any) => { return x['id'] == category[0]['id']; });
       this.layouts.push(layout[0]['id']);
@@ -159,6 +168,9 @@ export class AddDocumentCollaboratorComponent implements OnInit {
         break;
       case 'layout':
         this.addCollaboratorFormGroup.patchValue({ layouts: category[0]['id'] });
+        break;
+      case 'subLayout':
+        this.addCollaboratorFormGroup.patchValue({ layouts: category[0]['_id'] });
         break;
     }
   }
@@ -182,11 +194,6 @@ export class AddDocumentCollaboratorComponent implements OnInit {
   }
 
   onSelectCoverage(evt: any) {
-    // if (evt['value'].includes('all')) {
-    //   this.coverageSelect.options.forEach((item: MatOption) => item.select());
-    // } else {
-    //   this.coverageSelect.options.forEach((item: MatOption) => item.deselect());
-    // }
     this.addCollaboratorFormGroup.patchValue({ coverage: evt.value });
   }
 
