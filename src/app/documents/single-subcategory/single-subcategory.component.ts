@@ -82,7 +82,7 @@ export class SingleSubcategoryComponent implements OnInit {
     let acl: Observable<any> = this.documentService.fetchAccessControlList({ document_id: this.documentID });
 
     forkJoin([document, category, subcategory, user, acl]).subscribe((reply: any) => {
-      console.log(reply);
+      // console.log(reply);
       this.document = reply[0];
       // console.log('document: ', this.document);
       this.collaborators = this.document['collaborators'];
@@ -278,11 +278,18 @@ export class SingleSubcategoryComponent implements OnInit {
   }
 
   popAddCommentsDialog() {
+    let coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.coverageSelected });
+    if (coverage.length == 0) {
+      this.utilityService.openErrorSnackBar('Selecciona una cobertura.');
+      return;
+    }
+
     const dialogRef = this.dialog.open<AddCommentsComponent>(AddCommentsComponent, {
       width: '640px',
       data: {
-        location: 'category',
-        document: this.document
+        location: 'layout',
+        layout: this.subcategory,
+        coverage: coverage[0]
       },
       disableClose: true
     });

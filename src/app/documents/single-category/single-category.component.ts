@@ -50,6 +50,7 @@ export class SingleCategoryComponent implements OnInit {
   public accesibleLayouts: any[] = [];
   public userCoverageObj: any[] = [];
   public userCoverageStr: any[] = [];
+  public coverageSelected: any = null;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -86,7 +87,7 @@ export class SingleCategoryComponent implements OnInit {
         // console.log('document: ', this.document);
 
         this.category = reply[1];
-        console.log('category: ', this.category);
+        // console.log('category: ', this.category);
 
         this.user = reply[2];
         this.user['activityName'] = this.user['activities'][0]['value'];
@@ -159,6 +160,10 @@ export class SingleCategoryComponent implements OnInit {
   saveName() {
     this.selectedCategory.name = this.titleField.nativeElement.value;
     this.editingTitle = false;
+  }
+
+  onSelectCoverage(event: any) {
+    this.coverageSelected = event['value'];
   }
 
   handleSelectImage(event: any) {
@@ -288,11 +293,18 @@ export class SingleCategoryComponent implements OnInit {
   }
 
   popAddCommentsDialog() {
+    let coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.coverageSelected });
+    if (coverage.length == 0) {
+      this.utilityService.openErrorSnackBar('Selecciona una cobertura.');
+      return;
+    }
+
     const dialogRef = this.dialog.open<AddCommentsComponent>(AddCommentsComponent, {
       width: '640px',
       data: {
-        location: 'category',
-        document: this.document
+        location: 'layout',
+        layout: this.category,
+        coverage: coverage[0]
       },
       disableClose: true
     });

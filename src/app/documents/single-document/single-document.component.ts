@@ -44,6 +44,7 @@ export class SingleDocumentComponent implements OnInit {
   public accesibleLayouts: any[] = [];
   public userCoverageObj: any[] = [];
   public userCoverageStr: any[] = [];
+  public coverageSelected: any = null;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -123,6 +124,10 @@ export class SingleDocumentComponent implements OnInit {
     });
   }
 
+  onSelectCoverage(event: any) {
+    this.coverageSelected = event['value'];
+  }
+
   popAddDocumentCategory() {
     const dialogRef = this.dialog.open<AddDocumentCategoryComponent>(AddDocumentCategoryComponent, {
       width: '640px',
@@ -196,11 +201,18 @@ export class SingleDocumentComponent implements OnInit {
   }
 
   popAddCommentsDialog() {
+    let coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.coverageSelected });
+    if (coverage.length == 0) {
+      this.utilityService.openErrorSnackBar('Selecciona una cobertura.');
+      return;
+    }
+
     const dialogRef = this.dialog.open<AddCommentsComponent>(AddCommentsComponent, {
       width: '640px',
       data: {
         location: 'document',
-        document: this.document
+        document: this.document,
+        coverage: coverage[0]
       },
       disableClose: true
     });

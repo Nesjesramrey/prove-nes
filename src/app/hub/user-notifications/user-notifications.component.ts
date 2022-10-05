@@ -31,6 +31,7 @@ export class UserNotificationsComponent implements OnInit {
       this.notificationSrvc.fetchMyNotificationsContent({ userID: this.user['_id'] })
         .subscribe((reply: any) => {
           this.notifications = reply;
+          console.log(this.notifications);
         });
 
       setTimeout(() => {

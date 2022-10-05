@@ -27,8 +27,7 @@
       </div>
     </div>
 
-    <div class="set-12 txt-right ctrls" [class.messageErrorBtn]="messageError">
-      <span *ngIf="messageError" class="messageError">Titulo y descripción son requeridos.</span>
+    <div class="set-12 txt-right ctrls">
       <button type="button" mat-raised-button color="accent" [disabled]="submitted" (click)="killDialog()">
         <small>Cancelar</small>
       </button>

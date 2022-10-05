@@ -99,7 +99,7 @@
         <div class="set-4">
           <mat-form-field appearance="outline">
             <mat-label>Cobertura</mat-label>
-            <mat-select disabled>
+            <mat-select (selectionChange)="onSelectCoverage($event)">
               <mat-option *ngFor="let option of document.coverage" [value]="option._id" [disabled]="!option.enabled">
                 <small>{{option.name | titlecase}}</small>
               </mat-option>
