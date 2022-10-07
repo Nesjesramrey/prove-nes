@@ -1,111 +1,113 @@
 :host {
-  .container {
-    margin: 120px 40px;
-    margin-bottom: 100px;
+  padding: 40px 40px 70px 40px;
+  margin-top: 80px;
+  float: left;
+  width: 100%;
+  height: auto;
 
-    .container-titles {
-      padding-top: 20px;
-      background-color: white;
+  .container-titles {
+    padding-top: 20px;
+    background-color: white;
 
-      .title {
-        // display: flex;
+    .title {
+      // display: flex;
 
-        // align-items: flex-start;
-        p {
-          margin-left: 18%;
-          font-size: 16px;
-          font-weight: 700;
-          margin-top: 10px;
-        }
-
-        img {
-          position: absolute;
-          margin-left: 5px;
-        }
-      }
-    }
-
-    .tables {
-      padding-top: 10px;
-      .title {
-        font-weight: 500;
-        text-align: start;
-      }
-    }
-
-    .users-container {
+      // align-items: flex-start;
       p {
-        font-size: 14px;
-        font-weight: 500;
-      }
-    }
-
-    .featured-users {
-      height: min-content;
-    }
-
-    .doc-description {
-      padding: 0 !important;
-    }
-
-    .imghldr {
-      min-height: 250px;
-      max-height: 250px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba($color: #ceddff, $alpha: 0.4);
-      border-bottom: 1px solid rgba($color: #000000, $alpha: 0.05);
-      overflow: hidden;
-
-      mat-icon {
-        font-size: 70pt;
-        color: rgba($color: #000000, $alpha: 0.1);
+        margin-left: 18%;
+        font-size: 16px;
+        font-weight: 700;
+        margin-top: 10px;
       }
 
       img {
-        width: 100%;
-        height: auto;
-        position: relative;
-        object-fit: contain;
+        position: absolute;
+        margin-left: 5px;
       }
     }
+  }
 
-    .infohldr {
-      padding: 5px 20px;
+  .tables {
+    padding-top: 10px;
+
+    .title {
+      font-weight: 500;
+      text-align: start;
     }
+  }
 
-    .card-title {
-      font-weight: 700;
-      font-size: 20px;
-      text-transform: uppercase;
-      color: #000000;
-      margin-bottom: 10px;
-      letter-spacing: 0.5px;
-      margin-top: 15px;
-    }
-
-    .card-description {
-      font-weight: 400;
+  .users-container {
+    p {
       font-size: 14px;
-      text-align: justify;
-      color: #636363;
-      margin-bottom: 8px;
+      font-weight: 500;
+    }
+  }
 
-      &.link {
-        display: inline-block;
-        text-decoration: underline;
-        font-size: 12px;
-        cursor: pointer;
-      }
+  .featured-users {
+    height: min-content;
+  }
+
+  .doc-description {
+    padding: 0 !important;
+  }
+
+  .imghldr {
+    min-height: 250px;
+    max-height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba($color: #ceddff, $alpha: 0.4);
+    border-bottom: 1px solid rgba($color: #000000, $alpha: 0.05);
+    overflow: hidden;
+
+    mat-icon {
+      font-size: 70pt;
+      color: rgba($color: #000000, $alpha: 0.1);
     }
 
-    table {
+    img {
       width: 100%;
-      box-shadow: none !important;
-      padding: 0px 10px;
-      padding-bottom: 50px;
+      height: auto;
+      position: relative;
+      object-fit: contain;
     }
+  }
+
+  .infohldr {
+    padding: 5px 20px;
+  }
+
+  .card-title {
+    font-weight: 700;
+    font-size: 20px;
+    text-transform: uppercase;
+    color: #000000;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+    margin-top: 15px;
+  }
+
+  .card-description {
+    font-weight: 400;
+    font-size: 14px;
+    text-align: justify;
+    color: #636363;
+    margin-bottom: 8px;
+
+    &.link {
+      display: inline-block;
+      text-decoration: underline;
+      font-size: 12px;
+      cursor: pointer;
+    }
+  }
+
+  table {
+    width: 100%;
+    box-shadow: none !important;
+    padding: 0px 10px;
+    padding-bottom: 50px;
   }
 
   .loading {
@@ -133,10 +135,11 @@
     font-weight: 600;
     border-radius: 4px;
   }
-  .color:hover{
+
+  .color:hover {
     color: #696969;
   }
- 
+
 }
 
 .table-head {
@@ -174,13 +177,13 @@
   }
 }
 
-.notData{
+.notData {
   width: 100%;
   height: 130px;
   line-height: 130px;
   text-align: center;
 }
 
-.searchDisabled{
+.searchDisabled {
   opacity: 0 !important;
 }

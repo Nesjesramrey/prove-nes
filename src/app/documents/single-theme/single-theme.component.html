@@ -23,8 +23,8 @@
   <div class="set-12 author-hldr">
     <span class="created-by">
       Autor:
-      <span class="author">{{ category.createdBy.firstname }}
-        {{ category.createdBy.lastname }}</span>
+      <span class="author">{{ topic.createdBy.firstname }}
+        {{ topic.createdBy.lastname }}</span>
     </span>
   </div>
 
@@ -49,9 +49,13 @@
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <button mat-menu-item>
+                <!-- <button mat-menu-item>
                   <mat-icon>edit</mat-icon>
                   <span>Editar tema</span>
+                </button> -->
+                <button type="button" mat-menu-item (click)="popDocumentComments()">
+                  <mat-icon>question_answer</mat-icon>
+                  <span>Ver comentarios</span>
                 </button>
               </mat-menu>
             </div>
@@ -157,6 +161,7 @@
               <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                 <mat-icon>more_vert</mat-icon>
               </button>
+
               <mat-menu #menu="matMenu">
                 <button type="button" mat-menu-item
                   (click)="linkMe('/documentos-publicos/' + document._id + '/categoria/' + categoryID + '/subcategoria/' + subcategoryID + '/tema/' + topic._id + '/solucion/' + element._id)">

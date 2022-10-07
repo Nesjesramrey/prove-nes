@@ -4,16 +4,36 @@
 
 <div class="set-12" *ngIf="isDataAvailable">
   <h3>Agregar comentario</h3>
+  <div class="set-12 locations">
+    <p *ngIf="documentLocation == 'document'">
+      <small>Comentar en: <strong>{{document.title}}</strong></small>
+    </p>
+    <p *ngIf="documentLocation == 'layout'">
+      <small>Comentar en: <strong>{{layout.category.name}}</strong></small>
+    </p>
+    <p *ngIf="documentLocation == 'subLayout'">
+      <small>Comentar en: <strong>{{layout.category.name}}</strong></small>
+    </p>
+    <p *ngIf="documentLocation == 'topic'">
+      <small>Comentar en: <strong>{{topic.title}}</strong></small>
+    </p>
+    <p *ngIf="documentLocation == 'solution'">
+      <small>Comentar en: <strong>{{solution.title}}</strong></small>
+    </p>
+    <p *ngIf="coverage != null">
+      <small>Cobertura: <strong>{{coverage.name}}</strong></small>
+    </p>
+  </div>
   <form class="set-12" [formGroup]="commentFormGroup" (submit)="onComment(commentFormGroup)">
     <mat-form-field appearance="outline">
       <mat-label>Comentario</mat-label>
-      <textarea matInput cdkTextareaAutosize formControlName="comment"></textarea>
+      <textarea matInput cdkTextareaAutosize formControlName="message"></textarea>
     </mat-form-field>
 
-    <div class="set-12">
-      <button type="button" class="bwico" (click)="file.click()">
-        <mat-icon>attachment</mat-icon>
-        <small>Archivo</small>
+    <div class="set-12 txt-right">
+      <button type="button" mat-mini-fab color="warn" (click)="file.click()" matTooltip="Adjuntar archivo"
+        matTooltipClass="tooltip" class="bwico">
+        <mat-icon>attach_file</mat-icon>
       </button>
       <input type="file" #file (change)="onFileSelected($event)">
     </div>

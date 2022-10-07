@@ -21,6 +21,7 @@ import { AddCommentsComponent } from 'src/app/components/add-comments/add-commen
 import { WindowAlertComponent } from 'src/app/components/window-alert/window-alert.component';
 import { isArray } from 'util';
 import { AddDocumentCollaboratorComponent } from 'src/app/components/add-document-collaborator/add-document-collaborator.component';
+import { ViewDocumentCommentsComponent } from 'src/app/components/view-document-comments/view-document-comments.component';
 
 @Component({
   selector: '.app-single-subcategory',
@@ -82,7 +83,7 @@ export class SingleSubcategoryComponent implements OnInit {
     let acl: Observable<any> = this.documentService.fetchAccessControlList({ document_id: this.documentID });
 
     forkJoin([document, category, subcategory, user, acl]).subscribe((reply: any) => {
-      console.log(reply);
+      // console.log(reply);
       this.document = reply[0];
       // console.log('document: ', this.document);
       this.collaborators = this.document['collaborators'];
@@ -278,13 +279,37 @@ export class SingleSubcategoryComponent implements OnInit {
   }
 
   popAddCommentsDialog() {
+    let coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.coverageSelected });
+    if (coverage.length == 0) {
+      this.utilityService.openErrorSnackBar('Selecciona una cobertura.');
+      return;
+    }
+
     const dialogRef = this.dialog.open<AddCommentsComponent>(AddCommentsComponent, {
       width: '640px',
       data: {
-        location: 'category',
-        document: this.document
+        location: 'subLayout',
+        document: this.document,
+        layout: this.subcategory,
+        coverage: coverage[0]
       },
       disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  popDocumentComments() {
+    const dialogRef = this.dialog.open<ViewDocumentCommentsComponent>(ViewDocumentCommentsComponent, {
+      data: {
+        location: 'subLayout',
+        document: this.document,
+        layout: this.subcategory,
+      },
+      disableClose: true,
+      panelClass: 'side-dialog'
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {

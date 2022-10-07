@@ -13,6 +13,8 @@ import { ChartData, ChartOptions } from 'chart.js';
 import { LayoutService } from 'src/app/services/layout.service';
 import { SolutionService } from 'src/app/services/solution.service';
 import { TopicService } from 'src/app/services/topic.service';
+import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
+import { ViewDocumentCommentsComponent } from 'src/app/components/view-document-comments/view-document-comments.component';
 
 @Component({
   selector: 'app-single-solution',
@@ -78,6 +80,7 @@ export class SingleSolutionComponent implements OnInit {
   public accesibleLayouts: any[] = [];
   public userCoverageObj: any[] = [];
   public userCoverageStr: any[] = [];
+  public coverageSelected: any = null;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -175,6 +178,10 @@ export class SingleSolutionComponent implements OnInit {
     }
   }
 
+  onSelectCoverage(event: any) {
+    this.coverageSelected = event['value'];
+  }
+
   popAddDocumentTheme() {
     const dialogRef = this.dialog.open<AddDocumentThemeComponent>(
       AddDocumentThemeComponent,
@@ -242,6 +249,45 @@ export class SingleSolutionComponent implements OnInit {
     this.utilityService.linkMe(
       `documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/temas/${this.themeID}/solucion/${id}`
     );
+  }
+
+  popAddCommentsDialog() {
+    let coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.coverageSelected });
+    if (coverage.length == 0) {
+      this.utilityService.openErrorSnackBar('Selecciona una cobertura.');
+      return;
+    }
+
+    const dialogRef = this.dialog.open<AddCommentsComponent>(AddCommentsComponent, {
+      width: '640px',
+      data: {
+        location: 'solution',
+        document: this.document,
+        solution: this.solution,
+        coverage: coverage[0]
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  popDocumentComments() {
+    const dialogRef = this.dialog.open<ViewDocumentCommentsComponent>(ViewDocumentCommentsComponent, {
+      data: {
+        location: 'solution',
+        document: this.document,
+        solution: this.solution,
+      },
+      disableClose: true,
+      panelClass: 'side-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
   }
 }
 

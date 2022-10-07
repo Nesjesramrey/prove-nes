@@ -19,7 +19,9 @@ export class AddDocumentCommentComponent implements OnInit {
     public dialogRef: MatDialogRef<AddDocumentCommentComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public commentService: CommentService
-  ) {}
+  ) { 
+    console.log(this.dialogData);
+  }
 
   killDialog() {
     this.dialogRef.close();

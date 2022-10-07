@@ -125,6 +125,16 @@ export class EndPointService {
   public fetchSingleCommentByIdEndPoint: string = '/comment/';
   public createNewCommentEndPoint: string = '/comment/';
   public findRelationIdEndPoint: string = '/comment/document';
+  public createNewDocumentCommentEndPoint: string = '/comment/document/';
+  public fetchDocumentCommentsEndPoint: string = '/comment/document/';
+  public createNewLayoutCommentEndPoint: string = '/comment/document/';
+  public createNewSubLayoutCommentEndPoint: string = '/comment/document/';
+  public fetchLayoutCommentsEndPoint: string = '/comment/document/';
+  public createNewTopicCommentEndPoint: string = '/comment/document/';
+  public fetchTopicCommentsEndPoint: string = '/comment/document/';
+  public createNewSolutionCommentEndPoint: string = '/comment/document/';
+  public fetchSolutionCommentsEndPoint: string = '/comment/document/';
+  public fetchCommentByIdEndPoint: string = '/comment/'
 
   // vote
   public createNewVoteEndPonint: string = '/vote/';

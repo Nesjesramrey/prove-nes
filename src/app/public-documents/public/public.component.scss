@@ -1,13 +1,9 @@
 :host {
-  padding: 40px;
+  padding: 40px 40px 70px 40px;
   margin-top: 80px;
   float: left;
   width: 100%;
   height: auto;
-
-  // .container {
-  // margin: 120px 40px;
-  // margin-bottom: 100px;
 
   .select>select {
     background-color: white;
@@ -77,8 +73,6 @@
     }
   }
 
-  // }
-
   .loading {
     mat-spinner {
       position: absolute;
@@ -91,5 +85,21 @@
   .imageDocument {
     width: 100%;
     height: 208px;
+  }
+
+  .cards {
+    display: flex;
+
+    .set-6 {
+      flex: 1;
+    }
+
+    .set-6:nth-child(odd) {
+      padding-right: 15px;
+    }
+
+    .set-6:nth-child(even) {
+      padding-left: 15px;
+    }
   }
 }

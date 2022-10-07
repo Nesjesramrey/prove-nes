@@ -19,6 +19,7 @@ import { ImageViewerComponent } from 'src/app/components/image-viewer/image-view
 import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
 import { WindowAlertComponent } from 'src/app/components/window-alert/window-alert.component';
 import { AddDocumentCollaboratorComponent } from 'src/app/components/add-document-collaborator/add-document-collaborator.component';
+import { ViewDocumentCommentsComponent } from 'src/app/components/view-document-comments/view-document-comments.component';
 
 @Component({
   selector: '.app-single-category',
@@ -50,6 +51,7 @@ export class SingleCategoryComponent implements OnInit {
   public accesibleLayouts: any[] = [];
   public userCoverageObj: any[] = [];
   public userCoverageStr: any[] = [];
+  public coverageSelected: any = null;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -86,7 +88,7 @@ export class SingleCategoryComponent implements OnInit {
         // console.log('document: ', this.document);
 
         this.category = reply[1];
-        console.log('category: ', this.category);
+        // console.log('category: ', this.category);
 
         this.user = reply[2];
         this.user['activityName'] = this.user['activities'][0]['value'];
@@ -159,6 +161,10 @@ export class SingleCategoryComponent implements OnInit {
   saveName() {
     this.selectedCategory.name = this.titleField.nativeElement.value;
     this.editingTitle = false;
+  }
+
+  onSelectCoverage(event: any) {
+    this.coverageSelected = event['value'];
   }
 
   handleSelectImage(event: any) {
@@ -288,13 +294,37 @@ export class SingleCategoryComponent implements OnInit {
   }
 
   popAddCommentsDialog() {
+    let coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.coverageSelected });
+    if (coverage.length == 0) {
+      this.utilityService.openErrorSnackBar('Selecciona una cobertura.');
+      return;
+    }
+
     const dialogRef = this.dialog.open<AddCommentsComponent>(AddCommentsComponent, {
       width: '640px',
       data: {
-        location: 'category',
-        document: this.document
+        location: 'layout',
+        document: this.document,
+        layout: this.category,
+        coverage: coverage[0]
       },
       disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  popDocumentComments() {
+    const dialogRef = this.dialog.open<ViewDocumentCommentsComponent>(ViewDocumentCommentsComponent, {
+      data: {
+        location: 'layout',
+        document: this.document,
+        layout: this.category,
+      },
+      disableClose: true,
+      panelClass: 'side-dialog'
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {

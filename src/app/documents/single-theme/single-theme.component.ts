@@ -16,6 +16,7 @@ import { TopicService } from 'src/app/services/topic.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
+import { ViewDocumentCommentsComponent } from 'src/app/components/view-document-comments/view-document-comments.component';
 
 @Component({
   selector: 'app-single-theme',
@@ -106,30 +107,23 @@ export class SingleThemeComponent implements OnInit {
     let acl: Observable<any> = this.documentService.fetchAccessControlList({ document_id: this.documentID });
 
     forkJoin([document, category, subcategory, topic, user, acl]).subscribe((reply: any) => {
+      // console.log(reply);
       this.document = reply[0];
       // console.log(this.document);
-
       this.collaborators = this.document['collaborators'];
       // console.log('collaborators: ', this.collaborators);
-
       this.category = reply[1];
       // console.log('category: ', this.category);
-
       this.subcategory = reply[2];
       // console.log('subcategory: ', this.subcategory);
-
       this.topics = this.subcategory['topics'];
       // console.log('topics: ', this.topics);
-
       this.topic = reply[3];
       // console.log('topic: ', this.topic);
-
       this.sliderImages = this.topic['images'];
-
       this.solutions = this.topic['solutions'];
       // console.log('solutions: ', this.solutions);
       this.dataSource = new MatTableDataSource(this.solutions);
-
       this.user = reply[4];
       this.user['activityName'] = this.user['activities'][0]['value'];
       // console.log('user: ', this.user);
@@ -216,7 +210,7 @@ export class SingleThemeComponent implements OnInit {
       width: '640px',
       data: {
         themeID: this.themeID,
-        coverage: coverage
+        coverage: coverage[0]
       },
       disableClose: true,
     });
@@ -279,13 +273,37 @@ export class SingleThemeComponent implements OnInit {
   }
 
   popAddCommentsDialog() {
+    let coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.coverageSelected });
+    if (coverage.length == 0) {
+      this.utilityService.openErrorSnackBar('Selecciona una cobertura.');
+      return;
+    }
+
     const dialogRef = this.dialog.open<AddCommentsComponent>(AddCommentsComponent, {
       width: '640px',
       data: {
         location: 'topic',
-        document: this.document
+        document: this.document,
+        topic: this.topic,
+        coverage: coverage[0]
       },
       disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  popDocumentComments() {
+    const dialogRef = this.dialog.open<ViewDocumentCommentsComponent>(ViewDocumentCommentsComponent, {
+      data: {
+        location: 'topic',
+        document: this.document,
+        topic: this.topic,
+      },
+      disableClose: true,
+      panelClass: 'side-dialog'
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {

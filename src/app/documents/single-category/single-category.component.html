@@ -43,19 +43,17 @@
                 [disabled]="!actionControlActivityList.includes(user.activityName)">
                 <mat-icon>more_vert</mat-icon>
               </button>
+
               <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="popEditCategoryDialog()">
+                <!-- <button mat-menu-item (click)="popEditCategoryDialog()">
                   <mat-icon>settings</mat-icon>
                   <span>Editar</span>
-                </button>
-                <!-- <button mat-menu-item disabled="">
-                  <mat-icon>cloud_upload</mat-icon>
-                  <span>Cargar template</span>
-                </button>
-                <button mat-menu-item disabled="">
-                  <mat-icon>cloud_download</mat-icon>
-                  <span>Descargar template</span>
                 </button> -->
+
+                <button type="button" mat-menu-item (click)="popDocumentComments()">
+                  <mat-icon>question_answer</mat-icon>
+                  <span>Ver comentarios</span>
+                </button>
               </mat-menu>
             </div>
           </div>
@@ -101,7 +99,7 @@
         <div class="set-4">
           <mat-form-field appearance="outline">
             <mat-label>Cobertura</mat-label>
-            <mat-select>
+            <mat-select (selectionChange)="onSelectCoverage($event)">
               <mat-option *ngFor="let option of document.coverage" [value]="option._id" [disabled]="!option.enabled">
                 <small>{{ option.name | titlecase }}</small>
               </mat-option>

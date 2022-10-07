@@ -1,27 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
-import { MatButtonModule } from '@angular/material/button';
 import { forkJoin, Observable } from 'rxjs';
 import { LayoutService } from 'src/app/services/layout.service';
 import { DocumentService } from 'src/app/services/document.service';
 import { TopicService } from 'src/app/services/topic.service';
 import { MatDialog } from '@angular/material/dialog';
-// import { ModalSolutionComponent } from '../components/modal-solution/modal-solution.component';
-import { ModalTestimonyComponent } from '../components/modal-testimony/modal-testimony.component';
 import { AddDocumentTestimonyComponent } from 'src/app/components/add-document-testimony/add-document-testimony.component';
 import { AddDocumentSolutionComponent } from 'src/app/components/add-document-solution/add-document-solution.component';
 import { VoteService } from 'src/app/services/vote.service';
 import { ModalVotesComponent } from '../components/modal-votes/modal-votes.component';
-import { ThisReceiver } from '@angular/compiler';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
 import { AddDocumentCommentComponent } from 'src/app/components/add-document-comment/add-document-comment.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 import { CustomMatDataSource } from '../custom-class/custom-table.component';
 import { FavoritesService } from 'src/app/services/favorites.service';
-import { runInThisContext } from 'vm';
+import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
+
 @Component({
   selector: '.topic-page',
   templateUrl: './topic.component.html',
@@ -47,10 +43,10 @@ export class TopicComponent implements OnInit {
   public stats: any;
   public isFavorites: boolean = false;
   public allFavorites: any = null;
-
   public testimonials: any = TESTIMONIALS;
   public solutionsData: any = [];
   public titles: any = [];
+
   constructor(
     public dialog: MatDialog,
     public activatedRoute: ActivatedRoute,
@@ -64,23 +60,18 @@ export class TopicComponent implements OnInit {
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
-    this.subcategoryID =
-      this.activatedRoute['snapshot']['params']['subcategoryID'];
+    this.subcategoryID = this.activatedRoute['snapshot']['params']['subcategoryID'];
     this.topicID = this.activatedRoute['snapshot']['params']['topicID'];
   }
 
   ngOnInit(): void {
     this.user = this.UserService.fetchFireUser().subscribe({
-      error: (error: any) => {
-        console.log(error);
-      },
+      error: (error: any) => { },
       next: (reply: any) => {
         this.user = reply;
         this.loadTopic();
 
-        if (
-          ['administrator', 'editor'].includes(this.user.activities?.[0]?.value)
-        ) {
+        if (['administrator', 'editor'].includes(this.user.activities?.[0]?.value)) {
           this.permission = true;
         } else {
           this.permission = false;
@@ -88,6 +79,7 @@ export class TopicComponent implements OnInit {
       },
     });
   }
+
   checkFavorites() {
     let favorited = this.getUserFavorited();
     if (favorited.length > 0) {
@@ -95,11 +87,13 @@ export class TopicComponent implements OnInit {
     }
     return false;
   }
+
   getUserFavorited() {
     return this.allFavorites.filter(
       (item: any) => item.createdBy === this.user._id
     );
   }
+
   addFavorites() {
     let favorited = this.getUserFavorited();
     if (favorited.length > 0) {
@@ -107,6 +101,7 @@ export class TopicComponent implements OnInit {
         _id: favorited[0]._id,
         favorites: true,
       };
+
       this.favoritesService.updateFavorites(data).subscribe((reply: any) => {
         if (reply.message == 'favorite update success') {
           this.isFavorites = true;
@@ -125,6 +120,7 @@ export class TopicComponent implements OnInit {
       });
     }
   }
+
   removeFavorites() {
     let favorited = this.getUserFavorited();
     let data = {
@@ -183,9 +179,9 @@ export class TopicComponent implements OnInit {
       this.stats = this.topic.stats;
       this.votes = reply[4].length;
       this.solutionsData = this.topic.solutions;
-      this.SolutionDataSource = new CustomMatDataSource(
-        this.sortSolutions(this.solutionsData)
-      );
+      this.SolutionDataSource = new CustomMatDataSource(this.sortSolutions(this.solutionsData));
+
+      console.log(this.topic);
 
       this.getRamdomImage();
       setTimeout(() => {
@@ -206,6 +202,7 @@ export class TopicComponent implements OnInit {
       this.image = '';
     }
   }
+
   checkUserVote(votes: any[]) {
     return votes.find((vote) => vote.createdBy === this.user._id)?._id || 0;
   }
@@ -262,6 +259,7 @@ export class TopicComponent implements OnInit {
       }
     });
   }
+
   openModalVote() {
     const dialogRef = this.dialog.open<ModalVotesComponent>(
       ModalVotesComponent,
@@ -313,8 +311,30 @@ export class TopicComponent implements OnInit {
     );
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) {
-      }
+      if (reply != undefined) { }
+    });
+  }
+
+  popAddCommentsDialog() {
+    let coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.topic['coverage'][0] });
+    if (coverage.length == 0) {
+      this.utilityService.openErrorSnackBar('Selecciona una cobertura.');
+      return;
+    }
+
+    const dialogRef = this.dialog.open<AddCommentsComponent>(AddCommentsComponent, {
+      width: '640px',
+      data: {
+        location: 'topic',
+        document: this.document,
+        topic: this.topic,
+        coverage: coverage[0]
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
     });
   }
 
