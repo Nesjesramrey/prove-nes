@@ -14,6 +14,7 @@ import { LayoutService } from 'src/app/services/layout.service';
 import { SolutionService } from 'src/app/services/solution.service';
 import { TopicService } from 'src/app/services/topic.service';
 import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
+import { ViewDocumentCommentsComponent } from 'src/app/components/view-document-comments/view-document-comments.component';
 
 @Component({
   selector: 'app-single-solution',
@@ -261,10 +262,27 @@ export class SingleSolutionComponent implements OnInit {
       width: '640px',
       data: {
         location: 'solution',
+        document: this.document,
         solution: this.solution,
         coverage: coverage[0]
       },
       disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  popDocumentComments() {
+    const dialogRef = this.dialog.open<ViewDocumentCommentsComponent>(ViewDocumentCommentsComponent, {
+      data: {
+        location: 'solution',
+        document: this.document,
+        solution: this.solution,
+      },
+      disableClose: true,
+      panelClass: 'side-dialog'
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {

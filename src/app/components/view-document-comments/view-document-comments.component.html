@@ -1,0 +1,48 @@
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+
+<div class="set-12" *ngIf="isDataAvailable">
+  <div class="set-12 dialog-head">
+    <button type="button" matTooltip="Salir" matTooltipClass="tooltip" (click)="killDialog()">
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </div>
+
+  <div class="set-12 dialog-body">
+    <div class="set-12" *ngIf="comments.length == 0">
+      <div class="set-12 empty">
+        <p>
+          <small>No hay comentarios.</small>
+        </p>
+      </div>
+    </div>
+
+    <div class="set-12" *ngIf="comments.length != 0">
+      <div class="set-12 comment" *ngFor="let comment of comments">
+        <p>
+          <small>
+            <i>De: <strong>{{comment.createdBy[0].firstname}} {{comment.createdBy[0].lastname}}</strong></i>
+          </small>
+        </p>
+        <div class="set-12 mess">
+          <small>{{comment.message}}</small>
+        </div>
+        <div class="set-12 ctrls">
+          <button type="button" mat-mini-fab color="primary" matTooltip="Eliminar" matTooltipClass="tooltip">
+            <mat-icon>delete</mat-icon>
+          </button>
+
+          <button type="button" mat-mini-fab color="primary" matTooltip="Responder" matTooltipClass="tooltip">
+            <mat-icon>reply</mat-icon>
+          </button>
+
+          <button type="button" mat-mini-fab color="primary" [disabled]="comment.attachment == null"
+            matTooltip="Archivo" matTooltipClass="tooltip">
+            <mat-icon>attach_file</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

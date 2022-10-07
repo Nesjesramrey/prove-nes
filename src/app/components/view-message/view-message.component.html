@@ -1,0 +1,33 @@
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+
+<div class="set-12" *ngIf="isDataAvailable">
+  <div class="set-12 dialog-head">
+    <h3>{{notification.message}}</h3>
+    <p>
+      <small>
+        <i>{{comment.createdBy.firstname}} {{comment.createdBy.lastname}} - {{comment.createdAt | date:
+          'mediumDate'}} / {{comment.createdAt | date: 'mediumTime'}}</i>
+      </small>
+    </p>
+  </div>
+
+  <div class="set-12 dialog-body">
+    <p>{{comment.message}}</p>
+    <p *ngIf="comment.attachment != null" class="attachment">
+      <small>
+        <a href="{{comment.attachment}}" target="_blank">Abrir archivo adjuto</a>
+      </small>
+    </p>
+  </div>
+
+  <div class="set-12 ctrls">
+    <button type="button" mat-raised-button color="primary" (click)="killDialog()">
+      <small>Salir</small>
+    </button>
+    <button type="button" mat-raised-button color="warn" (click)="linkMe(notification.metadata.redirectURL)">
+      <small>Abrir sección</small>
+    </button>
+  </div>
+</div>

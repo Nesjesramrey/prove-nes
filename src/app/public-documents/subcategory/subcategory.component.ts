@@ -95,7 +95,7 @@ export class SubcategoryComponent implements OnInit {
         .forEach((_: any, index: number) => {
           dataSolution.push(
             ...this.subcategory.topics.map((item: any) => [...item.solutions])[
-              index
+            index
             ]
           );
         });

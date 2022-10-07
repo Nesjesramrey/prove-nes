@@ -3,96 +3,70 @@
 </div>
 
 <div class="set-12" *ngIf="isDataAvailable">
-  <div class="container">
-    <breadcrumbs-component>
-      <li>Documentos</li>
-      <li
-        *ngIf="!!document.title; else noTitle"
-        (click)="utilityService.linkMe('/documentos-publicos/' + document._id)"
-      >
-        {{ titles[0] }}
-      </li>
-      <ng-template #noTitle>
-        <div>categoria</div>
-      </ng-template>
-      <li>{{ titles[1] }}</li>
-    </breadcrumbs-component>
-    <div class="set-12 txt-left" style="margin-bottom: 10px">
-      <span class="created-by">
-        Autor:
-        <span class="author"
-          >{{ selectedCategory.createdBy.firstname }}
-          {{ selectedCategory.createdBy.lastname }}</span
-        >
+  <breadcrumbs-component>
+    <li>Documentos</li>
+    <li *ngIf="!!document.title; else noTitle" (click)="utilityService.linkMe('/documentos-publicos/' + document._id)">
+      {{ titles[0] }}
+    </li>
+    <ng-template #noTitle>
+      <div>categoria</div>
+    </ng-template>
+    <li>{{ titles[1] }}</li>
+  </breadcrumbs-component>
+  <div class="set-12 author-hldr">
+    <span class="created-by">
+      Autor: <span class="author">
+        {{ selectedCategory.createdBy.firstname }} {{ selectedCategory.createdBy.lastname }}
       </span>
-    </div>
+    </span>
+  </div>
 
-    <div class="set-12">
-      <div class="set-3 col-lft">
-        <mat-card class="set-12 doc-description">
-          <div class="set-12 imghldr">
-            <mat-icon *ngIf="selectedCategory.images.length == 0"
-              >panorama</mat-icon
-            >
-            <slider-images
-              [images]="selectedCategory.images"
-              *ngIf="selectedCategory.images.length != 0"
-            ></slider-images>
-            <div class="overlay" (click)="popImageViewer()">
-              <mat-icon>photo_camera</mat-icon>
-              <div class="cover"></div>
-            </div>
+  <div class="set-12">
+    <div class="set-3 col-lft">
+      <mat-card class="set-12 doc-description">
+        <div class="set-12 imghldr">
+          <mat-icon *ngIf="selectedCategory.images.length == 0">panorama</mat-icon>
+          <slider-images [images]="selectedCategory.images" *ngIf="selectedCategory.images.length != 0">
+          </slider-images>
+          <div class="overlay" (click)="popImageViewer()">
+            <mat-icon>photo_camera</mat-icon>
+            <div class="cover"></div>
           </div>
-
-          <div class="set-12 infohldr">
-            <p class="set-12 card-title">
-              {{ selectedCategory.category.name }}
-            </p>
-            <expanded-text
-              [text]="selectedCategory.description"
-              [minLength]="200"
-              [title]="selectedCategory.category.name"
-            ></expanded-text>
-          </div>
-        </mat-card>
-        <horizontal-stats
-          [users]="stats?.users"
-          [interactions]="stats?.interactions"
-        ></horizontal-stats>
-        <div class="set-12">
-          <vertical-stats
-            [topics]="stats?.topics"
-            [solutions]="stats?.solutions"
-          ></vertical-stats>
         </div>
+
+        <div class="set-12 infohldr">
+          <p class="set-12 card-title">
+            {{ selectedCategory.category.name }}
+          </p>
+          <expanded-text [text]="selectedCategory.description" [minLength]="200"
+            [title]="selectedCategory.category.name"></expanded-text>
+        </div>
+      </mat-card>
+      <horizontal-stats [users]="stats?.users" [interactions]="stats?.interactions"></horizontal-stats>
+      <div class="set-12">
+        <vertical-stats [topics]="stats?.topics" [solutions]="stats?.solutions"></vertical-stats>
       </div>
-      <div class="set-9 col-rgt">
-        <panel-circles
-          [data]="selectedCategory.subLayouts"
-          [withBorder]="true"
-          [redirectTo]="'SUBCATEGORY'"
-        >
-        </panel-circles>
+    </div>
+    <div class="set-9 col-rgt">
+      <panel-circles [data]="selectedCategory.subLayouts" [withBorder]="true" [redirectTo]="'SUBCATEGORY'">
+      </panel-circles>
 
-        <div class="mt-2 set-3">
-          <mat-form-field appearance="outline">
-            <mat-label>Cobertura</mat-label>
-            <mat-select value="location.name">
-              <mat-option
-                *ngFor="let location of coverage"
-                value="location.name"
-                >{{ location.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+      <div class="mt-2 set-3">
+        <mat-form-field appearance="outline">
+          <mat-label>Cobertura</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let location of coverage" value="location._id">
+              <small>{{ location.name }}</small>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="set-12 cards">
+        <div class="set-6">
+          <spider-chart [data]="topLayouts"></spider-chart>
         </div>
-        <div class="set-12">
-          <div class="set-6 col-rgt-2">
-            <spider-chart [data]="topLayouts"></spider-chart>
-          </div>
-          <div class="set-6">
-            <top10-list [data]="topSolutions"></top10-list>
-          </div>
+        <div class="set-6">
+          <top10-list [data]="topSolutions"></top10-list>
         </div>
       </div>
     </div>

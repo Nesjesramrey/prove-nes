@@ -16,6 +16,7 @@ import { TopicService } from 'src/app/services/topic.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
+import { ViewDocumentCommentsComponent } from 'src/app/components/view-document-comments/view-document-comments.component';
 
 @Component({
   selector: 'app-single-theme',
@@ -282,10 +283,27 @@ export class SingleThemeComponent implements OnInit {
       width: '640px',
       data: {
         location: 'topic',
+        document: this.document,
         topic: this.topic,
         coverage: coverage[0]
       },
       disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  popDocumentComments() {
+    const dialogRef = this.dialog.open<ViewDocumentCommentsComponent>(ViewDocumentCommentsComponent, {
+      data: {
+        location: 'topic',
+        document: this.document,
+        topic: this.topic,
+      },
+      disableClose: true,
+      panelClass: 'side-dialog'
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {

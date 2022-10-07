@@ -18,6 +18,7 @@ import { WindowAlertComponent } from 'src/app/components/window-alert/window-ale
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
 import { DescriptionViewerComponent } from 'src/app/components/description-viewer/description-viewer.component';
+import { ViewDocumentCommentsComponent } from 'src/app/components/view-document-comments/view-document-comments.component';
 
 @Component({
   selector: '.single-document-page',
@@ -215,6 +216,21 @@ export class SingleDocumentComponent implements OnInit {
         coverage: coverage[0]
       },
       disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  popDocumentComments() {
+    const dialogRef = this.dialog.open<ViewDocumentCommentsComponent>(ViewDocumentCommentsComponent, {
+      data: {
+        location: 'document',
+        document: this.document
+      },
+      disableClose: true,
+      panelClass: 'side-dialog'
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {

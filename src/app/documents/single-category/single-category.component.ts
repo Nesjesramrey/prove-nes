@@ -19,6 +19,7 @@ import { ImageViewerComponent } from 'src/app/components/image-viewer/image-view
 import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
 import { WindowAlertComponent } from 'src/app/components/window-alert/window-alert.component';
 import { AddDocumentCollaboratorComponent } from 'src/app/components/add-document-collaborator/add-document-collaborator.component';
+import { ViewDocumentCommentsComponent } from 'src/app/components/view-document-comments/view-document-comments.component';
 
 @Component({
   selector: '.app-single-category',
@@ -303,10 +304,27 @@ export class SingleCategoryComponent implements OnInit {
       width: '640px',
       data: {
         location: 'layout',
+        document: this.document,
         layout: this.category,
         coverage: coverage[0]
       },
       disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  popDocumentComments() {
+    const dialogRef = this.dialog.open<ViewDocumentCommentsComponent>(ViewDocumentCommentsComponent, {
+      data: {
+        location: 'layout',
+        document: this.document,
+        layout: this.category,
+      },
+      disableClose: true,
+      panelClass: 'side-dialog'
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {

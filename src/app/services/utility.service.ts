@@ -12,6 +12,7 @@ export class UtilityService {
   public image_extensions: any = ['jpg', 'jpeg', 'png', 'bmp'];
   public errorOops: string = '¡Oops!... Ocurrió un error, inténtalo más tarde.';
   public editedSuccess: string = 'Se actualizó correctamente.';
+  public saveSuccess: string = 'Se guardo correctamente.';
   public userAddedSuccesss: string = 'El usuario se agrego correctamente.';
   public actionControlActivityList: any = ['administrator', 'editor'];
 

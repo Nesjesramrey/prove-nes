@@ -3,194 +3,151 @@
 </div>
 
 <div class="set-12" *ngIf="isDataAvailable">
-  <div class="container">
-    <div class="set-12">
-      <div class="set-12" *ngIf="isDataAvailable">
-        <breadcrumbs-component>
-          <li>Documentos</li>
-          <li
-            (click)="
-              utilityService.linkMe('/documentos-publicos/' + document._id)
-            "
-          >
-            {{ titles[0] }}
-          </li>
-          <li
-            (click)="
-              utilityService.linkMe(
-                '/documentos-publicos/' +
-                  document._id +
-                  '/categoria/' +
-                  category._id
-              )
-            "
-          >
-            {{ titles[1] }}
-          </li>
-          <li>{{ titles[2] }}</li>
-        </breadcrumbs-component>
-      </div>
-    </div>
+  <div class="set-12">
+    <breadcrumbs-component>
+      <li>Documentos</li>
+      <li (click)="
+          utilityService.linkMe('/documentos-publicos/' + document._id)
+        ">
+        {{ titles[0] }}
+      </li>
+      <li (click)="
+          utilityService.linkMe(
+            '/documentos-publicos/' +
+              document._id +
+              '/categoria/' +
+              category._id
+          )
+        ">
+        {{ titles[1] }}
+      </li>
+      <li>{{ titles[2] }}</li>
+    </breadcrumbs-component>
 
-    <div
-      class="set-12"
-      style="padding-bottom: 100px; margin-top: 20px"
-      *ngIf="subcategory"
-    >
-      <div class="set-3 col-lft">
-        <mat-card class="set-12 doc-description">
-          <div class="set-12 imghldr">
-            <mat-icon *ngIf="subcategory.images.length == 0">panorama</mat-icon>
-            <slider-images
-              [images]="subcategory.images"
-              *ngIf="subcategory.images.length != 0"
-            ></slider-images>
-            <div class="overlay" (click)="popImageViewer()">
-              <mat-icon>photo_camera</mat-icon>
-              <div class="cover"></div>
-            </div>
-          </div>
-          <div class="set-12 infohldr">
-            <p class="set-12 card-title">{{ subcategory.category.name }}</p>
-            <expanded-text
-              [text]="subcategory.description"
-              [minLength]="200"
-              [title]="subcategory.category.name"
-            ></expanded-text>
-          </div>
-        </mat-card>
-        <horizontal-stats
-          [users]="stats?.users"
-          [interactions]="stats?.interactions"
-        ></horizontal-stats>
-      </div>
-      <div class="set-9 col-rgt">
-        <panel-subcategory
-          [data]="panelTopicsData"
-          [selectedID]="subcategory._id"
-        ></panel-subcategory>
-        <div class="set-12 container-titles">
-          <div class="set-3 title">
-            <p>
-              Soluciones
-              <img src="../../../assets/images/row.png" alt="" width="22" />
-            </p>
-          </div>
-          <div class="set-3">
-            <div class="set-4 table-head">
-              <input
-                type="text"
-                (keyup)="applyFilterSolution($event)"
-                placeholder="Buscar soluciones..."
-                [disabled]="solutionsDataSource.length == 0"
-                [class.searchDisabled]="solutionsDataSource.length === 0"
-              />
-            </div>
-          </div>
-          <div class="set-3 title">
-            <p>
-              Problemas
-              <img src="../../../assets/images/alert.webp" alt="" width="20" />
-            </p>
-          </div>
-          <div class="set-3">
-            <div class="set-4 table-head">
-              <input
-                type="text"
-                (keyup)="applyFilterTopic($event)"
-                placeholder="Buscar temas..."
-                [disabled]="topicsDataSource.length == 0"
-                [class.searchDisabled]="panelTopicsData.length === 0"
-              />
-            </div>
+    <div class="set-12 author-hldr">
+      <span class="created-by">
+        Autor: <span class="author">
+          {{ subcategory.createdBy.firstname }} {{ subcategory.createdBy.lastname }}
+        </span>
+      </span>
+    </div>
+  </div>
+
+  <div class="set-12" *ngIf="subcategory">
+    <div class="set-3 col-lft">
+      <mat-card class="set-12 doc-description">
+        <div class="set-12 imghldr">
+          <mat-icon *ngIf="subcategory.images.length == 0">panorama</mat-icon>
+          <slider-images [images]="subcategory.images" *ngIf="subcategory.images.length != 0"></slider-images>
+          <div class="overlay" (click)="popImageViewer()">
+            <mat-icon>photo_camera</mat-icon>
+            <div class="cover"></div>
           </div>
         </div>
-        <div class="set-12 tables" style="background-color: white">
-          <div class="set-6">
-            <table
-              *ngIf="solutionsDataSource.length > 0; else notsolutions"
-              mat-table
-              matSort
-              [dataSource]="SolutionDataSource"
-              class="mat-elevation-z8"
-            >
-              <ng-container matColumnDef="title">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Título</th>
-                <td mat-cell *matCellDef="let element" style="text-align:start">
-                  <button
-                    type="button"
-                    class="catbtn-2 color"
-                    (click)="redirectSolution(element._id)"
-                  >
-                    {{ element.title }}
-                  </button>
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="score">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Calificación</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.stats.score }}
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="users">
-                <th mat-header-cell *matHeaderCellDef>Usuarios</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.stats.users }}
-                </td>
-              </ng-container>
-
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-            </table>
+        <div class="set-12 infohldr">
+          <p class="set-12 card-title">{{ subcategory.category.name }}</p>
+          <expanded-text [text]="subcategory.description" [minLength]="200" [title]="subcategory.category.name">
+          </expanded-text>
+        </div>
+      </mat-card>
+      <horizontal-stats [users]="stats?.users" [interactions]="stats?.interactions"></horizontal-stats>
+    </div>
+    <div class="set-9 col-rgt">
+      <panel-subcategory [data]="panelTopicsData" [selectedID]="subcategory._id"></panel-subcategory>
+      <div class="set-12 container-titles">
+        <div class="set-3 title">
+          <p>
+            Soluciones
+            <img src="../../../assets/images/row.png" alt="" width="22" />
+          </p>
+        </div>
+        <div class="set-3">
+          <div class="set-4 table-head">
+            <input type="text" (keyup)="applyFilterSolution($event)" placeholder="Buscar soluciones..."
+              [disabled]="solutionsDataSource.length == 0" [class.searchDisabled]="solutionsDataSource.length === 0" />
           </div>
-          <ng-template #notsolutions>
-            <p class="notData">Sin soluciones</p>
+        </div>
+        <div class="set-3 title">
+          <p>
+            Problemas
+            <img src="../../../assets/images/alert.webp" alt="" width="20" />
+          </p>
+        </div>
+        <div class="set-3">
+          <div class="set-4 table-head">
+            <input type="text" (keyup)="applyFilterTopic($event)" placeholder="Buscar temas..."
+              [disabled]="topicsDataSource.length == 0" [class.searchDisabled]="panelTopicsData.length === 0" />
+          </div>
+        </div>
+      </div>
+      <div class="set-12 tables" style="background-color: white">
+        <div class="set-6">
+          <table *ngIf="solutionsDataSource.length > 0; else notsolutions" mat-table matSort
+            [dataSource]="SolutionDataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="title">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Título</th>
+              <td mat-cell *matCellDef="let element" style="text-align:start">
+                <button type="button" class="catbtn-2 color" (click)="redirectSolution(element._id)">
+                  {{ element.title }}
+                </button>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="score">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Calificación</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.stats.score }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="users">
+              <th mat-header-cell *matHeaderCellDef>Usuarios</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.stats.users }}
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+        </div>
+        <ng-template #notsolutions>
+          <p class="notData">Sin soluciones</p>
+        </ng-template>
+
+        <div class="set-6">
+          <table *ngIf="panelTopicsData.length > 0; else nottopic" mat-table matSort [dataSource]="TopicDataSource"
+            class="mat-elevation-z8">
+            <ng-container matColumnDef="title">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por título">Título
+              </th>
+              <td mat-cell *matCellDef="let element" style="text-align:start">
+                <button type="button" class="catbtn-2 color" (click)="redirect(element._id)">
+                  {{ element.title }}
+                </button>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="score">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Calificación</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.stats.score }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="users">
+              <th mat-header-cell *matHeaderCellDef>Usuarios</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.stats.users }}
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+          <ng-template #nottopic>
+            <p class="notData">Sin problemas</p>
           </ng-template>
-
-          <div class="set-6">
-            <table
-              *ngIf="panelTopicsData.length > 0; else nottopic"
-              mat-table
-              matSort
-              [dataSource]="TopicDataSource"
-              class="mat-elevation-z8"
-            >
-              <ng-container matColumnDef="title">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por título">Título</th>
-                <td mat-cell *matCellDef="let element" style="text-align:start">
-                  <button
-                    type="button"
-                    class="catbtn-2 color"
-                    (click)="redirect(element._id)"
-                  >
-                    {{ element.title }}
-                  </button>
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="score">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Calificación</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.stats.score }}
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="users">
-                <th mat-header-cell *matHeaderCellDef>Usuarios</th>
-                <td mat-cell *matCellDef="let element">
-                  {{ element.stats.users }}
-                </td>
-              </ng-container>
-
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-            </table>
-            <ng-template #nottopic>
-              <p class="notData">Sin problemas</p>
-            </ng-template>
-          </div>
         </div>
       </div>
     </div>

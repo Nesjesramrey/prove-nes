@@ -94,6 +94,19 @@ table {
   height: 100%;
 }
 
+.app {
+  display: flex;
+  flex-direction: column;
+}
+
+.mainhldr {
+  height: 100vh;
+}
+
+.app-footer {
+  flex-shrink: 0;
+}
+
 .set-1 {
   width: 8.33333333%;
 }
@@ -637,6 +650,20 @@ mat-form-field {
   .mat-dialog-container {
     padding: 0;
     background: #e5e5e5;
+  }
+}
+
+.side-dialog {
+  width: 30% !important;
+  max-width: 30vw !important;
+  top: 0;
+  right: 0;
+
+  .mat-dialog-container {
+    padding: 0;
+    background: #e5e5e5;
+    border-radius: 0;
+    height: 100vh;
   }
 }
 

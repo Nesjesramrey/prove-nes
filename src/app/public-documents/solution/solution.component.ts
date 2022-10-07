@@ -14,6 +14,8 @@ import { UserService } from 'src/app/services/user.service';
 import { AddDocumentCommentComponent } from 'src/app/components/add-document-comment/add-document-comment.component';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 import { FavoritesService } from 'src/app/services/favorites.service';
+import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
+
 @Component({
   selector: '.solution-page',
   templateUrl: './solution.component.html',
@@ -58,21 +60,21 @@ export class SolutionComponent implements OnInit {
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
-    this.subcategoryID =
-      this.activatedRoute['snapshot']['params']['subcategoryID'];
+    this.subcategoryID = this.activatedRoute['snapshot']['params']['subcategoryID'];
     this.topicID = this.activatedRoute['snapshot']['params']['topicID'];
     this.solutionID = this.activatedRoute['snapshot']['params']['solutionID'];
   }
 
   ngOnInit(): void {
     this.user = this.UserService.fetchFireUser().subscribe({
-      error: (error: any) => {},
+      error: (error: any) => { },
       next: (reply: any) => {
         this.user = reply;
         this.loadSolution();
       },
     });
   }
+
   addFavorites() {
     let favorited = this.getUserFavorited();
     if (favorited.length > 0) {
@@ -98,6 +100,7 @@ export class SolutionComponent implements OnInit {
       });
     }
   }
+
   checkFavorites() {
     let favorited = this.getUserFavorited();
     if (favorited.length > 0) {
@@ -105,11 +108,13 @@ export class SolutionComponent implements OnInit {
     }
     return false;
   }
+
   getUserFavorited() {
     return this.allFavorites.filter(
       (item: any) => item.createdBy === this.user._id
     );
   }
+
   removeFavorites() {
     let favorited = this.getUserFavorited();
     let data = {
@@ -186,6 +191,7 @@ export class SolutionComponent implements OnInit {
       this.image = '';
     }
   }
+
   checkUserVote(votes: any[]) {
     return votes.find((vote) => vote.createdBy === this.user._id)?._id || 0;
   }
@@ -237,6 +243,29 @@ export class SolutionComponent implements OnInit {
     });
   }
 
+  popAddCommentsDialog() {
+    let coverage = this.solution['coverage'];
+    if (coverage.length == 0) {
+      this.utilityService.openErrorSnackBar('Selecciona una cobertura.');
+      return;
+    }
+
+    const dialogRef = this.dialog.open<AddCommentsComponent>(AddCommentsComponent, {
+      width: '640px',
+      data: {
+        location: 'solution',
+        document: this.document,
+        solution: this.solution,
+        coverage: coverage[0]
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
   openModalVote() {
     const dialogRef = this.dialog.open<ModalVotesComponent>(
       ModalVotesComponent,
@@ -283,6 +312,7 @@ export class SolutionComponent implements OnInit {
       }
     });
   }
+
 }
 
 export interface ITestimony {
