@@ -92,4 +92,12 @@ export class CommentService {
   fetchCommentById(data: any) {
     return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchCommentByIdEndPoint + `${data['comment_id']}`, {});
   }
+
+  killDocumentComment(data: any) {
+    return this.httpClient.delete(this.endpointSrvc.apiEndPoint + this.endpointSrvc.killDocumentCommentEndPoint + `${data['comment_id']}`, {});
+  }
+
+  replyDocumentComments(data: any) {
+    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.replyDocumentCommentsEndPoint + `${data['comment_id']}` + '/response', data);
+  }
 }

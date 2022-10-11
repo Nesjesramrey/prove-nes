@@ -100,6 +100,9 @@ export class AddCommentsComponent implements OnInit {
 
   onComment(formGroup: FormGroup) {
     this.submitted = true;
+    let url = this.router['url'];
+    url = url.replace('/documentos-publicos/', '/documentos/');
+    url = url.replace('/tema/', '/temas/');
 
     let data: any = {
       location: this.documentLocation,
@@ -112,7 +115,7 @@ export class AddCommentsComponent implements OnInit {
     data['formData'].append('message', formGroup['value']['message']);
     data['formData'].append('coverage', JSON.stringify([this.coverage['_id']]));
     data['formData'].append('isAnonymous', this.isAnonymous);
-    data['formData'].append('redirectURL', this.router['url']);
+    data['formData'].append('redirectURL', url);
 
     switch (this.documentLocation) {
       case 'document':

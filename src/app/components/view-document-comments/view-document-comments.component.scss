@@ -46,6 +46,11 @@
       justify-content: center;
       margin-left: 10px !important;
 
+      a {
+        color: #ffffff;
+        text-decoration: none;
+      }
+
       mat-icon {
         font-size: 11pt;
       }
@@ -58,6 +63,17 @@
 
   .comment:hover {
     background: #f1f1f1;
+  }
+
+  .reply-hldr {
+    margin-top: 10px;
+    padding-left: 20px;
+
+    .reply {
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
+    }
   }
 
   .loading {

@@ -12,13 +12,11 @@ export interface Section {
 })
 export class Top10ListComponent implements OnInit {
   @Input() data: any[] = [];
-
   isColor: boolean = false;
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
+    // console.log(this.data);
   }
-
-
 }

@@ -214,7 +214,8 @@ export class SingleSubcategoryComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
-        this.subcategory['description'] = reply['description'];
+        this.subcategory['category']['name'] = reply[0]['name'];
+        this.subcategory['description'] = reply[1]['description'];
       }
     });
   }

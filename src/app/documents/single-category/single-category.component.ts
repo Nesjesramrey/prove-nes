@@ -242,15 +242,15 @@ export class SingleCategoryComponent implements OnInit {
     const dialogRef = this.dialog.open<EditCategoryDataComponent>(EditCategoryDataComponent, {
       width: '640px',
       data: {
-        layout: this.selectedCategory
+        layout: this.category
       },
       disableClose: true
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
-        this.selectedCategory['category']['name'] = reply[0]['name'];
-        this.selectedCategory['description'] = reply[1]['description'];
+        this.selectedCategory['name'] = reply[0]['name'];
+        this.category['description'] = reply[1]['description'];
       }
     });
   }

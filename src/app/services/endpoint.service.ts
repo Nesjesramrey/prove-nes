@@ -16,18 +16,13 @@ export class EndPointService {
   public fetchAllUsersEndPoint: string = '/user';
   public addUserPermissionsEndPoint: string = '/user/';
   public uploadAvatarImageEndPoint: string = '/user/';
-
-  // public fetchAllUsersEndPoint: string = '/user/fetch-all-users';
   public fetchUserByIdEndPoint: string = '/user/fetch-user-by-id';
-  public fetchUserByFirebaseUIDEndPoint: string =
-    '/user/fetch-user-by-firebase-uid';
-  // public addUserPermissionsEndPoint: string = '/user/add-permissions';
+  public fetchUserByFirebaseUIDEndPoint: string = '/user/fetch-user-by-firebase-uid';
 
   // documents
   public createNewDocumentEndPoint: string = '/document';
   public fetchSingleDocumentByIdEndPoint: string = '/document/';
-  public fetchDocumentsByCollaboratorEndPoint: string =
-    '/document/collaborator/';
+  public fetchDocumentsByCollaboratorEndPoint: string = '/document/collaborator/';
   public createDocumentLayoutEndPoint: string = '/layout/document/';
   public editDocumentDataEndPoint: string = '/document/';
   public fetchCoverDocumentEndPoint: string = '/document/public/home';
@@ -35,16 +30,10 @@ export class EndPointService {
   public setDocumentAsPublicPrivateEndPoint: string = '/document/';
   public uploadDocumentFilesEndPoint: string = '/document/';
   public killDocumentImageEndPoint: string = '/document/';
-
-  // public createNewDocumentEndPoint: string = '/document/create-new-document';
   public fetchMyDocumentsEndPoint: string = '/document/fetch-my-documents';
-  // public fetchSingleDocumentByngIdEndPoint: string = '/document/fetch-single-document-by-id';
-  public fetchEditorDocumentsEndPoint: string =
-    '/document/fetch-editor-documents';
+  public fetchEditorDocumentsEndPoint: string = '/document/fetch-editor-documents';
   public addDocumentLayoutEndPoint: string = '/document/add-document-layout';
-
-  public addDocumentCollaboratorEndPoint: string =
-    '/document/add-document-collaborator';
+  public addDocumentCollaboratorEndPoint: string = '/document/add-document-collaborator';
   public addDocumentColumnEndPoint: string = '/document/add-document-column';
   public fetchAccessControlListEndPoint: string = '/access_control_list';
 
@@ -83,39 +72,25 @@ export class EndPointService {
   public fetchAllCategoriesEndPoint: string = '/category/';
   public fetchAllActivitiesEndPoint: string = '/activity';
   public fetchAssociationTypologyEndPoint: string = '/association_typology';
-
   public fetchAllStatesMexEndPoint: string = '/utility/fetch-all-states-mex';
-  // public createNewCategoryEndPoint: string = '/utility/create-new-category';
-  // public fetchAllCategoriesEndPoint: string = '/utility/fetch-all-categories';
 
   // uploads
   public uploadUserAvatarEndPoint: string = '/upload/upload-avatar-file';
 
   // notifications
-  public createNewNotificationEndPoint: string =
-    '/notification/create-new-notification';
-  public fetchMyNotificationsLengthEndPoint: string =
-    '/notification/fetch-my-notifications-length';
-  public fetchMyNotificationsContentEndPoint: string =
-    '/notification';
-  public fetchMyNotificationUnreadEndPoint: string =
-    '/notification/number_of_unread/user/';
-  public markAsReadNotificationEndPoint: string =
-    '/notification/';
-  public killNotificationEndPoint: string
-    = '/notification/';
+  public createNewNotificationEndPoint: string = '/notification/create-new-notification';
+  public fetchMyNotificationsLengthEndPoint: string = '/notification/fetch-my-notifications-length';
+  public fetchMyNotificationsContentEndPoint: string = '/notification';
+  public fetchMyNotificationUnreadEndPoint: string = '/notification/number_of_unread/user/';
+  public markAsReadNotificationEndPoint: string = '/notification/';
+  public killNotificationEndPoint: string = '/notification/';
 
   // support
-  public sendSupportMessageEndPoint: string =
-    '/support/init-support-conversation';
-  public injectConversationMessageEndPoint: string =
-    '/support/inject-conversation-message';
-  public fetchSupportConversationsEndPoint: string =
-    '/support/fetch-support-conversations';
-  public killSupportConversationEndPoint: string =
-    '/support/kill-support-conversation';
-  public searchConversationsByDateEndPoint: string =
-    '/support/search-conversations-by-date';
+  public sendSupportMessageEndPoint: string = '/support/init-support-conversation';
+  public injectConversationMessageEndPoint: string = '/support/inject-conversation-message';
+  public fetchSupportConversationsEndPoint: string = '/support/fetch-support-conversations';
+  public killSupportConversationEndPoint: string = '/support/kill-support-conversation';
+  public searchConversationsByDateEndPoint: string = '/support/search-conversations-by-date';
 
   // testimony
   public fetchSingleTestimonyByIdEndPoint: string = '/testimony/';
@@ -135,21 +110,23 @@ export class EndPointService {
   public createNewSolutionCommentEndPoint: string = '/comment/document/';
   public fetchSolutionCommentsEndPoint: string = '/comment/document/';
   public fetchCommentByIdEndPoint: string = '/comment/'
+  public killDocumentCommentEndPoint: string = '/comment/';
+  public replyDocumentCommentsEndPoint: string = '/comment/';
 
   // vote
   public createNewVoteEndPonint: string = '/vote/';
   public deleteVoteEndPonint: string = '/vote/';
   public fetchVotesFromTopicEndPonint: string = '/vote/topic/';
   public fetchVotesFromSolutionEndPonint: string = '/vote/solution/';
+
   // favorites
   public addFavoritesEndPoint: string = '/favorites/';
   public updateFavoritesEndPoint: string = '/favorites/';
   public fetchFavoritesFromTopicEndPonint: string = '/favorites/topic/';
   public fetchFavoritesFromSolutionEndPonint: string = '/favorites/solution/';
 
-  //visit
+  // visit
   public sendVisitEndPoint: string = '/visit/';
-  // public deleteVoteEndPonint: string = '/vote/';
 
   // socket
   public updateSocketIDEndPoint: string = '/user/';

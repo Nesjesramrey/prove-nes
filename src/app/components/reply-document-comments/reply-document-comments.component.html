@@ -1,0 +1,29 @@
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+
+<div class="set-12" *ngIf="isDataAvailable">
+  <h3>Responder a:</h3>
+  <p>
+    <small>
+      <i>{{ comment.createdBy.firstname }} {{ comment.createdBy.lastname }}</i>
+    </small>
+  </p>
+
+  <form [formGroup]="replyFormGroup" (submit)="onReplyComment(replyFormGroup)">
+    <mat-form-field appearance="outline">
+      <mat-label>Comentario</mat-label>
+      <textarea matInput cdkTextareaAutosize formControlName="message"></textarea>
+    </mat-form-field>
+
+    <div class="set-12 ctrls">
+      <button type="button" mat-raised-button color="warn" (click)="killDialog()" [disabled]="submitted">
+        <small>Cancelar</small>
+      </button>
+      <button type="submit" mat-raised-button color="primary" [disabled]="replyFormGroup.invalid || submitted">
+        <small>Responder</small>
+      </button>
+      <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
+    </div>
+  </form>
+</div>

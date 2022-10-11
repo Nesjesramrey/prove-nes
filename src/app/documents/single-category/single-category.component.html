@@ -45,10 +45,10 @@
               </button>
 
               <mat-menu #menu="matMenu">
-                <!-- <button mat-menu-item (click)="popEditCategoryDialog()">
+                <button mat-menu-item (click)="popEditCategoryDialog()">
                   <mat-icon>settings</mat-icon>
                   <span>Editar</span>
-                </button> -->
+                </button>
 
                 <button type="button" mat-menu-item (click)="popDocumentComments()">
                   <mat-icon>question_answer</mat-icon>
@@ -57,7 +57,7 @@
               </mat-menu>
             </div>
           </div>
-          <p class="card-description" *ngIf="selectedCategory.description != null">{{selectedCategory.description}}</p>
+          <p class="card-description" *ngIf="category.description != null">{{category.description}}</p>
           <!-- <button type="button" class="toolbtn" *ngIf="selectedCategory.description == null"
             (click)="popEditCategoryDialog()">
             <small>Agregar descripción</small>

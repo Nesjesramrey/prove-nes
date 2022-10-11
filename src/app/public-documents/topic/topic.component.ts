@@ -181,8 +181,6 @@ export class TopicComponent implements OnInit {
       this.solutionsData = this.topic.solutions;
       this.SolutionDataSource = new CustomMatDataSource(this.sortSolutions(this.solutionsData));
 
-      console.log(this.topic);
-
       this.getRamdomImage();
       setTimeout(() => {
         this.getBreadcrumbsTitles();
