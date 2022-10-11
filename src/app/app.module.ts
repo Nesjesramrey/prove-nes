@@ -52,14 +52,13 @@ import { NgChartsModule } from 'ng2-charts';
 
 // prod
 const firebaseConfig = {
-  apiKey: "AIzaSyCPslMhtXbG3Yt5zbjrrFgEWQdkNI90eTs",
-  authDomain: "pando-e0a16.firebaseapp.com",
-  databaseURL: "https://pando-e0a16-default-rtdb.firebaseio.com",
-  projectId: "pando-e0a16",
-  storageBucket: "pando-e0a16.appspot.com",
-  messagingSenderId: "77420216693",
-  appId: "1:77420216693:web:86dd81674481bca5b5133c",
-  measurementId: "G-RB5CBF12TF"
+  apiKey: "AIzaSyDAAsZGlnJEzPl9qPm0XiIP9YL4S--VPaU",
+  authDomain: "mexicolectivo-d8868.firebaseapp.com",
+  projectId: "mexicolectivo-d8868",
+  storageBucket: "mexicolectivo-d8868.appspot.com",
+  messagingSenderId: "762515665430",
+  appId: "1:762515665430:web:5980490e2082d9e48d7b37",
+  measurementId: "G-JCHQ7304T0"
 };
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
