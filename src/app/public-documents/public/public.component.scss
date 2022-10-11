@@ -1,6 +1,9 @@
-.container {
-  margin: 120px 40px;
-  margin-bottom: 100px;
+:host {
+  padding: 40px 40px 70px 40px;
+  margin-top: 80px;
+  float: left;
+  width: 100%;
+  height: auto;
 
   .select>select {
     background-color: white;
@@ -24,7 +27,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba($color: #CEDDFF, $alpha: 0.4);
+    background: rgba($color: #ceddff, $alpha: 0.4);
     border-bottom: 1px solid rgba($color: #000000, $alpha: 0.05);
     overflow: hidden;
 
@@ -69,18 +72,34 @@
       cursor: pointer;
     }
   }
-}
 
-.loading {
-  mat-spinner {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  .loading {
+    mat-spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
   }
-}
 
-.imageDocument {
-  width: 100%;
-  height: 208px;
+  .imageDocument {
+    width: 100%;
+    height: 208px;
+  }
+
+  .cards {
+    display: flex;
+
+    .set-6 {
+      flex: 1;
+    }
+
+    .set-6:nth-child(odd) {
+      padding-right: 15px;
+    }
+
+    .set-6:nth-child(even) {
+      padding-left: 15px;
+    }
+  }
 }

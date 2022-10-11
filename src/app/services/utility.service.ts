@@ -10,6 +10,11 @@ export class UtilityService {
   public emailPattern: any = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   public numberOnly: string = '^[0-9]*$';
   public image_extensions: any = ['jpg', 'jpeg', 'png', 'bmp'];
+  public errorOops: string = '¡Oops!... Ocurrió un error, inténtalo más tarde.';
+  public editedSuccess: string = 'Se actualizó correctamente.';
+  public saveSuccess: string = 'Se guardo correctamente.';
+  public userAddedSuccesss: string = 'El usuario se agrego correctamente.';
+  public actionControlActivityList: any = ['administrator', 'editor'];
 
   constructor(
     public snackbar: MatSnackBar,
@@ -81,6 +86,10 @@ export class UtilityService {
     return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAllActivitiesEndPoint, {});
   }
 
+  fetchAssociationTypology() {
+    return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAssociationTypologyEndPoint, {});
+  }
+
   dataURIToBlob(dataURI: string) {
     const splitDataURI = dataURI.split(',');
     const byteString = splitDataURI[0].indexOf('base64') >= 0 ? atob(splitDataURI[1]) : decodeURI(splitDataURI[1]);
@@ -90,5 +99,24 @@ export class UtilityService {
       ia[i] = byteString.charCodeAt(i)
     };
     return new Blob([ia], { type: mimeString });
+  }
+
+  formatBreadscrumbs(arrayTitles: any) {
+    let resultTitle = [];
+    for (let title of arrayTitles) {
+      if (title.length > 0) {
+        const arrayTitle = title.split(' ');
+        title = (arrayTitle.length <= 4)
+          ? title
+          : `${arrayTitle[0]} ${arrayTitle[1]} ${arrayTitle[2]} ${arrayTitle[3]}...`;
+        resultTitle.push(title);
+      }
+    }
+    return resultTitle;
+  }
+
+  formatTitles(document: string, category: string, subCategory: string, topic: string) {
+    const array = [document, category, subCategory, topic];
+    return this.formatBreadscrumbs(array);
   }
 }

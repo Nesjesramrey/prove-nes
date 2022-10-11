@@ -55,13 +55,13 @@
         <small>He leído y estoy de acuerdo con:</small>
       </p>
       <div class="set-12 row">
-        <mat-checkbox formControlName="terms"></mat-checkbox>
+        <mat-checkbox color="primary" formControlName="terms"></mat-checkbox>
         <a href="#">
           <small>Términos y condiciones</small>
         </a>
       </div>
       <div class="set-12 row">
-        <mat-checkbox formControlName="privacy"></mat-checkbox>
+        <mat-checkbox color="primary" formControlName="privacy"></mat-checkbox>
         <a href="#">
           <small>Política de privacidad</small>
         </a>
@@ -80,11 +80,12 @@
         <small>¿Ya tienes cuenta? <a href="#" routerLink="/hub/ingresar">Ingresar</a></small>
       </div>
       <div class="set-6 txt-right">
-        <button type="submit" mat-raised-button color="primary"
-          [disabled]="signUpFormGroup.invalid || submitted">Registrarme</button>
+        <button type="submit" mat-raised-button color="primary" [disabled]="signUpFormGroup.invalid || submitted">
+          <small>Registrarme</small>
+        </button>
       </div>
     </div>
   </form>
 </div>
 
-<div class="cover"></div>
+<!-- <div class="cover"></div> -->

@@ -4,40 +4,38 @@
 
 <div class="set-12" *ngIf="isDataAvailable">
   <div class="set-12">
-    <div class="set-6">
-      <breadcrumbs-component>
-        <li>Documentos</li>
-        <li (click)="utilityService.linkMe('/documentos/' + document._id)">
-          {{ document.title }}
-        </li>
-        <li (click)="utilityService.linkMe('/documentos/' + document._id + '/categoria/' + category._id)">
-          {{ category.category.name }}
-        </li>
-        <li
-          (click)="utilityService.linkMe('/documentos/' + document._id + '/categoria/' + category._id + '/subcategoria/' + subcategory._id)">
-          {{ subcategory.category.name }}
-        </li>
-        <li>{{ topic.title }}</li>
-      </breadcrumbs-component>
-    </div>
+    <breadcrumbs-component>
+      <li>Documentos</li>
+      <li (click)="utilityService.linkMe('/documentos/' + document._id)">
+        {{ document.title }}
+      </li>
+      <li (click)="utilityService.linkMe('/documentos/' + document._id + '/categoria/' + category._id)">
+        {{ category.category.name }}
+      </li>
+      <li
+        (click)="utilityService.linkMe('/documentos/' + document._id + '/categoria/' + category._id + '/subcategoria/' + subcategory._id)">
+        {{ subcategory.category.name }}
+      </li>
+      <li>{{ topic.title }}</li>
+    </breadcrumbs-component>
+  </div>
 
-    <div class="set-6 txt-right">
-      <span class="created-by">
-        Autor:
-        <span class="author">{{ category.createdBy.firstname }}
-          {{ category.createdBy.lastname }}</span>
-      </span>
-    </div>
+  <div class="set-12 author-hldr">
+    <span class="created-by">
+      Autor:
+      <span class="author">{{ topic.createdBy.firstname }}
+        {{ topic.createdBy.lastname }}</span>
+    </span>
   </div>
 
   <div class="set-12">
     <div class="set-3 col-lft">
       <mat-card class="set-12 doc-description">
         <div class="set-12 imghldr">
-          <mat-icon *ngIf="topic.images.length == 0">panorama</mat-icon>
+          <mat-icon class="pano" *ngIf="topic.images.length == 0">panorama</mat-icon>
           <img [src]="topic.images[0]" alt="" *ngIf="topic.images.length != 0">
           <div class="overlay" (click)="popImageViewer()">
-            <mat-icon>photo_camera</mat-icon>
+            <mat-icon color="accent">photo_camera</mat-icon>
             <div class="cover"></div>
           </div>
         </div>
@@ -46,32 +44,33 @@
           <div class="set-12 card-title">
             <div class="set-10">{{topic.title}}</div>
             <div class="set-2 txt-right">
-              <button type="button" [matMenuTriggerFor]="menu">
+              <button type="button" [matMenuTriggerFor]="menu"
+                [disabled]="!actionControlActivityList.includes(user.activityName)">
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <button mat-menu-item>
+                <!-- <button mat-menu-item>
                   <mat-icon>edit</mat-icon>
                   <span>Editar tema</span>
+                </button> -->
+                <button type="button" mat-menu-item (click)="popDocumentComments()">
+                  <mat-icon>question_answer</mat-icon>
+                  <span>Ver comentarios</span>
                 </button>
               </mat-menu>
             </div>
           </div>
-          <!-- <p class="card-description" *ngIf="topic.description != null">{{topic.description}}</p>
-          <button type="button" class="toolbtn" *ngIf="topic.description == null">
-            <small>Agregar descripción</small>
-          </button> -->
-          <avatars-row [users]="collaborators"></avatars-row>
+          <avatars-row [users]="collaborators" *ngIf="actionControlActivityList.includes(user.activityName)">
+          </avatars-row>
         </div>
       </mat-card>
 
-      <mat-card class="set-12 card-chart donut">
+      <!-- <mat-card class="set-12 card-chart donut">
         <p class="title">Título de la gráfica</p>
         <div class="content">
           <canvas class="donut-chart" baseChart [data]="data" [type]="'doughnut'" [options]="chartOptions"></canvas>
         </div>
-
-      </mat-card>
+      </mat-card> -->
     </div>
 
     <div class="set-9 col-rgt">
@@ -79,22 +78,23 @@
         <div class="set-4">
           <mat-form-field appearance="outline">
             <mat-label>Cobertura</mat-label>
-            <mat-select [value]="document.coverage[0]._id">
-              <mat-option *ngFor="let option of document.coverage" [value]="option._id">
+            <mat-select (selectionChange)="onSelectCoverage($event)">
+              <mat-option *ngFor="let option of document.coverage" [value]="option._id" [disabled]="!option.enabled">
                 <small>{{ option.name | titlecase }}</small>
               </mat-option>
             </mat-select>
           </mat-form-field>
         </div>
         <div class="set-8 txt-right">
-          <button type="button" mat-mini-fab color="accent" class="mini test" matTooltip="Agregar Comentario">
+          <button type="button" mat-mini-fab color="primary" class="mini test" matTooltip="Agregar Comentario"
+            (click)="popAddCommentsDialog()">
+            <mat-icon>add_comment</mat-icon>
+          </button>
+          <button type="button" mat-mini-fab color="warn" class="mini test" matTooltip="Agregar Testimonio"
+            *ngIf="actionControlActivityList.includes(user.activityName)" (click)="popAddDocumentTestimony()">
             <mat-icon>forum</mat-icon>
           </button>
-          <button type="button" mat-mini-fab color="primary" class="mini test" matTooltip="Agregar Testimonio"
-            (click)="popAddDocumentTestimony()">
-            <mat-icon>forum</mat-icon>
-          </button>
-          <button type="button" mat-mini-fab color="warn" class="mini insights" matTooltip="Agregar Solución"
+          <button type="button" mat-mini-fab color="accent" class="mini insights" matTooltip="Agregar Solución"
             (click)="popAddDocumentSolution()">
             <mat-icon>insights</mat-icon>
           </button>
@@ -114,32 +114,83 @@
         </div>
 
         <div class="set-12 empty-layouts" *ngIf="solutions.length == 0">
-          <p>Sin soluciones disponibles.</p>
+          <p>
+            <small>Sin soluciones disponibles.</small>
+          </p>
+          <button type="button" mat-raised-button color="primary" (click)="popAddDocumentSolution()">
+            <small>Agregar Solución</small>
+          </button>
         </div>
 
         <table mat-table [dataSource]="dataSource" class="problems-table" *ngIf="solutions.length != 0">
           <ng-container matColumnDef="title">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element">
-              <button type="button" class="catbtn" (click)="linkSolution(element._id)">
-                {{ element.title }}
+              <button type="button" class="catbtn"
+                (click)="linkMe('/documentos/' + document._id + '/categoria/' + categoryID + '/subcategoria/' + subcategoryID + '/temas/' + topic._id + '/solucion/' + element._id)">
+                <mat-icon>question_answer</mat-icon>
+                <small>{{ element.title }}</small>
               </button>
             </td>
           </ng-container>
 
           <ng-container matColumnDef="ranking">
             <th mat-header-cell *matHeaderCellDef>Ranking</th>
-            <td mat-cell *matCellDef="let element">0</td>
+            <td mat-cell *matCellDef="let element">
+              <small>{{ 0 || 'NA' }}</small>
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="users">
             <th mat-header-cell *matHeaderCellDef>Usuarios</th>
-            <td mat-cell *matCellDef="let element">0</td>
+            <td mat-cell *matCellDef="let element">
+              <small>{{ 0 || 'NA' }}</small>
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="interactions">
             <th mat-header-cell *matHeaderCellDef>Interacciones</th>
-            <td mat-cell *matCellDef="let element">0</td>
+            <td mat-cell *matCellDef="let element">
+              <small>{{ 0 || 'NA' }}</small>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="menu">
+            <th mat-header-cell *matHeaderCellDef>&nbsp;</th>
+            <td mat-cell *matCellDef="let element">
+              <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+
+              <mat-menu #menu="matMenu">
+                <button type="button" mat-menu-item
+                  (click)="linkMe('/documentos-publicos/' + document._id + '/categoria/' + categoryID + '/subcategoria/' + subcategoryID + '/tema/' + topic._id + '/solucion/' + element._id)">
+                  <mat-icon>groups</mat-icon>
+                  <small>Abrir público</small>
+                </button>
+                <button type="button" mat-menu-item
+                  (click)="linkMe('/documentos/' + document._id + '/categoria/' + categoryID + '/subcategoria/' + subcategoryID + '/temas/' + topic._id + '/solucion/' + element._id)">
+                  <mat-icon>lock</mat-icon>
+                  <small>Abrir privado</small>
+                </button>
+                <button type="button" mat-menu-item *ngIf="actionControlActivityList.includes(user.activityName)">
+                  <mat-icon>settings</mat-icon>
+                  <small>Editar</small>
+                </button>
+                <button type="button" mat-menu-item *ngIf="actionControlActivityList.includes(user.activityName)">
+                  <mat-icon>file_copy</mat-icon>
+                  <small>Copiar</small>
+                </button>
+                <button type="button" mat-menu-item *ngIf="actionControlActivityList.includes(user.activityName)">
+                  <mat-icon>exit_to_app</mat-icon>
+                  <small>Mover</small>
+                </button>
+                <button type="button" mat-menu-item>
+                  <mat-icon>delete</mat-icon>
+                  <small>Eliminar</small>
+                </button>
+              </mat-menu>
+            </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

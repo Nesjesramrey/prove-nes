@@ -39,14 +39,27 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { NgChartsModule } from 'ng2-charts';
 
+// dev
+// const firebaseConfig = {
+//   apiKey: 'AIzaSyCPslMhtXbG3Yt5zbjrrFgEWQdkNI90eTs',
+//   authDomain: 'pando-e0a16.firebaseapp.com',
+//   projectId: 'pando-e0a16',
+//   storageBucket: 'pando-e0a16.appspot.com',
+//   messagingSenderId: '77420216693',
+//   appId: '1:77420216693:web:af914a0056ca44b6b5133c',
+//   measurementId: 'G-52TGZKKXKS',
+// };
+
+// prod
 const firebaseConfig = {
-  apiKey: 'AIzaSyCPslMhtXbG3Yt5zbjrrFgEWQdkNI90eTs',
-  authDomain: 'pando-e0a16.firebaseapp.com',
-  projectId: 'pando-e0a16',
-  storageBucket: 'pando-e0a16.appspot.com',
-  messagingSenderId: '77420216693',
-  appId: '1:77420216693:web:af914a0056ca44b6b5133c',
-  measurementId: 'G-52TGZKKXKS',
+  apiKey: "AIzaSyCPslMhtXbG3Yt5zbjrrFgEWQdkNI90eTs",
+  authDomain: "pando-e0a16.firebaseapp.com",
+  databaseURL: "https://pando-e0a16-default-rtdb.firebaseio.com",
+  projectId: "pando-e0a16",
+  storageBucket: "pando-e0a16.appspot.com",
+  messagingSenderId: "77420216693",
+  appId: "1:77420216693:web:86dd81674481bca5b5133c",
+  measurementId: "G-RB5CBF12TF"
 };
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';

@@ -1,5 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SolutionService } from 'src/app/services/solution.service';
 import { UtilityService } from 'src/app/services/utility.service';
@@ -15,16 +19,17 @@ export class AddDocumentSolutionComponent implements OnInit {
   public addSolutionFormGroup!: FormGroup;
   public submitted: boolean = false;
   public fileNames: any = [];
-  public messageError : boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<AddDocumentSolutionComponent>,
-    public dialog       : MatDialog, 
+    public dialog: MatDialog,
     public formBuilder: FormBuilder,
     public solutionService: SolutionService,
     public utilityService: UtilityService,
-    @Inject(MAT_DIALOG_DATA) public dialogData: any,
-  ) { }
+    @Inject(MAT_DIALOG_DATA) public dialogData: any
+  ) {
+    console.log(this.dialogData);
+  }
 
   ngOnInit(): void {
     this.addSolutionFormGroup = this.formBuilder.group({
@@ -38,17 +43,6 @@ export class AddDocumentSolutionComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  handleSelectImage(event: any) {
-    if (event == null) return;
-
-    const file = (event.target as HTMLInputElement)?.files![0];
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.imageUrl = reader.result as string;
-    };
-    reader.readAsDataURL(file);
-  }
-
   onFileSelected(event: any) {
     Array.from(event.target.files).forEach((file: any) => { this.fileNames.push(file['name']); });
     this.addSolutionFormGroup.patchValue({ files: event.target.files });
@@ -56,41 +50,30 @@ export class AddDocumentSolutionComponent implements OnInit {
   }
 
   onCreateSolution(form: FormGroup) {
-    try{
-      this.messageError = false;
-      if(this.addSolutionFormGroup.valid){
-        this.submitted = true;
-        let data: any = {
-          topic: this.dialogData['themeID'],
-          formData: new FormData()
-        }
-    
-        Array.from(this.addSolutionFormGroup.controls['files']['value'])
-          .forEach((file: any) => { data['formData'].append('files', file); });
-        data['formData'].append('title', form['value']['title']);
-        data['formData'].append('description', form['value']['description']);
-    
-        this.solutionService.createNewSolution(data).subscribe((reply: any) => {
-          this.submitted = false;
-          this.dialogRef.close(reply);
-        });
-      }else{
-        this.messageError = true;
-    }
-  }catch(error){
-       console.log(error)
-       this.diagloErrorOpen(); 
-    }
-    
+    this.submitted = true;
+
+    let data: any = {
+      formData: new FormData(),
+      topic: this.dialogData['themeID'],
+    };
+
+    Array.from(this.addSolutionFormGroup.controls['files']['value'])
+      .forEach((file: any) => { data['formData'].append('files', file); });
+    data['formData'].append('title', form['value']['title']);
+    data['formData'].append('description', form['value']['description']);
+    data['formData'].append('coverage', JSON.stringify(this.dialogData['coverage']['_id']));
+
+    this.solutionService.createNewSolution(data).subscribe({
+      error: (error: any) => {
+        this.utilityService.openErrorSnackBar(this.utilityService.errorOops);
+        this.killDialog();
+      },
+      next: (reply: any) => {
+        this.dialogRef.close(reply);
+      },
+      complete: () => {
+        this.submitted = false;
+      }
+    });
   }
-
-  diagloErrorOpen(){
-    const dialogRef = this.dialog.open<DialogErrorComponent>(
-      DialogErrorComponent,{
-        width:'550px'
-      })
-
-      dialogRef.afterClosed().subscribe((reply: any) => {
-      });
-  } 
 }

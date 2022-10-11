@@ -33,13 +33,13 @@ export class AddDocumentThemeComponent implements OnInit {
     public utilityService: UtilityService,
     public solutionService: SolutionService
   ) {
-    // console.log(this.dialogData);
+    console.log(this.dialogData);
   }
 
   ngOnInit(): void {
     this.addThemeFormGroup = this.formBuilder.group({
       title: ['', [Validators.required]],
-      description: ['', []],
+      description: ['', [Validators.required]],
       files: ['', []]
     });
 
@@ -75,6 +75,7 @@ export class AddDocumentThemeComponent implements OnInit {
       .forEach((file: any) => { data['formData'].append('files', file); });
     data['formData'].append('title', form['value']['title']);
     data['formData'].append('description', form['value']['description']);
+    data['formData'].append('coverage', JSON.stringify([this.dialogData['coverage']['_id']]));
 
     this.topicService.createNewTopic(data).subscribe({
       error: (error) => {
@@ -107,7 +108,10 @@ export class AddDocumentThemeComponent implements OnInit {
 
     this.solutionService.createNewSolution(data).subscribe((reply: any) => {
       this.submitted = false;
-      this.dialogRef.close(reply);
+      this.dialogRef.close({
+        topic: this.topic,
+        solutions: reply['solutions']
+      });
     });
   }
 }

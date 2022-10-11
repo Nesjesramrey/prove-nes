@@ -1,24 +1,12 @@
 <div class="set-12 map-container">
   <mat-card>
     <div class="map" #svgMapBox>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:amcharts="http://amcharts.com/ammap"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-        version="1.1"
-        class="draw-map"
-       
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:amcharts="http://amcharts.com/ammap"
+        xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="draw-map">
         <g>
-          <path
-            class="land"
-            *ngFor="let statePath of states"
-            (click)="onClickState(statePath)"
-            [id]="statePath.id"
-            [title]="statePath.title"
-            [attr.d]="statePath.d"
-            [ngClass]="activeState.includes(statePath.id) ? 'active' : ''"
-          />
+          <path class="land" *ngFor="let statePath of states" (click)="onClickState(statePath)" [id]="statePath.id"
+            [title]="statePath.title" [attr.d]="statePath.d"
+            [ngClass]="activeState.includes(statePath.id) ? 'active' : ''" />
         </g>
       </svg>
     </div>

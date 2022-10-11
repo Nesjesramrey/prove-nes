@@ -3,16 +3,12 @@
   <mat-list-item *ngFor="let item of data">
     <span mat-line style="font-size: 5px">
       <div mat-line>
-        <p class="name">{{ item.name }}</p>
+        <p class="name">{{ item.title }}</p>
       </div>
     </span>
-    <div mat-line class="progress-bar">
-      <div
-        id="progress"
-        class="progress"
-        [style.width.%]="item.value"
-      ></div>
-      
+    <div mat-line class="progress-bar" [matTooltip]="item.stats.score+' %'" matTooltipClass="tooltip"
+      matTooltipPosition="right">
+      <div id="progress" class="progress" [style.width.%]="item.stats.score"></div>
     </div>
   </mat-list-item>
 </mat-list>

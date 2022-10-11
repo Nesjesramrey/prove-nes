@@ -6,7 +6,8 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./testimonials.component.scss'],
 })
 export class TestimonialsComponent implements OnInit {
-  @Input() data: any = [];
+  @Input('data') data: any = [];
+  // @Input('image') image: string = '';
 
   constructor() {}
 

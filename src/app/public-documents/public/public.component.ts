@@ -4,6 +4,9 @@ import { DocumentService } from 'src/app/services/document.service';
 import { Section } from 'src/app/public-documents/components/top10-list/top10-list.component';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 import { MatDialog } from '@angular/material/dialog';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { SolutionService } from 'src/app/services/solution.service';
+import { LayoutService } from 'src/app/services/layout.service';
 
 @Component({
   selector: '.public-page',
@@ -13,15 +16,19 @@ import { MatDialog } from '@angular/material/dialog';
 export class PublicComponent implements OnInit {
   public documentID: string = '';
   public document: any = null;
-  public items: Section[] = ITEMS;
+  public topSolutions: any = [];
+  public topLayouts: any = [];
   public isDataAvailable: boolean = false;
   public image: string = '../../../assets/images/not_fount.jpg';
+  public coverage: any[] = [];
 
   constructor(
     public activatedRoute: ActivatedRoute,
     public documentService: DocumentService,
     public dialog: MatDialog,
-
+    public formBuilder: FormBuilder,
+    public solutionService: SolutionService,
+    public layoutService: LayoutService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
   }
@@ -35,54 +42,50 @@ export class PublicComponent implements OnInit {
       .fetchSingleDocumentById({ _id: this.documentID })
       .subscribe((reply: any) => {
         this.document = reply;
+        this.coverage = this.document.coverage;
         setTimeout(() => {
           this.isDataAvailable = true;
         }, 300);
         this.image = reply.images.length > 0 ? reply.images[0] : this.image;
       });
+    this.getDataCharts();
+  }
+
+  getDataCharts() {
+    this.solutionService
+      .getTopSolutionsByDocument(this.documentID)
+      .subscribe((resp: any) => {
+        this.topSolutions = resp;
+      });
+    this.layoutService
+      .getTopLayoutByDocument(this.documentID)
+      .subscribe((resp) => {
+        this.topLayouts = resp;
+      });
+    this.layoutService
+      .getTopLayoutByDocument(this.documentID)
+      .subscribe((resp) => {
+        this.topLayouts = resp;
+      });
   }
 
   popImageViewer() {
-    const dialogRef = this.dialog.open<ImageViewerComponent>(ImageViewerComponent, {
-      width: '640px',
-      data: {
-        location: 'document',
-        document: this.document
-      },
-      disableClose: true,
-      panelClass: 'viewer-dialog'
-    });
+    const dialogRef = this.dialog.open<ImageViewerComponent>(
+      ImageViewerComponent,
+      {
+        width: '640px',
+        data: {
+          location: 'document',
+          document: this.document,
+        },
+        disableClose: true,
+        panelClass: 'viewer-dialog',
+      }
+    );
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) { }
+      if (reply != undefined) {
+      }
     });
   }
-
 }
-
-const ITEMS = [
-  {
-    name: 'Construir escuelas en 2 años',
-    value: 88,
-  },
-  {
-    name: 'Construir 1000km de ancho de banda',
-    value: 50,
-  },
-  {
-    name: 'Estrategia de Combate al narcotrafico',
-    value: 50,
-  },
-  {
-    name: 'Camaras con IA en transporte',
-    value: 50,
-  },
-  {
-    name: 'Transporte publico gratis para estudiantes',
-    value: 50,
-  },
-  {
-    name: 'Subsidio a la familia por educacion',
-    value: 50,
-  },
-];

@@ -12,6 +12,10 @@ import { VoteService } from 'src/app/services/vote.service';
 import { ModalVotesComponent } from '../components/modal-votes/modal-votes.component';
 import { UserService } from 'src/app/services/user.service';
 import { AddDocumentCommentComponent } from 'src/app/components/add-document-comment/add-document-comment.component';
+import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
+import { FavoritesService } from 'src/app/services/favorites.service';
+import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
+
 @Component({
   selector: '.solution-page',
   templateUrl: './solution.component.html',
@@ -28,6 +32,8 @@ export class SolutionComponent implements OnInit {
   public submitted: boolean = false;
   public color: any;
   public userVoted: number = 0;
+  public isFavorites: boolean = false;
+  public allFavorites: any = null;
 
   public document: any = null;
   public solution: any = null;
@@ -36,8 +42,9 @@ export class SolutionComponent implements OnInit {
   public topic: any = null;
   public votes: number = 0;
   public image: string = '../../../assets/images/not_fount.jpg';
-
+  public stats: any = {};
   public testimonials: any = TESTIMONIALS;
+  public titles: any = [];
 
   constructor(
     public dialog: MatDialog,
@@ -48,23 +55,76 @@ export class SolutionComponent implements OnInit {
     public topicService: TopicService,
     public solutionService: SolutionService,
     public voteService: VoteService,
-    public UserService: UserService
+    public UserService: UserService,
+    public favoritesService: FavoritesService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
-    this.subcategoryID =
-      this.activatedRoute['snapshot']['params']['subcategoryID'];
+    this.subcategoryID = this.activatedRoute['snapshot']['params']['subcategoryID'];
     this.topicID = this.activatedRoute['snapshot']['params']['topicID'];
     this.solutionID = this.activatedRoute['snapshot']['params']['solutionID'];
   }
 
   ngOnInit(): void {
     this.user = this.UserService.fetchFireUser().subscribe({
-      error: (error: any) => {},
+      error: (error: any) => { },
       next: (reply: any) => {
         this.user = reply;
         this.loadSolution();
       },
+    });
+  }
+
+  addFavorites() {
+    let favorited = this.getUserFavorited();
+    if (favorited.length > 0) {
+      let data = {
+        _id: favorited[0]._id,
+        favorites: true,
+      };
+      this.favoritesService.updateFavorites(data).subscribe((reply: any) => {
+        if (reply.message == 'favorite update success') {
+          this.isFavorites = true;
+        }
+      });
+    } else {
+      let data = {
+        solution: this.solutionID,
+        favorites: true,
+      };
+      this.favoritesService.addFavorites(data).subscribe((reply: any) => {
+        if (reply.message == 'favorites add success') {
+          this.isFavorites = true;
+        }
+        this.allFavorites = [reply.data];
+      });
+    }
+  }
+
+  checkFavorites() {
+    let favorited = this.getUserFavorited();
+    if (favorited.length > 0) {
+      return favorited[0].favorites;
+    }
+    return false;
+  }
+
+  getUserFavorited() {
+    return this.allFavorites.filter(
+      (item: any) => item.createdBy === this.user._id
+    );
+  }
+
+  removeFavorites() {
+    let favorited = this.getUserFavorited();
+    let data = {
+      _id: favorited[0]._id,
+      favorites: false,
+    };
+    this.favoritesService.updateFavorites(data).subscribe((reply: any) => {
+      if (reply.message == 'favorite update success') {
+        this.isFavorites = false;
+      }
     });
   }
 
@@ -87,6 +147,11 @@ export class SolutionComponent implements OnInit {
       _id: this.solutionID,
     });
 
+    let favorites: Observable<any> =
+      this.favoritesService.fetchFavoritesBySolutionID({
+        _id: this.solutionID,
+      });
+
     forkJoin([
       document,
       category,
@@ -94,6 +159,7 @@ export class SolutionComponent implements OnInit {
       topic,
       solution,
       votes,
+      favorites,
     ]).subscribe((reply: any) => {
       this.userVoted = this.checkUserVote(reply[5]);
       this.document = reply[0];
@@ -101,14 +167,29 @@ export class SolutionComponent implements OnInit {
       this.subcategory = reply[2];
       this.topic = reply[3];
       this.solution = reply[4];
+      this.stats = this.solution.stats;
       this.votes = reply[5].length;
-      this.image = reply[3].images.length > 0 ? reply[3].images[0] : this.image;
+      this.allFavorites = reply[6].data;
+      this.isFavorites = this.checkFavorites();
+      this.getRamdomImage();
 
       setTimeout(() => {
         this.getBreadcrumbsTitles();
         this.isDataAvailable = true;
       }, 300);
     });
+  }
+
+  getRamdomImage() {
+    let testimonials_withs_images = this.solution.testimonials.filter(
+      (testimonial: any) => testimonial.images.length > 0
+    );
+    if (testimonials_withs_images.length > 0) {
+      let index = Math.floor(Math.random() * testimonials_withs_images.length);
+      this.image = testimonials_withs_images[index].images[0];
+    } else {
+      this.image = '';
+    }
   }
 
   checkUserVote(votes: any[]) {
@@ -127,6 +208,7 @@ export class SolutionComponent implements OnInit {
           categoryID: this.categoryID,
           topicID: this.solutionID,
           type: 'solution',
+          image: this.image,
         },
         disableClose: true,
       }
@@ -161,6 +243,29 @@ export class SolutionComponent implements OnInit {
     });
   }
 
+  popAddCommentsDialog() {
+    let coverage = this.solution['coverage'];
+    if (coverage.length == 0) {
+      this.utilityService.openErrorSnackBar('Selecciona una cobertura.');
+      return;
+    }
+
+    const dialogRef = this.dialog.open<AddCommentsComponent>(AddCommentsComponent, {
+      width: '640px',
+      data: {
+        location: 'solution',
+        document: this.document,
+        solution: this.solution,
+        coverage: coverage[0]
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
   openModalVote() {
     const dialogRef = this.dialog.open<ModalVotesComponent>(
       ModalVotesComponent,
@@ -174,16 +279,6 @@ export class SolutionComponent implements OnInit {
       this.loadSolution();
     });
   }
-  // unVote() {
-  //   this.voteService.deleteVote({ _id: this.userVoted }).subscribe({
-  //     error: (error: any) => {
-  //       console.log(error);
-  //     },
-  //     next: (reply: any) => {
-  //       this.loadSolution();
-  //     },
-  //   });
-  // }
 
   getBreadcrumbsTitles() {
     this.topic.shortTitle = this.getshortTitle(this.topic.title);
@@ -192,11 +287,32 @@ export class SolutionComponent implements OnInit {
 
   getshortTitle(title: string) {
     const titleArr = title.split(' ');
-    if (titleArr.length > 3) {
-      return titleArr[0] + ' ' + titleArr[1] + ' ' + titleArr[2] + '...';
+    if (titleArr.length > 4) {
+      return `${titleArr[0]} ${titleArr[1]} ${titleArr[2]} ${titleArr[3]}...`;
     }
     return title;
   }
+
+  popImageViewer() {
+    const dialogRef = this.dialog.open<ImageViewerComponent>(
+      ImageViewerComponent,
+      {
+        width: '640px',
+        data: {
+          location: 'document',
+          document: this.topic,
+        },
+        disableClose: true,
+        panelClass: 'viewer-dialog',
+      }
+    );
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+      }
+    });
+  }
+
 }
 
 export interface ITestimony {

@@ -9,21 +9,16 @@ import { ChartOptions, ChartData } from 'chart.js';
   styleUrls: ['./map-box.component.scss'],
 })
 export class MapBoxComponent implements OnInit {
-  // public activeState: string | null = null;
-  public mapStates: statePath[] = _statesList; // map
+  public mapStates: statePath[] = _statesList;
   public selectedState: statePath = this.mapStates[0];
-  // API
   public states: any = [];
   public isDataAvailable: boolean = false;
-
   public data: ChartData<'doughnut'> = data;
-
   public chartOptions: ChartOptions<'doughnut'> = {
     cutout: 80,
     plugins: {
       legend: { display: false },
     },
-
     scales: {
       x: {
         display: false,
@@ -35,34 +30,25 @@ export class MapBoxComponent implements OnInit {
       },
     },
   };
-
   @ViewChild('svgMapBox') svgMapBox!: ElementRef<HTMLDivElement>;
 
-  constructor(public utilitySrvc: UtilityService) { }
+  constructor(
+    public utilityService: UtilityService
+  ) { }
 
   ngOnInit(): void {
-    let states: Observable<any> = this.utilitySrvc.fetchAllStates();
-    // let activities: Observable<any> = this.utilitySrvc.fetchAllCategories();
-
+    let states: Observable<any> = this.utilityService.fetchAllStates();
     forkJoin([states]).subscribe((reply: any) => {
-      // console.log(reply);
       this.states = reply[0];
-
       this.isDataAvailable = true;
     });
   }
 
   ngAfterViewInit() {
-    // console.log('ngAfterViewInit');
     setTimeout(() => {
-      this.svgMapBox.nativeElement.scrollLeft =
-        (this.svgMapBox.nativeElement.clientWidth / 9) * 5;
+      this.svgMapBox.nativeElement.scrollLeft = (this.svgMapBox.nativeElement.clientWidth / 9) * 5;
       this.svgMapBox.nativeElement.scrollTop = 75;
-    }, 100);
-  }
-
-  loaded() {
-    console.log('LOADASD');
+    });
   }
 
   onClickState(newState: statePath) {

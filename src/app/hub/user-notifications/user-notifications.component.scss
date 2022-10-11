@@ -1,5 +1,8 @@
 :host {
-  margin-top: 70px;
+  width: 100%;
+  margin-top: 80px;
+  margin-bottom: 100px;
+  float: left;
 
   mat-spinner {
     position: absolute !important;
@@ -29,6 +32,21 @@
       overflow: hidden;
       background: #f1f1f1;
       margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #1e7e7f;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        float: left;
+      }
     }
+  }
+
+  .unread {
+    background: rgba($color: #1e7e7f, $alpha: 0.3);
   }
 }

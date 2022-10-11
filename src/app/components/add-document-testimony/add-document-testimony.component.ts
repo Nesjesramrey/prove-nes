@@ -1,5 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { AddDocumentThemeComponent } from '../add-document-theme/add-document-theme.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TestimonyService } from 'src/app/services/testimony.service';
@@ -15,14 +19,15 @@ export class AddDocumentTestimonyComponent implements OnInit {
   public imageUrl: string | null = null;
   public submitted = false;
   public file: any = null;
-  public messageError : boolean = false;
+  public messageError: boolean = false;
+  public isAnonymous: boolean = false;
   constructor(
     public formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<AddDocumentThemeComponent>,
-    public dialog       : MatDialog, 
+    public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public testimonyService: TestimonyService
-  ) {}
+  ) { }
 
   killDialog() {
     this.dialogRef.close();
@@ -30,10 +35,12 @@ export class AddDocumentTestimonyComponent implements OnInit {
 
   ngOnInit(): void {
     this.addTestimonyFormGroup = this.formBuilder.group({
-      name: ['', [Validators.required]],
       description: ['', [Validators.required]],
       image: ['', []],
     });
+  }
+  visibility() {
+    this.isAnonymous = !this.isAnonymous;
   }
 
   handleSelectImage(event: any) {
@@ -49,46 +56,45 @@ export class AddDocumentTestimonyComponent implements OnInit {
   }
 
   createTestimony(formGroup: FormGroup) {
-
-    try{
-      if(this.addTestimonyFormGroup.valid){
+    try {
+      if (this.addTestimonyFormGroup.valid) {
         this.submitted = true;
-
-        const { name, description } = formGroup.value;
+        const { description } = formGroup.value;
         const { topicID, type } = this.dialogData;
-        
+
         const formData = new FormData();
-        formData.append('name', name);
         formData.append('description', description);
         formData.append('files', this.file);
-    
+        formData.append('isAnonymous', (!this.isAnonymous).toString());
+
         const data = {
           form: formData,
           id: topicID,
-          type: type,
+          type: type
         };
-    
-        this.testimonyService.createNewTestimony(data).subscribe((reply: any) => {
-          this.submitted = false;
-          this.dialogRef.close(reply);
-        });
-      }else{
+
+        this.testimonyService
+          .createNewTestimony(data)
+          .subscribe((reply: any) => {
+            this.submitted = false;
+            this.dialogRef.close(reply);
+          });
+      } else {
         this.messageError = true;
       }
-    }catch(error){
+    } catch (error) {
       this.diagloErrorOpen();
     }
-   
   }
 
-
-  diagloErrorOpen(){
+  diagloErrorOpen() {
     const dialogRef = this.dialog.open<DialogErrorComponent>(
-      DialogErrorComponent,{
-        width:'550px'
-      })
+      DialogErrorComponent,
+      {
+        width: '550px',
+      }
+    );
 
-      dialogRef.afterClosed().subscribe((reply: any) => {
-      });
-  } 
+    dialogRef.afterClosed().subscribe((reply: any) => { });
+  }
 }

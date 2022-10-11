@@ -32,6 +32,7 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { ModalSolutionComponent } from './modal-solution/modal-solution.component';
 import { ModalTestimonyComponent } from './modal-testimony/modal-testimony.component';
 import { ModalVotesComponent } from './modal-votes/modal-votes.component';
+import { ModalDesciptionComponent } from './modal-desciption/modal-desciption.component';
 
 @NgModule({
   imports: [
@@ -69,6 +70,7 @@ import { ModalVotesComponent } from './modal-votes/modal-votes.component';
     ModalSolutionComponent,
     ModalTestimonyComponent,
     ModalVotesComponent,
+    ModalDesciptionComponent,
   ],
   exports: [
     Top10ListComponent,

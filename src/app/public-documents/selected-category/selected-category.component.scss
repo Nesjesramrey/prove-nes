@@ -5,7 +5,7 @@
   width: 100%;
   height: auto;
 
-  .select > select {
+  .select>select {
     background-color: white;
     width: 114px;
     height: 26px;
@@ -17,6 +17,7 @@
     border: 1px solid #A5A5A5;
     border-radius: 5px;
   }
+
   .title {
     text-transform: uppercase;
     font-family: 'Noto Sans';
@@ -25,11 +26,13 @@
     font-size: 18px;
     line-height: 25px;
   }
+
   .button {
     width: 100%;
     display: flex;
     justify-content: right;
-    & > button {
+
+    &>button {
       background: #FFFFFF;
       border: 1px solid #306EFF;
       border-radius: 5px;
@@ -43,6 +46,7 @@
       margin: 0px 0px 0px auto;
     }
   }
+
   .col-rgt {
     padding-left: 30px;
   }
@@ -103,7 +107,7 @@
 
     mat-icon {
       font-size: 14pt !important;
-      color: #fff;        
+      color: #fff;
     }
   }
 
@@ -160,7 +164,7 @@
 
   .info-lists {
     padding: 1.5em;
-     
+
     p.list-title {
       display: flex;
       align-items: center;
@@ -176,6 +180,7 @@
         &.icon-insights {
           color: #20C588;
         }
+
         &.icon-warnings {
           color: #E98282;
         }
@@ -244,7 +249,7 @@
           border: 1px solid transparent;
           cursor: text;
 
-        
+
           .text {
             font-size: 1.1em;
           }
@@ -256,10 +261,11 @@
           mat-icon {
             font-size: 15pt;
           }
-          
-          &:hover, &.editing {
+
+          &:hover,
+          &.editing {
             background-color: #CEDDFF;
-            border-color:  #306EFF;
+            border-color: #306EFF;
           }
 
 
@@ -272,9 +278,10 @@
             }
           }
         }
+
         // display: inline-block;
       }
-      
+
       .mat-column-actions {
         width: 50px;
         padding-right: 0;
@@ -289,9 +296,11 @@
     max-width: 400px;
     padding: 0px;
   }
-  .card-item > span.mat-list-base .mat-list-item .mat-list-item-content {
-    padding: 0px!important;
+
+  .card-item>span.mat-list-base .mat-list-item .mat-list-item-content {
+    padding: 0px !important;
   }
+
   .inner-container {
     margin: 5px;
     padding: 5px;

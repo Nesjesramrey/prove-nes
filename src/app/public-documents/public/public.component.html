@@ -2,35 +2,36 @@
   <mat-spinner></mat-spinner>
 </div>
 
-<div class="container" *ngIf="isDataAvailable">
-  <div class="set-12 txt-left">
+<div class="set-12" *ngIf="isDataAvailable">
+  <div class="set-12 author-hldr">
     <span class="created-by">
-      Autor:
-      <span class="author">{{ document.createdBy.firstname }}
-        {{ document.createdBy.lastname }}</span>
+      Autor: <span class="author">Mexicolectivo</span>
     </span>
   </div>
-  <div class="set-12" style="padding-bottom: 100px; margin-top: 10px">
+
+  <div class="set-12">
     <div class="set-3 col-lft">
       <mat-card class="set-12 doc-description">
         <div class="set-12 imghldr">
           <mat-icon *ngIf="document.images.length == 0">panorama</mat-icon>
           <slider-images [images]="document.images" *ngIf="document.images.length != 0"></slider-images>
-          <div class="overlay" (click)="popImageViewer()">
+          <!-- <div class="overlay" (click)="popImageViewer()">
             <mat-icon>photo_camera</mat-icon>
             <div class="cover"></div>
-          </div>
+          </div> -->
         </div>
+
         <div class="set-12 infohldr">
           <p class="set-12 card-title">{{ document.title }}</p>
-          <expanded-text [text]="document.description" [minLength]="200"></expanded-text>
+          <expanded-text [text]="document.description" [minLength]="200" [title]="document.title"></expanded-text>
         </div>
       </mat-card>
 
-      <horizontal-stats></horizontal-stats>
+      <horizontal-stats [users]="document.stats?.users" [interactions]="document.stats?.interactions">
+      </horizontal-stats>
 
       <div class="set-12">
-        <vertical-stats></vertical-stats>
+        <vertical-stats [topics]="document.stats?.topics" [solutions]="document.stats?.solutions"></vertical-stats>
       </div>
 
       <div class="set-12 mt-2">
@@ -40,26 +41,25 @@
 
     <div class="set-9 col-rgt">
       <panel-circles [data]="document.layouts" [document]="document" [redirectTo]="'CATEGORY'"></panel-circles>
+
       <div class="mt-2 set-3">
         <mat-form-field appearance="outline">
           <mat-label>Cobertura</mat-label>
           <mat-select>
-            <mat-option value="all">
-              <small>Nacional</small>
+            <mat-option *ngFor="let location of coverage" [value]="location._id">
+              <small>{{ location.name }}</small>
             </mat-option>
-            <mat-option> Municipio 1 </mat-option>
-            <mat-option> Municipio 2 </mat-option>
-            <mat-option> Municipio 3 </mat-option>
-            <mat-option> Municipio 4 </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="set-12 mt-2">
-        <div class="set-6 col-rgt-2">
-          <spider-chart></spider-chart>
-        </div>
+
+      <div class="set-12 cards">
         <div class="set-6">
-          <top10-list [data]="items"></top10-list>
+          <spider-chart [data]="topLayouts"></spider-chart>
+        </div>
+
+        <div class="set-6">
+          <top10-list [data]="topSolutions"></top10-list>
         </div>
       </div>
     </div>

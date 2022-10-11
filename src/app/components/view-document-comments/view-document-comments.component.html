@@ -1,0 +1,64 @@
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+
+<div class="set-12" *ngIf="isDataAvailable">
+  <div class="set-12 dialog-head">
+    <button type="button" matTooltip="Salir" matTooltipClass="tooltip" (click)="killDialog()">
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </div>
+
+  <div class="set-12 dialog-body">
+    <div class="set-12" *ngIf="comments.length == 0">
+      <div class="set-12 empty">
+        <p>
+          <small>No hay comentarios.</small>
+        </p>
+      </div>
+    </div>
+
+    <div class="set-12" *ngIf="comments.length != 0">
+      <div class="set-12 comment" *ngFor="let comment of comments">
+        <p>
+          <small>
+            <i>De: <strong>{{comment.createdBy.firstname}} {{comment.createdBy.lastname}}</strong></i>
+          </small>
+        </p>
+        <div class="set-12 mess">
+          <small>{{comment.message}}</small>
+        </div>
+
+        <div class="set-12 reply-hldr" *ngIf="comment.viewReply">
+          <div class="set-12 reply" *ngFor="let reply of comment.comments">
+            <small>{{ reply.message }}</small>
+          </div>
+        </div>
+
+        <div class="set-12 ctrls">
+          <button type="button" mat-mini-fab color="primary" matTooltip="Eliminar" matTooltipClass="tooltip"
+            (click)="killComment(comment)" [disabled]="submitted">
+            <mat-icon>delete</mat-icon>
+          </button>
+
+          <button type="button" mat-mini-fab color="primary" matTooltip="Responder" matTooltipClass="tooltip"
+            [disabled]="submitted" (click)="popReplyCommentDialog(comment)">
+            <mat-icon>reply</mat-icon>
+          </button>
+
+          <button type="button" mat-mini-fab color="primary" matTooltip="Ver comentarios" matTooltipClass="tooltip"
+            [disabled]="submitted || comment.comments.length == 0" (click)="viewReply(comment)">
+            <mat-icon>forum</mat-icon>
+          </button>
+
+          <button type="button" mat-mini-fab color="primary" matTooltip="Archivo" matTooltipClass="tooltip"
+            [disabled]="comment.attachment == null">
+            <a [href]="comment.attachment" target="_top">
+              <mat-icon>attach_file</mat-icon>
+            </a>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

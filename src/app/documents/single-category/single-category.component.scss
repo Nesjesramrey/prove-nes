@@ -9,6 +9,12 @@
     padding-left: 30px;
   }
 
+  .col-lft {
+    mat-card:not(:first-child) {
+      margin-top: 20px;
+    }
+  }
+
   .doc-description {
     padding: 0 !important;
   }
@@ -23,7 +29,7 @@
     border-bottom: 1px solid rgba($color: #000000, $alpha: 0.05);
     overflow: hidden;
 
-    mat-icon {
+    mat-icon.pano {
       font-size: 70pt;
       color: rgba($color: #000000, $alpha: 0.1);
     }
@@ -87,8 +93,8 @@
 
     .roundico-green,
     .roundico-orange {
-      width: 70px;
-      height: 70px;
+      width: 50px;
+      height: 50px;
       border-radius: 100%;
       overflow: hidden;
       display: flex;
@@ -120,10 +126,24 @@
     mat-icon {
       font-size: 30pt;
     }
+
+    .set-8 {
+      text-align: center;
+    }
   }
 
   .inner-card:last-child {
     margin-bottom: 0;
+  }
+
+  .list-hldr {
+    .set-6:nth-child(odd) {
+      padding-right: 10px;
+    }
+
+    .set-6:nth-child(even) {
+      padding-left: 10px;
+    }
   }
 
   .info-lists {
@@ -184,6 +204,10 @@
 
     .empty-layouts {
       margin-top: 40px;
+
+      p {
+        margin-bottom: 10px;
+      }
     }
 
     .categories-table {
@@ -235,7 +259,7 @@
     }
 
     input[type="text"]:focus {
-      box-shadow: inset 0 0 0 2px #306EFF;
+      box-shadow: inset 0 0 0 2px #00031d;
     }
 
     input[type="text"]:disabled {

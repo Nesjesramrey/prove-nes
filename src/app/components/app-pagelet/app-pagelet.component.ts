@@ -1,13 +1,11 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ActivatedRoute, Router } from '@angular/router';
-import { forkJoin, Observable } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { SocketService } from 'src/app/services/socket.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
-// btn
 import { MatDialog } from '@angular/material/dialog';
 import { ModalPermissionsComponent } from 'src/app/public-documents/components/modal-permissions/modal-permissions.component';
 
@@ -17,7 +15,6 @@ import { ModalPermissionsComponent } from 'src/app/public-documents/components/m
   styleUrls: ['./app-pagelet.component.scss'],
 })
 export class AppPageletComponent implements OnInit {
-  public token: any = null;
   @Input('user') public user: any = null;
   @Input('path') public path: any = null;
   public notifications: any = null;
@@ -36,43 +33,56 @@ export class AppPageletComponent implements OnInit {
     public utilitySrvc: UtilityService,
     public angularFireAuth: AngularFireAuth,
     public activatedRoute: ActivatedRoute,
-
     public dialog: MatDialog
-  ) {
-    this.token = this.authenticationSrvc.fetchAccessToken;
-  }
+  ) { }
 
   ngOnInit(): void {
     this.reset();
+
     setTimeout(() => {
+      this.notificationSrvc.notificationCountSubject.subscribe((reply: any) => {
+        if (reply != null) {
+          if (reply['reload']) {
+            this.notificationSrvc.fetchMyNotificationUnread({ userID: this.user['_id'] })
+              .subscribe((reply: any) => {
+                this.unreadNotifications = reply['count'];
+              });
+          }
+        }
+      });
+
       if (this.user) {
+        // console.log('user: ', this.user);
         this.user['activities'].filter((x: any) => {
           this.userActivities.push(x['value']);
         });
 
-        this.notificationSrvc
-          .fetchMyNotificationUnread({ userID: this.user['_id'] })
+        this.notificationSrvc.fetchMyNotificationUnread({ userID: this.user['_id'] })
           .subscribe((reply: any) => {
             this.unreadNotifications = reply['count'];
           });
 
-        if (
-          ['administrator', 'editor'].includes(this.user.activities?.[0]?.value)
-        ) {
+        if (['administrator', 'editor'].includes(this.user.activities?.[0]?.value)) {
           this.permission = true;
         } else {
           this.permission = false;
         }
 
-        this.isDataAvailable = true;
+        setTimeout(() => {
+          this.isDataAvailable = true;
+        });
       } else {
-        this.isDataAvailable = true;
+        setTimeout(() => {
+          this.isDataAvailable = true;
+        });
       }
     });
   }
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes['path']) this.reset();
   }
+
   reset() {
     const isDocument = this.router.url.indexOf('documentos');
     this.isPublic = this.router.url.indexOf('documentos-publicos');
@@ -113,7 +123,11 @@ export class AppPageletComponent implements OnInit {
   onSignOut() {
     return this.angularFireAuth.signOut().then(() => {
       localStorage.removeItem('accessToken');
-      this.router.navigateByUrl('/', { state: { status: 'logout' } });
+      if (this.path == '/') {
+        window.location.reload();
+      } else {
+        this.router.navigateByUrl('/', { state: { status: 'logout' } });
+      }
     });
   }
 
@@ -126,8 +140,9 @@ export class AppPageletComponent implements OnInit {
       }
     );
 
-    dialogRef.afterClosed().subscribe((reply: any) => {});
+    dialogRef.afterClosed().subscribe((reply: any) => { });
   }
+
   getRedirectUrl() {
     let params = window.location.pathname.split('/').filter((x) => x);
 
@@ -157,6 +172,7 @@ export class AppPageletComponent implements OnInit {
       return acc;
     }, '');
   }
+
   redirectEdition() {
     this.router.navigateByUrl(this.redirectUrl);
   }

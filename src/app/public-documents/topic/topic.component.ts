@@ -1,23 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
-import { MatButtonModule } from '@angular/material/button';
 import { forkJoin, Observable } from 'rxjs';
 import { LayoutService } from 'src/app/services/layout.service';
 import { DocumentService } from 'src/app/services/document.service';
 import { TopicService } from 'src/app/services/topic.service';
 import { MatDialog } from '@angular/material/dialog';
-// import { ModalSolutionComponent } from '../components/modal-solution/modal-solution.component';
-import { ModalTestimonyComponent } from '../components/modal-testimony/modal-testimony.component';
 import { AddDocumentTestimonyComponent } from 'src/app/components/add-document-testimony/add-document-testimony.component';
 import { AddDocumentSolutionComponent } from 'src/app/components/add-document-solution/add-document-solution.component';
 import { VoteService } from 'src/app/services/vote.service';
 import { ModalVotesComponent } from '../components/modal-votes/modal-votes.component';
-import { ThisReceiver } from '@angular/compiler';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
 import { AddDocumentCommentComponent } from 'src/app/components/add-document-comment/add-document-comment.component';
 import { MatTableDataSource } from '@angular/material/table';
+import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
+import { CustomMatDataSource } from '../custom-class/custom-table.component';
+import { FavoritesService } from 'src/app/services/favorites.service';
+import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
+
 @Component({
   selector: '.topic-page',
   templateUrl: './topic.component.html',
@@ -40,9 +40,13 @@ export class TopicComponent implements OnInit {
   public image: string = '../../../assets/images/not_fount.jpg';
   public permission: any;
   public SolutionDataSource = new MatTableDataSource<any>();
-
+  public stats: any;
+  public isFavorites: boolean = false;
+  public allFavorites: any = null;
   public testimonials: any = TESTIMONIALS;
   public solutionsData: any = [];
+  public titles: any = [];
+
   constructor(
     public dialog: MatDialog,
     public activatedRoute: ActivatedRoute,
@@ -52,30 +56,81 @@ export class TopicComponent implements OnInit {
     public topicService: TopicService,
     public voteService: VoteService,
     public UserService: UserService,
+    public favoritesService: FavoritesService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
-    this.subcategoryID =
-      this.activatedRoute['snapshot']['params']['subcategoryID'];
+    this.subcategoryID = this.activatedRoute['snapshot']['params']['subcategoryID'];
     this.topicID = this.activatedRoute['snapshot']['params']['topicID'];
-
   }
 
   ngOnInit(): void {
     this.user = this.UserService.fetchFireUser().subscribe({
-      error: (error: any) => {
-        console.log(error);
-      },
+      error: (error: any) => { },
       next: (reply: any) => {
         this.user = reply;
         this.loadTopic();
+
         if (['administrator', 'editor'].includes(this.user.activities?.[0]?.value)) {
           this.permission = true;
         } else {
           this.permission = false;
         }
       },
+    });
+  }
 
+  checkFavorites() {
+    let favorited = this.getUserFavorited();
+    if (favorited.length > 0) {
+      return favorited[0].favorites;
+    }
+    return false;
+  }
+
+  getUserFavorited() {
+    return this.allFavorites.filter(
+      (item: any) => item.createdBy === this.user._id
+    );
+  }
+
+  addFavorites() {
+    let favorited = this.getUserFavorited();
+    if (favorited.length > 0) {
+      let data = {
+        _id: favorited[0]._id,
+        favorites: true,
+      };
+
+      this.favoritesService.updateFavorites(data).subscribe((reply: any) => {
+        if (reply.message == 'favorite update success') {
+          this.isFavorites = true;
+        }
+      });
+    } else {
+      let data = {
+        topic: this.topicID,
+        favorites: true,
+      };
+      this.favoritesService.addFavorites(data).subscribe((reply: any) => {
+        if (reply.message == 'favorites add success') {
+          this.isFavorites = true;
+        }
+        this.allFavorites = [reply.data];
+      });
+    }
+  }
+
+  removeFavorites() {
+    let favorited = this.getUserFavorited();
+    let data = {
+      _id: favorited[0]._id,
+      favorites: false,
+    };
+    this.favoritesService.updateFavorites(data).subscribe((reply: any) => {
+      if (reply.message == 'favorite update success') {
+        this.isFavorites = false;
+      }
     });
   }
 
@@ -95,25 +150,55 @@ export class TopicComponent implements OnInit {
     let votes: Observable<any> = this.voteService.fetchVotesByTopicID({
       _id: this.topicID,
     });
+    let favorites: Observable<any> =
+      this.favoritesService.fetchFavoritesByTopicID({
+        _id: this.topicID,
+      });
 
-    forkJoin([document, category, subcategory, topic, votes]).subscribe(
-      (reply: any) => {
-        this.userVoted = this.checkUserVote(reply[4]);
-        this.document = reply[0];
-        this.category = reply[1];
-        this.subcategory = reply[2];
-        this.topic = reply[3];
-        this.votes = reply[4].length;
-        this.solutionsData = this.topic.solutions;
-        this.SolutionDataSource = new MatTableDataSource(this.solutionsData);
+    forkJoin([
+      document,
+      category,
+      subcategory,
+      topic,
+      votes,
+      favorites,
+    ]).subscribe((reply: any) => {
+      this.titles = this.utilityService.formatTitles(
+        reply[0].title,
+        reply[1].category.name,
+        reply[2].category.name,
+        reply[3].title
+      );
+      this.userVoted = this.checkUserVote(reply[4]);
+      this.allFavorites = reply[5].data;
+      this.isFavorites = this.checkFavorites();
+      this.document = reply[0];
+      this.category = reply[1];
+      this.subcategory = reply[2];
+      this.topic = reply[3];
+      this.stats = this.topic.stats;
+      this.votes = reply[4].length;
+      this.solutionsData = this.topic.solutions;
+      this.SolutionDataSource = new CustomMatDataSource(this.sortSolutions(this.solutionsData));
 
-        this.image = (reply[3].images.length > 0) ? reply[3].images[0] : this.image;
-        setTimeout(() => {
-          this.getBreadcrumbsTitles();
-          this.isDataAvailable = true;
-        }, 300);
-      }
+      this.getRamdomImage();
+      setTimeout(() => {
+        this.getBreadcrumbsTitles();
+        this.isDataAvailable = true;
+      }, 300);
+    });
+  }
+
+  getRamdomImage() {
+    let testimonials_withs_images = this.topic.testimonials.filter(
+      (testimonial: any) => testimonial.images.length > 0
     );
+    if (testimonials_withs_images.length > 0) {
+      let index = Math.floor(Math.random() * testimonials_withs_images.length);
+      this.image = testimonials_withs_images[index].images[0];
+    } else {
+      this.image = '';
+    }
   }
 
   checkUserVote(votes: any[]) {
@@ -132,6 +217,9 @@ export class TopicComponent implements OnInit {
           categoryID: this.categoryID,
           topicID: this.topicID,
           type: 'topic',
+          image: this.image,
+          firstname: this.user.firstname,
+          lastname: this.user.lastname,
         },
         disableClose: true,
       }
@@ -166,10 +254,10 @@ export class TopicComponent implements OnInit {
         this.solutionsData.unshift(solution);
         this.SolutionDataSource = new MatTableDataSource(this.solutionsData);
         // this.SolutionDataSource.setData(solution);
-
       }
     });
   }
+
   openModalVote() {
     const dialogRef = this.dialog.open<ModalVotesComponent>(
       ModalVotesComponent,
@@ -184,6 +272,26 @@ export class TopicComponent implements OnInit {
     });
   }
 
+  popImageViewer() {
+    const dialogRef = this.dialog.open<ImageViewerComponent>(
+      ImageViewerComponent,
+      {
+        width: '640px',
+        data: {
+          location: 'document',
+          document: this.topic,
+        },
+        disableClose: true,
+        panelClass: 'viewer-dialog',
+      }
+    );
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+      }
+    });
+  }
+
   openModalComment() {
     const dialogRef = this.dialog.open<AddDocumentCommentComponent>(
       AddDocumentCommentComponent,
@@ -192,7 +300,7 @@ export class TopicComponent implements OnInit {
         data: {
           documentID: this.documentID,
           document: this.document,
-          relationID: this.categoryID,
+          relationID: this.topicID,
           typeID: this.topicID,
           type: 'topic',
         },
@@ -201,8 +309,30 @@ export class TopicComponent implements OnInit {
     );
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) {
-      }
+      if (reply != undefined) { }
+    });
+  }
+
+  popAddCommentsDialog() {
+    let coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.topic['coverage'][0] });
+    if (coverage.length == 0) {
+      this.utilityService.openErrorSnackBar('Selecciona una cobertura.');
+      return;
+    }
+
+    const dialogRef = this.dialog.open<AddCommentsComponent>(AddCommentsComponent, {
+      width: '640px',
+      data: {
+        location: 'topic',
+        document: this.document,
+        topic: this.topic,
+        coverage: coverage[0]
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
     });
   }
 
@@ -224,9 +354,15 @@ export class TopicComponent implements OnInit {
   getshortTitle(title: string) {
     const titleArr = title.split(' ');
     if (titleArr.length > 3) {
-      return titleArr[0] + ' ' + titleArr[1] + ' ' + titleArr[2] + '...';
+      return `${titleArr[0]} ${titleArr[1]} ${titleArr[2]} ${titleArr[3]}...`;
     }
     return title;
+  }
+
+  sortSolutions(data: any) {
+    return data.sort((a: any, b: any) => {
+      return b.stats.score - a.stats.score;
+    });
   }
 }
 

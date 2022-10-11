@@ -15,6 +15,8 @@ import { SolutionService } from 'src/app/services/solution.service';
 import { TopicService } from 'src/app/services/topic.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
+import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
+import { ViewDocumentCommentsComponent } from 'src/app/components/view-document-comments/view-document-comments.component';
 
 @Component({
   selector: 'app-single-theme',
@@ -41,17 +43,16 @@ export class SingleThemeComponent implements OnInit {
   public themeData: Theme = _mockTheme;
   public imagesToUpload: string[] = [];
   public states: any = [];
-  public displayedColumns: string[] = [
-    'title',
-    'ranking',
-    'users',
-    'interactions',
-  ];
+  public displayedColumns: string[] = ['title', 'ranking', 'users', 'interactions', 'menu'];
   public dataSource = new MatTableDataSource<any>();
   public solutionsList: Solution[] = _mockSolutions;
   public collaborators: any = null;
   public solutions: any[] = [];
   public sliderImages: string[] = [..._mockTheme.images];
+  public actionControlActivityList: any[] = [];
+  public accesibleLayouts: any[] = [];
+  public userCoverageObj: any[] = [];
+  public userCoverageStr: any[] = [];
 
   // simplet doughnut
   public simpletDoughnutData: ChartData<'doughnut'> = _simpleDonuthData;
@@ -75,6 +76,7 @@ export class SingleThemeComponent implements OnInit {
       },
     },
   };
+  public coverageSelected: any = null;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -95,66 +97,60 @@ export class SingleThemeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.actionControlActivityList = this.utilityService.actionControlActivityList;
+
     let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
     let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID, });
     let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID, });
     let topic: Observable<any> = this.topicService.fetchSingleTopicById({ _id: this.themeID });
+    let user: Observable<any> = this.userService.fetchFireUser();
+    let acl: Observable<any> = this.documentService.fetchAccessControlList({ document_id: this.documentID });
 
-    //forkJoin([categories, document, solutions, category, subcategory]).subscribe((reply: any) => {
-    forkJoin([document, category, subcategory, topic]).subscribe((reply: any) => {
+    forkJoin([document, category, subcategory, topic, user, acl]).subscribe((reply: any) => {
       // console.log(reply);
       this.document = reply[0];
       // console.log(this.document);
-      this.layouts = this.document['layouts'];
-      this.collaborators = reply[0].collaborators;
+      this.collaborators = this.document['collaborators'];
+      // console.log('collaborators: ', this.collaborators);
       this.category = reply[1];
-      // console.log("categoria " + JSON.stringify(this.category));
+      // console.log('category: ', this.category);
       this.subcategory = reply[2];
-      // console.log("subcategoria " + JSON.stringify(this.subcategory));
+      // console.log('subcategory: ', this.subcategory);
       this.topics = this.subcategory['topics'];
-      // console.log(this.topics);
+      // console.log('topics: ', this.topics);
       this.topic = reply[3];
-      // console.log(this.topic);
-      // console.log("topic " + JSON.stringify(this.topic));
-      this.sliderImages = this.topic.images;
+      // console.log('topic: ', this.topic);
+      this.sliderImages = this.topic['images'];
       this.solutions = this.topic['solutions'];
+      // console.log('solutions: ', this.solutions);
       this.dataSource = new MatTableDataSource(this.solutions);
+      this.user = reply[4];
+      this.user['activityName'] = this.user['activities'][0]['value'];
+      // console.log('user: ', this.user);
 
-      // let sols = this.topic.solutions;
-      // for (let j = 0; j < sols.length; j++) {
-      //   let sol: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.topic.solutions[j] });
-      //   forkJoin([sol]).subscribe((reply: any) => {
-      //     this.solutions.push(reply[0]);
-      //   })
-      // }
-    });
-    // this.documentService
-    //   .fetchSingleDocumentById({ _id: this.documentID })
-    //   .subscribe((reply: any) => {
-    //     this.document = reply;
-    //     this.layouts = this.document['layouts'];
-    //   });
-
-    if (this.accessToken != null) {
-      this.userService.fetchFireUser().subscribe({
-        error: (error) => {
-          switch (error['status']) {
-            case 401:
-              break;
-          }
-          setTimeout(() => {
-            this.isDataAvailable = true;
-          }, 1000);
-        },
-        next: (reply: any) => {
-          this.user = reply;
-          setTimeout(() => {
-            this.isDataAvailable = true;
-          }, 1000);
-        },
-        complete: () => { },
+      this.layouts = reply[5]['layouts'];
+      this.layouts.filter((x: any) => { x['states'].length == 0 ? x['access'] = false : x['access'] = true; });
+      this.accesibleLayouts = this.layouts.filter((x: any) => { return x['states'].length != 0; });
+      this.accesibleLayouts.filter((x: any) => {
+        x['states'].filter((y: any) => { this.userCoverageObj.push(y); });
       });
-    }
+      this.userCoverageObj.filter((x: any) => { this.userCoverageStr.push(x['id']); });
+      this.document['coverage'].filter((x: any) => {
+        x['enabled'] = false;
+        if (this.userCoverageStr.includes(x['_id'])) { x['enabled'] = true; }
+      });
+      // console.log(this.layouts);
+
+      switch (this.user['activityName']) {
+        case 'editor':
+          this.document['coverage'].filter((x: any) => { x['enabled'] = true; });
+          break;
+      }
+
+      setTimeout(() => {
+        this.isDataAvailable = true;
+      }, 1000);
+    });
   }
 
   handleSelectImage(event: any) {
@@ -175,6 +171,10 @@ export class SingleThemeComponent implements OnInit {
 
       this.sliderImages = [...this.imagesToUpload, ...this.sliderImages];
     }
+  }
+
+  onSelectCoverage(event: any) {
+    this.coverageSelected = event['value'];
   }
 
   popAddDocumentTheme() {
@@ -200,16 +200,20 @@ export class SingleThemeComponent implements OnInit {
   }
 
   popAddDocumentSolution() {
-    const dialogRef = this.dialog.open<AddDocumentSolutionComponent>(
-      AddDocumentSolutionComponent,
-      {
-        width: '640px',
-        data: {
-          themeID: this.themeID,
-        },
-        disableClose: true,
-      }
-    );
+    let coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.coverageSelected });
+    if (coverage.length == 0) {
+      this.utilityService.openErrorSnackBar('Selecciona una cobertura.');
+      return;
+    }
+
+    const dialogRef = this.dialog.open<AddDocumentSolutionComponent>(AddDocumentSolutionComponent, {
+      width: '640px',
+      data: {
+        themeID: this.themeID,
+        coverage: coverage[0]
+      },
+      disableClose: true,
+    });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
@@ -242,8 +246,8 @@ export class SingleThemeComponent implements OnInit {
     });
   }
 
-  linkSolution(id: string) {
-    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/temas/${this.themeID}/solucion/${id}`)
+  linkMe(url: string) {
+    this.utilityService.linkMe(url);
   }
 
   applyFilter(event: Event) {
@@ -261,6 +265,45 @@ export class SingleThemeComponent implements OnInit {
       },
       disableClose: true,
       panelClass: 'viewer-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  popAddCommentsDialog() {
+    let coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.coverageSelected });
+    if (coverage.length == 0) {
+      this.utilityService.openErrorSnackBar('Selecciona una cobertura.');
+      return;
+    }
+
+    const dialogRef = this.dialog.open<AddCommentsComponent>(AddCommentsComponent, {
+      width: '640px',
+      data: {
+        location: 'topic',
+        document: this.document,
+        topic: this.topic,
+        coverage: coverage[0]
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  popDocumentComments() {
+    const dialogRef = this.dialog.open<ViewDocumentCommentsComponent>(ViewDocumentCommentsComponent, {
+      data: {
+        location: 'topic',
+        document: this.document,
+        topic: this.topic,
+      },
+      disableClose: true,
+      panelClass: 'side-dialog'
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {

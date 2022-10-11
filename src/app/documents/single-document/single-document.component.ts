@@ -17,6 +17,8 @@ import { AddDocumentCoverTextComponent } from 'src/app/components/add-document-c
 import { WindowAlertComponent } from 'src/app/components/window-alert/window-alert.component';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
+import { DescriptionViewerComponent } from 'src/app/components/description-viewer/description-viewer.component';
+import { ViewDocumentCommentsComponent } from 'src/app/components/view-document-comments/view-document-comments.component';
 
 @Component({
   selector: '.single-document-page',
@@ -39,6 +41,11 @@ export class SingleDocumentComponent implements OnInit {
   @ViewChild('editRowName') editRowName!: ElementRef<HTMLInputElement>;
   public collaborators: any = null;
   public published: boolean = false;
+  public actionControlActivityList: any[] = [];
+  public accesibleLayouts: any[] = [];
+  public userCoverageObj: any[] = [];
+  public userCoverageStr: any[] = [];
+  public coverageSelected: any = null;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -47,45 +54,79 @@ export class SingleDocumentComponent implements OnInit {
     public documentService: DocumentService,
     public dialog: MatDialog,
     public utilityService: UtilityService
-
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.accessToken = this.authenticationService.fetchAccessToken;
   }
 
   ngOnInit(): void {
-    this.documentService.fetchSingleDocumentById({ _id: this.documentID }).subscribe((reply: any) => {
-      this.document = reply;
-      this.layouts = this.document['layouts'];
-      this.collaborators = this.document.collaborators;
-      this.layouts.filter((layout: any) => { layout['categoryName'] = layout['category']['name']; });
-      this.dataSource = new MatTableDataSource(this.layouts);
-    });
+    this.actionControlActivityList = this.utilityService.actionControlActivityList;
 
-    if (this.accessToken != null) {
-      this.userService.fetchFireUser().subscribe({
-        error: (error) => {
-          // console.log(error);
-          switch (error['status']) {
-            case 401:
-              // this.utilityService.openErrorSnackBar('Tu token de acceso ha caducado, intenta ingresar otra vez.');
-              // localStorage.removeItem('accessToken');
-              break;
-          }
-          setTimeout(() => {
-            this.isDataAvailable = true;
-          }, 1000);
-        },
-        next: (reply: any) => {
-          this.user = reply;
-          // console.log(this.user);
-          setTimeout(() => {
-            this.isDataAvailable = true;
-          }, 1000);
-        },
-        complete: () => { },
-      });
-    }
+    let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
+    let user: Observable<any> = this.userService.fetchFireUser();
+    let acl: Observable<any> = this.documentService.fetchAccessControlList({ document_id: this.documentID });
+
+    forkJoin([document, user, acl]).subscribe({
+      error: (error: any) => {
+        this.utilityService.openErrorSnackBar(this.utilityService.errorOops);
+      },
+      next: (reply: any) => {
+        // console.log(reply);
+        this.document = reply[0];
+        // console.log('document: ', this.document);
+        this.user = reply[1];
+        this.user['activityName'] = this.user['activities'][0]['value'];
+        // console.log('user: ', this.user);
+
+        switch (this.user['activityName']) {
+          case 'editor':
+            this.layouts = reply[2]['layouts'];
+            this.layouts.filter((layout: any) => { layout['access'] = true; });
+            this.document['coverage'].filter((x: any) => { x['enabled'] = true; });
+            break;
+
+          case 'administrator':
+            this.layouts = this.document['layouts'];
+            this.layouts.filter((layout: any) => { layout['access'] = true; });
+            break;
+
+          case 'citizen':
+            this.layouts = reply[2]['layouts'];
+            this.layouts.filter((x: any) => { x['states'].length == 0 ? x['access'] = false : x['access'] = true; });
+            this.accesibleLayouts = this.layouts.filter((x: any) => { return x['states'].length != 0; });
+
+            this.accesibleLayouts.filter((x: any) => {
+              x['states'].filter((y: any) => { this.userCoverageObj.push(y); });
+            });
+
+            this.userCoverageObj.filter((x: any) => { this.userCoverageStr.push(x['id']); });
+
+            this.document['coverage'].filter((x: any) => {
+              x['enabled'] = false;
+              if (this.userCoverageStr.includes(x['_id'])) { x['enabled'] = true; }
+            });
+            break;
+        }
+        this.dataSource = new MatTableDataSource(this.layouts);
+        // console.log('layouts: ', this.layouts);
+
+        this.collaborators = this.document['collaborators'];
+        this.collaborators = this.collaborators.filter((value: any, index: any, self: any) =>
+          index === self.findIndex((t: any) =>
+            (t['user']['_id'] === value['user']['_id']))
+        );
+        // console.log('collaborators: ', this.collaborators);
+      },
+      complete: () => {
+        setTimeout(() => {
+          this.isDataAvailable = true;
+        }, 1000);
+      }
+    });
+  }
+
+  onSelectCoverage(event: any) {
+    this.coverageSelected = event['value'];
   }
 
   popAddDocumentCategory() {
@@ -100,9 +141,27 @@ export class SingleDocumentComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
-        this.layouts.push(reply[0]);
-        this.layouts.filter((layout: any) => { layout['categoryName'] = layout['category']['name']; });
-        this.dataSource = new MatTableDataSource(this.layouts); 
+        if (this.user['activityName'] == 'administrator') {
+          this.layouts.push(reply[0]);
+          this.layouts.filter((layout: any) => { layout['access'] = true; });
+          this.dataSource = new MatTableDataSource(this.layouts);
+        } else {
+          this.documentService.fetchAccessControlList({ document_id: this.documentID })
+            .subscribe({
+              error: (error: any) => {
+                window.location.reload();
+              },
+              next: (reply: any) => {
+                this.layouts = [];
+                this.layouts = reply['layouts'];
+                this.layouts.filter((layout: any) => { layout['access'] = true; });
+              },
+              complete: () => {
+                this.dataSource = new MatTableDataSource(this.layouts);
+              }
+            });
+        }
+
       }
     });
   }
@@ -111,8 +170,9 @@ export class SingleDocumentComponent implements OnInit {
     const dialogRef = this.dialog.open<AddDocumentCollaboratorComponent>(AddDocumentCollaboratorComponent, {
       width: '640px',
       data: {
-        documentID: this.documentID,
-        document: this.document
+        document: this.document,
+        user: this.user,
+        location: 'document'
       },
       disableClose: true
     });
@@ -142,13 +202,35 @@ export class SingleDocumentComponent implements OnInit {
   }
 
   popAddCommentsDialog() {
+    let coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.coverageSelected });
+    if (coverage.length == 0) {
+      this.utilityService.openErrorSnackBar('Selecciona una cobertura.');
+      return;
+    }
+
     const dialogRef = this.dialog.open<AddCommentsComponent>(AddCommentsComponent, {
       width: '640px',
       data: {
         location: 'document',
-        document: this.document
+        document: this.document,
+        coverage: coverage[0]
       },
       disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  popDocumentComments() {
+    const dialogRef = this.dialog.open<ViewDocumentCommentsComponent>(ViewDocumentCommentsComponent, {
+      data: {
+        location: 'document',
+        document: this.document
+      },
+      disableClose: true,
+      panelClass: 'side-dialog'
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
@@ -206,8 +288,24 @@ export class SingleDocumentComponent implements OnInit {
     });
   }
 
-  linkCategories(id: string) {
-    this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${id}`)
+  popDescriptionViewerDialog() {
+    const dialogRef = this.dialog.open<DescriptionViewerComponent>(DescriptionViewerComponent, {
+      data: {
+        document: this.document,
+        user: this.user,
+        location: 'document'
+      },
+      disableClose: true,
+      panelClass: 'full-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  LinkMe(url: string) {
+    this.utilityService.linkMe(url);
   }
 
   setDocumentAsPublicPrivate() {
@@ -233,7 +331,8 @@ export class SingleDocumentComponent implements OnInit {
       width: '640px',
       data: {
         location: 'document',
-        document: this.document
+        document: this.document,
+        user: this.user
       },
       disableClose: true,
       panelClass: 'viewer-dialog'
@@ -247,5 +346,23 @@ export class SingleDocumentComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  killLayout(layout: any) {
+    const dialogRef = this.dialog.open<WindowAlertComponent>(WindowAlertComponent, {
+      width: '420px',
+      data: {
+        windowType: 'kill-layout',
+        layout: layout
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        this.layouts = this.layouts.filter((x: any) => { return x['_id'] != reply['_id']; });
+        this.dataSource = new MatTableDataSource(this.layouts);
+      }
+    });
   }
 }

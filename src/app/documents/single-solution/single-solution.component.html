@@ -4,42 +4,41 @@
 
 <div class="set-12" *ngIf="isDataAvailable">
   <div class="set-12">
-    <div class="set-9">
-      <breadcrumbs-component>
-        <li>Documentos</li>
-        <li (click)="utilityService.linkMe('/documentos/' + document._id)">
-          {{ document.title }}
-        </li>
-        <li (click)="utilityService.linkMe('/documentos/' + document._id + '/categoria/' + category._id)">
-          {{ category.category.name }}
-        </li>
-        <li
-          (click)="utilityService.linkMe('/documentos/' + document._id + '/categoria/' + category._id + '/subcategoria/' + subcategory._id)">
-          {{ subcategory.category.name }}
-        </li>
-        <li
-          (click)="utilityService.linkMe('/documentos/' + document._id + '/categoria/' + category._id + '/subcategoria/' + subcategory._id + '/temas/' + topic._id)">
-          {{ topic.title }}
-        </li>
-        <li>{{ solution.title }}</li>
-      </breadcrumbs-component>
-    </div>
-    <div class="set-3 txt-right">
-      <span class="created-by">
-        Autor: <span class="author">{{category.createdBy.firstname}}
-          {{category.createdBy.lastname}}</span>
-      </span>
-    </div>
+    <breadcrumbs-component>
+      <li>Documentos</li>
+      <li (click)="utilityService.linkMe('/documentos/' + document._id)">
+        {{ document.title }}
+      </li>
+      <li (click)="utilityService.linkMe('/documentos/' + document._id + '/categoria/' + category._id)">
+        {{ category.category.name }}
+      </li>
+      <li
+        (click)="utilityService.linkMe('/documentos/' + document._id + '/categoria/' + category._id + '/subcategoria/' + subcategory._id)">
+        {{ subcategory.category.name }}
+      </li>
+      <li
+        (click)="utilityService.linkMe('/documentos/' + document._id + '/categoria/' + category._id + '/subcategoria/' + subcategory._id + '/temas/' + topic._id)">
+        {{ topic.title }}
+      </li>
+      <li>{{ solution.title }}</li>
+    </breadcrumbs-component>
+  </div>
+
+  <div class="set-12 author-hldr">
+    <span class="created-by">
+      Autor: <span class="author">{{solution.createdBy.firstname}}
+        {{solution.createdBy.lastname}}</span>
+    </span>
   </div>
 
   <div class="set-12">
     <div class="set-3 col-left">
       <mat-card class="set-12 doc-description">
         <div class="set-12 imghldr">
-          <mat-icon *ngIf="solution.images.length == 0">panorama</mat-icon>
+          <mat-icon class="pano" *ngIf="solution.images.length == 0">panorama</mat-icon>
           <slider-images [images]="solution.images" *ngIf="solution.images.length != 0"></slider-images>
           <div class="overlay">
-            <mat-icon>photo_camera</mat-icon>
+            <mat-icon color="accent">photo_camera</mat-icon>
             <div class="cover"></div>
           </div>
         </div>
@@ -48,22 +47,24 @@
           <div class="set-12 card-title">
             <div class="set-10">{{solution.title}}</div>
             <div class="set-2 txt-right">
-              <button type="button" [matMenuTriggerFor]="menu">
+              <button type="button" [matMenuTriggerFor]="menu"
+                [disabled]="!actionControlActivityList.includes(user.activityName)">
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <button mat-menu-item>
+                <!-- <button type="button" mat-menu-item>
                   <mat-icon>edit</mat-icon>
                   <span>Editar</span>
+                </button> -->
+                <button type="button" mat-menu-item (click)="popDocumentComments()">
+                  <mat-icon>question_answer</mat-icon>
+                  <span>Ver comentarios</span>
                 </button>
               </mat-menu>
             </div>
           </div>
-          <!-- <p class="card-description" *ngIf="document.description != null">{{document.description}}</p>
-          <button type="button" class="toolbtn" *ngIf="document.description == null">
-            <small>Agregar descripción</small>
-          </button> -->
-          <avatars-row [users]="collaborators"></avatars-row>
+          <avatars-row [users]="collaborators" *ngIf="actionControlActivityList.includes(user.activityName)">
+          </avatars-row>
         </div>
       </mat-card>
     </div>
@@ -73,19 +74,20 @@
         <div class="set-4">
           <mat-form-field appearance="outline">
             <mat-label>Cobertura</mat-label>
-            <mat-select disabled>
-              <!-- <mat-option *ngFor="let option of solution.coverage" [value]="option._id">
+            <mat-select (selectionChange)="onSelectCoverage($event)">
+              <mat-option *ngFor="let option of document.coverage" [value]="option._id" [disabled]="!option.enabled">
                 <small>{{ option.name | titlecase }}</small>
-              </mat-option> -->
+              </mat-option>
             </mat-select>
           </mat-form-field>
         </div>
         <div class="set-8 txt-right">
-          <button type="button" mat-mini-fab color="accent" class="mini test" matTooltip="Agregar Comentario">
-            <mat-icon>forum</mat-icon>
+          <button type="button" mat-mini-fab color="primary" class="mini test" matTooltip="Agregar Comentario"
+            (click)="popAddCommentsDialog()">
+            <mat-icon>add_comment</mat-icon>
           </button>
-          <button type="button" mat-mini-fab color="primary" class="mini test" matTooltip="Agregar Testimonio">
-            <mat-icon>forum</mat-icon>
+          <button type="button" mat-mini-fab color="warn" class="mini test" matTooltip="Agregar Testimonio">
+            <mat-icon>insert_comment</mat-icon>
           </button>
           <!-- <button type="button" mat-mini-fab color="warn" class="mini insights" matTooltip="Agregar Solución">
             <mat-icon>insights</mat-icon>

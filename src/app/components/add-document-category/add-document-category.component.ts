@@ -46,7 +46,7 @@ export class AddDocumentCategoryComponent implements OnInit {
     public dialog: MatDialog,
     public utilityservice: UtilityService
   ) {
-    // console.log(this.dialogData);
+    console.log(this.dialogData);
     this.dialogData['document']['layouts'].filter((x: any) => {
       this.addedLayouts.push(x['category']['_id']);
     });
@@ -131,6 +131,7 @@ export class AddDocumentCategoryComponent implements OnInit {
     let category: any = this.categories.filter((x: any) => {
       return x['name'] == event['option']['value'];
     });
+    console.log(category);
 
     if (this.addedLayouts.includes(category[0]['_id'])) {
       this.utilityService.openErrorSnackBar('La categoría ya esta en uso');
@@ -140,9 +141,7 @@ export class AddDocumentCategoryComponent implements OnInit {
     }
 
     if (this.selectedCategories.length == 1) {
-      this.utilityService.openErrorSnackBar(
-        'Solo se puede agregar 1 categoría.'
-      );
+      this.utilityService.openErrorSnackBar('Solo se puede agregar 1 categoría.');
       this.categoryInput.nativeElement.value = '';
       this.categoryCtrl.setValue(null);
       return;
@@ -163,7 +162,7 @@ export class AddDocumentCategoryComponent implements OnInit {
     console.log({ category: this.addCategoryFormGroup.value.category });
 
     this.utilityService.createNewCategory(data).subscribe((reply: any) => {
-      // console.log(reply);
+      console.log(reply);
       if (reply['status'] == false) {
         this.utilityService.openErrorSnackBar(reply['error']);
         return;
@@ -191,11 +190,16 @@ export class AddDocumentCategoryComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
+        // console.log(reply);
         this.utilityservice.openSuccessSnackBar('¡Se agrego correctamente!');
+
         this.categories.push(reply);
+        this.layout = [];
         this.layout.push(reply['_id']);
         this.categoriesString.push(reply['name']);
+        this.selectedCategories = [];
         this.selectedCategories.push(reply['name']);
+
         this.stepTwoFormGroup.patchValue({ layout: this.layout });
         this.setFilteredCategories();
       }

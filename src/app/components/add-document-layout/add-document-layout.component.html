@@ -57,10 +57,13 @@
           </div>
 
           <div class="set-12 ctrls">
-            <button type="button" mat-raised-button color="accent" (click)="popAddRootCategoryDialog()">Nueva
-              categoría</button>
+            <button type="button" mat-raised-button color="accent" (click)="popAddRootCategoryDialog()">
+              <small>Nueva categoría</small>
+            </button>
             <button type="button" mat-raised-button color="primary" matStepperNext
-              [disabled]="stepTwoFormGroup.invalid">Siguiente</button>
+              [disabled]="stepTwoFormGroup.invalid">
+              <small>Siguiente</small>
+            </button>
           </div>
         </div>
       </mat-step>
@@ -86,11 +89,12 @@
             </div>
           </form>
           <div class="set-12 ctrls">
-            <button type="button" mat-raised-button color="primary" matStepperPrevious
-              [disabled]="isSubmitted">Atras</button>
+            <button type="button" mat-raised-button color="primary" matStepperPrevious [disabled]="isSubmitted">
+              <small>Atras</small>
+            </button>
             <button type="button" mat-raised-button color="accent" [disabled]="stepTwoFormGroup.invalid || isSubmitted"
               (click)="onCreateLayout()">
-              <span>Guardar</span>
+              <small>Guardar</small>
             </button>
             <mat-spinner diameter="20" *ngIf="isSubmitted"></mat-spinner>
           </div>

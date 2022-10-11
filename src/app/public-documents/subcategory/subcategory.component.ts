@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { DocumentService } from 'src/app/services/document.service';
@@ -6,7 +12,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { LayoutService } from 'src/app/services/layout.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
-import { MatTableDataSource } from '@angular/material/table';
+import { CustomMatDataSource } from '../custom-class/custom-table.component';
+import { MatSort, Sort } from '@angular/material/sort';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { MatTable } from '@angular/material/table';
 
 @Component({
   selector: '.subcategory-page',
@@ -20,17 +29,21 @@ export class SubcategoryComponent implements OnInit {
 
   public document: any = null;
   public category: any;
+  public subCategoryTitle: any = null;
   public subcategory: any = null;
   public panelTopicsData: any = [];
 
   public isDataAvailable: boolean = false;
 
-  public displayedColumns: string[] = ['name', 'ranking', 'users'];
-  public TopicDataSource = new MatTableDataSource<any>();
-  public SolutionDataSource = new MatTableDataSource<any>();
+  public displayedColumns: string[] = ['title', 'score', 'users'];
+  public TopicDataSource: any;
+  public SolutionDataSource: any;
   public topicsDataSource: any = [];
   public solutionsDataSource: any = [];
   public image: string = '../../../assets/images/not_fount.jpg';
+  public titles: any = [];
+  public stats: any = {};
+  @ViewChild(MatSort) sort: MatSort = new MatSort();
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -44,7 +57,6 @@ export class SubcategoryComponent implements OnInit {
     this.subcategoryID =
       this.activatedRoute['snapshot']['params']['subcategoryID'];
   }
-
   ngOnInit(): void {
     this.loadSubcategory();
   }
@@ -64,12 +76,18 @@ export class SubcategoryComponent implements OnInit {
     );
 
     forkJoin([document, category, subcategory]).subscribe((reply: any) => {
+      this.titles = this.utilityService.formatTitles(
+        reply[0].title,
+        reply[1].category.name,
+        reply[2].category.name,
+        ''
+      );
       this.document = reply[0];
       this.category = reply[1];
       this.subcategory = reply[2];
+      this.stats = this.subcategory.stats;
       this.image = reply[1].images.length > 0 ? reply[1].images[0] : this.image;
       this.topicsDataSource = this.subcategory.topics;
-      this.TopicDataSource = new MatTableDataSource(this.subcategory.topics);
       const dataSolution: any = [];
 
       this.subcategory.topics
@@ -77,17 +95,21 @@ export class SubcategoryComponent implements OnInit {
         .forEach((_: any, index: number) => {
           dataSolution.push(
             ...this.subcategory.topics.map((item: any) => [...item.solutions])[
-              index
+            index
             ]
           );
         });
       this.solutionsDataSource = dataSolution;
-      this.SolutionDataSource = new MatTableDataSource(dataSolution);
+
       this.panelTopicsData = this.subcategory.topics.slice(0, 7);
+      this.TopicDataSource = new CustomMatDataSource(this.topicsDataSource);
+      this.SolutionDataSource = new CustomMatDataSource(
+        this.solutionsDataSource
+      );
 
       setTimeout(() => {
         this.isDataAvailable = true;
-      }, 300);
+      }, 1000);
     });
   }
 

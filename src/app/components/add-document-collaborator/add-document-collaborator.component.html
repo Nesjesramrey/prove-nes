@@ -4,16 +4,11 @@
 
 <div class="set-12" *ngIf="isDataAvailable">
   <div class="set-12 dialog-head">
-    <div class="set-9">
+    <div class="set-12">
       <h3>Agregar Colaborador</h3>
       <p class="created-by">
         {{document.title}}
       </p>
-    </div>
-    <div class="set-3 txt-right">
-      <button type="button" mat-icon-button color="primary" (click)="killDialog()" [disabled]="submitted">
-        <mat-icon>cancel</mat-icon>
-      </button>
     </div>
   </div>
 
@@ -55,22 +50,31 @@
           <mat-form-field appearance="outline">
             <mat-label>Tipo</mat-label>
             <mat-select formControlName="activity" (selectionChange)="onSelectType($event)">
-              <mat-option *ngFor="let activity of allActivities" [value]="activity._id">
+              <mat-option *ngFor="let activity of filteredActivities" [value]="activity._id">
                 <small>{{activity.viewValue}}</small>
               </mat-option>
             </mat-select>
           </mat-form-field>
         </div>
 
-        <div class="set-3">
+        <div class="set-3" *ngIf="coverage == null">
           <mat-form-field appearance="outline">
             <mat-label>Cobertura</mat-label>
-            <mat-select formControlName="coverage" (selectionChange)="onSelectCoverage($event)" #coverageSelect>
-              <!-- <mat-option value="all">
-                <small>Todos</small>
-              </mat-option> -->
+            <mat-select formControlName="coverage" (selectionChange)="onSelectCoverage($event)" #coverageSelect
+              multiple>
               <mat-option *ngFor="let state of states" [value]="state._id">
                 <small>{{state.name}}</small>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="set-3" *ngIf="coverage != null">
+          <mat-form-field appearance="outline">
+            <mat-label>Cobertura</mat-label>
+            <mat-select formControlName="coverage" (selectionChange)="onSelectCoverage($event)" #coverageSelect multiple>
+              <mat-option [value]="coverage._id">
+                <small>{{coverage.name}}</small>
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -78,8 +82,13 @@
       </div>
 
       <div class="set-12 ctrls">
+        <button type="button" mat-raised-button color="accent" [disabled]="submitted" (click)="killDialog()">
+          <small>Cancelar</small>
+        </button>
         <button type="submit" mat-raised-button color="primary"
-          [disabled]="addCollaboratorFormGroup.invalid || submitted">Agregar</button>
+          [disabled]="addCollaboratorFormGroup.invalid || submitted">
+          <small>Agregar</small>
+        </button>
         <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
       </div>
     </form>

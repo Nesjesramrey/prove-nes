@@ -54,6 +54,10 @@ export class DocumentService {
     return this.httpClient.delete(this.endpointSrvc.apiEndPoint + this.endpointSrvc.killDocumentImageEndPoint + `${data['document_id']}` + '/images', { body: data });
   }
 
+  fetchAccessControlList(data: any) {
+    return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAccessControlListEndPoint + `?document=${data['document_id']}&`);
+  }
+
 
 
 

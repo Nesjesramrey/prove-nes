@@ -1,17 +1,13 @@
 <div class="set-12 dialog-head">
-  <div class="set-9">
+  <h3>Agregar Comentario</h3>
+  <!-- <div class="set-9">
     <h3>Agregar Comentario</h3>
   </div>
   <div class="set-3 txt-right">
-    <button
-      type="button"
-      mat-icon-button
-      color="primary"
-      (click)="killDialog()"
-    >
+    <button type="button" mat-icon-button color="primary" (click)="killDialog()">
       <mat-icon>cancel</mat-icon>
     </button>
-  </div>
+  </div> -->
 </div>
 
 <div class="set-12 dialog-body">
@@ -19,43 +15,16 @@
     <div class="form-body">
       <mat-form-field class="example-full-width" appearance="outline">
         <mat-label>Escribe un comentario</mat-label>
-        <textarea
-          matInput
-          placeholder="Descripción"
-          formControlName="description"
-        ></textarea>
+        <textarea matInput placeholder="..." formControlName="description"></textarea>
       </mat-form-field>
-
-      <!-- <div class="imagebox">
-        <label [ngClass]="imageUrl ? 'data' : 'empty'">
-          <mat-icon>photo_camera</mat-icon>
-          <span>Subir imagen</span>
-          <input
-            type="file"
-            accept="image/*"
-            (change)="handleSelectImage($event)"
-            formControlName="image"
-          />
-        </label>
-
-        <img
-          class="preview"
-          [src]="imageUrl"
-          alt="img_upload"
-          [ngClass]="imageUrl ? 'data' : 'empty'"
-        />
-      </div> -->
     </div>
 
     <div class="set-12 ctrls">
-      <button
-        type="submit"
-        mat-raised-button
-        [disabled]="addCommentFormGroup.invalid"
-        color="primary"
-        class="submit-button"
-      >
-        Enviar comentario
+      <button type="submit" mat-raised-button color="warn" (click)="killDialog()">
+        <small>Cancelar</small>
+      </button>
+      <button type="submit" mat-raised-button color="primary" [disabled]="addCommentFormGroup.invalid">
+        <small>Enviar comentario</small>
       </button>
     </div>
   </form>

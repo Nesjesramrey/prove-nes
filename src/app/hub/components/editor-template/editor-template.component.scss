@@ -20,6 +20,13 @@
     }
   }
 
+  .select {
+    border: 2.5px solid #306EFF;
+    box-shadow: 0px 8px 25px 2px rgba(0, 0, 0, 0.12);
+    border-radius: 5px;
+    transition: all 200ms;
+  }
+
   .carousel-hldr {
     margin-bottom: 20px;
 
@@ -41,7 +48,7 @@
 
     mat-icon {
       font-size: 13pt;
-      color: #306EFF;
+      // color: #306EFF;
     }
 
     button {
@@ -73,7 +80,7 @@
 
     mat-icon {
       margin-bottom: 20px;
-      color: #306EFF;
+      // color: #306EFF;
       font-size: 40pt;
     }
   }
@@ -83,7 +90,7 @@
 
     mat-icon {
       font-size: 30pt;
-      color: #306EFF;
+      // color: #306EFF;
     }
 
     .date {
@@ -110,14 +117,14 @@
       transition: all .2s linear;
     }
 
-    button:hover {
-      color: #306EFF;
+    button:hover:enabled {
+      color: #1e7e7f;
     }
   }
 
   .imghldr {
-    min-height: 150px;
-    max-height: 150px;
+    min-height: 200px;
+    max-height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;

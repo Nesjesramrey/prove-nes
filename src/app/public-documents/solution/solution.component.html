@@ -4,31 +4,27 @@
 
 <div class="container" *ngIf="isDataAvailable">
   <div class="container">
-    <div class="set-7">
+    <div class="set-10">
       <breadcrumbs-component>
         <li>...</li>
-        <li
-          (click)="
+        <li [matTooltip]="document.title" matTooltipClass="tooltip" (click)="
             utilityService.linkMe('/documentos-publicos/' + document._id)
-          "
-        >
+          ">
           <!-- {{ document.title }} -->
           ...
         </li>
-        <li
-          (click)="
+        <li [matTooltip]="category.category.name" matTooltipClass="tooltip" (click)="
             utilityService.linkMe(
               '/documentos-publicos/' +
                 document._id +
                 '/categoria/' +
                 category._id
             )
-          "
-        >
-          {{ category.category.name }}
+          ">
+          ...
+          <!-- {{ category.category.name }} -->
         </li>
-        <li
-          (click)="
+        <li [matTooltip]="subcategory.category.name" matTooltipClass="tooltip" (click)="
             utilityService.linkMe(
               '/documentos-publicos/' +
                 document._id +
@@ -37,12 +33,10 @@
                 '/subcategoria/' +
                 subcategory._id
             )
-          "
-        >
+          ">
           {{ subcategory.category.name }}
         </li>
-        <li
-          (click)="
+        <li [matTooltip]="topic.title" matTooltipClass="tooltip" (click)="
             utilityService.linkMe(
               '/documentos-publicos/' +
                 document._id +
@@ -53,20 +47,21 @@
                 '/tema/' +
                 topic._id
             )
-          "
-        >
+          ">
           {{ topic.shortTitle }}
         </li>
-        <li>{{ solution.shortTitle }}</li>
+        <li [matTooltip]="solution.title" matTooltipClass="tooltip">
+          {{ solution.shortTitle }}
+        </li>
       </breadcrumbs-component>
     </div>
-    <div class="set-3 featured-users">
+    <!-- <div class="set-3 featured-users">
       <featured-users [inputAmount]="3"></featured-users>
-    </div>
+    </div> -->
 
     <div class="set-2 txt-center">
       <button type="button" mat-mini-fab color="primary" class="mini" matTooltip="Agregar Comentario"
-        (click)="openModalComment()">
+        (click)="popAddCommentsDialog()">
         <mat-icon>add_comment</mat-icon>
       </button>
       <button type="button" mat-mini-fab color="warn" class="mini" matTooltip="Agregar Testimonio"
@@ -77,10 +72,8 @@
     <div class="set-12 txt-left" style="margin-bottom: 10px">
       <span class="created-by">
         Autor:
-        <span class="author"
-          >{{ solution.createdBy.firstname }}
-          {{ solution.createdBy.lastname }}</span
-        >
+        <span class="author">{{ solution.createdBy.firstname }}
+          {{ solution.createdBy.lastname }}</span>
       </span>
     </div>
     <div class="set-12" style="padding-bottom: 100px">
@@ -88,36 +81,22 @@
         <div class="set-12 header-card">
           <mat-card>
             <!-- IMAGE -->
-            <div class="set-12 image-box">
+            <div class="set-12 image-box imghldr">
               <mat-icon *ngIf="!image">panorama</mat-icon>
-              <img *ngIf="image" [src]="image" alt="" />
-
+              <img *ngIf="image" [src]="image" style="cursor: pointer" (click)="popImageViewer()" />
               <div class="info">
-                <button class="custom-circle">
-                  <mat-icon>thumb_up</mat-icon>
-                </button>
-
                 <div class="actions">
                   <p>Relevancia ciudadana</p>
-                  <p class="votes">
-                    {{ votes }}
-                  </p>
-                  <button
-                    *ngIf="userVoted"
-                    mat-raised-button
-                    color="primary"
-                    disabled
-                    style="background-color: #d9d9d9"
-                  >
-                    Ya votaste
+                  <p class="votes">{{ stats.score }} / 100</p>
+                  <button *ngIf="userVoted" mat-raised-button color="primary" disabled
+                    style="background-color: #d9d9d9">
+                    Votos: {{ votes }}
                   </button>
-                  <button
-                    *ngIf="!userVoted"
-                    mat-raised-button
-                    color="black"
-                    style="background-color: #71f5ad;font-weight: 600;font-size: 16px;"
-                    (click)="openModalVote()"
-                  >
+                  <button *ngIf="!userVoted" mat-raised-button color="black" style="
+                      background-color: #71f5ad;
+                      font-weight: 600;
+                      font-size: 16px;
+                    " (click)="openModalVote()">
                     Votar
                   </button>
                 </div>
@@ -126,17 +105,27 @@
             <!-- DATA -->
             <div class="data-box">
               <p class="title">{{ solution.title }}</p>
-              <expanded-text [text]="solution.description"> </expanded-text>
+              <expanded-text [text]="solution.description" [title]="solution.title">
+              </expanded-text>
+            </div>
+            <div *ngIf="!isFavorites" class="favorites-button">
+              <button mat-icon-button style="background-color: #d9d9d9" color="warn"
+                aria-label="Example icon button with a heart icon" (click)="addFavorites()">
+                <mat-icon>favorite</mat-icon>
+              </button>
+            </div>
+            <div *ngIf="isFavorites" class="favorites-button">
+              <button mat-icon-button color="warn" style="background-color: #e98282"
+                aria-label="Example icon button with a heart icon" (click)="removeFavorites()">
+                <mat-icon>favorite</mat-icon>
+              </button>
             </div>
           </mat-card>
         </div>
         <div class="set-12 mt-2">
-          <mat-card
-            class="doc-description"
-            style="height: 480px; padding: 30px"
-          >
+          <mat-card class="doc-description" style="height: 480px; padding: 30px">
             <div class="set-12 mt-2">
-              <div class="set-6 col-rgt-2">
+              <div class="set-6 col-rgt-2" style="padding:40px">
                 <spider-chart [withBorder]="false"></spider-chart>
               </div>
               <div class="set-6 col-rgt-2">
@@ -148,9 +137,7 @@
         </div>
       </div>
       <div class="set-4">
-        <public-documents-testimonials
-          [data]="solution.testimonials"
-        ></public-documents-testimonials>
+        <public-documents-testimonials [data]="solution.testimonials"></public-documents-testimonials>
       </div>
     </div>
   </div>

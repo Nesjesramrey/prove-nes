@@ -1,21 +1,17 @@
-:host  {
+:host {
   .map-container {
     width: 100%;
-    // margin-top: 2em;
     padding: 0;
 
     mat-card {
       width: 100%;
       display: flex;
       flex-direction: column;
-      // justify-content: space-between;
-      // align-items: stretch;
       padding: 0;
       height: 100%;
     }
 
     .map {
-      //   max-width: 730px;
       width: 100%;
       height: 450px;
       display: block;
@@ -41,13 +37,17 @@
         justify-content: space-around;
         margin-top: 15pt;
 
-        > * {
+        >* {
           margin: 0;
         }
 
         .row {
           display: flex;
-          > * {
+          flex: 1;
+          align-items: center;
+          text-align: center;
+
+          >* {
             margin: 0;
           }
 
@@ -122,6 +122,7 @@
       stroke: #ceddff;
       stroke-opacity: 1;
       stroke-width: 0.5;
+
       &.active {
         fill: #fcdbc3;
       }
@@ -130,19 +131,17 @@
 
   .chart-container {
     width: 100%;
-    // background-color: orange;
     display: flex;
     flex-direction: column;
-    // justify-content: space-around;
 
     p {
-      // margin: 0;
       color: #20C588;
       margin-top: 20px;
       text-align: left;
       font-size: 15pt;
-    
+
     }
+
     canvas.donut-chart {
       margin-top: 30pt;
     }

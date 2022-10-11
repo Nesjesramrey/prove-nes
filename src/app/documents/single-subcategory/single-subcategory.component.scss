@@ -23,7 +23,7 @@
     border-bottom: 1px solid rgba($color: #000000, $alpha: 0.05);
     overflow: hidden;
 
-    mat-icon {
+    mat-icon.pano {
       font-size: 70pt;
       color: rgba($color: #000000, $alpha: 0.1);
     }
@@ -184,6 +184,10 @@
 
     .empty-layouts {
       margin-top: 40px;
+
+      p {
+        margin-bottom: 10px;
+      }
     }
 
     .categories-table {
@@ -235,7 +239,7 @@
     }
 
     input[type="text"]:focus {
-      box-shadow: inset 0 0 0 2px #306EFF;
+      box-shadow: inset 0 0 0 2px #00031d;
     }
 
     input[type="text"]:disabled {

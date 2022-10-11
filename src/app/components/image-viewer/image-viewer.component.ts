@@ -27,7 +27,7 @@ export class ImageViewerComponent implements OnInit {
     public utilityService: UtilityService,
     public layoutService: LayoutService
   ) {
-    // console.log(this.dialogData);
+    console.log(this.dialogData);
     this.document = this.dialogData['document'];
     this.layout = this.dialogData['layout'];
     this.topic = this.dialogData['topic']
@@ -42,7 +42,7 @@ export class ImageViewerComponent implements OnInit {
         break;
 
       case 'topic':
-        console.log('topic: ', this.topic);
+        // console.log('topic: ', this.topic);
         break;
     }
   }

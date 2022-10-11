@@ -6,7 +6,9 @@
   <div class="set-4 col-lft">
     <mat-card class="set-12">
       <div class="set-12 cardimg">
-        <img src="../../../assets/images/Aspens_Ed_Moss.jpeg" alt="" />
+        <div class="set-12 empty-img">
+          <mat-icon>panorama</mat-icon>
+        </div>
       </div>
 
       <input #fileInput type="file" (change)="openCropperDialog($event)" accept="image/*" hidden />
@@ -17,24 +19,24 @@
           {{ user.firstname | firstword | firstletter }}{{ user.lastname | firstword | firstletter }}
         </span>
         <div class="overlay" matTooltip="Cargar imágen" matTooltipClass="tooltip">
-          <mat-icon>photo_camera</mat-icon>
+          <mat-icon color="accent">photo_camera</mat-icon>
         </div>
       </button>
 
       <div class="set-12 cardbody">
         <button type="button" class="roundblue cardmore" (click)="linkMe('/hub/configuracion')"
           matTooltip="Configuración" matTooltipClass="tooltip">
-          <mat-icon>settings</mat-icon>
+          <mat-icon color="primary">settings</mat-icon>
         </button>
         <h3 class="txt-center">{{ user.firstname }} {{ user.lastname }}</h3>
         <div class="set-12 usrinfo">
           <p class="set-12">
-            <span class="set-6">Documentos:</span>
-            <span class="set-6 txt-right"><strong class="txt-blue">0</strong></span>
+            <small class="set-6">Documentos:</small>
+            <small class="set-6 txt-right"><strong class="txt-blue">0</strong></small>
           </p>
           <p class="set-12">
-            <span class="set-6">Colaboradores:</span>
-            <span class="set-6 txt-right"><strong class="txt-blue">0</strong></span>
+            <small class="set-6">Colaboradores:</small>
+            <small class="set-6 txt-right"><strong class="txt-blue">0</strong></small>
           </p>
         </div>
       </div>
@@ -53,6 +55,10 @@
     </div>
 
     <div class="set-12" *ngIf="!haveRootPermissions">
+      <div class="editor-template" [user]="user" [documents]="documents"></div>
+    </div>
+
+    <div class="set-12" *ngIf="userActivities.includes('citizen')">
       <div class="editor-template" [user]="user" [documents]="documents"></div>
     </div>
   </div>
