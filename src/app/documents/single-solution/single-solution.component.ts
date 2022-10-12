@@ -16,6 +16,7 @@ import { TopicService } from 'src/app/services/topic.service';
 import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
 import { ViewDocumentCommentsComponent } from 'src/app/components/view-document-comments/view-document-comments.component';
 import { EditSolutionDataComponent } from 'src/app/components/edit-solution-data/edit-solution-data.component';
+import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 
 @Component({
   selector: 'app-single-solution',
@@ -310,6 +311,24 @@ export class SingleSolutionComponent implements OnInit {
         this.solution['title'] = reply['title'];
         this.solution['description'] = reply['description'];
       }
+    });
+  }
+
+  popImageViewer() {
+    const dialogRef = this.dialog.open<ImageViewerComponent>(ImageViewerComponent, {
+      width: '640px',
+      data: {
+        location: 'solution',
+        document: this.document,
+        solution: this.solution,
+        user: this.user
+      },
+      disableClose: true,
+      panelClass: 'viewer-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
     });
   }
 }

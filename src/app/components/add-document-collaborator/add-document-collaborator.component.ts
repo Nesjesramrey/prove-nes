@@ -60,13 +60,16 @@ export class AddDocumentCollaboratorComponent implements OnInit {
 
     switch (this.userActivity) {
       case 'administrator':
-        this.editorAllowedActivities = ['editor', 'type-a', 'type-b', 'type-c', 'type-d'];
+        // this.editorAllowedActivities = ['editor', 'type-a', 'type-b', 'type-c', 'type-d'];
+        this.editorAllowedActivities = ['editor', 'type-c'];
         break;
       case 'editor':
-        this.editorAllowedActivities = ['type-a', 'type-b', 'type-c', 'type-d'];
+        // this.editorAllowedActivities = ['type-a', 'type-b', 'type-c', 'type-d'];
+        this.editorAllowedActivities = ['type-c'];
         break;
       case 'citizen':
-        this.editorAllowedActivities = ['type-c', 'type-d'];
+        // this.editorAllowedActivities = ['type-c', 'type-d'];
+        this.editorAllowedActivities = ['type-c'];
         break;
     }
   }

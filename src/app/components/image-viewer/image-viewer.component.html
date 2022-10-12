@@ -9,7 +9,8 @@
   <!-- document viewer -->
   <div class="viewer-display" *ngIf="dialogData.location == 'document'">
     <div class="set-12 txt-center" *ngIf="document.images.length == 0">
-      <button type="button" (click)="file.click()" [disabled]="submitted">
+      <button type="button" (click)="file.click()" [disabled]="submitted"
+        *ngIf="utilityService.actionControlActivityList.includes(user.activityName)">
         <mat-icon>add_a_photo</mat-icon>
         <p>Cargar imágenes</p>
       </button>
@@ -22,7 +23,8 @@
   <!-- layout viewer -->
   <div class="viewer-display" *ngIf="dialogData.location == 'layout'">
     <div class="set-12 txt-center" *ngIf="layout.images.length == 0">
-      <button type="button" (click)="file.click()" [disabled]="submitted">
+      <button type="button" (click)="file.click()" [disabled]="submitted"
+        *ngIf="utilityService.actionControlActivityList.includes(user.activityName)">
         <mat-icon>add_a_photo</mat-icon>
         <p>Cargar imágenes</p>
       </button>
@@ -35,7 +37,8 @@
   <!-- topic viewer -->
   <div class="viewer-display" *ngIf="dialogData.location == 'topic'">
     <div class="set-12 txt-center" *ngIf="topic.images.length == 0">
-      <button type="button" (click)="file.click()" [disabled]="submitted">
+      <button type="button" (click)="file.click()" [disabled]="submitted"
+        *ngIf="utilityService.actionControlActivityList.includes(user.activityName)">
         <mat-icon>add_a_photo</mat-icon>
         <p>Cargar imágenes</p>
       </button>
@@ -43,6 +46,20 @@
       <p class="txt-center" *ngIf="submitted">Cargando...</p>
     </div>
     <slider-images [images]="topic.images" [topic]="topic" *ngIf="topic.images != 0"></slider-images>
+  </div>
+
+  <!-- solution viewer -->
+  <div class="viewer-display" *ngIf="dialogData.location == 'solution'">
+    <div class="set-12 txt-center" *ngIf="solution.images.length == 0">
+      <button type="button" (click)="file.click()" [disabled]="submitted"
+        *ngIf="utilityService.actionControlActivityList.includes(user.activityName)">
+        <mat-icon>add_a_photo</mat-icon>
+        <p>Cargar imágenes</p>
+      </button>
+      <mat-spinner color="accent" diameter="70" *ngIf="submitted"></mat-spinner>
+      <p class="txt-center" *ngIf="submitted">Cargando...</p>
+    </div>
+    <slider-images [images]="solution.images" [solution]="solution" *ngIf="solution.images != 0"></slider-images>
   </div>
 </div>
 
