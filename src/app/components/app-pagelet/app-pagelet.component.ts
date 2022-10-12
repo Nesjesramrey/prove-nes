@@ -176,4 +176,8 @@ export class AppPageletComponent implements OnInit {
   redirectEdition() {
     this.router.navigateByUrl(this.redirectUrl);
   }
+
+  resetPassword(email: any) {
+    this.authenticationSrvc.forgotPassword(email);
+  }
 }
