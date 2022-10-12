@@ -53,7 +53,6 @@ export class SignUpComponent implements OnInit {
       .then((reply: any) => {
         this.SetUserData(reply['user']);
         this.SendVerificationMail();
-        // console.log('reply: ', reply);
         this.user = reply['user']['multiFactor']['user'];
         // console.log('user: ', this.user);
         // console.log(this.user['accessToken']);
@@ -67,7 +66,6 @@ export class SignUpComponent implements OnInit {
         }
 
         this.authenticationSrvc.signup(signUpData).subscribe((reply: any) => {
-          // console.log(reply);
           localStorage.setItem('accessToken', this.user['accessToken']);
           this.router.navigateByUrl('/', { state: { status: 'logout' } });
         });
