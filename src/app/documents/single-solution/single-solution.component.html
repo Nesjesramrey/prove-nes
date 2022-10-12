@@ -52,10 +52,10 @@
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <!-- <button type="button" mat-menu-item>
-                  <mat-icon>edit</mat-icon>
-                  <span>Editar</span>
-                </button> -->
+                <button type="button" mat-menu-item (click)="popEditSolutionDialog()">
+                  <mat-icon>settings</mat-icon>
+                  <span>Editar solución</span>
+                </button>
                 <button type="button" mat-menu-item (click)="popDocumentComments()">
                   <mat-icon>question_answer</mat-icon>
                   <span>Ver comentarios</span>

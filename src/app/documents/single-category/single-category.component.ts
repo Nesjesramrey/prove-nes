@@ -95,6 +95,10 @@ export class SingleCategoryComponent implements OnInit {
         // console.log('user: ', this.user);
 
         this.collaborators = this.document['collaborators'];
+        this.collaborators = this.collaborators.filter((value: any, index: any, self: any) =>
+          index === self.findIndex((t: any) =>
+            (t['user']['_id'] === value['user']['_id']))
+        );
         // console.log('collaborators: ', this.collaborators);
 
         if (!reply[3]['isAdmin']) {

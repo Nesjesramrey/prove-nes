@@ -15,6 +15,7 @@ import { SolutionService } from 'src/app/services/solution.service';
 import { TopicService } from 'src/app/services/topic.service';
 import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
 import { ViewDocumentCommentsComponent } from 'src/app/components/view-document-comments/view-document-comments.component';
+import { EditSolutionDataComponent } from 'src/app/components/edit-solution-data/edit-solution-data.component';
 
 @Component({
   selector: 'app-single-solution',
@@ -118,6 +119,10 @@ export class SingleSolutionComponent implements OnInit {
       this.document = reply[0];
       // console.log('document: ', this.document);
       this.collaborators = this.document['collaborators'];
+      this.collaborators = this.collaborators.filter((value: any, index: any, self: any) =>
+        index === self.findIndex((t: any) =>
+          (t['user']['_id'] === value['user']['_id']))
+      );
       // console.log('collaborators: ', this.collaborators);
       this.category = reply[1];
       // console.log('category: ', this.category);
@@ -287,6 +292,24 @@ export class SingleSolutionComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) { }
+    });
+  }
+
+  popEditSolutionDialog() {
+    const dialogRef = this.dialog.open<EditSolutionDataComponent>(EditSolutionDataComponent, {
+      width: '640px',
+      data: {
+        solution: this.solution,
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        console.log(reply);
+        this.solution['title'] = reply['title'];
+        this.solution['description'] = reply['description'];
+      }
     });
   }
 }

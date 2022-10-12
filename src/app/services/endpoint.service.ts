@@ -55,6 +55,7 @@ export class EndPointService {
   public fetchSingleTopicByIdEndPoint: string = '/topic/';
   public createNewTopicEndPoint: string = '/topic/layout/';
   public uploadTopicFilesEndPoint: string = '/topic/';
+  public updateTopicDataEndPoint: string = '/topic/';
 
   // permission
   public createNewPermissionEndPoint: string = '/permission/';
@@ -64,6 +65,7 @@ export class EndPointService {
   public createNewSolutionEndPoint: string = '/solution/topic/';
   public getTopSolutionByDocumentEndPoint: string = '/solution/document/';
   public getTopSolutionByLayoutEndPoint: string = '/solution/layout/';
+  public updateSolutionDataEndPoint: string = '/solution/';
 
 
   // utility

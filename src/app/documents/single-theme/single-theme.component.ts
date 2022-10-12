@@ -17,6 +17,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
 import { ViewDocumentCommentsComponent } from 'src/app/components/view-document-comments/view-document-comments.component';
+import { EditTopicDataComponent } from 'src/app/components/edit-topic-data/edit-topic-data.component';
 
 @Component({
   selector: 'app-single-theme',
@@ -111,6 +112,10 @@ export class SingleThemeComponent implements OnInit {
       this.document = reply[0];
       // console.log(this.document);
       this.collaborators = this.document['collaborators'];
+      this.collaborators = this.collaborators.filter((value: any, index: any, self: any) =>
+        index === self.findIndex((t: any) =>
+          (t['user']['_id'] === value['user']['_id']))
+      );
       // console.log('collaborators: ', this.collaborators);
       this.category = reply[1];
       // console.log('category: ', this.category);
@@ -308,6 +313,23 @@ export class SingleThemeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) { }
+    });
+  }
+
+  popEditTopicDialog() {
+    const dialogRef = this.dialog.open<EditTopicDataComponent>(EditTopicDataComponent, {
+      width: '640px',
+      data: {
+        topic: this.topic,
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        this.topic['title'] = reply['title'];
+        this.topic['description'] = reply['description'];
+      }
     });
   }
 }
