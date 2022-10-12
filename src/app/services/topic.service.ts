@@ -9,13 +9,13 @@ export class TopicService {
   constructor(
     public httpClient: HttpClient,
     public endpointSrvc: EndPointService
-  ) {}
+  ) { }
 
   createNewTopic(data: any) {
     return this.httpClient.post(
       this.endpointSrvc.apiEndPoint +
-        this.endpointSrvc.createNewTopicEndPoint +
-        `${data['layout_id']}`,
+      this.endpointSrvc.createNewTopicEndPoint +
+      `${data['layout_id']}`,
       data['formData']
     );
   }
@@ -23,18 +23,24 @@ export class TopicService {
   fetchSingleTopicById(data: any) {
     return this.httpClient.get(
       this.endpointSrvc.apiEndPoint +
-        this.endpointSrvc.fetchSingleTopicByIdEndPoint +
-        `${data['_id']}`
+      this.endpointSrvc.fetchSingleTopicByIdEndPoint +
+      `${data['_id']}`
     );
   }
 
   uploadTopicFiles(data: any) {
     return this.httpClient.post(
       this.endpointSrvc.apiEndPoint +
-        this.endpointSrvc.uploadTopicFilesEndPoint +
-        `${data['topic_id']}` +
-        '/images',
+      this.endpointSrvc.uploadTopicFilesEndPoint +
+      `${data['topic_id']}` +
+      '/images',
       data['formData']
+    );
+  }
+
+  updateTopicData(data: any) {
+    return this.httpClient.put(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.updateTopicDataEndPoint + `${data['topic_id']}`, data
     );
   }
 }

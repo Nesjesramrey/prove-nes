@@ -28,4 +28,10 @@ export class SolutionService {
   getTopSolutionsByLayout(id: any) {
     return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.getTopSolutionByLayoutEndPoint + `${id}`, {})
   }
+
+  updateSolutionData(data: any) {
+    return this.httpClient.put(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.updateSolutionDataEndPoint + `${data['solution_id']}`, data
+    )
+  }
 }

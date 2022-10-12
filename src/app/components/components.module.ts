@@ -53,6 +53,8 @@ import { DescriptionViewerComponent } from './description-viewer/description-vie
 import { ViewMessageComponent } from './view-message/view-message.component';
 import { ViewDocumentCommentsComponent } from './view-document-comments/view-document-comments.component';
 import { ReplyDocumentCommentsComponent } from './reply-document-comments/reply-document-comments.component';
+import { EditTopicDataComponent } from './edit-topic-data/edit-topic-data.component';
+import { EditSolutionDataComponent } from './edit-solution-data/edit-solution-data.component';
 
 @NgModule({
   imports: [
@@ -109,7 +111,9 @@ import { ReplyDocumentCommentsComponent } from './reply-document-comments/reply-
     DescriptionViewerComponent,
     ViewMessageComponent,
     ViewDocumentCommentsComponent,
-    ReplyDocumentCommentsComponent
+    ReplyDocumentCommentsComponent,
+    EditTopicDataComponent,
+    EditSolutionDataComponent
   ],
   exports: [
     AppPageletComponent,
@@ -145,7 +149,9 @@ import { ReplyDocumentCommentsComponent } from './reply-document-comments/reply-
     DescriptionViewerComponent,
     ViewMessageComponent,
     ViewDocumentCommentsComponent,
-    ReplyDocumentCommentsComponent
+    ReplyDocumentCommentsComponent,
+    EditTopicDataComponent,
+    EditSolutionDataComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
@@ -167,7 +173,9 @@ import { ReplyDocumentCommentsComponent } from './reply-document-comments/reply-
     DescriptionViewerComponent,
     ViewMessageComponent,
     ViewDocumentCommentsComponent,
-    ReplyDocumentCommentsComponent
+    ReplyDocumentCommentsComponent,
+    EditTopicDataComponent,
+    EditSolutionDataComponent
   ],
   providers: [],
 })

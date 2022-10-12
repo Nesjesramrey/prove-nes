@@ -87,6 +87,10 @@ export class SingleSubcategoryComponent implements OnInit {
       this.document = reply[0];
       // console.log('document: ', this.document);
       this.collaborators = this.document['collaborators'];
+      this.collaborators = this.collaborators.filter((value: any, index: any, self: any) =>
+        index === self.findIndex((t: any) =>
+          (t['user']['_id'] === value['user']['_id']))
+      );
       // console.log('collaborators: ', this.collaborators);
       this.selectedCategory = reply[1];
       // console.log('category: ', this.selectedCategory);
