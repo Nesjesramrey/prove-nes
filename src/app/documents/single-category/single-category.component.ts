@@ -264,12 +264,15 @@ export class SingleCategoryComponent implements OnInit {
   }
 
   popImageViewer() {
+    let layout = this.document['layouts'].filter((x: any) => { return x['_id'] == this.selectedCategory['id'] });
+
     const dialogRef = this.dialog.open<ImageViewerComponent>(ImageViewerComponent, {
       width: '640px',
       data: {
         location: 'layout',
         document: this.document,
-        layout: this.selectedCategory
+        layout: layout[0],
+        user: this.user
       },
       disableClose: true,
       panelClass: 'viewer-dialog'

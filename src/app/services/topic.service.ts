@@ -30,11 +30,7 @@ export class TopicService {
 
   uploadTopicFiles(data: any) {
     return this.httpClient.post(
-      this.endpointSrvc.apiEndPoint +
-      this.endpointSrvc.uploadTopicFilesEndPoint +
-      `${data['topic_id']}` +
-      '/images',
-      data['formData']
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.uploadTopicFilesEndPoint + `${data['topic_id']}` + '/images', data['formData']
     );
   }
 

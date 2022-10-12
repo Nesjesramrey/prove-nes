@@ -29,16 +29,17 @@ export class AddDocumentTestimonyComponent implements OnInit {
     public testimonyService: TestimonyService
   ) { }
 
-  killDialog() {
-    this.dialogRef.close();
-  }
-
   ngOnInit(): void {
     this.addTestimonyFormGroup = this.formBuilder.group({
       description: ['', [Validators.required]],
       image: ['', []],
     });
   }
+
+  killDialog() {
+    this.dialogRef.close();
+  }
+
   visibility() {
     this.isAnonymous = !this.isAnonymous;
   }

@@ -66,6 +66,7 @@ export class EndPointService {
   public getTopSolutionByDocumentEndPoint: string = '/solution/document/';
   public getTopSolutionByLayoutEndPoint: string = '/solution/layout/';
   public updateSolutionDataEndPoint: string = '/solution/';
+  public uploadSolutionFilesEndPoint: string = '/solution/';
 
 
   // utility

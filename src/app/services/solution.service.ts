@@ -34,4 +34,10 @@ export class SolutionService {
       this.endpointSrvc.apiEndPoint + this.endpointSrvc.updateSolutionDataEndPoint + `${data['solution_id']}`, data
     )
   }
+
+  uploadSolutionFiles(data: any) {
+    return this.httpClient.post(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.uploadSolutionFilesEndPoint + `${data['solution_id']}` + '/images', data['formData']
+    );
+  }
 }

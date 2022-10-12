@@ -229,19 +229,17 @@ export class SingleThemeComponent implements OnInit {
   }
 
   popAddDocumentTestimony() {
-    const dialogRef = this.dialog.open<AddDocumentTestimonyComponent>(
-      AddDocumentTestimonyComponent,
-      {
-        width: '640px',
-        data: {
-          documentID: this.documentID,
-          document: this.document,
-          categoryID: this.categoryID,
-          topicID: this.themeID,
-          type: 'topic',
-        },
-        disableClose: true,
-      }
+    const dialogRef = this.dialog.open<AddDocumentTestimonyComponent>(AddDocumentTestimonyComponent, {
+      width: '640px',
+      data: {
+        documentID: this.documentID,
+        document: this.document,
+        categoryID: this.categoryID,
+        topicID: this.themeID,
+        type: 'topic',
+      },
+      disableClose: true,
+    }
     );
 
     dialogRef.afterClosed().subscribe((reply: any) => {
@@ -266,7 +264,8 @@ export class SingleThemeComponent implements OnInit {
       data: {
         location: 'topic',
         document: this.document,
-        topic: this.topic
+        topic: this.topic,
+        user: this.user
       },
       disableClose: true,
       panelClass: 'viewer-dialog'

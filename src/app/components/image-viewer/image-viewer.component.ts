@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DocumentService } from 'src/app/services/document.service';
 import { LayoutService } from 'src/app/services/layout.service';
+import { SolutionService } from 'src/app/services/solution.service';
+import { TopicService } from 'src/app/services/topic.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
@@ -15,9 +17,11 @@ export class ImageViewerComponent implements OnInit {
   public document: any = null;
   public layout: any = null;
   public topic: any = null;
+  public solution: any = null;
   public filesFormGroup!: FormGroup;
   public fileNames: any = [];
   public submitted: boolean = false;
+  public user: any = null;
 
   constructor(
     public dialogRef: MatDialogRef<ImageViewerComponent>,
@@ -25,12 +29,18 @@ export class ImageViewerComponent implements OnInit {
     public formBuilder: FormBuilder,
     public documentService: DocumentService,
     public utilityService: UtilityService,
-    public layoutService: LayoutService
+    public layoutService: LayoutService,
+    public topicService: TopicService,
+    public solutionService: SolutionService
   ) {
-    console.log(this.dialogData);
+    // console.log(this.dialogData);
     this.document = this.dialogData['document'];
     this.layout = this.dialogData['layout'];
-    this.topic = this.dialogData['topic']
+    this.topic = this.dialogData['topic'];
+    this.solution = this.dialogData['solution'];
+    this.user = this.dialogData['user'];
+    this.user['activityName'] = this.user['activities'][0]['value'];
+    // console.log(this.user);
 
     switch (this.dialogData['location']) {
       case 'document':
@@ -81,11 +91,11 @@ export class ImageViewerComponent implements OnInit {
         this.documentService.uploadDocumentFiles(data).subscribe({
           error: (error: any) => {
             // console.log(error);
-            this.utilityService.openErrorSnackBar('Oops!... Ocurrió un error, inténtalo más tarde.');
+            this.utilityService.openErrorSnackBar(this.utilityService.errorOops);
           },
           next: (reply: any) => {
             // console.log(reply);
-            this.utilityService.openSuccessSnackBar('El documento se actualizó correctamente.');
+            this.utilityService.openSuccessSnackBar(this.utilityService.saveSuccess);
             this.document['images'] = reply['images'];
           },
           complete: () => {
@@ -99,14 +109,52 @@ export class ImageViewerComponent implements OnInit {
         this.layoutService.uploadLayoutFiles(data).subscribe({
           error: (error: any) => {
             // console.log(error);
-            this.utilityService.openErrorSnackBar('Oops!... Ocurrió un error, inténtalo más tarde.');
+            this.utilityService.openErrorSnackBar(this.utilityService.errorOops);
           },
           next: (reply: any) => {
             // console.log(reply);
-            this.utilityService.openSuccessSnackBar('La categoría se actualizó correctamente.');
+            this.utilityService.openSuccessSnackBar(this.utilityService.saveSuccess);
             this.layout['images'] = reply['images'];
           },
-          complete: () => { }
+          complete: () => {
+            this.submitted = false;
+          }
+        });
+        break;
+
+      case 'topic':
+        data.topic_id = this.topic['_id'];
+        this.topicService.uploadTopicFiles(data).subscribe({
+          error: (error: any) => {
+            // console.log(error);
+            this.utilityService.openErrorSnackBar(this.utilityService.errorOops);
+          },
+          next: (reply: any) => {
+            // console.log(reply);
+            this.utilityService.openSuccessSnackBar(this.utilityService.saveSuccess);
+            this.topic['images'] = reply['images'];
+          },
+          complete: () => {
+            this.submitted = false;
+          }
+        })
+        break;
+
+      case 'solution':
+        data.solution_id = this.solution['_id'];
+        this.solutionService.uploadSolutionFiles(data).subscribe({
+          error: (error: any) => {
+            // console.log(error);
+            this.utilityService.openErrorSnackBar(this.utilityService.errorOops);
+          },
+          next: (reply: any) => {
+            // console.log(reply);
+            this.utilityService.openSuccessSnackBar(this.utilityService.saveSuccess);
+            this.solution['images'] = reply['images'];
+          },
+          complete: () => {
+            this.submitted = false;
+          }
         });
         break;
     };

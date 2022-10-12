@@ -272,7 +272,8 @@ export class SingleSubcategoryComponent implements OnInit {
       data: {
         location: 'layout',
         document: this.document,
-        layout: this.subcategory
+        layout: this.subcategory,
+        user: this.user
       },
       disableClose: true,
       panelClass: 'viewer-dialog'
