@@ -175,18 +175,17 @@
               <th mat-header-cell *matHeaderCellDef>Título</th>
               <td mat-cell *matCellDef="let element">
                 <button type="button" class="catbtn" [disabled]="!element.access"
-                  (click)="linkMe('/documentos/' + document._id + '/categoria/' + selectedCategory.id + '/subcategoria/' + element.id)"
-                  *ngIf="user.activityName != 'administrator'">
+                  (click)="linkMe('/documentos/' + document._id + '/categoria/' + selectedCategory.id + '/subcategoria/' + element.id)">
                   <mat-icon>question_answer</mat-icon>
                   <small>{{element.name}}</small>
                 </button>
 
-                <button type="button" class="catbtn" [disabled]="!element.access"
+                <!-- <button type="button" class="catbtn" [disabled]="!element.access"
                   (click)="linkMe('/documentos/' + document._id + '/categoria/' + selectedCategory._id + '/subcategoria/' + element._id)"
                   *ngIf="user.activityName == 'administrator'">
                   <mat-icon>question_answer</mat-icon>
                   <small>{{element.name}}</small>
-                </button>
+                </button> -->
               </td>
             </ng-container>
 
