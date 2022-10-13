@@ -102,12 +102,14 @@ export class SingleCategoryComponent implements OnInit {
         );
         // console.log('collaborators: ', this.collaborators);
 
-        if (!reply[3]['isAdmin']) {
-          let selectedCategory = reply[3]['layouts'].filter((x: any) => { return x['id'] == this.categoryID });
-          this.selectedCategory = selectedCategory[0];
-        } else {
-          this.selectedCategory = reply[1];
-        }
+        // if (!reply[3]['isAdmin']) {
+        //   let selectedCategory = reply[3]['layouts'].filter((x: any) => { return x['id'] == this.categoryID });
+        //   this.selectedCategory = selectedCategory[0];
+        // } else {
+        //   this.selectedCategory = reply[1];
+        // }
+        let selectedCategory = reply[3]['layouts'].filter((x: any) => { return x['id'] == this.categoryID });
+        this.selectedCategory = selectedCategory[0];
 
         // this.selectedCategory = reply[1];
         // console.log('category: ', this.selectedCategory);
@@ -121,8 +123,9 @@ export class SingleCategoryComponent implements OnInit {
             break;
 
           case 'administrator':
-            this.subcategories = this.document['layouts'];
+            // this.subcategories = this.document['layouts'];
             this.subcategories.filter((layout: any) => { layout['access'] = true; });
+            this.document['coverage'].filter((x: any) => { x['enabled'] = true; });
             break;
 
           case 'citizen':
