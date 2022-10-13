@@ -71,7 +71,7 @@ export class SingleDocumentComponent implements OnInit {
         this.utilityService.openErrorSnackBar(this.utilityService.errorOops);
       },
       next: (reply: any) => {
-        // console.log(reply);
+        console.log(reply);
         this.document = reply[0];
         // console.log('document: ', this.document);
         this.user = reply[1];
@@ -86,8 +86,11 @@ export class SingleDocumentComponent implements OnInit {
             break;
 
           case 'administrator':
-            this.layouts = this.document['layouts'];
+            // this.layouts = this.document['layouts'];
+            // this.layouts.filter((layout: any) => { layout['access'] = true; });
+            this.layouts = reply[2]['layouts'];
             this.layouts.filter((layout: any) => { layout['access'] = true; });
+            this.document['coverage'].filter((x: any) => { x['enabled'] = true; });
             break;
 
           case 'citizen':
