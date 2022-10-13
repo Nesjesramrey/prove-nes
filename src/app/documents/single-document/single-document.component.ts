@@ -291,12 +291,10 @@ export class SingleDocumentComponent implements OnInit {
   popDescriptionViewerDialog() {
     const dialogRef = this.dialog.open<DescriptionViewerComponent>(DescriptionViewerComponent, {
       data: {
-        document: this.document,
-        user: this.user,
-        location: 'document'
+        title: this.document['title'],
+        text: this.document['description']
       },
       disableClose: true,
-      panelClass: 'full-dialog'
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {

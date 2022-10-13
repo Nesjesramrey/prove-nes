@@ -58,9 +58,10 @@
             </div>
           </div>
           <p class="card-description" *ngIf="subcategory.description != null">{{subcategory.description}}</p>
-          <button type="button" class="toolbtn" *ngIf="subcategory.description == null">
+          <!-- <button type="button" class="toolbtn" *ngIf="subcategory.description == null">
             <small>Agregar descripción</small>
-          </button>
+          </button> -->
+          <button type="button" class="card-description link" (click)="popDescriptionViewerDialog()">Leer más</button>
           <avatars-row [users]="collaborators" *ngIf="actionControlActivityList.includes(user.activityName)">
           </avatars-row>
         </div>

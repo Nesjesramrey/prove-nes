@@ -15,7 +15,7 @@ export class ExpandedTextComponent implements OnInit {
   public arrayText: string[] = [];
   public isShortText: boolean = false;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.processText();
@@ -41,6 +41,7 @@ export class ExpandedTextComponent implements OnInit {
   expandBox() {
     this.expanded = !this.expanded;
   }
+
   openModalDescription() {
     const dialogRef = this.dialog.open<ModalDesciptionComponent>(
       ModalDesciptionComponent,
