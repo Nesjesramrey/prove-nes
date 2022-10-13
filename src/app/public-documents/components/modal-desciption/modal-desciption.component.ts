@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {
-  MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
@@ -13,16 +12,16 @@ import {
 export class ModalDesciptionComponent implements OnInit {
   public text: string;
   public title: string;
+
   constructor(
     public dialogRef: MatDialogRef<ModalDesciptionComponent>,
-    public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: { text: string; title: string }
   ) {
     this.text = data.text;
     this.title = data.title;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   killDialog() {
     this.dialogRef.close();

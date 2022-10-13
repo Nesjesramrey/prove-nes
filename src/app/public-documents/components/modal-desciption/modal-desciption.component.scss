@@ -5,12 +5,14 @@
     overflow: hidden;
     position: relative;
   }
+
   .header {
     position: sticky;
     top: 0;
     width: 100%;
     background-color: white;
     display: flex;
+
     .title {
       word-break: break-all;
       max-width: 400px;
@@ -25,6 +27,7 @@
       right: 26px;
     }
   }
+
   .body {
     width: 100%;
     height: 330px;
@@ -32,6 +35,7 @@
     overflow-y: auto;
     overflow-x: hidden;
     overflow-wrap: break-word;
+
     .text {
       padding: 60px;
     }

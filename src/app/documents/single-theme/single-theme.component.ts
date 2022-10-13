@@ -333,6 +333,7 @@ export class SingleThemeComponent implements OnInit {
   }
 }
 
+
 // simplet doughnut
 const _simpleDonuthData: ChartData<'doughnut'> = {
   labels: ['75%'],

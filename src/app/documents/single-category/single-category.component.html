@@ -58,10 +58,7 @@
             </div>
           </div>
           <p class="card-description" *ngIf="category.description != null">{{category.description}}</p>
-          <!-- <button type="button" class="toolbtn" *ngIf="selectedCategory.description == null"
-            (click)="popEditCategoryDialog()">
-            <small>Agregar descripción</small>
-          </button> -->
+          <button type="button" class="card-description link" (click)="popDescriptionViewerDialog()">Leer más</button>
           <avatars-row [users]="collaborators" *ngIf="actionControlActivityList.includes(user.activityName)">
           </avatars-row>
         </div>

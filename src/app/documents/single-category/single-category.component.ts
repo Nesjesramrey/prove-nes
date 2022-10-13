@@ -20,6 +20,7 @@ import { AddCommentsComponent } from 'src/app/components/add-comments/add-commen
 import { WindowAlertComponent } from 'src/app/components/window-alert/window-alert.component';
 import { AddDocumentCollaboratorComponent } from 'src/app/components/add-document-collaborator/add-document-collaborator.component';
 import { ViewDocumentCommentsComponent } from 'src/app/components/view-document-comments/view-document-comments.component';
+import { DescriptionViewerComponent } from 'src/app/components/description-viewer/description-viewer.component';
 
 @Component({
   selector: '.app-single-category',
@@ -332,6 +333,20 @@ export class SingleCategoryComponent implements OnInit {
       },
       disableClose: true,
       panelClass: 'side-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  popDescriptionViewerDialog() {
+    const dialogRef = this.dialog.open<DescriptionViewerComponent>(DescriptionViewerComponent, {
+      data: {
+        title: this.category['category']['name'],
+        text: this.category['description']
+      },
+      disableClose: true,
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
