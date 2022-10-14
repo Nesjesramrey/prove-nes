@@ -33,6 +33,7 @@ import { ModalSolutionComponent } from './modal-solution/modal-solution.componen
 import { ModalTestimonyComponent } from './modal-testimony/modal-testimony.component';
 import { ModalVotesComponent } from './modal-votes/modal-votes.component';
 import { ModalDesciptionComponent } from './modal-desciption/modal-desciption.component';
+import { CategoryBarsComponent } from './category-bars/category-bars.component';
 
 @NgModule({
   imports: [
@@ -71,6 +72,7 @@ import { ModalDesciptionComponent } from './modal-desciption/modal-desciption.co
     ModalTestimonyComponent,
     ModalVotesComponent,
     ModalDesciptionComponent,
+    CategoryBarsComponent
   ],
   exports: [
     Top10ListComponent,
@@ -88,8 +90,9 @@ import { ModalDesciptionComponent } from './modal-desciption/modal-desciption.co
     ModalPermissionsComponent,
     ModalSolutionComponent,
     ModalTestimonyComponent,
+    CategoryBarsComponent
   ],
   entryComponents: [],
   providers: [],
 })
-export class ComponentsModule {}
+export class ComponentsModule { }
