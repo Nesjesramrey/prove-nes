@@ -21,6 +21,7 @@ export class PublicComponent implements OnInit {
   public isDataAvailable: boolean = false;
   public image: string = '../../../assets/images/not_fount.jpg';
   public coverage: any[] = [];
+  public layouts: any[] = [];
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -38,54 +39,55 @@ export class PublicComponent implements OnInit {
   }
 
   loadDocument() {
-    this.documentService
-      .fetchSingleDocumentById({ _id: this.documentID })
+    this.documentService.fetchSingleDocumentById({ _id: this.documentID })
       .subscribe((reply: any) => {
         this.document = reply;
         this.coverage = this.document.coverage;
+        this.image = reply.images.length > 0 ? reply.images[0] : this.image;
+        this.layouts = this.document['layouts'];
+
         setTimeout(() => {
           this.isDataAvailable = true;
-        }, 300);
-        this.image = reply.images.length > 0 ? reply.images[0] : this.image;
+        }, 100);
       });
+
     this.getDataCharts();
   }
 
   getDataCharts() {
-    this.solutionService
-      .getTopSolutionsByDocument(this.documentID)
+    this.solutionService.getTopSolutionsByDocument(this.documentID)
       .subscribe((resp: any) => {
         this.topSolutions = resp;
       });
-    this.layoutService
-      .getTopLayoutByDocument(this.documentID)
-      .subscribe((resp) => {
+
+    this.layoutService.getTopLayoutByDocument(this.documentID)
+      .subscribe((resp: any) => {
         this.topLayouts = resp;
       });
-    this.layoutService
-      .getTopLayoutByDocument(this.documentID)
-      .subscribe((resp) => {
+
+    this.layoutService.getTopLayoutByDocument(this.documentID)
+      .subscribe((resp: any) => {
         this.topLayouts = resp;
       });
   }
 
   popImageViewer() {
-    const dialogRef = this.dialog.open<ImageViewerComponent>(
-      ImageViewerComponent,
-      {
-        width: '640px',
-        data: {
-          location: 'document',
-          document: this.document,
-        },
-        disableClose: true,
-        panelClass: 'viewer-dialog',
-      }
-    );
+    const dialogRef = this.dialog.open<ImageViewerComponent>(ImageViewerComponent, {
+      width: '640px',
+      data: {
+        location: 'document',
+        document: this.document,
+      },
+      disableClose: true,
+      panelClass: 'viewer-dialog',
+    });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) {
-      }
+      if (reply != undefined) { }
     });
+  }
+
+  getLayoutData(layout: any) {
+    console.log(layout);
   }
 }

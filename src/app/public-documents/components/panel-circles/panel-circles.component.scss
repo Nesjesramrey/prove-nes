@@ -9,16 +9,17 @@
       height: 480px;
       width: 100%;
       display: flex;
-      background-image: radial-gradient(#71f5ac2e 5%, transparent 5%);
+      // background-image: radial-gradient(#71f5ac2e 5%, transparent 5%);
       background-position: 0 0, 20px 20px;
       background-size: 30px 30px;
       border-radius: 5px 5px 0px 0px;
       // background-color: #00031d;
-      background: linear-gradient(360deg, rgba(0, 3, 79, 0) -20%, #00031d 100%);
+      // background: linear-gradient(360deg, rgba(0, 3, 79, 0) -20%, #00031d 100%);
       //71f5ad
       align-items: center;
       overflow-y: hidden;
       overflow-x: hidden;
+      background: #00031d;
 
       .align {
         height: 100%;
@@ -60,5 +61,10 @@
     background-color: rgb(131, 131, 131);
     border-radius: 20px;
     height: 2px;
+  }
+
+  .graybar {
+    height: 10px;
+    background: rgba(255, 255, 255, 0.4);
   }
 }

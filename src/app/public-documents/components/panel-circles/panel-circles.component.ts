@@ -17,9 +17,11 @@ export interface ICategoryFormat {
     y: number;
   };
 }
+
 export interface ICategory {
   name: string;
 }
+
 @Component({
   selector: 'panel-circles',
   templateUrl: './panel-circles.component.html',
@@ -28,7 +30,6 @@ export interface ICategory {
 export class PanelCirclesComponent implements OnInit {
   public categories: ICategoryFormat[] = [];
   public expanded: boolean = false;
-
   public categoryID: string = '';
   public documentID: string = '';
   public image: string = '../../../assets/images/not_fount.jpg';
@@ -105,8 +106,8 @@ export class PanelCirclesComponent implements OnInit {
       cLength < 6
         ? setSizes[0]
         : cLength < 9
-        ? setSizes[1]
-        : cLength < 11 && setSizes[2];
+          ? setSizes[1]
+          : cLength < 11 && setSizes[2];
 
     const dat = [
       {
@@ -148,23 +149,23 @@ export class PanelCirclesComponent implements OnInit {
 
   getSize(size: string): any {
     if (size === 'small')
-    return {
-      width: 140,
-      height: 140,
-      font: 16,
-    };
-  if (size === 'medium')
-    return {
-      width: 145,
-      height: 145,
-      font: 16,
-    };
-  if (size === 'large')
-    return {
-      width: 168,
-      height: 168,
-      font: 16,
-    };
+      return {
+        width: 140,
+        height: 140,
+        font: 16,
+      };
+    if (size === 'medium')
+      return {
+        width: 145,
+        height: 145,
+        font: 16,
+      };
+    if (size === 'large')
+      return {
+        width: 168,
+        height: 168,
+        font: 16,
+      };
   }
 
   redirect(id: string) {
