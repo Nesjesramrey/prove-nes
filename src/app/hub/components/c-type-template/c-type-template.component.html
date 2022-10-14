@@ -67,16 +67,15 @@
                 <mat-icon color="primary">folder</mat-icon>
                 <p><strong><small>Tu documento esta vacio</small></strong></p>
               </div>
-
-              <div class="set-12 ctrls">
-                <button type="button" mat-raised-button color="primary" (click)="popLayoutDialog(document._id)">
-                  <small>Crear esquema</small>
-                </button>
-              </div>
             </div>
 
             <div class="set-12 available-layout" *ngIf="document.layouts.length != 0">
-              <h4 class="category-title">Categorías</h4>
+              <div class="set-12 ctrls">
+                <button type="button" mat-raised-button color="primary" (click)="utilityService.linkMe('/documentos/' + document._id)">
+                  <small>Abrir documento</small>
+                </button>
+              </div>
+              <!-- <h4 class="category-title">Categorías</h4>
               <div class="set-12" *ngFor="let layout of document.layouts">
                 <ul>
                   <li>
@@ -87,7 +86,7 @@
                     </button>
                   </li>
                 </ul>
-              </div>
+              </div> -->
             </div>
           </div>
         </mat-card>

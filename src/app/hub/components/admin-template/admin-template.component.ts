@@ -19,12 +19,13 @@ export class AdminTemplateComponent implements OnInit {
   public selectedDocument: any = null;
   public commentUsers: any[] = [];
   public documentSelectId: string = '';
+  public documentComments: any[] = [];
 
   constructor(
     public dialog: MatDialog,
     public utilityService: UtilityService,
     public commentService: CommentService,
-    public documentService: DocumentService
+    public documentService: DocumentService,
   ) { }
 
   ngOnInit(): void {
@@ -65,14 +66,6 @@ export class AdminTemplateComponent implements OnInit {
     });
   }
 
-  displayDocumentData(documentID: string) {
-    return;
-    let document: any = this.documents.filter((doc: any) => { return doc['_id'] == documentID; });
-    this.selectedDocument = null;
-    this.selectedDocument = document[0];
-    // console.log(this.selectedDocument);
-  }
-
   linkMe(url: string) {
     this.utilityService.linkMe(url);
   }
@@ -80,7 +73,18 @@ export class AdminTemplateComponent implements OnInit {
 
   selectDocument(document: any) {
     this.documentSelectId = document._id;
-    this.returnComments(document);
+    let data: any = { location_id: this.documentSelectId }
+    this.commentService.fetchDocumentComments(data).subscribe({
+      error: (error: any) => {
+        this.utilityService.openErrorSnackBar(this.utilityService.errorOops);
+      },
+      next: (reply: any) => {
+        this.documentComments = reply;
+        console.log(this.documentComments);
+      },
+      complete: () => { }
+    });
+    // this.returnComments(document);
   }
 
   returnComments(document: any) {

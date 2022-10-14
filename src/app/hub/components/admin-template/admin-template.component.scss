@@ -149,7 +149,6 @@
     }
 
     .top-cards {
-      padding: 15px;
 
       .inner-card {
         display: flex;
@@ -260,6 +259,12 @@
       display: flex;
       flex-flow: column wrap;
       margin-top: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
+
+      * {
+        margin: 0;
+      }
 
       .user {
         display: flex;
@@ -292,11 +297,10 @@
         }
 
         .userName {
-          margin: 0px;
-          width: 200px;
-          line-height: 38px;
-          color: #636363;
-          font-family: 'Noto Sans';
+          font-family: Roboto, "Helvetica Neue", sans-serif;
+          font-size: 10pt;
+          margin-bottom: 10px;
+          // color: #131313;
         }
       }
 
@@ -308,9 +312,9 @@
       }
 
       p {
-        font-family: 'Noto Sans';
-        margin-left: 43px;
-        color: #131313;
+        font-family: Roboto, "Helvetica Neue", sans-serif;
+        // color: #636363;
+        font-size: 10pt;
       }
 
       hr {
@@ -323,8 +327,13 @@
     }
   }
 
-  .scroll {
-    overflow-y: auto;
-    height: 340px;
+  .no-comments {
+    margin-top: 20px;
+    font-size: 10pt;
   }
+
+  // .scroll {
+  //   overflow-y: auto;
+  //   height: 340px;
+  // }
 }
