@@ -39,83 +39,55 @@ export class SingleUserComponent implements OnInit {
   ngOnInit(): void {
     this.userSrvc.fetchFireUser().subscribe({
       error: (error: any) => {
-        setTimeout(() => {
-          this.isDataAvailable = true;
-        }, 1000);
+        this.utilityService.openErrorSnackBar(this.utilityService.errorOops);
+        this.router.navigateByUrl('/');
       },
       next: (reply: any) => {
         this.user = reply;
         this.user['activityName'] = this.user['activities'][0]['value'];
         // console.log('user: ', this.user);
-
         this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
         // console.log(this.userActivities);
 
-        if (this.userActivities.length != 0) {
-          this.haveRootPermissions = true;
+        if (this.userActivities.includes('moderator')) {
+          setTimeout(() => {
+            this.isDataAvailable = true;
+          }, 1000);
+        }
 
-          if (this.userActivities.includes('moderator')) {
-            setTimeout(() => {
-              this.isDataAvailable = true;
-            }, 1000);
-          }
-
-          if (this.userActivities.includes('administrator')) {
-            let documents: Observable<any> = this.documentSrvc.fetchMyDocuments({ createdBy: this.userID });
-            forkJoin([documents]).subscribe((reply: any) => {
-              this.documents = reply[0];
-              setTimeout(() => {
-                this.isDataAvailable = true;
-              }, 1000);
-            });
-          }
-
-          if (this.userActivities.includes('citizen')) {
-            this.documentSrvc.fetchDocumentsByCollaborator({ _id: this.user['_id'] })
-              .subscribe((reply: any) => {
-                // console.log(reply);
-                this.documents = reply;
-                this.documents.filter((doc: any) => {
-                  doc['layouts'].filter((layout: any) => {
-                    layout['categoryName'] = layout['category']['name'];
-                    layout['accessControlList'].filter((acl: any) => {
-                      acl['collaborators'].filter((collaborator: any) => {
-                        if (collaborator['user'] != null) {
-                          if (collaborator['user']['_id'] == this.user['_id']) { layout['access'] = true; }
-                        }
-                      });
-                    });
-                  });
-                });
-                setTimeout(() => {
-                  this.isDataAvailable = true;
-                }, 1000);
-              });
-          }
-
-          if (this.userActivities.includes('editor')) {
-            this.haveRootPermissions = false;
-            this.documentSrvc.fetchDocumentsByCollaborator({ _id: this.user['_id'] })
-              .subscribe((reply: any) => {
-                // console.log(reply);
-                this.documents = reply;
-                this.documents.filter((doc: any) => {
-                  doc['layouts'].filter((layout: any) => {
-                    layout['access'] = true;
-                  });
-                });
-                setTimeout(() => {
-                  this.isDataAvailable = true;
-                }, 1000);
-              });
-          }
-        } else {
-          this.documentSrvc.fetchDocumentsByCollaborator({ _id: this.user['_id'] }).subscribe((reply: any) => {
-            this.documents = reply;
+        if (this.userActivities.includes('administrator')) {
+          let documents: Observable<any> = this.documentSrvc.fetchMyDocuments({ createdBy: this.userID });
+          forkJoin([documents]).subscribe((reply: any) => {
+            this.documents = reply[0];
             setTimeout(() => {
               this.isDataAvailable = true;
             }, 1000);
           });
+        }
+
+        if (this.userActivities.includes('citizen')) {
+          this.documentSrvc.fetchDocumentsByCollaborator({ _id: this.user['_id'] })
+            .subscribe((reply: any) => {
+              this.documents = reply;
+              setTimeout(() => {
+                this.isDataAvailable = true;
+              }, 1000);
+            });
+        }
+
+        if (this.userActivities.includes('editor')) {
+          this.documentSrvc.fetchDocumentsByCollaborator({ _id: this.user['_id'] })
+            .subscribe((reply: any) => {
+              this.documents = reply;
+              this.documents.filter((doc: any) => {
+                doc['layouts'].filter((layout: any) => {
+                  layout['access'] = true;
+                });
+              });
+              setTimeout(() => {
+                this.isDataAvailable = true;
+              }, 1000);
+            });
         }
       },
       complete: () => { }

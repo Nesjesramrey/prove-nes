@@ -132,7 +132,7 @@
       <mat-tab-group [disableRipple]="true" [@.disabled]="true">
         <mat-tab>
           <ng-template mat-tab-label>
-            <mat-icon>analytics</mat-icon>
+            <mat-icon>bar_chart</mat-icon>
             <span>BI</span>
           </ng-template>
 
@@ -172,46 +172,30 @@
           </ng-template>
 
           <div class="set-12 top-cards">
-            <div [class.scroll]="commentUsers.length > 3" class="set-12 contentActivity">
-              <h3 class="titleComment">Comentarios</h3>
-              <div *ngFor="let comments of commentUsers">
-                <div class="contentComment" *ngFor="let comment of comments.comments">
-                  <div class="user">
-                    <img [src]="comment.createdBy.avatarImage" class="imgUser" *ngIf="comment.createdBy.avatarImage" />
-                    <span class="imgUserNull" *ngIf="comment.createdBy.avatarImage === null">
-                      {{ comment.createdBy.firstname.slice(0, 1)
-                      }}{{ comment.createdBy.lastname.slice(0, 1) }}
-                    </span>
-                    <div class="userName">
-                      {{ comment.createdBy.firstname }}
+            <div [class.scroll]="documentComments.length > 3" class="set-12 contentActivity">
+              <p>Comentarios</p>
+              <div class="set-12 no-comments" *ngIf="documentComments.length == 0">
+                <p>Sin comentarios</p>
+              </div>
+
+              <div class="set-12" *ngIf="documentComments.length != 0">
+                <div class="set-12" *ngFor="let comments of documentComments">
+                  <div class="contentComment" *ngFor="let comment of comments.comments">
+                    <div class="user">
+                      <img [src]="comment.createdBy.avatarImage" class="imgUser"
+                        *ngIf="comment.createdBy.avatarImage" />
+                      <span class="imgUserNull" *ngIf="comment.createdBy.avatarImage === null">
+                        {{ comment.createdBy.firstname.slice(0, 1) }} {{ comment.createdBy.lastname.slice(0, 1) }}
+                      </span>
+
+                      <div class="userName">
+                        <strong>{{ comment.createdBy.firstname }} {{ comment.createdBy.lastname }}</strong> / {{
+                        comment.createdAt | date: 'mediumDate' }} - {{ comment.createdAt | date: 'mediumDate' }}
+                      </div>
                     </div>
+
+                    <p>{{ comment.message }}</p>
                   </div>
-                  <p>{{ comment.description }}</p>
-                  <a href="{{
-                      comment.relation === 'topic'
-                        ? '/documentos-publicos/' +
-                          documentSelectId +
-                          '/categoria/' +
-                          comments.layout +
-                          '/subcategoria/' +
-                          comments.subLayout +
-                          '/tema/' +
-                          comments.topicId
-                        : '/documentos-publicos/' +
-                          documentSelectId +
-                          '/categoria/' +
-                          comments.layout +
-                          '/subcategoria/' +
-                          comments.subLayout +
-                          '/tema/' +
-                          comments.topicID +
-                          '/solucion/' +
-                          comments.solutionId
-                    }}" class="textRelations">
-                    {{ comment.relation === "topic" ? "Problema" : "Solución" }}
-                    - {{ comments.title }}
-                  </a>
-                  <hr />
                 </div>
               </div>
             </div>
