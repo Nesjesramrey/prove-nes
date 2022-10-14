@@ -41,11 +41,13 @@
 
     <div class="set-9 col-rgt">
       <panel-circles [data]="document.layouts" [document]="document" [redirectTo]="'CATEGORY'"></panel-circles>
+      <!-- <div class="category-bars" [document_id]="document._id" [layouts]="layouts"
+        (sendLayoutData)="getLayoutData($event)"></div> -->
 
       <div class="mt-2 set-3">
         <mat-form-field appearance="outline">
           <mat-label>Cobertura</mat-label>
-          <mat-select>
+          <mat-select [value]="coverage[0]._id">
             <mat-option *ngFor="let location of coverage" [value]="location._id">
               <small>{{ location.name }}</small>
             </mat-option>

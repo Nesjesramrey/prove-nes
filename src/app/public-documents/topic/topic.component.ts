@@ -46,6 +46,7 @@ export class TopicComponent implements OnInit {
   public testimonials: any = TESTIMONIALS;
   public solutionsData: any = [];
   public titles: any = [];
+  public coverageSelected: any = null;
 
   constructor(
     public dialog: MatDialog,
@@ -233,23 +234,29 @@ export class TopicComponent implements OnInit {
   }
 
   openModalSolution() {
-    const dialogRef = this.dialog.open<AddDocumentSolutionComponent>(
-      AddDocumentSolutionComponent,
-      {
-        width: '640px',
-        data: {
-          documentID: this.documentID,
-          document: this.document,
-          categoryID: this.categoryID,
-          themeID: this.topicID,
-          type: 'sublayout',
-        },
-        disableClose: true,
-      }
+    let coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.topic['coverage'][0] });
+    if (coverage.length == 0) {
+      this.utilityService.openErrorSnackBar('Selecciona una cobertura.');
+      return;
+    }
+
+    const dialogRef = this.dialog.open<AddDocumentSolutionComponent>(AddDocumentSolutionComponent, {
+      width: '640px',
+      data: {
+        // documentID: this.documentID,
+        // document: this.document,
+        // categoryID: this.categoryID,
+        themeID: this.topicID,
+        // type: 'sublayout',
+        coverage: coverage[0]
+      },
+      disableClose: true,
+    }
     );
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
+        console.log(reply);
         const solution = reply.solutions[0];
         this.solutionsData.unshift(solution);
         this.SolutionDataSource = new MatTableDataSource(this.solutionsData);

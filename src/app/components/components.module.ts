@@ -113,7 +113,7 @@ import { EditSolutionDataComponent } from './edit-solution-data/edit-solution-da
     ViewDocumentCommentsComponent,
     ReplyDocumentCommentsComponent,
     EditTopicDataComponent,
-    EditSolutionDataComponent
+    EditSolutionDataComponent,
   ],
   exports: [
     AppPageletComponent,
