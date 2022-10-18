@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DocumentService } from 'src/app/services/document.service';
-import { Section } from 'src/app/public-documents/components/top10-list/top10-list.component';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 import { MatDialog } from '@angular/material/dialog';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { SolutionService } from 'src/app/services/solution.service';
 import { LayoutService } from 'src/app/services/layout.service';
 
@@ -19,15 +17,14 @@ export class PublicComponent implements OnInit {
   public topSolutions: any = [];
   public topLayouts: any = [];
   public isDataAvailable: boolean = false;
-  public image: string = '../../../assets/images/not_fount.jpg';
   public coverage: any[] = [];
   public layouts: any[] = [];
+  @ViewChild('dataViewport') public dataViewport!: ElementRef;
 
   constructor(
     public activatedRoute: ActivatedRoute,
     public documentService: DocumentService,
     public dialog: MatDialog,
-    public formBuilder: FormBuilder,
     public solutionService: SolutionService,
     public layoutService: LayoutService
   ) {
@@ -43,7 +40,6 @@ export class PublicComponent implements OnInit {
       .subscribe((reply: any) => {
         this.document = reply;
         this.coverage = this.document.coverage;
-        this.image = reply.images.length > 0 ? reply.images[0] : this.image;
         this.layouts = this.document['layouts'];
 
         setTimeout(() => {
@@ -65,10 +61,10 @@ export class PublicComponent implements OnInit {
         this.topLayouts = resp;
       });
 
-    this.layoutService.getTopLayoutByDocument(this.documentID)
-      .subscribe((resp: any) => {
-        this.topLayouts = resp;
-      });
+    // this.layoutService.getTopLayoutByDocument(this.documentID)
+    //   .subscribe((resp: any) => {
+    //     this.topLayouts = resp;
+    //   });
   }
 
   popImageViewer() {
@@ -88,6 +84,7 @@ export class PublicComponent implements OnInit {
   }
 
   getLayoutData(layout: any) {
-    console.log(layout);
+    // console.log(layout);
+    this.dataViewport.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 }

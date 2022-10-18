@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ThemeVariables, ThemeRef, lyl, StyleRenderer } from '@alyle/ui';
-import { ResolveStart, Router } from '@angular/router';
+import { NavigationEnd, ResolveStart, Router } from '@angular/router';
 import { AuthenticationService } from './services/authentication.service';
 import { UserService } from './services/user.service';
 import { UtilityService } from './services/utility.service';
@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CompleteRegistrationComponent } from './components/complete-registration/complete-registration.component';
 import { environment } from 'src/environments/environment';
 import { SocketService } from './services/socket.service';
-import { BehaviorSubject } from 'rxjs';
+import { filter } from 'rxjs';
 
 const STYLES = (theme: ThemeVariables, ref: ThemeRef) => {
   const __ = ref.selectorsOf(STYLES);
@@ -27,6 +27,8 @@ const STYLES = (theme: ThemeVariables, ref: ThemeRef) => {
     }`
   };
 };
+
+declare const gtag: Function;
 
 @Component({
   selector: '.app',
@@ -64,6 +66,13 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("Project version", environment.version);
+
+    this.router.events.pipe(filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      gtag('event', 'page_view', {
+        page_path: event.urlAfterRedirects
+      })
+    })
 
     if (this.accessToken != null) {
       this.userService.fetchFireUser().subscribe({

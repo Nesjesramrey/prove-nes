@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { WelcomeDialogComponent } from 'src/app/components/welcome-dialog/welcome-dialog.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
@@ -20,13 +22,33 @@ export class SignInComponent implements OnInit {
     public authenticationSrvc: AuthenticationService,
     public utilitySrvc: UtilityService,
     public angularFireAuth: AngularFireAuth,
-    public router: Router
-  ) { }
+    public router: Router,
+    public activatedRoute: ActivatedRoute,
+    public dialog: MatDialog
+  ) {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      if (params['from'] != undefined) {
+        this.popGreetingsDialog();
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.signInFormGroup = this.formBuilder.group({
       email: ['', [Validators.required, Validators.pattern(this.utilitySrvc.emailPattern), this.utilitySrvc.emailDomainValidator]],
       password: ['', [Validators.required, Validators.minLength(3)]]
+    });
+  }
+
+  popGreetingsDialog() {
+    const dialogRef = this.dialog.open<WelcomeDialogComponent>(WelcomeDialogComponent, {
+      width: '420px',
+      data: {},
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
     });
   }
 

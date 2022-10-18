@@ -55,6 +55,7 @@ import { ViewDocumentCommentsComponent } from './view-document-comments/view-doc
 import { ReplyDocumentCommentsComponent } from './reply-document-comments/reply-document-comments.component';
 import { EditTopicDataComponent } from './edit-topic-data/edit-topic-data.component';
 import { EditSolutionDataComponent } from './edit-solution-data/edit-solution-data.component';
+import { WelcomeDialogComponent } from './welcome-dialog/welcome-dialog.component';
 
 @NgModule({
   imports: [
@@ -114,6 +115,7 @@ import { EditSolutionDataComponent } from './edit-solution-data/edit-solution-da
     ReplyDocumentCommentsComponent,
     EditTopicDataComponent,
     EditSolutionDataComponent,
+    WelcomeDialogComponent
   ],
   exports: [
     AppPageletComponent,
@@ -151,7 +153,8 @@ import { EditSolutionDataComponent } from './edit-solution-data/edit-solution-da
     ViewDocumentCommentsComponent,
     ReplyDocumentCommentsComponent,
     EditTopicDataComponent,
-    EditSolutionDataComponent
+    EditSolutionDataComponent,
+    WelcomeDialogComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
@@ -175,7 +178,8 @@ import { EditSolutionDataComponent } from './edit-solution-data/edit-solution-da
     ViewDocumentCommentsComponent,
     ReplyDocumentCommentsComponent,
     EditTopicDataComponent,
-    EditSolutionDataComponent
+    EditSolutionDataComponent,
+    WelcomeDialogComponent
   ],
   providers: [],
 })

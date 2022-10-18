@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
@@ -14,6 +15,7 @@ export class CategoryBarsComponent implements OnInit {
 
   constructor(
     public utilityService: UtilityService,
+    public router: Router
   ) { }
 
   ngOnInit(): void { }
@@ -24,6 +26,7 @@ export class CategoryBarsComponent implements OnInit {
   }
 
   linkMe(url: string) {
-    this.utilityService.linkMe(url);
+    this.router.navigateByUrl(url, { state: { coverage: 'coverage' } });
+    // this.utilityService.linkMe(url);
   }
 }
