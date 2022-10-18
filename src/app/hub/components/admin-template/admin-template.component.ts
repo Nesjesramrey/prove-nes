@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddDocumentDialogComponent } from 'src/app/components/add-document-dialog/add-document-dialog.component';
 import { UtilityService } from 'src/app/services/utility.service';
@@ -20,6 +20,7 @@ export class AdminTemplateComponent implements OnInit {
   public commentUsers: any[] = [];
   public documentSelectId: string = '';
   public documentComments: any[] = [];
+  @ViewChild('dataViewport') public dataViewport!: ElementRef;
 
   constructor(
     public dialog: MatDialog,
@@ -85,6 +86,12 @@ export class AdminTemplateComponent implements OnInit {
       complete: () => { }
     });
     // this.returnComments(document);
+  }
+
+  displayDocumentData() {
+    setTimeout(() => {
+      this.dataViewport.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
   }
 
   returnComments(document: any) {

@@ -45,6 +45,9 @@ export class CategoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (history.state.coverage != undefined) {
+      console.log('coverage available');
+    };
     this.loadCategory();
   }
 
