@@ -51,7 +51,7 @@
                   <mat-icon color="primary">more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                  <button mat-menu-item type="button">
+                  <button mat-menu-item type="button" (click)="displayDocumentData()">
                     <mat-icon color="primary">pie_chart</mat-icon>
                     <span>Ver datos</span>
                   </button>
@@ -127,7 +127,7 @@
     </carousel>
   </div>
 
-  <div class="set-12 tabs">
+  <div class="set-12 tabs" #dataViewport>
     <mat-card class="set-12">
       <mat-tab-group [disableRipple]="true" [@.disabled]="true">
         <mat-tab>

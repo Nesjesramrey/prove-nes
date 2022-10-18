@@ -86,17 +86,7 @@ export class SelectedCategoryComponent implements OnInit {
     ];
   }
 
-  ngOnInit(): void {
-    // user available
-    if (this.token != null) {
-      this.payload = JSON.parse(atob(this.token.split('.')[1]));
-      let user: Observable<any> = this.userService.fetchUserById({
-        _id: this.payload['sub'],
-      });
-      user.subscribe((reply: any) => {
-      });
-    }
-  }
+  ngOnInit(): void { }
 
   linkCategories(id: string) {
     this.utilityService.linkMe(`documentos/${this.documentID}/categoria/${id}`);
