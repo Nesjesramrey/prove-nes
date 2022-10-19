@@ -1,0 +1,25 @@
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+
+<div class="set-12" *ngIf="isDataAvailable">
+  <h3>Selecciona tu cobertura</h3>
+  <mat-form-field appearance="outline">
+    <mat-label>Cobertura</mat-label>
+    <mat-select [formControl]="coverageFormControl" multiple>
+      <mat-option *ngFor="let item of coverage" [value]="item">
+        <small>{{ item.name }}</small>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="set-12 ctrls">
+    <button type="button" mat-raised-button color="warn" (click)="killDialog()">
+      <small>Cerrar</small>
+    </button>
+    <button type="button" mat-raised-button color="primary" [disabled]="submitted" (click)="onAddCoverage()">
+      <small>Guardar</small>
+    </button>
+    <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { DocumentService } from 'src/app/services/document.service';
@@ -17,13 +17,12 @@ import { SolutionService } from 'src/app/services/solution.service';
 export class CategoryComponent implements OnInit {
   public document: any = null;
   public coverage: any[] = [];
+  public coverageSelected: any = null;
   public isDataAvailable: boolean = false;
-
   public selectedCategory: any = null;
   public documentID: string = '';
   public categoryID: string = '';
   public image: string = '';
-
   public topicsCount: number = 0;
   public solutionsCount: number = 0;
   public topSolutions: any = [];
@@ -31,6 +30,8 @@ export class CategoryComponent implements OnInit {
   public selectedCategoryTitle: any = null;
   public titles: any = [];
   public stats: any = {};
+  public layouts: any = null;
+  @ViewChild('dataViewport') public dataViewport!: ElementRef;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -45,10 +46,10 @@ export class CategoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (history.state.coverage != undefined) {
-      console.log('coverage available');
-    };
     this.loadCategory();
+    if (history['state']['coverage'] != undefined) {
+      this.coverageSelected = history['state']['coverage'];
+    };
   }
 
   loadCategory() {
@@ -71,10 +72,13 @@ export class CategoryComponent implements OnInit {
       this.stats = this.selectedCategory.stats;
       this.image = reply[1].images.length > 0 ? reply[1].images[0] : this.image;
       this.topicsCount = reply[1].topics.length;
-      this.coverage = this.document.coverage;
+      this.coverage = this.document['coverage'];
+      if (this.coverageSelected == null) { this.coverageSelected = this.coverage[0]['_id']; }
+      this.layouts = this.selectedCategory['subLayouts'];
+
       setTimeout(() => {
         this.isDataAvailable = true;
-      }, 300);
+      }, 100);
     });
 
     this.getDataCharts();
@@ -112,4 +116,8 @@ export class CategoryComponent implements OnInit {
       }
     });
   }
+
+  onSelectCoverage(event: any) { this.coverageSelected = event['value']; }
+
+  getLayoutData(layout: any) { this.dataViewport.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
 }

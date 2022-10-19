@@ -1,8 +1,6 @@
 import {
-  ChangeDetectorRef,
   Component,
   OnInit,
-  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -13,9 +11,7 @@ import { LayoutService } from 'src/app/services/layout.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 import { CustomMatDataSource } from '../custom-class/custom-table.component';
-import { MatSort, Sort } from '@angular/material/sort';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { MatTable } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: '.subcategory-page',
@@ -26,15 +22,12 @@ export class SubcategoryComponent implements OnInit {
   public documentID: string = '';
   public categoryID: string = '';
   public subcategoryID: string = '';
-
   public document: any = null;
   public category: any;
   public subCategoryTitle: any = null;
   public subcategory: any = null;
   public panelTopicsData: any = [];
-
   public isDataAvailable: boolean = false;
-
   public displayedColumns: string[] = ['title', 'score', 'users'];
   public TopicDataSource: any;
   public SolutionDataSource: any;
@@ -44,6 +37,8 @@ export class SubcategoryComponent implements OnInit {
   public titles: any = [];
   public stats: any = {};
   @ViewChild(MatSort) sort: MatSort = new MatSort();
+  public coverage: any = null;
+  public coverageSelected: any = null;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -54,26 +49,20 @@ export class SubcategoryComponent implements OnInit {
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
-    this.subcategoryID =
-      this.activatedRoute['snapshot']['params']['subcategoryID'];
+    this.subcategoryID = this.activatedRoute['snapshot']['params']['subcategoryID'];
   }
+
   ngOnInit(): void {
+    if (history['state']['coverage'] != undefined) {
+      this.coverageSelected = history['state']['coverage'];
+    };
     this.loadSubcategory();
   }
 
   loadSubcategory() {
-    let document: Observable<any> =
-      this.documentService.fetchSingleDocumentById({ _id: this.documentID });
-
-    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({
-      _id: this.categoryID,
-    });
-
-    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById(
-      {
-        _id: this.subcategoryID,
-      }
-    );
+    let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
+    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID });
+    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID });
 
     forkJoin([document, category, subcategory]).subscribe((reply: any) => {
       this.titles = this.utilityService.formatTitles(
@@ -82,6 +71,7 @@ export class SubcategoryComponent implements OnInit {
         reply[2].category.name,
         ''
       );
+
       this.document = reply[0];
       this.category = reply[1];
       this.subcategory = reply[2];
@@ -103,9 +93,10 @@ export class SubcategoryComponent implements OnInit {
 
       this.panelTopicsData = this.subcategory.topics.slice(0, 7);
       this.TopicDataSource = new CustomMatDataSource(this.topicsDataSource);
-      this.SolutionDataSource = new CustomMatDataSource(
-        this.solutionsDataSource
-      );
+      this.SolutionDataSource = new CustomMatDataSource(this.solutionsDataSource);
+
+      this.coverage = this.document['coverage'];
+      if (this.coverageSelected == null) { this.coverageSelected = this.coverage[0]['_id']; }
 
       setTimeout(() => {
         this.isDataAvailable = true;
@@ -147,15 +138,20 @@ export class SubcategoryComponent implements OnInit {
       }
     });
   }
+
   applyFilterTopic(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.TopicDataSource.filter = filterValue.trim().toLowerCase();
   }
+
   applyFilterSolution(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.SolutionDataSource.filter = filterValue.trim().toLowerCase();
   }
+
+  onSelectCoverage(event: any) { this.coverageSelected = event['value']; }
 }
+
 export interface DataTable {
   name: string;
   ranking: number;

@@ -1,0 +1,23 @@
+<div class="set-12 featured-users">
+  <div class="featured-users-circles"></div>
+</div>
+
+<div class="set-12 bars">
+  <div class="set-12 inner-bar" *ngFor="let layout of layouts"
+    [class.active]="layoutSelected != layout._id && layoutSelected != ''">
+    <button type="button" class="linker" matTooltip="Abrir categoría" matTooltipClass="tooltip"
+      matTooltipPosition="left" *ngIf="layoutSelected == layout._id && layoutSelected != ''"
+      (click)="linkMe('/documentos-publicos/' + document_id + '/categoria/' + layout._id)">
+      <mat-icon>shortcut</mat-icon>
+    </button>
+    <div class="grayback">
+      <button type="button" class="fav">
+        <mat-icon>favorite</mat-icon>
+      </button>
+    </div>
+    <div class="gradbar"></div>
+    <button type="button" class="catname" (click)="displayLayoutData(layout)">
+      <small>{{ layout.category.name }}</small>
+    </button>
+  </div>
+</div>
