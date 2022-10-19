@@ -15,11 +15,14 @@ export class PublicComponent implements OnInit {
   public documentID: string = '';
   public document: any = null;
   public topSolutions: any = [];
+  public topSolutionsIds: any = [];
   public topLayouts: any = [];
   public isDataAvailable: boolean = false;
   public coverage: any[] = [];
+  public coverageSelected: any = null;
   public layouts: any[] = [];
   @ViewChild('dataViewport') public dataViewport!: ElementRef;
+  public allDocumentSolutions: any[] = [];
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -36,35 +39,53 @@ export class PublicComponent implements OnInit {
   }
 
   loadDocument() {
+    this.getDataCharts();
     this.documentService.fetchSingleDocumentById({ _id: this.documentID })
       .subscribe((reply: any) => {
         this.document = reply;
-        this.coverage = this.document.coverage;
+        this.coverage = this.document['coverage'];
         this.layouts = this.document['layouts'];
+        if (this.coverageSelected == null) { this.coverageSelected = this.coverage[0]['_id']; };
+
+        this.layouts.filter((x: any) => {
+          x['subLayouts'].filter((y: any) => {
+            y['topics'].filter((t: any) => {
+              t['solutions'].filter((s: any) => {
+                s['url'] = '/documentos-publicos/' + this.document['_id'] +
+                  '/categoria/' + x['_id'] +
+                  '/subcategoria/' + y['_id'] +
+                  '/tema/' + t['_id'] +
+                  '/solucion/' + s['_id'];
+                this.allDocumentSolutions.push(s);
+              });
+            });
+          });
+        });
+
+        let solutions = this.allDocumentSolutions.filter((e: any) => {
+          return this.topSolutionsIds.includes(e['_id']);
+        }, this.topSolutionsIds);
+
+        this.topSolutions = [];
+        this.topSolutions = solutions;
 
         setTimeout(() => {
           this.isDataAvailable = true;
         }, 100);
       });
-
-    this.getDataCharts();
   }
 
   getDataCharts() {
     this.solutionService.getTopSolutionsByDocument(this.documentID)
       .subscribe((resp: any) => {
         this.topSolutions = resp;
+        this.topSolutions.filter((x: any) => {
+          this.topSolutionsIds.push(x['_id']);
+        });
       });
 
     this.layoutService.getTopLayoutByDocument(this.documentID)
-      .subscribe((resp: any) => {
-        this.topLayouts = resp;
-      });
-
-    // this.layoutService.getTopLayoutByDocument(this.documentID)
-    //   .subscribe((resp: any) => {
-    //     this.topLayouts = resp;
-    //   });
+      .subscribe((resp: any) => { this.topLayouts = resp; });
   }
 
   popImageViewer() {
@@ -83,8 +104,7 @@ export class PublicComponent implements OnInit {
     });
   }
 
-  getLayoutData(layout: any) {
-    // console.log(layout);
-    this.dataViewport.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
+  onSelectCoverage(event: any) { this.coverageSelected = event['value']; }
+
+  getLayoutData(layout: any) { this.dataViewport.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
 }

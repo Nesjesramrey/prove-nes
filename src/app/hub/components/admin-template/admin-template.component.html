@@ -55,6 +55,10 @@
                     <mat-icon color="primary">pie_chart</mat-icon>
                     <span>Ver datos</span>
                   </button>
+                  <button mat-menu-item type="button" (click)="addCategoryDialog(document)">
+                    <mat-icon color="primary">category</mat-icon>
+                    <span>Cobertura</span>
+                  </button>
                   <button mat-menu-item type="button" (click)="linkMe('/documentos-publicos/' + document._id)">
                     <mat-icon color="primary">groups</mat-icon>
                     <span>Abrir público</span>
@@ -62,6 +66,10 @@
                   <button mat-menu-item type="button" (click)="linkMe('/documentos/' + document._id)">
                     <mat-icon color="primary">lock</mat-icon>
                     <span>Abrir privado</span>
+                  </button>
+                  <button mat-menu-item type="button" (click)="killDocument(document)">
+                    <mat-icon color="primary">delete</mat-icon>
+                    <span>Eliminar</span>
                   </button>
                 </mat-menu>
               </div>

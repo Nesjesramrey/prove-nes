@@ -50,23 +50,29 @@
     <div class="set-9 col-rgt">
       <panel-circles [data]="selectedCategory.subLayouts" [withBorder]="true" [redirectTo]="'SUBCATEGORY'">
       </panel-circles>
+      <!-- <div class="subcategory-bars" [document_id]="document._id" [coverageSelected]="coverageSelected"
+        [layouts]="layouts" (sendLayoutData)="getLayoutData($event)"></div> -->
 
-      <div class="mt-2 set-3">
-        <mat-form-field appearance="outline">
-          <mat-label>Cobertura</mat-label>
-          <mat-select>
-            <mat-option *ngFor="let location of coverage" value="location._id">
-              <small>{{ location.name }}</small>
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="set-12 cards">
-        <div class="set-6">
-          <spider-chart [data]="topLayouts"></spider-chart>
+      <div class="set-12" #dataViewport>
+        <div class="mt-2 set-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Cobertura</mat-label>
+            <mat-select [value]="coverageSelected" (selectionChange)="onSelectCoverage($event)">
+              <mat-option *ngFor="let location of coverage" [value]="location._id">
+                <small>{{ location.name }}</small>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
-        <div class="set-6">
-          <top10-list [data]="topSolutions"></top10-list>
+
+        <div class="set-12 cards">
+          <div class="set-6">
+            <spider-chart [data]="topLayouts"></spider-chart>
+          </div>
+
+          <div class="set-6">
+            <top10-list [data]="topSolutions"></top10-list>
+          </div>
         </div>
       </div>
     </div>

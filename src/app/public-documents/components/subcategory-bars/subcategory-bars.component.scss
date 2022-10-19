@@ -1,0 +1,112 @@
+:host {
+  min-height: 480px;
+  background: #00031d;
+  position: relative;
+
+  .featured-users {
+    padding: 10px 20px;
+  }
+
+  .active {
+    opacity: 0.4;
+  }
+
+  .active:hover {
+    opacity: 1;
+  }
+
+  .inner-bar {
+    height: 44px;
+    margin-bottom: 5px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    transition: all .2s linear;
+
+    * {
+      margin: 0;
+    }
+
+    .grayback {
+      height: 44px;
+      width: calc(100% - 70px);
+      max-width: calc(100% - 70px);
+      background: rgba(255, 255, 255, 0.5);
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 7;
+      border-top-right-radius: 50px;
+      border-bottom-right-radius: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 5px;
+    }
+
+    .gradbar {
+      height: 24px;
+      max-width: calc(100% - 70px);
+      width: calc(43% - 20px);
+      background: linear-gradient(180deg, #71F5AD 0%, #0EAA70 100%);
+      border-radius: 50px;
+      margin: 0 0 0 20px;
+      position: relative;
+      z-index: 4;
+    }
+
+    .catname {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      margin-left: 35px;
+      z-index: 9;
+      font-weight: bold;
+      color: #131313;
+      transition: all .2s linear;
+    }
+
+    .catname:hover {
+      color: #FF6D00
+    }
+
+    .fav {
+      width: 34px;
+      height: 34px;
+      border-radius: 100%;
+      background: #FFCF03;
+      border: 3px solid #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .2s linear;
+
+      mat-icon {
+        font-size: 11pt;
+        color: #ffffff;
+      }
+    }
+
+    .fav:hover {
+      background: #FF6D00;
+    }
+
+    .linker {
+      width: 24px;
+      height: 24px;
+      border-radius: 100%;
+      background: #00031d;
+      position: absolute;
+      top: 10px;
+      left: -12px;
+      z-index: 11;
+      border: 2px solid #ffffff;
+
+      mat-icon {
+        font-size: 9pt;
+        color: #ffffff;
+      }
+    }
+  }
+}
