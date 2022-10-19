@@ -2,23 +2,14 @@
   <div *ngIf="categories.length === 0">
     <p class="message">No cuenta con temas</p>
   </div>
-  <div
-    class="random-text"
-    [ngStyle]="{
+  <div class="random-text" [ngStyle]="{
       left: item.pos.x + 'px',
       right: item.pos.y + 'px',
       'font-size': item.size + 'px',
       opacity: item.opacity
-    }"
-    *ngFor="let item of categories"
-  >
-    <!-- <div class="box sb4">I'm speech bubble</div> -->
-    <span
-      (click)="redirect(item._id)"
-      style="cursor: pointer"
-      [matTooltip]="item.title.toUpperCase()"
-      matTooltipClass="tooltip"
-      >{{ item.shortTitle }}
+    }" *ngFor="let item of categories">
+    <span (click)="redirect(item._id)" style="cursor: pointer" [matTooltip]="item.title.toUpperCase()"
+      matTooltipClass="tooltip">{{ item.shortTitle }}
       <div class="sb4"></div>
     </span>
   </div>

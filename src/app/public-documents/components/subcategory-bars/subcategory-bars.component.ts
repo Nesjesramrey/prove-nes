@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
-  selector: '.category-bars',
-  templateUrl: './category-bars.component.html',
-  styleUrls: ['./category-bars.component.scss']
+  selector: '.subcategory-bars',
+  templateUrl: './subcategory-bars.component.html',
+  styleUrls: ['./subcategory-bars.component.scss']
 })
-export class CategoryBarsComponent implements OnInit {
+export class SubcategoryBarsComponent implements OnInit {
   @Input('document_id') public document_id: string = '';
   @Input('coverageSelected') public coverageSelected: any = null;
   @Input('layouts') public layouts: any[] = [];
@@ -19,9 +19,7 @@ export class CategoryBarsComponent implements OnInit {
     public router: Router
   ) { }
 
-  ngOnInit(): void {
-    // console.log(this.coverageSelected);
-  }
+  ngOnInit(): void { }
 
   displayLayoutData(layout: any) {
     this.layoutSelected = layout['_id'];

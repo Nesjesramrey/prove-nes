@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { UtilityService } from 'src/app/services/utility.service';
 
 export interface Section {
   name: string;
@@ -14,9 +15,15 @@ export class Top10ListComponent implements OnInit {
   @Input() data: any[] = [];
   isColor: boolean = false;
 
-  constructor() { }
+  constructor(
+    public utilityService: UtilityService
+  ) { }
 
-  ngOnInit(): void { 
-    // console.log(this.data);
+  ngOnInit(): void {
+    console.log(this.data);
+  }
+
+  linkMe(url: string) {
+    this.utilityService.linkMe(url);
   }
 }

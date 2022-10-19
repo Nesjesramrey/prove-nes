@@ -34,6 +34,7 @@ import { ModalTestimonyComponent } from './modal-testimony/modal-testimony.compo
 import { ModalVotesComponent } from './modal-votes/modal-votes.component';
 import { ModalDesciptionComponent } from './modal-desciption/modal-desciption.component';
 import { CategoryBarsComponent } from './category-bars/category-bars.component';
+import { SubcategoryBarsComponent } from './subcategory-bars/subcategory-bars.component';
 
 @NgModule({
   imports: [
@@ -72,7 +73,8 @@ import { CategoryBarsComponent } from './category-bars/category-bars.component';
     ModalTestimonyComponent,
     ModalVotesComponent,
     ModalDesciptionComponent,
-    CategoryBarsComponent
+    CategoryBarsComponent,
+    SubcategoryBarsComponent
   ],
   exports: [
     Top10ListComponent,
@@ -90,7 +92,8 @@ import { CategoryBarsComponent } from './category-bars/category-bars.component';
     ModalPermissionsComponent,
     ModalSolutionComponent,
     ModalTestimonyComponent,
-    CategoryBarsComponent
+    CategoryBarsComponent,
+    SubcategoryBarsComponent
   ],
   entryComponents: [],
   providers: [],

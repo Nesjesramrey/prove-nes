@@ -5,6 +5,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 import { CommentService } from 'src/app/services/comment.service';
 import { DocumentService } from 'src/app/services/document.service';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { AddCategoryDialogComponent } from 'src/app/components/add-category-dialog/add-category-dialog.component';
 
 
 @Component({
@@ -81,7 +82,6 @@ export class AdminTemplateComponent implements OnInit {
       },
       next: (reply: any) => {
         this.documentComments = reply;
-        console.log(this.documentComments);
       },
       complete: () => { }
     });
@@ -103,4 +103,37 @@ export class AdminTemplateComponent implements OnInit {
     })
   }
 
+  addCategoryDialog(document: any) {
+    const dialogRef = this.dialog.open(AddCategoryDialogComponent, {
+      width: '420px',
+      data: {
+        document: document
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  killDocument(document: any) {
+    let data: any = {
+      documentID: document['_id'],
+      isActive: false
+    };
+
+    this.documentService.editDocumentData(data).subscribe({
+      error: (error: any) => {
+        this.utilityService.openErrorSnackBar(this.utilityService.errorOops);
+      },
+      next: (reply: any) => {
+        this.utilityService.openSuccessSnackBar(this.utilityService.saveSuccess);
+        this.documents = this.documents.filter((x: any) => {
+          return x['_id'] != document['_id']
+        });
+      },
+      complete: () => { }
+    });
+  }
 }
