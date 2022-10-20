@@ -109,8 +109,15 @@
       <mat-card class="set-12 topic-list">
         <div class="set-12 table-head">
           <p class="title">Soluciones</p>
-          <input type="text" (keyup)="applyFilter($event)" placeholder="Búscar en soluciones..."
-            [disabled]="solutions.length == 0">
+          <!-- <input type="text" (keyup)="applyFilter($event)" placeholder="Búscar en soluciones..."
+            [disabled]="solutions.length == 0"> -->
+          <mat-form-field appearance="outline">
+            <mat-label>Búscar en soluciones...</mat-label>
+            <input matInput type="text" (keyup)="applyFilter($event)" [disabled]="solutions.length == 0">
+            <button matSuffix mat-icon-button>
+              <mat-icon>search</mat-icon>
+            </button>
+          </mat-form-field>
         </div>
 
         <div class="set-12 empty-layouts" *ngIf="solutions.length == 0">

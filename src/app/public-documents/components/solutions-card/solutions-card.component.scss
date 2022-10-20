@@ -1,16 +1,20 @@
 :host {
+
   .solutions-box {
-    padding: 10px;
+    padding: 20px;
+
     .title {
       font-size: 14px;
       font-weight: 700;
     }
+
     .title-column {
       font-size: 12px;
       font-weight: 400;
       margin-right: 120px;
       padding: 0;
     }
+
     table tbody tr td {
       p {
         font-size: 14px;
@@ -23,21 +27,39 @@
       }
     }
 
+    table {
+      button.linker {
+        transition: all .2s linear;
+      }
+
+      button.linker:hover {
+        color: #696969;
+      }
+    }
+
     .catbtn-2 {
-      // background-color: #71f5ad;
-      // color: #00031d;
       padding: 5px 20px;
-      // border: 3px solid #71f5ad;
       font-size: 15px;
       font-weight: 600;
       border-radius: 4px;
+      transition: all .2s linear;
     }
+
     .catbtn-2:hover {
       color: #696969;
     }
+
     .table-head {
       display: flex;
       align-items: center;
+
+      // .set-6:nth-child(odd) {
+      //   padding-right: 10px;
+      // }
+
+      .set-6:nth-child(even) {
+        padding-left: 20px;
+      }
 
       * {
         margin: 0;
@@ -51,35 +73,31 @@
       ::ng-deep .mat-form-field-wrapper {
         padding-bottom: 0 !important;
       }
-
-      input[type="text"] {
-        padding: 15px;
-        // border: 1px solid rgba($color: #000000, $alpha: 0.1);
-        box-shadow: inset 0 0 0 1px rgba($color: #000000, $alpha: 0.1);
-        border-radius: 5px;
-        // width: 40%;
-        flex: 1;
-      }
-
-      input[type="text"]:focus {
-        box-shadow: inset 0 0 0 2px #00031d;
-      }
-
-      input[type="text"]:disabled {
-        cursor: not-allowed;
-        opacity: 0.7;
-      }
-    }
-
-    .notData {
-      width: 100%;
-      height: 130px;
-      line-height: 130px;
-      text-align: center;
     }
 
     .searchDisabled {
       opacity: 0 !important;
+    }
+  }
+
+  .notData {
+    width: 100%;
+    margin-top: 40px;
+
+    .ctrls {
+      margin-top: 20px;
+    }
+  }
+
+  ::ng-deep th.mat-header-cell:first-of-type,
+  td.mat-cell:first-of-type,
+  td.mat-footer-cell:first-of-type {
+    padding: 0 !important;
+    text-align: left;
+
+    .mat-sort-header-content {
+      text-align: left !important;
+      margin: 0;
     }
   }
 }

@@ -19,14 +19,22 @@
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      ;
 
-      >div,
       * {
         margin: 0;
       }
 
-      .set-9 {
+      .set-4 {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        mat-icon {
+          margin-left: 10px;
+        }
+      }
+
+      .set-8 {
         padding-left: 20px;
       }
     }
@@ -169,22 +177,22 @@
       padding-bottom: 0 !important;
     }
 
-    input[type="text"] {
-      width: 100%;
-      padding: 15px;
-      box-shadow: inset 0 0 0 1px rgba($color: #000000, $alpha: 0.1);
-      border-radius: 5px;
-      flex: 1;
-    }
+    // input[type="text"] {
+    //   width: 100%;
+    //   padding: 15px;
+    //   box-shadow: inset 0 0 0 1px rgba($color: #000000, $alpha: 0.1);
+    //   border-radius: 5px;
+    //   flex: 1;
+    // }
 
-    input[type="text"]:focus {
-      box-shadow: inset 0 0 0 2px #00031d;
-    }
+    // input[type="text"]:focus {
+    //   box-shadow: inset 0 0 0 2px #00031d;
+    // }
 
-    input[type="text"]:disabled {
-      cursor: not-allowed;
-      opacity: 0.7;
-    }
+    // input[type="text"]:disabled {
+    //   cursor: not-allowed;
+    //   opacity: 0.7;
+    // }
   }
 
   .notData {

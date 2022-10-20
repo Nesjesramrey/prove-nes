@@ -1,46 +1,41 @@
 <div class="testimonials">
-  <p class="title-card">Testimonios</p>
+  <div class="set 12 head-titles">
+    <span>Testimonios</span>
+    <div class="line"></div>
+  </div>
 
-  <!-- TESTIMONIALS LIST -->
   <div class="content">
-    <!-- ITEM -->
-    <div *ngIf="data.length === 0" class="txt-center">
-      <p>Sin testimonios</p>
+    <div *ngIf="data.length === 0" class="txt-center emptyhldr">
+      <p>
+        <small>Sin testimonios</small>
+      </p>
+      <p>
+        <small>Sé el primero en agregar tu testimonio</small>
+      </p>
+      <div class="set-12 ctrls">
+        <button type="button" mat-raised-button color="primary" (click)="addFirstTestimony()">
+          <small>Agregar testimonio</small>
+        </button>
+      </div>
     </div>
+
     <mat-card class="testimonial-item" *ngFor="let testimonial of data">
-      <!-- IMAGE -->
       <div class="leading">
         <mat-icon *ngIf="!testimonial.images[0]">panorama</mat-icon>
         <img *ngIf="testimonial.images[0]" [src]="testimonial.images[0]" />
       </div>
-      <!-- CONTENT -->
+
       <div class="info">
         <p class="title" *ngIf="!testimonial.isAnonymous">
           {{ testimonial.createdBy.firstname }}
           {{ testimonial.createdBy.lastname }}
         </p>
         <p class="title" *ngIf="testimonial.isAnonymous">Anónimo</p>
-        <!-- <p class="description">{{ testimonial.description }}</p> -->
 
         <div class="about">
-          <!-- AVATAR -->
-
-          <img
-            class="avatar"
-            *ngIf="testimonial.createdBy.avatarImage"
-            [src]="testimonial.createdBy.avatarImage"
-            [matTooltip]="
-              testimonial.createdBy.firstname +
-              ' ' +
-              testimonial.createdBy.lastname
-            "
-          />
-          <mat-icon
-            *ngIf="!testimonial.createdBy.avatarImage"
-            style="font-size: 20px"
-            >panorama</mat-icon
-          >
-
+          <img class="avatar" *ngIf="testimonial.createdBy.avatarImage" [src]="testimonial.createdBy.avatarImage"
+            [matTooltip]="testimonial.createdBy.firstname + ' ' + testimonial.createdBy.lastname" />
+          <mat-icon *ngIf="!testimonial.createdBy.avatarImage" style="font-size: 20px">panorama</mat-icon>
           <p>Fecha de creación: {{ testimonial.createdAt | date }}</p>
         </div>
       </div>

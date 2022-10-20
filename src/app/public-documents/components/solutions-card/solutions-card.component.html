@@ -1,18 +1,35 @@
-<mat-card class="doc-description" style="min-height: 280px">
-  <div class="solutions-box" style="text-align: start">
+<!-- <mat-card class="doc-description" style="min-height: 280px"> -->
+<div class="set-12 doc-description">
+  <div class="set-12 solutions-box">
     <div class="set-12 table-head">
-      <p class="title">Soluciones</p>
-      <input type="text" (keyup)="applyFilterSolution($event)" placeholder="Buscar soluciones..."
-        [disabled]="data.length == 0" [class.searchDisabled]="data.filteredData.length === 0" />
+      <div class="set-6 head-titles">
+        <span>Soluciones</span>
+        <div class="line"></div>
+      </div>
+
+      <div class="set-6">
+        <!-- <input type="text" (keyup)="applyFilterSolution($event)" placeholder="Buscar soluciones..."
+          [disabled]="data.length == 0" [class.searchDisabled]="data.filteredData.length === 0" /> -->
+        <mat-form-field appearance="outline">
+          <mat-label>
+            <small>Búscar soluciones...</small>
+          </mat-label>
+          <input matInput type="text" (keyup)="applyFilterSolution($event)" [disabled]="data.length == 0">
+          <button matSuffix mat-icon-button>
+            <mat-icon>search</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
     </div>
+
     <table *ngIf="data.filteredData.length > 0; else notSolution" mat-table [dataSource]="data" matSort class="">
       <ng-container matColumnDef="title">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por título">
           Título
         </th>
         <td mat-cell *matCellDef="let element">
-          <button type="button" class="catbtn-2" (click)="redirect(element._id)">
-            {{ element.title }}
+          <button type="button" (click)="redirect(element._id)" class="linker">
+            <strong>{{ element.title }}</strong>
           </button>
         </td>
       </ng-container>
@@ -30,8 +47,27 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
+
     <ng-template #notSolution>
-      <p class="notData">Sin soluciones</p>
+      <div class="set-12 notData">
+        <div class="set-12">
+          <p>
+            <small>Sin soluciones</small>
+          </p>
+          <p>
+            <small>Sé el primero en proponer una solución</small>
+          </p>
+        </div>
+        <div class="set-12 ctrls">
+          <button type="button" mat-raised-button color="accent" (click)="addFirstSolution()">
+            <strong>
+              <small>Agregar solución</small>
+            </strong>
+          </button>
+        </div>
+      </div>
     </ng-template>
   </div>
-</mat-card>
+</div>
+
+<!-- </mat-card> -->

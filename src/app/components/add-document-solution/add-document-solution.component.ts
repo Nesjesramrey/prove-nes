@@ -28,7 +28,7 @@ export class AddDocumentSolutionComponent implements OnInit {
     public utilityService: UtilityService,
     @Inject(MAT_DIALOG_DATA) public dialogData: any
   ) {
-    console.log(this.dialogData);
+    // console.log(this.dialogData);
   }
 
   ngOnInit(): void {

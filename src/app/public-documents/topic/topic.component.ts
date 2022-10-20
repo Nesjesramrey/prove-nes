@@ -206,25 +206,22 @@ export class TopicComponent implements OnInit {
     return votes.find((vote) => vote.createdBy === this.user._id)?._id || 0;
   }
 
-  openModalTestimony() {
-    const dialogRef = this.dialog.open<AddDocumentTestimonyComponent>(
-      AddDocumentTestimonyComponent,
-      {
-        width: '640px',
-        maxHeight: '600px',
-        data: {
-          documentID: this.documentID,
-          document: this.document,
-          categoryID: this.categoryID,
-          topicID: this.topicID,
-          type: 'topic',
-          image: this.image,
-          firstname: this.user.firstname,
-          lastname: this.user.lastname,
-        },
-        disableClose: true,
-      }
-    );
+  openModalTestimony(event: any) {
+    const dialogRef = this.dialog.open<AddDocumentTestimonyComponent>(AddDocumentTestimonyComponent, {
+      width: '640px',
+      maxHeight: '600px',
+      data: {
+        documentID: this.documentID,
+        document: this.document,
+        categoryID: this.categoryID,
+        topicID: this.topicID,
+        type: 'topic',
+        image: this.image,
+        firstname: this.user.firstname,
+        lastname: this.user.lastname,
+      },
+      disableClose: true,
+    });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
@@ -233,7 +230,7 @@ export class TopicComponent implements OnInit {
     });
   }
 
-  openModalSolution() {
+  openModalSolution(event: any) {
     let coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.topic['coverage'][0] });
     if (coverage.length == 0) {
       this.utilityService.openErrorSnackBar('Selecciona una cobertura.');
@@ -243,11 +240,7 @@ export class TopicComponent implements OnInit {
     const dialogRef = this.dialog.open<AddDocumentSolutionComponent>(AddDocumentSolutionComponent, {
       width: '640px',
       data: {
-        // documentID: this.documentID,
-        // document: this.document,
-        // categoryID: this.categoryID,
         themeID: this.topicID,
-        // type: 'sublayout',
         coverage: coverage[0]
       },
       disableClose: true,
@@ -256,11 +249,9 @@ export class TopicComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
-        console.log(reply);
         const solution = reply.solutions[0];
         this.solutionsData.unshift(solution);
         this.SolutionDataSource = new MatTableDataSource(this.solutionsData);
-        // this.SolutionDataSource.setData(solution);
       }
     });
   }
