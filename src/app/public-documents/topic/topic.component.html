@@ -68,62 +68,72 @@
   <div class="set-12">
     <div class="set-8 col-lft">
       <mat-card>
-        <div class="imghldr">
-          <mat-icon *ngIf="!image">panorama</mat-icon>
-          <img *ngIf="image" [src]="image" style="cursor: pointer" (click)="popImageViewer()" />
+        <div class="set-12 card-desc">
+          <div class="imghldr">
+            <!-- <mat-icon *ngIf="!image">panorama</mat-icon>
+            <img *ngIf="image" [src]="image" style="cursor: pointer" (click)="popImageViewer()" /> -->
 
-          <div class="info">
-            <div class="actions">
-              <p>Relevancia ciudadana</p>
-              <p class="votes">{{ stats.score }} / 100</p>
+            <div class="info">
+              <div class="actions">
+                <div class="set-12">
+                  <p>Relevancia ciudadana</p>
+                  <p class="votes">{{ stats.score }} / 100</p>
+                </div>
 
-              <button *ngIf="userVoted" mat-raised-button color="primary" disabled style="background-color: #d9d9d9">
-                Votos: {{ votes }}
-              </button>
-              <button *ngIf="!userVoted" mat-raised-button color="black" style="
-                  background-color: #71f5ad;
-                  font-weight: 600;
-                  font-size: 16px;
-                " (click)="openModalVote()">
-                Votar
-              </button>
-              <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
+                <div class="set-12 vote-status" *ngIf="userVoted">
+                  Votos: {{ votes }}
+                </div>
+
+                <div class="set-12 vote-status">
+                  <button *ngIf="!userVoted" mat-raised-button color="accent" (click)="openModalVote()">
+                    <strong>Votar</strong>
+                  </button>
+                  <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
+                </div>
+              </div>
             </div>
+          </div>
+
+          <div class="infohldr">
+            <h3>{{ topic.title }}</h3>
+            <expanded-text [text]="topic.description" [minLength]="300" [title]="topic.title"></expanded-text>
+          </div>
+
+          <div class="icons">
+            <button type="button" mat-mini-fab color="warn" matTooltip="Agregar a favoritos" matTooltipClass="tooltip"
+              (click)="addFavorites()" *ngIf="!isFavorites">
+              <mat-icon>favorite</mat-icon>
+            </button>
+
+            <button type="button" mat-mini-fab color="accent" matTooltip="Agregar a favoritos" matTooltipClass="tooltip"
+              (click)="removeFavorites()" *ngIf="isFavorites">
+              <mat-icon>favorite</mat-icon>
+            </button>
+
+            <button type="button" mat-mini-fab color="warn" matTooltip="Agregar solución" matTooltipClass="tooltip"
+              (click)="openModalSolution(null)">
+              <mat-icon>feedback</mat-icon>
+            </button>
+            <button type="button" mat-mini-fab color="warn" matTooltip="Agregar comentario" matTooltipClass="tooltip"
+              (click)="popAddCommentsDialog()">
+              <mat-icon>add_comment</mat-icon>
+            </button>
+            <button type="button" mat-mini-fab color="warn" matTooltip="Agregar testimonio" matTooltipClass="tooltip"
+              (click)="openModalTestimony(null)">
+              <mat-icon>book</mat-icon>
+            </button>
           </div>
         </div>
 
-        <div class="infohldr">
-          <h3>{{ topic.title }}</h3>
-          <expanded-text [text]="topic.description" [minLength]="300" [title]="topic.title"></expanded-text>
-        </div>
-
-        <div class="icons">
-          <button type="button" mat-mini-fab color="primary" matTooltip="Agregar a favoritos" matTooltipClass="tooltip"
-            (click)="addFavorites()">
-            <mat-icon>favorite</mat-icon>
-          </button>
-          <button type="button" mat-mini-fab color="primary" matTooltip="Agregar solución" matTooltipClass="tooltip"
-            (click)="openModalSolution()">
-            <mat-icon>feedback</mat-icon>
-          </button>
-          <button type="button" mat-mini-fab color="primary" matTooltip="Agregar comentario" matTooltipClass="tooltip"
-            (click)="popAddCommentsDialog()">
-            <mat-icon>add_comment</mat-icon>
-          </button>
-          <button type="button" mat-mini-fab color="primary" matTooltip="Agregar testimonio" matTooltipClass="tooltip"
-            (click)="openModalTestimony()">
-            <mat-icon>book</mat-icon>
-          </button>
+        <div class="set-12 listhldr">
+          <solutions-card [data]="SolutionDataSource" (sendSolutionData)="openModalSolution($event)"></solutions-card>
         </div>
       </mat-card>
-
-      <div class="set-12 listhldr">
-        <solutions-card [data]="SolutionDataSource"></solutions-card>
-      </div>
     </div>
 
     <div class="set-4 col-rgt">
-      <public-documents-testimonials [data]="topic.testimonials"></public-documents-testimonials>
+      <public-documents-testimonials [data]="topic.testimonials" (sendTestimonyData)="openModalTestimony($event)">
+      </public-documents-testimonials>
     </div>
   </div>
 
