@@ -156,8 +156,15 @@
         <mat-card class="set-12">
           <div class="set-12 table-head">
             <p class="title">Sub Categorías</p>
-            <input type="text" (keyup)="applyFilter($event)" placeholder="Búscar en sub categorías..."
-              [disabled]="subcategories.length == 0">
+            <!-- <input type="text" (keyup)="applyFilter($event)" placeholder="Búscar en sub categorías..."
+              [disabled]="subcategories.length == 0"> -->
+            <mat-form-field appearance="outline">
+              <mat-label>Búscar en sub categorías...</mat-label>
+              <input matInput type="text" (keyup)="applyFilter($event)" [disabled]="subcategories.length == 0">
+              <button matSuffix mat-icon-button>
+                <mat-icon>search</mat-icon>
+              </button>
+            </mat-form-field>
           </div>
 
           <div class="set-12 empty-layouts" *ngIf="subcategories.length == 0">
@@ -179,13 +186,6 @@
                   <mat-icon>question_answer</mat-icon>
                   <small>{{element.name}}</small>
                 </button>
-
-                <!-- <button type="button" class="catbtn" [disabled]="!element.access"
-                  (click)="linkMe('/documentos/' + document._id + '/categoria/' + selectedCategory._id + '/subcategoria/' + element._id)"
-                  *ngIf="user.activityName == 'administrator'">
-                  <mat-icon>question_answer</mat-icon>
-                  <small>{{element.name}}</small>
-                </button> -->
               </td>
             </ng-container>
 

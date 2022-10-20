@@ -40,9 +40,9 @@
       }
     }
 
-    .listhldr {
-      margin-top: 30px;
-    }
+    // .listhldr {
+    //   margin-top: 30px;
+    // }
 
     .imghldr,
     .infohldr {
@@ -208,9 +208,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba($color: #ceddff, $alpha: 0.4);
-    border-bottom: 1px solid rgba($color: #000000, $alpha: 0.05);
-    overflow: hidden;
+    // background: rgba($color: #ceddff, $alpha: 0.4);
+    // border-bottom: 1px solid rgba($color: #000000, $alpha: 0.05);
+    // overflow: hidden;
 
     mat-icon {
       font-size: 70pt;
@@ -222,6 +222,18 @@
       height: auto;
       position: relative;
       object-fit: contain;
+    }
+
+    .actions {
+      text-align: center;
+    }
+
+    .vote-status {
+      margin-top: 20px;
+
+      button {
+        width: 70% !important;
+      }
     }
   }
 
@@ -252,6 +264,12 @@
       font-size: 12px;
       cursor: pointer;
     }
+  }
+
+  .card-desc {
+    position: relative;
+    background: #00031d;
+    color: white;
   }
 
   table {
@@ -348,12 +366,6 @@
               width: 100%;
               margin-top: 8pt;
             }
-
-            .votes {
-              margin-top: 4px;
-              font-size: 16pt;
-              font-weight: bold;
-            }
           }
         }
       }
@@ -444,5 +456,11 @@
       font-size: 14pt !important;
       color: #fff;
     }
+  }
+
+  .votes {
+    margin-top: 4px;
+    font-size: 16pt;
+    font-weight: bold;
   }
 }

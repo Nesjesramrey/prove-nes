@@ -73,29 +73,45 @@
           </div>
 
           <div class="set-6 col">
-            <div class="set-3">
+            <div class="set-4">
               <strong>
                 <small>Soluciones</small>
               </strong>
+              <mat-icon>insights</mat-icon>
             </div>
 
-            <div class="set-9 table-head">
-              <input type="text" (keyup)="applyFilterSolution($event)" placeholder="Buscar soluciones..."
-                [disabled]="solutionsDataSource.length == 0"
-                [class.searchDisabled]="solutionsDataSource.length === 0" />
+            <div class="set-8 table-head">
+              <mat-form-field appearance="outline">
+                <mat-label>
+                  <small>Búscar en soluciones...</small>
+                </mat-label>
+                <input matInput type="text" (keyup)="applyFilterSolution($event)"
+                  [disabled]="solutionsDataSource.length == 0">
+                <button matSuffix mat-icon-button>
+                  <mat-icon>search</mat-icon>
+                </button>
+              </mat-form-field>
             </div>
           </div>
 
           <div class="set-6 col">
-            <div class="set-3 title">
+            <div class="set-4 title">
               <strong>
                 <small>Problemas</small>
               </strong>
+              <mat-icon>warning</mat-icon>
             </div>
 
-            <div class="set-9 table-head">
-              <input type="text" (keyup)="applyFilterTopic($event)" placeholder="Buscar temas..."
-                [disabled]="topicsDataSource.length == 0" [class.searchDisabled]="panelTopicsData.length === 0" />
+            <div class="set-8 table-head">
+              <mat-form-field appearance="outline">
+                <mat-label>
+                  <small>Búscar temas...</small>
+                </mat-label>
+                <input matInput type="text" (keyup)="applyFilterTopic($event)" [disabled]="panelTopicsData.length == 0">
+                <button matSuffix mat-icon-button>
+                  <mat-icon>search</mat-icon>
+                </button>
+              </mat-form-field>
             </div>
           </div>
         </div>
@@ -130,10 +146,11 @@
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
             </table>
+
+            <ng-template #notsolutions>
+              <p class="notData">Sin soluciones</p>
+            </ng-template>
           </div>
-          <ng-template #notsolutions>
-            <p class="notData">Sin soluciones</p>
-          </ng-template>
 
           <div class="set-6">
             <table *ngIf="panelTopicsData.length > 0; else nottopic" mat-table matSort [dataSource]="TopicDataSource"
@@ -165,6 +182,7 @@
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
             </table>
+
             <ng-template #nottopic>
               <p class="notData">Sin problemas</p>
             </ng-template>
