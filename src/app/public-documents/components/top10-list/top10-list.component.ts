@@ -20,7 +20,7 @@ export class Top10ListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.data);
+    // console.log(this.data);
   }
 
   linkMe(url: string) {

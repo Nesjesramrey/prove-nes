@@ -5,7 +5,6 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { SocketService } from 'src/app/services/socket.service';
 import { UtilityService } from 'src/app/services/utility.service';
-
 import { MatDialog } from '@angular/material/dialog';
 import { ModalPermissionsComponent } from 'src/app/public-documents/components/modal-permissions/modal-permissions.component';
 
@@ -131,14 +130,14 @@ export class AppPageletComponent implements OnInit {
     });
   }
 
-  btnPermissions() {
-    const dialogRef = this.dialog.open<ModalPermissionsComponent>(
-      ModalPermissionsComponent,
-      {
-        width: '640px',
-        disableClose: true,
-      }
-    );
+  popPermissionsDialog() {
+    const dialogRef = this.dialog.open<ModalPermissionsComponent>(ModalPermissionsComponent, {
+      width: '640px',
+      data: {
+        user: this.user
+      },
+      disableClose: true,
+    });
 
     dialogRef.afterClosed().subscribe((reply: any) => { });
   }

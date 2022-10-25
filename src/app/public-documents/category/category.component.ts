@@ -2,7 +2,6 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { DocumentService } from 'src/app/services/document.service';
-import { Section } from 'src/app/public-documents/components/top10-list/top10-list.component';
 import { LayoutService } from 'src/app/services/layout.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
@@ -26,12 +25,14 @@ export class CategoryComponent implements OnInit {
   public topicsCount: number = 0;
   public solutionsCount: number = 0;
   public topSolutions: any = [];
+  public topSolutionsIds: any = [];
   public topLayouts: any = [];
   public selectedCategoryTitle: any = null;
   public titles: any = [];
   public stats: any = {};
   public layouts: any = null;
   @ViewChild('dataViewport') public dataViewport!: ElementRef;
+  public allDocumentSolutions: any[] = [];
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -61,12 +62,7 @@ export class CategoryComponent implements OnInit {
     });
 
     forkJoin([document, category]).subscribe((reply: any) => {
-      this.titles = this.utilityService.formatTitles(
-        reply[0].title,
-        reply[1].category.name,
-        '',
-        ''
-      );
+      this.titles = this.utilityService.formatTitles(reply[0].title, reply[1].category.name, '', '');
       this.document = reply[0];
       this.selectedCategory = reply[1];
       this.stats = this.selectedCategory.stats;
@@ -75,6 +71,26 @@ export class CategoryComponent implements OnInit {
       this.coverage = this.document['coverage'];
       if (this.coverageSelected == null) { this.coverageSelected = this.coverage[0]['_id']; }
       this.layouts = this.selectedCategory['subLayouts'];
+      this.layouts.filter((x: any) => {
+        x['topics'].filter((t: any) => {
+          t['solutions'].filter((s: any) => {
+            s['url'] = '/documentos-publicos/' + this.document['_id'] +
+              '/categoria/' + this.selectedCategory['_id'] +
+              '/subcategoria/' + x['_id'] +
+              '/tema/' + t['_id'] +
+              '/solucion/' + s['_id'];
+            this.allDocumentSolutions.push(s);
+          });
+        });
+      });
+      console.log(this.layouts);
+
+      let solutions = this.allDocumentSolutions.filter((e: any) => {
+        return this.topSolutionsIds.includes(e['_id']);
+      }, this.topSolutionsIds);
+
+      this.topSolutions = [];
+      this.topSolutions = solutions;
 
       setTimeout(() => {
         this.isDataAvailable = true;
@@ -85,35 +101,31 @@ export class CategoryComponent implements OnInit {
   }
 
   getDataCharts() {
-    this.solutionService
-      .getTopSolutionsByLayout(this.categoryID)
-      .subscribe((resp) => {
-        this.topSolutions = resp;
+    this.solutionService.getTopSolutionsByLayout(this.categoryID).subscribe((resp) => {
+      this.topSolutions = resp;
+      this.topSolutions.filter((x: any) => {
+        this.topSolutionsIds.push(x['_id']);
       });
-    this.layoutService
-      .getTopSublayoutByLayout(this.categoryID)
-      .subscribe((resp) => {
-        this.topLayouts = resp;
-      });
+    });
+
+    this.layoutService.getTopSublayoutByLayout(this.categoryID).subscribe((resp) => {
+      this.topLayouts = resp;
+    });
   }
 
   popImageViewer() {
-    const dialogRef = this.dialog.open<ImageViewerComponent>(
-      ImageViewerComponent,
-      {
-        width: '640px',
-        data: {
-          location: 'document',
-          document: this.selectedCategory,
-        },
-        disableClose: true,
-        panelClass: 'viewer-dialog',
-      }
-    );
+    const dialogRef = this.dialog.open<ImageViewerComponent>(ImageViewerComponent, {
+      width: '640px',
+      data: {
+        location: 'document',
+        document: this.selectedCategory,
+      },
+      disableClose: true,
+      panelClass: 'viewer-dialog',
+    });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) {
-      }
+      if (reply != undefined) { }
     });
   }
 

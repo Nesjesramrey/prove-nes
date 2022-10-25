@@ -3,23 +3,26 @@
 </div>
 
 <div class="set-12" *ngIf="isDataAvailable">
-  <!-- <input type="file" #file multiple> -->
-  <h3>Permiso para editar</h3>
+  <div class="set-12 dialog-head">
+    <h3>Permiso para participar</h3>
+  </div>
 
-  <div class="dialog-body">
-    <p>Platicanos por qué quisieras participar como editor en el proyecto</p>
-    <form [formGroup]="formPermission" class="Modalform">
+  <div class="set-12 dialog-body">
+    <p>
+      <small>Platicanos por qué quisieras participar como editor en
+        <strong>{{this.dialogData['layout']['name']}}</strong></small>
+    </p>
+    <form [formGroup]="formPermission" (submit)="onRequestPermission(formPermission)">
       <mat-form-field appearance="outline">
         <mat-label>Escribe una descripción</mat-label>
         <textarea matInput cdkTextareaAutosize formControlName="description"></textarea>
       </mat-form-field>
 
       <div class="set-12 ctrls">
-        <button type="button" mat-raised-button color="warn" (click)="killDialog()">
+        <button type="button" mat-raised-button color="warn" (click)="killDialog()" [disabled]="submitted">
           <small>Salir</small>
         </button>
-        <button type="submit" mat-raised-button color="primary" (click)="sendrequest()"
-          [disabled]="formPermission.invalid || submitted">
+        <button type="submit" mat-raised-button color="primary" [disabled]="formPermission.invalid || submitted">
           <small>Solicita permiso</small>
         </button>
         <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
