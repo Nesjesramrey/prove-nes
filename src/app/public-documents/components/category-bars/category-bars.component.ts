@@ -13,6 +13,7 @@ export class CategoryBarsComponent implements OnInit {
   @Input('layouts') public layouts: any[] = [];
   @Output() public sendLayoutData = new EventEmitter<any>();
   public layoutSelected: string = '';
+  public stats: any = [];
 
   constructor(
     public utilityService: UtilityService,
@@ -20,7 +21,9 @@ export class CategoryBarsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // console.log(this.coverageSelected);
+    this.layouts.filter((x: any) => {
+      this.stats.push({ layout: x['_id'], score: x['stats']['score'] });
+    });
   }
 
   displayLayoutData(layout: any) {
@@ -30,6 +33,5 @@ export class CategoryBarsComponent implements OnInit {
 
   linkMe(url: string) {
     this.router.navigateByUrl(url, { state: { coverage: this.coverageSelected } });
-    // this.utilityService.linkMe(url);
   }
 }

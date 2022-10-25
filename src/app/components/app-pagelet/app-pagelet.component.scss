@@ -1,20 +1,15 @@
 :host {
-  //position: fixed;
-  z-index: 99;
   width: 100%;
 
   mat-toolbar {
     height: 80px;
     padding: 0 40px;
-    // background: rgba($color: #ffffff, $alpha: 0.9);
     background: rgb(0, 3, 29);
-    // background: linear-gradient(360deg, rgba(0, 3, 29, 0) 0%, rgba(0, 3, 29, 0.75) 100%);
     box-shadow: 0;
-    // background: transparent;
     position: fixed;
-    z-index: 300;
     top: 0;
     left: 0;
+    z-index: 99;
   }
 
   .logo {
@@ -39,9 +34,12 @@
     }
   }
 
+  .search-hldr {
+    padding-left: 30px;
+  }
+
   .bar-search {
     background: #ffffff;
-    margin-left: 30px !important;
   }
 
   .bar-search:disabled {
@@ -66,10 +64,9 @@
 
     button {
       margin-left: 20px;
-      letter-spacing: 0.4px;
-      font-weight: 700;
-      font-size: 17px;
       color: #71f5ad;
+      font-weight: bold;
+      font-weight: 14pt;
     }
 
     button:nth-child(1):hover,
@@ -127,12 +124,7 @@
   }
 
   .btn-permissios {
-    width: 204px;
-    height: 35px;
-    color: #fff;
-    border-radius: 5px;
-    font-weight: 600;
-    font-size: 14px;
+    color: #ffffff;
   }
 
   .btn-permissios:hover {

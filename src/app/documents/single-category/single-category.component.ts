@@ -21,6 +21,7 @@ import { WindowAlertComponent } from 'src/app/components/window-alert/window-ale
 import { AddDocumentCollaboratorComponent } from 'src/app/components/add-document-collaborator/add-document-collaborator.component';
 import { ViewDocumentCommentsComponent } from 'src/app/components/view-document-comments/view-document-comments.component';
 import { DescriptionViewerComponent } from 'src/app/components/description-viewer/description-viewer.component';
+import { RequestEditPermissionComponent } from 'src/app/components/request-edit-permission/request-edit-permission.component';
 
 @Component({
   selector: '.app-single-category',
@@ -377,6 +378,20 @@ export class SingleCategoryComponent implements OnInit {
         this.subcategories = this.subcategories.filter((x: any) => { return x['_id'] != reply['_id']; });
         this.dataSource = new MatTableDataSource(this.subcategories);
       }
+    });
+  }
+
+  requestPermission(layout: any) {
+    const dialogRef = this.dialog.open<RequestEditPermissionComponent>(RequestEditPermissionComponent, {
+      width: '640px',
+      data: {
+        layout: layout
+      },
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
     });
   }
 }
