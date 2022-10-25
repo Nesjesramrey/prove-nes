@@ -192,7 +192,7 @@
             <ng-container matColumnDef="name">
               <th mat-header-cell *matHeaderCellDef>Categoría</th>
               <td mat-cell *matCellDef=" let element">
-                <button type="button" class="catbtn"
+                <button type="button" class="catbtn" [disabled]="!element.access"
                   (click)="LinkMe('/documentos/' + document._id + '/categoria/' + element.id)">
                   <mat-icon>question_answer</mat-icon>
                   <small>{{element.name}}</small>
@@ -253,6 +253,10 @@
                     [disabled]="!element.access">
                     <mat-icon>lock</mat-icon>
                     <small>Abrir privado</small>
+                  </button>
+                  <button type="button" mat-menu-item *ngIf="!element.access" (click)="requestPermission(element)">
+                    <mat-icon>vpn_key</mat-icon>
+                    <small>Solicitar permiso</small>
                   </button>
                   <button type="button" mat-menu-item *ngIf="actionControlActivityList.includes(user.activityName)">
                     <mat-icon>settings</mat-icon>

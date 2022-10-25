@@ -4,14 +4,16 @@
       <img src="../../../assets/images/mexicolectivo-full-green.png" (click)="linkMe('home')" />
     </div>
     <div class="set-8 search-hldr">
-      <input type="text" placeholder="Búscar en Mexicolectivo..." class="bar-search" disabled>
+      <form [formGroup]="searchFormGroup" (submit)="onSearch(searchFormGroup)">
+        <input type="text" placeholder="Búscar en Mexicolectivo..." class="bar-search" formControlName="search">
+      </form>
     </div>
   </div>
 
   <div class="set-6 navigation">
-    <button *ngIf="permission == false && isPublic > 0" type="button" (click)="popPermissionsDialog()">
+    <!-- <button *ngIf="permission == false && isPublic > 0" type="button" (click)="popPermissionsDialog()">
       Permiso para editar
-    </button>
+    </button> -->
     <button *ngIf="permission == true && isPublic > 0" type="button" (click)="redirectEdition()">
       Ir a edición
     </button>

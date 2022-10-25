@@ -9,12 +9,24 @@
 
   <div class="set-12 dialog-body">
     <p>
-      <small>Platicanos por qué quisieras participar como editor en
-        <strong>{{this.dialogData['layout']['name']}}</strong></small>
+      <small>Platicanos por qué quisieras participar en <strong>{{this.dialogData['layout']['name']}}</strong></small>
     </p>
     <form [formGroup]="formPermission" (submit)="onRequestPermission(formPermission)">
+      <div class="set-12">
+        <div class="set-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Categorías disponibles</mat-label>
+            <mat-select multiple formControlName="layouts">
+              <mat-option *ngFor="let layout of availableLayouts" [value]="layout.id">
+                <small>{{ layout.name }}</small>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
       <mat-form-field appearance="outline">
-        <mat-label>Escribe una descripción</mat-label>
+        <mat-label>Escribe tus motivos</mat-label>
         <textarea matInput cdkTextareaAutosize formControlName="description"></textarea>
       </mat-form-field>
 

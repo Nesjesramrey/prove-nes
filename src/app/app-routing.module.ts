@@ -27,6 +27,10 @@ const routes: Routes = [
       import('./legal/legal.component.module').then(module => module.LegalComponentModule)
   },
   {
+    path: 'search', loadChildren: () =>
+      import('./search-results/search-results.component.module').then(module => module.SearchResultsComponentModule)
+  },
+  {
     path: '404', loadChildren: () =>
       import('./not-found/not-found.component.module').then(module => module.NotFoundComponentModule)
   },
