@@ -1,0 +1,112 @@
+<div class="set-12" *ngIf="!isDataAvailable">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="innerhldr" *ngIf="isDataAvailable">
+  <div class="set-3">&nbsp;</div>
+
+  <div class="set-6">
+    <div class="set-12 head-titles">
+      <span>Resultados de tu búsqueda:</span>
+      <div class="line"></div>
+    </div>
+
+    <div class="set-12 listhldr" *ngIf="searchResults.length == 0">
+      <p>
+        <strong>
+          No hay resultados que mostrar.
+        </strong>
+      </p>
+    </div>
+
+    <div class="set-12 listhldr" *ngIf="searchResults.length != 0">
+      <div class="set-12 listitem" *ngFor="let item of searchResults">
+        <div class="set-8">
+          <div class="set-12" *ngIf="item.type == 'layout'">
+            <button type="button"
+              (click)="linkMe('/documentos-publicos/' + item.parents.document + '/categoria/' + item._id)">
+              <strong>{{ item.category }}</strong>
+            </button>
+            <p *ngIf="item.description != null" class="desc">
+              <small>{{ (item.description.length > 60)? (item.description | slice:0:60)+'...':(item.description)
+                }}</small>
+            </p>
+            <p class="updatedAt">
+              <small>Última actualización: {{ item.updatedAt | date: 'mediumDate' }} - {{ item.updatedAt | date:
+                'mediumTime' }}</small>
+            </p>
+          </div>
+
+          <div class="set-12" *ngIf="item.type == 'sublayout'">
+            <button type="button"
+              (click)="linkMe('/documentos-publicos/' + item.parents.document + '/categoria/' + item.parents.layout + '/subcategoria/' + item._id)">
+              <strong>{{ item.category }}</strong>
+            </button>
+            <p *ngIf="item.description != null" class="desc">
+              <small>{{ (item.description.length > 60)? (item.description | slice:0:60)+'...':(item.description)
+                }}</small>
+            </p>
+            <p class="updatedAt">
+              <small>Última actualización: {{ item.updatedAt | date: 'mediumDate' }} - {{ item.updatedAt | date:
+                'mediumTime' }}</small>
+            </p>
+          </div>
+
+          <div class="set-12" *ngIf="item.type == 'topic'">
+            <button type="button"
+              (click)="linkMe('/documentos-publicos/' + item.parents.document + '/categoria/' + item.parents.layout + '/subcategoria/' + item.parents.sublayout + '/tema/' + item._id)">
+              <strong>
+                {{ item.title }}
+              </strong>
+            </button>
+            <p *ngIf="item.description != null" class="desc">
+              <small>{{ (item.description.length > 60)? (item.description | slice:0:60)+'...':(item.description)
+                }}</small>
+            </p>
+            <p class="updatedAt">
+              <small>Última actualización: {{ item.updatedAt | date: 'mediumDate' }} - {{ item.updatedAt | date:
+                'mediumTime' }}</small>
+            </p>
+          </div>
+
+          <div class="set-12" *ngIf="item.type == 'solution'">
+            <button type="button"
+              (click)="linkMe('/documentos-publicos/' + item.parents.document + '/categoria/' + item.parents.layout + '/subcategoria/' + item.parents.sublayout + '/tema/' + item.parents.topic + '/solucion/' + item._id)">
+              <strong>
+                {{ item.title }}
+              </strong>
+            </button>
+            <p *ngIf="item.description != null" class="desc">
+              <small>{{ (item.description.length > 60)? (item.description | slice:0:60)+'...':(item.description)
+                }}</small>
+            </p>
+            <p class="updatedAt">
+              <small>Última actualización: {{ item.updatedAt | date: 'mediumDate' }} - {{ item.updatedAt | date:
+                'mediumTime' }}</small>
+            </p>
+          </div>
+        </div>
+
+        <div class="set-4">
+          <mat-chip-list>
+            <mat-chip color="primary" selected *ngIf="item.type == 'layout'">
+              <small>{{ item.typeName }}</small>
+            </mat-chip>
+
+            <mat-chip color="primary" selected *ngIf="item.type == 'sublayout'">
+              <small>{{ item.typeName }}</small>
+            </mat-chip>
+
+            <mat-chip color="warn" selected *ngIf="item.type == 'topic'">
+              <small>{{ item.typeName }}</small>
+            </mat-chip>
+
+            <mat-chip color="warn" selected *ngIf="item.type == 'solution'">
+              <small>{{ item.typeName }}</small>
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

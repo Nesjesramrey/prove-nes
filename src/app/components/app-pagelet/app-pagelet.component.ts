@@ -7,6 +7,8 @@ import { SocketService } from 'src/app/services/socket.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalPermissionsComponent } from 'src/app/public-documents/components/modal-permissions/modal-permissions.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SearchService } from 'src/app/services/search.service';
 
 @Component({
   selector: '.app-pagelet',
@@ -16,6 +18,7 @@ import { ModalPermissionsComponent } from 'src/app/public-documents/components/m
 export class AppPageletComponent implements OnInit {
   @Input('user') public user: any = null;
   @Input('path') public path: any = null;
+  @Input('coverDocument') public coverDocument: any = null;
   public notifications: any = null;
   public isDataAvailable: boolean = false;
   public userActivities: any = [];
@@ -23,6 +26,7 @@ export class AppPageletComponent implements OnInit {
   public unreadNotifications: any = null;
   public permission: any;
   public redirectUrl: string = '';
+  public searchFormGroup!: FormGroup;
 
   constructor(
     public router: Router,
@@ -32,11 +36,16 @@ export class AppPageletComponent implements OnInit {
     public utilitySrvc: UtilityService,
     public angularFireAuth: AngularFireAuth,
     public activatedRoute: ActivatedRoute,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public formBuilder: FormBuilder,
+    public searchService: SearchService
   ) { }
 
   ngOnInit(): void {
     this.reset();
+    this.searchFormGroup = this.formBuilder.group({
+      search: ['', [Validators.required]]
+    });
 
     setTimeout(() => {
       this.notificationSrvc.notificationCountSubject.subscribe((reply: any) => {
@@ -178,5 +187,22 @@ export class AppPageletComponent implements OnInit {
 
   resetPassword(email: any) {
     this.authenticationSrvc.forgotPassword(email);
+  }
+
+  onSearch(formGroup: FormGroup) {
+    let data: any = {
+      filter: formGroup['value']['search'],
+      document_id: this.coverDocument['_id']
+    };
+    this.searchService.globalSearch(data).subscribe({
+      error: (error: any) => {
+        this.utilitySrvc.openErrorSnackBar(this.utilitySrvc.errorOops);
+      },
+      next: (reply: any) => {
+        this.searchService.searchSubject.next(reply);
+        this.utilitySrvc.linkMe('/search');
+      },
+      complete: () => { }
+    });
   }
 }
