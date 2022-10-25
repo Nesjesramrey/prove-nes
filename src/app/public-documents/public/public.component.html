@@ -41,11 +41,11 @@
 
     <div class="set-9 col-rgt">
       <mat-card>
-        <panel-circles [data]="document.layouts" [document]="document" [redirectTo]="'CATEGORY'"></panel-circles>
-        <!-- <div class="set-12">
-        <div class="category-bars" [document_id]="document._id" [coverageSelected]="coverageSelected"
-          [layouts]="layouts" (sendLayoutData)="getLayoutData($event)"></div>
-      </div> -->
+        <!-- <panel-circles [data]="document.layouts" [document]="document" [redirectTo]="'CATEGORY'"></panel-circles> -->
+        <div class="set-12">
+          <div class="category-bars" [document_id]="document._id" [coverageSelected]="coverageSelected"
+            [layouts]="layouts" (sendLayoutData)="getLayoutData($event)"></div>
+        </div>
 
         <div class="set-12 dataViewport" #dataViewport>
           <div class="mt-2 set-3">

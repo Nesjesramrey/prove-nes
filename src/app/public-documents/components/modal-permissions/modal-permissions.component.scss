@@ -1,9 +1,19 @@
 :host {
-  min-height: 170px;
+  width: 100%;
+  min-height: 170px !important;
+  float: left;
 
   .dialog-head {
     display: flex;
     align-items: center;
+  }
+
+  .dialog-body {
+    margin-top: 20px;
+
+    p {
+      margin-bottom: 20px;
+    }
   }
 
   ::ng-deep .mat-step-header:hover,
@@ -16,7 +26,6 @@
   }
 
   .loading {
-    height: 100px;
     mat-spinner {
       position: absolute;
       top: 60%;
@@ -24,133 +33,30 @@
       transform: translate(-50%, -50%);
     }
   }
-}
 
-
-
-
-
-
-
-.modalContainer {
-  background-color: #ffffff;
-  width: 708px;
-  height: 365px;
-  position: absolute;
-  left: -5%;
-  top: -200%;
-  border-radius: 5px;
-}
-
-.titleContainer {
-  position: absolute;
-  height: 30px;
-  left: 16px;
-  right: 0px;
-  top: 12px;
-  width: 638px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  p {
-    font-style: normal;
-    font-weight: 700;
-    font-size: 22px;
-    line-height: 30px;
+  textarea {
+    min-height: 110px;
   }
-}
-img {
-  position: absolute;
-  left: 670px;
-  top: 16px;
-  cursor: pointer;
-}
-.modalBody {
-  position: absolute;
-  width: 643px;
-  height: min-content;
-  margin-top: 62px;
-  margin-left: 33px;
-  margin-right: 32px;
-  p {
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 16px;
-    letter-spacing: 0.01em;
-  }
-  form {
-    input {
-      border: 1px solid #636363;
-      border-radius: 8px;
-      width: 100%;
-    }
-    label {
-      position: absolute;
-      // font-family: "Noto Sans";
-      font-style: normal;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 16px;
-      color: #a5a5a5;
-    }
-    margin-top: 16px;
-    .descriptionInput {
-      font-style: normal;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 16px;
-      color: #a5a5a5;
-      height: 169px;
-      border: 1px solid #636363;
-      border-radius: 8px;
-      width: 100%;
-      padding-top: 16px;
-      padding-left: 16px;
 
+  .ctrls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    * {
+      margin: 0;
     }
-    .emailInput {
-      font-style: normal;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 16px;
-      color: #a5a5a5;
-      margin-top: 23px;
-      height: 45px;
-      padding-left: 12px;
-    }
+
     button {
-      position: absolute;
-      left: 246px;
-      background: #ffffff;
-      width: 149px;
-      height: 35px;
-      margin-top: 32px;
-      border: 1px solid #a5a5a5;
-      border-radius: 5px;
-      color: #a5a5a5;
+      margin-left: 10px;
+    }
+
+    button:first-child {
+      margin-left: 0;
+    }
+
+    mat-spinner {
+      margin-left: 20px;
     }
   }
-}
-
-
-.alingCenter{
-  text-align: end;
-}
-
-.btnEnabled{
-  background-color: #306EFF !important;
-  color: #ffffff !important;
-}
-
-.messageError{
-
-  color: red;
-  margin-right: 20%;
-  display: block;
-  width: 100%;
-  text-align: center;
-  margin-bottom: -19px;
-  margin-top: 18px;
 }

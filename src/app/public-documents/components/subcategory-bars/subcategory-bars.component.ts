@@ -9,17 +9,23 @@ import { UtilityService } from 'src/app/services/utility.service';
 })
 export class SubcategoryBarsComponent implements OnInit {
   @Input('document_id') public document_id: string = '';
+  @Input('category_id') public category_id: string = '';
   @Input('coverageSelected') public coverageSelected: any = null;
   @Input('layouts') public layouts: any[] = [];
   @Output() public sendLayoutData = new EventEmitter<any>();
   public layoutSelected: string = '';
+  public stats: any = [];
 
   constructor(
     public utilityService: UtilityService,
     public router: Router
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.layouts.filter((x: any) => {
+      this.stats.push({ layout: x['_id'], score: x['stats']['score'] });
+    });
+  }
 
   displayLayoutData(layout: any) {
     this.layoutSelected = layout['_id'];

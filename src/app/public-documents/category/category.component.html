@@ -28,10 +28,10 @@
           <mat-icon *ngIf="selectedCategory.images.length == 0">panorama</mat-icon>
           <slider-images [images]="selectedCategory.images" *ngIf="selectedCategory.images.length != 0">
           </slider-images>
-          <div class="overlay" (click)="popImageViewer()">
+          <!-- <div class="overlay" (click)="popImageViewer()">
             <mat-icon>photo_camera</mat-icon>
             <div class="cover"></div>
-          </div>
+          </div> -->
         </div>
 
         <div class="set-12 infohldr">
@@ -39,7 +39,10 @@
             {{ selectedCategory.category.name }}
           </p>
           <expanded-text [text]="selectedCategory.description" [minLength]="200"
-            [title]="selectedCategory.category.name"></expanded-text>
+            [title]="selectedCategory.category.name" *ngIf="selectedCategory.description != null"></expanded-text>
+          <p *ngIf="selectedCategory.description == null">
+            <small>Sin descripción</small>
+          </p>
         </div>
       </mat-card>
       <horizontal-stats [users]="stats?.users" [interactions]="stats?.interactions"></horizontal-stats>
@@ -50,10 +53,10 @@
 
     <div class="set-9 col-rgt">
       <mat-card>
-        <panel-circles [data]="selectedCategory.subLayouts" [withBorder]="true" [redirectTo]="'SUBCATEGORY'">
-        </panel-circles>
-        <!-- <div class="subcategory-bars" [document_id]="document._id" [coverageSelected]="coverageSelected"
-          [layouts]="layouts" (sendLayoutData)="getLayoutData($event)"></div> -->
+        <!-- <panel-circles [data]="selectedCategory.subLayouts" [withBorder]="true" [redirectTo]="'SUBCATEGORY'">
+        </panel-circles> -->
+        <div class="subcategory-bars" [document_id]="document._id" [category_id]="categoryID"
+          [coverageSelected]="coverageSelected" [layouts]="layouts" (sendLayoutData)="getLayoutData($event)"></div>
 
         <div class="set-12 dataViewport" #dataViewport>
           <div class="mt-2 set-3">

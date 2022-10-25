@@ -8,6 +8,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
+import { DocumentService } from 'src/app/services/document.service';
 
 @Component({
   selector: '.sign-up-page',
@@ -19,6 +20,7 @@ export class SignUpComponent implements OnInit {
   public submitted: boolean = false;
   public hide: boolean = true;
   public user: any = null;
+  public document: any = null;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -27,7 +29,8 @@ export class SignUpComponent implements OnInit {
     public utilitySrvc: UtilityService,
     public angularFireAuth: AngularFireAuth,
     public angularFireStore: AngularFirestore,
-    public router: Router
+    public router: Router,
+    public documentService: DocumentService
   ) { }
 
   ngOnInit(): void {
@@ -40,6 +43,11 @@ export class SignUpComponent implements OnInit {
       zipcode: ['', [Validators.minLength(5), Validators.maxLength(5)]],
       terms: [true, [Validators.required]],
       privacy: [true, [Validators.required]]
+    });
+
+    this.documentService.fetchCoverDocument().subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => { this.document = reply; }
     });
   }
 
@@ -67,11 +75,11 @@ export class SignUpComponent implements OnInit {
 
         this.authenticationSrvc.signup(signUpData).subscribe((reply: any) => {
           localStorage.setItem('accessToken', this.user['accessToken']);
-          this.router.navigateByUrl('/', { state: { status: 'logout' } });
+          // this.router.navigateByUrl('/', { state: { status: 'logout' } });
+          this.router.navigateByUrl('/documentos-publicos/' + this.document['_id'], { state: { status: 'logout' } });
         });
       })
       .catch((error: any) => {
-        console.log(error);
         this.submitted = false;
       });
   }
