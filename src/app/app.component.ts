@@ -9,6 +9,7 @@ import { CompleteRegistrationComponent } from './components/complete-registratio
 import { environment } from 'src/environments/environment';
 import { SocketService } from './services/socket.service';
 import { filter } from 'rxjs';
+import { DocumentService } from './services/document.service';
 
 const STYLES = (theme: ThemeVariables, ref: ThemeRef) => {
   const __ = ref.selectorsOf(STYLES);
@@ -43,6 +44,7 @@ export class AppComponent implements OnInit {
   public accessToken: any = null;
   public socketID: any = null;
   public path: any = null;
+  public coverDocument: any = null;
 
   constructor(
     readonly sRenderer: StyleRenderer,
@@ -51,7 +53,8 @@ export class AppComponent implements OnInit {
     public userService: UserService,
     public utilityService: UtilityService,
     public dialog: MatDialog,
-    public socketService: SocketService
+    public socketService: SocketService,
+    public documentService: DocumentService
   ) {
     this.accessToken = this.authenticationSrvc.fetchAccessToken;
     // console.log('accessToken: ', this.accessToken);
@@ -72,12 +75,20 @@ export class AppComponent implements OnInit {
       gtag('event', 'page_view', {
         page_path: event.urlAfterRedirects
       })
-    })
+    });
+
+    this.documentService.fetchCoverDocument().subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        this.coverDocument = reply;
+      },
+      complete: () => { }
+    });
 
     if (this.accessToken != null) {
       this.userService.fetchFireUser().subscribe({
         error: (error) => {
-          console.log(error);
+          // console.log(error);
           switch (error['status']) {
             case 401:
               // this.utilityService.openErrorSnackBar('Tu token de acceso ha caducado, intenta ingresar otra vez.');
@@ -92,7 +103,7 @@ export class AppComponent implements OnInit {
           this.user = reply;
           this.isDataAvailable = true;
 
-          if (!this.user['isFullRegister']) { this.openAddDocumentDialog(); }
+          if (!this.user['isFullRegister']) { this.openCompleteRegistration(); }
 
           // setTimeout(() => {
           //   this.socketService.socketSubject.subscribe((reply: any) => {
@@ -116,7 +127,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  openAddDocumentDialog() {
+  openCompleteRegistration() {
     const dialogRef = this.dialog.open(CompleteRegistrationComponent, {
       width: '640px',
       data: {

@@ -7,7 +7,6 @@ import { DocumentService } from 'src/app/services/document.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddDocumentCategoryComponent } from 'src/app/components/add-document-category/add-document-category.component';
 import { AddDocumentCollaboratorComponent } from 'src/app/components/add-document-collaborator/add-document-collaborator.component';
-import { AddDocumentLayoutComponent } from 'src/app/components/add-document-layout/add-document-layout.component';
 import { AddDocumentThemeComponent } from '../../components/add-document-theme/add-document-theme.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -19,6 +18,7 @@ import { ImageViewerComponent } from 'src/app/components/image-viewer/image-view
 import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
 import { DescriptionViewerComponent } from 'src/app/components/description-viewer/description-viewer.component';
 import { ViewDocumentCommentsComponent } from 'src/app/components/view-document-comments/view-document-comments.component';
+import { RequestEditPermissionComponent } from 'src/app/components/request-edit-permission/request-edit-permission.component';
 
 @Component({
   selector: '.single-document-page',
@@ -71,7 +71,7 @@ export class SingleDocumentComponent implements OnInit {
         this.utilityService.openErrorSnackBar(this.utilityService.errorOops);
       },
       next: (reply: any) => {
-        console.log(reply);
+        // console.log(reply);
         this.document = reply[0];
         // console.log('document: ', this.document);
         this.user = reply[1];
@@ -364,6 +364,21 @@ export class SingleDocumentComponent implements OnInit {
         this.layouts = this.layouts.filter((x: any) => { return x['_id'] != reply['_id']; });
         this.dataSource = new MatTableDataSource(this.layouts);
       }
+    });
+  }
+
+  requestPermission(layout: any) {
+    const dialogRef = this.dialog.open<RequestEditPermissionComponent>(RequestEditPermissionComponent, {
+      width: '640px',
+      data: {
+        document_id: this.document['_id'],
+        layout: layout
+      },
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
     });
   }
 }

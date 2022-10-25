@@ -11,17 +11,24 @@ export class RequestEditPermissionComponent implements OnInit {
   public isDataAvailable: boolean = false;
   public submitted: boolean = false;
   public formPermission!: FormGroup;
+  public layout: any = null;
+  public availableLayouts: any = null;
+  public document_id: string = '';
 
   constructor(
     public dialogRef: MatDialogRef<RequestEditPermissionComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public formBuilder: FormBuilder,
   ) {
-    console.log(this.dialogData);
+    // console.log(this.dialogData);
+    this.layout = this.dialogData['layout'];
+    this.availableLayouts = this.dialogData['layout']['subLayouts'];
+    this.document_id = this.dialogData['document_id'];
   }
 
   ngOnInit(): void {
     this.formPermission = this.formBuilder.group({
+      layouts: ['', [Validators.required]],
       description: ['', [Validators.required]]
     });
 
@@ -33,9 +40,10 @@ export class RequestEditPermissionComponent implements OnInit {
   onRequestPermission(form: FormGroup) {
     this.submitted = true;
     let data: any = {
-      layout_id: this.dialogData['layout']['id'],
+      layout_id: this.layout['id'],
       description: form['value']['description'],
-      user_id: ''
+      layouts: form['value']['layouts'],
+      document_id: this.document_id
     };
     console.log(data);
   }

@@ -137,5 +137,8 @@ export class EndPointService {
   // categories
   public editCategoryEndPoint: string = '/category/';
 
+  // search
+  public globalSearchEndPoint: string = '/document/search_content';
+
   constructor() { }
 }
