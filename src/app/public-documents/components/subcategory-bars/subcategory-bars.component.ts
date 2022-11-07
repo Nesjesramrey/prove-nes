@@ -26,7 +26,7 @@ export class SubcategoryBarsComponent implements OnInit {
       if (x['stats'] != null) {
         this.stats.push({ layout: x['_id'], score: x['stats']['score'] });
       } else {
-        this.stats.push({ layout: '', score: 0 });
+        this.stats.push({ layout: x['_id'], score: 0 });
       }
     });
   }
