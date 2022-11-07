@@ -15,6 +15,7 @@ export class PublicComponent implements OnInit {
   public documentID: string = '';
   public document: any = null;
   public topSolutions: any = [];
+  public storedSolutions: any = [];
   public topSolutionsIds: any = [];
   public topLayouts: any = [];
   public isDataAvailable: boolean = false;
@@ -40,52 +41,55 @@ export class PublicComponent implements OnInit {
 
   loadDocument() {
     this.getDataCharts();
-    this.documentService.fetchSingleDocumentById({ _id: this.documentID })
-      .subscribe((reply: any) => {
-        this.document = reply;
-        this.coverage = this.document['coverage'];
-        this.layouts = this.document['layouts'];
-        if (this.coverageSelected == null) { this.coverageSelected = this.coverage[0]['_id']; };
+    this.documentService.fetchSingleDocumentById({ _id: this.documentID }).subscribe((reply: any) => {
+      this.document = reply;
+      this.coverage = this.document['coverage'];
+      this.layouts = this.document['layouts'];
 
-        this.layouts.filter((x: any) => {
-          x['subLayouts'].filter((y: any) => {
-            y['topics'].filter((t: any) => {
-              t['solutions'].filter((s: any) => {
-                s['url'] = '/documentos-publicos/' + this.document['_id'] +
-                  '/categoria/' + x['_id'] +
-                  '/subcategoria/' + y['_id'] +
-                  '/tema/' + t['_id'] +
-                  '/solucion/' + s['_id'];
-                this.allDocumentSolutions.push(s);
-              });
+      if (this.coverageSelected == null) { this.coverageSelected = this.coverage[0]['_id']; };
+
+      this.layouts.filter((x: any) => {
+        x['subLayouts'].filter((y: any) => {
+          y['topics'].filter((t: any) => {
+            t['solutions'].filter((s: any) => {
+              s['url'] = '/documentos-publicos/' + this.document['_id'] +
+                '/categoria/' + x['_id'] +
+                '/subcategoria/' + y['_id'] +
+                '/tema/' + t['_id'] +
+                '/solucion/' + s['_id'];
+              this.allDocumentSolutions.push(s);
             });
           });
         });
-
-        let solutions = this.allDocumentSolutions.filter((e: any) => {
-          return this.topSolutionsIds.includes(e['_id']);
-        }, this.topSolutionsIds);
-
-        this.topSolutions = [];
-        this.topSolutions = solutions;
-
-        setTimeout(() => {
-          this.isDataAvailable = true;
-        }, 100);
       });
-  }
 
-  getDataCharts() {
-    this.solutionService.getTopSolutionsByDocument(this.documentID)
-      .subscribe((resp: any) => {
-        this.topSolutions = resp;
-        this.topSolutions.filter((x: any) => {
-          this.topSolutionsIds.push(x['_id']);
+      let solutions = this.allDocumentSolutions.filter((e: any) => {
+        return this.topSolutionsIds.includes(e['_id']);
+      }, this.topSolutionsIds);
+
+      this.topSolutions = [];
+      this.storedSolutions = solutions;
+      this.storedSolutions.filter((x: any) => {
+        x['coverage'].filter((c: any) => {
+          if (c['_id'] == this.coverageSelected) { this.topSolutions.push(x); }
         });
       });
 
-    this.layoutService.getTopLayoutByDocument(this.documentID)
-      .subscribe((resp: any) => { this.topLayouts = resp; });
+      setTimeout(() => {
+        this.isDataAvailable = true;
+      }, 100);
+    });
+  }
+
+  getDataCharts() {
+    this.solutionService.getTopSolutionsByDocument(this.documentID).subscribe((resp: any) => {
+      this.topSolutions = resp;
+      this.topSolutions.filter((x: any) => {
+        this.topSolutionsIds.push(x['_id']);
+      });
+    });
+
+    this.layoutService.getTopLayoutByDocument(this.documentID).subscribe((resp: any) => { this.topLayouts = resp; });
   }
 
   popImageViewer() {
@@ -104,7 +108,15 @@ export class PublicComponent implements OnInit {
     });
   }
 
-  onSelectCoverage(event: any) { this.coverageSelected = event['value']; }
+  onSelectCoverage(event: any) {
+    this.coverageSelected = event['value'];
+    this.topSolutions = [];
+    this.storedSolutions.filter((x: any) => {
+      x['coverage'].filter((c: any) => {
+        if (c['_id'] == this.coverageSelected) { this.topSolutions.push(x); }
+      });
+    });
+  }
 
   getLayoutData(layout: any) { this.dataViewport.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
 }

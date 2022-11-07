@@ -146,7 +146,7 @@
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <button type="button" mat-menu-item>
+                <button type="button" mat-menu-item (click)="popGivePermissionsDialog(notification)">
                   <mat-icon>launch</mat-icon>
                   <span>Abrir</span>
                 </button>

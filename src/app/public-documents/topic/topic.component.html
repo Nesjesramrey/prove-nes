@@ -66,13 +66,10 @@
   </div> -->
 
   <div class="set-12">
-    <div class="set-8 col-lft">
+    <div class="set-9 col-lft">
       <mat-card>
         <div class="set-12 card-desc">
           <div class="imghldr">
-            <!-- <mat-icon *ngIf="!image">panorama</mat-icon>
-            <img *ngIf="image" [src]="image" style="cursor: pointer" (click)="popImageViewer()" /> -->
-
             <div class="info">
               <div class="actions">
                 <div class="set-12">
@@ -126,12 +123,13 @@
         </div>
 
         <div class="set-12 listhldr">
-          <solutions-card [data]="SolutionDataSource" (sendSolutionData)="openModalSolution($event)"></solutions-card>
+          <solutions-card [data]="SolutionDataSource" [document]="document" [coverage]="coverage"
+            [coverageSelected]="coverageSelected" (sendSolutionData)="openModalSolution($event)"></solutions-card>
         </div>
       </mat-card>
     </div>
 
-    <div class="set-4 col-rgt">
+    <div class="set-3 col-rgt">
       <public-documents-testimonials [data]="topic.testimonials" (sendTestimonyData)="openModalTestimony($event)">
       </public-documents-testimonials>
     </div>

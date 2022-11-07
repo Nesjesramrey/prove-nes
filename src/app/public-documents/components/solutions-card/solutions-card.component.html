@@ -1,6 +1,20 @@
-<!-- <mat-card class="doc-description" style="min-height: 280px"> -->
 <div class="set-12 doc-description">
   <div class="set-12 solutions-box">
+    <div class="set-12">
+      <div class="set-6">
+        <div class="set-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Cobertura</mat-label>
+            <mat-select [value]="coverageSelected" (selectionChange)="onSelectCoverage($event)">
+              <mat-option *ngFor="let location of coverage" [value]="location._id">
+                <small>{{ location.name }}</small>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
     <div class="set-12 table-head">
       <div class="set-6 head-titles">
         <span>Soluciones</span>
@@ -8,13 +22,11 @@
       </div>
 
       <div class="set-6">
-        <!-- <input type="text" (keyup)="applyFilterSolution($event)" placeholder="Buscar soluciones..."
-          [disabled]="data.length == 0" [class.searchDisabled]="data.filteredData.length === 0" /> -->
         <mat-form-field appearance="outline">
           <mat-label>
             <small>Búscar soluciones...</small>
           </mat-label>
-          <input matInput type="text" (keyup)="applyFilterSolution($event)" [disabled]="data.length == 0">
+          <input matInput type="text" (keyup)="applyFilterSolution($event)" [disabled]="solutions.length == 0">
           <button matSuffix mat-icon-button>
             <mat-icon>search</mat-icon>
           </button>
@@ -22,7 +34,7 @@
       </div>
     </div>
 
-    <table *ngIf="data.filteredData.length > 0; else notSolution" mat-table [dataSource]="data" matSort class="">
+    <table *ngIf="solutions.length > 0; else notSolution" mat-table [dataSource]="data" matSort class="">
       <ng-container matColumnDef="title">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por título">
           Título
@@ -69,5 +81,3 @@
     </ng-template>
   </div>
 </div>
-
-<!-- </mat-card> -->

@@ -1,6 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { PermissionService } from 'src/app/services/permission.service';
+import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
   selector: '.request-edit-permission',
@@ -19,6 +21,8 @@ export class RequestEditPermissionComponent implements OnInit {
     public dialogRef: MatDialogRef<RequestEditPermissionComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public formBuilder: FormBuilder,
+    public permissionService: PermissionService,
+    public utilityService: UtilityService
   ) {
     // console.log(this.dialogData);
     this.layout = this.dialogData['layout'];
@@ -40,12 +44,23 @@ export class RequestEditPermissionComponent implements OnInit {
   onRequestPermission(form: FormGroup) {
     this.submitted = true;
     let data: any = {
-      layout_id: this.layout['id'],
+      layout: this.layout['id'],
       description: form['value']['description'],
-      layouts: form['value']['layouts'],
-      document_id: this.document_id
+      sublayouts: form['value']['layouts'],
+      document: this.document_id
     };
-    console.log(data);
+    this.permissionService.requestAccessPermission(data).subscribe({
+      error: (error: any) => {
+        this.utilityService.openErrorSnackBar(this.utilityService.errorOops);
+      },
+      next: (reply: any) => {
+        this.utilityService.openSuccessSnackBar(this.utilityService.saveSuccess);
+      },
+      complete: () => {
+        this.submitted = false;
+        this.killDialog();
+      }
+    });
   }
 
   killDialog() {
