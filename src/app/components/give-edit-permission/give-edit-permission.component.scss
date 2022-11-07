@@ -1,0 +1,47 @@
+:host {
+  min-height: 170px;
+
+  .dialog-head {
+    display: flex;
+    align-items: center;
+
+    h3 {
+      margin-bottom: 10px;
+    }
+  }
+
+  .dialog-body {
+    margin-top: 20px;
+
+    .set-3 {
+      padding-left: 10px;
+    }
+
+    .ctrls {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      * {
+        margin: 0;
+      }
+
+      button {
+        margin-right: 10px;
+      }
+
+      mat-spinner {
+        margin-left: 20px;
+      }
+    }
+  }
+
+  .loading {
+    mat-spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}

@@ -23,7 +23,11 @@ export class SubcategoryBarsComponent implements OnInit {
 
   ngOnInit(): void {
     this.layouts.filter((x: any) => {
-      this.stats.push({ layout: x['_id'], score: x['stats']['score'] });
+      if (x['stats'] != null) {
+        this.stats.push({ layout: x['_id'], score: x['stats']['score'] });
+      } else {
+        this.stats.push({ layout: '', score: 0 });
+      }
     });
   }
 

@@ -13,23 +13,35 @@ export class PermissionService {
     public endpointSrvc: EndPointService
   ) { }
 
-  createNewPermission(data : any) {
-    const {description ,  Authorization , documentID } = data ;
+  createNewPermission(data: any) {
+    const { description, Authorization, documentID } = data;
     const body = {
-      description : description
+      description: description
     }
-    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.createNewPermissionEndPoint + `${documentID}` , 
-    body , {
-      headers:{
+    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.createNewPermissionEndPoint + `${documentID}`,
+      body, {
+      headers: {
         Authorization
       }
     }).pipe(
-      map( (data : any) => {
-          return data.payload;
+      map((data: any) => {
+        return data.payload;
       }),
-      catchError( (error:any) => {
-        return throwError(() => { console.log("error controlado",error)})
+      catchError((error: any) => {
+        return throwError(() => { console.log("error controlado", error) })
       })
     )
+  }
+
+  requestAccessPermission(data: any) {
+    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.requestAccessPermissionEndPoint, data);
+  }
+
+  markPermissionAsAttended(data: any) {
+    return this.httpClient.put(this.endpointSrvc.apiEndPoint + this.endpointSrvc.markPermissionAsAttendedEndPoint + data['permission_id'] + '/mark_as_attended', data);
+  }
+
+  fetchPermissionById(data: any) {
+    return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchPermissionByIdEndPoint + data['permission_id'], {});
   }
 }

@@ -1,6 +1,7 @@
 import { S } from '@angular/cdk/keycodes';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subject } from 'rxjs';
 import { UtilityService } from 'src/app/services/utility.service';
 
 export interface ICategoryFormat {
@@ -25,6 +26,7 @@ export class PanelSubcategoryComponent implements OnInit {
   public subcategoryID: string = '';
   @Input() data: any[] = [];
   @Input() selectedID: string = '';
+  @Input('updated') updated!: Subject<any>;
 
   constructor(
     public utilityService: UtilityService,
@@ -32,12 +34,16 @@ export class PanelSubcategoryComponent implements OnInit {
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
-    this.subcategoryID =
-      this.activatedRoute['snapshot']['params']['subcategoryID'];
+    this.subcategoryID = this.activatedRoute['snapshot']['params']['subcategoryID'];
   }
 
   ngOnInit(): void {
     this.loadSubcategories();
+    this.updated.subscribe(data => {
+      this.data = [];
+      this.data = data;
+      this.loadSubcategories();
+    });
   }
 
   loadSubcategories() {
@@ -78,7 +84,6 @@ export class PanelSubcategoryComponent implements OnInit {
 
   redirect(id: string) {
     const path = `documentos-publicos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/tema/${id}`;
-
     this.utilityService.linkMe(path);
   }
 }

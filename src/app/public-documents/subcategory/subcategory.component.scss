@@ -196,10 +196,12 @@
   }
 
   .notData {
-    width: 100%;
-    height: 130px;
-    line-height: 130px;
+    padding: 20px;
     text-align: center;
+
+    p {
+      margin-bottom: 20px;
+    }
   }
 
   .searchDisabled {

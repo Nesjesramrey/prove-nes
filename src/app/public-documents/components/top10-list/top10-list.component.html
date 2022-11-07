@@ -1,10 +1,9 @@
-<!-- <mat-list class="container shadow"> -->
 <div class="set 12 head-titles">
   <span>Top 10 Soluciones</span>
   <div class="line"></div>
 </div>
 
-<div class="set-12 itemlist">
+<div class="set-12 itemlist" *ngIf="data.length != 0">
   <div class="set-12 item" *ngFor="let item of data">
     <span mat-line>
       <div mat-line>
@@ -19,4 +18,7 @@
     </div>
   </div>
 </div>
-<!-- </mat-list> -->
+
+<div class="set-12 itemlist" *ngIf="data.length == 0">
+  <small>No se encontraron resultados para tu cobertura.</small>
+</div>

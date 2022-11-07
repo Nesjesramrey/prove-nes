@@ -140,5 +140,10 @@ export class EndPointService {
   // search
   public globalSearchEndPoint: string = '/document/search_content';
 
+  // permissions
+  public requestAccessPermissionEndPoint: string = '/permission';
+  public markPermissionAsAttendedEndPoint: string = '/permission/';
+  public fetchPermissionByIdEndPoint: string = '/permission/';
+
   constructor() { }
 }

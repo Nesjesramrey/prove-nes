@@ -50,7 +50,7 @@ export class AddDocumentCollaboratorComponent implements OnInit {
     public utilitySrvc: UtilityService,
     public layoutService: LayoutService
   ) {
-    console.log(this.dialogData);
+    // console.log(this.dialogData);
     this.document = this.dialogData['document'];
     this.layout = this.dialogData['layout'];
     this.subLayout = this.dialogData['subLayout'];
