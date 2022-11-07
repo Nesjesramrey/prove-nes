@@ -43,9 +43,10 @@ export class TopicComponent implements OnInit {
   public stats: any;
   public isFavorites: boolean = false;
   public allFavorites: any = null;
-  public testimonials: any = TESTIMONIALS;
+  public testimonials: any = [];
   public solutionsData: any = [];
   public titles: any = [];
+  public coverage: any = null;
   public coverageSelected: any = null;
 
   constructor(
@@ -66,6 +67,10 @@ export class TopicComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (history['state']['coverage'] != undefined) {
+      this.coverageSelected = history['state']['coverage'];
+    };
+
     this.user = this.UserService.fetchFireUser().subscribe({
       error: (error: any) => { },
       next: (reply: any) => {
@@ -78,6 +83,7 @@ export class TopicComponent implements OnInit {
           this.permission = false;
         }
       },
+      complete: () => { }
     });
   }
 
@@ -136,40 +142,15 @@ export class TopicComponent implements OnInit {
   }
 
   loadTopic() {
-    let document: Observable<any> =
-      this.documentService.fetchSingleDocumentById({ _id: this.documentID });
-    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({
-      _id: this.categoryID,
-    });
-    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById(
-      { _id: this.subcategoryID }
-    );
-    let topic: Observable<any> = this.topicService.fetchSingleTopicById({
-      _id: this.topicID,
-    });
+    let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
+    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID });
+    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID });
+    let topic: Observable<any> = this.topicService.fetchSingleTopicById({ _id: this.topicID });
+    let votes: Observable<any> = this.voteService.fetchVotesByTopicID({ _id: this.topicID });
+    let favorites: Observable<any> = this.favoritesService.fetchFavoritesByTopicID({ _id: this.topicID });
 
-    let votes: Observable<any> = this.voteService.fetchVotesByTopicID({
-      _id: this.topicID,
-    });
-    let favorites: Observable<any> =
-      this.favoritesService.fetchFavoritesByTopicID({
-        _id: this.topicID,
-      });
-
-    forkJoin([
-      document,
-      category,
-      subcategory,
-      topic,
-      votes,
-      favorites,
-    ]).subscribe((reply: any) => {
-      this.titles = this.utilityService.formatTitles(
-        reply[0].title,
-        reply[1].category.name,
-        reply[2].category.name,
-        reply[3].title
-      );
+    forkJoin([document, category, subcategory, topic, votes, favorites]).subscribe((reply: any) => {
+      this.titles = this.utilityService.formatTitles(reply[0].title, reply[1].category.name, reply[2].category.name, reply[3].title);
       this.userVoted = this.checkUserVote(reply[4]);
       this.allFavorites = reply[5].data;
       this.isFavorites = this.checkFavorites();
@@ -182,11 +163,14 @@ export class TopicComponent implements OnInit {
       this.solutionsData = this.topic.solutions;
       this.SolutionDataSource = new CustomMatDataSource(this.sortSolutions(this.solutionsData));
 
+      this.coverage = this.document['coverage'];
+      if (this.coverageSelected == null) { this.coverageSelected = this.coverage[0]['_id']; }
       this.getRamdomImage();
+
       setTimeout(() => {
         this.getBreadcrumbsTitles();
         this.isDataAvailable = true;
-      }, 300);
+      }, 100);
     });
   }
 
@@ -363,108 +347,3 @@ export class TopicComponent implements OnInit {
     });
   }
 }
-
-export interface DataTable {
-  title: string;
-  ranking: number;
-  users: number;
-  score: number;
-}
-
-export interface ITestimony {
-  title: string;
-  description: string;
-  created: string;
-  avatarUrl: string;
-  avatarUser: string;
-}
-
-const TESTIMONIALS: ITestimony[] = [
-  {
-    title: 'Testimonio 1',
-    description: 'description',
-    created: '01/02/2022',
-    avatarUrl: 'books.png',
-    avatarUser: '16393769364132.jpeg',
-  },
-  {
-    title: 'Testimonio 2',
-    description: 'description',
-    created: '23/02/2022',
-    avatarUrl: 'books.png',
-    avatarUser: '16393769364132.jpeg',
-  },
-  {
-    title: 'Testimonio 3',
-    description: 'description',
-    created: '10/02/2022',
-    avatarUrl: 'books.png',
-    avatarUser: '16393769364132.jpeg',
-  },
-  {
-    title: 'Testimonio 4',
-    description: 'description',
-    created: '08/02/2022',
-    avatarUrl: 'books.png',
-    avatarUser: '16393769364132.jpeg',
-  },
-  {
-    title: 'Testimonio 5',
-    description: 'description',
-    created: '05/02/2022',
-    avatarUrl: 'books.png',
-    avatarUser: '16393769364132.jpeg',
-  },
-  {
-    title: 'Testimonio 6',
-    description: 'description',
-    created: '21/02/2022',
-    avatarUrl: 'books.png',
-    avatarUser: '16393769364132.jpeg',
-  },
-  {
-    title: 'Testimonio 7',
-    description: 'description',
-    created: '22/02/2022',
-    avatarUrl: 'books.png',
-    avatarUser: '16393769364132.jpeg',
-  },
-  {
-    title: 'Testimonio 8',
-    description: 'description',
-    created: '04/02/2022',
-    avatarUrl: 'books.png',
-    avatarUser: '16393769364132.jpeg',
-  },
-  {
-    title: 'Testimonio 9',
-    description: 'description',
-    created: '01/03/2022',
-    avatarUrl: 'books.png',
-    avatarUser: '16393769364132.jpeg',
-  },
-];
-
-const SOLUTIONS_DATA: DataTable[] = [
-  {
-    title:
-      'Incorporar informales a través de cuotas únicas de ISR y Seguridad Social',
-    ranking: 10,
-    users: 255,
-    score: 1.2,
-  },
-  {
-    title: 'Tipificar la actividad económica ilegal como delito grave',
-    ranking: 10,
-    users: 255,
-    score: 2,
-  },
-  { title: 'Crear padrón de informales', ranking: 10, users: 255, score: 3 },
-  {
-    title:
-      'Publicar estudio de pérdidas económicas por actividad económica informal',
-    ranking: 10,
-    users: 255,
-    score: 1.3,
-  },
-];

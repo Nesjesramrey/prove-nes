@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { forkJoin, Observable } from 'rxjs';
+import { GiveEditPermissionComponent } from 'src/app/components/give-edit-permission/give-edit-permission.component';
 import { ViewMessageComponent } from 'src/app/components/view-message/view-message.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -34,7 +35,7 @@ export class UserNotificationsComponent implements OnInit {
       this.notificationSrvc.fetchMyNotificationsContent({ userID: this.user['_id'] })
         .subscribe((reply: any) => {
           this.notifications = reply;
-          console.log(this.notifications);
+          // console.log(this.notifications);
         });
 
       setTimeout(() => {
@@ -84,6 +85,22 @@ export class UserNotificationsComponent implements OnInit {
     this.markNotificationAsRead(notification);
 
     const dialogRef = this.dialog.open<ViewMessageComponent>(ViewMessageComponent, {
+      width: '640px',
+      data: {
+        notification: notification
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  popGivePermissionsDialog(notification: any) {
+    this.markNotificationAsRead(notification);
+
+    const dialogRef = this.dialog.open<GiveEditPermissionComponent>(GiveEditPermissionComponent, {
       width: '640px',
       data: {
         notification: notification

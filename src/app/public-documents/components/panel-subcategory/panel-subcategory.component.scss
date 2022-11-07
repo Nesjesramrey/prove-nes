@@ -6,6 +6,8 @@
     background-color: #00031d;
     border-radius: 5px 5px 0px 0px;
     padding: 25px;
+    align-items: center;
+    justify-content: center;
 
     .random-text {
       margin-bottom: 32px;
@@ -39,10 +41,7 @@
 
     .message {
       color: #71f5ad;
-      font-weight: 600;
-      font-size: 20px;
-      margin-top: 20%;
-      margin-left: 40%;
+      font-size: 13pt;
     }
   }
 }

@@ -32,6 +32,7 @@ export class SingleDocumentComponent implements OnInit {
   public document: any = null;
   public layout: any = [];
   public layouts: any[] = [];
+  public layoutsClone: any[] = [];
   public categoriesDisplayedColumns: string[] = ["name", "users", "interactions", "solutions", "problems", "ranking", "actions"]
   public isDataAvailable: boolean = false;
   public displayedColumns: string[] = ['select', 'name', 'email', 'activities', 'menu'];
@@ -42,7 +43,7 @@ export class SingleDocumentComponent implements OnInit {
   public collaborators: any = null;
   public published: boolean = false;
   public actionControlActivityList: any[] = [];
-  public accesibleLayouts: any[] = [];
+  public availableLayouts: any[] = [];
   public userCoverageObj: any[] = [];
   public userCoverageStr: any[] = [];
   public coverageSelected: any = null;
@@ -83,6 +84,7 @@ export class SingleDocumentComponent implements OnInit {
             this.layouts = reply[2]['layouts'];
             this.layouts.filter((layout: any) => { layout['access'] = true; });
             this.document['coverage'].filter((x: any) => { x['enabled'] = true; });
+            console.log(this.layouts);
             break;
 
           case 'administrator':
@@ -95,10 +97,11 @@ export class SingleDocumentComponent implements OnInit {
 
           case 'citizen':
             this.layouts = reply[2]['layouts'];
+            this.layoutsClone = reply[2]['layouts'];
             this.layouts.filter((x: any) => { x['states'].length == 0 ? x['access'] = false : x['access'] = true; });
-            this.accesibleLayouts = this.layouts.filter((x: any) => { return x['states'].length != 0; });
+            this.availableLayouts = this.layouts.filter((x: any) => { return x['states'].length != 0; });
 
-            this.accesibleLayouts.filter((x: any) => {
+            this.availableLayouts.filter((x: any) => {
               x['states'].filter((y: any) => { this.userCoverageObj.push(y); });
             });
 
@@ -123,13 +126,22 @@ export class SingleDocumentComponent implements OnInit {
       complete: () => {
         setTimeout(() => {
           this.isDataAvailable = true;
-        }, 1000);
+        }, 100);
       }
     });
   }
 
   onSelectCoverage(event: any) {
     this.coverageSelected = event['value'];
+    this.layouts = [];
+    this.layoutsClone.filter((x: any) => {
+      x['states'].filter((y: any) => {
+        if (y['id'] == this.coverageSelected) {
+          this.layouts.push(x);
+        }
+      });
+    });
+    this.dataSource = new MatTableDataSource(this.layouts);
   }
 
   popAddDocumentCategory() {

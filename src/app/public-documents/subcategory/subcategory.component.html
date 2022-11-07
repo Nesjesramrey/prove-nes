@@ -56,7 +56,8 @@
 
     <div class="set-9 col-rgt">
       <mat-card>
-        <panel-subcategory [data]="panelTopicsData" [selectedID]="subcategory._id"></panel-subcategory>
+        <panel-subcategory [data]="panelTopicsData" [selectedID]="subcategory._id" [updated]="panelDataUpdated">
+        </panel-subcategory>
 
         <div class="set-12 container-titles">
           <div class="set-12">
@@ -87,7 +88,7 @@
                 </mat-label>
                 <input matInput type="text" (keyup)="applyFilterSolution($event)"
                   [disabled]="solutionsDataSource.length == 0">
-                <button matSuffix mat-icon-button>
+                <button matSuffix mat-icon-button [disabled]="solutionsDataSource.length == 0">
                   <mat-icon>search</mat-icon>
                 </button>
               </mat-form-field>
@@ -108,7 +109,7 @@
                   <small>Búscar temas...</small>
                 </mat-label>
                 <input matInput type="text" (keyup)="applyFilterTopic($event)" [disabled]="panelTopicsData.length == 0">
-                <button matSuffix mat-icon-button>
+                <button matSuffix mat-icon-button [disabled]="panelTopicsData.length == 0">
                   <mat-icon>search</mat-icon>
                 </button>
               </mat-form-field>
@@ -148,7 +149,11 @@
             </table>
 
             <ng-template #notsolutions>
-              <p class="notData">Sin soluciones</p>
+              <p class="notData">
+                <strong>
+                  <small>No se encontraron soluciones.</small>
+                </strong>
+              </p>
             </ng-template>
           </div>
 
@@ -184,7 +189,18 @@
             </table>
 
             <ng-template #nottopic>
-              <p class="notData">Sin problemas</p>
+              <div class="notData">
+                <p>
+                  <strong>
+                    <small>No se encontraron problemas.</small>
+                  </strong>
+                  <!-- <br />
+                  <small>Sé el primero en agregar un problema.</small> -->
+                </p>
+                <!-- <button type="button" mat-raised-button color="warn">
+                  <small>Agregar problema</small>
+                </button> -->
+              </div>
             </ng-template>
           </div>
         </div>

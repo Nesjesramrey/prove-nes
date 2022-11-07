@@ -15,8 +15,13 @@ export class SolutionsCardComponent implements OnInit {
   public topicID: string = '';
   public displayedColumns: string[] = ['title', 'stats.score'];
   @Input() data: any = [];
+  @Input() document: any = [];
   @ViewChild(MatSort) sort: MatSort = new MatSort();
   @Output() public sendSolutionData = new EventEmitter<any>();
+  @Input() coverage: any = null;
+  @Input() coverageSelected: any = null;
+  public solutions: any[] = [];
+  public allSolutions: any[] = [];
 
   constructor(
     private utilityService: UtilityService,
@@ -29,7 +34,13 @@ export class SolutionsCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // console.log(this.data);
+    this.allSolutions = this.data['filteredData'];
+    // this.solutions = this.data['filteredData'];
+    this.allSolutions.filter((x: any) => {
+      x['coverage'].filter((y: any) => {
+        if (y == this.coverageSelected) { this.solutions.push(x); }
+      });
+    });
   }
 
   ngAfterViewInit() {
@@ -48,5 +59,15 @@ export class SolutionsCardComponent implements OnInit {
 
   addFirstSolution() {
     this.sendSolutionData.emit({ add: true });
+  }
+
+  onSelectCoverage(event: any) {
+    this.coverageSelected = event['value'];
+    this.solutions = [];
+    this.allSolutions.filter((x: any) => {
+      x['coverage'].filter((y: any) => {
+        if (y == this.coverageSelected) { this.solutions.push(x); }
+      });
+    });
   }
 }

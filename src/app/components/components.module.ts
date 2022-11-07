@@ -58,6 +58,7 @@ import { EditSolutionDataComponent } from './edit-solution-data/edit-solution-da
 import { WelcomeDialogComponent } from './welcome-dialog/welcome-dialog.component';
 import { AddCategoryDialogComponent } from './add-category-dialog/add-category-dialog.component';
 import { RequestEditPermissionComponent } from './request-edit-permission/request-edit-permission.component';
+import { GiveEditPermissionComponent } from './give-edit-permission/give-edit-permission.component';
 
 @NgModule({
   imports: [
@@ -119,7 +120,8 @@ import { RequestEditPermissionComponent } from './request-edit-permission/reques
     EditSolutionDataComponent,
     WelcomeDialogComponent,
     AddCategoryDialogComponent,
-    RequestEditPermissionComponent
+    RequestEditPermissionComponent,
+    GiveEditPermissionComponent
   ],
   exports: [
     AppPageletComponent,
@@ -160,7 +162,8 @@ import { RequestEditPermissionComponent } from './request-edit-permission/reques
     EditSolutionDataComponent,
     WelcomeDialogComponent,
     AddCategoryDialogComponent,
-    RequestEditPermissionComponent
+    RequestEditPermissionComponent,
+    GiveEditPermissionComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
@@ -187,7 +190,8 @@ import { RequestEditPermissionComponent } from './request-edit-permission/reques
     EditSolutionDataComponent,
     WelcomeDialogComponent,
     AddCategoryDialogComponent,
-    RequestEditPermissionComponent
+    RequestEditPermissionComponent,
+    GiveEditPermissionComponent
   ],
   providers: [],
 })

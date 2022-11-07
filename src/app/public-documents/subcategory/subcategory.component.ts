@@ -3,8 +3,8 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { forkJoin, Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { forkJoin, Observable, Subject } from 'rxjs';
 import { DocumentService } from 'src/app/services/document.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LayoutService } from 'src/app/services/layout.service';
@@ -39,13 +39,15 @@ export class SubcategoryComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort = new MatSort();
   public coverage: any = null;
   public coverageSelected: any = null;
+  public panelDataUpdated: Subject<any> = new Subject();
 
   constructor(
     public activatedRoute: ActivatedRoute,
     public documentService: DocumentService,
     public dialog: MatDialog,
     public layoutService: LayoutService,
-    public utilityService: UtilityService
+    public utilityService: UtilityService,
+    public router: Router
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
@@ -65,12 +67,7 @@ export class SubcategoryComponent implements OnInit {
     let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID });
 
     forkJoin([document, category, subcategory]).subscribe((reply: any) => {
-      this.titles = this.utilityService.formatTitles(
-        reply[0].title,
-        reply[1].category.name,
-        reply[2].category.name,
-        ''
-      );
+      this.titles = this.utilityService.formatTitles(reply[0].title, reply[1].category.name, reply[2].category.name, '');
 
       this.document = reply[0];
       this.category = reply[1];
@@ -78,25 +75,25 @@ export class SubcategoryComponent implements OnInit {
       this.stats = this.subcategory.stats;
       this.image = reply[1].images.length > 0 ? reply[1].images[0] : this.image;
       this.topicsDataSource = this.subcategory.topics;
-      const dataSolution: any = [];
-
-      this.subcategory.topics
-        .map((item: any) => [...item.solutions])
-        .forEach((_: any, index: number) => {
-          dataSolution.push(
-            ...this.subcategory.topics.map((item: any) => [...item.solutions])[
-            index
-            ]
-          );
-        });
-      this.solutionsDataSource = dataSolution;
-
-      this.panelTopicsData = this.subcategory.topics.slice(0, 7);
-      this.TopicDataSource = new CustomMatDataSource(this.topicsDataSource);
-      this.SolutionDataSource = new CustomMatDataSource(this.solutionsDataSource);
 
       this.coverage = this.document['coverage'];
       if (this.coverageSelected == null) { this.coverageSelected = this.coverage[0]['_id']; }
+      this.subcategory['topics'].filter((x: any) => {
+        if (x['coverage'].includes(this.coverageSelected)) { this.panelTopicsData.push(x); }
+      });
+
+      const dataSolution: any = [];
+      this.subcategory.topics.map((item: any) => [...item.solutions]).forEach((_: any, index: number) => {
+        dataSolution.push(...this.subcategory.topics.map((item: any) => [...item.solutions])[index]);
+      });
+      dataSolution.filter((x: any) => {
+        if (x['coverage'].includes(this.coverageSelected)) {
+          this.solutionsDataSource.push(x);
+        }
+      });
+
+      this.TopicDataSource = new CustomMatDataSource(this.topicsDataSource);
+      this.SolutionDataSource = new CustomMatDataSource(this.solutionsDataSource);
 
       setTimeout(() => {
         this.isDataAvailable = true;
@@ -108,15 +105,15 @@ export class SubcategoryComponent implements OnInit {
     const topic = this.topicsDataSource.filter((item: any) =>
       item.solutions.filter((s: any) => (s._id === id ? item._id : ''))
     )[0];
-    const path = `documentos-publicos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/tema/${topic._id}/solucion/${id}`;
 
+    const path = `documentos-publicos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/tema/${topic._id}/solucion/${id}`;
     this.utilityService.linkMe(path);
   }
 
   redirect(id: string) {
     const path = `documentos-publicos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/tema/${id}`;
-
-    this.utilityService.linkMe(path);
+    // this.utilityService.linkMe(path);
+    this.router.navigateByUrl(path, { state: { coverage: this.coverageSelected } });
   }
 
   popImageViewer() {
@@ -149,7 +146,26 @@ export class SubcategoryComponent implements OnInit {
     this.SolutionDataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  onSelectCoverage(event: any) { this.coverageSelected = event['value']; }
+  onSelectCoverage(event: any) {
+    this.coverageSelected = event['value'];
+    this.panelTopicsData = [];
+    this.subcategory['topics'].filter((x: any) => {
+      if (x['coverage'].includes(this.coverageSelected)) { this.panelTopicsData.push(x); }
+    });
+    this.panelDataUpdated.next(this.panelTopicsData);
+
+    const dataSolution: any = [];
+    this.subcategory.topics.map((item: any) => [...item.solutions]).forEach((_: any, index: number) => {
+      dataSolution.push(...this.subcategory.topics.map((item: any) => [...item.solutions])[index]);
+    });
+    this.solutionsDataSource = [];
+    dataSolution.filter((x: any) => {
+      if (x['coverage'].includes(this.coverageSelected)) {
+        this.solutionsDataSource.push(x);
+      }
+    });
+    this.SolutionDataSource = new CustomMatDataSource(this.solutionsDataSource);
+  }
 }
 
 export interface DataTable {

@@ -19,9 +19,7 @@ export class Top10ListComponent implements OnInit {
     public utilityService: UtilityService
   ) { }
 
-  ngOnInit(): void {
-    // console.log(this.data);
-  }
+  ngOnInit(): void { }
 
   linkMe(url: string) {
     this.utilityService.linkMe(url);
