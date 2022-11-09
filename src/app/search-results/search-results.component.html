@@ -2,8 +2,8 @@
   <mat-spinner></mat-spinner>
 </div>
 
-<div class="innerhldr" *ngIf="isDataAvailable">
-  <div class="set-3">&nbsp;</div>
+<div class="innerhldr" *ngIf="isDataAvailable" [class.fixmob]="isMobile">
+  <div class="set-3" *ngIf="!isMobile">&nbsp;</div>
 
   <div class="set-6">
     <div class="set-12 head-titles">

@@ -2,32 +2,162 @@
   <mat-spinner></mat-spinner>
 </div>
 
-<div class="set-12 page" *ngIf="isDataAvailable">
-  <div class="set-12 ds-page">
-    <!-- <div class="cover"></div>
-
-    <div class="set-12 info" *ngIf="document != null">
-      <div class="set-12 txt-center">
-        <button type="button" class="grad-txt" (click)="linkMe('/documentos-publicos/' + document._id)">
-          {{document.title}}
-        </button>
-
-        <div class="set-12" *ngIf="document.coverDescription != null">
-          <div class="set-3">&nbsp;</div>
-          <div class="set-6 desc">
-            <p class="grad-txt">{{document.coverDescription}}</p>
-          </div>
-        </div>
-
-        <div class="set-12 txt-center">
-          <button type="button" mat-raised-button color="primary"
-            (click)="linkMe('/documentos-publicos/' + document._id)">
-            Visitar Documento
-          </button>
-        </div>
-      </div>
-    </div> -->
+<!-- mobile -->
+<div class="set-12 page" *ngIf="isDataAvailable && isMobile">
+  <div class="set-12 mb-page">
+    <div class="set-12">
+      <form [formGroup]="searchFormGroup" (submit)="onSearch(searchFormGroup)">
+        <input type="text" placeholder="Búscar en Mexicolectivo..." formControlName="search">
+      </form>
+    </div>
+    <p class="set-12">
+      Mexicolectivo surge como una plataforma para recoger e intercambiar ideas, soluciones y diagnósticos, entre la
+      ciudadanía y la sociedad civil organizada experta para incidir en la agenda pública.
+    </p>
   </div>
+
+  <div class="set-12 mb-page">
+    <div class="set-12 row">
+      <div class="icon">
+        <img src="../../assets/images/cover-icon-01.png" alt="">
+      </div>
+      <div class="txt">
+        Visita la plataforma y conoce más de este ejercicio digital de participación social
+      </div>
+    </div>
+
+    <div class="set-12 row">
+      <div class="icon">
+        <img src="../../assets/images/cover-icon-02.png" alt="">
+      </div>
+      <div class="txt">
+        Aporta contenido en las distintas secciones
+      </div>
+    </div>
+
+    <div class="set-12 row">
+      <div class="icon">
+        <img src="../../assets/images/cover-icon-03.png" alt="">
+      </div>
+      <div class="txt">
+        Visibiliza alguna problemática en tu comunidad
+      </div>
+    </div>
+
+    <div class="set-12 row">
+      <div class="icon">
+        <img src="../../assets/images/cover-icon-04.png" alt="">
+      </div>
+      <div class="txt">
+        Plantea una solución para resolver un problema que afecte a la ciudadanía
+      </div>
+    </div>
+  </div>
+
+  <div class="set-12 mb-page">
+    video
+  </div>
+
+  <div class="set-12 mb-page">
+    <p>Buscamos detonar un pensamiento colectivo ciudadano que con cada comentario y aportación, logre dar voz
+      constructiva para una sociedad más justa, incluyente, próspera y en paz; rumbo a un México de iguales.
+    </p>
+  </div>
+
+  <div class="set-12 mb-page">
+    <div class="mb-inner">
+      <h3>¿Quienes somos?</h3>
+      <p>Una colectiva plural, abierta y propositiva.</p>
+      <p>Una colectiva que privilegia el proyecto antes que las personas.</p>
+      <p>Una colectiva que SÍ busca incidir en la agenda pública y política en el marco de la coyuntura electoral del
+        2024.</p>
+      <p>Una plataforma participativa transparente con datos abiertos para la ciudadanía.</p>
+    </div>
+  </div>
+
+  <div class="set-12 mb-page">
+    <h3>Misión</h3>
+    <p>
+      Estás a unos pasos de involucrarte con México desde una nueva trinchera, ésta aventura busca que mejoremos, desde
+      cualquier trinchera social : la familia, la amistad, el trabajo. la vecindad, la escuela. el activismo o la
+      comunidad. Somos muchos Méxicos vinculados por los derechos, las causas, las libertades, la solidaridad pero sobre
+      todo por el amor y la confianza en que un mejor país es posible.
+    </p>
+  </div>
+
+  <div class="set-12 mb-page">
+    <h3>Visión</h3>
+    <p>
+      Una ciudadanía permanente es una ciudadanía que participa más allá del voto informado. Es una ciudadanía fuerte,
+      articulada, escuchada que hace propuestas y actúa para mejorar México.
+    </p>
+  </div>
+
+  <div class="set-12 mb-page">
+    <h3>Manifiesto</h3>
+    <p>
+      Un país donde exista la posibilidad de tener un empleo bien pagado y que nos permita un desarrollo personal y
+      profesional.
+    </p>
+    <p>
+      Queremos tener la seguridad de contar con una buena educación para nuestros hijos y los servicios de salud
+      necesarios para emergencias y nuestro buen desarrollo.
+    </p>
+    <p>
+      Queremos tener nuestra casa, nuestro barrio y nuestra ciudad donde podamos salir a la calle sin temor. Donde las
+      reglas sean claras y la justicia se imparta sin distinción.
+    </p>
+    <p>
+      Donde se elimine la corrupción y las oportunidades sean las mismas independientemente de sexo, religión,etnia y
+      condición social.
+    </p>
+    <p>
+      Un país donde la democracia tenga su pleno desarrollo y todos podamos ser elegidos para puestos públicos. Donde
+      las diferencias entre ricos y pobres cada vez sean menores y el progreso del país se refleje en el progreso de las
+      familias.
+    </p>
+    <p>
+      Donde retomemos nuestras tradiciones y las hagamos parte de nuestra futura cultura. Un país donde el espíritu
+      emprendedor que nos caracteriza sea apoyado.
+    </p>
+    <p>
+      Queremos ser parte de la comunidad internacional y estar a la vanguardia en tecnología y cuidado del
+      medioambiente. Donde crezcamos como personas y dejemos a nuestros hijos un mejor México.
+    </p>
+  </div>
+
+  <div class="set-12 mb-page">
+    <img src="../../assets/images/andrea-leopardi-N17c03GJGKc-unsplash.png" alt="">
+  </div>
+
+  <mat-card class="set-12 horn">
+    <div class="set-2">
+      <img src="../../assets/images/cover-icon-05.png" alt="">
+    </div>
+    <div class="set-10">
+      <strong>
+        <span>Participa en nuestra plataforma, entra al Pensamiento Colectivo <a href="">Aquí</a></span>
+      </strong>
+    </div>
+  </mat-card>
+
+  <!-- <div class="set-12 mb-page">
+    <mat-card class="set-12">
+      <div class="set-2">
+        <img src="../../assets/images/cover-icon-05.png" alt="">
+      </div>
+      <div class="set-10">
+        <strong>
+          <span>Participa en nuestra plataforma, entra al Pensamiento Colectivo <a href="">Aquí</a></span>
+        </strong>
+      </div>
+    </mat-card>
+  </div> -->
+</div>
+
+<!-- desktop -->
+<div class="set-12 page" *ngIf="isDataAvailable && !isMobile">
+  <div class="set-12 ds-page"></div>
 
   <div class="set-12 ds-page">
     <div class="set-6">
@@ -77,33 +207,6 @@
         </div>
       </div>
     </div>
-
-    <!-- <div class="info">
-      <div class="titles">
-        <span class="line">&nbsp;</span>
-        <span class="title">Manifiesto</span>
-      </div>
-
-      <div class="set-12">
-        <p>Un país donde exista la posibilidad de tener un empleo bien pagado y que nos permita un desarrollo personal y
-          profesional.</p>
-        <p>Queremos tener la seguridad de contar con una buena educación para nuestros hijos y los servicios de salud
-          necesarios para emergencias y nuestro buen desarrollo.</p>
-        <p>Queremos tener nuestra casa, nuestro barrio y nuestra ciudad donde podamos salir a la calle sin temor. Donde
-          las reglas sean claras y la justicia se imparta sin distinción.</p>
-        <p>Donde se elimine la corrupción y las oportunidades sean las mismas independientemente de sexo, religión,etnia
-          y
-          condición social.</p>
-        <p>Un país donde la democracia tenga su pleno desarrollo y todos podamos ser elegidos para puestos públicos.
-          Donde
-          las diferencias entre ricos y pobres cada vez sean menores y el progreso del país se refleje en el progreso de
-          las familias.</p>
-        <p>Donde retomemos nuestras tradiciones y las hagamos parte de nuestra futura cultura. Un país donde el espíritu
-          emprendedor que nos caracteriza sea apoyado.</p>
-        <p>Queremos ser parte de la comunidad internacional y estar a la vanguardia en tecnología y cuidado del
-          medioambiente. Donde crezcamos como personas y dejemos a nuestros hijos un mejor México.</p>
-      </div>
-    </div> -->
   </div>
 
   <div class="set-12 ds-page">
@@ -119,48 +222,9 @@
       </p>
     </div>
     <button type="button" (click)="linkMe('/documentos-publicos/' + document._id)">Entrar</button>
-
-    <!-- <div class="info">
-      <div class="titles">
-        <span class="line">&nbsp;</span>
-        <span class="title">Mexicolectivo</span>
-      </div>
-
-      <div class="set-12">
-        <p>Somos un grupo de mexicanos plural que busca un mejor país.</p>
-        <p>Que está preocupado por rescatar el futuro que nos merecemos.</p>
-        <p>Que busca recuperar el desarrollo conseguido en siglos de trabajo y dedicación.</p>
-        <p>Que quiere erradicar los vicios y malos gobiernos que hemos tenido.</p>
-        <p>Que no está dispuesto a permitir que se nos arrebate el futuro.</p>
-        <p>Que convoca a todos los mexicanos para trabajar juntos para lograrlo.</p>
-      </div>
-    </div> -->
   </div>
 
   <div class="set-12 ds-page">
     <div class="app-footer"></div>
-    <!-- <div class="info">
-      <div class="titles">
-        <span class="line">&nbsp;</span>
-        <span class="title">Ideas</span>
-      </div>
-
-      <div class="set-12"></div>
-    </div> -->
   </div>
-
-  <!-- <div class="set-12 mailing-list">
-    <div class="set-12">
-      <p>Suscríbete a nuestro newsletter</p>
-    </div>
-    <form class="set-12" [formGroup]="mailingListFormGroup" (submit)="onSubscribe(mailingListFormGroup)">
-      <input type="text" placeholder="nombre@ejemplo.com" formControlName="email">
-      <button type="submit" [disabled]="mailingListFormGroup.invalid || submitted">Suscribirme</button>
-    </form>
-    <div class="set-12 networks">
-      <span>Siguenos: </span>
-      <a href="#" class="facebook-net icon"></a>
-      <a href="#" class="instagram-net icon"></a>
-    </div>
-  </div> -->
 </div>

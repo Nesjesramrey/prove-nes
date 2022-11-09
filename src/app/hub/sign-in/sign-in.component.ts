@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { WelcomeDialogComponent } from 'src/app/components/welcome-dialog/welcome-dialog.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UtilityService } from 'src/app/services/utility.service';
@@ -16,6 +17,7 @@ export class SignInComponent implements OnInit {
   public signInFormGroup!: FormGroup;
   public submitted: boolean = false;
   public hide: boolean = true;
+  public isMobile: boolean = false;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -24,13 +26,15 @@ export class SignInComponent implements OnInit {
     public angularFireAuth: AngularFireAuth,
     public router: Router,
     public activatedRoute: ActivatedRoute,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public deviceDetectorService: DeviceDetectorService
   ) {
     this.activatedRoute.queryParams.subscribe((params) => {
       if (params['from'] != undefined) {
         this.popGreetingsDialog();
       }
     });
+    this.isMobile = this.deviceDetectorService.isMobile();
   }
 
   ngOnInit(): void {
@@ -57,25 +61,18 @@ export class SignInComponent implements OnInit {
 
     this.angularFireAuth.signInWithEmailAndPassword(form['value']['email'], form['value']['password'])
       .then((reply: any) => {
-        // console.log('reply: ', reply);
         this.angularFireAuth.authState.subscribe((data: any) => {
-          // console.log('user: ', data['multiFactor']['user']);
           this.submitted = false;
           localStorage.setItem('accessToken', data['multiFactor']['user']['accessToken']);
-          // window.location.reload();
-          // this.utilitySrvc.linkMe('/');
           this.router.navigateByUrl('/', { state: { status: 'logout' } });
         });
       })
-      .catch((error) => {
-        // console.log(error['code']);
+      .catch((error: any) => {
         this.submitted = false;
-
         switch (error['code']) {
           case 'auth/wrong-password':
             this.utilitySrvc.openErrorSnackBar('Tu contraseña es incorrecta.');
             break;
-
           case 'auth/user-not-found':
             this.utilitySrvc.openErrorSnackBar('No se encontro el usuario.');
             break;

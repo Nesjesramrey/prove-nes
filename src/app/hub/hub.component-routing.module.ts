@@ -4,6 +4,7 @@ import { CanActivateAuthenticatedGuard } from '../guards/authenticated.guard';
 import { CanActivateLoggedInGuard } from '../guards/logged-in.guard';
 import { AppConfigurationComponent } from './app-configuration/app-configuration.component';
 import { HubComponent } from './hub.component';
+import { SignInMobileComponent } from './sign-in-mobile/sign-in-mobile.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { SingleUserComponent } from './single-user/single-user.component';
@@ -16,6 +17,7 @@ const routes: Routes = [
       { path: '', component: HubComponent },
       { path: 'registro', component: SignUpComponent, canActivate: [CanActivateAuthenticatedGuard] },
       { path: 'ingresar', component: SignInComponent, canActivate: [CanActivateAuthenticatedGuard] },
+      { path: 'mobile', component: SignInMobileComponent, canActivate: [CanActivateAuthenticatedGuard] },
       { path: 'notificaciones', component: UserNotificationsComponent, canActivate: [CanActivateLoggedInGuard] },
       { path: 'configuracion', component: AppConfigurationComponent, canActivate: [CanActivateLoggedInGuard] },
       { path: ':userID', component: SingleUserComponent, canActivate: [] }
