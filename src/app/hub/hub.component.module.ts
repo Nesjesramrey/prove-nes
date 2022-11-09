@@ -23,6 +23,7 @@ import { SingleUserComponent } from './single-user/single-user.component';
 import { UserNotificationsComponent } from './user-notifications/user-notifications.component';
 import { AppConfigurationComponent } from './app-configuration/app-configuration.component';
 import { SignInMobileComponent } from './sign-in-mobile/sign-in-mobile.component';
+import { SignUpMobileComponent } from './sign-up-mobile/sign-up-mobile.component';
 
 @NgModule({
   imports: [
@@ -50,7 +51,8 @@ import { SignInMobileComponent } from './sign-in-mobile/sign-in-mobile.component
     SingleUserComponent,
     UserNotificationsComponent,
     AppConfigurationComponent,
-    SignInMobileComponent
+    SignInMobileComponent,
+    SignUpMobileComponent
   ],
 })
 export class HubComponentModule { }
