@@ -1,7 +1,7 @@
 :host {
   width: 100%;
   height: 100%;
-  padding-top: 80px;
+  // padding-top: 80px;
   background: #00031d;
 
   .ds-page {
@@ -9,10 +9,6 @@
     height: 100%;
     position: relative;
   }
-
-  // .ds-page:not(:first-child) {
-  //   border-top: 11px solid #ffffff;
-  // }
 
   .ds-page:nth-child(1) {
     background: url('../../assets/images/mexiclectivo-top-bg.png') no-repeat;
@@ -42,7 +38,6 @@
     button {
       margin-top: 90px;
       margin-bottom: 30px;
-      // font-size: 40pt;
     }
 
     .layouts {
@@ -76,8 +71,6 @@
   }
 
   .ds-page:nth-child(2) {
-    // background: url('../../assets/images/andrea-leopardi-N17c03GJGKc-unsplash.png') no-repeat;
-    // background-size: 70% auto;
     height: auto !important;
     background: #ffffff;
     z-index: 11;
@@ -174,9 +167,6 @@
   }
 
   .ds-page:nth-child(3) {
-    // background: url('../../assets/images/jezael-melgoza-KbR06h9dNQw-unsplash.png') no-repeat;
-    // background-size: 70% auto;
-    // background-position: right;
     background: #71f5ad;
     height: auto !important;
     padding: 70px 120px;
@@ -222,7 +212,6 @@
 
     .info {
       width: 45%;
-      // margin-left: 40%;
       height: calc(100% + 90px);
       background: #20C588;
       color: #ffffff;
@@ -268,11 +257,8 @@
   }
 
   .ds-page:nth-child(4) {
-    // background: url('../../assets/images/Rectangle-511.png') no-repeat;
-    // background-size: cover;
     height: auto !important;
     background: #00031d;
-    // padding: 70px 120px;
     z-index: 14;
     text-align: center;
 
@@ -412,5 +398,158 @@
 
   .desc {
     font-size: 15pt;
+  }
+
+  .mb-page {
+    width: 100%;
+    position: relative;
+    padding: 20px;
+  }
+
+  .mb-page:nth-child(1) {
+    background: #54f093;
+
+    input {
+      width: 100%;
+      background: #ffffff;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid rgba($color: #000000, $alpha: 0.4);
+    }
+
+    p {
+      margin-top: 20px;
+      text-align: justify;
+    }
+  }
+
+  .mb-page:nth-child(2) {
+    background: #262626;
+    color: #54f093;
+
+    .icon {
+      text-align: center;
+    }
+
+    .txt {
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .row:not(:first-child) {
+      margin-top: 40px;
+    }
+  }
+
+  .mb-page:nth-child(3) {}
+
+  .mb-page:nth-child(4) {
+    background: #ffffff;
+
+    p {
+      text-align: justify;
+    }
+  }
+
+  .mb-page:nth-child(5) {
+    background: #54f093;
+
+    .mb-inner {
+      padding: 20px;
+      background: rgba($color: #ffffff, $alpha: 0.7);
+
+      h3 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #20C588;
+      }
+
+      p {
+        text-align: justify;
+      }
+
+      p:not(:last-child) {
+        margin-bottom: 20px;
+      }
+    }
+  }
+
+  .mb-page:nth-child(6),
+  .mb-page:nth-child(7) {
+    background: #262626;
+    color: #ffffff;
+
+    h3 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #20C588;
+    }
+
+    p {
+      text-align: justify;
+    }
+  }
+
+  .mb-page:nth-child(6) {
+    border-bottom: 20px solid #54f093;
+  }
+
+  .mb-page:nth-child(8) {
+    background: #ffffff;
+    color: #000000;
+
+    h3 {
+      text-align: center;
+      color: #306EFF;
+      margin-bottom: 20px;
+    }
+
+    p {
+      text-align: justify;
+    }
+
+    p:not(:last-child) {
+      margin-bottom: 20px;
+    }
+  }
+
+  .mb-page:nth-child(9) {
+    padding: 0;
+
+    img {
+      width: 100%;
+      height: auto;
+      float: left;
+    }
+  }
+
+  .mb-page:nth-child(10) {
+    background: #54f093;
+
+    mat-card {
+      margin-top: 40px;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+
+    .set-10 {
+      padding-left: 10px;
+    }
+  }
+
+  .horn {
+    width: 90%;
+    position: fixed;
+    bottom: 2%;
+    left: 5%;
+    display: flex;
+    align-items: center;
+
+    .set-10 {
+      padding-left: 10px;
+    }
   }
 }

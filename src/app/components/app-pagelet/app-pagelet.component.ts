@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ModalPermissionsComponent } from 'src/app/public-documents/components/modal-permissions/modal-permissions.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SearchService } from 'src/app/services/search.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: '.app-pagelet',
@@ -27,6 +28,9 @@ export class AppPageletComponent implements OnInit {
   public permission: any;
   public redirectUrl: string = '';
   public searchFormGroup!: FormGroup;
+  public isMobile: any;
+  @Output() public openMenu = new EventEmitter<any>();
+  @Input() open: boolean = false;
 
   constructor(
     public router: Router,
@@ -38,8 +42,11 @@ export class AppPageletComponent implements OnInit {
     public activatedRoute: ActivatedRoute,
     public dialog: MatDialog,
     public formBuilder: FormBuilder,
-    public searchService: SearchService
-  ) { }
+    public searchService: SearchService,
+    public deviceDetectorService: DeviceDetectorService
+  ) {
+    this.isMobile = this.deviceDetectorService.isMobile();
+  }
 
   ngOnInit(): void {
     this.reset();
@@ -204,5 +211,10 @@ export class AppPageletComponent implements OnInit {
       },
       complete: () => { }
     });
+  }
+
+  displayMobileMenu() {
+    this.open = !this.open;
+    this.openMenu.emit({ open: this.open });
   }
 }

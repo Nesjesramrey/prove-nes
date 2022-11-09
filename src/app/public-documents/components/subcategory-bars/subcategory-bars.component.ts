@@ -29,6 +29,7 @@ export class SubcategoryBarsComponent implements OnInit {
         this.stats.push({ layout: x['_id'], score: 0 });
       }
     });
+    console.log(this.layouts);
   }
 
   displayLayoutData(layout: any) {

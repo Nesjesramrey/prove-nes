@@ -6,6 +6,7 @@ import { AppMaterialModule } from '../app-material.module';
 import { ComponentsModule } from '../components/components.module';
 import { HubComponentsModule } from './components/hub.components.module';
 import { AppSharedModule } from '../app-shared.module';
+import { NgChartsModule } from 'ng2-charts';
 
 import { LyCarouselModule } from '@alyle/ui/carousel';
 import { LyTypographyModule } from '@alyle/ui/typography';
@@ -21,8 +22,7 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { SingleUserComponent } from './single-user/single-user.component';
 import { UserNotificationsComponent } from './user-notifications/user-notifications.component';
 import { AppConfigurationComponent } from './app-configuration/app-configuration.component';
-import { MapBoxComponent } from './components/map-box/map-box.component';
-import { NgChartsModule } from 'ng2-charts';
+import { SignInMobileComponent } from './sign-in-mobile/sign-in-mobile.component';
 
 @NgModule({
   imports: [
@@ -50,6 +50,7 @@ import { NgChartsModule } from 'ng2-charts';
     SingleUserComponent,
     UserNotificationsComponent,
     AppConfigurationComponent,
+    SignInMobileComponent
   ],
 })
-export class HubComponentModule {}
+export class HubComponentModule { }

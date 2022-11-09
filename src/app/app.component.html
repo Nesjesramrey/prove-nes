@@ -1,7 +1,43 @@
 <div class="set-12 mainhldr">
-  <div class="app-pagelet" [user]="user" [path]="path" [coverDocument]="coverDocument" *ngIf="isDataAvailable"></div>
+  <div class="app-pagelet" [user]="user" [path]="path" [coverDocument]="coverDocument" [open]="open"
+    (openMenu)="getMenuStatus($event)" *ngIf="isDataAvailable"></div>
 
   <router-outlet></router-outlet>
   <!-- <div class="message-box" [user]="user" *ngIf="isDataAvailable"></div> -->
   <!-- <div class="app-footer" *ngIf="isDataAvailable"></div> -->
+</div>
+
+<div class="set-12 mobilenav" *ngIf="isDataAvailable && isMobile" [class.menuopen]="open">
+  <div class="set-12 topnav">
+    <div class="set-6">
+      <button type="button" (click)="utilityService.linkMe('/'); open = !open">Menú</button>
+    </div>
+    <div class="set-6 txt-right" (click)="open = !open">
+      <button type="button">
+        <mat-icon color="accent">close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="set-12 innernav" *ngIf="user == null">
+    <div class="set-12">
+      <button type="button" (click)="utilityService.linkMe('/'); open = !open">Inicio</button>
+    </div>
+    <div class="set-12">
+      <button type="button" (click)="utilityService.linkMe('/hub/ingresar'); open = !open">Ingresar</button>
+    </div>
+    <div class="set-12">
+      <button type="button" (click)="utilityService.linkMe('/hub/registro'); open = !open">Registro</button>
+    </div>
+  </div>
+
+  <div class="set-12 avatarhldr" *ngIf="user != null">
+    <button class="avatar">
+      <img src="{{ user.avatarImage }}" alt="{{ user.firstname }}" *ngIf="user.avatarImage != null" />
+      <span *ngIf="user.avatarImage == null">
+        {{ user.firstname | firstword | firstletter }}{{ user.lastname | firstword | firstletter }}
+      </span>
+    </button>
+    <div class="usrname">{{user.firstname}} {{user.lastname}}</div>
+  </div>
 </div>

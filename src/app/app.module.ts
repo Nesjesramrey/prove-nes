@@ -19,6 +19,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MinimaLight } from '@alyle/ui/themes/minima';
 import { ComponentsModule } from './components/components.module';
 import { AppSharedModule } from './app-shared.module';
+import { AppMaterialModule } from './app-material.module';
 
 import { AuthenticationService } from './services/authentication.service';
 import { EndPointService } from './services/endpoint.service';
@@ -40,26 +41,26 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { NgChartsModule } from 'ng2-charts';
 
 // dev
-// const firebaseConfig = {
-//   apiKey: 'AIzaSyCPslMhtXbG3Yt5zbjrrFgEWQdkNI90eTs',
-//   authDomain: 'pando-e0a16.firebaseapp.com',
-//   projectId: 'pando-e0a16',
-//   storageBucket: 'pando-e0a16.appspot.com',
-//   messagingSenderId: '77420216693',
-//   appId: '1:77420216693:web:af914a0056ca44b6b5133c',
-//   measurementId: 'G-52TGZKKXKS',
-// };
+const firebaseConfig = {
+  apiKey: 'AIzaSyCPslMhtXbG3Yt5zbjrrFgEWQdkNI90eTs',
+  authDomain: 'pando-e0a16.firebaseapp.com',
+  projectId: 'pando-e0a16',
+  storageBucket: 'pando-e0a16.appspot.com',
+  messagingSenderId: '77420216693',
+  appId: '1:77420216693:web:af914a0056ca44b6b5133c',
+  measurementId: 'G-52TGZKKXKS',
+};
 
 // prod
-const firebaseConfig = {
-  apiKey: "AIzaSyDAAsZGlnJEzPl9qPm0XiIP9YL4S--VPaU",
-  authDomain: "mexicolectivo-d8868.firebaseapp.com",
-  projectId: "mexicolectivo-d8868",
-  storageBucket: "mexicolectivo-d8868.appspot.com",
-  messagingSenderId: "762515665430",
-  appId: "1:762515665430:web:5980490e2082d9e48d7b37",
-  measurementId: "G-JCHQ7304T0"
-};
+// const firebaseConfig = {
+//   apiKey: "AIzaSyDAAsZGlnJEzPl9qPm0XiIP9YL4S--VPaU",
+//   authDomain: "mexicolectivo-d8868.firebaseapp.com",
+//   projectId: "mexicolectivo-d8868",
+//   storageBucket: "mexicolectivo-d8868.appspot.com",
+//   messagingSenderId: "762515665430",
+//   appId: "1:762515665430:web:5980490e2082d9e48d7b37",
+//   measurementId: "G-JCHQ7304T0"
+// };
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from 'src/environments/environment';
@@ -82,6 +83,7 @@ const socketConfig: SocketIoConfig = { url: environment.apiSocket, options: {} }
     AngularFireDatabaseModule,
     NgChartsModule,
     SocketIoModule.forRoot(socketConfig),
+    AppMaterialModule
   ],
   providers: [
     { provide: HAMMER_GESTURE_CONFIG, useClass: LyHammerGestureConfig },
