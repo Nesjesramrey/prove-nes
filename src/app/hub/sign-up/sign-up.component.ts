@@ -13,7 +13,7 @@ import { DocumentService } from 'src/app/services/document.service';
 @Component({
   selector: '.sign-up-page',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss']
+  styleUrls: ['./sign-up.component.scss'],
 })
 export class SignUpComponent implements OnInit {
   public signUpFormGroup!: FormGroup;
@@ -31,23 +31,32 @@ export class SignUpComponent implements OnInit {
     public angularFireStore: AngularFirestore,
     public router: Router,
     public documentService: DocumentService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.signUpFormGroup = this.formBuilder.group({
       firstname: ['', [Validators.required, Validators.minLength(2)]],
       lastname: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.pattern(this.utilitySrvc.emailPattern), this.utilitySrvc.emailDomainValidator]],
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(this.utilitySrvc.emailPattern),
+          this.utilitySrvc.emailDomainValidator,
+        ],
+      ],
       password: ['', [Validators.required, Validators.minLength(9)]],
       phone: ['', [Validators.minLength(10), Validators.maxLength(10)]],
       zipcode: ['', [Validators.minLength(5), Validators.maxLength(5)]],
       terms: [true, [Validators.required]],
-      privacy: [true, [Validators.required]]
+      privacy: [true, [Validators.required]],
     });
 
     this.documentService.fetchCoverDocument().subscribe({
-      error: (error: any) => { },
-      next: (reply: any) => { this.document = reply; }
+      error: (error: any) => {},
+      next: (reply: any) => {
+        this.document = reply;
+      },
     });
   }
 
@@ -57,7 +66,8 @@ export class SignUpComponent implements OnInit {
     let email: any = formGroup['value']['email'];
     let password: any = formGroup['value']['password'];
 
-    this.angularFireAuth.createUserWithEmailAndPassword(email, password)
+    this.angularFireAuth
+      .createUserWithEmailAndPassword(email, password)
       .then((reply: any) => {
         this.SetUserData(reply['user']);
         this.SendVerificationMail();
@@ -71,18 +81,26 @@ export class SignUpComponent implements OnInit {
           firstname: formGroup['value']['firstname'],
           lastname: formGroup['value']['lastname'],
           email: formGroup['value']['email'],
-          password: formGroup['value']['password']
-        }
+          password: formGroup['value']['password'],
+        };
 
         this.authenticationSrvc.signup(signUpData).subscribe((reply: any) => {
           // console.log(reply);
           localStorage.setItem('accessToken', this.user['accessToken']);
-          // this.router.navigateByUrl('/', { state: { status: 'logout' } });
-          this.router.navigateByUrl('/documentos-publicos/' + this.document['_id'], { state: { status: 'logout' } });
+          this.router.navigateByUrl('/', { state: { status: 'logout' } });
+          // this.router.navigateByUrl(
+          //   '/documentos-publicos/' + this.document['_id'],
+          //   { state: { status: 'logout' } }
+          // );
         });
+        this.utilitySrvc.openSuccessSnackBar(
+          'El registro fue exitosospider-chart'
+        );
       })
       .catch((error: any) => {
-        this.submitted = false;
+        this.utilitySrvc.openErrorSnackBar(
+          'Este correo ya fue registrado, intentalo de nuevo'
+        );
       });
   }
 

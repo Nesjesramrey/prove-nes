@@ -1,4 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  ViewChild,
+  AfterViewInit,
+  Component,
+  Input,
+  OnInit,
+  ElementRef,
+} from '@angular/core';
 import {
   ChartConfiguration,
   ChartData,
@@ -7,13 +14,34 @@ import {
   Scale,
   ScaleChartOptions,
 } from 'chart.js';
-
 @Component({
   selector: 'spider-chart',
   templateUrl: './spider-chart.component.html',
   styleUrls: ['./spider-chart.component.scss'],
 })
 export class SpiderChartComponent implements OnInit {
+  @ViewChild('canvas') canvas: any;
+  mychart: any;
+  ngAfterContentInit() {
+    var ctx = <HTMLCanvasElement>document.querySelector('#canvas');
+
+    var context = ctx.getContext('2d')!;
+    var gradientColor = context.createLinearGradient(0, 0, 0, 200);
+
+    gradientColor.addColorStop(0, 'green');
+    gradientColor.addColorStop(1, 'red');
+    gradientColor.addColorStop(1, 'pink');
+    gradientColor.addColorStop(1, 'orange');
+
+    // this.canvas = [
+    //   {
+    //     backgroundColor: gradientColor,
+    //     borderColor: 'black',
+    //   },
+    // ];
+    return gradientColor;
+  }
+
   public spiderChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     plugins: {
@@ -31,7 +59,7 @@ export class SpiderChartComponent implements OnInit {
         borderWidth: 1,
         fill: true,
         pointRadius: 0,
-        backgroundColor: '#71f5ad ',
+        backgroundColor: '#71F5AD',
       },
     },
     scales: {
@@ -69,18 +97,13 @@ export class SpiderChartComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.loadChart()
+    this.loadChart();
   }
 
   loadChart() {
     if (this.data.length === 0) {
       this.spiderData = {
-        labels: [
-          'data',
-          'data',
-          'data',
-          'data',
-        ],
+        labels: ['data', 'data', 'data', 'data'],
         datasets: [{ data: [96, 65, 81, 26] }],
       };
       return;

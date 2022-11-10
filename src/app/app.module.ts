@@ -64,7 +64,10 @@ const firebaseConfig = {
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from 'src/environments/environment';
-const socketConfig: SocketIoConfig = { url: environment.apiSocket, options: {} };
+const socketConfig: SocketIoConfig = {
+  url: environment.apiSocket,
+  options: {},
+};
 
 @NgModule({
   declarations: [AppComponent],
@@ -103,4 +106,4 @@ const socketConfig: SocketIoConfig = { url: environment.apiSocket, options: {} }
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
