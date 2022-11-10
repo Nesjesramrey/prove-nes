@@ -101,6 +101,7 @@ export class SignUpComponent implements OnInit {
         this.utilitySrvc.openErrorSnackBar(
           'Este correo ya fue registrado, intentalo de nuevo'
         );
+        this.submitted = false;
       });
   }
 
