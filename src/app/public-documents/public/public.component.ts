@@ -22,6 +22,7 @@ export class PublicComponent implements OnInit {
   public coverage: any[] = [];
   public coverageSelected: any = null;
   public layouts: any[] = [];
+  public collaborators: any[] = [];
   @ViewChild('dataViewport') public dataViewport!: ElementRef;
   public allDocumentSolutions: any[] = [];
 
@@ -47,7 +48,9 @@ export class PublicComponent implements OnInit {
         this.document = reply;
         this.coverage = this.document['coverage'];
         this.layouts = this.document['layouts'];
+        this.collaborators = this.document['collaborators'];
 
+        console.log(this.document);
         if (this.coverageSelected == null) {
           this.coverageSelected = this.coverage[0]['_id'];
         }

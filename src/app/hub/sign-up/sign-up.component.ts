@@ -65,7 +65,7 @@ export class SignUpComponent implements OnInit {
 
     let email: any = formGroup['value']['email'];
     let password: any = formGroup['value']['password'];
-
+    console.log({ state: { status: 'logout' } });
     this.angularFireAuth
       .createUserWithEmailAndPassword(email, password)
       .then((reply: any) => {
@@ -87,11 +87,12 @@ export class SignUpComponent implements OnInit {
         this.authenticationSrvc.signup(signUpData).subscribe((reply: any) => {
           // console.log(reply);
           localStorage.setItem('accessToken', this.user['accessToken']);
-          this.router.navigateByUrl('/', { state: { status: 'logout' } });
-          // this.router.navigateByUrl(
-          //   '/documentos-publicos/' + this.document['_id'],
-          //   { state: { status: 'logout' } }
-          // );
+          // this.router.navigateByUrl('/', { state: { status: 'logout' } });
+
+          this.router.navigateByUrl(
+            '/documentos-publicos/' + this.document['_id'],
+            { state: { status: 'logout' } }
+          );
         });
         this.utilitySrvc.openSuccessSnackBar(
           'El registro fue exitosospider-chart'
