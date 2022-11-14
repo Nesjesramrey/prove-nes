@@ -13,6 +13,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UtilityService } from 'src/app/services/utility.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 const STYLES = (_theme: ThemeVariables, ref: ThemeRef) => {
   ref.renderStyleSheet(SLIDER_STYLES);
@@ -64,6 +65,7 @@ export class SetAvatarDialogComponent implements OnInit, WithStyles, AfterViewIn
   public user: any = null;
   public uploadFormGroup!: FormGroup;
   public submitted: boolean = false;
+  public isMobile: boolean = false;
 
   constructor(
     public dialogRef: LyDialogRef,
@@ -72,8 +74,11 @@ export class SetAvatarDialogComponent implements OnInit, WithStyles, AfterViewIn
     public authenticationSrvc: AuthenticationService,
     public userSrvc: UserService,
     public formBuilder: FormBuilder,
-    public utilityService: UtilityService
-  ) { }
+    public utilityService: UtilityService,
+    public deviceDetectorService: DeviceDetectorService
+  ) {
+    this.isMobile = this.deviceDetectorService.isMobile();
+  }
 
   ngOnInit(): void {
     this.userSrvc.fetchFireUser().subscribe({
@@ -130,5 +135,11 @@ export class SetAvatarDialogComponent implements OnInit, WithStyles, AfterViewIn
       this.submitted = false;
       this.dialogRef.close(reply);
     });
+  }
+
+  sendAvatarImage() {
+    this.cropper.crop();
+    let file = this.utilityService.dataURIToBlob(this.uploadFormGroup['controls']['file']['value']);
+    this.dialogRef.close({ file: file });
   }
 }

@@ -80,5 +80,20 @@
     .set-6 {
       width: 100%;
     }
+
+    .listhldr {
+      .listitem {
+        display: block;
+
+        .set-8,
+        .set-4 {
+          width: 100%;
+        }
+
+        .set-8 {
+          margin-bottom: 10px;
+        }
+      }
+    }
   }
 }
