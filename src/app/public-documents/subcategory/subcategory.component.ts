@@ -12,6 +12,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 import { CustomMatDataSource } from '../custom-class/custom-table.component';
 import { MatSort } from '@angular/material/sort';
+import { AddDocumentThemeComponent } from 'src/app/components/add-document-theme/add-document-theme.component';
 
 @Component({
   selector: '.subcategory-page',
@@ -92,7 +93,7 @@ export class SubcategoryComponent implements OnInit {
         }
       });
 
-      this.TopicDataSource = new CustomMatDataSource(this.topicsDataSource);
+      this.TopicDataSource = new CustomMatDataSource(this.panelTopicsData);
       this.SolutionDataSource = new CustomMatDataSource(this.solutionsDataSource);
 
       setTimeout(() => {
@@ -153,6 +154,7 @@ export class SubcategoryComponent implements OnInit {
       if (x['coverage'].includes(this.coverageSelected)) { this.panelTopicsData.push(x); }
     });
     this.panelDataUpdated.next(this.panelTopicsData);
+    this.TopicDataSource = new CustomMatDataSource(this.panelTopicsData);
 
     const dataSolution: any = [];
     this.subcategory.topics.map((item: any) => [...item.solutions]).forEach((_: any, index: number) => {
@@ -165,6 +167,38 @@ export class SubcategoryComponent implements OnInit {
       }
     });
     this.SolutionDataSource = new CustomMatDataSource(this.solutionsDataSource);
+  }
+
+  popAddDocumentTheme() {
+    let coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.coverageSelected });
+    if (coverage.length == 0) {
+      this.utilityService.openErrorSnackBar('Selecciona una cobertura.');
+      return;
+    }
+
+    const dialogRef = this.dialog.open<AddDocumentThemeComponent>(AddDocumentThemeComponent, {
+      width: '640px',
+      data: {
+        documentID: this.documentID,
+        document: this.document,
+        categoryID: this.subcategoryID,
+        coverage: coverage[0]
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        console.log(reply);
+        if (reply.hasOwnProperty('topic')) {
+          reply['topic']['solutions'] = reply['solutions'];
+          // this.topics.push(reply['topic']);
+        } else {
+          this.panelTopicsData.push(reply);
+        }
+        this.TopicDataSource = new CustomMatDataSource(this.panelTopicsData);
+      }
+    });
   }
 }
 
