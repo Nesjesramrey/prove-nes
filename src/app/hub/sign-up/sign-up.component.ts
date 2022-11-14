@@ -65,13 +65,20 @@ export class SignUpComponent implements OnInit {
         // console.log('user: ', this.user);
         // console.log(this.user['accessToken']);
 
-        let signUpData: any = {
-          firebaseUID: this.user['uid'],
-          firstname: formGroup['value']['firstname'],
-          lastname: formGroup['value']['lastname'],
-          email: formGroup['value']['email'],
-          password: formGroup['value']['password']
-        }
+        let signUpData = new FormData();
+        signUpData.append('firebaseUID', this.user['uid']);
+        signUpData.append('firstname', formGroup['value']['firstname']);
+        signUpData.append('lastname', formGroup['value']['lastname']);
+        signUpData.append('email', formGroup['value']['email']);
+        signUpData.append('password', formGroup['value']['password']);
+
+        // let signUpData: any = {
+        //   firebaseUID: this.user['uid'],
+        //   firstname: formGroup['value']['firstname'],
+        //   lastname: formGroup['value']['lastname'],
+        //   email: formGroup['value']['email'],
+        //   password: formGroup['value']['password']
+        // }
 
         this.authenticationSrvc.signup(signUpData).subscribe((reply: any) => {
           localStorage.setItem('accessToken', this.user['accessToken']);

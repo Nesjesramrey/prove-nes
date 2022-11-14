@@ -17,11 +17,11 @@
     <button *ngIf="permission == true && isPublic == -1" type="button" (click)="redirectEdition()">
       Ver público
     </button>
-    <button type="button">
+
+    <!-- <button type="button">
       Pensamiento colectivo
     </button>
-
-    <span class="sep">|</span>
+    <span class="sep">|</span> -->
 
     <!-- user not available -->
     <button type="button" (click)="linkMe('join')" *ngIf="user == null" matTooltip="Registro" matTooltipClass="tooltip">
@@ -51,7 +51,7 @@
       <mat-icon>power_settings_new</mat-icon>
     </button>
     <button type="button" class="btn-ico" [matMenuTriggerFor]="menu" *ngIf="user != null">
-      <mat-icon>more_vert</mat-icon>
+      <mat-icon>menu</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="resetPassword(user.email)">

@@ -3,7 +3,7 @@
 </div>
 
 <!-- mobile -->
-<div class="set-12 page" *ngIf="isDataAvailable && isMobile">
+<div class="set-12 page" *ngIf="isDataAvailable" [class.fixdesk]="!isMobile">
   <div class="set-12 mb-page">
     <div class="set-12">
       <form [formGroup]="searchFormGroup" (submit)="onSearch(searchFormGroup)">
@@ -55,7 +55,7 @@
   </div>
 
   <div class="set-12 mb-page">
-    video
+    <video src=""></video>
   </div>
 
   <div class="set-12 mb-page">
@@ -126,7 +126,7 @@
     </p>
   </div>
 
-  <div class="set-12 mb-page">
+  <div class="set-12 mb-page" *ngIf="isMobile">
     <img src="../../assets/images/andrea-leopardi-N17c03GJGKc-unsplash.png" alt="">
   </div>
 
@@ -136,8 +136,10 @@
     </div>
     <div class="set-10">
       <strong>
-        <span>Participa en nuestra plataforma, entra al Pensamiento Colectivo <a href="">Aquí</a></span>
+        <span>Participa en nuestra plataforma, entra al Pensamiento Colectivo</span>
       </strong>
+      <button type="button" mat-raised-button color="accent"
+        (click)="linkMe('/documentos-publicos/' + document._id)">Aquí</button>
     </div>
   </mat-card>
 
@@ -156,7 +158,7 @@
 </div>
 
 <!-- desktop -->
-<div class="set-12 page" *ngIf="isDataAvailable && !isMobile">
+<!-- <div class="set-12 page" *ngIf="isDataAvailable && !isMobile">
   <div class="set-12 ds-page"></div>
 
   <div class="set-12 ds-page">
@@ -227,4 +229,4 @@
   <div class="set-12 ds-page">
     <div class="app-footer"></div>
   </div>
-</div>
+</div> -->

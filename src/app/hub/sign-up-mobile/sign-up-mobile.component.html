@@ -1,1 +1,202 @@
-<p>sign-up-mobile works!</p>
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="set-12" *ngIf="isDataAvailable">
+  <h1>¡Hola!</h1>
+  <h3>Necesitas una cuenta para ingresar.</h3>
+  <input #fileInput type="file" (change)="openCropperDialog($event)" accept="image/*" hidden />
+
+  <form class="set-12" [formGroup]="signupFormGroup" (submit)="onRegister(signupFormGroup)">
+    <div class="set-12 avatarhldr">
+      <button type="button" class="avatar" (click)="fileInput.click()">
+        <mat-icon>add_a_photo</mat-icon>
+      </button>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre(s)</mat-label>
+      <input type="text" matInput formControlName="firstname">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Apellido(s)</mat-label>
+      <input type="text" matInput formControlName="lastname">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Alias</mat-label>
+      <input type="text" matInput formControlName="alias">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Correo electrónico</mat-label>
+      <input type="text" matInput formControlName="email">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Contraseña</mat-label>
+      <input type="password" matInput formControlName="password">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Teléfono</mat-label>
+      <input type="text" matInput formControlName="phone">
+    </mat-form-field>
+
+    <div class="set-12 formsep">
+      <h3>Datos de la asociación</h3>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Tipo</mat-label>
+      <mat-select formControlName="associationTypology">
+        <mat-option *ngFor="let option of associationTypologyArray" [value]="option._id">
+          <small>{{option.name}}</small>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input type="text" matInput formControlName="associationName">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Descripción</mat-label>
+      <textarea matInput cdkTextareaAutosize formControlName="associationDescription"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Intereses</mat-label>
+      <mat-chip-list #chipList>
+        <mat-chip *ngFor="let fruit of fruits" (removed)="remove(fruit)">
+          {{fruit.name}}
+          <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+        <input placeholder="..." [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+      </mat-chip-list>
+    </mat-form-field>
+
+    <div class="set-12 note">
+      <small>
+        <i>Presiona <strong class="footnote">ENTER</strong> después de escribir uno de tus intereses.</i>
+      </small>
+    </div>
+
+    <div class="set-12 ctrls">
+      <button type="submit" mat-raised-button color="primary" [disabled]="signupFormGroup.invalid || submitted">
+        <small>Registrarme</small>
+      </button>
+      <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
+    </div>
+  </form>
+</div>
+
+<!-- <div class="set-12" *ngIf="isDataAvailable">
+  <mat-stepper #stepper [disableRipple]="true" [linear]="true" [@.disabled]="true">
+    <mat-step>
+      <form class="set-12" [formGroup]="stepOneFormGroup">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre(s)</mat-label>
+          <input type="text" matInput formControlName="firstname">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Apellido(s)</mat-label>
+          <input type="text" matInput formControlName="lastname">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Correo electrónico</mat-label>
+          <input type="text" matInput formControlName="email">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <input type="password" matInput formControlName="password">
+        </mat-form-field>
+
+        <div class="set-12 ctrls">
+          <button mat-raised-button color="warn" matStepperNext>
+            <small>Siguiente</small>
+          </button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step>
+      <div class="set-12">
+        <p>
+          <small>Organiza las categorías por interés</small>
+        </p>
+      </div>
+
+      <div cdkDropList class="set-12 drag-list" (cdkDropListDropped)="drop($event)">
+        <div class="set-12 drag-box" *ngFor="let layout of layouts" cdkDrag (click)="onLayoutSelected(layout)">
+          <strong>{{layout.category.name}}</strong>
+        </div>
+      </div>
+
+      <div class="set-12 ctrls">
+        <button mat-raised-button color="warn" matStepperPrevious>
+          <small>Atras</small>
+        </button>
+        <button mat-raised-button color="warn" matStepperNext>
+          <small>Siguiente</small>
+        </button>
+      </div>
+    </mat-step>
+
+    <mat-step>
+      <div class="set-12">
+        <p>
+          <small>¿Qué te hace feliz?</small>
+        </p>
+      </div>
+
+      <form class="set-12 searchhldr">
+        <mat-form-field appearance="outline">
+          <mat-label>Búscar contenidos...</mat-label>
+          <input type="text" matInput>
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </form>
+
+      <div class="set-12 ctrls">
+        <button mat-raised-button color="warn" matStepperPrevious>
+          <small>Atras</small>
+        </button>
+        <button mat-raised-button color="warn" matStepperNext>
+          <small>Siguiente</small>
+        </button>
+      </div>
+    </mat-step>
+
+    <mat-step>
+      <div class="set-12">
+        <p>
+          <small>¿Qué te entristece?</small>
+        </p>
+      </div>
+
+      <form class="set-12 searchhldr">
+        <mat-form-field appearance="outline">
+          <mat-label>Búscar contenidos...</mat-label>
+          <input type="text" matInput>
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </form>
+
+      <div class="set-12 ctrls">
+        <button mat-raised-button color="warn" matStepperPrevious>
+          <small>Atras</small>
+        </button>
+        <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</div> -->
