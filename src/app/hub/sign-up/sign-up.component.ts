@@ -9,6 +9,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { DocumentService } from 'src/app/services/document.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: '.sign-up-page',
@@ -30,7 +31,8 @@ export class SignUpComponent implements OnInit {
     public angularFireAuth: AngularFireAuth,
     public angularFireStore: AngularFirestore,
     public router: Router,
-    public documentService: DocumentService
+    public documentService: DocumentService,
+    public UserService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -87,16 +89,31 @@ export class SignUpComponent implements OnInit {
         this.authenticationSrvc.signup(signUpData).subscribe((reply: any) => {
           // console.log(reply);
           localStorage.setItem('accessToken', this.user['accessToken']);
-          // this.router.navigateByUrl('/', { state: { status: 'logout' } });
 
-          this.router.navigateByUrl(
-            '/documentos-publicos/' + this.document['_id'],
-            { state: { status: 'logout' } }
-          );
+          this.angularFireAuth
+            .signInWithEmailAndPassword(
+              signUpData['email'],
+              signUpData['password']
+            )
+            .then((reply: any) => {
+              // console.log('reply: ', reply);
+              this.angularFireAuth.authState.subscribe((data: any) => {
+                // console.log('user: ', data['multiFactor']['user']);
+                this.submitted = false;
+                localStorage.setItem(
+                  'accessToken',
+                  data['multiFactor']['user']['accessToken']
+                );
+
+                this.router.navigate(
+                  ['/documentos-publicos/' + this.document['_id']],
+                  { state: { status: 'logout' } }
+                );
+                this.UserService.onLogin.next(signUpData);
+              });
+            });
         });
-        this.utilitySrvc.openSuccessSnackBar(
-          'El registro fue exitosospider-chart'
-        );
+        this.utilitySrvc.openSuccessSnackBar('El registro fue exitoso');
       })
       .catch((error: any) => {
         this.utilitySrvc.openErrorSnackBar(

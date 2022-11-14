@@ -23,6 +23,7 @@ import { UserNotificationsComponent } from './user-notifications/user-notificati
 import { AppConfigurationComponent } from './app-configuration/app-configuration.component';
 import { MapBoxComponent } from './components/map-box/map-box.component';
 import { NgChartsModule } from 'ng2-charts';
+import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
 
 @NgModule({
   imports: [
@@ -50,6 +51,7 @@ import { NgChartsModule } from 'ng2-charts';
     SingleUserComponent,
     UserNotificationsComponent,
     AppConfigurationComponent,
+    PasswordRecoveryComponent,
   ],
 })
 export class HubComponentModule {}

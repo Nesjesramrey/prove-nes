@@ -5,25 +5,43 @@
   <form [formGroup]="signInFormGroup" (submit)="onSignIn(signInFormGroup)">
     <mat-form-field appearance="outline">
       <mat-label>Correo electrónico</mat-label>
-      <input matInput type="text" formControlName="email">
+      <input matInput type="text" formControlName="email" />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Contraseña</mat-label>
-      <input matInput type="password" formControlName="password" [type]="hide ? 'password' : 'text'">
+      <input
+        matInput
+        type="password"
+        formControlName="password"
+        [type]="hide ? 'password' : 'text'"
+      />
       <button type="button" matSuffix (click)="hide = !hide">
         <mat-icon color="primary">
-          {{ hide ? 'visibility_off' : 'visibility' }}
+          {{ hide ? "visibility_off" : "visibility" }}
         </mat-icon>
       </button>
     </mat-form-field>
 
     <div class="set-12 form-ctrls">
       <div class="set-6">
-        <small>¿No tienes cuenta? <a href="#" routerLink="/hub/registro">Registro</a></small>
+        <small
+          >¿No tienes cuenta?
+          <a href="#" routerLink="/hub/registro">Registro</a></small
+        >
+        <small
+          >¿Olvidaste tu contraseñ?
+          <a href="#" routerLink="/hub/olvide-contrasena">Obtenla</a></small
+        >
       </div>
+      <br />
       <div class="set-6 txt-right">
-        <button type="submit" mat-raised-button color="primary" [disabled]="signInFormGroup.invalid || submitted">
+        <button
+          type="submit"
+          mat-raised-button
+          color="primary"
+          [disabled]="signInFormGroup.invalid || submitted"
+        >
           <small>Ingresar</small>
         </button>
       </div>

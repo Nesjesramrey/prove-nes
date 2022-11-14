@@ -1,3 +1,4 @@
+import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CanActivateAuthenticatedGuard } from '../guards/authenticated.guard';
@@ -11,20 +12,42 @@ import { UserNotificationsComponent } from './user-notifications/user-notificati
 
 const routes: Routes = [
   {
-    path: '', children: [
+    path: '',
+    children: [
       { path: '', redirectTo: '/404', pathMatch: 'full' },
       { path: '', component: HubComponent },
-      { path: 'registro', component: SignUpComponent, canActivate: [CanActivateAuthenticatedGuard] },
-      { path: 'ingresar', component: SignInComponent, canActivate: [CanActivateAuthenticatedGuard] },
-      { path: 'notificaciones', component: UserNotificationsComponent, canActivate: [CanActivateLoggedInGuard] },
-      { path: 'configuracion', component: AppConfigurationComponent, canActivate: [CanActivateLoggedInGuard] },
-      { path: ':userID', component: SingleUserComponent, canActivate: [] }
-    ]
-  }
+      {
+        path: 'olvide-contrasena',
+        component: PasswordRecoveryComponent,
+        canActivate: [CanActivateAuthenticatedGuard],
+      },
+      {
+        path: 'registro',
+        component: SignUpComponent,
+        canActivate: [CanActivateAuthenticatedGuard],
+      },
+      {
+        path: 'ingresar',
+        component: SignInComponent,
+        canActivate: [CanActivateAuthenticatedGuard],
+      },
+      {
+        path: 'notificaciones',
+        component: UserNotificationsComponent,
+        canActivate: [CanActivateLoggedInGuard],
+      },
+      {
+        path: 'configuracion',
+        component: AppConfigurationComponent,
+        canActivate: [CanActivateLoggedInGuard],
+      },
+      { path: ':userID', component: SingleUserComponent, canActivate: [] },
+    ],
+  },
 ];
 
 @NgModule({
   exports: [RouterModule],
-  imports: [RouterModule.forChild(routes)]
+  imports: [RouterModule.forChild(routes)],
 })
-export class HubComponentRoutingModule { }
+export class HubComponentRoutingModule {}
