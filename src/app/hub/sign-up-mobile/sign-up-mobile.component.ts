@@ -34,7 +34,10 @@ export class SignUpMobileComponent implements OnInit {
   public stepThreeFormGroup!: FormGroup;
   public document: any = null;
   public layouts: any = null;
+  public sublayouts: any = null;
   @ViewChild('stepper') public stepper!: MatStepper;
+  public viewSubLayouts: boolean = false;
+  public bagOfWords: any = ['Educación', 'Cultura', 'Política', 'Empleo', 'Arte', 'Delincuencia', 'Violencia', 'Salud'];
 
   constructor(
     public formBuilder: FormBuilder,
@@ -86,16 +89,28 @@ export class SignUpMobileComponent implements OnInit {
       next: (reply: any) => {
         this.document = reply;
         this.layouts = this.document['layouts'];
+        this.sublayouts = this.layouts[0]['subLayouts'];
       },
       complete: () => { }
     });
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  dragAndDropLayout(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.layouts, event.previousIndex, event.currentIndex);
   }
 
-  onLayoutSelected(layout: any) { }
+  dragAndDropSubLayout(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.sublayouts, event.previousIndex, event.currentIndex);
+  }
+
+  onLayoutSelected(layout: any) {
+    this.viewSubLayouts = true;
+    this.sublayouts = layout['subLayouts'];
+  }
+
+  hideSubLayouts() {
+    this.viewSubLayouts = false;
+  }
 
   openCropperDialog(event: Event) {
     const dialogRef = this.dialog.open<SetAvatarDialogComponent, Event>(SetAvatarDialogComponent, {
