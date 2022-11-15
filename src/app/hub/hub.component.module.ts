@@ -6,6 +6,7 @@ import { AppMaterialModule } from '../app-material.module';
 import { ComponentsModule } from '../components/components.module';
 import { HubComponentsModule } from './components/hub.components.module';
 import { AppSharedModule } from '../app-shared.module';
+import { NgChartsModule } from 'ng2-charts';
 
 import { LyCarouselModule } from '@alyle/ui/carousel';
 import { LyTypographyModule } from '@alyle/ui/typography';
@@ -22,8 +23,9 @@ import { SingleUserComponent } from './single-user/single-user.component';
 import { UserNotificationsComponent } from './user-notifications/user-notifications.component';
 import { AppConfigurationComponent } from './app-configuration/app-configuration.component';
 import { MapBoxComponent } from './components/map-box/map-box.component';
-import { NgChartsModule } from 'ng2-charts';
 import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
+import { SignInMobileComponent } from './sign-in-mobile/sign-in-mobile.component';
+import { SignUpMobileComponent } from './sign-up-mobile/sign-up-mobile.component';
 
 @NgModule({
   imports: [
@@ -42,7 +44,7 @@ import { PasswordRecoveryComponent } from './password-recovery/password-recovery
     LyCheckboxModule,
     LyDialogModule,
     IvyCarouselModule,
-    NgChartsModule
+    NgChartsModule,
   ],
   declarations: [
     HubComponent,
@@ -52,6 +54,8 @@ import { PasswordRecoveryComponent } from './password-recovery/password-recovery
     UserNotificationsComponent,
     AppConfigurationComponent,
     PasswordRecoveryComponent,
+    SignInMobileComponent,
+    SignUpMobileComponent,
   ],
 })
 export class HubComponentModule {}

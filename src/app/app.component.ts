@@ -11,6 +11,8 @@ import { SocketService } from './services/socket.service';
 import { filter, Observable } from 'rxjs';
 import { DocumentService } from './services/document.service';
 import { response } from 'express';
+import { DeviceDetectorService } from 'ngx-device-detector';
+import { trigger, transition, animate, style } from '@angular/animations';
 
 const STYLES = (theme: ThemeVariables, ref: ThemeRef) => {
   const __ = ref.selectorsOf(STYLES);
@@ -46,6 +48,8 @@ export class AppComponent implements OnInit {
   public socketID: any = null;
   public path: any = null;
   public coverDocument: any = null;
+  public isMobile: boolean = false;
+  public open: boolean = false;
 
   constructor(
     readonly sRenderer: StyleRenderer,
@@ -55,17 +59,16 @@ export class AppComponent implements OnInit {
     public utilityService: UtilityService,
     public dialog: MatDialog,
     public socketService: SocketService,
-    public documentService: DocumentService
+    public documentService: DocumentService,
+    public deviceDetectorService: DeviceDetectorService
   ) {
     this.accessToken = this.authenticationSrvc.fetchAccessToken;
-    // console.log('accessToken: ', this.accessToken);
-
     this.router.events.subscribe((val) => {
       if (val instanceof ResolveStart) {
-        // console.log('ResolveStart: ', val.url);
         this.path = val.url;
       }
     });
+    this.isMobile = this.deviceDetectorService.isMobile();
   }
 
   ngOnInit(): void {
@@ -90,12 +93,7 @@ export class AppComponent implements OnInit {
     if (this.accessToken != null) {
       this.userService.fetchFireUser().subscribe({
         error: (error) => {
-          // console.log(error);
           switch (error['status']) {
-            case 401:
-              // this.utilityService.openErrorSnackBar('Tu token de acceso ha caducado, intenta ingresar otra vez.');
-              // localStorage.removeItem('accessToken');
-              break;
           }
           setTimeout(() => {
             this.isDataAvailable = true;
@@ -108,19 +106,6 @@ export class AppComponent implements OnInit {
           if (!this.user['isFullRegister']) {
             this.openCompleteRegistration();
           }
-
-          // setTimeout(() => {
-          //   this.socketService.socketSubject.subscribe((reply: any) => {
-          //     this.socketID = reply;
-          //     if (reply != null) {
-          //       this.socketService.updateSocketID({
-          //         user_id: this.user['_id'],
-          //         socketUID: this.socketID
-          //       }).subscribe((reply: any) => { });
-          //     }
-          //   });
-          //   this.isDataAvailable = true;
-          // });
         },
         complete: () => {},
       });
@@ -144,5 +129,9 @@ export class AppComponent implements OnInit {
       if (reply != undefined) {
       }
     });
+  }
+
+  getMenuStatus(data: any) {
+    this.open = data['open'];
   }
 }

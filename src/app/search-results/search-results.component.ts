@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { SearchService } from '../services/search.service';
 import { UtilityService } from '../services/utility.service';
 
@@ -10,16 +11,19 @@ import { UtilityService } from '../services/utility.service';
 export class SearchResultsComponent implements OnInit {
   public isDataAvailable: boolean = false;
   public searchResults: any = null;
+  public isMobile: boolean = false;
 
   constructor(
     public searchService: SearchService,
-    public utilityService: UtilityService
-  ) { }
+    public utilityService: UtilityService,
+    public deviceDetectorService: DeviceDetectorService
+  ) {
+    this.isMobile = this.deviceDetectorService.isMobile();
+  }
 
   ngOnInit(): void {
     this.searchService.searchSubject.subscribe((reply: any) => {
       this.searchResults = reply;
-      // console.log('searchResults: ', this.searchResults);
       if (this.searchResults == null) {
         this.utilityService.linkMe('/404');
         return;
@@ -43,7 +47,6 @@ export class SearchResultsComponent implements OnInit {
             break;
         }
       });
-      // console.log('searchResults: ', this.searchResults);
     });
 
     setTimeout(() => {

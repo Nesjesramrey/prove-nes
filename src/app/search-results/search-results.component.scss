@@ -1,8 +1,12 @@
 :host {
   width: 100%;
-  margin-top: 80px;
-  margin-bottom: 100px;
   float: left;
+
+  .innerhldr {
+    float: left;
+    margin-top: 160px;
+    margin-bottom: 100px;
+  }
 
   mat-spinner {
     position: absolute !important;
@@ -66,5 +70,30 @@
 
   .desc {
     font-size: 10pt;
+  }
+
+  .fixmob {
+    width: 100% !important;
+    padding: 20px;
+    margin: 0 !important;
+
+    .set-6 {
+      width: 100%;
+    }
+
+    .listhldr {
+      .listitem {
+        display: block;
+
+        .set-8,
+        .set-4 {
+          width: 100%;
+        }
+
+        .set-8 {
+          margin-bottom: 10px;
+        }
+      }
+    }
   }
 }

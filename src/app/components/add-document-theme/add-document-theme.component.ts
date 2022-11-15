@@ -33,7 +33,7 @@ export class AddDocumentThemeComponent implements OnInit {
     public utilityService: UtilityService,
     public solutionService: SolutionService
   ) {
-    console.log(this.dialogData);
+    // console.log(this.dialogData);
   }
 
   ngOnInit(): void {

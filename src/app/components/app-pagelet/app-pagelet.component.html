@@ -1,30 +1,27 @@
-<mat-toolbar *ngIf="isDataAvailable">
+<mat-toolbar *ngIf="isDataAvailable" [class.fixtoolbar]="isMobile">
   <div class="set-6 logo">
-    <div class="set-4">
+    <div class="set-4" [class.set-12]="isMobile">
       <img src="../../../assets/images/mexicolectivo-full-green.png" (click)="linkMe('home')" />
     </div>
-    <div class="set-8 search-hldr">
+    <div class="set-8 search-hldr" *ngIf="!isMobile">
       <form [formGroup]="searchFormGroup" (submit)="onSearch(searchFormGroup)">
         <input type="text" placeholder="Búscar en Mexicolectivo..." class="bar-search" formControlName="search">
       </form>
     </div>
   </div>
 
-  <div class="set-6 navigation">
-    <!-- <button *ngIf="permission == false && isPublic > 0" type="button" (click)="popPermissionsDialog()">
-      Permiso para editar
-    </button> -->
+  <div class="set-6 navigation" *ngIf="!isMobile">
     <button *ngIf="permission == true && isPublic > 0" type="button" (click)="redirectEdition()">
       Ir a edición
     </button>
     <button *ngIf="permission == true && isPublic == -1" type="button" (click)="redirectEdition()">
       Ver público
     </button>
-    <button type="button">
+
+    <!-- <button type="button">
       Pensamiento colectivo
     </button>
-
-    <span class="sep">|</span>
+    <span class="sep">|</span> -->
 
     <!-- user not available -->
     <button type="button" (click)="linkMe('join')" *ngIf="user == null" matTooltip="Registro" matTooltipClass="tooltip">
@@ -54,7 +51,7 @@
       <mat-icon>power_settings_new</mat-icon>
     </button>
     <button type="button" class="btn-ico" [matMenuTriggerFor]="menu" *ngIf="user != null">
-      <mat-icon>more_vert</mat-icon>
+      <mat-icon>menu</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="resetPassword(user.email)">
@@ -66,5 +63,11 @@
         <span>Usuarios</span>
       </button>
     </mat-menu>
+  </div>
+
+  <div class="set-6 navigation" *ngIf="isMobile">
+    <button type="button" (click)="displayMobileMenu()">
+      <mat-icon color="accent">menu</mat-icon>
+    </button>
   </div>
 </mat-toolbar>

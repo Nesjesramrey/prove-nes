@@ -69,7 +69,7 @@ export class GiveEditPermissionComponent implements OnInit {
         }
       },
       complete: () => {
-        console.log(this.permission);
+        // console.log(this.permission);
       }
     });
 

@@ -1,5 +1,11 @@
-import { UserService } from './../../services/user.service';
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -10,6 +16,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ModalPermissionsComponent } from 'src/app/public-documents/components/modal-permissions/modal-permissions.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SearchService } from 'src/app/services/search.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: '.app-pagelet',
@@ -28,6 +36,9 @@ export class AppPageletComponent implements OnInit {
   public permission: any;
   public redirectUrl: string = '';
   public searchFormGroup!: FormGroup;
+  public isMobile: any;
+  @Output() public openMenu = new EventEmitter<any>();
+  @Input() open: boolean = false;
 
   constructor(
     public router: Router,
@@ -40,7 +51,7 @@ export class AppPageletComponent implements OnInit {
     public dialog: MatDialog,
     public formBuilder: FormBuilder,
     public searchService: SearchService,
-    public UserService: UserService
+    public userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -91,7 +102,7 @@ export class AppPageletComponent implements OnInit {
         });
       }
     });
-    this.UserService.onLogin.subscribe((data: any) => {
+    this.userService.onLogin.subscribe((data: any) => {
       console.log('data: ', data);
       this.user = data;
     });
@@ -217,5 +228,10 @@ export class AppPageletComponent implements OnInit {
       },
       complete: () => {},
     });
+  }
+
+  displayMobileMenu() {
+    this.open = !this.open;
+    this.openMenu.emit({ open: this.open });
   }
 }

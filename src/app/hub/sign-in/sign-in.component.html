@@ -1,4 +1,35 @@
-<div class="form-hldr">
+<div class="set-12" *ngIf="isMobile">
+  <div class="set-12 imgdisplay">
+    <div class="set-12 imgoverlay"></div>
+    <div class="set-12 displayform">
+      <button type="button" class="facebooksignin">
+        <img src="../../../assets/images/facebook-white.png" alt="" />
+        <span>Seguir con Facebook</span>
+      </button>
+
+      <button type="button" class="googlesignin">
+        <img src="../../../assets/images/google-icon.png" alt="" />
+        <span>Seguir con Google</span>
+      </button>
+
+      <button type="button" class="applesignin">
+        <img src="../../../assets/images/apple-icon-white.png" alt="" />
+        <span>Seguir con Apple</span>
+      </button>
+
+      <button
+        type="button"
+        class="emailsignin"
+        (click)="utilitySrvc.linkMe('/hub/signin-mobile')"
+      >
+        <span>Entra con tu email</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- desktop -->
+<div class="form-hldr" *ngIf="!isMobile">
   <h1>¡Hola!</h1>
   <h4>Ingresa a tu cuenta.</h4>
 
