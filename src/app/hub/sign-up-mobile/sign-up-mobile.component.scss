@@ -3,8 +3,13 @@
   float: left;
   padding: 20px;
 
+  ::ng-deep .mat-form-field-subscript-wrapper {
+    position: relative !important;
+    font-style: italic;
+  }
+
   .avatarhldr {
-    margin: 20px 0;
+    margin: 40px 0;
   }
 
   .avatar {
@@ -222,5 +227,26 @@
 
   .note {
     padding: 0 20px;
+  }
+
+  .legals {
+    margin-top: 20px;
+
+    p {
+      margin-bottom: 10px;
+    }
+
+    .row {
+      display: flex;
+      margin-bottom: 4px;
+
+      * {
+        margin: 0;
+      }
+
+      a {
+        margin-left: 5px !important;
+      }
+    }
   }
 }
