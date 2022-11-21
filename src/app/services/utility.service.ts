@@ -66,6 +66,10 @@ export class UtilityService {
     }
   }
 
+  capitalizeFirstLetter(string: any) {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  }
+
   fetchAllStates() {
     return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAllStatesEndPoint, {});
   }
