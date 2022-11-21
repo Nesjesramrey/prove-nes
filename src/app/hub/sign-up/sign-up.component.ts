@@ -54,49 +54,43 @@ export class SignUpComponent implements OnInit {
   onSignUp(formGroup: FormGroup) {
     this.submitted = true;
 
-    let email: any = formGroup['value']['email'];
+    let firstname = formGroup['value']['firstname'];
+    let lastname = formGroup['value']['lastname'];
+    firstname = this.utilitySrvc.capitalizeFirstLetter(firstname);
+    lastname = this.utilitySrvc.capitalizeFirstLetter(lastname);
+    let email: any = formGroup['value']['email'].toLowerCase();
     let password: any = formGroup['value']['password'];
 
-    this.angularFireAuth.createUserWithEmailAndPassword(email, password)
-      .then((reply: any) => {
-        this.SetUserData(reply['user']);
-        this.SendVerificationMail();
-        this.user = reply['user']['multiFactor']['user'];
-        // console.log('user: ', this.user);
-        // console.log(this.user['accessToken']);
+    this.angularFireAuth.createUserWithEmailAndPassword(email, password).then((reply: any) => {
+      this.SetUserData(reply['user']);
+      this.SendVerificationMail();
+      this.user = reply['user']['multiFactor']['user'];
 
-        let signUpData = new FormData();
-        signUpData.append('firebaseUID', this.user['uid']);
-        signUpData.append('firstname', formGroup['value']['firstname']);
-        signUpData.append('lastname', formGroup['value']['lastname']);
-        signUpData.append('email', formGroup['value']['email']);
-        signUpData.append('password', formGroup['value']['password']);
+      let signUpData = new FormData();
+      signUpData.append('firebaseUID', this.user['uid']);
+      signUpData.append('firstname', formGroup['value']['firstname']);
+      signUpData.append('lastname', formGroup['value']['lastname']);
+      signUpData.append('email', formGroup['value']['email']);
+      signUpData.append('password', formGroup['value']['password']);
 
-        // let signUpData: any = {
-        //   firebaseUID: this.user['uid'],
-        //   firstname: formGroup['value']['firstname'],
-        //   lastname: formGroup['value']['lastname'],
-        //   email: formGroup['value']['email'],
-        //   password: formGroup['value']['password']
-        // }
-
-        this.authenticationSrvc.signup(signUpData).subscribe((reply: any) => {
-          localStorage.setItem('accessToken', this.user['accessToken']);
-          // this.router.navigateByUrl('/', { state: { status: 'logout' } });
-          this.router.navigateByUrl('/documentos-publicos/' + this.document['_id'], { state: { status: 'logout' } });
-        });
-      })
+      this.authenticationSrvc.signup(signUpData).subscribe((reply: any) => {
+        localStorage.setItem('accessToken', this.user['accessToken']);
+        this.router.navigateByUrl('/documentos-publicos/' + this.document['_id'], { state: { status: 'logout' } });
+      });
+    })
       .catch((error: any) => {
+        switch (error['code']) {
+          case 'auth/email-already-in-use':
+            this.utilitySrvc.openErrorSnackBar('El correo electrónico ya esta en uso.');
+            break;
+        }
         this.submitted = false;
       });
   }
 
   SendVerificationMail() {
-    return this.angularFireAuth.currentUser
-      .then((u: any) => u.sendEmailVerification())
-      .then(() => {
-        // this.utilitySrvc.router.navigateByUrl('/');
-      });
+    return this.angularFireAuth.currentUser.then((u: any) => u.sendEmailVerification())
+      .then(() => { });
   }
 
   SetUserData(user: any) {

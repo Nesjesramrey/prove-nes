@@ -99,26 +99,70 @@
 <div class="set-12" *ngIf="isDataAvailable">
   <mat-stepper #stepper [disableRipple]="true" [linear]="true" [@.disabled]="true">
     <mat-step>
+      <div class="set-12 txt-center">
+        <h1>¡Hola!</h1>
+        <h3>Necesitas una cuenta para ingresar</h3>
+        <input #fileInput type="file" (change)="openCropperDialog($event)" accept="image/*" hidden />
+      </div>
+
+      <div class="set-12 avatarhldr">
+        <button type="button" class="avatar" (click)="fileInput.click()">
+          <mat-icon>add_a_photo</mat-icon>
+        </button>
+      </div>
+
       <form class="set-12" [formGroup]="stepOneFormGroup">
-        <mat-form-field appearance="outline">
-          <mat-label>Nombre(s)</mat-label>
-          <input type="text" matInput formControlName="firstname">
-        </mat-form-field>
+        <div class="set-12">
+          <mat-form-field appearance="outline">
+            <mat-label>Tipo</mat-label>
+            <mat-select formControlName="associationTypology" (selectionChange)="onTypeSelected($event)">
+              <mat-option *ngFor="let item of associationTypologyArray" [value]="item">
+                <small>{{item.name}}</small>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Apellido(s)</mat-label>
-          <input type="text" matInput formControlName="lastname">
-        </mat-form-field>
+        <div class="set-12">
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre(s)</mat-label>
+            <input type="text" matInput formControlName="firstname">
+          </mat-form-field>
+        </div>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Correo electrónico</mat-label>
-          <input type="text" matInput formControlName="email">
-        </mat-form-field>
+        <div class="set-12">
+          <mat-form-field appearance="outline">
+            <mat-label>Apellido(s)</mat-label>
+            <input type="text" matInput formControlName="lastname">
+          </mat-form-field>
+        </div>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Contraseña</mat-label>
-          <input type="password" matInput formControlName="password">
-        </mat-form-field>
+        <div class="set-12">
+          <mat-form-field appearance="outline">
+            <mat-label>Correo electrónico</mat-label>
+            <input type="text" matInput formControlName="email">
+          </mat-form-field>
+        </div>
+
+        <div class="set-12">
+          <mat-form-field appearance="outline">
+            <mat-label>Contraseña</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" autocomplete="off" formControlName="password">
+            <button type="button" matSuffix (click)="hide = !hide">
+              <mat-icon color="primary">
+                {{ hide ? 'visibility_off' : 'visibility' }}
+              </mat-icon>
+            </button>
+            <mat-hint>** Mínimo 9 caracteres</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div class="set-12">
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre de tu organización</mat-label>
+            <input type="text" matInput formControlName="associationName">
+          </mat-form-field>
+        </div>
 
         <div class="set-12 ctrls">
           <button mat-raised-button color="warn" matStepperNext>
@@ -166,27 +210,25 @@
     </mat-step>
 
     <mat-step>
-      <div class="set-12">
-        <p>
-          <small>¿Qué te hace feliz?</small>
-        </p>
-      </div>
-
       <form class="set-12 searchhldr">
         <mat-form-field appearance="outline">
-          <mat-label>Búscar contenidos...</mat-label>
-          <input type="text" matInput>
-          <mat-icon matSuffix>search</mat-icon>
+          <mat-label>¿Qué te hace feliz?</mat-label>
+          <mat-chip-list #happyChipList>
+            <mat-chip *ngFor="let item of happyArray" (removed)="removeHappyItem(item)">
+              {{item}}
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip>
+            <input placeholder="..." [matChipInputFor]="happyChipList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+              (matChipInputTokenEnd)="addHappyItem($event)">
+          </mat-chip-list>
+          <mat-hint>** Presiona <strong>ENTER</strong> después de escribir algo que te haga féliz, ej:
+            <strong>"Comida"</strong>
+          </mat-hint>
         </mat-form-field>
       </form>
-
-      <div class="set-12">
-        <div cdkDropList class="set-12 drag-chiplist">
-          <div class="drag-chip" *ngFor="let word of bagOfWords" cdkDrag>
-            <strong>{{word}}</strong>
-          </div>
-        </div>
-      </div>
 
       <div class="set-12 ctrls">
         <button mat-raised-button color="warn" matStepperPrevious>
@@ -199,23 +241,58 @@
     </mat-step>
 
     <mat-step>
-      <div class="set-12">
-        <p>
-          <small>¿Qué te entristece?</small>
-        </p>
-      </div>
-
-      <form class="set-12 searchhldr">
+      <form class="set-12 searchhldr" [formGroup]="legalsFormGroup">
         <mat-form-field appearance="outline">
-          <mat-label>Búscar contenidos...</mat-label>
-          <input type="text" matInput>
-          <mat-icon matSuffix>search</mat-icon>
+          <mat-label>¿Qué te hace entristezca?</mat-label>
+          <mat-chip-list #sadChipList>
+            <mat-chip *ngFor="let item of sadArray" (removed)="removeSadItem(item)">
+              {{item}}
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip>
+            <input placeholder="..." [matChipInputFor]="sadChipList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+              (matChipInputTokenEnd)="addSadItem($event)">
+          </mat-chip-list>
+          <mat-hint>** Presiona <strong>ENTER</strong> después de escribir algo que te haga féliz, ej:
+            <strong>"Comida"</strong>
+          </mat-hint>
         </mat-form-field>
+
+        <div class="set-12 legals">
+          <p>
+            <small>He leído y estoy de acuerdo con:</small>
+          </p>
+          <div class="set-12 row">
+            <mat-checkbox color="primary" formControlName="terms"></mat-checkbox>
+            <a href="#">
+              <small>Términos y condiciones</small>
+            </a>
+          </div>
+          <div class="set-12 row">
+            <mat-checkbox color="primary" formControlName="privacy"></mat-checkbox>
+            <a href="#">
+              <small>Política de privacidad</small>
+            </a>
+          </div>
+          <div class="set-12 activation-legend">
+            <p>
+              <small>
+                Al hacer <strong>click</strong> en <strong>"Registrarme"</strong>, te envíaremos un correo de
+                activación. **
+              </small>
+            </p>
+          </div>
+        </div>
       </form>
 
       <div class="set-12 ctrls">
         <button mat-raised-button color="warn" matStepperPrevious>
           <small>Atras</small>
+        </button>
+        <button type="button" mat-raised-button color="primary" [disabled]="legalsFormGroup.invalid">
+          <small>Registrarme</small>
         </button>
         <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
       </div>

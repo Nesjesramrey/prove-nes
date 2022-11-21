@@ -163,7 +163,10 @@ export class TopicComponent implements OnInit {
       this.solutionsData = this.topic.solutions;
       this.SolutionDataSource = new CustomMatDataSource(this.sortSolutions(this.solutionsData));
 
-      this.coverage = this.document['coverage'];
+      // this.coverage = this.document['coverage'];
+      this.coverage = this.document['coverage'].filter((x: any) => {
+        return x['_id'] == this.topic['coverage'][0];
+      });
       if (this.coverageSelected == null) { this.coverageSelected = this.coverage[0]['_id']; }
       this.getRamdomImage();
 

@@ -39,6 +39,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { NgChartsModule } from 'ng2-charts';
+import { DndModule } from 'ngx-drag-drop';
 
 // dev
 // const firebaseConfig = {
@@ -83,7 +84,8 @@ const socketConfig: SocketIoConfig = { url: environment.apiSocket, options: {} }
     AngularFireDatabaseModule,
     NgChartsModule,
     SocketIoModule.forRoot(socketConfig),
-    AppMaterialModule
+    AppMaterialModule,
+    DndModule
   ],
   providers: [
     { provide: HAMMER_GESTURE_CONFIG, useClass: LyHammerGestureConfig },
