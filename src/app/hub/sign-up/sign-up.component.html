@@ -21,6 +21,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Correo electrónico</mat-label>
         <input matInput type="text" autocomplete="off" formControlName="email">
+        <mat-hint>** Ej: nombre@dominio.com</mat-hint>
       </mat-form-field>
     </div>
 
@@ -33,6 +34,7 @@
             {{ hide ? 'visibility_off' : 'visibility' }}
           </mat-icon>
         </button>
+        <mat-hint>** 9 carateres minimo.</mat-hint>
       </mat-form-field>
     </div>
 

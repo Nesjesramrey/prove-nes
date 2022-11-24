@@ -54,6 +54,7 @@ export class SingleThemeComponent implements OnInit {
   public accesibleLayouts: any[] = [];
   public userCoverageObj: any[] = [];
   public userCoverageStr: any[] = [];
+  public topicCoverage: any = null;
 
   // simplet doughnut
   public simpletDoughnutData: ChartData<'doughnut'> = _simpleDonuthData;
@@ -108,30 +109,23 @@ export class SingleThemeComponent implements OnInit {
     let acl: Observable<any> = this.documentService.fetchAccessControlList({ document_id: this.documentID });
 
     forkJoin([document, category, subcategory, topic, user, acl]).subscribe((reply: any) => {
-      // console.log(reply);
       this.document = reply[0];
-      // console.log(this.document);
       this.collaborators = this.document['collaborators'];
       this.collaborators = this.collaborators.filter((value: any, index: any, self: any) =>
-        index === self.findIndex((t: any) =>
-          (t['user']['_id'] === value['user']['_id']))
-      );
-      // console.log('collaborators: ', this.collaborators);
+        index === self.findIndex((t: any) => (t['user']['_id'] === value['user']['_id'])));
       this.category = reply[1];
-      // console.log('category: ', this.category);
       this.subcategory = reply[2];
-      // console.log('subcategory: ', this.subcategory);
       this.topics = this.subcategory['topics'];
-      // console.log('topics: ', this.topics);
       this.topic = reply[3];
-      // console.log('topic: ', this.topic);
+      this.topicCoverage = this.document['coverage'].filter((x: any) => {
+        return x['_id'] == this.topic['coverage'][0]
+      });
+
       this.sliderImages = this.topic['images'];
       this.solutions = this.topic['solutions'];
-      // console.log('solutions: ', this.solutions);
       this.dataSource = new MatTableDataSource(this.solutions);
       this.user = reply[4];
       this.user['activityName'] = this.user['activities'][0]['value'];
-      // console.log('user: ', this.user);
 
       this.layouts = reply[5]['layouts'];
       this.layouts.filter((x: any) => { x['states'].length == 0 ? x['access'] = false : x['access'] = true; });
@@ -144,7 +138,6 @@ export class SingleThemeComponent implements OnInit {
         x['enabled'] = false;
         if (this.userCoverageStr.includes(x['_id'])) { x['enabled'] = true; }
       });
-      // console.log(this.layouts);
 
       switch (this.user['activityName']) {
         case 'editor':

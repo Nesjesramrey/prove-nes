@@ -129,38 +129,15 @@ export class SolutionComponent implements OnInit {
   }
 
   loadSolution() {
-    let document: Observable<any> =
-      this.documentService.fetchSingleDocumentById({ _id: this.documentID });
-    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({
-      _id: this.categoryID,
-    });
-    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById(
-      { _id: this.subcategoryID }
-    );
-    let topic: Observable<any> = this.topicService.fetchSingleTopicById({
-      _id: this.topicID,
-    });
-    let solution: Observable<any> =
-      this.solutionService.fetchSingleSolutionById({ _id: this.solutionID });
+    let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
+    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID });
+    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID });
+    let topic: Observable<any> = this.topicService.fetchSingleTopicById({ _id: this.topicID });
+    let solution: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.solutionID });
+    let votes: Observable<any> = this.voteService.fetchVotesBySolutionID({ _id: this.solutionID });
+    let favorites: Observable<any> = this.favoritesService.fetchFavoritesBySolutionID({ _id: this.solutionID });
 
-    let votes: Observable<any> = this.voteService.fetchVotesBySolutionID({
-      _id: this.solutionID,
-    });
-
-    let favorites: Observable<any> =
-      this.favoritesService.fetchFavoritesBySolutionID({
-        _id: this.solutionID,
-      });
-
-    forkJoin([
-      document,
-      category,
-      subcategory,
-      topic,
-      solution,
-      votes,
-      favorites,
-    ]).subscribe((reply: any) => {
+    forkJoin([document, category, subcategory, topic, solution, votes, favorites]).subscribe((reply: any) => {
       this.userVoted = this.checkUserVote(reply[5]);
       this.document = reply[0];
       this.category = reply[1];

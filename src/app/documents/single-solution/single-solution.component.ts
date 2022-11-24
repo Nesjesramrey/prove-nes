@@ -116,29 +116,19 @@ export class SingleSolutionComponent implements OnInit {
     let acl: Observable<any> = this.documentService.fetchAccessControlList({ document_id: this.documentID });
 
     forkJoin([document, category, subcategory, topic, solution, user, acl]).subscribe((reply: any) => {
-      // console.log(reply);
       this.document = reply[0];
-      // console.log('document: ', this.document);
       this.collaborators = this.document['collaborators'];
       this.collaborators = this.collaborators.filter((value: any, index: any, self: any) =>
-        index === self.findIndex((t: any) =>
-          (t['user']['_id'] === value['user']['_id']))
-      );
-      // console.log('collaborators: ', this.collaborators);
+        index === self.findIndex((t: any) => (t['user']['_id'] === value['user']['_id'])));
       this.category = reply[1];
-      // console.log('category: ', this.category);
       this.subcategory = reply[2];
-      // console.log('subcategory: ', this.subcategory);
       this.topics = this.subcategory['topics'];
-      // console.log('topics: ', this.topics);
       this.topic = reply[3];
-      // console.log('topic: ', this.topic);
       this.solution = reply[4];
-      // console.log('solution: ', this.solution);
+
       this.sliderImages = this.solution['images'];
       this.user = reply[5];
       this.user['activityName'] = this.user['activities'][0]['value'];
-      // console.log('user: ', this.user);
       this.layouts = reply[6]['layouts'];
       this.layouts.filter((x: any) => { x['states'].length == 0 ? x['access'] = false : x['access'] = true; });
       this.accesibleLayouts = this.layouts.filter((x: any) => { return x['states'].length != 0; });
@@ -150,7 +140,6 @@ export class SingleSolutionComponent implements OnInit {
         x['enabled'] = false;
         if (this.userCoverageStr.includes(x['_id'])) { x['enabled'] = true; }
       });
-      // console.log(this.layouts);
 
       switch (this.user['activityName']) {
         case 'editor':

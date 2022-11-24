@@ -65,7 +65,11 @@ export class SignUpComponent implements OnInit {
   onSignUp(formGroup: FormGroup) {
     this.submitted = true;
 
-    let email: any = formGroup['value']['email'];
+    let firstname = formGroup['value']['firstname'];
+    let lastname = formGroup['value']['lastname'];
+    // firstname = this.utilitySrvc.capitalizeFirstLetter(firstname);
+    // lastname = this.utilitySrvc.capitalizeFirstLetter(lastname);
+    let email: any = formGroup['value']['email'].toLowerCase();
     let password: any = formGroup['value']['password'];
     console.log({ state: { status: 'logout' } });
     this.angularFireAuth
@@ -124,9 +128,7 @@ export class SignUpComponent implements OnInit {
   SendVerificationMail() {
     return this.angularFireAuth.currentUser
       .then((u: any) => u.sendEmailVerification())
-      .then(() => {
-        // this.utilitySrvc.router.navigateByUrl('/');
-      });
+      .then(() => {});
   }
 
   SetUserData(user: any) {
