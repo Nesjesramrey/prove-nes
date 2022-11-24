@@ -13,6 +13,7 @@ import { SingleThemeComponent } from './single-theme/single-theme.component';
 import { SingleSubcategoryComponent } from './single-subcategory/single-subcategory.component';
 import { SingleSolutionComponent } from './single-solution/single-solution.component';
 import { NgChartsModule } from 'ng2-charts';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { NgChartsModule } from 'ng2-charts';
     AppSharedModule,
     ComponentsModule,
     NgChartsModule,
+    AngularEditorModule
   ],
   declarations: [
     DocumentsComponent,

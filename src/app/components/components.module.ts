@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppMaterialModule } from '../app-material.module';
 import { NgChartsModule } from 'ng2-charts';
 import { AppSharedModule } from '../app-shared.module';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 import { LyToolbarModule } from '@alyle/ui/toolbar';
 import { LyTypographyModule } from '@alyle/ui/typography';
@@ -77,6 +78,7 @@ import { GiveEditPermissionComponent } from './give-edit-permission/give-edit-pe
     LyIconModule,
     NgChartsModule,
     AppSharedModule,
+    AngularEditorModule
   ],
   declarations: [
     AppPageletComponent,

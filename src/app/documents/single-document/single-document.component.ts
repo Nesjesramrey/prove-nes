@@ -84,7 +84,7 @@ export class SingleDocumentComponent implements OnInit {
             this.layouts = reply[2]['layouts'];
             this.layouts.filter((layout: any) => { layout['access'] = true; });
             this.document['coverage'].filter((x: any) => { x['enabled'] = true; });
-            console.log(this.layouts);
+            // console.log(this.layouts);
             break;
 
           case 'administrator':
@@ -146,12 +146,13 @@ export class SingleDocumentComponent implements OnInit {
 
   popAddDocumentCategory() {
     const dialogRef = this.dialog.open<AddDocumentCategoryComponent>(AddDocumentCategoryComponent, {
-      width: '640px',
+      // width: '640px',
       data: {
         documentID: this.documentID,
         document: this.document
       },
-      disableClose: true
+      disableClose: true,
+      panelClass: 'full-dialog'
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
@@ -255,11 +256,12 @@ export class SingleDocumentComponent implements OnInit {
 
   popEditDocumentDialog() {
     const dialogRef = this.dialog.open<EditDocumentDataComponent>(EditDocumentDataComponent, {
-      width: '640px',
+      // width: '640px',
       data: {
         document: this.document
       },
-      disableClose: true
+      disableClose: true,
+      panelClass: 'full-dialog'
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {

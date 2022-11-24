@@ -1,5 +1,9 @@
 :host {
-  min-height: 170px;
+  // min-height: 170px;
+  padding: 20px;
+  float: left;
+  width: 70%;
+  margin: 0 15%;
 
   .dialog-head {
     display: flex;
@@ -11,8 +15,42 @@
     background: transparent !important;
   }
 
+  .mat-stepper-horizontal,
+  .mat-stepper-vertical {
+    background: transparent !important;
+  }
+
   ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
     margin: 0;
+  }
+
+  ::ng-deep .angular-editor-toolbar {
+    background: transparent !important;
+    border: 0 !important;
+    border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1) !important;
+    padding: 10px !important;
+  }
+
+  // ::ng-deep .angular-editor-textarea {
+  //   resize: none !important;
+  // }
+
+  ::ng-deep .angular-editor .angular-editor-wrapper .angular-editor-textarea {
+    background: transparent !important;
+    margin: 0 !important;
+    border: 0 !important;
+    outline: none !important;
+    padding: 10px !important;
+  }
+
+  ::ng-deep .angular-editor .angular-editor-wrapper .angular-editor-placeholder {
+    padding: 10px !important;
+  }
+
+  .editor-form {
+    margin-bottom: 20px;
+    background: #ffffff;
+    border-radius: 5px;
   }
 
   .step-content {
@@ -33,14 +71,24 @@
     }
 
     .upload-img {
+      width: 170px;
+      height: 170px;
       display: flex;
-      width: 100%;
-      min-height: 100px;
-      height: calc(100% - 20px);
+      // width: 100%;
+      // min-height: 100px;
+      // height: calc(100% - 20px);
       align-items: center;
       justify-content: center;
-      border: 1px dashed rgba($color: #000000, $alpha: 0.1);
-      border-radius: 5px;
+      border: 3px solid rgba($color: #00031d, $alpha: 1.0);
+      // border-radius: 5px;
+      border-radius: 100%;
+      background: #1e7e7f;
+      overflow: hidden;
+
+      mat-icon {
+        font-size: 40pt !important;
+        color: #ffffff;
+      }
     }
 
     .tools {
@@ -93,6 +141,8 @@
   .file-hldr {
     font-weight: bold;
     font-style: italic;
+    margin: 40px 0;
+    text-align: center;
   }
 
   .loading {

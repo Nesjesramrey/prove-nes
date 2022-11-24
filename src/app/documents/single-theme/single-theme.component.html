@@ -103,7 +103,7 @@
 
       <mat-card class="set-12 about-card">
         <p class="title">{{ topic.title }}</p>
-        <p class="description">{{ topic.description }}</p>
+        <p class="description" [innerHTML]="topic.description"></p>
       </mat-card>
 
       <mat-card class="set-12 topic-list">

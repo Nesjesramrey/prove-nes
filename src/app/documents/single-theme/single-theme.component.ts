@@ -205,12 +205,13 @@ export class SingleThemeComponent implements OnInit {
     }
 
     const dialogRef = this.dialog.open<AddDocumentSolutionComponent>(AddDocumentSolutionComponent, {
-      width: '640px',
+      // width: '640px',
       data: {
         themeID: this.themeID,
         coverage: coverage[0]
       },
       disableClose: true,
+      panelClass: 'full-dialog'
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {

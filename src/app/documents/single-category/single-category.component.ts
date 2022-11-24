@@ -193,14 +193,15 @@ export class SingleCategoryComponent implements OnInit {
 
   popAddDocumentCategory() {
     const dialogRef = this.dialog.open<AddDocumentCategoryComponent>(AddDocumentCategoryComponent, {
-      width: '640px',
+      // width: '640px',
       data: {
         documentID: this.documentID,
         document: this.document,
         categoryID: this.categoryID,
         type: 'sublayout'
       },
-      disableClose: true
+      disableClose: true,
+      panelClass: 'full-dialog'
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
