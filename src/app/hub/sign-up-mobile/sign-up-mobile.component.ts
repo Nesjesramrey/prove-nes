@@ -23,21 +23,25 @@ export class SignUpMobileComponent implements OnInit {
   public isDataAvailable: boolean = false;
   public submitted: boolean = false;
   public signupFormGroup!: FormGroup;
-  public associationTypologyArray: any = [];
+  public associationTypologyArray: any[] = [];
   public file: any = null;
   public fruits: Fruit[] = [];
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   public addOnBlur = true;
+  public hide: boolean = true;
 
   public stepOneFormGroup!: FormGroup;
   public stepTwoFormGroup!: FormGroup;
   public stepThreeFormGroup!: FormGroup;
+  public legalsFormGroup!: FormGroup;
   public document: any = null;
   public layouts: any = null;
   public sublayouts: any = null;
   @ViewChild('stepper') public stepper!: MatStepper;
   public viewSubLayouts: boolean = false;
   public bagOfWords: any = ['Educación', 'Cultura', 'Política', 'Empleo', 'Arte', 'Delincuencia', 'Violencia', 'Salud'];
+  public happyArray: any[] = [];
+  public sadArray: any[] = [];
 
   constructor(
     public formBuilder: FormBuilder,
@@ -74,10 +78,18 @@ export class SignUpMobileComponent implements OnInit {
     }, 1000);
 
     this.stepOneFormGroup = this.formBuilder.group({
-      firstname: ['', [Validators.required]],
-      lastname: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-      password: ['', [Validators.required]]
+      firstname: ['', [Validators.required, Validators.minLength(2)]],
+      lastname: ['', [Validators.required, Validators.minLength(2)]],
+      email: ['', [Validators.required, Validators.pattern(this.utilityService.emailPattern), this.utilityService.emailDomainValidator]],
+      password: ['', [Validators.required, Validators.minLength(9)]],
+      associationTypology: ['', [Validators.required]],
+      associationName: [null, []]
+    });
+    this.stepOneFormGroup.get('associationName')?.disable();
+
+    this.legalsFormGroup = this.formBuilder.group({
+      terms: [true, [Validators.required]],
+      privacy: [true, [Validators.required]]
     });
 
     this.documentService.fetchCoverDocument().subscribe({
@@ -139,6 +151,47 @@ export class SignUpMobileComponent implements OnInit {
     const index = this.fruits.indexOf(fruit);
     if (index >= 0) {
       this.fruits.splice(index, 1);
+    }
+  }
+
+  onTypeSelected(event: any) {
+    if (event['value']['name'] == 'OSC') {
+      this.stepOneFormGroup.get('associationName')?.enable();
+      this.stepOneFormGroup.get('associationName')?.setValidators([Validators.required]);
+    } else {
+      this.stepOneFormGroup.get('associationName')?.disable();
+      this.stepOneFormGroup.get('associationName')?.setValidators([]);
+      this.stepOneFormGroup['controls']['associationName'].setValue(null);
+    }
+  }
+
+  addHappyItem(event: MatChipInputEvent) {
+    const value = (event.value || '').trim();
+    if (value) {
+      this.happyArray.push(value);
+    }
+    event.chipInput!.clear();
+  }
+
+  removeHappyItem(item: any) {
+    const index = this.happyArray.indexOf(item);
+    if (index >= 0) {
+      this.happyArray.splice(index, 1);
+    }
+  }
+
+  addSadItem(event: MatChipInputEvent) {
+    const value = (event.value || '').trim();
+    if (value) {
+      this.sadArray.push(value);
+    }
+    event.chipInput!.clear();
+  }
+
+  removeSadItem(item: any) {
+    const index = this.sadArray.indexOf(item);
+    if (index >= 0) {
+      this.sadArray.splice(index, 1);
     }
   }
 

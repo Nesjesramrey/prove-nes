@@ -62,12 +62,19 @@ export class SignUpComponent implements OnInit {
     });
   }
 
+  /**
+   * @see https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#createuserwithemailandpassword
+   */
   onSignUp(formGroup: FormGroup) {
     this.submitted = true;
 
-    let email: any = formGroup['value']['email'];
+    let firstname = formGroup['value']['firstname'];
+    let lastname = formGroup['value']['lastname'];
+    firstname = this.utilitySrvc.capitalizeFirstLetter(firstname);
+    lastname = this.utilitySrvc.capitalizeFirstLetter(lastname);
+    let email: any = formGroup['value']['email'].toLowerCase();
     let password: any = formGroup['value']['password'];
-    console.log({ state: { status: 'logout' } });
+    // console.log({ state: { status: 'logout' } });
     this.angularFireAuth
       .createUserWithEmailAndPassword(email, password)
       .then((reply: any) => {
@@ -77,21 +84,20 @@ export class SignUpComponent implements OnInit {
         // console.log('user: ', this.user);
         // console.log(this.user['accessToken']);
 
-        let signUpData: any = {
-          firebaseUID: this.user['uid'],
-          firstname: formGroup['value']['firstname'],
-          lastname: formGroup['value']['lastname'],
-          email: formGroup['value']['email'],
-          password: formGroup['value']['password'],
-        };
+        let signUpData = new FormData();
+        signUpData.append('firebaseUID', this.user['uid']);
+        signUpData.append('firstname', formGroup['value']['firstname']);
+        signUpData.append('lastname', formGroup['value']['lastname']);
+        signUpData.append('email', formGroup['value']['email']);
+        signUpData.append('password', formGroup['value']['password']);
 
         this.authenticationSrvc.signup(signUpData).subscribe((reply: any) => {
           localStorage.setItem('accessToken', this.user['accessToken']);
 
           this.angularFireAuth
             .signInWithEmailAndPassword(
-              signUpData['email'],
-              signUpData['password']
+              formGroup['value']['email'],
+              formGroup['value']['password']
             )
             .then((reply: any) => {
               // console.log('reply: ', reply);
@@ -114,19 +120,25 @@ export class SignUpComponent implements OnInit {
         this.utilitySrvc.openSuccessSnackBar('El registro fue exitoso');
       })
       .catch((error: any) => {
-        this.utilitySrvc.openErrorSnackBar(
-          'Este correo ya fue registrado, intentalo de nuevo'
-        );
+        switch (error['code']) {
+          case 'auth/email-already-in-use':
+            this.utilitySrvc.openErrorSnackBar('El correo electrónico ya esta en uso.');
+            break;
+        }
+
+        // "auth/email-already-in-use":
+        // "auth/invalid-email": 
+        // "auth/operation-not-allowed":         
+        // "auth/weak-password": 
+        // "auth/network-request-failed":  
+
         this.submitted = false;
       });
   }
 
   SendVerificationMail() {
-    return this.angularFireAuth.currentUser
-      .then((u: any) => u.sendEmailVerification())
-      .then(() => {
-        // this.utilitySrvc.router.navigateByUrl('/');
-      });
+    return this.angularFireAuth.currentUser.then((u: any) => u.sendEmailVerification())
+      .then(() => { });
   }
 
   SetUserData(user: any) {
