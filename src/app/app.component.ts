@@ -82,13 +82,13 @@ export class AppComponent implements OnInit {
         });
       });
 
-    this.documentService.fetchCoverDocument().subscribe({
-      error: (error: any) => {},
-      next: (reply: any) => {
-        this.coverDocument = reply;
-      },
-      complete: () => {},
-    });
+    // this.documentService.fetchCoverDocument().subscribe({
+    //   error: (error: any) => {},
+    //   next: (reply: any) => {
+    //     this.coverDocument = reply;
+    //   },
+    //   complete: () => {},
+    // });
 
     if (this.accessToken != null) {
       this.userService.fetchFireUser().subscribe({

@@ -55,26 +55,26 @@ export class PublicComponent implements OnInit {
           this.coverageSelected = this.coverage[0]['_id'];
         }
 
-        this.layouts.filter((x: any) => {
-          x['subLayouts'].filter((y: any) => {
-            y['topics'].filter((t: any) => {
-              t['solutions'].filter((s: any) => {
-                s['url'] =
-                  '/documentos-publicos/' +
-                  this.document['_id'] +
-                  '/categoria/' +
-                  x['_id'] +
-                  '/subcategoria/' +
-                  y['_id'] +
-                  '/tema/' +
-                  t['_id'] +
-                  '/solucion/' +
-                  s['_id'];
-                this.allDocumentSolutions.push(s);
-              });
-            });
-          });
-        });
+        // this.layouts.filter((x: any) => {
+        //   x['subLayouts'].filter((y: any) => {
+        //     y['topics'].filter((t: any) => {
+        //       t['solutions'].filter((s: any) => {
+        //         s['url'] =
+        //           '/documentos-publicos/' +
+        //           this.document['_id'] +
+        //           '/categoria/' +
+        //           x['_id'] +
+        //           '/subcategoria/' +
+        //           y['_id'] +
+        //           '/tema/' +
+        //           t['_id'] +
+        //           '/solucion/' +
+        //           s['_id'];
+        //         this.allDocumentSolutions.push(s);
+        //       });
+        //     });
+        //   });
+        // });
 
         let solutions = this.allDocumentSolutions.filter((e: any) => {
           return this.topSolutionsIds.includes(e['_id']);

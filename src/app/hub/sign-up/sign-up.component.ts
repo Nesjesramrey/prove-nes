@@ -137,8 +137,9 @@ export class SignUpComponent implements OnInit {
   }
 
   SendVerificationMail() {
-    return this.angularFireAuth.currentUser.then((u: any) => u.sendEmailVerification())
-      .then(() => { });
+    return this.angularFireAuth.currentUser
+      .then((u: any) => u.sendEmailVerification())
+      .then(() => {});
   }
 
   SetUserData(user: any) {
