@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -10,6 +17,7 @@ import { ModalPermissionsComponent } from 'src/app/public-documents/components/m
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SearchService } from 'src/app/services/search.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: '.app-pagelet',
@@ -43,22 +51,21 @@ export class AppPageletComponent implements OnInit {
     public dialog: MatDialog,
     public formBuilder: FormBuilder,
     public searchService: SearchService,
-    public deviceDetectorService: DeviceDetectorService
-  ) {
-    this.isMobile = this.deviceDetectorService.isMobile();
-  }
+    public userService: UserService
+  ) {}
 
   ngOnInit(): void {
     this.reset();
     this.searchFormGroup = this.formBuilder.group({
-      search: ['', [Validators.required]]
+      search: ['', [Validators.required]],
     });
 
     setTimeout(() => {
       this.notificationSrvc.notificationCountSubject.subscribe((reply: any) => {
         if (reply != null) {
           if (reply['reload']) {
-            this.notificationSrvc.fetchMyNotificationUnread({ userID: this.user['_id'] })
+            this.notificationSrvc
+              .fetchMyNotificationUnread({ userID: this.user['_id'] })
               .subscribe((reply: any) => {
                 this.unreadNotifications = reply['count'];
               });
@@ -72,12 +79,15 @@ export class AppPageletComponent implements OnInit {
           this.userActivities.push(x['value']);
         });
 
-        this.notificationSrvc.fetchMyNotificationUnread({ userID: this.user['_id'] })
+        this.notificationSrvc
+          .fetchMyNotificationUnread({ userID: this.user['_id'] })
           .subscribe((reply: any) => {
             this.unreadNotifications = reply['count'];
           });
 
-        if (['administrator', 'editor'].includes(this.user.activities?.[0]?.value)) {
+        if (
+          ['administrator', 'editor'].includes(this.user.activities?.[0]?.value)
+        ) {
           this.permission = true;
         } else {
           this.permission = false;
@@ -91,6 +101,10 @@ export class AppPageletComponent implements OnInit {
           this.isDataAvailable = true;
         });
       }
+    });
+    this.userService.onLogin.subscribe((data: any) => {
+      console.log('data: ', data);
+      this.user = data;
     });
   }
 
@@ -147,15 +161,18 @@ export class AppPageletComponent implements OnInit {
   }
 
   popPermissionsDialog() {
-    const dialogRef = this.dialog.open<ModalPermissionsComponent>(ModalPermissionsComponent, {
-      width: '640px',
-      data: {
-        user: this.user
-      },
-      disableClose: true,
-    });
+    const dialogRef = this.dialog.open<ModalPermissionsComponent>(
+      ModalPermissionsComponent,
+      {
+        width: '640px',
+        data: {
+          user: this.user,
+        },
+        disableClose: true,
+      }
+    );
 
-    dialogRef.afterClosed().subscribe((reply: any) => { });
+    dialogRef.afterClosed().subscribe((reply: any) => {});
   }
 
   getRedirectUrl() {
@@ -199,7 +216,7 @@ export class AppPageletComponent implements OnInit {
   onSearch(formGroup: FormGroup) {
     let data: any = {
       filter: formGroup['value']['search'],
-      document_id: this.coverDocument['_id']
+      document_id: this.coverDocument['_id'],
     };
     this.searchService.globalSearch(data).subscribe({
       error: (error: any) => {
@@ -209,7 +226,7 @@ export class AppPageletComponent implements OnInit {
         this.searchService.searchSubject.next(reply);
         this.utilitySrvc.linkMe('/search');
       },
-      complete: () => { }
+      complete: () => {},
     });
   }
 

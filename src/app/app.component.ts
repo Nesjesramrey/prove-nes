@@ -8,10 +8,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { CompleteRegistrationComponent } from './components/complete-registration/complete-registration.component';
 import { environment } from 'src/environments/environment';
 import { SocketService } from './services/socket.service';
-import { filter } from 'rxjs';
+import { filter, Observable } from 'rxjs';
 import { DocumentService } from './services/document.service';
+import { response } from 'express';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { trigger, transition, animate, style } from '@angular/animations'
+import { trigger, transition, animate, style } from '@angular/animations';
 
 const STYLES = (theme: ThemeVariables, ref: ThemeRef) => {
   const __ = ref.selectorsOf(STYLES);
@@ -27,7 +28,7 @@ const STYLES = (theme: ThemeVariables, ref: ThemeRef) => {
     }`,
     root: lyl`{
       display: block
-    }`
+    }`,
   };
 };
 
@@ -37,7 +38,7 @@ declare const gtag: Function;
   selector: '.app',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  providers: [StyleRenderer]
+  providers: [StyleRenderer],
 })
 export class AppComponent implements OnInit {
   readonly classes = this.sRenderer.renderSheet(STYLES, true);
@@ -63,33 +64,37 @@ export class AppComponent implements OnInit {
   ) {
     this.accessToken = this.authenticationSrvc.fetchAccessToken;
     this.router.events.subscribe((val) => {
-      if (val instanceof ResolveStart) { this.path = val.url; }
+      if (val instanceof ResolveStart) {
+        this.path = val.url;
+      }
     });
     this.isMobile = this.deviceDetectorService.isMobile();
   }
 
   ngOnInit(): void {
-    console.log("Project version", environment.version);
+    console.log('Project version', environment.version);
 
-    this.router.events.pipe(filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: any) => {
-      gtag('event', 'page_view', {
-        page_path: event.urlAfterRedirects
-      })
-    });
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        gtag('event', 'page_view', {
+          page_path: event.urlAfterRedirects,
+        });
+      });
 
     this.documentService.fetchCoverDocument().subscribe({
-      error: (error: any) => { },
+      error: (error: any) => {},
       next: (reply: any) => {
         this.coverDocument = reply;
       },
-      complete: () => { }
+      complete: () => {},
     });
 
     if (this.accessToken != null) {
       this.userService.fetchFireUser().subscribe({
         error: (error) => {
-          switch (error['status']) { }
+          switch (error['status']) {
+          }
           setTimeout(() => {
             this.isDataAvailable = true;
           });
@@ -98,9 +103,11 @@ export class AppComponent implements OnInit {
           this.user = reply;
           this.isDataAvailable = true;
 
-          if (!this.user['isFullRegister']) { this.openCompleteRegistration(); }
+          if (!this.user['isFullRegister']) {
+            this.openCompleteRegistration();
+          }
         },
-        complete: () => { },
+        complete: () => {},
       });
     } else {
       setTimeout(() => {
@@ -113,13 +120,14 @@ export class AppComponent implements OnInit {
     const dialogRef = this.dialog.open(CompleteRegistrationComponent, {
       width: '640px',
       data: {
-        user: this.user
+        user: this.user,
       },
-      disableClose: true
+      disableClose: true,
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) { }
+      if (reply != undefined) {
+      }
     });
   }
 
