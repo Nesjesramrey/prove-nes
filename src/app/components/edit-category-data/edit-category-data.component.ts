@@ -5,6 +5,7 @@ import { forkJoin, Observable } from 'rxjs';
 import { CategoryService } from 'src/app/services/category.service';
 import { LayoutService } from 'src/app/services/layout.service';
 import { UtilityService } from 'src/app/services/utility.service';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 @Component({
   selector: '.edit-category-data-dialog',
@@ -17,6 +18,44 @@ export class EditCategoryDataComponent implements OnInit {
   public category: any = null;
   public formGroup!: FormGroup;
   public submitted: boolean = false;
+  public htmlContent: any = '';
+  public editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: '15rem',
+    minHeight: '5rem',
+    placeholder: 'Descripción...',
+    translate: 'no',
+    defaultParagraphSeparator: 'p',
+    defaultFontName: 'Arial',
+    toolbarHiddenButtons: [
+      [
+        'strikeThrough',
+        'subscript',
+        'superscript',
+        'justifyLeft',
+        'justifyCenter',
+        'justifyRight',
+        'justifyFull',
+        'indent',
+        'outdent',
+        'insertUnorderedList',
+        'insertOrderedList',
+        'heading',
+      ],
+      [
+        'textColor',
+        'backgroundColor',
+        'customClasses',
+        'unlink',
+        'insertImage',
+        'insertVideo',
+        'insertHorizontalRule',
+        'removeFormat',
+        'toggleEditorMode'
+      ]
+    ]
+  };
 
   constructor(
     public dialogRef: MatDialogRef<any>,

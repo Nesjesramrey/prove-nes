@@ -225,12 +225,13 @@ export class TopicComponent implements OnInit {
     }
 
     const dialogRef = this.dialog.open<AddDocumentSolutionComponent>(AddDocumentSolutionComponent, {
-      width: '640px',
+      // width: '640px',
       data: {
         themeID: this.topicID,
         coverage: coverage[0]
       },
       disableClose: true,
+      panelClass: 'full-dialog'
     }
     );
 

@@ -311,11 +311,12 @@ export class SingleThemeComponent implements OnInit {
 
   popEditTopicDialog() {
     const dialogRef = this.dialog.open<EditTopicDataComponent>(EditTopicDataComponent, {
-      width: '640px',
+      // width: '640px',
       data: {
         topic: this.topic,
       },
-      disableClose: true
+      disableClose: true,
+      panelClass: 'full-dialog'
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {

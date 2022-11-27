@@ -211,11 +211,12 @@ export class SingleSubcategoryComponent implements OnInit {
 
   popEditCategoryDialog() {
     const dialogRef = this.dialog.open<EditCategoryDataComponent>(EditCategoryDataComponent, {
-      width: '640px',
+      // width: '640px',
       data: {
         layout: this.subcategory
       },
-      disableClose: true
+      disableClose: true,
+      panelClass: 'full-dialog'
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
@@ -332,6 +333,7 @@ export class SingleSubcategoryComponent implements OnInit {
         text: this.subcategory['description']
       },
       disableClose: true,
+      panelClass: 'full-dialog'
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {

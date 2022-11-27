@@ -36,7 +36,12 @@
 
                 <input placeholder="..." #categoryInput [formControl]="categoryCtrl" [matAutocomplete]="auto"
                   [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                  (matChipInputTokenEnd)="addCategory($event)">
+                  (matChipInputTokenEnd)="addCategory($event)" (keyup.enter)="onEnter($event)">
+
+                <button mat-button matSuffix mat-icon-button color="warn" matTooltip="Agregar categoría"
+                  [disabled]="!addCategoryValidated">
+                  <mat-icon>add_circle</mat-icon>
+                </button>
               </mat-chip-list>
 
               <mat-autocomplete #auto="matAutocomplete" (optionSelected)="categorySelected($event)">
@@ -44,13 +49,16 @@
                   <small>{{category}}</small>
                 </mat-option>
               </mat-autocomplete>
+
+              <mat-hint *ngIf="addCategoryValidated">** ¡Esa categoría no existe! <br /> ** Puedes agregarla con el
+                botón a la derecha.</mat-hint>
             </mat-form-field>
           </div>
 
           <div class="set-12 ctrls">
-            <button type="button" mat-raised-button color="accent" (click)="popAddRootCategoryDialog()">
+            <!-- <button type="button" mat-raised-button color="accent" (click)="popAddRootCategoryDialog()">
               <small>Nueva Categoría</small>
-            </button>
+            </button> -->
             <button type="button" mat-raised-button color="primary" matStepperNext
               [disabled]="stepTwoFormGroup.invalid">
               <small>Siguiente</small>

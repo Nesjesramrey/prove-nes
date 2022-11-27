@@ -57,7 +57,8 @@
               </mat-menu>
             </div>
           </div>
-          <p class="card-description" *ngIf="category.description != null" [innerHtml]="category.description"></p>
+          <p class="card-description" *ngIf="category.description != null" [innerHtml]="(category.description.length > 200) ? (category.description | slice: 0 : 200) + '..' :
+            (category.description)"></p>
           <button type="button" class="card-description link" (click)="popDescriptionViewerDialog()">Leer más</button>
           <avatars-row [users]="collaborators" *ngIf="actionControlActivityList.includes(user.activityName)">
           </avatars-row>

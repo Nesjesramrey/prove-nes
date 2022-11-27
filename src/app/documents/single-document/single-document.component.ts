@@ -312,6 +312,7 @@ export class SingleDocumentComponent implements OnInit {
         text: this.document['description']
       },
       disableClose: true,
+      panelClass: 'full-dialog'
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {

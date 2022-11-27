@@ -57,10 +57,9 @@
               </mat-menu>
             </div>
           </div>
-          <p class="card-description" *ngIf="subcategory.description != null" [innerHtml]="subcategory.description"></p>
-          <!-- <button type="button" class="toolbtn" *ngIf="subcategory.description == null">
-            <small>Agregar descripción</small>
-          </button> -->
+          <p class="card-description" *ngIf="subcategory.description != null"
+            [innerHtml]="(subcategory.description.length > 200) ? (subcategory.description | slice: 0 : 200) + '..' : (subcategory.description)">
+          </p>
           <button type="button" class="card-description link" (click)="popDescriptionViewerDialog()">Leer más</button>
           <avatars-row [users]="collaborators" *ngIf="actionControlActivityList.includes(user.activityName)">
           </avatars-row>

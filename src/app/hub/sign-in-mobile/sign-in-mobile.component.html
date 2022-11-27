@@ -4,14 +4,29 @@
 
 <div class="set-12" *ngIf="isDataAvailable">
   <form class="set-12" [formGroup]="signInFormGroup" (submit)="onSignIn(signInFormGroup)">
-    <input type="text" placeholder="Correo electrónico" formControlName="email">
-    <input type="password" placeholder="Contraseña" formControlName="password">
+    <h1>¡Hola!</h1>
+    <h4>Ingresa a tu cuenta.</h4>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Correo electrónico</mat-label>
+      <input type="text" matInput formControlName="email">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Contraseña</mat-label>
+      <input matInput type="password" formControlName="password" [type]="hide ? 'password' : 'text'">
+      <button type="button" matSuffix (click)="hide = !hide">
+        <mat-icon color="primary">
+          {{ hide ? 'visibility_off' : 'visibility' }}
+        </mat-icon>
+      </button>
+    </mat-form-field>
 
     <div class=" set-12 ctrls">
       <button type="submit" mat-raised-button color="primary" [disabled]="signInFormGroup.invalid || submitted">
         <small>Ingresar</small>
       </button>
-      <button type="button" class="recover">Recuperar contraseña</button>
+      <!-- <button type="button" class="recover">Recuperar contraseña</button> -->
     </div>
   </form>
 </div>
