@@ -6,9 +6,10 @@ import { UtilityService } from 'src/app/services/utility.service';
 import { map, startWith } from 'rxjs/operators';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { LayoutService } from 'src/app/services/layout.service';
 import { AddRootCategoryComponent } from '../add-root-category/add-root-category.component';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 @Component({
   selector: '.add-document-category',
@@ -27,6 +28,9 @@ export class AddDocumentCategoryComponent implements OnInit {
   @ViewChild('categoryInput') categoryInput!: ElementRef<HTMLInputElement>;
   public new_category: boolean = false;
   public addCategoryFormGroup!: FormGroup;
+  public addCategoryValidated: boolean = false;
+  @ViewChild(MatAutocompleteTrigger) public auto!: MatAutocompleteTrigger;
+  public newCategoryName: string = '';
 
   public stepOneFormGroup!: FormGroup;
   public stepTwoFormGroup!: FormGroup;
@@ -37,6 +41,45 @@ export class AddDocumentCategoryComponent implements OnInit {
   public fileNames: any = [];
   public isSubmitted: boolean = false;
 
+  public htmlContent: any = '';
+  public editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: '15rem',
+    minHeight: '5rem',
+    placeholder: 'Descripción...',
+    translate: 'no',
+    defaultParagraphSeparator: 'p',
+    defaultFontName: 'Arial',
+    toolbarHiddenButtons: [
+      [
+        'strikeThrough',
+        'subscript',
+        'superscript',
+        'justifyLeft',
+        'justifyCenter',
+        'justifyRight',
+        'justifyFull',
+        'indent',
+        'outdent',
+        'insertUnorderedList',
+        'insertOrderedList',
+        'heading',
+      ],
+      [
+        'textColor',
+        'backgroundColor',
+        'customClasses',
+        'unlink',
+        'insertImage',
+        'insertVideo',
+        'insertHorizontalRule',
+        'removeFormat',
+        'toggleEditorMode'
+      ]
+    ]
+  };
+
   constructor(
     public dialogRef: MatDialogRef<AddDocumentCategoryComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
@@ -46,7 +89,7 @@ export class AddDocumentCategoryComponent implements OnInit {
     public dialog: MatDialog,
     public utilityservice: UtilityService
   ) {
-    console.log(this.dialogData);
+    // console.log(this.dialogData);
     this.dialogData['document']['layouts'].filter((x: any) => {
       this.addedLayouts.push(x['category']['_id']);
     });
@@ -113,8 +156,10 @@ export class AddDocumentCategoryComponent implements OnInit {
 
   removeCategory(category: string): void {
     const index = this.selectedCategories.indexOf(category);
-    if (index >= 0) {
-      this.selectedCategories.splice(index, 1);
+    if (index >= 0) { this.selectedCategories.splice(index, 1); }
+    if (this.categoryCtrl.disabled) {
+      this.categoryCtrl.enable();
+      this.addCategoryValidated = false;
     }
   }
 
@@ -127,11 +172,28 @@ export class AddDocumentCategoryComponent implements OnInit {
     this.categoryCtrl.setValue(null);
   }
 
+  onEnter(event: any) {
+    this.newCategoryName = this.selectedCategories[0];
+
+    let category: any[] = this.categories.filter((x: any) => {
+      return x['name'] == this.newCategoryName;
+    });
+
+    if (category.length == 0) {
+      this.addCategoryValidated = true;
+    } else {
+      this.addCategoryValidated = false;
+    }
+
+    this.auto.closePanel();
+    this.categoryCtrl.disable();
+    console.log(this.newCategoryName);
+  }
+
   categorySelected(event: MatAutocompleteSelectedEvent): void {
-    let category: any = this.categories.filter((x: any) => {
+    let category: any[] = this.categories.filter((x: any) => {
       return x['name'] == event['option']['value'];
     });
-    console.log(category);
 
     if (this.addedLayouts.includes(category[0]['_id'])) {
       this.utilityService.openErrorSnackBar('La categoría ya esta en uso');
@@ -159,15 +221,15 @@ export class AddDocumentCategoryComponent implements OnInit {
       name: this.addCategoryFormGroup.value.category,
     };
 
-    console.log({ category: this.addCategoryFormGroup.value.category });
+    // console.log({ category: this.addCategoryFormGroup.value.category });
 
     this.utilityService.createNewCategory(data).subscribe((reply: any) => {
-      console.log(reply);
+      // console.log(reply);
       if (reply['status'] == false) {
         this.utilityService.openErrorSnackBar(reply['error']);
         return;
       }
-      console.log({ reply: reply });
+      // console.log({ reply: reply });
       this.utilityService.openSuccessSnackBar(reply['message']);
       this.categories.push(reply['clasification']);
       this.categoriesString.push(reply['clasification']['name']);
@@ -232,6 +294,7 @@ export class AddDocumentCategoryComponent implements OnInit {
         );
 
         this.layoutService.createNewSubLayout(data).subscribe((reply: any) => {
+          // console.log(reply);
           this.isSubmitted = false;
           this.dialogRef.close(reply['sublayouts']);
         });
@@ -254,6 +317,7 @@ export class AddDocumentCategoryComponent implements OnInit {
       data['formData'].append('category', this.stepTwoFormGroup.value.layout);
 
       this.layoutService.createNewLayoutOnly(data).subscribe((reply: any) => {
+        // console.log(reply);
         this.isSubmitted = false;
         this.dialogRef.close(reply['layouts']);
       });

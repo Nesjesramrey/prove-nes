@@ -7,7 +7,7 @@ import {
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SolutionService } from 'src/app/services/solution.service';
 import { UtilityService } from 'src/app/services/utility.service';
-import { DialogErrorComponent } from '../dialog-error/dialog-error.component';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 @Component({
   selector: 'app-add-document-solution',
@@ -15,10 +15,49 @@ import { DialogErrorComponent } from '../dialog-error/dialog-error.component';
   styleUrls: ['./add-document-solution.component.scss'],
 })
 export class AddDocumentSolutionComponent implements OnInit {
+  public isDataAvailable: boolean = false;
   public imageUrl: string | null = null;
   public addSolutionFormGroup!: FormGroup;
   public submitted: boolean = false;
   public fileNames: any = [];
+  public htmlContent: any = '';
+  public editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: '15rem',
+    minHeight: '5rem',
+    placeholder: 'Descripción...',
+    translate: 'no',
+    defaultParagraphSeparator: 'p',
+    defaultFontName: 'Arial',
+    toolbarHiddenButtons: [
+      [
+        'strikeThrough',
+        'subscript',
+        'superscript',
+        'justifyLeft',
+        'justifyCenter',
+        'justifyRight',
+        'justifyFull',
+        'indent',
+        'outdent',
+        'insertUnorderedList',
+        'insertOrderedList',
+        'heading',
+      ],
+      [
+        'textColor',
+        'backgroundColor',
+        'customClasses',
+        'unlink',
+        'insertImage',
+        'insertVideo',
+        'insertHorizontalRule',
+        'removeFormat',
+        'toggleEditorMode'
+      ]
+    ]
+  };
 
   constructor(
     public dialogRef: MatDialogRef<AddDocumentSolutionComponent>,
@@ -37,6 +76,10 @@ export class AddDocumentSolutionComponent implements OnInit {
       description: ['', [Validators.required]],
       files: ['', []],
     });
+
+    setTimeout(() => {
+      this.isDataAvailable = true;
+    }, 1000);
   }
 
   killDialog() {

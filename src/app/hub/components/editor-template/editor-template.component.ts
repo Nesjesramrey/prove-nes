@@ -35,10 +35,12 @@ export class EditorTemplateComponent implements OnInit {
     });
 
     const dialogRef = this.dialog.open(AddDocumentLayoutComponent, {
-      width: '640px',
+      // width: '640px',
       data: {
         document: document[0]
-      }
+      },
+      disableClose: true,
+      panelClass: 'full-dialog'
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {

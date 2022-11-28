@@ -5,6 +5,7 @@ import { ImageViewerComponent } from 'src/app/components/image-viewer/image-view
 import { MatDialog } from '@angular/material/dialog';
 import { SolutionService } from 'src/app/services/solution.service';
 import { LayoutService } from 'src/app/services/layout.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: '.public-page',
@@ -25,15 +26,18 @@ export class PublicComponent implements OnInit {
   public collaborators: any[] = [];
   @ViewChild('dataViewport') public dataViewport!: ElementRef;
   public allDocumentSolutions: any[] = [];
+  public isMobile: boolean = false;
 
   constructor(
     public activatedRoute: ActivatedRoute,
     public documentService: DocumentService,
     public dialog: MatDialog,
     public solutionService: SolutionService,
-    public layoutService: LayoutService
+    public layoutService: LayoutService,
+    public deviceDetectorService: DeviceDetectorService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
+    this.isMobile = this.deviceDetectorService.isMobile();
   }
 
   ngOnInit(): void {

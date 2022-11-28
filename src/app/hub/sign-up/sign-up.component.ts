@@ -109,10 +109,7 @@ export class SignUpComponent implements OnInit {
                   data['multiFactor']['user']['accessToken']
                 );
 
-                this.router.navigate(
-                  ['/documentos-publicos/' + this.document['_id']],
-                  { state: { status: 'logout' } }
-                );
+                this.router.navigate(['/documentos-publicos/' + this.document['_id']], { state: { status: 'logout' } });
                 this.UserService.onLogin.next(signUpData);
               });
             });

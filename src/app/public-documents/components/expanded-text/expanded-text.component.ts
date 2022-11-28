@@ -43,15 +43,13 @@ export class ExpandedTextComponent implements OnInit {
   }
 
   openModalDescription() {
-    const dialogRef = this.dialog.open<ModalDesciptionComponent>(
-      ModalDesciptionComponent,
-      {
-        data: {
-          title: this.title,
-          text: this.text,
-        },
-        disableClose: true,
-      }
-    );
+    const dialogRef = this.dialog.open<ModalDesciptionComponent>(ModalDesciptionComponent, {
+      data: {
+        title: this.title,
+        text: this.text,
+      },
+      disableClose: true,
+      panelClass: 'full-dialog'
+    });
   }
 }

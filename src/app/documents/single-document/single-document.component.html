@@ -107,24 +107,10 @@
               </mat-menu>
             </div>
           </div>
-          <p class="card-description" *ngIf="document.description != null">
-            {{
-              document.description.length > 200
-                ? (document.description | slice: 0:200) + ".."
-                : document.description
-            }}
-          </p>
-          <button
-            type="button"
-            class="card-description link"
-            (click)="popDescriptionViewerDialog()"
-          >
-            Leer más
-          </button>
-          <avatars-row
-            [users]="collaborators"
-            *ngIf="actionControlActivityList.includes(user.activityName)"
-          >
+          <p class="card-description" *ngIf="document.description != null" [innerHtml]="(document.description.length > 200) ? (document.description | slice: 0 : 200) + '..' :
+            (document.description)"></p>
+          <button type="button" class="card-description link" (click)="popDescriptionViewerDialog()">Leer más</button>
+          <avatars-row [users]="collaborators" *ngIf="actionControlActivityList.includes(user.activityName)">
           </avatars-row>
         </div>
       </mat-card>

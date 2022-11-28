@@ -97,7 +97,7 @@
 
       <mat-card class="set-12 about-card">
         <p class="title">{{ solution.title }}</p>
-        <p class="description">{{ solution.description }}</p>
+        <p class="description" [innerHTML]="solution.description"></p>
       </mat-card>
     </div>
   </div>

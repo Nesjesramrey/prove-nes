@@ -5,6 +5,7 @@ import { MatStepper } from '@angular/material/stepper';
 import { TopicService } from 'src/app/services/topic.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { SolutionService } from 'src/app/services/solution.service';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 @Component({
   selector: '.add-document-theme',
@@ -18,12 +19,50 @@ export class AddDocumentThemeComponent implements OnInit {
   public addSolutionFormGroup!: FormGroup;
   public showThemeForm: boolean = true;
   public showSolutionForm: boolean = false;
-
   public canAddSolution: boolean = false;
   public submitted: boolean = false;
   @ViewChild('stepper') public stepper!: MatStepper;
   public topic: any = null;
   public fileNames: any = [];
+
+  public htmlContent: any = '';
+  public editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: '15rem',
+    minHeight: '5rem',
+    placeholder: 'Descripción...',
+    translate: 'no',
+    defaultParagraphSeparator: 'p',
+    defaultFontName: 'Arial',
+    toolbarHiddenButtons: [
+      [
+        'strikeThrough',
+        'subscript',
+        'superscript',
+        'justifyLeft',
+        'justifyCenter',
+        'justifyRight',
+        'justifyFull',
+        'indent',
+        'outdent',
+        'insertUnorderedList',
+        'insertOrderedList',
+        'heading',
+      ],
+      [
+        'textColor',
+        'backgroundColor',
+        'customClasses',
+        'unlink',
+        'insertImage',
+        'insertVideo',
+        'insertHorizontalRule',
+        'removeFormat',
+        'toggleEditorMode'
+      ]
+    ]
+  };
 
   constructor(
     public formBuilder: FormBuilder,
@@ -69,7 +108,7 @@ export class AddDocumentThemeComponent implements OnInit {
     let data: any = {
       layout_id: this.dialogData['categoryID'],
       formData: new FormData()
-    }
+    };
 
     Array.from(this.addThemeFormGroup.controls['files']['value'])
       .forEach((file: any) => { data['formData'].append('files', file); });
@@ -83,7 +122,6 @@ export class AddDocumentThemeComponent implements OnInit {
         this.submitted = false;
       },
       next: (reply: any) => {
-        // console.log(reply);
         this.canAddSolution = true;
         this.submitted = false;
         this.fileNames = []
@@ -105,6 +143,7 @@ export class AddDocumentThemeComponent implements OnInit {
       .forEach((file: any) => { data['formData'].append('files', file); });
     data['formData'].append('title', form['value']['title']);
     data['formData'].append('description', form['value']['description']);
+    data['formData'].append('coverage', JSON.stringify([this.dialogData['coverage']['_id']]));
 
     this.solutionService.createNewSolution(data).subscribe((reply: any) => {
       this.submitted = false;

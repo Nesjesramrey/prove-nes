@@ -9,6 +9,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { map, startWith } from 'rxjs/operators';
 import { DocumentService } from 'src/app/services/document.service';
 import { AddRootCategoryComponent } from '../add-root-category/add-root-category.component';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 @Component({
   selector: '.add-document-layout',
@@ -32,6 +33,44 @@ export class AddDocumentLayoutComponent implements OnInit {
   public addCategoryFormGroup!: FormGroup;
   public isSubmitted: boolean = false;
   public fileNames: any = [];
+  public htmlContent: any = '';
+  public editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: '15rem',
+    minHeight: '5rem',
+    placeholder: 'Descripción...',
+    translate: 'no',
+    defaultParagraphSeparator: 'p',
+    defaultFontName: 'Arial',
+    toolbarHiddenButtons: [
+      [
+        'strikeThrough',
+        'subscript',
+        'superscript',
+        'justifyLeft',
+        'justifyCenter',
+        'justifyRight',
+        'justifyFull',
+        'indent',
+        'outdent',
+        'insertUnorderedList',
+        'insertOrderedList',
+        'heading',
+      ],
+      [
+        'textColor',
+        'backgroundColor',
+        'customClasses',
+        'unlink',
+        'insertImage',
+        'insertVideo',
+        'insertHorizontalRule',
+        'removeFormat',
+        'toggleEditorMode'
+      ]
+    ]
+  };
 
   constructor(
     public dialogRef: MatDialogRef<AddDocumentLayoutComponent>,

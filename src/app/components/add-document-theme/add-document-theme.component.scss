@@ -1,5 +1,9 @@
 :host {
-  min-height: 170px;
+  // min-height: 170px;
+  padding: 20px;
+  float: left;
+  width: 70%;
+  margin: 0 15%;
 
   .dialog-head {
     display: flex;
@@ -16,12 +20,42 @@
     background: transparent !important;
   }
 
+  .mat-stepper-horizontal,
+  .mat-stepper-vertical {
+    background: transparent !important;
+  }
+
   ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
     margin: 0;
   }
 
-  ::ng-deep .mat-horizontal-stepper-header-container {
-    display: none !important;
+  ::ng-deep .angular-editor-toolbar {
+    background: transparent !important;
+    border: 0 !important;
+    border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1) !important;
+    padding: 10px !important;
+  }
+
+  // ::ng-deep .angular-editor-textarea {
+  //   resize: none !important;
+  // }
+
+  ::ng-deep .angular-editor .angular-editor-wrapper .angular-editor-textarea {
+    background: transparent !important;
+    margin: 0 !important;
+    border: 0 !important;
+    outline: none !important;
+    padding: 10px !important;
+  }
+
+  ::ng-deep .angular-editor .angular-editor-wrapper .angular-editor-placeholder {
+    padding: 10px !important;
+  }
+
+  .editor-form {
+    margin-bottom: 20px;
+    background: #ffffff;
+    border-radius: 5px;
   }
 
   .step-content {
@@ -107,7 +141,7 @@
   }
 
   .topic {
-    margin-bottom: 10px;
+    margin: 10px 0;
 
     h3 {
       margin-bottom: 10px;

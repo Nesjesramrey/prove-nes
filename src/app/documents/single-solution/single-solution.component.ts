@@ -287,11 +287,12 @@ export class SingleSolutionComponent implements OnInit {
 
   popEditSolutionDialog() {
     const dialogRef = this.dialog.open<EditSolutionDataComponent>(EditSolutionDataComponent, {
-      width: '640px',
+      // width: '640px',
       data: {
         solution: this.solution,
       },
-      disableClose: true
+      disableClose: true,
+      panelClass: 'full-dialog'
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
