@@ -6,24 +6,33 @@
   <div class="set-12">
     <breadcrumbs-component>
       <li>...</li>
-      <li [matTooltip]="document.title" matTooltipClass="tooltip" (click)="
-          utilityService.linkMe('/documentos-publicos/' + document._id)
-        ">
+      <li
+        [matTooltip]="document.title"
+        matTooltipClass="tooltip"
+        (click)="utilityService.linkMe('/documentos-publicos/' + document._id)"
+      >
         <!-- {{ document.title }} -->
         ...
       </li>
-      <li [matTooltip]="category.category.name" matTooltipClass="tooltip" (click)="
+      <li
+        [matTooltip]="category.category.name"
+        matTooltipClass="tooltip"
+        (click)="
           utilityService.linkMe(
             '/documentos-publicos/' +
               document._id +
               '/categoria/' +
               category._id
           )
-        ">
+        "
+      >
         ...
         <!-- {{ category.category.name }} -->
       </li>
-      <li [matTooltip]="subcategory.category.name" matTooltipClass="tooltip" (click)="
+      <li
+        [matTooltip]="subcategory.category.name"
+        matTooltipClass="tooltip"
+        (click)="
           utilityService.linkMe(
             '/documentos-publicos/' +
               document._id +
@@ -32,10 +41,14 @@
               '/subcategoria/' +
               subcategory._id
           )
-        ">
+        "
+      >
         {{ subcategory.category.name }}
       </li>
-      <li [matTooltip]="topic.title" matTooltipClass="tooltip" (click)="
+      <li
+        [matTooltip]="topic.title"
+        matTooltipClass="tooltip"
+        (click)="
           utilityService.linkMe(
             '/documentos-publicos/' +
               document._id +
@@ -46,7 +59,8 @@
               '/tema/' +
               topic._id
           )
-        ">
+        "
+      >
         {{ topic.shortTitle }}
       </li>
       <li [matTooltip]="solution.title" matTooltipClass="tooltip">
@@ -72,8 +86,10 @@
   <div class="set-12 txt-left" style="margin-bottom: 10px">
     <span class="created-by">
       Autor:
-      <span class="author">{{ solution.createdBy.firstname }}
-        {{ solution.createdBy.lastname }}</span>
+      <span class="author"
+        >{{ solution.createdBy.firstname }}
+        {{ solution.createdBy.lastname }}</span
+      >
     </span>
   </div>
 
@@ -97,7 +113,12 @@
                 </div>
 
                 <div class="set-12 vote-status">
-                  <button *ngIf="!userVoted" mat-raised-button color="accent" (click)="openModalVote()">
+                  <button
+                    *ngIf="!userVoted"
+                    mat-raised-button
+                    color="accent"
+                    (click)="openModalVote()"
+                  >
                     <strong>Votar</strong>
                   </button>
                   <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
@@ -108,26 +129,55 @@
 
           <div class="infohldr">
             <h3>{{ solution.title }}</h3>
-            <expanded-text [text]="solution.description" [title]="solution.title"></expanded-text>
+            <expanded-text
+              [text]="solution.description"
+              [title]="solution.title"
+            ></expanded-text>
           </div>
 
           <div class="icons">
-            <button type="button" mat-mini-fab color="warn" matTooltip="Agregar a favoritos" matTooltipClass="tooltip"
-              (click)="addFavorites()" *ngIf="!isFavorites">
+            <button
+              type="button"
+              mat-mini-fab
+              color="warn"
+              matTooltip="Agregar a favoritos"
+              matTooltipClass="tooltip"
+              (click)="addFavorites()"
+              *ngIf="!isFavorites"
+            >
               <mat-icon>favorite</mat-icon>
             </button>
 
-            <button type="button" mat-mini-fab color="accent" matTooltip="Agregar a favoritos" matTooltipClass="tooltip"
-              (click)="removeFavorites()" *ngIf="isFavorites">
+            <button
+              type="button"
+              mat-mini-fab
+              color="accent"
+              matTooltip="Agregar a favoritos"
+              matTooltipClass="tooltip"
+              (click)="removeFavorites()"
+              *ngIf="isFavorites"
+            >
               <mat-icon>favorite</mat-icon>
             </button>
 
-            <button type="button" mat-mini-fab color="warn" matTooltip="Agregar Comentario" matTooltipClass="tooltip"
-              (click)="popAddCommentsDialog()">
+            <button
+              type="button"
+              mat-mini-fab
+              color="warn"
+              matTooltip="Agregar Comentario"
+              matTooltipClass="tooltip"
+              (click)="popAddCommentsDialog()"
+            >
               <mat-icon>add_comment</mat-icon>
             </button>
-            <button type="button" mat-mini-fab color="warn" matTooltip="Agregar Testimonio" matTooltipClass="tooltip"
-              (click)="openModalTestimony()">
+            <button
+              type="button"
+              mat-mini-fab
+              color="warn"
+              matTooltip="Agregar Testimonio"
+              matTooltipClass="tooltip"
+              (click)="openModalTestimony()"
+            >
               <mat-icon>book</mat-icon>
             </button>
           </div>
@@ -150,7 +200,9 @@
     </div>
 
     <div class="set-3">
-      <public-documents-testimonials [data]="solution.testimonials"></public-documents-testimonials>
+      <public-documents-testimonials
+        [data]="solution.testimonials"
+      ></public-documents-testimonials>
     </div>
   </div>
 </div>

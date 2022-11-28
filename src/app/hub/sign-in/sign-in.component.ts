@@ -11,7 +11,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 @Component({
   selector: '.sign-in-page',
   templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.scss']
+  styleUrls: ['./sign-in.component.scss'],
 })
 export class SignInComponent implements OnInit {
   public signInFormGroup!: FormGroup;
@@ -39,32 +39,52 @@ export class SignInComponent implements OnInit {
 
   ngOnInit(): void {
     this.signInFormGroup = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.pattern(this.utilitySrvc.emailPattern), this.utilitySrvc.emailDomainValidator]],
-      password: ['', [Validators.required, Validators.minLength(3)]]
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(this.utilitySrvc.emailPattern),
+          this.utilitySrvc.emailDomainValidator,
+        ],
+      ],
+      password: ['', [Validators.required, Validators.minLength(3)]],
     });
   }
 
   popGreetingsDialog() {
-    const dialogRef = this.dialog.open<WelcomeDialogComponent>(WelcomeDialogComponent, {
-      width: '420px',
-      data: {},
-      disableClose: true
-    });
+    const dialogRef = this.dialog.open<WelcomeDialogComponent>(
+      WelcomeDialogComponent,
+      {
+        width: '420px',
+        data: {},
+        disableClose: true,
+      }
+    );
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) { }
+      if (reply != undefined) {
+      }
     });
   }
 
   onSignIn(form: FormGroup) {
     this.submitted = true;
 
-    this.angularFireAuth.signInWithEmailAndPassword(form['value']['email'], form['value']['password'])
+    this.angularFireAuth
+      .signInWithEmailAndPassword(
+        form['value']['email'],
+        form['value']['password']
+      )
       .then((reply: any) => {
         this.angularFireAuth.authState.subscribe((data: any) => {
           this.submitted = false;
-          localStorage.setItem('accessToken', data['multiFactor']['user']['accessToken']);
-          this.router.navigateByUrl('/', { state: { status: 'logout' } });
+          localStorage.setItem(
+            'accessToken',
+            data['multiFactor']['user']['accessToken']
+          );
+          // window.location.reload();
+          // this.utilitySrvc.linkMe('/');
+          this.router.navigate(['/'], { state: { status: 'logout' } });
         });
       })
       .catch((error: any) => {

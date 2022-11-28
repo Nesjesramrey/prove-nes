@@ -3,6 +3,29 @@
   background: #00031d;
   position: relative;
 
+  .containercategory{
+    margin: 0px 0px 0px 2rem;
+
+    display: flex;
+    justify-content: flex-end;
+  }
+  .btncategory{
+    margin: 1rem;
+    color: white;
+    font-size: 1vw;
+  }
+  .circle-collaborador{
+    margin: .5rem -10px .5rem 0px;
+    background: aquamarine;
+    height: 40px;
+    width: 40px;
+    min-width: 40px;
+    border-radius: 50%;
+    display: inline-block;
+    border-color: white;
+    border-style: solid;
+    border-width: medium;
+  }
   .featured-users {
     padding: 10px 20px;
   }
@@ -30,7 +53,7 @@
 
     .grayback {
       height: 44px;
-      width: 40%;
+      // width: 10%;
       background: rgba(255, 255, 255, 0.5);
       position: absolute;
       top: 0;
@@ -70,6 +93,8 @@
     .catname:hover {
       color: #FF6D00
     }
+   
+    
 
     .fav {
       width: 34px;

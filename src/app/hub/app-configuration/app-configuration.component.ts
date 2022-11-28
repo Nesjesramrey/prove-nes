@@ -7,7 +7,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 @Component({
   selector: '.app-configuration-page',
   templateUrl: './app-configuration.component.html',
-  styleUrls: ['./app-configuration.component.scss']
+  styleUrls: ['./app-configuration.component.scss'],
 })
 export class AppConfigurationComponent implements OnInit {
   public token: any = null;
@@ -26,7 +26,9 @@ export class AppConfigurationComponent implements OnInit {
   ngOnInit(): void {
     if (this.token != null) {
       this.payload = JSON.parse(atob(this.token.split('.')[1]));
-      let user: Observable<any> = this.userService.fetchUserById({ _id: this.payload['sub'] });
+      let user: Observable<any> = this.userService.fetchUserById({
+        _id: this.payload['sub'],
+      });
       forkJoin([user]).subscribe((reply: any) => {
         this.user = reply[0]['user'];
         // console.log(this.user);
