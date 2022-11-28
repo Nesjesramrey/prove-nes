@@ -54,7 +54,7 @@ export class PublicComponent implements OnInit {
         this.layouts = this.document['layouts'];
         this.collaborators = this.document['collaborators'];
 
-        console.log(this.document);
+        // console.log(this.document);
         if (this.coverageSelected == null) {
           this.coverageSelected = this.coverage[0]['_id'];
         }
