@@ -1,14 +1,14 @@
 <div class="set-12 featured-users">
   <div class="featured-users-circles"></div>
 </div>
-<div class="containercategory">
+<!-- <div class="containercategory">
   <div class="circle-collaborador">.</div>
   <div *ngFor="let layout of layouts">
     <div class="circle-collaborador"></div>
   </div>
 
   <button class="btncategory">Categorias</button>
-</div>
+</div> -->
 <div class="set-12 bars">
   <div class="set-12 inner-bar" *ngFor="let layout of layouts">
     <!-- <button
@@ -33,25 +33,15 @@
       </button>
     </div>
 
-    <div
-      class="gradbar"
-      [style.min-width.%]="1"
-      [style.max-width]="'calc(100% - 70px)'"
-      [style.width.%]="layout.stats.score"
-      [matTooltip]="layout.stats.score + '%'"
-      matTooltipClass="tooltip"
-      matTooltipPosition="right"
-    ></div>
+    <div class="gradbar" [style.min-width.%]="1" [style.max-width]="'calc(100% - 70px)'"
+      [style.width.%]="layout.stats.score" [matTooltip]="layout.stats.score + '%'" matTooltipClass="tooltip"
+      matTooltipPosition="right"></div>
 
-    <button
-      type="button"
-      class="catname"
-      (click)="
+    <button type="button" class="catname" (click)="
         linkMe(
           '/documentos-publicos/' + document_id + '/categoria/' + layout._id
         )
-      "
-    >
+      ">
       <small>{{ layout.category.name }}</small>
     </button>
   </div>

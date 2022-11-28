@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { WelcomeDialogComponent } from 'src/app/components/welcome-dialog/welcome-dialog.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { DocumentService } from 'src/app/services/document.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
@@ -18,6 +19,7 @@ export class SignInComponent implements OnInit {
   public submitted: boolean = false;
   public hide: boolean = true;
   public isMobile: boolean = false;
+  public document: any = null;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -27,7 +29,8 @@ export class SignInComponent implements OnInit {
     public router: Router,
     public activatedRoute: ActivatedRoute,
     public dialog: MatDialog,
-    public deviceDetectorService: DeviceDetectorService
+    public deviceDetectorService: DeviceDetectorService,
+    public documentService: DocumentService
   ) {
     this.activatedRoute.queryParams.subscribe((params) => {
       if (params['from'] != undefined) {
@@ -48,6 +51,13 @@ export class SignInComponent implements OnInit {
         ],
       ],
       password: ['', [Validators.required, Validators.minLength(3)]],
+    });
+
+    this.documentService.fetchCoverDocument().subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        this.document = reply;
+      },
     });
   }
 
@@ -84,7 +94,8 @@ export class SignInComponent implements OnInit {
           );
           // window.location.reload();
           // this.utilitySrvc.linkMe('/');
-          this.router.navigate(['/'], { state: { status: 'logout' } });
+          // this.router.navigate(['/'], { state: { status: 'logout' } });
+          this.router.navigate(['/documentos-publicos/' + this.document['_id']], { state: { status: 'logout' } });
         });
       })
       .catch((error: any) => {

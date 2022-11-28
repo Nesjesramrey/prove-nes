@@ -52,7 +52,7 @@ export class AppPageletComponent implements OnInit {
     public formBuilder: FormBuilder,
     public searchService: SearchService,
     public userService: UserService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.reset();
@@ -103,7 +103,7 @@ export class AppPageletComponent implements OnInit {
       }
     });
     this.userService.onLogin.subscribe((data: any) => {
-      console.log('data: ', data);
+      // console.log('data: ', data);
       this.user = data;
     });
   }
@@ -172,7 +172,7 @@ export class AppPageletComponent implements OnInit {
       }
     );
 
-    dialogRef.afterClosed().subscribe((reply: any) => {});
+    dialogRef.afterClosed().subscribe((reply: any) => { });
   }
 
   getRedirectUrl() {
@@ -226,7 +226,7 @@ export class AppPageletComponent implements OnInit {
         this.searchService.searchSubject.next(reply);
         this.utilitySrvc.linkMe('/search');
       },
-      complete: () => {},
+      complete: () => { },
     });
   }
 
