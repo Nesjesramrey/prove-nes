@@ -23,7 +23,8 @@ export class EndPointService {
 
   // documents
   public createNewDocumentEndPoint: string = '/document';
-  public fetchSingleDocumentByIdEndPoint: string = '/yoorco-dev/document/';
+  // public fetchSingleDocumentByIdEndPoint: string = '/yoorco-dev/document/';
+  public fetchSingleDocumentByIdEndPoint: string = '/document/';
   public fetchDocumentsByCollaboratorEndPoint: string =
     '/document/collaborator/';
   public createDocumentLayoutEndPoint: string = '/layout/document/';
