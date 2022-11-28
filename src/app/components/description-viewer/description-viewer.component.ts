@@ -14,7 +14,7 @@ export class DescriptionViewerComponent implements OnInit {
     public dialogRef: MatDialogRef<DescriptionViewerComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: { text: string; title: string },
   ) {
-    // console.log(this.dialogData);
+    console.log(this.dialogData);
   }
 
   ngOnInit(): void {

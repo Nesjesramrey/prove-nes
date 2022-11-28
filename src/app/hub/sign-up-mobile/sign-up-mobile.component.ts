@@ -9,6 +9,9 @@ import { SetAvatarDialogComponent } from 'src/app/components/set-avatar-dialog/s
 import { DocumentService } from 'src/app/services/document.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 export interface Fruit {
   name: string;
@@ -29,6 +32,7 @@ export class SignUpMobileComponent implements OnInit {
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   public addOnBlur = true;
   public hide: boolean = true;
+  public user: any = null;
 
   public stepOneFormGroup!: FormGroup;
   public stepTwoFormGroup!: FormGroup;
@@ -48,19 +52,22 @@ export class SignUpMobileComponent implements OnInit {
     public documentService: DocumentService,
     public dialog: LyDialog,
     public utilityService: UtilityService,
-    public angularFireAuth: AngularFireAuth
+    public angularFireAuth: AngularFireAuth,
+    public router: Router,
+    public authenticationSrvc: AuthenticationService,
+    public angularFireStore: AngularFirestore
   ) { }
 
   ngOnInit(): void {
     this.signupFormGroup = this.formBuilder.group({
       firstname: ['', [Validators.required]],
       lastname: ['', [Validators.required]],
-      alias: ['', []],
+      // alias: ['', []],
       email: ['', [Validators.required]],
       password: ['', [Validators.required]],
       phone: ['', []],
-      associationTypology: ['', []],
-      associationName: ['', []],
+      // associationTypology: ['', []],
+      // associationName: ['', []],
       associationDescription: ['', []],
       associationInterests: ['', []]
     });
@@ -82,10 +89,10 @@ export class SignUpMobileComponent implements OnInit {
       lastname: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.pattern(this.utilityService.emailPattern), this.utilityService.emailDomainValidator]],
       password: ['', [Validators.required, Validators.minLength(9)]],
-      associationTypology: ['', [Validators.required]],
-      associationName: [null, []]
+      // associationTypology: ['', [Validators.required]],
+      // associationName: [null, []]
     });
-    this.stepOneFormGroup.get('associationName')?.disable();
+    // this.stepOneFormGroup.get('associationName')?.disable();
 
     this.legalsFormGroup = this.formBuilder.group({
       terms: [true, [Validators.required]],
@@ -168,7 +175,7 @@ export class SignUpMobileComponent implements OnInit {
   addHappyItem(event: MatChipInputEvent) {
     const value = (event.value || '').trim();
     if (value) {
-      this.happyArray.push(value);
+      this.happyArray.push({ name: value });
     }
     event.chipInput!.clear();
   }
@@ -183,7 +190,7 @@ export class SignUpMobileComponent implements OnInit {
   addSadItem(event: MatChipInputEvent) {
     const value = (event.value || '').trim();
     if (value) {
-      this.sadArray.push(value);
+      this.sadArray.push({ name: value });
     }
     event.chipInput!.clear();
   }
@@ -195,25 +202,61 @@ export class SignUpMobileComponent implements OnInit {
     }
   }
 
-  onRegister(form: FormGroup) {
+  onRegister() {
     this.submitted = true;
-    let email: any = form['value']['email'];
-    let password: any = form['value']['password'];
 
-    return;
+    let firstname = this.stepOneFormGroup['value']['firstname'];
+    let lastname = this.stepOneFormGroup['value']['lastname'];
+    firstname = this.utilityService.capitalizeFirstLetter(firstname);
+    lastname = this.utilityService.capitalizeFirstLetter(lastname);
+    let email: any = this.stepOneFormGroup['value']['email'].toLowerCase();
+    let password: any = this.stepOneFormGroup['value']['password'];
 
+    this.angularFireAuth.createUserWithEmailAndPassword(email, password).then((reply: any) => {
+      this.SetUserData(reply['user']);
+      this.SendVerificationMail();
+      this.user = reply['user']['multiFactor']['user'];
 
-    let data = new FormData();
-    if (this.file != null) { data.append('file', this.file, 'avatar.jpg'); }
-    data.append('firstname', form['value']['firstname']);
-    data.append('lastname', form['value']['lastname']);
-    data.append('alias', form['value']['alias']);
-    data.append('email', form['value']['email']);
-    data.append('password', form['value']['password']);
-    data.append('phone', form['value']['phone']);
-    data.append('associationTypology', form['value']['associationTypology']);
-    data.append('associationName', form['value']['associationName']);
-    data.append('associationDescription', form['value']['associationDescription']);
-    data.append('associationInterests', JSON.stringify(form['value']['associationInterests']));
+      let signUpData = new FormData();
+      signUpData.append('firebaseUID', this.user['uid']);
+      signUpData.append('firstname', this.stepOneFormGroup['value']['firstname']);
+      signUpData.append('lastname', this.stepOneFormGroup['value']['lastname']);
+      signUpData.append('email', this.stepOneFormGroup['value']['email']);
+      signUpData.append('password', this.stepOneFormGroup['value']['password']);
+      signUpData.append('associationInterests', JSON.stringify(this.happyArray));
+      signUpData.append('uninterestingTopics', JSON.stringify(this.sadArray));
+
+      this.authenticationSrvc.signup(signUpData).subscribe((reply: any) => {
+        console.log(reply);
+        localStorage.setItem('accessToken', this.user['accessToken']);
+        this.router.navigateByUrl('/documentos-publicos/' + this.document['_id'], { state: { status: 'logout' } });
+      });
+    }).catch((error: any) => {
+      switch (error['code']) {
+        case 'auth/email-already-in-use':
+          this.utilityService.openErrorSnackBar('El correo electrónico ya esta en uso.');
+          break;
+      }
+      this.submitted = false;
+    });
+  }
+
+  SendVerificationMail() {
+    return this.angularFireAuth.currentUser.then((u: any) => u.sendEmailVerification())
+      .then(() => { });
+  }
+
+  SetUserData(user: any) {
+    const userRef: any = this.angularFireStore.doc(`users/${user.uid}`);
+    const userData: any = {
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      emailVerified: user.emailVerified,
+    };
+    return userRef.set(userData, {
+      merge: true,
+    });
   }
 }

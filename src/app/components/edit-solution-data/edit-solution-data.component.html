@@ -4,7 +4,16 @@
 
 <div class="set-12" *ngIf="isDataAvailable">
   <div class="set-12 dialog-head">
-    <!-- <h3>{{solution.title}}</h3> -->
+    <div class="set-9">
+      <h3>{{solution.title}}</h3>
+    </div>
+
+    <div class="set-3 txt-right">
+      <button type="button" mat-icon-button color="primary" (click)="killDialog()" [disabled]="submitted"
+        matTooltip="Cerrar" matTooltipClass="tooltip">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </div>
   </div>
 
   <div class="set-12 dialog-body">
@@ -16,15 +25,18 @@
         </mat-form-field>
       </div>
 
-      <mat-form-field appearance="outline">
+      <!-- <mat-form-field appearance="outline">
         <mat-label>Descripción</mat-label>
         <textarea matInput cdkTextareaAutosize formControlName="description"></textarea>
-      </mat-form-field>
+      </mat-form-field> -->
+      <div class="set-12 editor-form">
+        <angular-editor formControlName="description" [config]="editorConfig"></angular-editor>
+      </div>
 
       <div class="set-12 ctrls">
-        <button type="button" mat-raised-button color="accent" [disabled]="submitted" (click)="killDialog()">
+        <!-- <button type="button" mat-raised-button color="accent" [disabled]="submitted" (click)="killDialog()">
           <small>Cancelar</small>
-        </button>
+        </button> -->
         <button type="submit" mat-raised-button color="primary" [disabled]="formGroup.invalid || submitted">
           <small>Guardar</small>
         </button>

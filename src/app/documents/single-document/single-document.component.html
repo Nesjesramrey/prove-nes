@@ -6,7 +6,7 @@
   <div class="set-12">
     <breadcrumbs-component>
       <li>Documentos</li>
-      <li>{{document.title}}</li>
+      <li>{{ document.title }}</li>
     </breadcrumbs-component>
   </div>
 
@@ -14,15 +14,22 @@
     <!-- <span class="created-by">
       Autor: <span class="author">{{document.createdBy.firstname}} {{document.createdBy.lastname}}</span>
     </span> -->
-    <span class="created-by">Autor: <span class="author">Mexicolectivo</span> </span>
+    <span class="created-by"
+      >Autor: <span class="author">Mexicolectivo</span>
+    </span>
   </div>
 
   <div class="set-12">
     <div class="set-3 col-lft">
       <mat-card class="set-12 doc-description">
         <div class="set-12 imghldr">
-          <mat-icon class="pano" *ngIf="document.images.length == 0">panorama</mat-icon>
-          <slider-images [images]="document.images" *ngIf="document.images.length != 0"></slider-images>
+          <mat-icon class="pano" *ngIf="document.images.length == 0"
+            >panorama</mat-icon
+          >
+          <slider-images
+            [images]="document.images"
+            *ngIf="document.images.length != 0"
+          ></slider-images>
           <div class="overlay" (click)="popImageViewer()">
             <mat-icon color="accent">photo_camera</mat-icon>
             <div class="cover"></div>
@@ -31,45 +38,77 @@
 
         <div class="set-12 infohldr">
           <div class="set-12 card-title">
-            <div class="set-10">{{document.title}}</div>
+            <div class="set-10">{{ document.title }}</div>
             <div class="set-2 txt-right">
-              <button type="button" [matMenuTriggerFor]="menu"
-                [disabled]="!actionControlActivityList.includes(user.activityName)">
+              <button
+                type="button"
+                [matMenuTriggerFor]="menu"
+                [disabled]="
+                  !actionControlActivityList.includes(user.activityName)
+                "
+              >
                 <mat-icon>more_vert</mat-icon>
               </button>
 
               <mat-menu #menu="matMenu">
-                <button type="button" mat-menu-item (click)="popEditDocumentDialog()">
+                <button
+                  type="button"
+                  mat-menu-item
+                  (click)="popEditDocumentDialog()"
+                >
                   <mat-icon>settings</mat-icon>
                   <span>Editar documento</span>
                 </button>
 
-                <button type="button" mat-menu-item (click)="popDocumentComments()">
+                <button
+                  type="button"
+                  mat-menu-item
+                  (click)="popDocumentComments()"
+                >
                   <mat-icon>question_answer</mat-icon>
                   <span>Ver comentarios</span>
                 </button>
 
-                <button type="button" mat-menu-item (click)="popWindowAlertDialog()" [disabled]="document.inCover">
+                <button
+                  type="button"
+                  mat-menu-item
+                  (click)="popWindowAlertDialog()"
+                  [disabled]="document.inCover"
+                >
                   <mat-icon>home</mat-icon>
                   <span>Usar como portada</span>
                 </button>
 
-                <button type="button" mat-menu-item (click)="popAddCoverTextDialog()">
+                <button
+                  type="button"
+                  mat-menu-item
+                  (click)="popAddCoverTextDialog()"
+                >
                   <mat-icon>edit_note</mat-icon>
-                  <span>{{document.coverDescription ? 'Editar' : 'Agregar'}} texto portada</span>
+                  <span
+                    >{{
+                      document.coverDescription ? "Editar" : "Agregar"
+                    }}
+                    texto portada</span
+                  >
                 </button>
 
-                <button type="button" mat-menu-item (click)="setDocumentAsPublicPrivate()">
+                <button
+                  type="button"
+                  mat-menu-item
+                  (click)="setDocumentAsPublicPrivate()"
+                >
                   <mat-icon>lock</mat-icon>
-                  <span>Marcar como {{document.isPublic ? 'Privado' : 'Público'}}</span>
+                  <span
+                    >Marcar como
+                    {{ document.isPublic ? "Privado" : "Público" }}</span
+                  >
                 </button>
               </mat-menu>
             </div>
           </div>
-          <p class="card-description" *ngIf="document.description != null">
-            {{ (document.description.length > 200) ? (document.description | slice: 0 : 200) + '..' :
-            (document.description) }}
-          </p>
+          <p class="card-description" *ngIf="document.description != null" [innerHtml]="(document.description.length > 200) ? (document.description | slice: 0 : 200) + '..' :
+            (document.description)"></p>
           <button type="button" class="card-description link" (click)="popDescriptionViewerDialog()">Leer más</button>
           <avatars-row [users]="collaborators" *ngIf="actionControlActivityList.includes(user.activityName)">
           </avatars-row>
@@ -85,7 +124,7 @@
           </div>
           <div class="set-8">
             <p><small>Usuarios</small></p>
-            <strong>{{collaborators.length}}</strong>
+            <strong>{{ collaborators.length }}</strong>
           </div>
         </div>
 
@@ -109,24 +148,41 @@
           <mat-form-field appearance="outline">
             <mat-label>Cobertura</mat-label>
             <mat-select (selectionChange)="onSelectCoverage($event)">
-              <mat-option *ngFor="let option of document.coverage" [value]="option._id" [disabled]="!option.enabled">
-                <small>{{option.name | titlecase}}</small>
+              <mat-option
+                *ngFor="let option of document.coverage"
+                [value]="option._id"
+                [disabled]="!option.enabled"
+              >
+                <small>{{ option.name | titlecase }}</small>
               </mat-option>
             </mat-select>
           </mat-form-field>
         </div>
 
         <div class="set-8 txt-right">
-          <button type="button" mat-mini-fab color="primary" class="mini" matTooltip="Agregar Comentario"
-            (click)="popAddCommentsDialog()">
+          <button
+            type="button"
+            mat-mini-fab
+            color="primary"
+            class="mini"
+            matTooltip="Agregar Comentario"
+            (click)="popAddCommentsDialog()"
+          >
             <mat-icon>add_comment</mat-icon>
           </button>
           <!-- <button type="button" mat-mini-fab color="primary" class="mini" matTooltip="Agregar Colaborador"
             (click)="popAddDocumentCollaborator()">
             <mat-icon>person_add</mat-icon>
           </button> -->
-          <button type="button" mat-mini-fab color="warn" class="mini" matTooltip="Agregar Categoría"
-            (click)="popAddDocumentCategory()" *ngIf="actionControlActivityList.includes(user.activityName)">
+          <button
+            type="button"
+            mat-mini-fab
+            color="warn"
+            class="mini"
+            matTooltip="Agregar Categoría"
+            (click)="popAddDocumentCategory()"
+            *ngIf="actionControlActivityList.includes(user.activityName)"
+          >
             <mat-icon>create_new_folder</mat-icon>
           </button>
         </div>
@@ -172,7 +228,12 @@
               [disabled]="layouts.length == 0"> -->
             <mat-form-field appearance="outline">
               <mat-label>Búscar en categorías...</mat-label>
-              <input matInput type="text" (keyup)="applyFilter($event)" [disabled]="layouts.length == 0">
+              <input
+                matInput
+                type="text"
+                (keyup)="applyFilter($event)"
+                [disabled]="layouts.length == 0"
+              />
               <button matSuffix mat-icon-button>
                 <mat-icon>search</mat-icon>
               </button>
@@ -183,95 +244,166 @@
             <p>
               <small>Sin categorías disponibles.</small>
             </p>
-            <button type="button" mat-raised-button color="primary" (click)="popAddDocumentCategory()">
+            <button
+              type="button"
+              mat-raised-button
+              color="primary"
+              (click)="popAddDocumentCategory()"
+            >
               <small>Agregar Categoría</small>
             </button>
           </div>
 
-          <table mat-table [dataSource]="dataSource" class="categories-table" *ngIf="layouts.length != 0">
+          <table
+            mat-table
+            [dataSource]="dataSource"
+            class="categories-table"
+            *ngIf="layouts.length != 0"
+          >
             <ng-container matColumnDef="name">
               <th mat-header-cell *matHeaderCellDef>Categoría</th>
-              <td mat-cell *matCellDef=" let element">
-                <button type="button" class="catbtn" [disabled]="!element.access"
-                  (click)="LinkMe('/documentos/' + document._id + '/categoria/' + element.id)">
+              <td mat-cell *matCellDef="let element">
+                <button
+                  type="button"
+                  class="catbtn"
+                  [disabled]="!element.access"
+                  (click)="
+                    LinkMe(
+                      '/documentos/' + document._id + '/categoria/' + element.id
+                    )
+                  "
+                >
                   <mat-icon>question_answer</mat-icon>
-                  <small>{{element.name}}</small>
+                  <small>{{ element.name }}</small>
                 </button>
               </td>
             </ng-container>
 
             <ng-container matColumnDef="users">
-              <th mat-header-cell *matHeaderCellDef> Usuarios </th>
+              <th mat-header-cell *matHeaderCellDef>Usuarios</th>
               <td mat-cell *matCellDef="let element">
                 <!-- <small>{{element.accessControlList.length || 'NA'}}</small> -->
               </td>
             </ng-container>
 
             <ng-container matColumnDef="interactions">
-              <th mat-header-cell *matHeaderCellDef> Interacciones</th>
+              <th mat-header-cell *matHeaderCellDef>Interacciones</th>
               <td mat-cell *matCellDef="let element">
-                <small>{{element.interactions || 'NA'}}</small>
+                <small>{{ element.interactions || "NA" }}</small>
               </td>
             </ng-container>
 
             <ng-container matColumnDef="solutions">
-              <th mat-header-cell *matHeaderCellDef> Soluciones</th>
+              <th mat-header-cell *matHeaderCellDef>Soluciones</th>
               <td mat-cell *matCellDef="let element">
-                <small>{{element.solutions || 'NA'}}</small>
+                <small>{{ element.solutions || "NA" }}</small>
               </td>
             </ng-container>
 
             <ng-container matColumnDef="problems">
-              <th mat-header-cell *matHeaderCellDef> Problemas</th>
+              <th mat-header-cell *matHeaderCellDef>Problemas</th>
               <td mat-cell *matCellDef="let element">
                 <!-- <small>{{ element.topics.length }}</small> -->
               </td>
             </ng-container>
 
             <ng-container matColumnDef="ranking">
-              <th mat-header-cell *matHeaderCellDef> Ranking</th>
+              <th mat-header-cell *matHeaderCellDef>Ranking</th>
               <td mat-cell *matCellDef="let element">
-                <small>{{element.ranking || 'NA'}}</small>
+                <small>{{ element.ranking || "NA" }}</small>
               </td>
             </ng-container>
 
             <ng-container matColumnDef="actions">
-              <th mat-header-cell *matHeaderCellDef> </th>
+              <th mat-header-cell *matHeaderCellDef></th>
               <td mat-cell *matCellDef="let element">
-                <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                <button
+                  type="button"
+                  mat-icon-button
+                  [matMenuTriggerFor]="menu"
+                >
                   <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                  <button type="button" mat-menu-item
-                    (click)="LinkMe('/documentos-publicos/' + document._id + '/categoria/' + element.id)"
-                    [disabled]="!element.access">
+                  <button
+                    type="button"
+                    mat-menu-item
+                    (click)="
+                      LinkMe(
+                        '/documentos-publicos/' +
+                          document._id +
+                          '/categoria/' +
+                          element.id
+                      )
+                    "
+                    [disabled]="!element.access"
+                  >
                     <mat-icon>groups</mat-icon>
                     <small>Abrir público</small>
                   </button>
-                  <button type="button" mat-menu-item
-                    (click)="LinkMe('/documentos/' + document._id + '/categoria/' + element.id)"
-                    [disabled]="!element.access">
+                  <button
+                    type="button"
+                    mat-menu-item
+                    (click)="
+                      LinkMe(
+                        '/documentos/' +
+                          document._id +
+                          '/categoria/' +
+                          element.id
+                      )
+                    "
+                    [disabled]="!element.access"
+                  >
                     <mat-icon>lock</mat-icon>
                     <small>Abrir privado</small>
                   </button>
-                  <button type="button" mat-menu-item *ngIf="!element.access" (click)="requestPermission(element)">
+                  <button
+                    type="button"
+                    mat-menu-item
+                    *ngIf="!element.access"
+                    (click)="requestPermission(element)"
+                  >
                     <mat-icon>vpn_key</mat-icon>
                     <small>Solicitar permiso</small>
                   </button>
-                  <button type="button" mat-menu-item *ngIf="actionControlActivityList.includes(user.activityName)">
+                  <button
+                    type="button"
+                    mat-menu-item
+                    *ngIf="
+                      actionControlActivityList.includes(user.activityName)
+                    "
+                  >
                     <mat-icon>settings</mat-icon>
                     <small>Editar</small>
                   </button>
-                  <button type="button" mat-menu-item *ngIf="actionControlActivityList.includes(user.activityName)">
+                  <button
+                    type="button"
+                    mat-menu-item
+                    *ngIf="
+                      actionControlActivityList.includes(user.activityName)
+                    "
+                  >
                     <mat-icon>drag_handle</mat-icon>
                     <small>Duplicar</small>
                   </button>
-                  <button type="button" mat-menu-item *ngIf="actionControlActivityList.includes(user.activityName)">
+                  <button
+                    type="button"
+                    mat-menu-item
+                    *ngIf="
+                      actionControlActivityList.includes(user.activityName)
+                    "
+                  >
                     <mat-icon>exit_to_app</mat-icon>
                     <small>Mover</small>
                   </button>
-                  <button type="button" mat-menu-item (click)="killLayout(element)"
-                    *ngIf="actionControlActivityList.includes(user.activityName)">
+                  <button
+                    type="button"
+                    mat-menu-item
+                    (click)="killLayout(element)"
+                    *ngIf="
+                      actionControlActivityList.includes(user.activityName)
+                    "
+                  >
                     <mat-icon>delete</mat-icon>
                     <small>Eliminar</small>
                   </button>
@@ -279,8 +411,14 @@
               </td>
             </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="categoriesDisplayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: categoriesDisplayedColumns;"></tr>
+            <tr
+              mat-header-row
+              *matHeaderRowDef="categoriesDisplayedColumns"
+            ></tr>
+            <tr
+              mat-row
+              *matRowDef="let row; columns: categoriesDisplayedColumns"
+            ></tr>
           </table>
         </mat-card>
       </div>

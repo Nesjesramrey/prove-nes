@@ -1,17 +1,13 @@
 <div>
-  <p class="card-description">
-    {{ arrayText[0] }}
-    <span *ngIf="!expanded && !isShortText">...</span>
+  <div class="card-description" [innerHTML]="arrayText[0]">
+    {{arrayText[0]}}
+    <!-- <span *ngIf="!expanded && !isShortText">...</span>
     <span *ngIf="expanded">
       {{ arrayText[1] }}
-    </span>
-  </p>
+    </span> -->
+  </div>
   <p class="card-description"></p>
-  <button
-    class="card-description link"
-    (click)="openModalDescription()"
-    *ngIf="!isShortText"
-  >
+  <button class="card-description link" (click)="openModalDescription()" *ngIf="!isShortText">
     {{ expanded ? "Leer menos" : "Leer más" }}
   </button>
 </div>

@@ -74,8 +74,12 @@
         </ng-template>
 
         <div class="set-12 step-content">
-          <form [formGroup]="stepOneFormGroup">
-            <div class="set-9">
+          <form class="editor-form" [formGroup]="stepOneFormGroup">
+            <div class="set-12">
+              <angular-editor formControlName="description" [config]="editorConfig"></angular-editor>
+            </div>
+
+            <!-- <div class="set-9">
               <mat-form-field appearance="outline">
                 <mat-label>Descripción</mat-label>
                 <textarea matInput cdkTextareaAutosize formControlName="description"></textarea>
@@ -86,8 +90,37 @@
               <button type="button" class="upload-img" (click)="file.click()">
                 <mat-icon>add_a_photo</mat-icon>
               </button>
-            </div>
+            </div> -->
           </form>
+
+          <div class="set-12 ctrls">
+            <button type="button" mat-raised-button color="primary" matStepperPrevious [disabled]="isSubmitted">
+              <small>Atras</small>
+            </button>
+
+            <button type="button" mat-raised-button color="primary" matStepperNext [disabled]="isSubmitted">
+              <small>Siguiente</small>
+            </button>
+          </div>
+        </div>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>
+          <small>Carga tus imágenes</small>
+        </ng-template>
+
+        <div class="set-12 step-content">
+          <button type="button" class="upload-img" (click)="file.click()">
+            <mat-icon>add_a_photo</mat-icon>
+          </button>
+
+          <div class="set-12 file-hldr">
+            <p *ngFor="let name of fileNames">
+              <small>{{name}}</small>
+            </p>
+          </div>
+
           <div class="set-12 ctrls">
             <button type="button" mat-raised-button color="primary" matStepperPrevious [disabled]="isSubmitted">
               <small>Atras</small>
@@ -98,12 +131,6 @@
             </button>
             <mat-spinner diameter="20" *ngIf="isSubmitted"></mat-spinner>
           </div>
-        </div>
-
-        <div class="set-12 file-hldr" *ngIf="fileNames.length != 0">
-          <p *ngFor="let name of fileNames">
-            <small>{{name}}</small>
-          </p>
         </div>
       </mat-step>
     </mat-stepper>

@@ -22,6 +22,8 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { SingleUserComponent } from './single-user/single-user.component';
 import { UserNotificationsComponent } from './user-notifications/user-notifications.component';
 import { AppConfigurationComponent } from './app-configuration/app-configuration.component';
+import { MapBoxComponent } from './components/map-box/map-box.component';
+import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
 import { SignInMobileComponent } from './sign-in-mobile/sign-in-mobile.component';
 import { SignUpMobileComponent } from './sign-up-mobile/sign-up-mobile.component';
 
@@ -42,7 +44,7 @@ import { SignUpMobileComponent } from './sign-up-mobile/sign-up-mobile.component
     LyCheckboxModule,
     LyDialogModule,
     IvyCarouselModule,
-    NgChartsModule
+    NgChartsModule,
   ],
   declarations: [
     HubComponent,
@@ -51,8 +53,9 @@ import { SignUpMobileComponent } from './sign-up-mobile/sign-up-mobile.component
     SingleUserComponent,
     UserNotificationsComponent,
     AppConfigurationComponent,
+    PasswordRecoveryComponent,
     SignInMobileComponent,
-    SignUpMobileComponent
+    SignUpMobileComponent,
   ],
 })
-export class HubComponentModule { }
+export class HubComponentModule {}

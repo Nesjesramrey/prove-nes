@@ -36,7 +36,12 @@
 
                 <input placeholder="..." #categoryInput [formControl]="categoryCtrl" [matAutocomplete]="auto"
                   [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                  (matChipInputTokenEnd)="addCategory($event)">
+                  (matChipInputTokenEnd)="addCategory($event)" (keyup.enter)="onEnter($event)">
+
+                <button mat-button matSuffix mat-icon-button color="warn" matTooltip="Agregar categoría"
+                  [disabled]="!addCategoryValidated">
+                  <mat-icon>add_circle</mat-icon>
+                </button>
               </mat-chip-list>
 
               <mat-autocomplete #auto="matAutocomplete" (optionSelected)="categorySelected($event)">
@@ -44,13 +49,16 @@
                   <small>{{category}}</small>
                 </mat-option>
               </mat-autocomplete>
+
+              <mat-hint *ngIf="addCategoryValidated">** ¡Esa categoría no existe! <br /> ** Puedes agregarla con el
+                botón a la derecha.</mat-hint>
             </mat-form-field>
           </div>
 
           <div class="set-12 ctrls">
-            <button type="button" mat-raised-button color="accent" (click)="popAddRootCategoryDialog()">
+            <!-- <button type="button" mat-raised-button color="accent" (click)="popAddRootCategoryDialog()">
               <small>Nueva Categoría</small>
-            </button>
+            </button> -->
             <button type="button" mat-raised-button color="primary" matStepperNext
               [disabled]="stepTwoFormGroup.invalid">
               <small>Siguiente</small>
@@ -65,8 +73,8 @@
         </ng-template>
 
         <div class="set-12 step-content">
-          <form [formGroup]="stepOneFormGroup">
-            <div class="set-9">
+          <form class="editor-form" [formGroup]="stepOneFormGroup">
+            <!-- <div class="set-9">
               <mat-form-field appearance="outline">
                 <mat-label>Descripción</mat-label>
                 <textarea matInput cdkTextareaAutosize formControlName="description"></textarea>
@@ -77,8 +85,38 @@
               <button type="button" class="upload-img" (click)="file.click()">
                 <mat-icon>add_a_photo</mat-icon>
               </button>
+            </div> -->
+            <div class="set-12">
+              <angular-editor formControlName="description" [config]="editorConfig"></angular-editor>
             </div>
           </form>
+
+          <div class="set-12 ctrls">
+            <button type="button" mat-raised-button color="primary" matStepperPrevious>
+              <small>Atras</small>
+            </button>
+            <button type="button" mat-raised-button color="primary" matStepperNext>
+              <small>Siguiente</small>
+            </button>
+          </div>
+        </div>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>
+          <small>Carga tus imágenes</small>
+        </ng-template>
+
+        <div class="set-12 step-content">
+          <button type="button" class="upload-img" (click)="file.click()">
+            <mat-icon>add_a_photo</mat-icon>
+          </button>
+
+          <div class="set-12 file-hldr">
+            <p *ngFor="let name of fileNames">
+              <small>{{name}}</small>
+            </p>
+          </div>
 
           <div class="set-12 ctrls">
             <button type="button" mat-raised-button color="primary" matStepperPrevious [disabled]="isSubmitted">
@@ -89,12 +127,6 @@
             </button>
             <mat-spinner diameter="20" *ngIf="isSubmitted"></mat-spinner>
           </div>
-        </div>
-
-        <div class="set-12 file-hldr" *ngIf="fileNames.length != 0">
-          <p *ngFor="let name of fileNames">
-            <small>{{name}}</small>
-          </p>
         </div>
       </mat-step>
     </mat-stepper>
