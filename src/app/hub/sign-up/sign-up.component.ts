@@ -77,15 +77,14 @@ export class SignUpComponent implements OnInit {
         localStorage.setItem('accessToken', this.user['accessToken']);
         this.router.navigateByUrl('/documentos-publicos/' + this.document['_id'], { state: { status: 'logout' } });
       });
-    })
-      .catch((error: any) => {
-        switch (error['code']) {
-          case 'auth/email-already-in-use':
-            this.utilitySrvc.openErrorSnackBar('El correo electrónico ya esta en uso.');
-            break;
-        }
-        this.submitted = false;
-      });
+    }).catch((error: any) => {
+      switch (error['code']) {
+        case 'auth/email-already-in-use':
+          this.utilitySrvc.openErrorSnackBar('El correo electrónico ya esta en uso.');
+          break;
+      }
+      this.submitted = false;
+    });
   }
 
   SendVerificationMail() {

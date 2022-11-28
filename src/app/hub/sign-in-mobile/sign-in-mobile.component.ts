@@ -38,7 +38,7 @@ export class SignInMobileComponent implements OnInit {
 
     this.angularFireAuth.signInWithEmailAndPassword(form['value']['email'], form['value']['password'])
       .then((reply: any) => {
-        console.log(reply);
+        // console.log(reply);
         this.angularFireAuth.authState.subscribe((data: any) => {
           this.submitted = false;
           localStorage.setItem('accessToken', data['multiFactor']['user']['accessToken']);
@@ -46,7 +46,7 @@ export class SignInMobileComponent implements OnInit {
         });
       })
       .catch((error: any) => {
-        console.log(error);
+        // console.log(error);
         this.submitted = false;
         switch (error['code']) {
           case 'auth/wrong-password':
