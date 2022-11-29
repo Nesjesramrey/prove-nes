@@ -1,0 +1,26 @@
+<div class="set-12 head-titles">
+  <span>Top 10 Soluciones</span>
+  <div class="line"></div>
+</div>
+
+<!-- <div class="set-12">
+  <div class="set-12" *ngFor="let solution of solutions">
+    {{solution.title}}
+  </div>
+</div> -->
+
+<div class="set-12 itemlist" *ngIf="solutions.length != 0">
+  <div class="set-12 item" *ngFor="let item of solutions">
+    <span mat-line>
+      <div mat-line>
+        <button type="button" class="linker" (click)="linkMe(item.url)">
+          {{ item.title }}
+        </button>
+      </div>
+    </span>
+    <div mat-line class="progress-bar" [matTooltip]="item.stats.score+' %'" matTooltipClass="tooltip"
+      matTooltipPosition="right">
+      <div id="progress" class="progress" [style.width.%]="item.stats.score"></div>
+    </div>
+  </div>
+</div>

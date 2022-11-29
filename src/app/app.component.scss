@@ -2,4 +2,27 @@
   .menuopen {
     left: 0 !important;
   }
+
+  .mobilenav {
+    position: fixed;
+  }
+
+  .innernav {
+    .innerbtn {
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        mat-icon {
+          margin-right: 10px;
+          font-size: 13pt;
+        }
+      }
+    }
+
+    * {
+      margin: 0;
+    }
+  }
 }

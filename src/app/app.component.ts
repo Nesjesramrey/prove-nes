@@ -13,6 +13,7 @@ import { DocumentService } from './services/document.service';
 import { response } from 'express';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { trigger, transition, animate, style } from '@angular/animations';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 const STYLES = (theme: ThemeVariables, ref: ThemeRef) => {
   const __ = ref.selectorsOf(STYLES);
@@ -60,7 +61,8 @@ export class AppComponent implements OnInit {
     public dialog: MatDialog,
     public socketService: SocketService,
     public documentService: DocumentService,
-    public deviceDetectorService: DeviceDetectorService
+    public deviceDetectorService: DeviceDetectorService,
+    public angularFireAuth: AngularFireAuth
   ) {
     this.accessToken = this.authenticationSrvc.fetchAccessToken;
     this.router.events.subscribe((val) => {
@@ -83,11 +85,11 @@ export class AppComponent implements OnInit {
       });
 
     this.documentService.fetchCoverDocument().subscribe({
-      error: (error: any) => {},
+      error: (error: any) => { },
       next: (reply: any) => {
         this.coverDocument = reply;
       },
-      complete: () => {},
+      complete: () => { },
     });
 
     if (this.accessToken != null) {
@@ -107,7 +109,7 @@ export class AppComponent implements OnInit {
             this.openCompleteRegistration();
           }
         },
-        complete: () => {},
+        complete: () => { },
       });
     } else {
       setTimeout(() => {
@@ -133,5 +135,19 @@ export class AppComponent implements OnInit {
 
   getMenuStatus(data: any) {
     this.open = data['open'];
+  }
+
+  onSignOut() {
+    this.open = !this.open;
+    setTimeout(() => {
+      return this.angularFireAuth.signOut().then(() => {
+        localStorage.removeItem('accessToken');
+        if (this.path == '/') {
+          window.location.reload();
+        } else {
+          this.router.navigateByUrl('/', { state: { status: 'logout' } });
+        }
+      });
+    }, 300);
   }
 }

@@ -20,6 +20,7 @@ export class EndPointService {
   public fetchUserByIdEndPoint: string = '/user/fetch-user-by-id';
   public fetchUserByFirebaseUIDEndPoint: string =
     '/user/fetch-user-by-firebase-uid';
+  public saveLayoutsCategoryPreferenceEndPoint: string = '/user/';
 
   // documents
   public createNewDocumentEndPoint: string = '/document';
@@ -157,5 +158,5 @@ export class EndPointService {
   public markPermissionAsAttendedEndPoint: string = '/permission/';
   public fetchPermissionByIdEndPoint: string = '/permission/';
 
-  constructor() {}
+  constructor() { }
 }

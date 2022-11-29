@@ -1,2 +1,10 @@
-<img src="../../../assets/images/mexicolectivo-small-blue.png" alt="">
-<small>Todos los derechos reservados https://mexicolectivo.com/</small>
+<div class="set-12" *ngIf="!isMobile">
+  <img src="../../../assets/images/mexicolectivo-small-blue.png" alt="Mexicolectivo">
+
+</div>
+
+<div class="set-12" *ngIf="isMobile" [class.fixmobile]="isMobile">
+  <img src="../../../assets/images/mexicolectivo-small-blue.png" alt="Mexicolectivo">
+  <p><small>Todos los derechos reservados</small></p>
+  <p><small>https://mexicolectivo.com/</small></p>
+</div>

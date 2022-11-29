@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: '.app-footer',
@@ -6,8 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app-footer.component.scss']
 })
 export class AppFooterComponent implements OnInit {
+  public isMobile: boolean = false;
 
-  constructor() { }
+  constructor(
+    public deviceDetectorService: DeviceDetectorService
+  ) {
+    this.isMobile = this.deviceDetectorService.isMobile();
+  }
 
   ngOnInit(): void { }
 }
