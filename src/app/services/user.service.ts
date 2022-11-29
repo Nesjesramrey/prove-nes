@@ -47,7 +47,7 @@ export class UserService {
   passwordRecovery(data: any) {
     return this.httpClient.post(
       this.endpointSrvc.apiEndPoint +
-        this.endpointSrvc.passwordRecoveryEndPoint,
+      this.endpointSrvc.passwordRecoveryEndPoint,
       data
     );
   }
@@ -55,7 +55,7 @@ export class UserService {
   fetchUserByFirebaseUID(data: any) {
     return this.httpClient.post(
       this.endpointSrvc.apiEndPoint +
-        this.endpointSrvc.fetchUserByFirebaseUIDEndPoint,
+      this.endpointSrvc.fetchUserByFirebaseUIDEndPoint,
       data
     );
   }
@@ -63,8 +63,8 @@ export class UserService {
   addUserPermissions(data: any) {
     return this.httpClient.put(
       this.endpointSrvc.apiEndPoint +
-        this.endpointSrvc.addUserPermissionsEndPoint +
-        `${data['userID']}`,
+      this.endpointSrvc.addUserPermissionsEndPoint +
+      `${data['userID']}`,
       data
     );
   }
@@ -72,10 +72,14 @@ export class UserService {
   uploadAvatarImageEndPoint(data: any) {
     return this.httpClient.put(
       this.endpointSrvc.apiEndPoint +
-        this.endpointSrvc.uploadAvatarImageEndPoint +
-        `${data['user_id']}` +
-        '/profile_picture',
+      this.endpointSrvc.uploadAvatarImageEndPoint +
+      `${data['user_id']}` +
+      '/profile_picture',
       data['formData']
     );
+  }
+
+  saveLayoutsCategoryPreference(data: any) {
+    return this.httpClient.put(this.endpointSrvc.apiEndPoint + this.endpointSrvc.saveLayoutsCategoryPreferenceEndPoint + `${data['user_id']}` + '/layout_category_preference', data);
   }
 }

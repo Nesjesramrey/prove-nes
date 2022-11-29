@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DocumentService } from 'src/app/services/document.service';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
@@ -27,7 +27,7 @@ export class PublicComponent implements OnInit {
   @ViewChild('dataViewport') public dataViewport!: ElementRef;
   public allDocumentSolutions: any[] = [];
   public isMobile: boolean = false;
-
+  @HostBinding('class') public class: string = '';
   constructor(
     public activatedRoute: ActivatedRoute,
     public documentService: DocumentService,
@@ -38,6 +38,7 @@ export class PublicComponent implements OnInit {
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.isMobile = this.deviceDetectorService.isMobile();
+    if (this.isMobile) { this.class = 'fixmobile'; }
   }
 
   ngOnInit(): void {

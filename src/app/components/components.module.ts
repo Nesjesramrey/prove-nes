@@ -60,6 +60,10 @@ import { WelcomeDialogComponent } from './welcome-dialog/welcome-dialog.componen
 import { AddCategoryDialogComponent } from './add-category-dialog/add-category-dialog.component';
 import { RequestEditPermissionComponent } from './request-edit-permission/request-edit-permission.component';
 import { GiveEditPermissionComponent } from './give-edit-permission/give-edit-permission.component';
+import { PublicDocumentMobileViewComponent } from './public-document-mobile-view/public-document-mobile-view.component';
+import { PublicDocumentMobileCategoryBarsComponent } from './public-document-mobile-category-bars/public-document-mobile-category-bars.component';
+import { PublicDocumentMobileRadarChartComponent } from './public-document-mobile-radar-chart/public-document-mobile-radar-chart.component';
+import { PublicDocumentMobileTopTenComponent } from './public-document-mobile-top-ten/public-document-mobile-top-ten.component';
 
 @NgModule({
   imports: [
@@ -123,7 +127,11 @@ import { GiveEditPermissionComponent } from './give-edit-permission/give-edit-pe
     WelcomeDialogComponent,
     AddCategoryDialogComponent,
     RequestEditPermissionComponent,
-    GiveEditPermissionComponent
+    GiveEditPermissionComponent,
+    PublicDocumentMobileViewComponent,
+    PublicDocumentMobileCategoryBarsComponent,
+    PublicDocumentMobileRadarChartComponent,
+    PublicDocumentMobileTopTenComponent
   ],
   exports: [
     AppPageletComponent,
@@ -165,7 +173,11 @@ import { GiveEditPermissionComponent } from './give-edit-permission/give-edit-pe
     WelcomeDialogComponent,
     AddCategoryDialogComponent,
     RequestEditPermissionComponent,
-    GiveEditPermissionComponent
+    GiveEditPermissionComponent,
+    PublicDocumentMobileViewComponent,
+    PublicDocumentMobileCategoryBarsComponent,
+    PublicDocumentMobileRadarChartComponent,
+    PublicDocumentMobileTopTenComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,

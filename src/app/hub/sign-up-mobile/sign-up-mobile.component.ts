@@ -12,6 +12,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { UserService } from 'src/app/services/user.service';
 
 export interface Fruit {
   name: string;
@@ -46,6 +47,7 @@ export class SignUpMobileComponent implements OnInit {
   public bagOfWords: any = ['Educación', 'Cultura', 'Política', 'Empleo', 'Arte', 'Delincuencia', 'Violencia', 'Salud'];
   public happyArray: any[] = [];
   public sadArray: any[] = [];
+  public layoutsCategoryPreference: any[] = [];
 
   constructor(
     public formBuilder: FormBuilder,
@@ -55,7 +57,8 @@ export class SignUpMobileComponent implements OnInit {
     public angularFireAuth: AngularFireAuth,
     public router: Router,
     public authenticationSrvc: AuthenticationService,
-    public angularFireStore: AngularFirestore
+    public angularFireStore: AngularFirestore,
+    public userService: UserService
   ) { }
 
   ngOnInit(): void {
@@ -82,13 +85,13 @@ export class SignUpMobileComponent implements OnInit {
 
     setTimeout(() => {
       this.isDataAvailable = true;
-    }, 1000);
+    }, 400);
 
     this.stepOneFormGroup = this.formBuilder.group({
-      firstname: ['', [Validators.required, Validators.minLength(2)]],
-      lastname: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.pattern(this.utilityService.emailPattern), this.utilityService.emailDomainValidator]],
-      password: ['', [Validators.required, Validators.minLength(9)]],
+      firstname: ['Jorge', [Validators.required, Validators.minLength(2)]],
+      lastname: ['Paredes', [Validators.required, Validators.minLength(2)]],
+      email: ['jalpate@outlook.es', [Validators.required, Validators.pattern(this.utilityService.emailPattern), this.utilityService.emailDomainValidator]],
+      password: ['KxElxnWsjsa77', [Validators.required, Validators.minLength(9)]],
       // associationTypology: ['', [Validators.required]],
       // associationName: [null, []]
     });
@@ -109,13 +112,30 @@ export class SignUpMobileComponent implements OnInit {
         this.document = reply;
         this.layouts = this.document['layouts'];
         this.sublayouts = this.layouts[0]['subLayouts'];
+        this.layouts.filter((x: any, i: any) => {
+          let obj: any = {
+            priority: i,
+            category: x['category']['_id']
+          }
+          this.layoutsCategoryPreference.push(obj);
+        });
       },
       complete: () => { }
     });
+
   }
 
   dragAndDropLayout(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.layouts, event.previousIndex, event.currentIndex);
+    this.layoutsCategoryPreference = [];
+    this.layouts.filter((x: any, i: any) => {
+      let obj: any = {
+        priority: i,
+        category: x['category']['_id']
+      }
+      this.layoutsCategoryPreference.push(obj);
+    });
+    // console.log(this.layoutsCategoryPreference);
   }
 
   dragAndDropSubLayout(event: CdkDragDrop<string[]>) {
@@ -123,8 +143,8 @@ export class SignUpMobileComponent implements OnInit {
   }
 
   onLayoutSelected(layout: any) {
-    this.viewSubLayouts = true;
-    this.sublayouts = layout['subLayouts'];
+    // this.viewSubLayouts = true;
+    // this.sublayouts = layout['subLayouts'];
   }
 
   hideSubLayouts() {
@@ -226,10 +246,24 @@ export class SignUpMobileComponent implements OnInit {
       signUpData.append('associationInterests', JSON.stringify(this.happyArray));
       signUpData.append('uninterestingTopics', JSON.stringify(this.sadArray));
 
-      this.authenticationSrvc.signup(signUpData).subscribe((reply: any) => {
-        console.log(reply);
-        localStorage.setItem('accessToken', this.user['accessToken']);
-        this.router.navigateByUrl('/documentos-publicos/' + this.document['_id'], { state: { status: 'logout' } });
+      // this.authenticationSrvc.signup(signUpData).subscribe((reply: any) => {
+      //   localStorage.setItem('accessToken', this.user['accessToken']);
+      //   this.router.navigateByUrl('/documentos-publicos/' + this.document['_id'], { state: { status: 'logout' } });
+      // });
+      this.authenticationSrvc.signup(signUpData).subscribe({
+        error: (error: any) => {
+          this.utilityService.openErrorSnackBar(this.utilityService.errorOops);
+        },
+        next: (reply: any) => {
+          this.userService.saveLayoutsCategoryPreference({
+            user_id: reply['_id'],
+            layoutsCategoryPreference: this.layoutsCategoryPreference
+          }).subscribe((reply: any) => { });
+        },
+        complete: () => {
+          localStorage.setItem('accessToken', this.user['accessToken']);
+          this.router.navigateByUrl('/documentos-publicos/' + this.document['_id'], { state: { status: 'logout' } });
+        }
       });
     }).catch((error: any) => {
       switch (error['code']) {
