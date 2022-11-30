@@ -1,0 +1,52 @@
+<div class="set-12 datahldr">
+  <div class="set-12 img-hldr" [ngStyle]="{
+    'background-image': category.images.length != 0 ? 'url(' + category.images[0] + ')' : 'url(' + 'assets/images/1200x-1.jpeg' + ')' 
+  }">
+    <div class="set-12 description">
+      <h3 class="txt-center">{{category.title}}</h3>
+      <div class="set-12 txt" *ngIf="category.description != null" [innerHtml]="(category.description.length > 100) ? (category.description | slice: 0 : 100) + '...' :
+    (category.description)"></div>
+      <button type="button">Leer más</button>
+    </div>
+    <div class="overlay"></div>
+  </div>
+
+  <div class="set-12 carddata">
+    <mat-card>
+      <div class="set-6">
+        <div class="image-box gray-icon-color">
+          <mat-icon>group</mat-icon>
+        </div>
+        <div class="set-12 texts-box">
+          <p class="name">
+            <small>Usuarios</small>
+          </p>
+          <p class="amount">
+            <small>{{category.stats?.users}}</small>
+          </p>
+        </div>
+      </div>
+
+      <div class="set-6">
+        <div class="set-12">
+          <div class="image-box red-icon-color">
+            <mat-icon>front_hand</mat-icon>
+          </div>
+        </div>
+        <div class="set-12 texts-box">
+          <p class="name">
+            <small>Interacciones</small>
+          </p>
+          <p class="amount">
+            <small>{{category.stats?.interactions}}</small>
+          </p>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- <div class="set-12 layoutshldr">
+    <div class="public-document-mobile-category-bars" [document]="document" [document_id]="document._id"
+      [layouts]="document.layouts" [open]="open" (openMenu)="getCoverageMenuStatus($event)"></div>
+  </div> -->
+</div>

@@ -13,8 +13,8 @@ export class PublicDocumentMobileRadarChartComponent implements OnInit {
     responsive: true,
     plugins: {
       title: {
-        display: true,
-        text: 'Tópicos'
+        display: false,
+        text: ''
       },
       legend: {
         display: false
@@ -34,17 +34,8 @@ export class PublicDocumentMobileRadarChartComponent implements OnInit {
 
   ngOnInit(): void {
     this.document['layouts'].filter((x: any) => {
-      x['subLayouts'].filter((y: any) => {
-        y['topics'].filter((t: any) => {
-          this.topics.push(t);
-        });
-      });
-    });
-
-    this.topics.filter((t: any) => {
-      this.radarChartLabels.push(t['title']);
-      this.radarChartData['datasets'][0]['data'].push(t['stats']['score']);
-      // this.radarChartData['datasets'][0]['data'].push(t['stats']['interactions']);
+      this.radarChartLabels.push(x['category']['name']);
+      this.radarChartData['datasets'][0]['data'].push(x['stats']['score']);
     });
   }
 
