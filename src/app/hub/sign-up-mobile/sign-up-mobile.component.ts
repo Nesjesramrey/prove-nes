@@ -88,10 +88,10 @@ export class SignUpMobileComponent implements OnInit {
     }, 400);
 
     this.stepOneFormGroup = this.formBuilder.group({
-      firstname: ['Jorge', [Validators.required, Validators.minLength(2)]],
-      lastname: ['Paredes', [Validators.required, Validators.minLength(2)]],
-      email: ['jalpate@outlook.es', [Validators.required, Validators.pattern(this.utilityService.emailPattern), this.utilityService.emailDomainValidator]],
-      password: ['KxElxnWsjsa77', [Validators.required, Validators.minLength(9)]],
+      firstname: ['', [Validators.required, Validators.minLength(2)]],
+      lastname: ['', [Validators.required, Validators.minLength(2)]],
+      email: ['', [Validators.required, Validators.pattern(this.utilityService.emailPattern), this.utilityService.emailDomainValidator]],
+      password: ['', [Validators.required, Validators.minLength(9)]],
       // associationTypology: ['', [Validators.required]],
       // associationName: [null, []]
     });
