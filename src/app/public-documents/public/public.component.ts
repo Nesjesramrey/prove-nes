@@ -28,6 +28,7 @@ export class PublicComponent implements OnInit {
   public allDocumentSolutions: any[] = [];
   public isMobile: boolean = false;
   @HostBinding('class') public class: string = '';
+  
   constructor(
     public activatedRoute: ActivatedRoute,
     public documentService: DocumentService,

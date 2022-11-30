@@ -1,0 +1,51 @@
+:host {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 101;
+  padding: 10px;
+  background: gray;
+  border-radius: 100%;
+
+  button {
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all .2s linear;
+  }
+
+  button.opener {
+    width: 40px;
+    height: 40px;
+    background: greenyellow;
+    z-index: 17;
+  }
+
+  button.tool {
+    width: 30px;
+    height: 30px;
+    background: greenyellow;
+    z-index: 14;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+
+    mat-icon {
+      font-size: 12pt;
+    }
+  }
+
+  button.tool:nth-child(1) {
+    &.fixedpos {
+      top: -70px;
+    }
+  }
+
+  button.tool:nth-child(2) {
+    &.fixedpos {
+      top: -35px;
+    }
+  }
+}

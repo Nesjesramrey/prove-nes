@@ -28,7 +28,9 @@ export class PublicDocumentMobileCategoryBarsComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  linkMe(url: string) { }
+  linkMe(url: string) {
+    this.utilityService.linkMe(url);
+  }
 
   displayCoverageMenu() {
     this.open = !this.open;
