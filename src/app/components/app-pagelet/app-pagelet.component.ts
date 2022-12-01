@@ -157,7 +157,7 @@ export class AppPageletComponent implements OnInit {
       if (this.path == '/') {
         window.location.reload();
       } else {
-        this.router.navigateByUrl('/', { state: { status: 'logout' } });
+        this.router.navigateByUrl('/', { state: { status: 'reload' } });
       }
     });
   }

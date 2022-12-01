@@ -28,8 +28,8 @@
               <strong>{{ item.category }}</strong>
             </button>
             <p *ngIf="item.description != null" class="desc">
-              <small>{{ (item.description.length > 60)? (item.description | slice:0:60)+'...':(item.description)
-                }}</small>
+              <small [innerHtml]="(item.description.length > 200) ? (item.description | slice: 0 : 200) + '..' :
+                (item.description)"></small>
             </p>
             <p class="updatedAt">
               <small>Última actualización: {{ item.updatedAt | date: 'mediumDate' }} - {{ item.updatedAt | date:
@@ -43,8 +43,8 @@
               <strong>{{ item.category }}</strong>
             </button>
             <p *ngIf="item.description != null" class="desc">
-              <small>{{ (item.description.length > 60)? (item.description | slice:0:60)+'...':(item.description)
-                }}</small>
+              <small [innerHtml]="(item.description.length > 200) ? (item.description | slice: 0 : 200) + '..' :
+                (item.description)"></small>
             </p>
             <p class="updatedAt">
               <small>Última actualización: {{ item.updatedAt | date: 'mediumDate' }} - {{ item.updatedAt | date:
@@ -60,8 +60,8 @@
               </strong>
             </button>
             <p *ngIf="item.description != null" class="desc">
-              <small>{{ (item.description.length > 60)? (item.description | slice:0:60)+'...':(item.description)
-                }}</small>
+              <small [innerHtml]="(item.description.length > 200) ? (item.description | slice: 0 : 200) + '..' :
+                (item.description)"></small>
             </p>
             <p class="updatedAt">
               <small>Última actualización: {{ item.updatedAt | date: 'mediumDate' }} - {{ item.updatedAt | date:
@@ -77,8 +77,8 @@
               </strong>
             </button>
             <p *ngIf="item.description != null" class="desc">
-              <small>{{ (item.description.length > 60)? (item.description | slice:0:60)+'...':(item.description)
-                }}</small>
+              <small [innerHtml]="(item.description.length > 200) ? (item.description | slice: 0 : 200) + '..' :
+                (item.description)"></small>
             </p>
             <p class="updatedAt">
               <small>Última actualización: {{ item.updatedAt | date: 'mediumDate' }} - {{ item.updatedAt | date:
@@ -91,18 +91,22 @@
           <mat-chip-list>
             <mat-chip color="primary" selected *ngIf="item.type == 'layout'">
               <small>{{ item.typeName }}</small>
+              <mat-icon [matBadge]="item.votes" matBadgeOverlap="false">thumb_up_alt</mat-icon>
             </mat-chip>
 
             <mat-chip color="primary" selected *ngIf="item.type == 'sublayout'">
               <small>{{ item.typeName }}</small>
+              <mat-icon [matBadge]="item.votes" matBadgeOverlap="false">thumb_up_alt</mat-icon>
             </mat-chip>
 
             <mat-chip color="warn" selected *ngIf="item.type == 'topic'">
               <small>{{ item.typeName }}</small>
+              <mat-icon [matBadge]="item.votes" matBadgeOverlap="false">thumb_up_alt</mat-icon>
             </mat-chip>
 
             <mat-chip color="warn" selected *ngIf="item.type == 'solution'">
               <small>{{ item.typeName }}</small>
+              <mat-icon [matBadge]="item.votes" matBadgeOverlap="false">thumb_up_alt</mat-icon>
             </mat-chip>
           </mat-chip-list>
         </div>

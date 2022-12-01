@@ -33,7 +33,7 @@ export class SignUpComponent implements OnInit {
     public router: Router,
     public documentService: DocumentService,
     public UserService: UserService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.signUpFormGroup = this.formBuilder.group({
@@ -55,7 +55,7 @@ export class SignUpComponent implements OnInit {
     });
 
     this.documentService.fetchCoverDocument().subscribe({
-      error: (error: any) => {},
+      error: (error: any) => { },
       next: (reply: any) => {
         this.document = reply;
       },
@@ -74,48 +74,36 @@ export class SignUpComponent implements OnInit {
     lastname = this.utilitySrvc.capitalizeFirstLetter(lastname);
     let email: any = formGroup['value']['email'].toLowerCase();
     let password: any = formGroup['value']['password'];
-    // console.log({ state: { status: 'logout' } });
-    this.angularFireAuth
-      .createUserWithEmailAndPassword(email, password)
-      .then((reply: any) => {
-        this.SetUserData(reply['user']);
-        this.SendVerificationMail();
-        this.user = reply['user']['multiFactor']['user'];
-        // console.log('user: ', this.user);
-        // console.log(this.user['accessToken']);
 
-        let signUpData = new FormData();
-        signUpData.append('firebaseUID', this.user['uid']);
-        signUpData.append('firstname', formGroup['value']['firstname']);
-        signUpData.append('lastname', formGroup['value']['lastname']);
-        signUpData.append('email', formGroup['value']['email']);
-        signUpData.append('password', formGroup['value']['password']);
+    this.angularFireAuth.createUserWithEmailAndPassword(email, password).then((reply: any) => {
+      this.SetUserData(reply['user']);
+      this.SendVerificationMail();
+      this.user = reply['user']['multiFactor']['user'];
 
-        this.authenticationSrvc.signup(signUpData).subscribe((reply: any) => {
-          localStorage.setItem('accessToken', this.user['accessToken']);
+      let signUpData = new FormData();
+      signUpData.append('firebaseUID', this.user['uid']);
+      signUpData.append('firstname', formGroup['value']['firstname']);
+      signUpData.append('lastname', formGroup['value']['lastname']);
+      signUpData.append('email', formGroup['value']['email']);
+      signUpData.append('password', formGroup['value']['password']);
 
-          this.angularFireAuth
-            .signInWithEmailAndPassword(
-              formGroup['value']['email'],
-              formGroup['value']['password']
-            )
-            .then((reply: any) => {
-              // console.log('reply: ', reply);
-              this.angularFireAuth.authState.subscribe((data: any) => {
-                // console.log('user: ', data['multiFactor']['user']);
-                this.submitted = false;
-                localStorage.setItem(
-                  'accessToken',
-                  data['multiFactor']['user']['accessToken']
-                );
+      this.authenticationSrvc.signup(signUpData).subscribe((reply: any) => {
+        localStorage.setItem('accessToken', this.user['accessToken']);
+        this.router.navigate(['/documentos-publicos/' + this.document['_id']], { state: { status: 'reload' } });
 
-                this.router.navigate(['/documentos-publicos/' + this.document['_id']], { state: { status: 'logout' } });
-                this.UserService.onLogin.next(signUpData);
-              });
-            });
-        });
-        this.utilitySrvc.openSuccessSnackBar('El registro fue exitoso');
-      })
+        // this.angularFireAuth.signInWithEmailAndPassword(
+        //   formGroup['value']['email'], formGroup['value']['password']
+        // ).then((reply: any) => {
+        //   this.angularFireAuth.authState.subscribe((data: any) => {
+        //     this.submitted = false;
+        //     localStorage.setItem('accessToken', data['multiFactor']['user']['accessToken']);
+        //     this.router.navigate(['/documentos-publicos/' + this.document['_id']], { state: { status: 'reload' } });
+        //     this.UserService.onLogin.next(signUpData);
+        //   });
+        // });
+      });
+      // this.utilitySrvc.openSuccessSnackBar('El registro fue exitoso');
+    })
       .catch((error: any) => {
         switch (error['code']) {
           case 'auth/email-already-in-use':
@@ -136,7 +124,7 @@ export class SignUpComponent implements OnInit {
   SendVerificationMail() {
     return this.angularFireAuth.currentUser
       .then((u: any) => u.sendEmailVerification())
-      .then(() => {});
+      .then(() => { });
   }
 
   SetUserData(user: any) {
