@@ -1,19 +1,6 @@
-import {
-  ViewChild,
-  AfterViewInit,
-  Component,
-  Input,
-  OnInit,
-  ElementRef,
-} from '@angular/core';
-import {
-  ChartConfiguration,
-  ChartData,
-  ChartEvent,
-  ChartType,
-  Scale,
-  ScaleChartOptions,
-} from 'chart.js';
+import { ViewChild, Component, Input, OnInit } from '@angular/core';
+import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
+
 @Component({
   selector: 'spider-chart',
   templateUrl: './spider-chart.component.html',
@@ -21,45 +8,26 @@ import {
 })
 export class SpiderChartComponent implements OnInit {
   @ViewChild('canvas') canvas: any;
-  mychart: any;
-  ngAfterContentInit() {
-    var ctx = <HTMLCanvasElement>document.querySelector('#canvas');
-
-    var context = ctx.getContext('2d')!;
-    var gradientColor = context.createLinearGradient(0, 0, 0, 200);
-
-    gradientColor.addColorStop(0, 'green');
-    gradientColor.addColorStop(1, 'red');
-    gradientColor.addColorStop(1, 'pink');
-    gradientColor.addColorStop(1, 'orange');
-
-    // this.canvas = [
-    //   {
-    //     backgroundColor: gradientColor,
-    //     borderColor: 'black',
-    //   },
-    // ];
-    return gradientColor;
-  }
-
+  public mychart: any;
   public spiderChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     plugins: {
-      legend: {
+      title: {
         display: false,
+        text: ''
       },
-    },
-    font: {
-      style: 'normal',
-      weight: 'bold',
+      legend: {
+        display: false
+      }
     },
     datasets: {
       radar: {
-        borderColor: 'rgba(0, 0, 0, 0)',
         borderWidth: 1,
+        borderColor: '#54f093',
         fill: true,
-        pointRadius: 0,
-        backgroundColor: '#71F5AD',
+        pointRadius: 5,
+        pointBackgroundColor: '#54f093',
+        backgroundColor: 'rgba(173, 255, 47, 0.4)',
       },
     },
     scales: {
@@ -67,13 +35,13 @@ export class SpiderChartComponent implements OnInit {
         grid: {
           circular: true,
           // offset: 10,
-          // drawTicks: false,
+          // drawTicks: true,
           // tickWidth: 10,
-          borderWidth: 10,
+          // borderWidth: 10,
           // borderDash: [5, 5],
-          drawBorder: false,
+          // drawBorder: true,
           // color: '#fff',
-          borderColor: 'red',
+          // borderColor: 'red',
         },
         beginAtZero: true,
         suggestedMin: 0,
@@ -84,27 +52,36 @@ export class SpiderChartComponent implements OnInit {
       },
     },
   };
-
   @Input() withBorder: boolean = true;
   @Input() data: any[] = [];
-
   public spiderData: ChartData<'radar'> = {
-    labels: ['data', 'data', 'data', 'data', 'data', 'data', 'data', 'data'],
-    datasets: [{ data: [96, 65, 81, 76, 33, 81, 38, 79] }],
+    labels: [],
+    datasets: [{ data: [] }],
   };
   public spiderChartType: ChartType = 'radar';
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
     this.loadChart();
   }
 
+  ngAfterContentInit() {
+    // var ctx = <HTMLCanvasElement>document.querySelector('#canvas');
+    // var context = ctx.getContext('2d')!;
+    // var gradientColor = context.createLinearGradient(0, 0, 0, 200);
+    // gradientColor.addColorStop(0, 'green');
+    // gradientColor.addColorStop(1, 'red');
+    // gradientColor.addColorStop(1, 'pink');
+    // gradientColor.addColorStop(1, 'orange');
+    // return gradientColor;
+  }
+
   loadChart() {
     if (this.data.length === 0) {
       this.spiderData = {
-        labels: ['data', 'data', 'data', 'data'],
-        datasets: [{ data: [96, 65, 81, 26] }],
+        labels: [],
+        datasets: [{ data: [] }],
       };
       return;
     }
@@ -120,5 +97,6 @@ export class SpiderChartComponent implements OnInit {
       labels,
       datasets: [{ data: datasets }],
     };
+    console.log(this.data);
   }
 }

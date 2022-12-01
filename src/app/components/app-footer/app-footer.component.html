@@ -1,10 +1,21 @@
-<div class="set-12" *ngIf="!isMobile">
+<div class="set-12" *ngIf="!isMobile" [class.fixdesk]="!isMobile">
   <img src="../../../assets/images/mexicolectivo-small-blue.png" alt="Mexicolectivo">
-
+  <p><small>Todos los derechos reservados</small></p>
+  <p><small>https://mexicolectivo.com/</small></p>
+  <p>
+    <small>
+      <a href="javascript:void(0)" (click)="linkMe('/legales/terminos-condiciones')">Términos y condiciones</a>
+    </small>
+  </p>
 </div>
 
 <div class="set-12" *ngIf="isMobile" [class.fixmobile]="isMobile">
   <img src="../../../assets/images/mexicolectivo-small-blue.png" alt="Mexicolectivo">
   <p><small>Todos los derechos reservados</small></p>
   <p><small>https://mexicolectivo.com/</small></p>
+  <p>
+    <small>
+      <a href="javascript:void(0)" (click)="linkMe('/legales/terminos-condiciones')">Términos y condiciones</a>
+    </small>
+  </p>
 </div>

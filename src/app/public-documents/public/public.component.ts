@@ -28,7 +28,7 @@ export class PublicComponent implements OnInit {
   public allDocumentSolutions: any[] = [];
   public isMobile: boolean = false;
   @HostBinding('class') public class: string = '';
-  
+
   constructor(
     public activatedRoute: ActivatedRoute,
     public documentService: DocumentService,
@@ -44,39 +44,29 @@ export class PublicComponent implements OnInit {
 
   ngOnInit(): void {
     if (history.state.status != undefined) { window.location.reload(); };
-    this.loadDocument();
-  }
 
-  loadDocument() {
-    this.getDataCharts();
-    this.documentService
-      .fetchSingleDocumentById({ _id: this.documentID })
-      .subscribe((reply: any) => {
+    this.documentService.fetchSingleDocumentById({ _id: this.documentID }).subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
         this.document = reply;
+        // console.log('document: ', this.document);
+
         this.coverage = this.document['coverage'];
         this.layouts = this.document['layouts'];
         this.collaborators = this.document['collaborators'];
 
-        // console.log(this.document);
-        if (this.coverageSelected == null) {
-          this.coverageSelected = this.coverage[0]['_id'];
-        }
+        if (this.coverageSelected == null) { this.coverageSelected = this.coverage[0]['_id']; }
 
         this.layouts.filter((x: any) => {
           x['subLayouts'].filter((y: any) => {
             y['topics'].filter((t: any) => {
               t['solutions'].filter((s: any) => {
                 s['url'] =
-                  '/documentos-publicos/' +
-                  this.document['_id'] +
-                  '/categoria/' +
-                  x['_id'] +
-                  '/subcategoria/' +
-                  y['_id'] +
-                  '/tema/' +
-                  t['_id'] +
-                  '/solucion/' +
-                  s['_id'];
+                  '/documentos-publicos/' + this.document['_id'] +
+                  '/categoria/' + x['_id'] +
+                  '/subcategoria/' + y['_id'] +
+                  '/tema/' + t['_id'] +
+                  '/solucion/' + s['_id'];
                 this.allDocumentSolutions.push(s);
               });
             });
@@ -91,52 +81,50 @@ export class PublicComponent implements OnInit {
         this.storedSolutions = solutions;
         this.storedSolutions.filter((x: any) => {
           x['coverage'].filter((c: any) => {
-            if (c['_id'] == this.coverageSelected) {
-              this.topSolutions.push(x);
-            }
+            if (c['_id'] == this.coverageSelected) { this.topSolutions.push(x); }
           });
         });
+      },
+      complete: () => { }
+    });
 
-        setTimeout(() => {
-          this.isDataAvailable = true;
-        }, 100);
-      });
-  }
-
-  getDataCharts() {
-    this.solutionService
-      .getTopSolutionsByDocument(this.documentID)
-      .subscribe((resp: any) => {
-        this.topSolutions = resp;
+    this.solutionService.getTopSolutionsByDocument(this.documentID).subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        this.topSolutions = reply;
+        // console.log('topSolutions: ', this.topSolutions);
         this.topSolutions.filter((x: any) => {
           this.topSolutionsIds.push(x['_id']);
         });
-      });
+      },
+      complete: () => { }
+    });
 
-    this.layoutService
-      .getTopLayoutByDocument(this.documentID)
-      .subscribe((resp: any) => {
-        this.topLayouts = resp;
-      });
+    // *** yoorco request for chart data
+    // this.layoutService.getTopLayoutByDocument(this.documentID).subscribe({
+    //   error: (error: any) => { },
+    //   next: (reply: any) => {
+    //     this.topLayouts = reply;
+    //     console.log('topLayouts: ', this.topLayouts);
+    //   },
+    //   complete: () => { }
+    // });
   }
 
   popImageViewer() {
     const dialogRef = this.dialog.open<ImageViewerComponent>(
-      ImageViewerComponent,
-      {
-        width: '640px',
-        data: {
-          location: 'document',
-          document: this.document,
-        },
-        disableClose: true,
-        panelClass: 'viewer-dialog',
-      }
-    );
+      ImageViewerComponent, {
+      width: '640px',
+      data: {
+        location: 'document',
+        document: this.document,
+      },
+      disableClose: true,
+      panelClass: 'viewer-dialog',
+    });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) {
-      }
+      if (reply != undefined) { }
     });
   }
 
