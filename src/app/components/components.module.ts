@@ -66,6 +66,7 @@ import { PublicDocumentMobileRadarChartComponent } from './public-document-mobil
 import { PublicDocumentMobileTopTenComponent } from './public-document-mobile-top-ten/public-document-mobile-top-ten.component';
 import { PublicDocumentMobileCategoryViewComponent } from './public-document-mobile-category-view/public-document-mobile-category-view.component';
 import { PublicDocumentMobileFixedToolsComponent } from './public-document-mobile-fixed-tools/public-document-mobile-fixed-tools.component';
+import { PublicDocumentMobileSubcategoryBarsComponent } from './public-document-mobile-subcategory-bars/public-document-mobile-subcategory-bars.component';
 
 @NgModule({
   imports: [
@@ -135,7 +136,8 @@ import { PublicDocumentMobileFixedToolsComponent } from './public-document-mobil
     PublicDocumentMobileRadarChartComponent,
     PublicDocumentMobileTopTenComponent,
     PublicDocumentMobileCategoryViewComponent,
-    PublicDocumentMobileFixedToolsComponent
+    PublicDocumentMobileFixedToolsComponent,
+    PublicDocumentMobileSubcategoryBarsComponent
   ],
   exports: [
     AppPageletComponent,
@@ -183,7 +185,8 @@ import { PublicDocumentMobileFixedToolsComponent } from './public-document-mobil
     PublicDocumentMobileRadarChartComponent,
     PublicDocumentMobileTopTenComponent,
     PublicDocumentMobileCategoryViewComponent,
-    PublicDocumentMobileFixedToolsComponent
+    PublicDocumentMobileFixedToolsComponent,
+    PublicDocumentMobileSubcategoryBarsComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,

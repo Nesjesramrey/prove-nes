@@ -61,6 +61,14 @@
 
   ::ng-deep .mat-chip {
     font-size: 9pt !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    mat-icon {
+      font-size: 11pt !important;
+      margin-left: 10px !important;
+    }
   }
 
   .updatedAt {

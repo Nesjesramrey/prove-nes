@@ -248,7 +248,7 @@ export class SignUpMobileComponent implements OnInit {
 
       // this.authenticationSrvc.signup(signUpData).subscribe((reply: any) => {
       //   localStorage.setItem('accessToken', this.user['accessToken']);
-      //   this.router.navigateByUrl('/documentos-publicos/' + this.document['_id'], { state: { status: 'logout' } });
+      //   this.router.navigateByUrl('/documentos-publicos/' + this.document['_id'], { state: { status: 'reload' } });
       // });
       this.authenticationSrvc.signup(signUpData).subscribe({
         error: (error: any) => {
@@ -262,7 +262,7 @@ export class SignUpMobileComponent implements OnInit {
         },
         complete: () => {
           localStorage.setItem('accessToken', this.user['accessToken']);
-          this.router.navigateByUrl('/documentos-publicos/' + this.document['_id'], { state: { status: 'logout' } });
+          this.router.navigateByUrl('/documentos-publicos/' + this.document['_id'], { state: { status: 'reload' } });
         }
       });
     }).catch((error: any) => {

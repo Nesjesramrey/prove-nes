@@ -17,11 +17,7 @@
         <span>Seguir con Apple</span>
       </button>
 
-      <button
-        type="button"
-        class="emailsignin"
-        (click)="utilitySrvc.linkMe('/hub/signin-mobile')"
-      >
+      <button type="button" class="emailsignin" (click)="utilitySrvc.linkMe('/hub/signin-mobile')">
         <span>Entra con tu email</span>
       </button>
     </div>
@@ -41,12 +37,7 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Contraseña</mat-label>
-      <input
-        matInput
-        type="password"
-        formControlName="password"
-        [type]="hide ? 'password' : 'text'"
-      />
+      <input matInput type="password" formControlName="password" [type]="hide ? 'password' : 'text'" />
       <button type="button" matSuffix (click)="hide = !hide">
         <mat-icon color="primary">
           {{ hide ? "visibility_off" : "visibility" }}
@@ -56,24 +47,16 @@
 
     <div class="set-12 form-ctrls">
       <div class="set-6">
-        <small
-          >¿No tienes cuenta?
-          <a href="#" routerLink="/hub/registro"> Registro </a></small
-        >
-        <small>
+        <small>¿No tienes cuenta?
+          <a href="#" routerLink="/hub/registro"> Registro </a></small>
+        <!-- <small>
           <a href="#" routerLink="/hub/olvide-contrasena">
             ¿Olvidaste tu contraseña?
-          </a></small
-        >
+          </a></small> -->
       </div>
       <br />
       <div class="set-6 txt-right">
-        <button
-          type="submit"
-          mat-raised-button
-          color="primary"
-          [disabled]="signInFormGroup.invalid || submitted"
-        >
+        <button type="submit" mat-raised-button color="primary" [disabled]="signInFormGroup.invalid || submitted">
           <small>Ingresar</small>
         </button>
       </div>
