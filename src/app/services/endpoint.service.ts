@@ -26,8 +26,7 @@ export class EndPointService {
   public createNewDocumentEndPoint: string = '/document';
   // public fetchSingleDocumentByIdEndPoint: string = '/yoorco-dev/document/';
   public fetchSingleDocumentByIdEndPoint: string = '/document/';
-  public fetchDocumentsByCollaboratorEndPoint: string =
-    '/document/collaborator/';
+  public fetchDocumentsByCollaboratorEndPoint: string = '/document/collaborator/';
   public createDocumentLayoutEndPoint: string = '/layout/document/';
   public editDocumentDataEndPoint: string = '/document/';
   public fetchCoverDocumentEndPoint: string = '/document/public/home';
