@@ -45,6 +45,7 @@ export class PublicComponent implements OnInit {
   ngOnInit(): void {
     if (history.state.status != undefined) { window.location.reload(); };
 
+    // *** load document
     this.documentService.fetchSingleDocumentById({ _id: this.documentID }).subscribe({
       error: (error: any) => { },
       next: (reply: any) => {
@@ -88,6 +89,7 @@ export class PublicComponent implements OnInit {
       complete: () => { }
     });
 
+    // *** load top solutions
     this.solutionService.getTopSolutionsByDocument(this.documentID).subscribe({
       error: (error: any) => { },
       next: (reply: any) => {
