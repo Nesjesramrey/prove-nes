@@ -1,25 +1,21 @@
-<div class="set-12 loading" *ngIf="!isDataAvailable">
+<div class="set-12 loading" *ngIf="document == null">
   <mat-spinner></mat-spinner>
 </div>
 
 <!-- desktop -->
-<div class="set-12" *ngIf="isDataAvailable && !isMobile">
+<div class="set-12" *ngIf="!isMobile">
   <div class="set-12 author-hldr">
     <span class="created-by">
       Autor: <span class="author">Mexicolectivo</span>
     </span>
   </div>
 
-  <div class="set-12">
+  <div class="set-12" *ngIf="document != null">
     <div class="set-3 col-lft">
       <mat-card class="set-12 doc-description">
         <div class="set-12 imghldr">
           <mat-icon *ngIf="document.images.length == 0">panorama</mat-icon>
           <slider-images [images]="document.images" *ngIf="document.images.length != 0"></slider-images>
-          <!-- <div class="overlay" (click)="popImageViewer()">
-            <mat-icon>photo_camera</mat-icon>
-            <div class="cover"></div>
-          </div> -->
         </div>
 
         <div class="set-12 infohldr">
@@ -62,7 +58,7 @@
 
           <div class="set-12 cards">
             <div class="set-6">
-              <spider-chart [data]="topLayouts"></spider-chart>
+              <spider-chart [data]="document.layouts"></spider-chart>
             </div>
 
             <div class="set-6">
@@ -76,6 +72,7 @@
 </div>
 
 <!-- mobile -->
-<div class="set-12" *ngIf="isDataAvailable && isMobile">
-  Hello
+<div class="set-12" *ngIf="isMobile">
+  <div class="public-document-mobile-view" [document]="document" [topSolutions]="topSolutions"></div>
+  <div class="public-document-mobile-fixed-tools"></div>
 </div>

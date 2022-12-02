@@ -31,13 +31,23 @@
     </div>
   </div>
 
-  <div class="set-12 avatarhldr" *ngIf="user != null">
-    <button class="avatar">
-      <img src="{{ user.avatarImage }}" alt="{{ user.firstname }}" *ngIf="user.avatarImage != null" />
-      <span *ngIf="user.avatarImage == null">
-        {{ user.firstname | firstword | firstletter }}{{ user.lastname | firstword | firstletter }}
-      </span>
-    </button>
-    <div class="usrname">{{user.firstname}} {{user.lastname}}</div>
+  <div class="set-12" *ngIf="user != null">
+    <div class="set-12 avatarhldr">
+      <button class="avatar">
+        <img src="{{ user.avatarImage }}" alt="{{ user.firstname }}" *ngIf="user.avatarImage != null" />
+        <span *ngIf="user.avatarImage == null">
+          {{ user.firstname | firstword | firstletter }}{{ user.lastname | firstword | firstletter }}
+        </span>
+      </button>
+      <div class="usrname">{{user.firstname}} {{user.lastname}}</div>
+    </div>
+
+    <div class="set-12 innernav">
+      <div class="set-12 innerbtn">
+        <button type="button" (click)="onSignOut()">
+          <mat-icon>power_settings_new</mat-icon> <span>Salir</span>
+        </button>
+      </div>
+    </div>
   </div>
 </div>

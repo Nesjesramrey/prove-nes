@@ -51,10 +51,12 @@ export class AppPageletComponent implements OnInit {
     public dialog: MatDialog,
     public formBuilder: FormBuilder,
     public searchService: SearchService,
-    public userService: UserService
+    public userService: UserService,
+    public deviceDetectorService: DeviceDetectorService
   ) { }
 
   ngOnInit(): void {
+    this.isMobile = this.deviceDetectorService.isMobile();
     this.reset();
     this.searchFormGroup = this.formBuilder.group({
       search: ['', [Validators.required]],
@@ -155,7 +157,7 @@ export class AppPageletComponent implements OnInit {
       if (this.path == '/') {
         window.location.reload();
       } else {
-        this.router.navigateByUrl('/', { state: { status: 'logout' } });
+        this.router.navigateByUrl('/', { state: { status: 'reload' } });
       }
     });
   }

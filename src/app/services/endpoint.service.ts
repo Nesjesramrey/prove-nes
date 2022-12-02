@@ -20,13 +20,13 @@ export class EndPointService {
   public fetchUserByIdEndPoint: string = '/user/fetch-user-by-id';
   public fetchUserByFirebaseUIDEndPoint: string =
     '/user/fetch-user-by-firebase-uid';
+  public saveLayoutsCategoryPreferenceEndPoint: string = '/user/';
 
   // documents
   public createNewDocumentEndPoint: string = '/document';
   // public fetchSingleDocumentByIdEndPoint: string = '/yoorco-dev/document/';
   public fetchSingleDocumentByIdEndPoint: string = '/document/';
-  public fetchDocumentsByCollaboratorEndPoint: string =
-    '/document/collaborator/';
+  public fetchDocumentsByCollaboratorEndPoint: string = '/document/collaborator/';
   public createDocumentLayoutEndPoint: string = '/layout/document/';
   public editDocumentDataEndPoint: string = '/document/';
   public fetchCoverDocumentEndPoint: string = '/document/public/home';
@@ -157,5 +157,5 @@ export class EndPointService {
   public markPermissionAsAttendedEndPoint: string = '/permission/';
   public fetchPermissionByIdEndPoint: string = '/permission/';
 
-  constructor() {}
+  constructor() { }
 }

@@ -33,23 +33,14 @@ export class SignInComponent implements OnInit {
     public documentService: DocumentService
   ) {
     this.activatedRoute.queryParams.subscribe((params) => {
-      if (params['from'] != undefined) {
-        this.popGreetingsDialog();
-      }
+      if (params['from'] != undefined) { this.popGreetingsDialog(); }
     });
     this.isMobile = this.deviceDetectorService.isMobile();
   }
 
   ngOnInit(): void {
     this.signInFormGroup = this.formBuilder.group({
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(this.utilitySrvc.emailPattern),
-          this.utilitySrvc.emailDomainValidator,
-        ],
-      ],
+      email: ['', [Validators.required, Validators.pattern(this.utilitySrvc.emailPattern), this.utilitySrvc.emailDomainValidator]],
       password: ['', [Validators.required, Validators.minLength(3)]],
     });
 
@@ -62,40 +53,26 @@ export class SignInComponent implements OnInit {
   }
 
   popGreetingsDialog() {
-    const dialogRef = this.dialog.open<WelcomeDialogComponent>(
-      WelcomeDialogComponent,
-      {
+    const dialogRef = this.dialog.open<WelcomeDialogComponent>
+      (WelcomeDialogComponent, {
         width: '420px',
         data: {},
         disableClose: true,
-      }
-    );
+      });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) {
-      }
+      if (reply != undefined) { }
     });
   }
 
   onSignIn(form: FormGroup) {
     this.submitted = true;
-
-    this.angularFireAuth
-      .signInWithEmailAndPassword(
-        form['value']['email'],
-        form['value']['password']
-      )
-      .then((reply: any) => {
+    this.angularFireAuth.signInWithEmailAndPassword(
+      form['value']['email'], form['value']['password']).then((reply: any) => {
         this.angularFireAuth.authState.subscribe((data: any) => {
           this.submitted = false;
-          localStorage.setItem(
-            'accessToken',
-            data['multiFactor']['user']['accessToken']
-          );
-          // window.location.reload();
-          // this.utilitySrvc.linkMe('/');
-          // this.router.navigate(['/'], { state: { status: 'logout' } });
-          this.router.navigate(['/documentos-publicos/' + this.document['_id']], { state: { status: 'logout' } });
+          localStorage.setItem('accessToken', data['multiFactor']['user']['accessToken']);
+          this.router.navigate(['/documentos-publicos/' + this.document['_id']], { state: { status: 'reload' } });
         });
       })
       .catch((error: any) => {

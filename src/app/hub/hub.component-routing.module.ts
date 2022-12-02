@@ -24,9 +24,19 @@ const routes: Routes = [
         canActivate: [CanActivateAuthenticatedGuard],
       },
       {
+        path: 'signup-mobile',
+        component: SignUpMobileComponent,
+        canActivate: [],
+      },
+      {
         path: 'registro',
         component: SignUpComponent,
         canActivate: [CanActivateAuthenticatedGuard],
+      },
+      {
+        path: 'signin-mobile',
+        component: SignInMobileComponent,
+        canActivate: [],
       },
       {
         path: 'ingresar',
@@ -52,4 +62,4 @@ const routes: Routes = [
   exports: [RouterModule],
   imports: [RouterModule.forChild(routes)],
 })
-export class HubComponentRoutingModule {}
+export class HubComponentRoutingModule { }

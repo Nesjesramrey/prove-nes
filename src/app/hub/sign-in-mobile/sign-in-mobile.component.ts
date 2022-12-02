@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
+import { DocumentService } from 'src/app/services/document.service';
 
 @Component({
   selector: '.sign-in-mobile',
@@ -14,12 +15,14 @@ export class SignInMobileComponent implements OnInit {
   public signInFormGroup!: FormGroup;
   public submitted: boolean = false;
   public hide: boolean = true;
+  public document: any = null;
 
   constructor(
     public formBuilder: FormBuilder,
     public utilityService: UtilityService,
     public angularFireAuth: AngularFireAuth,
-    public router: Router
+    public router: Router,
+    public documentService: DocumentService
   ) { }
 
   ngOnInit(): void {
@@ -28,25 +31,29 @@ export class SignInMobileComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(3)]]
     });
 
+    this.documentService.fetchCoverDocument().subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        this.document = reply;
+      },
+    });
+
     setTimeout(() => {
       this.isDataAvailable = true;
-    }, 1000);
+    }, 300);
   }
 
   onSignIn(form: FormGroup) {
     this.submitted = true;
 
-    this.angularFireAuth.signInWithEmailAndPassword(form['value']['email'], form['value']['password'])
-      .then((reply: any) => {
-        // console.log(reply);
+    this.angularFireAuth.signInWithEmailAndPassword(
+      form['value']['email'], form['value']['password']).then((reply: any) => {
         this.angularFireAuth.authState.subscribe((data: any) => {
           this.submitted = false;
           localStorage.setItem('accessToken', data['multiFactor']['user']['accessToken']);
-          this.router.navigateByUrl('/', { state: { status: 'logout' } });
+          this.router.navigate(['/documentos-publicos/' + this.document['_id']], { state: { status: 'reload' } });
         });
-      })
-      .catch((error: any) => {
-        // console.log(error);
+      }).catch((error: any) => {
         this.submitted = false;
         switch (error['code']) {
           case 'auth/wrong-password':

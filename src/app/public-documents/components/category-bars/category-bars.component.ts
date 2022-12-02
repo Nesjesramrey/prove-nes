@@ -19,7 +19,10 @@ export class CategoryBarsComponent implements OnInit {
   public layoutCollaborators: string = '';
   public stats: any = [];
 
-  constructor(public utilityService: UtilityService, public router: Router) {}
+  constructor(
+    public utilityService: UtilityService,
+    public router: Router
+  ) { }
 
   ngOnInit(): void {
     this.layouts.filter((x: any) => {

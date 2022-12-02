@@ -60,6 +60,13 @@ import { WelcomeDialogComponent } from './welcome-dialog/welcome-dialog.componen
 import { AddCategoryDialogComponent } from './add-category-dialog/add-category-dialog.component';
 import { RequestEditPermissionComponent } from './request-edit-permission/request-edit-permission.component';
 import { GiveEditPermissionComponent } from './give-edit-permission/give-edit-permission.component';
+import { PublicDocumentMobileViewComponent } from './public-document-mobile-view/public-document-mobile-view.component';
+import { PublicDocumentMobileCategoryBarsComponent } from './public-document-mobile-category-bars/public-document-mobile-category-bars.component';
+import { PublicDocumentMobileRadarChartComponent } from './public-document-mobile-radar-chart/public-document-mobile-radar-chart.component';
+import { PublicDocumentMobileTopTenComponent } from './public-document-mobile-top-ten/public-document-mobile-top-ten.component';
+import { PublicDocumentMobileCategoryViewComponent } from './public-document-mobile-category-view/public-document-mobile-category-view.component';
+import { PublicDocumentMobileFixedToolsComponent } from './public-document-mobile-fixed-tools/public-document-mobile-fixed-tools.component';
+import { PublicDocumentMobileSubcategoryBarsComponent } from './public-document-mobile-subcategory-bars/public-document-mobile-subcategory-bars.component';
 
 @NgModule({
   imports: [
@@ -123,7 +130,14 @@ import { GiveEditPermissionComponent } from './give-edit-permission/give-edit-pe
     WelcomeDialogComponent,
     AddCategoryDialogComponent,
     RequestEditPermissionComponent,
-    GiveEditPermissionComponent
+    GiveEditPermissionComponent,
+    PublicDocumentMobileViewComponent,
+    PublicDocumentMobileCategoryBarsComponent,
+    PublicDocumentMobileRadarChartComponent,
+    PublicDocumentMobileTopTenComponent,
+    PublicDocumentMobileCategoryViewComponent,
+    PublicDocumentMobileFixedToolsComponent,
+    PublicDocumentMobileSubcategoryBarsComponent
   ],
   exports: [
     AppPageletComponent,
@@ -165,7 +179,14 @@ import { GiveEditPermissionComponent } from './give-edit-permission/give-edit-pe
     WelcomeDialogComponent,
     AddCategoryDialogComponent,
     RequestEditPermissionComponent,
-    GiveEditPermissionComponent
+    GiveEditPermissionComponent,
+    PublicDocumentMobileViewComponent,
+    PublicDocumentMobileCategoryBarsComponent,
+    PublicDocumentMobileRadarChartComponent,
+    PublicDocumentMobileTopTenComponent,
+    PublicDocumentMobileCategoryViewComponent,
+    PublicDocumentMobileFixedToolsComponent,
+    PublicDocumentMobileSubcategoryBarsComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { DocumentService } from 'src/app/services/document.service';
@@ -7,6 +7,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SolutionService } from 'src/app/services/solution.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-category-page',
@@ -34,6 +35,8 @@ export class CategoryComponent implements OnInit {
   public layouts: any = null;
   @ViewChild('dataViewport') public dataViewport!: ElementRef;
   public allDocumentSolutions: any[] = [];
+  public isMobile: boolean = false;
+  @HostBinding('class') public class: string = '';
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -41,10 +44,13 @@ export class CategoryComponent implements OnInit {
     public layoutService: LayoutService,
     public utilityService: UtilityService,
     public dialog: MatDialog,
-    public solutionService: SolutionService
+    public solutionService: SolutionService,
+    public deviceDetectorService: DeviceDetectorService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
+    this.isMobile = this.deviceDetectorService.isMobile();
+    if (this.isMobile) { this.class = 'fixmobile'; }
   }
 
   ngOnInit(): void {

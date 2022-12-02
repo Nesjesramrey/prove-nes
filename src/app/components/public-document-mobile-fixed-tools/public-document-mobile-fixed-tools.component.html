@@ -1,0 +1,14 @@
+<div class="set-12">
+  <button type="button" class="tool" [class.fixedpos]="open">
+    <mat-icon>warning</mat-icon>
+  </button>
+
+  <button type="button" class="tool" [class.fixedpos]="open">
+    <mat-icon>insights</mat-icon>
+  </button>
+</div>
+
+<button type="button" class="opener" (click)="displayMenu()">
+  <mat-icon *ngIf="!open">menu_open</mat-icon>
+  <mat-icon *ngIf="open">cancel</mat-icon>
+</button>
