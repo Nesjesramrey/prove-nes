@@ -50,7 +50,6 @@ export class PublicComponent implements OnInit {
       error: (error: any) => { },
       next: (reply: any) => {
         this.document = reply;
-        // console.log('document: ', this.document);
 
         this.coverage = this.document['coverage'];
         this.layouts = this.document['layouts'];
@@ -62,8 +61,7 @@ export class PublicComponent implements OnInit {
           x['subLayouts'].filter((y: any) => {
             y['topics'].filter((t: any) => {
               t['solutions'].filter((s: any) => {
-                s['url'] =
-                  '/documentos-publicos/' + this.document['_id'] +
+                s['url'] = '/documentos-publicos/' + this.document['_id'] +
                   '/categoria/' + x['_id'] +
                   '/subcategoria/' + y['_id'] +
                   '/tema/' + t['_id'] +
@@ -94,7 +92,6 @@ export class PublicComponent implements OnInit {
       error: (error: any) => { },
       next: (reply: any) => {
         this.topSolutions = reply;
-        // console.log('topSolutions: ', this.topSolutions);
         this.topSolutions.filter((x: any) => {
           this.topSolutionsIds.push(x['_id']);
         });

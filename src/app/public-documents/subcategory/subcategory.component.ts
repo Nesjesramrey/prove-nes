@@ -1,10 +1,6 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { forkJoin, Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { DocumentService } from 'src/app/services/document.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LayoutService } from 'src/app/services/layout.service';
@@ -56,49 +52,53 @@ export class SubcategoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (history['state']['coverage'] != undefined) {
-      this.coverageSelected = history['state']['coverage'];
-    };
-    this.loadSubcategory();
-  }
+    if (history['state']['coverage'] != undefined) { this.coverageSelected = history['state']['coverage']; };
+    // this.loadSubcategory();
 
-  loadSubcategory() {
-    let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
-    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID });
-    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID });
+    // *** load document
+    this.documentService.fetchSingleDocumentById({ _id: this.documentID }).subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        this.document = reply;
+        this.coverage = this.document['coverage'];
+        if (this.coverageSelected == null) { this.coverageSelected = this.coverage[0]['_id']; }
+      },
+      complete: () => { }
+    });
 
-    forkJoin([document, category, subcategory]).subscribe((reply: any) => {
-      this.titles = this.utilityService.formatTitles(reply[0].title, reply[1].category.name, reply[2].category.name, '');
+    // *** load category
+    this.layoutService.fetchSingleLayoutById({ _id: this.categoryID }).subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        this.category = reply;
+      },
+      complete: () => { }
+    });
 
-      this.document = reply[0];
-      this.category = reply[1];
-      this.subcategory = reply[2];
-      this.stats = this.subcategory.stats;
-      this.image = reply[1].images.length > 0 ? reply[1].images[0] : this.image;
-      this.topicsDataSource = this.subcategory.topics;
+    // *** load sub category
+    this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID }).subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        this.subcategory = reply;
+        this.stats = this.subcategory['stats'];
 
-      this.coverage = this.document['coverage'];
-      if (this.coverageSelected == null) { this.coverageSelected = this.coverage[0]['_id']; }
-      this.subcategory['topics'].filter((x: any) => {
-        if (x['coverage'].includes(this.coverageSelected)) { this.panelTopicsData.push(x); }
-      });
+        this.topicsDataSource = this.subcategory['topics'];
+        this.subcategory['topics'].filter((x: any) => {
+          if (x['coverage'].includes(this.coverageSelected)) { this.panelTopicsData.push(x); }
+        });
 
-      const dataSolution: any = [];
-      this.subcategory.topics.map((item: any) => [...item.solutions]).forEach((_: any, index: number) => {
-        dataSolution.push(...this.subcategory.topics.map((item: any) => [...item.solutions])[index]);
-      });
-      dataSolution.filter((x: any) => {
-        if (x['coverage'].includes(this.coverageSelected)) {
-          this.solutionsDataSource.push(x);
-        }
-      });
+        const dataSolution: any = [];
+        this.subcategory.topics.map((item: any) => [...item.solutions]).forEach((_: any, index: number) => {
+          dataSolution.push(...this.subcategory.topics.map((item: any) => [...item.solutions])[index]);
+        });
+        dataSolution.filter((x: any) => {
+          if (x['coverage'].includes(this.coverageSelected)) { this.solutionsDataSource.push(x); }
+        });
 
-      this.TopicDataSource = new CustomMatDataSource(this.panelTopicsData);
-      this.SolutionDataSource = new CustomMatDataSource(this.solutionsDataSource);
-
-      setTimeout(() => {
-        this.isDataAvailable = true;
-      }, 1000);
+        this.TopicDataSource = new CustomMatDataSource(this.panelTopicsData);
+        this.SolutionDataSource = new CustomMatDataSource(this.solutionsDataSource);
+      },
+      complete: () => { }
     });
   }
 
@@ -189,7 +189,6 @@ export class SubcategoryComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
-        console.log(reply);
         if (reply.hasOwnProperty('topic')) {
           reply['topic']['solutions'] = reply['solutions'];
           // this.topics.push(reply['topic']);

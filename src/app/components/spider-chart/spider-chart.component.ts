@@ -97,6 +97,5 @@ export class SpiderChartComponent implements OnInit {
       labels,
       datasets: [{ data: datasets }],
     };
-    console.log(this.data);
   }
 }
