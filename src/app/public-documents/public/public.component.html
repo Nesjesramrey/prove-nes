@@ -3,7 +3,7 @@
 </div>
 
 <!-- desktop -->
-<div class="set-12" *ngIf="!isMobile">
+<div class="set-12" *ngIf="document != null && !isMobile">
   <div class="set-12 author-hldr">
     <span class="created-by">
       Autor: <span class="author">Mexicolectivo</span>
@@ -72,7 +72,7 @@
 </div>
 
 <!-- mobile -->
-<div class="set-12" *ngIf="isMobile">
+<div class="set-12" *ngIf="document != null && isMobile">
   <div class="public-document-mobile-view" [document]="document" [topSolutions]="topSolutions"></div>
   <div class="public-document-mobile-fixed-tools"></div>
 </div>

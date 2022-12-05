@@ -1,27 +1,18 @@
-<div class="set-12 loading" *ngIf="!isDataAvailable">
+<div class="set-12 loading" *ngIf="subcategory == null">
   <mat-spinner></mat-spinner>
 </div>
 
-<div class="set-12" *ngIf="isDataAvailable">
+<div class="set-12" *ngIf="subcategory != null">
   <div class="set-12">
     <breadcrumbs-component>
       <li>Documentos</li>
-      <li (click)="
-          utilityService.linkMe('/documentos-publicos/' + document._id)
-        ">
-        {{ titles[0] }}
+      <li (click)="utilityService.linkMe('/documentos-publicos/' + document._id)">
+        {{ document?.title }}
       </li>
-      <li (click)="
-          utilityService.linkMe(
-            '/documentos-publicos/' +
-              document._id +
-              '/categoria/' +
-              category._id
-          )
-        ">
-        {{ titles[1] }}
+      <li (click)="utilityService.linkMe('/documentos-publicos/' + document._id + '/categoria/' + category._id)">
+        {{ category?.category?.name }}
       </li>
-      <li>{{ titles[2] }}</li>
+      <li>{{ subcategory?.category?.name }}</li>
     </breadcrumbs-component>
 
     <div class="set-12 author-hldr">
@@ -98,7 +89,7 @@
           <div class="set-6 col">
             <div class="set-4 title">
               <strong>
-                <small>Problemas</small>
+                <small>Tópicos</small>
               </strong>
               <mat-icon>warning</mat-icon>
             </div>
@@ -194,10 +185,10 @@
               <div class="notData">
                 <p>
                   <strong>
-                    <small>No se encontraron problemas.</small>
+                    <small>No se encontraron tópicos.</small>
                   </strong>
                   <br />
-                  <small>Sé el primero en agregar un problema.</small>
+                  <small>Sé el primero en agregar un tópico.</small>
                 </p>
                 <button type="button" mat-raised-button color="warn" (click)="popAddDocumentTheme()">
                   <small>Agregar problema</small>

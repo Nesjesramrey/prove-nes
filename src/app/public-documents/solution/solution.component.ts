@@ -34,7 +34,6 @@ export class SolutionComponent implements OnInit {
   public userVoted: number = 0;
   public isFavorites: boolean = false;
   public allFavorites: any = null;
-
   public document: any = null;
   public solution: any = null;
   public category: any = null;
@@ -66,12 +65,110 @@ export class SolutionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // *** load user
     this.user = this.UserService.fetchFireUser().subscribe({
       error: (error: any) => { },
       next: (reply: any) => {
         this.user = reply;
-        this.loadSolution();
       },
+      complete: () => { }
+    });
+
+    // *** load document
+    this.documentService.fetchSingleDocumentById({ _id: this.documentID }).subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        this.document = reply;
+      },
+      complete: () => { }
+    });
+
+    // *** load category
+    this.layoutService.fetchSingleLayoutById({ _id: this.categoryID }).subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        this.category = reply;
+      },
+      complete: () => { }
+    });
+
+    // *** load sub category
+    this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID }).subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        this.subcategory = reply;
+      },
+      complete: () => { }
+    });
+
+    // *** load topic
+    this.topicService.fetchSingleTopicById({ _id: this.topicID }).subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        this.topic = reply;
+        this.topic['shortTitle'] = this.getshortTitle(this.topic['title']);
+      },
+      complete: () => { }
+    });
+
+    // *** load solution
+    this.solutionService.fetchSingleSolutionById({ _id: this.solutionID }).subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        this.solution = reply;
+        this.solution['shortTitle'] = this.getshortTitle(this.solution['title']);
+        this.stats = this.solution['stats'];
+      },
+      complete: () => { }
+    });
+
+    // *** load votes
+    this.voteService.fetchVotesBySolutionID({ _id: this.solutionID }).subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        this.votes = reply;
+        this.userVoted = this.checkUserVote(reply);
+      },
+      complete: () => { }
+    });
+
+    // *** load favourites
+    this.favoritesService.fetchFavoritesBySolutionID({ _id: this.solutionID }).subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        this.allFavorites = reply['data'];
+        this.isFavorites = this.checkFavorites();
+      },
+      complete: () => { }
+    });
+  }
+
+  loadSolution() {
+    let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
+    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID });
+    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID });
+    let topic: Observable<any> = this.topicService.fetchSingleTopicById({ _id: this.topicID });
+    let solution: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.solutionID });
+    let votes: Observable<any> = this.voteService.fetchVotesBySolutionID({ _id: this.solutionID });
+    let favorites: Observable<any> = this.favoritesService.fetchFavoritesBySolutionID({ _id: this.solutionID });
+
+    forkJoin([document, category, subcategory, topic, solution, votes, favorites]).subscribe((reply: any) => {
+      this.userVoted = this.checkUserVote(reply[5]);
+      this.document = reply[0];
+      this.category = reply[1];
+      this.subcategory = reply[2];
+      this.topic = reply[3];
+      this.solution = reply[4];
+      this.stats = this.solution.stats;
+      this.votes = reply[5].length;
+      this.allFavorites = reply[6].data;
+      this.isFavorites = this.checkFavorites();
+      this.getRamdomImage();
+
+      setTimeout(() => {
+        this.getBreadcrumbsTitles();
+        this.isDataAvailable = true;
+      }, 300);
     });
   }
 
@@ -125,35 +222,6 @@ export class SolutionComponent implements OnInit {
       if (reply.message == 'favorite update success') {
         this.isFavorites = false;
       }
-    });
-  }
-
-  loadSolution() {
-    let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
-    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID });
-    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID });
-    let topic: Observable<any> = this.topicService.fetchSingleTopicById({ _id: this.topicID });
-    let solution: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.solutionID });
-    let votes: Observable<any> = this.voteService.fetchVotesBySolutionID({ _id: this.solutionID });
-    let favorites: Observable<any> = this.favoritesService.fetchFavoritesBySolutionID({ _id: this.solutionID });
-
-    forkJoin([document, category, subcategory, topic, solution, votes, favorites]).subscribe((reply: any) => {
-      this.userVoted = this.checkUserVote(reply[5]);
-      this.document = reply[0];
-      this.category = reply[1];
-      this.subcategory = reply[2];
-      this.topic = reply[3];
-      this.solution = reply[4];
-      this.stats = this.solution.stats;
-      this.votes = reply[5].length;
-      this.allFavorites = reply[6].data;
-      this.isFavorites = this.checkFavorites();
-      this.getRamdomImage();
-
-      setTimeout(() => {
-        this.getBreadcrumbsTitles();
-        this.isDataAvailable = true;
-      }, 300);
     });
   }
 
