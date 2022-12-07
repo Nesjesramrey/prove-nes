@@ -1,8 +1,8 @@
-<div class="set-12 loading" *ngIf="solution == null">
+<div class="set-12 loading" *ngIf="!isDataAvailable">
   <mat-spinner></mat-spinner>
 </div>
 
-<div class="set-12" *ngIf="solution != null">
+<div class="set-12" *ngIf="isDataAvailable">
   <div class="set-12">
     <breadcrumbs-component>
       <li>...</li>

@@ -53,38 +53,26 @@ export class SubcategoryComponent implements OnInit {
 
   ngOnInit(): void {
     if (history['state']['coverage'] != undefined) { this.coverageSelected = history['state']['coverage']; };
-    // this.loadSubcategory();
 
-    // *** load document
     this.documentService.fetchSingleDocumentById({ _id: this.documentID }).subscribe({
       error: (error: any) => { },
       next: (reply: any) => {
         this.document = reply;
         this.coverage = this.document['coverage'];
-        if (this.coverageSelected == null) { this.coverageSelected = this.coverage[0]['_id']; }
-      },
-      complete: () => { }
-    });
+        if (this.coverageSelected == null) { this.coverageSelected = this.coverage[0]['_id']; };
 
-    // *** load category
-    this.layoutService.fetchSingleLayoutById({ _id: this.categoryID }).subscribe({
-      error: (error: any) => { },
-      next: (reply: any) => {
-        this.category = reply;
-      },
-      complete: () => { }
-    });
+        let category = this.document['layouts'].filter((x: any) => { return x['_id'] == this.categoryID });
+        this.category = category[0];
 
-    // *** load sub category
-    this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID }).subscribe({
-      error: (error: any) => { },
-      next: (reply: any) => {
-        this.subcategory = reply;
+        let subcategory = this.category['subLayouts'].filter((x: any) => { return x['_id'] == this.subcategoryID });
+        this.subcategory = subcategory[0];
         this.stats = this.subcategory['stats'];
 
         this.topicsDataSource = this.subcategory['topics'];
         this.subcategory['topics'].filter((x: any) => {
-          if (x['coverage'].includes(this.coverageSelected)) { this.panelTopicsData.push(x); }
+          x['coverage'].filter((y: any) => {
+            if (y['_id'] == this.coverageSelected) { this.panelTopicsData.push(x); }
+          });
         });
 
         const dataSolution: any = [];
@@ -92,13 +80,17 @@ export class SubcategoryComponent implements OnInit {
           dataSolution.push(...this.subcategory.topics.map((item: any) => [...item.solutions])[index]);
         });
         dataSolution.filter((x: any) => {
-          if (x['coverage'].includes(this.coverageSelected)) { this.solutionsDataSource.push(x); }
+          x['coverage'].filter((y: any) => {
+            if (y['_id'] == this.coverageSelected) { this.solutionsDataSource.push(x); }
+          });
         });
 
         this.TopicDataSource = new CustomMatDataSource(this.panelTopicsData);
         this.SolutionDataSource = new CustomMatDataSource(this.solutionsDataSource);
       },
-      complete: () => { }
+      complete: () => {
+        this.isDataAvailable = true;
+      }
     });
   }
 
@@ -151,7 +143,9 @@ export class SubcategoryComponent implements OnInit {
     this.coverageSelected = event['value'];
     this.panelTopicsData = [];
     this.subcategory['topics'].filter((x: any) => {
-      if (x['coverage'].includes(this.coverageSelected)) { this.panelTopicsData.push(x); }
+      x['coverage'].filter((y: any) => {
+        if (y['_id'] == this.coverageSelected) { this.panelTopicsData.push(x); }
+      });
     });
     this.panelDataUpdated.next(this.panelTopicsData);
     this.TopicDataSource = new CustomMatDataSource(this.panelTopicsData);
@@ -162,9 +156,9 @@ export class SubcategoryComponent implements OnInit {
     });
     this.solutionsDataSource = [];
     dataSolution.filter((x: any) => {
-      if (x['coverage'].includes(this.coverageSelected)) {
-        this.solutionsDataSource.push(x);
-      }
+      x['coverage'].filter((y: any) => {
+        if (y['_id'] == this.coverageSelected) { this.solutionsDataSource.push(x); }
+      });
     });
     this.SolutionDataSource = new CustomMatDataSource(this.solutionsDataSource);
   }
@@ -177,14 +171,14 @@ export class SubcategoryComponent implements OnInit {
     }
 
     const dialogRef = this.dialog.open<AddDocumentThemeComponent>(AddDocumentThemeComponent, {
-      width: '640px',
       data: {
         documentID: this.documentID,
         document: this.document,
         categoryID: this.subcategoryID,
         coverage: coverage[0]
       },
-      disableClose: true
+      disableClose: true,
+      panelClass: 'full-dialog'
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {

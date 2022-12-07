@@ -26,11 +26,14 @@ export class CategoryBarsComponent implements OnInit {
 
   ngOnInit(): void {
     this.layouts.filter((x: any) => {
-      this.stats.push({ layout: x['_id'], score: x['stats']['score'] });
+      if (x['stats'] != null) {
+        this.stats.push({ layout: x['_id'], score: x['stats']['score'] });
+      } else {
+        x['stats'] = { layout: x['_id'], score: 0 }
+        this.stats.push({ layout: x['_id'], score: x['stats']['score'] });
+      }
     });
-    // this.collaborators.filter((x: any) => {
-    //   this.stats.push({ layout: x['_id'], score: x['stats']['score'] });
-    // });
+    // console.log(this.layouts);
   }
 
   displayLayoutData(layout: any) {
