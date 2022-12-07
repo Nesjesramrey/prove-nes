@@ -275,8 +275,6 @@ export class TopicComponent implements OnInit {
 
   openModalTestimony(event: any) {
     const dialogRef = this.dialog.open<AddDocumentTestimonyComponent>(AddDocumentTestimonyComponent, {
-      width: '640px',
-      maxHeight: '600px',
       data: {
         documentID: this.documentID,
         document: this.document,
@@ -284,10 +282,12 @@ export class TopicComponent implements OnInit {
         topicID: this.topicID,
         type: 'topic',
         image: this.image,
-        firstname: this.user.firstname,
-        lastname: this.user.lastname,
+        firstname: this.user['firstname'],
+        lastname: this.user['lastname'],
+        user: this.user
       },
       disableClose: true,
+      panelClass: 'full-dialog'
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {

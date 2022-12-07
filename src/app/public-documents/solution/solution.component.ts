@@ -258,22 +258,20 @@ export class SolutionComponent implements OnInit {
     return votes.find((vote) => vote.createdBy === this.user._id)?._id || 0;
   }
 
-  openModalTestimony() {
-    const dialogRef = this.dialog.open<AddDocumentTestimonyComponent>(
-      AddDocumentTestimonyComponent,
-      {
-        width: '640px',
-        maxHeight: '600px',
-        data: {
-          documentID: this.documentID,
-          document: this.document,
-          categoryID: this.categoryID,
-          topicID: this.solutionID,
-          type: 'solution',
-          image: this.image,
-        },
-        disableClose: true,
-      }
+  openModalTestimony(event: any) {
+    const dialogRef = this.dialog.open<AddDocumentTestimonyComponent>(AddDocumentTestimonyComponent, {
+      data: {
+        documentID: this.documentID,
+        document: this.document,
+        categoryID: this.categoryID,
+        topicID: this.solutionID,
+        type: 'solution',
+        image: this.image,
+        user: this.user
+      },
+      disableClose: true,
+      panelClass: 'full-dialog'
+    }
     );
 
     dialogRef.afterClosed().subscribe((reply: any) => {

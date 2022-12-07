@@ -10,43 +10,72 @@
 </div>
 
 <div class="set-12 dialog-body">
-  <form [formGroup]="addTestimonyFormGroup" (submit)="createTestimony(addTestimonyFormGroup)">
-    <div class="form-body">
-      <div *ngIf="isAnonymous" class="visibility-container">
-        <img class="visibility" src="../../../assets/images/VISIBILITY ICON.svg" alt="imagen de usuario visible"
-          (click)="visibility()" />
-        <small (click)="visibility()">Usuario Visible</small>
-      </div>
-      <div *ngIf="!isAnonymous" class="visibility-container">
-        <img class="visibility" src="../../../assets/images/VISIBILITY OFF ICON.svg" alt="imagen de usuario visible"
-          (click)="visibility()" />
-        <small (click)="visibility()">Usuario Anónimo</small>
-      </div>
-
-      <mat-form-field class="example-full-width" appearance="outline">
-        <mat-label>Escribe una descripción o carga un documento</mat-label>
-        <textarea matInput placeholder="Descripción" formControlName="description"></textarea>
-      </mat-form-field>
-
-      <div class="imagebox">
-        <label [ngClass]="imageUrl ? 'data' : 'empty'">
-          <mat-icon>photo_camera</mat-icon>
-          <span>Subir imagen</span>
-          <input type="file" accept="image/*" (change)="handleSelectImage($event)" formControlName="image" />
-        </label>
-
-        <img class="preview" [src]="imageUrl" alt="img_upload" [ngClass]="imageUrl ? 'data' : 'empty'" />
-      </div>
-    </div>
-    <div class="messageError">
-      <span *ngIf="messageError" class="messageError">Titulo y descripción son requeridos.</span>
+  <input type="file" #file (change)="onFileSelected($event)" multiple>
+  <button type="button" mat-button color="warn" (click)="visibility()" class="anon">
+    <div class="set-12" *ngIf="!isAnonymous">
+      <mat-icon>visibility</mat-icon>
+      <small>{{user.firstname}} {{user.lastname}}</small>
     </div>
 
-    <div class="set-12 ctrls">
-      <button type="submit" mat-raised-button [disabled]="addTestimonyFormGroup.invalid" color="primary"
-        class="submit-button">
-        Agregar testimonio
-      </button>
+    <div class="set-12" *ngIf="isAnonymous">
+      <mat-icon>visibility_off</mat-icon>
+      <small>Anónimo</small>
     </div>
-  </form>
+  </button>
+
+  <mat-stepper labelPosition="bottom" #stepper [disableRipple]="true" [linear]="true" [@.disabled]="true">
+    <mat-step [stepControl]="addTestimonyFormGroup">
+      <ng-template matStepLabel>
+        <small>Escribe sobre tu experiencia</small>
+      </ng-template>
+
+      <form [formGroup]="addTestimonyFormGroup" class="set-12">
+        <div class="set-12 form-body">
+          <div class="set-12 editor-form">
+            <angular-editor formControlName="description" [config]="editorConfig"></angular-editor>
+          </div>
+        </div>
+
+        <div class="set-12 ctrls">
+          <button type="button" mat-raised-button color="primary" matStepperNext
+            [disabled]="addTestimonyFormGroup.invalid">
+            <small>Siguiente</small>
+          </button>
+
+          <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>
+        <small>Carga tus imágenes</small>
+      </ng-template>
+
+      <div class="set-12 step-content">
+        <button type="button" class="upload-img" (click)="file.click()">
+          <mat-icon>cloud_upload</mat-icon>
+        </button>
+
+        <div class="set-12 file-hldr">
+          <p *ngFor="let name of fileNames">
+            <small>{{name}}</small>
+          </p>
+        </div>
+
+        <div class="set-12 ctrls">
+          <button type="button" mat-raised-button color="primary" matStepperPrevious [disabled]="submitted">
+            <small>Atras</small>
+          </button>
+
+          <button type="button" mat-raised-button color="accent" [disabled]="addTestimonyFormGroup.invalid || submitted"
+            (click)="createTestimony()">
+            <small>Guardar</small>
+          </button>
+
+          <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
+        </div>
+      </div>
+    </mat-step>
+  </mat-stepper>
 </div>

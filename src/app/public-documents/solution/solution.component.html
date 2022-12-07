@@ -28,20 +28,6 @@
       </li>
     </breadcrumbs-component>
   </div>
-  <!-- <div class="set-3 featured-users">
-    <featured-users [inputAmount]="3"></featured-users>
-  </div> -->
-
-  <!-- <div class="set-2 txt-center">
-    <button type="button" mat-mini-fab color="primary" class="mini" matTooltip="Agregar Comentario"
-      (click)="popAddCommentsDialog()">
-      <mat-icon>add_comment</mat-icon>
-    </button>
-    <button type="button" mat-mini-fab color="warn" class="mini" matTooltip="Agregar Testimonio"
-      (click)="openModalTestimony()">
-      <mat-icon>book</mat-icon>
-    </button>
-  </div> -->
 
   <div class="set-12 txt-left" style="margin-bottom: 10px">
     <span class="created-by">
@@ -100,10 +86,10 @@
               (click)="popAddCommentsDialog()">
               <mat-icon>add_comment</mat-icon>
             </button>
-            <button type="button" mat-mini-fab color="warn" matTooltip="Agregar Testimonio" matTooltipClass="tooltip"
-              (click)="openModalTestimony()">
+            <!-- <button type="button" mat-mini-fab color="warn" matTooltip="Agregar Testimonio" matTooltipClass="tooltip"
+              (click)="openModalTestimony(null)">
               <mat-icon>book</mat-icon>
-            </button>
+            </button> -->
           </div>
         </div>
 
@@ -124,7 +110,8 @@
     </div>
 
     <div class="set-3">
-      <public-documents-testimonials [data]="solution.testimonials"></public-documents-testimonials>
+      <public-documents-testimonials [data]="solution.testimonials" (sendTestimonyData)="openModalTestimony($event)">
+      </public-documents-testimonials>
     </div>
   </div>
 </div>

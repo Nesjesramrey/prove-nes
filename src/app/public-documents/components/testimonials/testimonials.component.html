@@ -1,3 +1,8 @@
+<button type="button" mat-mini-fab color="primary" class="ctrls-add" matTooltip="Agregar testimonio"
+  matTooltipClass="tooltip" (click)="addFirstTestimony()">
+  <mat-icon>add_circle</mat-icon>
+</button>
+
 <div class="testimonials">
   <div class="set 12 head-titles">
     <span>Testimonios</span>
@@ -21,8 +26,8 @@
 
     <mat-card class="testimonial-item" *ngFor="let testimonial of data">
       <div class="leading">
-        <mat-icon *ngIf="!testimonial.images[0]">panorama</mat-icon>
-        <img *ngIf="testimonial.images[0]" [src]="testimonial.images[0]" />
+        <mat-icon *ngIf="testimonial.images.length == 0">panorama</mat-icon>
+        <img *ngIf="testimonial.images.length != 0" [src]="testimonial.images[0]" />
       </div>
 
       <div class="info">
@@ -30,13 +35,21 @@
           {{ testimonial.createdBy.firstname }}
           {{ testimonial.createdBy.lastname }}
         </p>
+
         <p class="title" *ngIf="testimonial.isAnonymous">Anónimo</p>
 
         <div class="about">
-          <img class="avatar" *ngIf="testimonial.createdBy.avatarImage" [src]="testimonial.createdBy.avatarImage"
-            [matTooltip]="testimonial.createdBy.firstname + ' ' + testimonial.createdBy.lastname" />
-          <mat-icon *ngIf="!testimonial.createdBy.avatarImage" style="font-size: 20px">panorama</mat-icon>
-          <p>Fecha de creación: {{ testimonial.createdAt | date }}</p>
+          <mat-icon *ngIf="!testimonial.createdBy.avatarImage" style="font-size: 20px">collections</mat-icon>
+          <div>
+            <img class="avatar" *ngIf="testimonial.createdBy.avatarImage" [src]="testimonial.createdBy.avatarImage"
+              [matTooltip]="testimonial.createdBy.firstname + ' ' + testimonial.createdBy.lastname" />
+            <p [innerHTML]="testimonial.description"></p>
+            <p>
+              <small>
+                {{ testimonial.createdAt | date: 'shortDate' }} - {{ testimonial.createdAt | date: 'shortTime' }}
+              </small>
+            </p>
+          </div>
         </div>
       </div>
     </mat-card>
