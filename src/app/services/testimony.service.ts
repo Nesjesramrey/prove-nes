@@ -17,7 +17,6 @@ export class TestimonyService {
   }
 
   createNewTestimony(data: any) {
-    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.createNewTestimonyEndPoint + `${data.id}`+`/?type=${data.type}`, data.form);
+    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.createNewTestimonyEndPoint + `${data.id}` + `/?type=${data.type}`, data['formData']);
   }
-  
 }
