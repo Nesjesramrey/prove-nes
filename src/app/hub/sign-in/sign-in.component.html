@@ -1,4 +1,9 @@
-<div class="set-12" *ngIf="isMobile">
+<div class="set-12 loading" *ngIf="document == null">
+  <mat-spinner></mat-spinner>
+</div>
+
+<!-- mobile -->
+<div class="set-12" *ngIf="document != null && isMobile">
   <div class="set-12 imgdisplay">
     <div class="set-12 imgoverlay"></div>
     <div class="set-12 displayform">
@@ -25,7 +30,7 @@
 </div>
 
 <!-- desktop -->
-<div class="form-hldr" *ngIf="!isMobile">
+<div class="form-hldr" *ngIf="document != null && !isMobile">
   <h1>¡Hola!</h1>
   <h4>Ingresa a tu cuenta.</h4>
 
@@ -63,5 +68,3 @@
     </div>
   </form>
 </div>
-
-<!-- <div class="cover"></div> -->

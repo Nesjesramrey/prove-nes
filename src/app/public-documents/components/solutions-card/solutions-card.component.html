@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <table *ngIf="solutions.length > 0; else notSolution" mat-table [dataSource]="data" matSort class="">
+    <table *ngIf="allSolutions.length > 0; else notSolution" mat-table [dataSource]="data" matSort>
       <ng-container matColumnDef="title">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por título">
           Título
@@ -70,6 +70,7 @@
             <small>Sé el primero en proponer una solución</small>
           </p>
         </div>
+
         <div class="set-12 ctrls">
           <button type="button" mat-raised-button color="accent" (click)="addFirstSolution()">
             <strong>

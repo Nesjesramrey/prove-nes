@@ -63,16 +63,11 @@ export class CategoryComponent implements OnInit {
         this.document = reply;
         this.coverage = this.document['coverage'];
         if (this.coverageSelected == null) { this.coverageSelected = this.coverage[0]['_id']; };
-      },
-      complete: () => { }
-    })
 
-    // *** load layout
-    this.layoutService.fetchSingleLayoutById({ _id: this.categoryID }).subscribe({
-      error: (error: any) => { },
-      next: (reply: any) => {
-        this.selectedCategory = reply;
+        this.selectedCategory = this.document['layouts'].filter((x: any) => { return x['_id'] == this.categoryID });
+        this.selectedCategory = this.selectedCategory[0];
         this.stats = this.selectedCategory['stats'];
+
         this.layouts = this.selectedCategory['subLayouts'];
         this.layouts.filter((x: any) => {
           x['topics'].filter((t: any) => {
@@ -89,7 +84,6 @@ export class CategoryComponent implements OnInit {
         });
 
         this.topSolutions.filter((x: any) => { this.topSolutionsIds.push(x['_id']); });
-
         let solutions = this.allDocumentSolutions.filter((e: any) => {
           return this.topSolutionsIds.includes(e['_id']);
         }, this.topSolutionsIds);
@@ -104,8 +98,50 @@ export class CategoryComponent implements OnInit {
 
         this.topLayouts = this.selectedCategory['subLayouts'];
       },
-      complete: () => { }
-    });
+      complete: () => { 
+        this.isDataAvailable = true;
+      }
+    })
+
+    // *** load layout
+    // this.layoutService.fetchSingleLayoutById({ _id: this.categoryID }).subscribe({
+    //   error: (error: any) => { },
+    //   next: (reply: any) => {
+    //     this.selectedCategory = reply;
+    //     this.stats = this.selectedCategory['stats'];
+    //     this.layouts = this.selectedCategory['subLayouts'];
+    //     this.layouts.filter((x: any) => {
+    //       x['topics'].filter((t: any) => {
+    //         t['solutions'].filter((s: any) => {
+    //           s['url'] = '/documentos-publicos/' + this.document['_id'] +
+    //             '/categoria/' + this.selectedCategory['_id'] +
+    //             '/subcategoria/' + x['_id'] +
+    //             '/tema/' + t['_id'] +
+    //             '/solucion/' + s['_id'];
+    //           this.allDocumentSolutions.push(s);
+    //           this.topSolutions.push(s);
+    //         });
+    //       });
+    //     });
+
+    //     this.topSolutions.filter((x: any) => { this.topSolutionsIds.push(x['_id']); });
+
+    //     let solutions = this.allDocumentSolutions.filter((e: any) => {
+    //       return this.topSolutionsIds.includes(e['_id']);
+    //     }, this.topSolutionsIds);
+
+    //     this.topSolutions = [];
+    //     this.storedSolutions = solutions;
+    //     this.storedSolutions.filter((x: any) => {
+    //       x['coverage'].filter((c: any) => {
+    //         if (c['_id'] == this.coverageSelected) { this.topSolutions.push(x); }
+    //       });
+    //     });
+
+    //     this.topLayouts = this.selectedCategory['subLayouts'];
+    //   },
+    //   complete: () => { }
+    // });
   }
 
   popImageViewer() {

@@ -1,8 +1,8 @@
-<div class="set-12 loading" *ngIf="subcategory == null">
+<div class="set-12 loading" *ngIf="!isDataAvailable">
   <mat-spinner></mat-spinner>
 </div>
 
-<div class="set-12" *ngIf="subcategory != null">
+<div class="set-12" *ngIf="isDataAvailable">
   <div class="set-12">
     <breadcrumbs-component>
       <li>Documentos</li>
@@ -24,7 +24,7 @@
     </div>
   </div>
 
-  <div class="set-12" *ngIf="subcategory">
+  <div class="set-12">
     <div class="set-3 col-lft">
       <mat-card class="set-12 doc-description">
         <div class="set-12 imghldr">
@@ -191,7 +191,7 @@
                   <small>Sé el primero en agregar un tópico.</small>
                 </p>
                 <button type="button" mat-raised-button color="warn" (click)="popAddDocumentTheme()">
-                  <small>Agregar problema</small>
+                  <small>Agregar tópico</small>
                 </button>
               </div>
             </ng-template>

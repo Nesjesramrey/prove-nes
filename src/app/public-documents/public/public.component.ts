@@ -50,7 +50,6 @@ export class PublicComponent implements OnInit {
       error: (error: any) => { },
       next: (reply: any) => {
         this.document = reply;
-
         this.coverage = this.document['coverage'];
         this.layouts = this.document['layouts'];
         this.collaborators = this.document['collaborators'];
@@ -72,6 +71,7 @@ export class PublicComponent implements OnInit {
           });
         });
 
+        this.allDocumentSolutions.filter((x) => { this.topSolutionsIds.push(x['_id']); });
         let solutions = this.allDocumentSolutions.filter((e: any) => {
           return this.topSolutionsIds.includes(e['_id']);
         }, this.topSolutionsIds);
@@ -84,20 +84,22 @@ export class PublicComponent implements OnInit {
           });
         });
       },
-      complete: () => { }
+      complete: () => { 
+        this.isDataAvailable = true;
+      }
     });
 
     // *** load top solutions
-    this.solutionService.getTopSolutionsByDocument(this.documentID).subscribe({
-      error: (error: any) => { },
-      next: (reply: any) => {
-        this.topSolutions = reply;
-        this.topSolutions.filter((x: any) => {
-          this.topSolutionsIds.push(x['_id']);
-        });
-      },
-      complete: () => { }
-    });
+    // this.solutionService.getTopSolutionsByDocument(this.documentID).subscribe({
+    //   error: (error: any) => { },
+    //   next: (reply: any) => {
+    //     this.topSolutions = reply;
+    //     this.topSolutions.filter((x: any) => {
+    //       this.topSolutionsIds.push(x['_id']);
+    //     });
+    //   },
+    //   complete: () => { }
+    // });
 
     // *** yoorco request for chart data
     // this.layoutService.getTopLayoutByDocument(this.documentID).subscribe({

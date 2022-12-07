@@ -15,25 +15,6 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: '/404', pathMatch: 'full' },
       {
-        path: 'selected',
-        component: SelectedCategoryComponent,
-      },
-      {
-        path: 'test',
-        component: ModalVotesComponent,
-      },
-      {
-        path: ':documentID/categoria/:categoryID/subcategoria/:subcategoryID/tema/:topicID/solucion/:solutionID',
-        component: SolutionComponent,
-        canActivate: [CanActivateVisitGuard],
-      },
-      {
-        // path: 'publico/tema',
-        path: ':documentID/categoria/:categoryID/subcategoria/:subcategoryID/tema/:topicID',
-        component: TopicComponent,
-        canActivate: [CanActivateVisitGuard],
-      },
-      {
         path: ':documentID',
         component: PublicComponent,
         canActivate: [CanActivateVisitGuard],
@@ -48,6 +29,16 @@ const routes: Routes = [
         component: SubcategoryComponent,
         canActivate: [CanActivateVisitGuard],
       },
+      {
+        path: ':documentID/categoria/:categoryID/subcategoria/:subcategoryID/tema/:topicID',
+        component: TopicComponent,
+        canActivate: [CanActivateVisitGuard],
+      },
+      {
+        path: ':documentID/categoria/:categoryID/subcategoria/:subcategoryID/tema/:topicID/solucion/:solutionID',
+        component: SolutionComponent,
+        canActivate: [CanActivateVisitGuard],
+      },
     ],
   },
 ];
@@ -56,4 +47,4 @@ const routes: Routes = [
   exports: [RouterModule],
   imports: [RouterModule.forChild(routes)],
 })
-export class PublicDocumentsComponentRoutingModule {}
+export class PublicDocumentsComponentRoutingModule { }

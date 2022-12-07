@@ -1,8 +1,8 @@
-<div class="set-12 loading" *ngIf="selectedCategory == null">
+<div class="set-12 loading" *ngIf="!isDataAvailable">
   <mat-spinner></mat-spinner>
 </div>
 
-<div class="set-12" *ngIf="selectedCategory != null && !isMobile">
+<div class="set-12" *ngIf="isDataAvailable && !isMobile">
   <breadcrumbs-component>
     <li>Documentos</li>
     <li *ngIf="!!document.title; else noTitle" (click)="utilityService.linkMe('/documentos-publicos/' + document._id)">
@@ -46,9 +46,9 @@
           </p>
         </div>
       </mat-card>
-      <horizontal-stats [users]="stats?.users" [interactions]="stats?.interactions"></horizontal-stats>
+      <horizontal-stats [users]="document?.stats?.users" [interactions]="stats?.interactions"></horizontal-stats>
       <div class="set-12">
-        <vertical-stats [topics]="stats?.topics" [solutions]="stats?.solutions"></vertical-stats>
+        <vertical-stats [topics]="document?.stats?.topics" [solutions]="stats?.solutions"></vertical-stats>
       </div>
     </div>
 
@@ -84,6 +84,6 @@
   </div>
 </div>
 
-<div class="set-12" *ngIf="selectedCategory != null && isMobile">
+<div class="set-12" *ngIf="isDataAvailable && isMobile">
   <div class="public-document-mobile-category-view" [category]="selectedCategory"></div>
 </div>

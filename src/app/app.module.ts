@@ -109,4 +109,4 @@ const socketConfig: SocketIoConfig = {
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

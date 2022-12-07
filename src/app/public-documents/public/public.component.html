@@ -1,16 +1,16 @@
-<div class="set-12 loading" *ngIf="document == null">
+<div class="set-12 loading" *ngIf="!isDataAvailable">
   <mat-spinner></mat-spinner>
 </div>
 
 <!-- desktop -->
-<div class="set-12" *ngIf="document != null && !isMobile">
+<div class="set-12" *ngIf="isDataAvailable && !isMobile">
   <div class="set-12 author-hldr">
     <span class="created-by">
       Autor: <span class="author">Mexicolectivo</span>
     </span>
   </div>
 
-  <div class="set-12" *ngIf="document != null">
+  <div class="set-12">
     <div class="set-3 col-lft">
       <mat-card class="set-12 doc-description">
         <div class="set-12 imghldr">
@@ -24,7 +24,7 @@
         </div>
       </mat-card>
 
-      <horizontal-stats [users]="document.stats?.users" [interactions]="document.stats?.interactions">
+      <horizontal-stats [users]="document?.stats?.users" [interactions]="document?.stats?.interactions">
       </horizontal-stats>
 
       <div class="set-12">
@@ -38,7 +38,6 @@
 
     <div class="set-9 col-rgt">
       <mat-card>
-        <!-- <panel-circles [data]="document.layouts" [document]="document" [redirectTo]="'CATEGORY'"></panel-circles> -->
         <div class="set-12">
           <div class="category-bars" [document_id]="document._id" [coverageSelected]="coverageSelected"
             [layouts]="layouts" (sendLayoutData)="getLayoutData($event)"></div>
@@ -72,7 +71,7 @@
 </div>
 
 <!-- mobile -->
-<div class="set-12" *ngIf="document != null && isMobile">
+<div class="set-12" *ngIf="isDataAvailable && isMobile">
   <div class="public-document-mobile-view" [document]="document" [topSolutions]="topSolutions"></div>
   <div class="public-document-mobile-fixed-tools"></div>
 </div>

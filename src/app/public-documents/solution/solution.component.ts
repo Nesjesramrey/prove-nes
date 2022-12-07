@@ -79,48 +79,65 @@ export class SolutionComponent implements OnInit {
       error: (error: any) => { },
       next: (reply: any) => {
         this.document = reply;
-      },
-      complete: () => { }
-    });
 
-    // *** load category
-    this.layoutService.fetchSingleLayoutById({ _id: this.categoryID }).subscribe({
-      error: (error: any) => { },
-      next: (reply: any) => {
-        this.category = reply;
-      },
-      complete: () => { }
-    });
+        let category = this.document['layouts'].filter((x: any) => { return x['_id'] == this.categoryID; });
+        this.category = category[0];
 
-    // *** load sub category
-    this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID }).subscribe({
-      error: (error: any) => { },
-      next: (reply: any) => {
-        this.subcategory = reply;
-      },
-      complete: () => { }
-    });
+        let subcategory = this.category['subLayouts'].filter((x: any) => { return x['_id'] == this.subcategoryID; });
+        this.subcategory = subcategory[0];
 
-    // *** load topic
-    this.topicService.fetchSingleTopicById({ _id: this.topicID }).subscribe({
-      error: (error: any) => { },
-      next: (reply: any) => {
-        this.topic = reply;
+        let topic = this.subcategory['topics'].filter((x: any) => { return x['_id'] == this.topicID; });
+        this.topic = topic[0];
         this.topic['shortTitle'] = this.getshortTitle(this.topic['title']);
-      },
-      complete: () => { }
-    });
 
-    // *** load solution
-    this.solutionService.fetchSingleSolutionById({ _id: this.solutionID }).subscribe({
-      error: (error: any) => { },
-      next: (reply: any) => {
-        this.solution = reply;
+        let solution = this.topic['solutions'].filter((x: any) => { return x['_id'] == this.solutionID; });
+        this.solution = solution[0];
         this.solution['shortTitle'] = this.getshortTitle(this.solution['title']);
         this.stats = this.solution['stats'];
       },
-      complete: () => { }
+      complete: () => {
+        this.isDataAvailable = true;
+      }
     });
+
+    // *** load category
+    // this.layoutService.fetchSingleLayoutById({ _id: this.categoryID }).subscribe({
+    //   error: (error: any) => { },
+    //   next: (reply: any) => {
+    //     this.category = reply;
+    //   },
+    //   complete: () => { }
+    // });
+
+    // *** load sub category
+    // this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID }).subscribe({
+    //   error: (error: any) => { },
+    //   next: (reply: any) => {
+    //     this.subcategory = reply;
+    //   },
+    //   complete: () => { }
+    // });
+
+    // *** load topic
+    // this.topicService.fetchSingleTopicById({ _id: this.topicID }).subscribe({
+    //   error: (error: any) => { },
+    //   next: (reply: any) => {
+    //     this.topic = reply;
+    //     this.topic['shortTitle'] = this.getshortTitle(this.topic['title']);
+    //   },
+    //   complete: () => { }
+    // });
+
+    // *** load solution
+    // this.solutionService.fetchSingleSolutionById({ _id: this.solutionID }).subscribe({
+    //   error: (error: any) => { },
+    //   next: (reply: any) => {
+    //     this.solution = reply;
+    //     this.solution['shortTitle'] = this.getshortTitle(this.solution['title']);
+    //     this.stats = this.solution['stats'];
+    //   },
+    //   complete: () => { }
+    // });
 
     // *** load votes
     this.voteService.fetchVotesBySolutionID({ _id: this.solutionID }).subscribe({
