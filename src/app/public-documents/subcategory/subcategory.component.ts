@@ -1,10 +1,6 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { forkJoin, Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { DocumentService } from 'src/app/services/document.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LayoutService } from 'src/app/services/layout.service';
@@ -56,49 +52,45 @@ export class SubcategoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (history['state']['coverage'] != undefined) {
-      this.coverageSelected = history['state']['coverage'];
-    };
-    this.loadSubcategory();
-  }
+    if (history['state']['coverage'] != undefined) { this.coverageSelected = history['state']['coverage']; };
 
-  loadSubcategory() {
-    let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
-    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID });
-    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID });
+    this.documentService.fetchSingleDocumentById({ _id: this.documentID }).subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        this.document = reply;
+        this.coverage = this.document['coverage'];
+        if (this.coverageSelected == null) { this.coverageSelected = this.coverage[0]['_id']; };
 
-    forkJoin([document, category, subcategory]).subscribe((reply: any) => {
-      this.titles = this.utilityService.formatTitles(reply[0].title, reply[1].category.name, reply[2].category.name, '');
+        let category = this.document['layouts'].filter((x: any) => { return x['_id'] == this.categoryID });
+        this.category = category[0];
 
-      this.document = reply[0];
-      this.category = reply[1];
-      this.subcategory = reply[2];
-      this.stats = this.subcategory.stats;
-      this.image = reply[1].images.length > 0 ? reply[1].images[0] : this.image;
-      this.topicsDataSource = this.subcategory.topics;
+        let subcategory = this.category['subLayouts'].filter((x: any) => { return x['_id'] == this.subcategoryID });
+        this.subcategory = subcategory[0];
+        this.stats = this.subcategory['stats'];
 
-      this.coverage = this.document['coverage'];
-      if (this.coverageSelected == null) { this.coverageSelected = this.coverage[0]['_id']; }
-      this.subcategory['topics'].filter((x: any) => {
-        if (x['coverage'].includes(this.coverageSelected)) { this.panelTopicsData.push(x); }
-      });
+        this.topicsDataSource = this.subcategory['topics'];
+        this.subcategory['topics'].filter((x: any) => {
+          x['coverage'].filter((y: any) => {
+            if (y['_id'] == this.coverageSelected) { this.panelTopicsData.push(x); }
+          });
+        });
 
-      const dataSolution: any = [];
-      this.subcategory.topics.map((item: any) => [...item.solutions]).forEach((_: any, index: number) => {
-        dataSolution.push(...this.subcategory.topics.map((item: any) => [...item.solutions])[index]);
-      });
-      dataSolution.filter((x: any) => {
-        if (x['coverage'].includes(this.coverageSelected)) {
-          this.solutionsDataSource.push(x);
-        }
-      });
+        const dataSolution: any = [];
+        this.subcategory.topics.map((item: any) => [...item.solutions]).forEach((_: any, index: number) => {
+          dataSolution.push(...this.subcategory.topics.map((item: any) => [...item.solutions])[index]);
+        });
+        dataSolution.filter((x: any) => {
+          x['coverage'].filter((y: any) => {
+            if (y['_id'] == this.coverageSelected) { this.solutionsDataSource.push(x); }
+          });
+        });
 
-      this.TopicDataSource = new CustomMatDataSource(this.panelTopicsData);
-      this.SolutionDataSource = new CustomMatDataSource(this.solutionsDataSource);
-
-      setTimeout(() => {
+        this.TopicDataSource = new CustomMatDataSource(this.panelTopicsData);
+        this.SolutionDataSource = new CustomMatDataSource(this.solutionsDataSource);
+      },
+      complete: () => {
         this.isDataAvailable = true;
-      }, 1000);
+      }
     });
   }
 
@@ -151,7 +143,9 @@ export class SubcategoryComponent implements OnInit {
     this.coverageSelected = event['value'];
     this.panelTopicsData = [];
     this.subcategory['topics'].filter((x: any) => {
-      if (x['coverage'].includes(this.coverageSelected)) { this.panelTopicsData.push(x); }
+      x['coverage'].filter((y: any) => {
+        if (y['_id'] == this.coverageSelected) { this.panelTopicsData.push(x); }
+      });
     });
     this.panelDataUpdated.next(this.panelTopicsData);
     this.TopicDataSource = new CustomMatDataSource(this.panelTopicsData);
@@ -162,9 +156,9 @@ export class SubcategoryComponent implements OnInit {
     });
     this.solutionsDataSource = [];
     dataSolution.filter((x: any) => {
-      if (x['coverage'].includes(this.coverageSelected)) {
-        this.solutionsDataSource.push(x);
-      }
+      x['coverage'].filter((y: any) => {
+        if (y['_id'] == this.coverageSelected) { this.solutionsDataSource.push(x); }
+      });
     });
     this.SolutionDataSource = new CustomMatDataSource(this.solutionsDataSource);
   }
@@ -177,19 +171,18 @@ export class SubcategoryComponent implements OnInit {
     }
 
     const dialogRef = this.dialog.open<AddDocumentThemeComponent>(AddDocumentThemeComponent, {
-      width: '640px',
       data: {
         documentID: this.documentID,
         document: this.document,
         categoryID: this.subcategoryID,
         coverage: coverage[0]
       },
-      disableClose: true
+      disableClose: true,
+      panelClass: 'full-dialog'
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
-        console.log(reply);
         if (reply.hasOwnProperty('topic')) {
           reply['topic']['solutions'] = reply['solutions'];
           // this.topics.push(reply['topic']);

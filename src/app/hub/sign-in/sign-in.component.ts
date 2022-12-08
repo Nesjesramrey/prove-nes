@@ -49,6 +49,7 @@ export class SignInComponent implements OnInit {
       next: (reply: any) => {
         this.document = reply;
       },
+      complete: () => { }
     });
   }
 

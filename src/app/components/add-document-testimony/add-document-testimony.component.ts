@@ -1,13 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AddDocumentThemeComponent } from '../add-document-theme/add-document-theme.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TestimonyService } from 'src/app/services/testimony.service';
-import { DialogErrorComponent } from '../dialog-error/dialog-error.component';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
   selector: 'app-add-document-testimony',
@@ -21,18 +18,62 @@ export class AddDocumentTestimonyComponent implements OnInit {
   public file: any = null;
   public messageError: boolean = false;
   public isAnonymous: boolean = false;
+  public htmlContent: any = '';
+  public editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: '15rem',
+    minHeight: '5rem',
+    placeholder: 'Descripción...',
+    translate: 'no',
+    defaultParagraphSeparator: 'p',
+    defaultFontName: 'Arial',
+    toolbarHiddenButtons: [
+      [
+        'strikeThrough',
+        'subscript',
+        'superscript',
+        'justifyLeft',
+        'justifyCenter',
+        'justifyRight',
+        'justifyFull',
+        'indent',
+        'outdent',
+        'insertUnorderedList',
+        'insertOrderedList',
+        'heading',
+      ],
+      [
+        'textColor',
+        'backgroundColor',
+        'customClasses',
+        'unlink',
+        'insertImage',
+        'insertVideo',
+        'insertHorizontalRule',
+        'removeFormat',
+        'toggleEditorMode'
+      ]
+    ]
+  };
+  public fileNames: any = [];
+  public user: any = null;
+
   constructor(
     public formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<AddDocumentThemeComponent>,
-    public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
-    public testimonyService: TestimonyService
-  ) { }
+    public testimonyService: TestimonyService,
+    public utilityService: UtilityService
+  ) {
+    // console.log(this.dialogData);
+    this.user = this.dialogData['user'];
+  }
 
   ngOnInit(): void {
     this.addTestimonyFormGroup = this.formBuilder.group({
       description: ['', [Validators.required]],
-      image: ['', []],
+      files: ['', []],
     });
   }
 
@@ -44,58 +85,40 @@ export class AddDocumentTestimonyComponent implements OnInit {
     this.isAnonymous = !this.isAnonymous;
   }
 
-  handleSelectImage(event: any) {
-    if (event == null) return;
+  onFileSelected(event: any) {
+    Array.from(event.target.files).forEach((file: any) => { this.fileNames.push(file['name']); });
+    this.addTestimonyFormGroup.patchValue({ files: event.target.files });
+    this.addTestimonyFormGroup.updateValueAndValidity();
+    // console.log(this.addTestimonyFormGroup.controls['files']['value']);
+  }
 
-    const file = (event.target as HTMLInputElement)?.files![0];
-    this.file = file;
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.imageUrl = reader.result as string;
+  createTestimony() {
+    this.submitted = true;
+    const { topicID, type } = this.dialogData;
+
+    let data = {
+      formData: new FormData(),
+      id: topicID,
+      type: type
     };
-    reader.readAsDataURL(file);
-  }
 
-  createTestimony(formGroup: FormGroup) {
-    try {
-      if (this.addTestimonyFormGroup.valid) {
-        this.submitted = true;
-        const { description } = formGroup.value;
-        const { topicID, type } = this.dialogData;
+    Array.from(this.addTestimonyFormGroup.controls['files']['value'])
+      .forEach((file: any) => { data['formData'].append('files', file); });
+    data['formData'].append('description', this.addTestimonyFormGroup.value.description);
+    data['formData'].append('isAnonymous', (this.isAnonymous).toString());
 
-        const formData = new FormData();
-        formData.append('description', description);
-        formData.append('files', this.file);
-        formData.append('isAnonymous', (!this.isAnonymous).toString());
-
-        const data = {
-          form: formData,
-          id: topicID,
-          type: type
-        };
-
-        this.testimonyService
-          .createNewTestimony(data)
-          .subscribe((reply: any) => {
-            this.submitted = false;
-            this.dialogRef.close(reply);
-          });
-      } else {
-        this.messageError = true;
+    this.testimonyService.createNewTestimony(data).subscribe({
+      error: (error: any) => {
+        this.utilityService.openErrorSnackBar(this.utilityService.errorOops);
+        this.killDialog();
+      },
+      next: (reply: any) => {
+        this.utilityService.openSuccessSnackBar(this.utilityService.saveSuccess);
+        this.dialogRef.close(reply);
+      },
+      complete: () => {
+        this.submitted = false;
       }
-    } catch (error) {
-      this.diagloErrorOpen();
-    }
-  }
-
-  diagloErrorOpen() {
-    const dialogRef = this.dialog.open<DialogErrorComponent>(
-      DialogErrorComponent,
-      {
-        width: '550px',
-      }
-    );
-
-    dialogRef.afterClosed().subscribe((reply: any) => { });
+    });
   }
 }

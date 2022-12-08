@@ -38,7 +38,7 @@ export class SolutionsCardComponent implements OnInit {
     // this.solutions = this.data['filteredData'];
     this.allSolutions.filter((x: any) => {
       x['coverage'].filter((y: any) => {
-        if (y == this.coverageSelected) { this.solutions.push(x); }
+        if (y['_id'] == this.coverageSelected) { this.solutions.push(x); }
       });
     });
   }

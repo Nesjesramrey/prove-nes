@@ -44,7 +44,7 @@ export class TopicComponent implements OnInit {
   public isFavorites: boolean = false;
   public allFavorites: any = null;
   public testimonials: any = [];
-  public solutionsData: any = [];
+  public solutionsData: any[] = [];
   public titles: any = [];
   public coverage: any = null;
   public coverageSelected: any = null;
@@ -67,16 +67,13 @@ export class TopicComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (history['state']['coverage'] != undefined) {
-      this.coverageSelected = history['state']['coverage'];
-    };
+    if (history['state']['coverage'] != undefined) { this.coverageSelected = history['state']['coverage']; };
 
+    // *** load user
     this.user = this.UserService.fetchFireUser().subscribe({
       error: (error: any) => { },
       next: (reply: any) => {
         this.user = reply;
-        this.loadTopic();
-
         if (['administrator', 'editor'].includes(this.user.activities?.[0]?.value)) {
           this.permission = true;
         } else {
@@ -84,6 +81,125 @@ export class TopicComponent implements OnInit {
         }
       },
       complete: () => { }
+    });
+
+    // *** load document
+    this.documentService.fetchSingleDocumentById({ _id: this.documentID }).subscribe({
+      error: (reply: any) => { },
+      next: (reply: any) => {
+        this.document = reply;
+        this.coverage = this.document['coverage'];
+
+        let category = this.document['layouts'].filter((x: any) => { return x['_id'] == this.categoryID; });
+        this.category = category[0];
+
+        let subcategory = this.category['subLayouts'].filter((x: any) => { return x['_id'] == this.subcategoryID; });
+        this.subcategory = subcategory[0];
+
+        let topic = this.subcategory['topics'].filter((x: any) => { return x['_id'] == this.topicID; });
+        this.topic = topic[0];
+        this.stats = this.topic['stats'];
+
+        this.solutionsData = this.topic['solutions'];
+        this.SolutionDataSource = new MatTableDataSource(this.sortSolutions(this.solutionsData));
+
+        this.topic['shortTitle'] = this.getshortTitle(this.topic['title']);
+
+        this.coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.topic['coverage'][0]['_id']; });
+        if (this.coverageSelected == null) { this.coverageSelected = this.coverage[0]['_id']; }
+      },
+      complete: () => {
+        this.isDataAvailable = true;
+      }
+    });
+
+    // *** load category
+    // this.layoutService.fetchSingleLayoutById({ _id: this.categoryID }).subscribe({
+    //   error: (reply: any) => { },
+    //   next: (reply: any) => {
+    //     this.category = reply;
+    //   },
+    //   complete: () => { }
+    // });
+
+    // *** load sub category
+    // this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID }).subscribe({
+    //   error: (reply: any) => { },
+    //   next: (reply: any) => {
+    //     this.subcategory = reply;
+    //   },
+    //   complete: () => { }
+    // });
+
+    // *** load topic
+    // this.topicService.fetchSingleTopicById({ _id: this.topicID }).subscribe({
+    //   error: (reply: any) => { },
+    //   next: (reply: any) => {
+    //     this.topic = reply;
+    //     this.stats = this.topic['stats'];
+    //     this.solutionsData = this.topic.solutions;
+    //     this.SolutionDataSource = new CustomMatDataSource(this.sortSolutions(this.solutionsData));
+    //     this.getBreadcrumbsTitles();
+    //     this.coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.topic['coverage'][0]; });
+    //     if (this.coverageSelected == null) { this.coverageSelected = this.coverage[0]['_id']; }
+    //   },
+    //   complete: () => { }
+    // });
+
+    // *** load votes
+    this.voteService.fetchVotesByTopicID({ _id: this.topicID }).subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        this.votes = reply.length;
+        this.userVoted = this.checkUserVote(reply);
+      },
+      complete: () => { }
+    });
+
+    // *** load favourites
+    this.favoritesService.fetchFavoritesByTopicID({ _id: this.topicID }).subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        this.allFavorites = reply['data'];
+        this.isFavorites = this.checkFavorites();
+      },
+      complete: () => { }
+    });
+  }
+
+  loadTopic() {
+    let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
+    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID });
+    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID });
+    let topic: Observable<any> = this.topicService.fetchSingleTopicById({ _id: this.topicID });
+    let votes: Observable<any> = this.voteService.fetchVotesByTopicID({ _id: this.topicID });
+    let favorites: Observable<any> = this.favoritesService.fetchFavoritesByTopicID({ _id: this.topicID });
+
+    forkJoin([document, category, subcategory, topic, votes, favorites]).subscribe((reply: any) => {
+      this.titles = this.utilityService.formatTitles(reply[0].title, reply[1].category.name, reply[2].category.name, reply[3].title);
+      this.userVoted = this.checkUserVote(reply[4]);
+      this.allFavorites = reply[5].data;
+      this.isFavorites = this.checkFavorites();
+      this.document = reply[0];
+      this.category = reply[1];
+      this.subcategory = reply[2];
+      this.topic = reply[3];
+      this.stats = this.topic.stats;
+      this.votes = reply[4].length;
+      this.solutionsData = this.topic.solutions;
+      this.SolutionDataSource = new CustomMatDataSource(this.sortSolutions(this.solutionsData));
+
+      this.coverage = this.document['coverage'];
+      this.coverage = this.document['coverage'].filter((x: any) => {
+        return x['_id'] == this.topic['coverage'][0];
+      });
+      if (this.coverageSelected == null) { this.coverageSelected = this.coverage[0]['_id']; }
+      this.getRamdomImage();
+
+      setTimeout(() => {
+        this.getBreadcrumbsTitles();
+        this.isDataAvailable = true;
+      }, 100);
     });
   }
 
@@ -141,42 +257,6 @@ export class TopicComponent implements OnInit {
     });
   }
 
-  loadTopic() {
-    let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
-    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID });
-    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID });
-    let topic: Observable<any> = this.topicService.fetchSingleTopicById({ _id: this.topicID });
-    let votes: Observable<any> = this.voteService.fetchVotesByTopicID({ _id: this.topicID });
-    let favorites: Observable<any> = this.favoritesService.fetchFavoritesByTopicID({ _id: this.topicID });
-
-    forkJoin([document, category, subcategory, topic, votes, favorites]).subscribe((reply: any) => {
-      this.titles = this.utilityService.formatTitles(reply[0].title, reply[1].category.name, reply[2].category.name, reply[3].title);
-      this.userVoted = this.checkUserVote(reply[4]);
-      this.allFavorites = reply[5].data;
-      this.isFavorites = this.checkFavorites();
-      this.document = reply[0];
-      this.category = reply[1];
-      this.subcategory = reply[2];
-      this.topic = reply[3];
-      this.stats = this.topic.stats;
-      this.votes = reply[4].length;
-      this.solutionsData = this.topic.solutions;
-      this.SolutionDataSource = new CustomMatDataSource(this.sortSolutions(this.solutionsData));
-
-      // this.coverage = this.document['coverage'];
-      this.coverage = this.document['coverage'].filter((x: any) => {
-        return x['_id'] == this.topic['coverage'][0];
-      });
-      if (this.coverageSelected == null) { this.coverageSelected = this.coverage[0]['_id']; }
-      this.getRamdomImage();
-
-      setTimeout(() => {
-        this.getBreadcrumbsTitles();
-        this.isDataAvailable = true;
-      }, 100);
-    });
-  }
-
   getRamdomImage() {
     let testimonials_withs_images = this.topic.testimonials.filter(
       (testimonial: any) => testimonial.images.length > 0
@@ -195,8 +275,6 @@ export class TopicComponent implements OnInit {
 
   openModalTestimony(event: any) {
     const dialogRef = this.dialog.open<AddDocumentTestimonyComponent>(AddDocumentTestimonyComponent, {
-      width: '640px',
-      maxHeight: '600px',
       data: {
         documentID: this.documentID,
         document: this.document,
@@ -204,10 +282,12 @@ export class TopicComponent implements OnInit {
         topicID: this.topicID,
         type: 'topic',
         image: this.image,
-        firstname: this.user.firstname,
-        lastname: this.user.lastname,
+        firstname: this.user['firstname'],
+        lastname: this.user['lastname'],
+        user: this.user
       },
       disableClose: true,
+      panelClass: 'full-dialog'
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
@@ -218,14 +298,13 @@ export class TopicComponent implements OnInit {
   }
 
   openModalSolution(event: any) {
-    let coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.topic['coverage'][0] });
+    let coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.topic['coverage'][0]['_id'] });
     if (coverage.length == 0) {
       this.utilityService.openErrorSnackBar('Selecciona una cobertura.');
       return;
     }
 
     const dialogRef = this.dialog.open<AddDocumentSolutionComponent>(AddDocumentSolutionComponent, {
-      // width: '640px',
       data: {
         themeID: this.topicID,
         coverage: coverage[0]
@@ -324,12 +403,11 @@ export class TopicComponent implements OnInit {
 
   unVote() {
     this.voteService.deleteVote({ _id: this.userVoted }).subscribe({
-      error: (error: any) => {
-        console.log(error);
-      },
+      error: (error: any) => { },
       next: (reply: any) => {
-        this.loadTopic();
+        // this.loadTopic();
       },
+      complete: () => { }
     });
   }
 

@@ -6,13 +6,14 @@
   <breadcrumbs-component>
     <li>Documentos</li>
     <li *ngIf="!!document.title; else noTitle" (click)="utilityService.linkMe('/documentos-publicos/' + document._id)">
-      {{ titles[0] }}
+      {{ document.title }}
     </li>
     <ng-template #noTitle>
       <div>categoria</div>
     </ng-template>
-    <li>{{ titles[1] }}</li>
+    <li>{{ selectedCategory.category.name }}</li>
   </breadcrumbs-component>
+
   <div class="set-12 author-hldr">
     <span class="created-by">
       Autor: <span class="author">
@@ -45,16 +46,14 @@
           </p>
         </div>
       </mat-card>
-      <horizontal-stats [users]="stats?.users" [interactions]="stats?.interactions"></horizontal-stats>
+      <horizontal-stats [users]="document?.stats?.users" [interactions]="stats?.interactions"></horizontal-stats>
       <div class="set-12">
-        <vertical-stats [topics]="stats?.topics" [solutions]="stats?.solutions"></vertical-stats>
+        <vertical-stats [topics]="document?.stats?.topics" [solutions]="stats?.solutions"></vertical-stats>
       </div>
     </div>
 
     <div class="set-9 col-rgt">
       <mat-card>
-        <!-- <panel-circles [data]="selectedCategory.subLayouts" [withBorder]="true" [redirectTo]="'SUBCATEGORY'">
-        </panel-circles> -->
         <div class="subcategory-bars" [document_id]="document._id" [category_id]="categoryID"
           [coverageSelected]="coverageSelected" [layouts]="layouts" (sendLayoutData)="getLayoutData($event)"></div>
 

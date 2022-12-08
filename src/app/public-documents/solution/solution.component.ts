@@ -34,7 +34,6 @@ export class SolutionComponent implements OnInit {
   public userVoted: number = 0;
   public isFavorites: boolean = false;
   public allFavorites: any = null;
-
   public document: any = null;
   public solution: any = null;
   public category: any = null;
@@ -66,12 +65,127 @@ export class SolutionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // *** load user
     this.user = this.UserService.fetchFireUser().subscribe({
       error: (error: any) => { },
       next: (reply: any) => {
         this.user = reply;
-        this.loadSolution();
       },
+      complete: () => { }
+    });
+
+    // *** load document
+    this.documentService.fetchSingleDocumentById({ _id: this.documentID }).subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        this.document = reply;
+
+        let category = this.document['layouts'].filter((x: any) => { return x['_id'] == this.categoryID; });
+        this.category = category[0];
+
+        let subcategory = this.category['subLayouts'].filter((x: any) => { return x['_id'] == this.subcategoryID; });
+        this.subcategory = subcategory[0];
+
+        let topic = this.subcategory['topics'].filter((x: any) => { return x['_id'] == this.topicID; });
+        this.topic = topic[0];
+        this.topic['shortTitle'] = this.getshortTitle(this.topic['title']);
+
+        let solution = this.topic['solutions'].filter((x: any) => { return x['_id'] == this.solutionID; });
+        this.solution = solution[0];
+        this.solution['shortTitle'] = this.getshortTitle(this.solution['title']);
+        this.stats = this.solution['stats'];
+      },
+      complete: () => {
+        this.isDataAvailable = true;
+      }
+    });
+
+    // *** load category
+    // this.layoutService.fetchSingleLayoutById({ _id: this.categoryID }).subscribe({
+    //   error: (error: any) => { },
+    //   next: (reply: any) => {
+    //     this.category = reply;
+    //   },
+    //   complete: () => { }
+    // });
+
+    // *** load sub category
+    // this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID }).subscribe({
+    //   error: (error: any) => { },
+    //   next: (reply: any) => {
+    //     this.subcategory = reply;
+    //   },
+    //   complete: () => { }
+    // });
+
+    // *** load topic
+    // this.topicService.fetchSingleTopicById({ _id: this.topicID }).subscribe({
+    //   error: (error: any) => { },
+    //   next: (reply: any) => {
+    //     this.topic = reply;
+    //     this.topic['shortTitle'] = this.getshortTitle(this.topic['title']);
+    //   },
+    //   complete: () => { }
+    // });
+
+    // *** load solution
+    // this.solutionService.fetchSingleSolutionById({ _id: this.solutionID }).subscribe({
+    //   error: (error: any) => { },
+    //   next: (reply: any) => {
+    //     this.solution = reply;
+    //     this.solution['shortTitle'] = this.getshortTitle(this.solution['title']);
+    //     this.stats = this.solution['stats'];
+    //   },
+    //   complete: () => { }
+    // });
+
+    // *** load votes
+    this.voteService.fetchVotesBySolutionID({ _id: this.solutionID }).subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        this.votes = reply;
+        this.userVoted = this.checkUserVote(reply);
+      },
+      complete: () => { }
+    });
+
+    // *** load favourites
+    this.favoritesService.fetchFavoritesBySolutionID({ _id: this.solutionID }).subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        this.allFavorites = reply['data'];
+        this.isFavorites = this.checkFavorites();
+      },
+      complete: () => { }
+    });
+  }
+
+  loadSolution() {
+    let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
+    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID });
+    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID });
+    let topic: Observable<any> = this.topicService.fetchSingleTopicById({ _id: this.topicID });
+    let solution: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.solutionID });
+    let votes: Observable<any> = this.voteService.fetchVotesBySolutionID({ _id: this.solutionID });
+    let favorites: Observable<any> = this.favoritesService.fetchFavoritesBySolutionID({ _id: this.solutionID });
+
+    forkJoin([document, category, subcategory, topic, solution, votes, favorites]).subscribe((reply: any) => {
+      this.userVoted = this.checkUserVote(reply[5]);
+      this.document = reply[0];
+      this.category = reply[1];
+      this.subcategory = reply[2];
+      this.topic = reply[3];
+      this.solution = reply[4];
+      this.stats = this.solution.stats;
+      this.votes = reply[5].length;
+      this.allFavorites = reply[6].data;
+      this.isFavorites = this.checkFavorites();
+      this.getRamdomImage();
+
+      setTimeout(() => {
+        this.getBreadcrumbsTitles();
+        this.isDataAvailable = true;
+      }, 300);
     });
   }
 
@@ -128,35 +242,6 @@ export class SolutionComponent implements OnInit {
     });
   }
 
-  loadSolution() {
-    let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
-    let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID });
-    let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID });
-    let topic: Observable<any> = this.topicService.fetchSingleTopicById({ _id: this.topicID });
-    let solution: Observable<any> = this.solutionService.fetchSingleSolutionById({ _id: this.solutionID });
-    let votes: Observable<any> = this.voteService.fetchVotesBySolutionID({ _id: this.solutionID });
-    let favorites: Observable<any> = this.favoritesService.fetchFavoritesBySolutionID({ _id: this.solutionID });
-
-    forkJoin([document, category, subcategory, topic, solution, votes, favorites]).subscribe((reply: any) => {
-      this.userVoted = this.checkUserVote(reply[5]);
-      this.document = reply[0];
-      this.category = reply[1];
-      this.subcategory = reply[2];
-      this.topic = reply[3];
-      this.solution = reply[4];
-      this.stats = this.solution.stats;
-      this.votes = reply[5].length;
-      this.allFavorites = reply[6].data;
-      this.isFavorites = this.checkFavorites();
-      this.getRamdomImage();
-
-      setTimeout(() => {
-        this.getBreadcrumbsTitles();
-        this.isDataAvailable = true;
-      }, 300);
-    });
-  }
-
   getRamdomImage() {
     let testimonials_withs_images = this.solution.testimonials.filter(
       (testimonial: any) => testimonial.images.length > 0
@@ -173,22 +258,20 @@ export class SolutionComponent implements OnInit {
     return votes.find((vote) => vote.createdBy === this.user._id)?._id || 0;
   }
 
-  openModalTestimony() {
-    const dialogRef = this.dialog.open<AddDocumentTestimonyComponent>(
-      AddDocumentTestimonyComponent,
-      {
-        width: '640px',
-        maxHeight: '600px',
-        data: {
-          documentID: this.documentID,
-          document: this.document,
-          categoryID: this.categoryID,
-          topicID: this.solutionID,
-          type: 'solution',
-          image: this.image,
-        },
-        disableClose: true,
-      }
+  openModalTestimony(event: any) {
+    const dialogRef = this.dialog.open<AddDocumentTestimonyComponent>(AddDocumentTestimonyComponent, {
+      data: {
+        documentID: this.documentID,
+        document: this.document,
+        categoryID: this.categoryID,
+        topicID: this.solutionID,
+        type: 'solution',
+        image: this.image,
+        user: this.user
+      },
+      disableClose: true,
+      panelClass: 'full-dialog'
+    }
     );
 
     dialogRef.afterClosed().subscribe((reply: any) => {

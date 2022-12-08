@@ -47,8 +47,6 @@ export class PanelSubcategoryComponent implements OnInit {
   }
 
   loadSubcategories() {
-    const sizes = [25, 35, 44];
-    const opacities = [0.5, 1];
     let maxX = 250;
     let maxY = 700;
 
@@ -66,6 +64,7 @@ export class PanelSubcategoryComponent implements OnInit {
         x: Math.floor(Math.random() * (maxX + 1) - 190),
         y: Math.floor(Math.random() * (maxY + 1) + 0),
       };
+
       return item;
     });
   }

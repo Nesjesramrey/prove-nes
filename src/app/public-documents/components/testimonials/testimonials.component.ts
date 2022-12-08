@@ -11,9 +11,18 @@ export class TestimonialsComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    console.log(this.data);
+    this.sortData();
+  }
 
   addFirstTestimony() {
     this.sendTestimonyData.emit({ add: true });
+  }
+
+  sortData() {
+    return this.data.sort((a: any, b: any) => {
+      return <any>new Date(b.createdAt) - <any>new Date(a.createdAt);
+    });
   }
 }
