@@ -19,7 +19,13 @@ export class Top10ListComponent implements OnInit {
     public utilityService: UtilityService
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.data.filter((x: any) => {
+      if (x['stats'] == null) {
+        x['stats'] = { layout: x['_id'], score: 0 }
+      }
+    });
+  }
 
   linkMe(url: string) {
     this.utilityService.linkMe(url);
