@@ -64,18 +64,4 @@
       <div class="app-map-box"></div>
     </mat-card>
   </div>
-
-  <div class="set-8 col-rgt">
-    <div class="set-12" *ngIf="userActivities.includes('administrator')">
-      <div class="admin-template" [user]="user" [documents]="documents"></div>
-    </div>
-
-    <div class="set-12" *ngIf="userActivities.includes('editor')">
-      <div class="editor-template" [user]="user" [documents]="documents"></div>
-    </div>
-
-    <div class="set-12" *ngIf="userActivities.includes('citizen')">
-      <div class="c-type-template" [user]="user" [documents]="documents"></div>
-    </div>
-  </div>
 </div>

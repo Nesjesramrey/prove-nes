@@ -8,6 +8,7 @@ import { EditorTemplateComponent } from './editor-template/editor-template.compo
 import { CTypeTemplateComponent } from './c-type-template/c-type-template.component';
 import { MapBoxComponent } from './map-box/map-box.component';
 import { NgChartsModule } from 'ng2-charts';
+import { AdminTemplateMobileComponent } from './admin-template-mobile/admin-template-mobile.component';
 
 @NgModule({
   imports: [
@@ -20,12 +21,14 @@ import { NgChartsModule } from 'ng2-charts';
   ],
   declarations: [
     AdminTemplateComponent,
+    AdminTemplateMobileComponent,
     EditorTemplateComponent,
     CTypeTemplateComponent,
     MapBoxComponent,
   ],
   exports: [
     AdminTemplateComponent,
+    AdminTemplateMobileComponent,
     EditorTemplateComponent,
     CTypeTemplateComponent,
     MapBoxComponent

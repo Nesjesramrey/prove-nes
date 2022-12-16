@@ -8,14 +8,14 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DocumentService } from 'src/app/services/document.service';
 import { UserService } from 'src/app/services/user.service';
 import { UtilityService } from 'src/app/services/utility.service';
-import { DeviceDetectorService } from 'ngx-device-detector';
+
 
 @Component({
-  selector: '.single-user-page',
-  templateUrl: './single-user.component.html',
-  styleUrls: ['./single-user.component.scss']
+  selector: '.user-documents.component',
+  templateUrl: './user-documents.component.html',
+  styleUrls: ['./user-documents.component.scss']
 })
-export class SingleUserComponent implements OnInit {
+export class UserDocumentsComponent implements OnInit {
   public userID: string = '';
   public isDataAvailable: boolean = false;
   public isAuthenticated: boolean = false;
@@ -23,7 +23,6 @@ export class SingleUserComponent implements OnInit {
   public userActivities: any = [];
   public documents: any = [];
   public haveRootPermissions: boolean = false;
-  public isMobile: boolean = false;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -33,11 +32,9 @@ export class SingleUserComponent implements OnInit {
     public userSrvc: UserService,
     public documentSrvc: DocumentService,
     public utilityService: UtilityService,
-    public deviceDetectorService: DeviceDetectorService,
   ) {
     this.userID = this.activatedRoute['snapshot']['params']['userID'];
     this.isAuthenticated = this.authenticationSrvc['isAuthenticated'];
-    this.isMobile = this.deviceDetectorService.isMobile();
   }
 
   ngOnInit(): void {
@@ -60,7 +57,7 @@ export class SingleUserComponent implements OnInit {
         }
 
         if (this.userActivities.includes('administrator')) {
-          let documents: Observable<any> = this.documentSrvc.fetchMyDocuments({ createdBy: this.userID });
+          let documents: Observable<any> = this.documentSrvc.fetchMyDocuments({ createdBy: this.user['_id']  });
           forkJoin([documents]).subscribe((reply: any) => {
             this.documents = reply[0];
             setTimeout(() => {
@@ -132,3 +129,4 @@ export class SingleUserComponent implements OnInit {
     this.utilityService.linkMe(url);
   }
 }
+

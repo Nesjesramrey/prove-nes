@@ -26,6 +26,8 @@ import { MapBoxComponent } from './components/map-box/map-box.component';
 import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
 import { SignInMobileComponent } from './sign-in-mobile/sign-in-mobile.component';
 import { SignUpMobileComponent } from './sign-up-mobile/sign-up-mobile.component';
+import { UserDocumentsComponent } from './user-documents/user-documents.component';
+
 
 @NgModule({
   imports: [
@@ -45,6 +47,7 @@ import { SignUpMobileComponent } from './sign-up-mobile/sign-up-mobile.component
     LyDialogModule,
     IvyCarouselModule,
     NgChartsModule,
+  
   ],
   declarations: [
     HubComponent,
@@ -56,6 +59,7 @@ import { SignUpMobileComponent } from './sign-up-mobile/sign-up-mobile.component
     PasswordRecoveryComponent,
     SignInMobileComponent,
     SignUpMobileComponent,
+    UserDocumentsComponent
   ],
 })
 export class HubComponentModule {}
