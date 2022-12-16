@@ -6,11 +6,23 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./public-document-mobile-category-view.component.scss']
 })
 export class PublicDocumentMobileCategoryViewComponent implements OnInit {
+  @Input('document') public document: any = null;
   @Input('category') public category: any = null;
+  @Input('topSolutions') public topSolutions: any = null;
+  public layouts: any = null;
+  public open: boolean = false;
 
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.category);
+    this.layouts = this.category['subLayouts'];
+  }
+
+  getCoverageMenuStatus(data: any) {
+    this.open = data['open'];
+  }
+
+  displayCoverageMenu() {
+    this.open = !this.open;
   }
 }

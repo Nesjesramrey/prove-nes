@@ -1,23 +1,23 @@
-import { Component, HostBinding, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AddDocumentThemeComponent } from '../add-document-theme/add-document-theme.component';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TestimonyService } from 'src/app/services/testimony.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { TestimonyService } from 'src/app/services/testimony.service';
 import { UtilityService } from 'src/app/services/utility.service';
-import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
-  selector: 'app-add-document-testimony',
-  templateUrl: './add-document-testimony.component.html',
-  styleUrls: ['./add-document-testimony.component.scss'],
+  selector: '.testimonial-list',
+  templateUrl: './testimonial-list.component.html',
+  styleUrls: ['./testimonial-list.component.scss']
 })
-export class AddDocumentTestimonyComponent implements OnInit {
+export class TestimonialListComponent implements OnInit {
+  public location: string = '';
+  public topic: any = null;
+  public solution: any = null;
+  public testimonials: any[] = [];
+  public user: any = null;
+  public submitted: boolean = false;
   public addTestimonyFormGroup!: FormGroup;
-  public imageUrl: string | null = null;
-  public submitted = false;
-  public file: any = null;
-  public messageError: boolean = false;
   public isAnonymous: boolean = false;
   public htmlContent: any = '';
   public editorConfig: AngularEditorConfig = {
@@ -58,37 +58,37 @@ export class AddDocumentTestimonyComponent implements OnInit {
     ]
   };
   public fileNames: any = [];
-  public user: any = null;
-  public isMobile: boolean = false;
-  @HostBinding('class') public class: string = '';
 
   constructor(
-    public formBuilder: FormBuilder,
-    public dialogRef: MatDialogRef<AddDocumentThemeComponent>,
+    public dialogRef: MatDialogRef<TestimonialListComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
+    public formBuilder: FormBuilder,
     public testimonyService: TestimonyService,
-    public utilityService: UtilityService,
-    public deviceDetectorService: DeviceDetectorService
+    public utilityService: UtilityService
   ) {
     console.log(this.dialogData);
+    this.location = this.dialogData['location'];
     this.user = this.dialogData['user'];
-    this.isMobile = this.deviceDetectorService.isMobile();
-    if (this.isMobile) { this.class = 'fixmobile'; }
   }
 
   ngOnInit(): void {
     this.addTestimonyFormGroup = this.formBuilder.group({
+      name: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      files: ['', []],
+      files: ['', []]
     });
-  }
 
-  killDialog() {
-    this.dialogRef.close();
-  }
+    switch (this.location) {
+      case 'topic':
+        this.topic = this.dialogData['topic'];
+        this.testimonials = this.topic['testimonials'];
+        break;
 
-  visibility() {
-    this.isAnonymous = !this.isAnonymous;
+      case 'solution':
+        this.solution = this.dialogData['solution'];
+        this.testimonials = this.solution['testimonials'];
+        break;
+    }
   }
 
   onFileSelected(event: any) {
@@ -98,14 +98,18 @@ export class AddDocumentTestimonyComponent implements OnInit {
     // console.log(this.addTestimonyFormGroup.controls['files']['value']);
   }
 
+  visibility() {
+    this.isAnonymous = !this.isAnonymous;
+  }
+
   createTestimony() {
     this.submitted = true;
-    const { topicID, type } = this.dialogData;
+    const { topicID, location } = this.dialogData;
 
     let data = {
       formData: new FormData(),
       id: topicID,
-      type: type
+      type: location
     };
 
     Array.from(this.addTestimonyFormGroup.controls['files']['value'])
@@ -120,11 +124,14 @@ export class AddDocumentTestimonyComponent implements OnInit {
       },
       next: (reply: any) => {
         this.utilityService.openSuccessSnackBar(this.utilityService.saveSuccess);
-        this.dialogRef.close(reply);
+        console.log(reply);
+        // this.dialogRef.close(reply);
       },
       complete: () => {
         this.submitted = false;
       }
     });
   }
+
+  killDialog() { this.dialogRef.close(); }
 }

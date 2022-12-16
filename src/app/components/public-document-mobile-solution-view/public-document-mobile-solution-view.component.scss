@@ -1,0 +1,57 @@
+:host {
+  width: 100%;
+  height: calc(100vh - 80px);
+  float: left;
+  display: flex;
+  flex-direction: column;
+  // padding: 20px;
+
+  .cards {
+    flex: 1 0 auto;
+  }
+
+  .foot {
+    flex-shrink: 0;
+  }
+
+  mat-card {
+    margin-bottom: 10px;
+    border-radius: 0 !important;
+  }
+
+  .row:not(:first-child) {
+    margin-top: 20px;
+  }
+
+  .vote-tools {
+    margin-top: 40px !important;
+
+    p {
+      margin-bottom: 5px;
+    }
+
+    button.votebtn {
+      width: 40%;
+      margin-top: 20px;
+    }
+
+    .ctrls {
+      margin-top: 15px;
+
+      button {
+        margin: 0 10px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        mat-icon {
+          font-size: 13pt;
+        }
+
+        * {
+          margin: 0;
+        }
+      }
+    }
+  }
+}

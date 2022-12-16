@@ -45,17 +45,12 @@
     </mat-card>
   </div>
 
-  <div class="set-12 layoutshldr">
-    <div class="public-document-mobile-subcategory-bars" [document]="document" [document_id]="document._id"
-      [category_id]="category._id" [layouts]="layouts" [open]="open" (openMenu)="getCoverageMenuStatus($event)"></div>
+  <div class="set-12 topic-list">
+    <div class="public-document-mobile-topic-list" [category]="category"></div>
   </div>
 
-  <div class="set-12 chartdata">
-    <div class="public-document-mobile-radar-chart" [layout]="category" [isLayout]="true"></div>
-  </div>
-
-  <div class="set-12 topten">
-    <div class="public-document-mobile-top-ten" [solutions]="topSolutions"></div>
+  <div class="set-12" *ngIf="topics.length != 0">
+    <div class="public-document-mobile-radar-chart" [isSubLayout]="true" [topics]="topics"></div>
   </div>
 
   <div class="set-12">

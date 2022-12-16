@@ -193,3 +193,8 @@
     text-align: center;
   }
 }
+
+:host(.fixmobile) {
+  margin: 0 !important;
+  width: 100%;
+}

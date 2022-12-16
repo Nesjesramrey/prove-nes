@@ -1,0 +1,62 @@
+<div class="set-12 cards">
+  <mat-card class="set-12">
+    <div class="set-12 row">
+      <strong>{{topic?.title}}</strong>
+    </div>
+
+    <div class="set-12 row" [innerHTML]="topic?.description"></div>
+
+    <div class="set-12 txt-center row vote-tools">
+      <p>Relevancia ciudadana</p>
+      <p><strong>{{topic?.stats?.score || 0}} / 100</strong></p>
+      <button type="button" mat-raised-button color="warn" class="votebtn">
+        <small>Vota</small>
+      </button>
+      <div class="set-12 ctrls">
+        <button type="button">
+          <mat-icon>favorite</mat-icon>
+        </button>
+        <button type="button">
+          <mat-icon>share</mat-icon>
+        </button>
+        <button type="button">
+          <mat-icon>forum</mat-icon>
+        </button>
+        <button type="button" (click)="openTestimoniesDialog()">
+          <mat-icon>report</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-card>
+
+  <mat-card class="set-12">
+    <div class="set-12 row empty-list" *ngIf="solutions.length == 0">
+      <p><small>No se encontraron soluciones.</small></p>
+      <p><small>Sé el primero en agregar una solución.</small></p>
+      <button type="button" mat-raised-button color="accent">
+        <small>Agregar solución</small>
+      </button>
+    </div>
+
+    <div class="set-12 row solution-list" *ngIf="solutions.length != 0">
+      <p class="title">
+        <strong>Soluciones</strong>
+        <mat-icon>insights</mat-icon>
+      </p>
+      <div class="set-12">
+        <div class="set-12 list-item" *ngFor="let solution of solutions" (click)="linkMe(solution._id)">
+          <div class="set-10">
+            <small>{{solution?.title}}</small>
+          </div>
+          <div class="set-2">
+            <strong><small>{{solution?.stats?.score || 0}}</small></strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>
+
+<div class="set-12 foot">
+  <div class="app-footer"></div>
+</div>

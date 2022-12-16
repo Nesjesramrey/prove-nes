@@ -1,0 +1,35 @@
+<div class="set-12 cards">
+  <mat-card class="set-12">
+    <div class="set-12 row">
+      <strong>{{solution?.title}}</strong>
+    </div>
+
+    <div class="set-12 row" [innerHTML]="solution?.description"></div>
+
+    <div class="set-12 txt-center row vote-tools">
+      <p>Relevancia ciudadana</p>
+      <p><strong>{{solution?.stats?.score || 0}} / 100</strong></p>
+      <button type="button" mat-raised-button color="warn" class="votebtn">
+        <small>Vota</small>
+      </button>
+      <div class="set-12 ctrls">
+        <button type="button">
+          <mat-icon>favorite</mat-icon>
+        </button>
+        <button type="button">
+          <mat-icon>share</mat-icon>
+        </button>
+        <button type="button">
+          <mat-icon>forum</mat-icon>
+        </button>
+        <button type="button" (click)="openTestimoniesDialog()">
+          <mat-icon>report</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-card>
+</div>
+
+<div class="set-12 foot">
+  <div class="app-footer"></div>
+</div>

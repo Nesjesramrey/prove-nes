@@ -1,0 +1,44 @@
+:host {
+  width: 100%;
+  background: #00031d;
+  padding: 20px;
+  float: left;
+
+  .topic-item {
+    padding: 10px;
+    border: 2px solid #71F5AD;
+    color: #71F5AD;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+
+    .set-2 {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      font-size: 9pt;
+
+      * {
+        margin: 0;
+      }
+
+      mat-icon {
+        font-size: 9pt;
+        margin-left: 10px;
+      }
+    }
+  }
+
+  .topic-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .empty-list {
+    padding: 10px;
+    color: #71F5AD;
+
+    button {
+      margin-top: 20px;
+    }
+  }
+}

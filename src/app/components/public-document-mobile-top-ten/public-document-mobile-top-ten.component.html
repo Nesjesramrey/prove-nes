@@ -3,11 +3,13 @@
   <div class="line"></div>
 </div>
 
-<!-- <div class="set-12">
-  <div class="set-12" *ngFor="let solution of solutions">
-    {{solution.title}}
-  </div>
-</div> -->
+<div class="set-12 itemlist empty" *ngIf="solutions.length == 0">
+  <p><small>No se encontraron soluciones</small></p>
+  <!-- <p><small>Sé el primero en agregar una solución</small></p>
+  <button type="button" mat-raised-button color="accent">
+    <small>Agregar solución</small>
+  </button> -->
+</div>
 
 <div class="set-12 itemlist" *ngIf="solutions.length != 0">
   <div class="set-12 item" *ngFor="let item of solutions">

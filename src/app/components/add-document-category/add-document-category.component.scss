@@ -153,4 +153,10 @@
       transform: translate(-50%, -50%);
     }
   }
+
+  .helpers {
+    margin-top: 20px;
+    font-style: italic;
+    color: rgba($color: #000000, $alpha: 0.4);
+  }
 }
