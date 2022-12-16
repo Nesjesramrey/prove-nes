@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
@@ -15,6 +15,7 @@ import { AddDocumentCommentComponent } from 'src/app/components/add-document-com
 import { ImageViewerComponent } from 'src/app/components/image-viewer/image-viewer.component';
 import { FavoritesService } from 'src/app/services/favorites.service';
 import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: '.solution-page',
@@ -44,6 +45,8 @@ export class SolutionComponent implements OnInit {
   public stats: any = {};
   public testimonials: any = TESTIMONIALS;
   public titles: any = [];
+  public isMobile: boolean = false;
+  @HostBinding('class') public class: string = '';
 
   constructor(
     public dialog: MatDialog,
@@ -55,13 +58,16 @@ export class SolutionComponent implements OnInit {
     public solutionService: SolutionService,
     public voteService: VoteService,
     public UserService: UserService,
-    public favoritesService: FavoritesService
+    public favoritesService: FavoritesService,
+    public deviceDetectorService: DeviceDetectorService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
     this.subcategoryID = this.activatedRoute['snapshot']['params']['subcategoryID'];
     this.topicID = this.activatedRoute['snapshot']['params']['topicID'];
     this.solutionID = this.activatedRoute['snapshot']['params']['solutionID'];
+    this.isMobile = this.deviceDetectorService.isMobile();
+    if (this.isMobile) { this.class = 'fixmobile'; }
   }
 
   ngOnInit(): void {
@@ -94,6 +100,7 @@ export class SolutionComponent implements OnInit {
         this.solution = solution[0];
         this.solution['shortTitle'] = this.getshortTitle(this.solution['title']);
         this.stats = this.solution['stats'];
+        if (this.stats == null) { this.stats = { score: 0 } }
       },
       complete: () => {
         this.isDataAvailable = true;

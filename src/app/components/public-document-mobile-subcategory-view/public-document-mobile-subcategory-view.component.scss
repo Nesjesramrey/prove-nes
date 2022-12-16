@@ -1,0 +1,118 @@
+:host {
+  width: 100%;
+  height: 100%;
+  float: left;
+
+  .datahldr {
+    position: relative;
+    z-index: 4;
+  }
+
+  .img-hldr {
+    height: 265px;
+    min-height: 265px;
+    max-height: 265px;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-size: cover;
+    object-fit: contain;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .overlay {
+      position: absolute;
+      z-index: 4;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba($color: #000000, $alpha: 0.4);
+    }
+
+    .description {
+      position: relative;
+      z-index: 7;
+      color: white;
+      padding: 20px;
+
+      .txt {
+        font-size: 11pt;
+        text-align: justify;
+      }
+
+      * {
+        margin: 0;
+      }
+
+      h3 {
+        margin-bottom: 20px;
+      }
+
+      button {
+        color: greenyellow;
+        font-size: 9pt;
+        margin-top: 20px;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .carddata {
+    margin-top: -40px;
+    position: relative;
+    z-index: 9;
+
+    mat-card {
+      width: 90%;
+      margin: 0 5%;
+      text-align: center;
+    }
+
+    .image-box {
+      width: 45px;
+      height: 45px;
+      padding: 10px;
+      border-radius: 100%;
+    }
+
+    .texts-box {
+      text-align: start;
+      margin-left: 10px;
+      margin: 10px 0px;
+      text-align: center;
+
+      .name {
+        font-size: 17px;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+      }
+
+      .amount {
+        font-size: 24px;
+        font-weight: 600;
+      }
+    }
+
+    .gray-icon-color {
+      background-color: #E1F2EC;
+
+      mat-icon {
+        color: #20C588;
+      }
+    }
+
+    .red-icon-color {
+      background-color: #FCDBC3;
+
+      mat-icon {
+        color: #FF6D00;
+      }
+    }
+  }
+
+  .topic-list {
+    margin-top: 30px;
+  }
+}

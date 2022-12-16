@@ -1,0 +1,102 @@
+:host {
+  width: 100%;
+  height: calc(100vh - 80px);
+  float: left;
+  display: flex;
+  flex-direction: column;
+  // padding: 20px;
+
+  .cards {
+    flex: 1 0 auto;
+  }
+
+  .foot {
+    flex-shrink: 0;
+  }
+
+  mat-card {
+    margin-bottom: 10px;
+    border-radius: 0 !important;
+  }
+
+  .row:not(:first-child) {
+    margin-top: 20px;
+  }
+
+  .vote-tools {
+    margin-top: 40px !important;
+
+    p {
+      margin-bottom: 5px;
+    }
+
+    button.votebtn {
+      width: 40%;
+      margin-top: 20px;
+    }
+
+    .ctrls {
+      margin-top: 15px;
+
+      button {
+        margin: 0 10px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        mat-icon {
+          font-size: 13pt;
+        }
+
+        * {
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  .empty-list {
+    button {
+      margin-top: 10px;
+    }
+  }
+
+  .solution-list {
+    p.title {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: 20px;
+
+      * {
+        margin: 0;
+      }
+
+      mat-icon {
+        margin-left: 20px;
+        color: #71F5AD;
+      }
+    }
+
+    .list-item {
+      display: flex;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
+
+      .set-2 {
+        text-align: right;
+      }
+    }
+
+    .list-item:first-child {
+      padding-top: 0 !important;
+    }
+
+    .list-item:last-child {
+      margin-bottom: 0 !important;
+      padding-bottom: 0 !important;
+      border-bottom: none !important;
+    }
+  }
+}

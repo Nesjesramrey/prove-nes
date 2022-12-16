@@ -15,9 +15,19 @@ export class PublicDocumentMobileTopTenComponent implements OnInit {
 
   ngOnInit(): void {
     // console.log(this.solutions);
+    this.solutions.filter((x: any) => {
+      if (x['stats'] == null) { x['stats'] = { score: 0 } }
+    });
+    this.sortSolutions(this.solutions);
   }
 
   linkMe(url: string) {
     this.utilityService.linkMe(url);
+  }
+
+  sortSolutions(data: any) {
+    return data.sort((a: any, b: any) => {
+      return b.stats.score - a.stats.score;
+    });
   }
 }

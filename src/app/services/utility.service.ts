@@ -22,7 +22,7 @@ export class UtilityService {
     public router: Router,
     public httpClient: HttpClient,
     public endpointSrvc: EndPointService
-  ) {}
+  ) { }
 
   emailDomainValidator(control: FormControl) {
     let email = control.value;
@@ -81,23 +81,21 @@ export class UtilityService {
   fetchAllStatesMex() {
     return this.httpClient.get(
       this.endpointSrvc.apiEndPoint +
-        this.endpointSrvc.fetchAllStatesMexEndPoint,
+      this.endpointSrvc.fetchAllStatesMexEndPoint,
       {}
     );
   }
 
   createNewCategory(data: any) {
     return this.httpClient.post(
-      this.endpointSrvc.apiEndPoint +
-        this.endpointSrvc.createNewCategoryEndPoint,
-      data
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.createNewCategoryEndPoint, data
     );
   }
 
   fetchAllCategories() {
     return this.httpClient.get(
       this.endpointSrvc.apiEndPoint +
-        this.endpointSrvc.fetchAllCategoriesEndPoint,
+      this.endpointSrvc.fetchAllCategoriesEndPoint,
       {}
     );
   }
@@ -105,7 +103,7 @@ export class UtilityService {
   fetchAllActivities() {
     return this.httpClient.get(
       this.endpointSrvc.apiEndPoint +
-        this.endpointSrvc.fetchAllActivitiesEndPoint,
+      this.endpointSrvc.fetchAllActivitiesEndPoint,
       {}
     );
   }
@@ -113,7 +111,7 @@ export class UtilityService {
   fetchAssociationTypology() {
     return this.httpClient.get(
       this.endpointSrvc.apiEndPoint +
-        this.endpointSrvc.fetchAssociationTypologyEndPoint,
+      this.endpointSrvc.fetchAssociationTypologyEndPoint,
       {}
     );
   }

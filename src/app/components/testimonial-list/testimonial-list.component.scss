@@ -1,0 +1,150 @@
+:host {
+  width: 100%;
+  float: left;
+  padding: 20px;
+
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 0 !important;
+  }
+
+  ::ng-deep .angular-editor-toolbar {
+    background: transparent !important;
+    border: 0 !important;
+    border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1) !important;
+    padding: 10px !important;
+  }
+
+  ::ng-deep .angular-editor .angular-editor-wrapper .angular-editor-textarea {
+    background: transparent !important;
+    margin: 0 !important;
+    border: 0 !important;
+    outline: none !important;
+    padding: 10px !important;
+  }
+
+  ::ng-deep .angular-editor .angular-editor-wrapper .angular-editor-placeholder {
+    padding: 10px !important;
+  }
+
+  .dialog-head {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    * {
+      margin: 0;
+    }
+
+    .set-4 {
+      display: flex;
+    }
+
+    button {
+      display: flex;
+      align-items: center;
+      margin-right: 10px;
+      zoom: 0.7;
+
+      mat-icon {
+        font-size: 14pt;
+      }
+    }
+
+    button:last-child {
+      margin: 0;
+    }
+  }
+
+  .dialog-body {
+    margin-top: 30px;
+
+    form {
+      margin-top: 20px;
+
+      .ctrls {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        * {
+          margin: 0;
+        }
+
+        button {
+          margin-left: 10px;
+        }
+
+        button:first-child {
+          margin: 0;
+        }
+
+        button.minifab {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          mat-icon {
+            font-size: 14pt;
+          }
+        }
+
+        mat-spinner {
+          margin-left: 20px;
+        }
+      }
+    }
+  }
+
+  .testimony {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
+
+    .desc {
+      color: #b3b3b3;
+      font-size: 10pt;
+      margin-top: 5px;
+    }
+
+    .date {
+      color: #b3b3b3;
+      font-size: 9pt;
+    }
+  }
+
+  .testimony:first-child {
+    padding-top: 0;
+  }
+
+  .editor-form {
+    margin-bottom: 20px;
+    background: #ffffff;
+    border-radius: 5px;
+  }
+
+  .file-hldr {
+    font-weight: bold;
+    font-style: italic;
+    margin: 0 0 20px 0;
+    text-align: center;
+  }
+
+  .anonhldr {
+    margin-top: 20px;
+  }
+
+  .anon {
+    .set-12 {
+      display: flex;
+      align-items: center;
+
+      * {
+        margin: 0;
+      }
+
+      mat-icon {
+        margin-right: 10px;
+        font-size: 13pt;
+      }
+    }
+  }
+}

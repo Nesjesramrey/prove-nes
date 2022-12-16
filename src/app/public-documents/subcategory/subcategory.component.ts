@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { DocumentService } from 'src/app/services/document.service';
@@ -9,6 +9,7 @@ import { ImageViewerComponent } from 'src/app/components/image-viewer/image-view
 import { CustomMatDataSource } from '../custom-class/custom-table.component';
 import { MatSort } from '@angular/material/sort';
 import { AddDocumentThemeComponent } from 'src/app/components/add-document-theme/add-document-theme.component';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: '.subcategory-page',
@@ -37,6 +38,8 @@ export class SubcategoryComponent implements OnInit {
   public coverage: any = null;
   public coverageSelected: any = null;
   public panelDataUpdated: Subject<any> = new Subject();
+  public isMobile: boolean = false;
+  @HostBinding('class') public class: string = '';
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -44,11 +47,14 @@ export class SubcategoryComponent implements OnInit {
     public dialog: MatDialog,
     public layoutService: LayoutService,
     public utilityService: UtilityService,
-    public router: Router
+    public router: Router,
+    public deviceDetectorService: DeviceDetectorService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
     this.subcategoryID = this.activatedRoute['snapshot']['params']['subcategoryID'];
+    this.isMobile = this.deviceDetectorService.isMobile();
+    if (this.isMobile) { this.class = 'fixmobile'; }
   }
 
   ngOnInit(): void {

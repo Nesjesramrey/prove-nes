@@ -1,0 +1,21 @@
+<div class="set-12" *ngIf="topics.length == 0">
+  <div class="empty-list">
+    <p><small>No se encontraron tópicos.</small></p>
+    <p><small>Sé el primero en agregar un tópico.</small></p>
+    <button type="button" mat-raised-button color="accent">
+      <small>Agregar tópico</small>
+    </button>
+  </div>
+</div>
+
+<div class="set-12" *ngIf="topics.length != 0">
+  <div class="set-12 topic-item" *ngFor="let topic of topics" (click)="linkMe(topic._id)">
+    <div class="set-10">
+      <small>{{topic?.title}}</small>
+    </div>
+    <div class="set-2">
+      <small>{{topic?.stats?.score}}</small>
+      <mat-icon>star_rate</mat-icon>
+    </div>
+  </div>
+</div>

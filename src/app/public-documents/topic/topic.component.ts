@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
 import { forkJoin, Observable } from 'rxjs';
@@ -17,6 +17,7 @@ import { ImageViewerComponent } from 'src/app/components/image-viewer/image-view
 import { CustomMatDataSource } from '../custom-class/custom-table.component';
 import { FavoritesService } from 'src/app/services/favorites.service';
 import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: '.topic-page',
@@ -48,6 +49,8 @@ export class TopicComponent implements OnInit {
   public titles: any = [];
   public coverage: any = null;
   public coverageSelected: any = null;
+  public isMobile: boolean = false;
+  @HostBinding('class') public class: string = '';
 
   constructor(
     public dialog: MatDialog,
@@ -57,20 +60,23 @@ export class TopicComponent implements OnInit {
     public layoutService: LayoutService,
     public topicService: TopicService,
     public voteService: VoteService,
-    public UserService: UserService,
-    public favoritesService: FavoritesService
+    public userService: UserService,
+    public favoritesService: FavoritesService,
+    public deviceDetectorService: DeviceDetectorService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
     this.subcategoryID = this.activatedRoute['snapshot']['params']['subcategoryID'];
     this.topicID = this.activatedRoute['snapshot']['params']['topicID'];
+    this.isMobile = this.deviceDetectorService.isMobile();
+    if (this.isMobile) { this.class = 'fixmobile'; }
   }
 
   ngOnInit(): void {
     if (history['state']['coverage'] != undefined) { this.coverageSelected = history['state']['coverage']; };
 
     // *** load user
-    this.user = this.UserService.fetchFireUser().subscribe({
+    this.user = this.userService.fetchFireUser().subscribe({
       error: (error: any) => { },
       next: (reply: any) => {
         this.user = reply;
@@ -101,6 +107,11 @@ export class TopicComponent implements OnInit {
         this.stats = this.topic['stats'];
 
         this.solutionsData = this.topic['solutions'];
+        this.solutionsData.filter((x: any) => {
+          if (x['stats'] == null) {
+            x['stats'] = { score: 0 }
+          }
+        });
         this.SolutionDataSource = new MatTableDataSource(this.sortSolutions(this.solutionsData));
 
         this.topic['shortTitle'] = this.getshortTitle(this.topic['title']);
@@ -112,39 +123,6 @@ export class TopicComponent implements OnInit {
         this.isDataAvailable = true;
       }
     });
-
-    // *** load category
-    // this.layoutService.fetchSingleLayoutById({ _id: this.categoryID }).subscribe({
-    //   error: (reply: any) => { },
-    //   next: (reply: any) => {
-    //     this.category = reply;
-    //   },
-    //   complete: () => { }
-    // });
-
-    // *** load sub category
-    // this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID }).subscribe({
-    //   error: (reply: any) => { },
-    //   next: (reply: any) => {
-    //     this.subcategory = reply;
-    //   },
-    //   complete: () => { }
-    // });
-
-    // *** load topic
-    // this.topicService.fetchSingleTopicById({ _id: this.topicID }).subscribe({
-    //   error: (reply: any) => { },
-    //   next: (reply: any) => {
-    //     this.topic = reply;
-    //     this.stats = this.topic['stats'];
-    //     this.solutionsData = this.topic.solutions;
-    //     this.SolutionDataSource = new CustomMatDataSource(this.sortSolutions(this.solutionsData));
-    //     this.getBreadcrumbsTitles();
-    //     this.coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.topic['coverage'][0]; });
-    //     if (this.coverageSelected == null) { this.coverageSelected = this.coverage[0]['_id']; }
-    //   },
-    //   complete: () => { }
-    // });
 
     // *** load votes
     this.voteService.fetchVotesByTopicID({ _id: this.topicID }).subscribe({
