@@ -2,8 +2,10 @@
   <mat-spinner></mat-spinner>
 </div>
 
-<div class="set-12 innerhldr" *ngIf="isDataAvailable">
+<!--Desk-->
+<div class="set-12 innerhldr" *ngIf="isDataAvailable && !isMobile">
   <div class="set-4 col-lft">
+    <diV>Button</diV>
     <mat-card class="set-12">
       <div class="set-12 cardimg">
         <div class="set-12 empty-img">
@@ -64,4 +66,10 @@
       <div class="app-map-box"></div>
     </mat-card>
   </div>
+</div>
+
+
+<!--Mobile-->
+<div class="set-12 innerhldr" *ngIf="isDataAvailable && isMobile">My profile
+  
 </div>
