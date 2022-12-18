@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 
+
 @Component({
   selector: 'app-tabs-mobile',
   templateUrl: './tabs-mobile.component.html',
