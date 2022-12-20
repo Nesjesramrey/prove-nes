@@ -1,11 +1,24 @@
+.people{
+    display: flex;
+    flex-direction: row;
+}
+
 .img-people {
-    float: left;
     width: 32px;
     height: 32px;
   }
 
 .about{
-    margin-left: 0px;
+    width: 200px;
+}
+
+.name{
+    font-size: 14px;
+    padding: 3px;
+}
+.status{
+    font-size: 12px;
+    padding: 3px;
 }
 
 .name, .status{

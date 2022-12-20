@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {  ChartModule, ChartComponent } from 'chart.js';
+git 
 
 @Component({
   selector: 'spider-chart-mobile',

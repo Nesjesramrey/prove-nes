@@ -31,6 +31,7 @@ import { TabsMobileComponent } from './components/tabs-mobile/tabs-mobile.compon
 import { SearchInputMobileComponent } from './components/search-input-mobile/search-input-mobile.component';
 import { CardTopicsMobileComponent } from './components/card-topics-mobile/card-topics-mobile.component';
 import { CommunityMobileComponent } from './components/community-mobile/community-mobile.component';
+import { SpiderChartMobileComponent } from './components/spider-chart-mobile/spider-chart-mobile.component';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { CommunityMobileComponent } from './components/community-mobile/communit
     TabsMobileComponent,
     SearchInputMobileComponent,
     CardTopicsMobileComponent,
-    CommunityMobileComponent
+    CommunityMobileComponent,
+    SpiderChartMobileComponent
   ],
 })
 export class HubComponentModule {}
