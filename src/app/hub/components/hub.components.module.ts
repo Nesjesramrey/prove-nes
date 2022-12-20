@@ -10,6 +10,7 @@ import { MapBoxComponent } from './map-box/map-box.component';
 import { NgChartsModule } from 'ng2-charts';
 import { AdminTemplateMobileComponent } from './admin-template-mobile/admin-template-mobile.component';
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -17,7 +18,8 @@ import { AdminTemplateMobileComponent } from './admin-template-mobile/admin-temp
     ReactiveFormsModule,
     AppMaterialModule,
     IvyCarouselModule,
-    NgChartsModule
+    NgChartsModule,
+  
   ],
   declarations: [
     AdminTemplateComponent,
@@ -25,6 +27,7 @@ import { AdminTemplateMobileComponent } from './admin-template-mobile/admin-temp
     EditorTemplateComponent,
     CTypeTemplateComponent,
     MapBoxComponent,
+   
   ],
   exports: [
     AdminTemplateComponent,

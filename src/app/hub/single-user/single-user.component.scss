@@ -1,6 +1,6 @@
 :host {
   width: 100%;
-  margin-top: 80px;
+  margin-top: 5px;
   margin-bottom: 100px;
   float: left;
 
@@ -171,12 +171,6 @@
     justify-content: center;
   }
   
-  .mat-tab-group ::ng-deep .mat-tab-header .mat-tab-header-pagination {
-    display: none;
-  }
-  ::ng-deep .mat-tab-label {
-   font-size: 16px;
-  }
 
 }
 

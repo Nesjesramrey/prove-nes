@@ -2,11 +2,12 @@ import { Component, OnInit, Input, AfterViewInit, ElementRef, ViewChild } from '
 
 
 @Component({
-  selector: 'app-tabs-mobile',
+  selector: 'tabs-mobile',
   templateUrl: './tabs-mobile.component.html',
   styleUrls: ['./tabs-mobile.component.scss']
 })
 export class TabsMobileComponent implements OnInit {
+  
   
   constructor() { }
 

@@ -27,6 +27,10 @@ import { PasswordRecoveryComponent } from './password-recovery/password-recovery
 import { SignInMobileComponent } from './sign-in-mobile/sign-in-mobile.component';
 import { SignUpMobileComponent } from './sign-up-mobile/sign-up-mobile.component';
 import { UserDocumentsComponent } from './user-documents/user-documents.component';
+import { TabsMobileComponent } from './components/tabs-mobile/tabs-mobile.component';
+import { SearchInputMobileComponent } from './components/search-input-mobile/search-input-mobile.component';
+import { CardTopicsMobileComponent } from './components/card-topics-mobile/card-topics-mobile.component';
+import { CommunityMobileComponent } from './components/community-mobile/community-mobile.component';
 
 
 @NgModule({
@@ -59,7 +63,11 @@ import { UserDocumentsComponent } from './user-documents/user-documents.componen
     PasswordRecoveryComponent,
     SignInMobileComponent,
     SignUpMobileComponent,
-    UserDocumentsComponent
+    UserDocumentsComponent,
+    TabsMobileComponent,
+    SearchInputMobileComponent,
+    CardTopicsMobileComponent,
+    CommunityMobileComponent
   ],
 })
 export class HubComponentModule {}
