@@ -1,17 +1,12 @@
-import { Component, OnInit, Input, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'tabs-mobile',
   templateUrl: './tabs-mobile.component.html',
-  styleUrls: ['./tabs-mobile.component.scss']
+  styleUrls: ['./tabs-mobile.component.scss'],
 })
 export class TabsMobileComponent implements OnInit {
-  
-  
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

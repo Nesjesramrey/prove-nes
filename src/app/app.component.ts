@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { ThemeVariables, ThemeRef, lyl, StyleRenderer } from '@alyle/ui';
 import { NavigationEnd, ResolveStart, Router } from '@angular/router';
 import { AuthenticationService } from './services/authentication.service';
@@ -51,6 +51,8 @@ export class AppComponent implements OnInit {
   public coverDocument: any = null;
   public isMobile: boolean = false;
   public open: boolean = false;
+  public isProfile: boolean = false;
+  public openProfileMenu = new EventEmitter<any>();
 
   constructor(
     readonly sRenderer: StyleRenderer,
@@ -85,11 +87,11 @@ export class AppComponent implements OnInit {
       });
 
     this.documentService.fetchCoverDocument().subscribe({
-      error: (error: any) => { },
+      error: (error: any) => {},
       next: (reply: any) => {
         this.coverDocument = reply;
       },
-      complete: () => { },
+      complete: () => {},
     });
 
     if (this.accessToken != null) {
@@ -109,7 +111,7 @@ export class AppComponent implements OnInit {
             this.openCompleteRegistration();
           }
         },
-        complete: () => { },
+        complete: () => {},
       });
     } else {
       setTimeout(() => {
@@ -137,6 +139,24 @@ export class AppComponent implements OnInit {
     this.open = data['open'];
   }
 
+  getMenuProfileStatus(data: any) {
+    this.isProfile = data['isProfile'];
+  }
+
+  onProfile() {
+    this.open = !this.open;
+    setTimeout(() => {
+      return this.angularFireAuth.signOut().then(() => {
+        if (this.path == '/') {
+          window.location.reload();
+        } else {
+          this.router.navigateByUrl('/hub/documentos', {
+            state: { status: 'reload' },
+          });
+        }
+      });
+    }, 300);
+  }
   onSignOut() {
     this.open = !this.open;
     setTimeout(() => {
@@ -149,5 +169,10 @@ export class AppComponent implements OnInit {
         }
       });
     }, 300);
+  }
+
+  displayProfileMenu() {
+    this.isProfile = !this.isProfile;
+    this.openProfileMenu.emit({ open: this.isProfile });
   }
 }
