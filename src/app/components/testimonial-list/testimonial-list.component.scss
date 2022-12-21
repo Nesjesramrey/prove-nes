@@ -3,6 +3,20 @@
   float: left;
   padding: 20px;
 
+  ::ng-deep .mat-step-header:hover,
+  ::ng-deep .mat-step-header {
+    background: transparent !important;
+  }
+
+  .mat-stepper-horizontal,
+  .mat-stepper-vertical {
+    background: transparent !important;
+  }
+
+  ::ng-deep .mat-horizontal-stepper-header-container {
+    display: none !important;
+  }
+
   ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
     margin: 0 !important;
   }
@@ -43,10 +57,10 @@
       display: flex;
       align-items: center;
       margin-right: 10px;
-      zoom: 0.7;
+      // zoom: 0.7;
 
       mat-icon {
-        font-size: 14pt;
+        font-size: 17pt;
       }
     }
 
@@ -109,6 +123,22 @@
       color: #b3b3b3;
       font-size: 9pt;
     }
+
+    .ctrls {
+      margin-top: 10px;
+
+      button {
+        margin-right: 10px;
+      }
+
+      button:last-child {
+        margin-right: 0;
+      }
+
+      mat-icon {
+        font-size: 13pt;
+      }
+    }
   }
 
   .testimony:first-child {
@@ -145,6 +175,12 @@
         margin-right: 10px;
         font-size: 13pt;
       }
+    }
+  }
+
+  .empty-list {
+    button {
+      margin-top: 20px;
     }
   }
 }

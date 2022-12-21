@@ -1,4 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { UtilityService } from 'src/app/services/utility.service';
+import { DescriptionViewerComponent } from '../description-viewer/description-viewer.component';
 
 @Component({
   selector: '.public-document-mobile-category-view',
@@ -11,11 +14,16 @@ export class PublicDocumentMobileCategoryViewComponent implements OnInit {
   @Input('topSolutions') public topSolutions: any = null;
   public layouts: any = null;
   public open: boolean = false;
+  @ViewChild('states') public states!: any;
 
-  constructor() { }
+  constructor(
+    public dialog: MatDialog,
+    public utilityService: UtilityService
+  ) { }
 
   ngOnInit(): void {
     this.layouts = this.category['subLayouts'];
+    // console.log(this.category);
   }
 
   getCoverageMenuStatus(data: any) {
@@ -24,5 +32,25 @@ export class PublicDocumentMobileCategoryViewComponent implements OnInit {
 
   displayCoverageMenu() {
     this.open = !this.open;
+  }
+
+  openModalDescription() {
+    const dialogRef = this.dialog.open<DescriptionViewerComponent>(
+      DescriptionViewerComponent, {
+      data: {
+        title: this.category['category']['name'],
+        text: this.category['description']
+      },
+      disableClose: true,
+      panelClass: 'viewer-dialog',
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  linkMe(url: string) {
+    this.utilityService.linkMe(url);
   }
 }

@@ -10,6 +10,9 @@ import { TestimonialListComponent } from '../testimonial-list/testimonial-list.c
   styleUrls: ['./public-document-mobile-topic-view.component.scss']
 })
 export class PublicDocumentMobileTopicViewComponent implements OnInit {
+  @Input('document') public document: any = null;
+  public category: any = null;
+  public subcategory: any = null;
   @Input('topic') public topic: any = null;
   @Input('user') public user: any = null;
   public solutions: any[] = [];
@@ -30,17 +33,15 @@ export class PublicDocumentMobileTopicViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let category = this.document['layouts'].filter((x: any) => { return x['_id'] == this.categoryID });
+    this.category = category[0];
+    let subcategory = category[0]['subLayouts'].filter((x: any) => { return x['_id'] == this.subcategoryID; });
+    this.subcategory = subcategory[0];
     this.solutions = this.topic['solutions'];
   }
 
-  linkMe(solutionID: string) {
-    this.utilityservice.linkMe(
-      '/documentos-publicos/' + this.documentID +
-      '/categoria/' + this.categoryID +
-      '/subcategoria/' + this.subcategoryID +
-      '/tema/' + this.topicID +
-      '/solucion/' + solutionID
-    );
+  linkMe(url: string) {
+    this.utilityservice.linkMe(url);
   }
 
   openTestimoniesDialog() {
@@ -48,7 +49,8 @@ export class PublicDocumentMobileTopicViewComponent implements OnInit {
       data: {
         location: 'topic',
         topic: this.topic,
-        topicID: this.topic['_id']
+        topicID: this.topic['_id'],
+        user: this.user
       },
       disableClose: true,
       panelClass: 'full-dialog',

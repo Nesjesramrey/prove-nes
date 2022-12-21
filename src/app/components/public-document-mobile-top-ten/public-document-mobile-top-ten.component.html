@@ -1,14 +1,20 @@
-<div class="set-12 head-titles">
-  <span>Top 10 Soluciones</span>
-  <div class="line"></div>
+<div class="set-12">
+  <div class="set-2">
+    <button type="button" mat-mini-fab color="primary" (click)="displayCoverageMenu()">
+      <mat-icon>filter_list</mat-icon>
+    </button>
+  </div>
+
+  <div class="set-10">
+    <div class="set-12 head-titles">
+      <span>Top 10 Soluciones</span>
+      <div class="line"></div>
+    </div>
+  </div>
 </div>
 
 <div class="set-12 itemlist empty" *ngIf="solutions.length == 0">
   <p><small>No se encontraron soluciones</small></p>
-  <!-- <p><small>Sé el primero en agregar una solución</small></p>
-  <button type="button" mat-raised-button color="accent">
-    <small>Agregar solución</small>
-  </button> -->
 </div>
 
 <div class="set-12 itemlist" *ngIf="solutions.length != 0">

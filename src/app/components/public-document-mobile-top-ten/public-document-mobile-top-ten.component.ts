@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
@@ -8,17 +8,19 @@ import { UtilityService } from 'src/app/services/utility.service';
 })
 export class PublicDocumentMobileTopTenComponent implements OnInit {
   @Input('solutions') public solutions: any = null;
+  @Input('open') public open: boolean = false;
+  @Output() public openMenu = new EventEmitter<any>();
 
   constructor(
     public utilityService: UtilityService
   ) { }
 
   ngOnInit(): void {
-    // console.log(this.solutions);
     this.solutions.filter((x: any) => {
       if (x['stats'] == null) { x['stats'] = { score: 0 } }
     });
     this.sortSolutions(this.solutions);
+    this.solutions = this.solutions.slice(0, 10);
   }
 
   linkMe(url: string) {
@@ -29,5 +31,10 @@ export class PublicDocumentMobileTopTenComponent implements OnInit {
     return data.sort((a: any, b: any) => {
       return b.stats.score - a.stats.score;
     });
+  }
+
+  displayCoverageMenu() {
+    this.open = !this.open;
+    this.openMenu.emit({ open: this.open });
   }
 }

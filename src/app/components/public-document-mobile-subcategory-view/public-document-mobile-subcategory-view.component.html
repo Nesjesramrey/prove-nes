@@ -1,13 +1,34 @@
 <div class="set-12 datahldr">
   <div class="set-12 img-hldr" [ngStyle]="{
-    'background-image': category.images.length != 0 ? 'url(' + category.images[0] + ')' : 'url(' + 'assets/images/1200x-1.jpeg' + ')' 
+    'background-image': subcategory.images.length != 0 ? 
+    'url(' + subcategory.images[0] + ')' : 'url(' + 'assets/images/1200x-1.jpeg' + ')' 
   }">
+
     <div class="set-12 description">
-      <h3 class="txt-center">{{category.title}}</h3>
-      <div class="set-12 txt" *ngIf="category.description != null" [innerHtml]="(category.description.length > 100) ? (category.description | slice: 0 : 100) + '...' :
-    (category.description)"></div>
-      <button type="button">Leer más</button>
+      <h3 class="txt-center">{{subcategory.title}}</h3>
+      <div class="set-12 txt" *ngIf="subcategory.description != null" [innerHtml]="(subcategory.description.length > 100) ? (subcategory.description | slice: 0 : 100) + '...' :
+    (subcategory.description)"></div>
+      <button type="button" (click)="openModalDescription()" *ngIf="subcategory.description != null">Leer más</button>
     </div>
+
+    <button type="button" class="crumbs-menu" mat-icon-button color="accent" [matMenuTriggerFor]="crumbsMenu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #crumbsMenu="matMenu">
+      <button mat-menu-item (click)="linkMe('/documentos-publicos/' + documentID)">
+        <mat-icon>arrow_left</mat-icon>
+        <span>Mexicolectivo</span>
+      </button>
+      <button mat-menu-item (click)="linkMe('/documentos-publicos/' + documentID + '/categoria/' + categoryID)">
+        <mat-icon>arrow_left</mat-icon>
+        <span>{{category.category.name}}</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>location_on</mat-icon>
+        <span>{{subcategory.category.name}}</span>
+      </button>
+    </mat-menu>
+
     <div class="overlay"></div>
   </div>
 
@@ -22,7 +43,7 @@
             <small>Usuarios</small>
           </p>
           <p class="amount">
-            <small>{{category.stats?.users}}</small>
+            <small>{{subcategory.stats?.users}}</small>
           </p>
         </div>
       </div>
@@ -38,7 +59,7 @@
             <small>Interacciones</small>
           </p>
           <p class="amount">
-            <small>{{category.stats?.interactions}}</small>
+            <small>{{subcategory.stats?.interactions}}</small>
           </p>
         </div>
       </div>
@@ -46,7 +67,7 @@
   </div>
 
   <div class="set-12 topic-list">
-    <div class="public-document-mobile-topic-list" [category]="category"></div>
+    <div class="public-document-mobile-topic-list" [category]="subcategory"></div>
   </div>
 
   <div class="set-12" *ngIf="topics.length != 0">

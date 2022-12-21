@@ -28,12 +28,12 @@ export class PublicDocumentMobileCategoryBarsComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  linkMe(url: string) {
-    this.utilityService.linkMe(url);
+  linkMe(layoutID: string) {
+    this.utilityService.linkMe('/documentos-publicos/' + this.document_id + '/categoria/' + layoutID);
   }
 
-  displayCoverageMenu() {
-    this.open = !this.open;
-    this.openMenu.emit({ open: this.open });
-  }
+  // displayCoverageMenu() {
+  //   this.open = !this.open;
+  //   this.openMenu.emit({ open: this.open });
+  // }
 }

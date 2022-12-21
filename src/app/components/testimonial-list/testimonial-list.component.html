@@ -3,8 +3,13 @@
     <button type="button" mat-mini-fab color="primary" (click)="killDialog()" [disabled]="submitted">
       <mat-icon>cancel</mat-icon>
     </button>
-    <button type="button" mat-mini-fab color="warn" [disabled]="submitted">
+    <button type="button" mat-mini-fab color="primary" [disabled]="submitted" (click)="stepNext()"
+      *ngIf="selectedIndex == 0">
       <mat-icon>add_circle</mat-icon>
+    </button>
+    <button type="button" mat-mini-fab color="warn" [disabled]="submitted" (click)="stepPrevious()"
+      *ngIf="selectedIndex == 1">
+      <mat-icon>arrow_back</mat-icon>
     </button>
   </div>
 
@@ -17,64 +22,98 @@
   <input type="file" #file (change)="onFileSelected($event)" multiple>
 </div>
 
-<div class="set-12 dialog-body" *ngIf="testimonials.length != 0">
-  <div class="set-12 testimony" *ngFor="let testimony of testimonials">
-    <p *ngIf="testimony.isAnonymous">
-      <small>Anónimo</small>
-    </p>
-    <p *ngIf="!testimony.isAnonymous">
-      <small>{{testimony.createdBy.firstname}} {{testimony.createdBy.lastname}}</small>
-    </p>
+<div class="set-12 dialog-body">
+  <mat-stepper labelPosition="bottom" #stepper [disableRipple]="true" [linear]="true" [@.disabled]="true">
+    <mat-step>
+      <ng-template matStepLabel>
+        <small>Testimonios</small>
+      </ng-template>
 
-    <p class="desc" [innerHTML]="testimony.description"></p>
-    <p class="date">
-      <small>{{testimony.createdAt | date: 'mediumDate'}} - {{testimony.createdAt | date: 'mediumTime'}}</small>
-    </p>
-  </div>
-</div>
-
-<div class="set-12 dialog-body" *ngIf="testimonials.length == 0">
-  <p><small>No se encontraron testimonios.</small></p>
-  <p><small>Sé el primero en agregar tu testimonio.</small></p>
-
-  <div class="set-12 txt-center anonhldr">
-    <button type="button" mat-button color="warn" (click)="visibility()" class="anon">
-      <div class="set-12" *ngIf="!isAnonymous">
-        <mat-icon>visibility</mat-icon>
-        <small>{{user.firstname}} {{user.lastname}}</small>
+      <div class="set-12 empty-list" *ngIf="testimonials.length == 0">
+        <p><small>No se encontraron testimonios.</small></p>
+        <p><small>Sé el primero en agregar tu testimonio.</small></p>
+        <button type="button" mat-raised-button color="warn" (click)="stepNext()">
+          <small>Nuevo testimonio</small>
+        </button>
       </div>
-  
-      <div class="set-12" *ngIf="isAnonymous">
-        <mat-icon>visibility_off</mat-icon>
-        <small>Anónimo</small>
+
+      <div class=" set-12" *ngIf="testimonials.length != 0">
+        <div class="set-12 testimony" *ngFor="let testimony of testimonials">
+          <p>
+            <small *ngIf="testimony.name != null">{{
+              (testimony.name.length > 45) ?
+              (testimony.name | slice: 0 : 45) + '..' : (testimony.name)
+              }}</small>
+            <small *ngIf="testimony.name == null">Sin título</small>
+          </p>
+          <p class="desc" [innerHTML]="
+          (testimony.description.length > 100) ? 
+          (testimony.description | slice: 0 : 100) + '..' : (testimony.description)">
+          </p>
+          <p class="date">
+            <small>{{testimony.createdAt | date: 'mediumDate'}} - {{testimony.createdAt | date: 'mediumTime'}}</small>
+          </p>
+          <div class="set-12 ctrls">
+            <button type="button" disabled>
+              <mat-icon>flag</mat-icon>
+            </button>
+            <button type="button" (click)="openTestimonialDialog(testimony)">
+              <mat-icon>auto_stories</mat-icon>
+            </button>
+          </div>
+        </div>
       </div>
-    </button>
-  </div>
+    </mat-step>
 
-  <form class="set-12" [formGroup]="addTestimonyFormGroup" (submit)="createTestimony()">
-    <mat-form-field appearance="outline">
-      <mat-label>Título</mat-label>
-      <input type="text" matInput formControlName="name">
-    </mat-form-field>
+    <mat-step>
+      <ng-template matStepLabel>
+        <small>Nuevo testimonio</small>
+      </ng-template>
 
-    <div class="set-12 editor-form">
-      <angular-editor formControlName="description" [config]="editorConfig"></angular-editor>
-    </div>
+      <div class="set-12">
+        <p><small>Platicanos sobre tu experiencia.</small></p>
+      </div>
 
-    <div class="set-12 file-hldr" *ngIf="fileNames.length != 0">
-      <p *ngFor="let name of fileNames">
-        <small>{{name}}</small>
-      </p>
-    </div>
+      <div class="set-12 txt-center anonhldr">
+        <button type="button" mat-button color="warn" (click)="visibility()" class="anon">
+          <div class="set-12" *ngIf="!isAnonymous">
+            <mat-icon>visibility</mat-icon>
+            <small>{{user.firstname}} {{user.lastname}}</small>
+          </div>
 
-    <div class="set-12 ctrls">
-      <button type="button" mat-mini-fab color="primary" class="minifab" (click)="file.click()">
-        <mat-icon>cloud_upload</mat-icon>
-      </button>
-      <button type="submit" mat-raised-button color="warn" [disabled]="addTestimonyFormGroup.invalid || submitted">
-        <small>Agregar testimonio</small>
-      </button>
-      <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
-    </div>
-  </form>
+          <div class="set-12" *ngIf="isAnonymous">
+            <mat-icon>visibility_off</mat-icon>
+            <small>Anónimo</small>
+          </div>
+        </button>
+      </div>
+
+      <form class="set-12" [formGroup]="addTestimonyFormGroup" (submit)="createTestimony()">
+        <mat-form-field appearance="outline">
+          <mat-label>Título</mat-label>
+          <input type="text" matInput formControlName="name">
+        </mat-form-field>
+
+        <div class="set-12 editor-form">
+          <angular-editor formControlName="description" [config]="editorConfig"></angular-editor>
+        </div>
+
+        <div class="set-12 file-hldr" *ngIf="fileNames.length != 0">
+          <p *ngFor="let name of fileNames">
+            <small>{{name}}</small>
+          </p>
+        </div>
+
+        <div class="set-12 ctrls">
+          <button type="button" mat-mini-fab color="primary" class="minifab" (click)="file.click()">
+            <mat-icon>add_a_photo</mat-icon>
+          </button>
+          <button type="submit" mat-raised-button color="warn" [disabled]="addTestimonyFormGroup.invalid || submitted">
+            <small>Agregar testimonio</small>
+          </button>
+          <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
+        </div>
+      </form>
+    </mat-step>
+  </mat-stepper>
 </div>
