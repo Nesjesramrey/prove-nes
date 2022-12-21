@@ -17,12 +17,12 @@
     <div class="gradbar" [style.min-width.%]="40" [style.max-width]="'calc(100% - 70px)'"
       [style.width.%]="layout.stats.score" *ngIf="layout.stats != null"></div>
 
-    <button type="button" class="catname" (click)="displayLayoutData(layout)" [style.min-width.%]="37"
+    <button type="button" class="catname" (click)="displayLayoutData(layout)" [style.min-width.%]="75"
       [style.width.%]="layout.stats.score - 3" [matTooltip]="layout.stats.score + '%'" matTooltipClass="tooltip"
       matTooltipPosition="right"
       (click)="linkMe('/documentos-publicos/' + document_id + '/categoria/' + category_id + '/subcategoria/' + layout._id)"
       *ngIf="layout.stats != null">
-      <small>{{ layout.category.name }}</small>
+      {{ layout.category.name }}
     </button>
   </div>
 </div>

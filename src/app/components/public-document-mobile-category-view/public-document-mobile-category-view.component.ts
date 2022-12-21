@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatListOption } from '@angular/material/list';
 import { UtilityService } from 'src/app/services/utility.service';
 import { DescriptionViewerComponent } from '../description-viewer/description-viewer.component';
 
@@ -15,6 +16,7 @@ export class PublicDocumentMobileCategoryViewComponent implements OnInit {
   public layouts: any = null;
   public open: boolean = false;
   @ViewChild('states') public states!: any;
+  @Input('storedSolutions') public storedSolutions: any = null;
 
   constructor(
     public dialog: MatDialog,
@@ -52,5 +54,25 @@ export class PublicDocumentMobileCategoryViewComponent implements OnInit {
 
   linkMe(url: string) {
     this.utilityService.linkMe(url);
+  }
+
+  onCoverageSelected(option: MatListOption[]) {
+    let selection: any = [];
+    let coverage: any = [];
+    option.filter((x: any) => { selection.push(x['value']); });
+    coverage = this.document['coverage'].filter((x: any) => { return selection.includes(x['_id']); });
+  }
+
+  onFilterSolutions() {
+    let ids: any[] = [];
+    this.states['selectedOptions']['selected'].filter((x: any) => { ids.push(x['value']); });
+
+    this.topSolutions = [];
+    this.storedSolutions.filter((x: any) => {
+      x['coverage'].filter((c: any) => {
+        if (ids.includes(c['_id'])) { this.topSolutions.push(x); }
+      });
+    });
+    this.displayCoverageMenu();
   }
 }

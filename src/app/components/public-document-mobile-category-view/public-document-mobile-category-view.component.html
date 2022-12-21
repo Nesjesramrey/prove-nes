@@ -95,7 +95,8 @@
   </div>
 
   <div class="set-12">
-    <mat-selection-list #states [disableRipple]="true">
+    <mat-selection-list #states [disableRipple]="true"
+      (selectionChange)="onCoverageSelected(states.selectedOptions.selected)">
       <mat-list-option *ngFor="let state of document.coverage" color="warn" [value]="state._id">
         <small>{{state.name}}</small>
       </mat-list-option>
@@ -103,7 +104,7 @@
   </div>
 
   <div class="set-12 ctrls">
-    <button type="button" mat-raised-button color="warn">
+    <button type="button" mat-raised-button color="warn" (click)="onFilterSolutions()">
       <small>Filtrar</small>
     </button>
   </div>
