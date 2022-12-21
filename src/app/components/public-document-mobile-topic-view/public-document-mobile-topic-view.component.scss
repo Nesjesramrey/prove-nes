@@ -19,6 +19,11 @@
     border-radius: 0 !important;
   }
 
+  .rowflex {
+    display: flex;
+    align-items: center;
+  }
+
   .row:not(:first-child) {
     margin-top: 20px;
   }

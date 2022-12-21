@@ -4,7 +4,7 @@
   right: 20px;
   z-index: 101;
   padding: 10px;
-  background: gray;
+  // background: gray;
   border-radius: 100%;
 
   button {
@@ -19,31 +19,39 @@
   button.opener {
     width: 40px;
     height: 40px;
-    background: greenyellow;
+    background: #306EFF;
     z-index: 17;
   }
 
   button.tool {
-    width: 30px;
-    height: 30px;
-    background: greenyellow;
+    width: 40px;
+    height: 40px;
+    // background: greenyellow;
     z-index: 14;
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 10px;
+    right: 10px;
 
     mat-icon {
-      font-size: 12pt;
+      font-size: 14pt;
     }
   }
 
   button.tool:nth-child(1) {
+    background: #FCDBC3;
+
+    mat-icon {
+      color: #E98282;
+    }
+
     &.fixedpos {
-      top: -70px;
+      top: -80px;
     }
   }
 
   button.tool:nth-child(2) {
+    background: #71F5AD;
+
     &.fixedpos {
       top: -35px;
     }

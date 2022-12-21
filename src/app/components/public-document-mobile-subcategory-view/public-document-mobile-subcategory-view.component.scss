@@ -57,6 +57,17 @@
         text-decoration: underline;
       }
     }
+
+    .crumbs-menu {
+      position: absolute;
+      z-index: 7;
+      top: 10px;
+      right: 10px;
+
+      mat-icon {
+        color: #71F5AD;
+      }
+    }
   }
 
   .carddata {
@@ -68,6 +79,7 @@
       width: 90%;
       margin: 0 5%;
       text-align: center;
+      zoom: 0.7;
     }
 
     .image-box {

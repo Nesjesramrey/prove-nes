@@ -1,4 +1,5 @@
-<mat-card>
+<!-- desktop -->
+<mat-card *ngIf="!isMobile">
   <div class="header">
     <div class="set-10">
       <h3 class="txt-left">{{title.toUpperCase()}}</h3>
@@ -9,14 +10,41 @@
         <mat-icon>cancel</mat-icon>
       </button>
     </div>
-  
-    <!-- <h2 class="title">{{ title.toUpperCase() }}</h2>
-    <button class="button" type="button" mat-icon-button (click)="killDialog()">
-      <mat-icon>cancel</mat-icon>
-    </button> -->
   </div>
-  
+
   <div class="body">
     <div class="set-12" [innerHTML]="text"></div>
   </div>
 </mat-card>
+
+
+<!-- mobile -->
+<div class="set-12" *ngIf="isMobile">
+  <div class="set-12 header">
+    <div class="set-10">
+      <h3 class="txt-left">{{title.toUpperCase()}}</h3>
+    </div>
+    <div class="set-2 txt-right">
+      <button type="button" mat-icon-button color="primary" matTooltip="Salir" matTooltipClass="tooltip"
+        (click)="killDialog()">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="set-12 ctrls">
+    <button type="button" mat-icon-button color="primary" disabled>
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button type="button" mat-icon-button color="primary" disabled>
+      <mat-icon>share</mat-icon>
+    </button>
+    <button type="button" mat-icon-button color="primary" disabled>
+      <mat-icon>forum</mat-icon>
+    </button>
+  </div>
+
+  <div class="set-12 body">
+    <div class="set-12" [innerHTML]="text"></div>
+  </div>
+</div>

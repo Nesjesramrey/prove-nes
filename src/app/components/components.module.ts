@@ -72,6 +72,8 @@ import { PublicDocumentMobileTopicListComponent } from './public-document-mobile
 import { PublicDocumentMobileTopicViewComponent } from './public-document-mobile-topic-view/public-document-mobile-topic-view.component';
 import { PublicDocumentMobileSolutionViewComponent } from './public-document-mobile-solution-view/public-document-mobile-solution-view.component';
 import { TestimonialListComponent } from './testimonial-list/testimonial-list.component';
+import { TestimonialSingleViewComponent } from './testimonial-single-view/testimonial-single-view.component';
+import { TestimonialImageSliderComponent } from './testimonial-image-slider/testimonial-image-slider.component';
 
 @NgModule({
   imports: [
@@ -147,7 +149,9 @@ import { TestimonialListComponent } from './testimonial-list/testimonial-list.co
     PublicDocumentMobileTopicListComponent,
     PublicDocumentMobileTopicViewComponent,
     PublicDocumentMobileSolutionViewComponent,
-    TestimonialListComponent
+    TestimonialListComponent,
+    TestimonialSingleViewComponent,
+    TestimonialImageSliderComponent
   ],
   exports: [
     AppPageletComponent,
@@ -201,7 +205,9 @@ import { TestimonialListComponent } from './testimonial-list/testimonial-list.co
     PublicDocumentMobileTopicListComponent,
     PublicDocumentMobileTopicViewComponent,
     PublicDocumentMobileSolutionViewComponent,
-    TestimonialListComponent
+    TestimonialListComponent,
+    TestimonialSingleViewComponent,
+    TestimonialImageSliderComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
@@ -230,7 +236,8 @@ import { TestimonialListComponent } from './testimonial-list/testimonial-list.co
     AddCategoryDialogComponent,
     RequestEditPermissionComponent,
     GiveEditPermissionComponent,
-    TestimonialListComponent
+    TestimonialListComponent,
+    TestimonialSingleViewComponent
   ],
   providers: [],
 })

@@ -1,9 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatStepper } from '@angular/material/stepper';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { TestimonyService } from 'src/app/services/testimony.service';
 import { UtilityService } from 'src/app/services/utility.service';
+import { TestimonialSingleViewComponent } from '../testimonial-single-view/testimonial-single-view.component';
 
 @Component({
   selector: '.testimonial-list',
@@ -58,15 +60,18 @@ export class TestimonialListComponent implements OnInit {
     ]
   };
   public fileNames: any = [];
+  @ViewChild('stepper') public stepper!: MatStepper;
+  public selectedIndex: number = 0;
 
   constructor(
     public dialogRef: MatDialogRef<TestimonialListComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public formBuilder: FormBuilder,
     public testimonyService: TestimonyService,
-    public utilityService: UtilityService
+    public utilityService: UtilityService,
+    public dialog: MatDialog
   ) {
-    console.log(this.dialogData);
+    // console.log(this.dialogData);
     this.location = this.dialogData['location'];
     this.user = this.dialogData['user'];
   }
@@ -89,6 +94,8 @@ export class TestimonialListComponent implements OnInit {
         this.testimonials = this.solution['testimonials'];
         break;
     }
+
+    // console.log(this.testimonials);
   }
 
   onFileSelected(event: any) {
@@ -114,6 +121,7 @@ export class TestimonialListComponent implements OnInit {
 
     Array.from(this.addTestimonyFormGroup.controls['files']['value'])
       .forEach((file: any) => { data['formData'].append('files', file); });
+    data['formData'].append('name', this.addTestimonyFormGroup.value.name);
     data['formData'].append('description', this.addTestimonyFormGroup.value.description);
     data['formData'].append('isAnonymous', (this.isAnonymous).toString());
 
@@ -124,8 +132,8 @@ export class TestimonialListComponent implements OnInit {
       },
       next: (reply: any) => {
         this.utilityService.openSuccessSnackBar(this.utilityService.saveSuccess);
-        console.log(reply);
-        // this.dialogRef.close(reply);
+        this.testimonials.unshift(reply['testimonials'][0]);
+        this.stepPrevious();
       },
       complete: () => {
         this.submitted = false;
@@ -134,4 +142,28 @@ export class TestimonialListComponent implements OnInit {
   }
 
   killDialog() { this.dialogRef.close(); }
+
+  stepNext() {
+    this.stepper.next();
+    this.selectedIndex = this.stepper['selectedIndex'];
+  }
+
+  stepPrevious() {
+    this.stepper.previous();
+    this.selectedIndex = this.stepper['selectedIndex'];
+  }
+
+  openTestimonialDialog(testimony: any) {
+    const dialogRef = this.dialog.open<any>(TestimonialSingleViewComponent, {
+      data: {
+        testimony: testimony,
+      },
+      disableClose: true,
+      panelClass: 'full-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
 }
