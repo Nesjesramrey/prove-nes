@@ -73,14 +73,14 @@
         </span>
       </button>
       <div class="usrname">{{ user.firstname }} {{ user.lastname }}</div>
-      <mat-icon (click)="open = !open; displayProfileMenu()"
+      <mat-icon class="avatar-icon" (click)="open = !open; displayProfileMenu()"
         >keyboard_arrow_right</mat-icon
       >
     </div>
 
     <div class="set-12 innernav">
       <div class="set-12 innerbtn">
-        <button type="button" (click)="onProfile()">
+        <button type="button">
           <span>Quienes somos</span>
         </button>
         <button type="button" (click)="open = !open">
@@ -100,14 +100,17 @@
   [class.menuopen]="isProfile"
 >
   <div class="set-12 topnav">
-    <div class="set-6">
+    <div class="topnav-iconProfile">
       <button
+        id="topnav-button-profile"
         type="button"
-        (click)="utilityService.linkMe('/'); isProfile = !isProfile"
+        (click)="open = !open; isProfile = !isProfile"
       >
         <mat-icon color="accent">keyboard_arrow_left</mat-icon>
-        <div>Perfil</div>
       </button>
+    </div>
+    <div class="topnav-profile">
+      <div>Perfil</div>
     </div>
 
     <div class="set-6 txt-right" (click)="isProfile = !isProfile">
@@ -122,7 +125,7 @@
       <button type="button" (click)="onProfile()">
         <span>Mi perfil</span>
       </button>
-      <button type="button" (click)="isProfile = !isProfile">
+      <button type="button">
         <span>Asociaciones</span>
       </button>
       <button type="button" (click)="onProfile()">

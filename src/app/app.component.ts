@@ -153,6 +153,8 @@ export class AppComponent implements OnInit {
           this.router.navigateByUrl('/hub/documentos', {
             state: { status: 'reload' },
           });
+          this.isProfile = !this.isProfile;
+          this.open = !this.open;
         }
       });
     }, 300);
