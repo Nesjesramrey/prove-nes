@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ChartData, ChartEvent, ChartType } from 'chart.js';
 
 @Component({
   selector: 'circle-chart-mobile',
@@ -7,7 +6,7 @@ import { ChartData, ChartEvent, ChartType } from 'chart.js';
   styleUrls: ['./circle-chart-mobile.component.scss']
 })
 export class CircleChartMobileComponent implements OnInit {
-  
+  progressValue: number = 75;
 
 
   constructor() { }

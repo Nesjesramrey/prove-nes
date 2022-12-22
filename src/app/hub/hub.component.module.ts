@@ -73,7 +73,7 @@ import { LineChartMobileComponent } from './components/line-chart-mobile/line-ch
     CommunityMobileComponent,
     SpiderChartMobileComponent,
     CircleChartMobileComponent,
-    LineChartMobileComponent
+    LineChartMobileComponent, 
   ],
 })
 export class HubComponentModule {}
