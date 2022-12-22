@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { FavoritesService } from 'src/app/services/favorites.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { TestimonialListComponent } from '../testimonial-list/testimonial-list.component';
 import { VoteDialogComponent } from '../vote-dialog/vote-dialog.component';
@@ -23,13 +24,16 @@ export class PublicDocumentMobileTopicViewComponent implements OnInit {
   public topicID: string = '';
   @Input('userVoted') public userVoted: any = null;
   @Input('votes') public votes: any = null;
+  public isFavorite: boolean = false;
+  @Input('allFavorites') public allFavorites: any = null;
   @Output() public topicVoted = new EventEmitter<any>();
-
+  @Output() public addSolution = new EventEmitter<any>();
 
   constructor(
     public activatedRoute: ActivatedRoute,
     public utilityservice: UtilityService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public favoritesService: FavoritesService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
@@ -45,6 +49,11 @@ export class PublicDocumentMobileTopicViewComponent implements OnInit {
     this.subcategory = subcategory[0];
 
     this.solutions = this.topic['solutions'];
+
+    let favorite = this.allFavorites.filter((item: any) => item['createdBy'] == this.user['_id']);
+    if (favorite.length != 0) {
+      this.isFavorite = true;
+    } else { this.isFavorite = false; }
   }
 
   linkMe(url: string) {
@@ -76,8 +85,45 @@ export class PublicDocumentMobileTopicViewComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      console.log(reply);
       this.topicVoted.emit({ action: 'vote' });
     });
+  }
+
+  getUserFavorited() {
+    return this.allFavorites.filter((item: any) => item['createdBy'] === this.user['_id']);
+  }
+
+  addFavorites() {
+    let favorited = this.getUserFavorited();
+
+    if (favorited.length > 0) {
+      let data = {
+        _id: favorited[0]._id,
+        favorites: true,
+      };
+      console.log(data);
+      return;
+
+      this.favoritesService.updateFavorites(data).subscribe((reply: any) => {
+        if (reply.message == 'favorite update success') {
+          this.isFavorite = true;
+        }
+      });
+    } else {
+      let data = {
+        topic: this.topicID,
+        favorites: true,
+      };
+
+      this.favoritesService.addFavorites(data).subscribe((reply: any) => {
+        if (reply.message == 'favorites add success') {
+          this.isFavorite = true;
+        }
+      });
+    }
+  }
+
+  popAddSolutionDialog() {
+    this.addSolution.emit({ add: true });
   }
 }

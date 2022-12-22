@@ -45,9 +45,11 @@
       <div class="set-12 vote-count" *ngIf="userVoted">Votos: {{ votes }}</div>
 
       <div class="set-12 ctrls">
-        <button type="button" disabled>
-          <mat-icon>favorite</mat-icon>
+        <button type="button" (click)="addFavorites()">
+          <mat-icon color="primary" *ngIf="!isFavorite">favorite</mat-icon>
+          <mat-icon color="accent" *ngIf="isFavorite">favorite</mat-icon>
         </button>
+
         <button type="button" disabled>
           <mat-icon>share</mat-icon>
         </button>
@@ -62,28 +64,43 @@
   </mat-card>
 
   <mat-card class="set-12">
+    <!-- empty solutions -->
     <div class="set-12 row empty-list" *ngIf="solutions.length == 0">
       <p><small>No se encontraron soluciones.</small></p>
       <p><small>Sé el primero en agregar una solución.</small></p>
-      <button type="button" mat-raised-button color="accent">
+      <button type="button" mat-raised-button color="accent" (click)="popAddSolutionDialog()">
         <small>Agregar solución</small>
       </button>
     </div>
 
+    <!-- solutions available -->
     <div class="set-12 row solution-list" *ngIf="solutions.length != 0">
-      <p class="title">
-        <strong>Soluciones</strong>
-        <mat-icon>insights</mat-icon>
-      </p>
+      <div class="set-12 list-head">
+        <div class="set-10">
+          <p class="title">
+            <strong>Soluciones</strong>
+            <mat-icon>insights</mat-icon>
+          </p>
+        </div>
+
+        <div class="set-2">
+          <button type="button" mat-mini-fab color="primary" (click)="popAddSolutionDialog()">
+            <mat-icon>feedback</mat-icon>
+          </button>
+        </div>
+      </div>
+
       <div class="set-12">
         <div class="set-12 list-item" *ngFor="let solution of solutions" (click)="linkMe('/documentos-publicos/' + this.documentID + 
           '/categoria/' + this.categoryID + 
           '/subcategoria/' + this.subcategoryID + 
           '/tema/' + this.topicID + 
           '/solucion/' + solution._id)">
+
           <div class="set-10">
             <small>{{solution?.title}}</small>
           </div>
+
           <div class="set-2">
             <strong><small>{{solution?.stats?.score || 0}}</small></strong>
           </div>

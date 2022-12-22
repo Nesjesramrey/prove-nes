@@ -110,5 +110,6 @@
 <!-- mobile -->
 <div class="set-12" *ngIf="isDataAvailable && isMobile">
   <div class="public-document-mobile-topic-view" [document]="document" [topic]="topic" [user]="user"
-    [userVoted]="userVoted" [votes]="votes" (topicVoted)="getVoteStatus($event)"></div>
+    [userVoted]="userVoted" [votes]="votes" [allFavorites]="allFavorites" (topicVoted)="getVoteStatus($event)"
+    (addSolution)="openModalSolution(null)"></div>
 </div>

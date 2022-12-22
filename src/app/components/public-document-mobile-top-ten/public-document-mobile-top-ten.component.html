@@ -1,6 +1,7 @@
 <div class="set-12">
   <div class="set-2">
-    <button type="button" mat-mini-fab color="primary" (click)="displayCoverageMenu()">
+    <button type="button" mat-mini-fab color="primary" (click)="displayCoverageMenu()"
+      [disabled]="solutions.length == 0">
       <mat-icon>filter_list</mat-icon>
     </button>
   </div>

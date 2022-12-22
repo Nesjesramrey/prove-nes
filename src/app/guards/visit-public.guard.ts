@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  CanActivate,
-  Router,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-} from '@angular/router';
+import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 import { VisitService } from '../services/visit.service';
 
@@ -12,13 +7,15 @@ import { VisitService } from '../services/visit.service';
   providedIn: 'root',
 })
 export class CanActivateVisitGuard implements CanActivate {
-  constructor(public router: Router, public visitService: VisitService) {}
+  constructor(
+    public router: Router,
+    public visitService: VisitService
+  ) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const arrUrl = state.url.split('/');
     const id = arrUrl[arrUrl.length - 1];
     const type = arrUrl[arrUrl.length - 2];
-
     this.visitService.sendVisit(id, this.getType(type));
     return true;
   }

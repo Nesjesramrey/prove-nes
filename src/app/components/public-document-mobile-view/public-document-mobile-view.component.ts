@@ -59,10 +59,13 @@ export class PublicDocumentMobileViewComponent implements OnInit {
 
     this.topSolutions = [];
     this.storedSolutions.filter((x: any) => {
+      if (x['stats'] == null) { x['stats'] = { score: 0 } }
+
       x['coverage'].filter((c: any) => {
         if (ids.includes(c['_id'])) { this.topSolutions.push(x); }
       });
     });
+
     this.displayCoverageMenu();
   }
 }

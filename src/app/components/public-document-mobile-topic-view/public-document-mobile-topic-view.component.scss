@@ -71,11 +71,32 @@
   }
 
   .solution-list {
+    .list-head {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+
+      .set-2 {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          mat-icon {
+            font-size: 14pt;
+          }
+        }
+      }
+    }
+
     p.title {
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      margin-bottom: 20px;
 
       * {
         margin: 0;

@@ -75,6 +75,7 @@ import { TestimonialListComponent } from './testimonial-list/testimonial-list.co
 import { TestimonialSingleViewComponent } from './testimonial-single-view/testimonial-single-view.component';
 import { TestimonialImageSliderComponent } from './testimonial-image-slider/testimonial-image-slider.component';
 import { VoteDialogComponent } from './vote-dialog/vote-dialog.component';
+import { SearchDialogComponent } from './search-dialog/search-dialog.component';
 
 @NgModule({
   imports: [
@@ -153,7 +154,8 @@ import { VoteDialogComponent } from './vote-dialog/vote-dialog.component';
     TestimonialListComponent,
     TestimonialSingleViewComponent,
     TestimonialImageSliderComponent,
-    VoteDialogComponent
+    VoteDialogComponent,
+    SearchDialogComponent
   ],
   exports: [
     AppPageletComponent,
@@ -210,7 +212,8 @@ import { VoteDialogComponent } from './vote-dialog/vote-dialog.component';
     TestimonialListComponent,
     TestimonialSingleViewComponent,
     TestimonialImageSliderComponent,
-    VoteDialogComponent
+    VoteDialogComponent,
+    SearchDialogComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
@@ -241,7 +244,8 @@ import { VoteDialogComponent } from './vote-dialog/vote-dialog.component';
     GiveEditPermissionComponent,
     TestimonialListComponent,
     TestimonialSingleViewComponent,
-    VoteDialogComponent
+    VoteDialogComponent,
+    SearchDialogComponent
   ],
   providers: [],
 })

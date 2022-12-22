@@ -14,7 +14,7 @@ export class PublicDocumentMobileCategoryViewComponent implements OnInit {
   @Input('category') public category: any = null;
   @Input('topSolutions') public topSolutions: any = null;
   public layouts: any = null;
-  public open: boolean = false;
+  @Input('open') public open: boolean = false;
   @ViewChild('states') public states!: any;
   @Input('storedSolutions') public storedSolutions: any = null;
 

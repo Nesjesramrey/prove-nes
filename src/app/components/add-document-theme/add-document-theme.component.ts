@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, HostBinding, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
@@ -6,6 +6,7 @@ import { TopicService } from 'src/app/services/topic.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { SolutionService } from 'src/app/services/solution.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: '.add-document-theme',
@@ -24,7 +25,6 @@ export class AddDocumentThemeComponent implements OnInit {
   @ViewChild('stepper') public stepper!: MatStepper;
   public topic: any = null;
   public fileNames: any = [];
-
   public htmlContent: any = '';
   public editorConfig: AngularEditorConfig = {
     editable: true,
@@ -63,6 +63,8 @@ export class AddDocumentThemeComponent implements OnInit {
       ]
     ]
   };
+  @HostBinding('class') public class: string = '';
+  public isMobile: boolean = false;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -70,9 +72,12 @@ export class AddDocumentThemeComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public topicService: TopicService,
     public utilityService: UtilityService,
-    public solutionService: SolutionService
+    public solutionService: SolutionService,
+    public deviceDetectorService: DeviceDetectorService
   ) {
     // console.log(this.dialogData);
+    this.isMobile = this.deviceDetectorService.isMobile();
+    if (this.isMobile) { this.class = 'fixmobile'; }
   }
 
   ngOnInit(): void {
@@ -122,6 +127,7 @@ export class AddDocumentThemeComponent implements OnInit {
         this.submitted = false;
       },
       next: (reply: any) => {
+        console.log(reply);
         this.canAddSolution = true;
         this.submitted = false;
         this.fileNames = []
