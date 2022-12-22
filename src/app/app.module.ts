@@ -40,6 +40,7 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { NgChartsModule } from 'ng2-charts';
 import { DndModule } from 'ngx-drag-drop';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 // dev
 const firebaseConfig = {
@@ -88,7 +89,8 @@ const socketConfig: SocketIoConfig = {
     NgChartsModule,
     SocketIoModule.forRoot(socketConfig),
     AppMaterialModule,
-    DndModule
+    DndModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     { provide: HAMMER_GESTURE_CONFIG, useClass: LyHammerGestureConfig },

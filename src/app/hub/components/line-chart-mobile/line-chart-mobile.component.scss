@@ -1,0 +1,20 @@
+.card-line-chart {
+    width: 100%;
+    margin-bottom: 30px;
+    padding: 10px;
+    background: #ffffff;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.24);
+    border-radius: 5px;
+}
+
+
+.vote-button-container {
+    display: flex;
+    justify-content: center;
+
+    button {
+        height: 35px;
+        width: 150px;
+        border-radius: 5px;
+    }
+}

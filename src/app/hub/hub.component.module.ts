@@ -32,6 +32,8 @@ import { SearchInputMobileComponent } from './components/search-input-mobile/sea
 import { CardTopicsMobileComponent } from './components/card-topics-mobile/card-topics-mobile.component';
 import { CommunityMobileComponent } from './components/community-mobile/community-mobile.component';
 import { SpiderChartMobileComponent } from './components/spider-chart-mobile/spider-chart-mobile.component';
+import { CircleChartMobileComponent } from './components/circle-chart-mobile/circle-chart-mobile.component';
+import { LineChartMobileComponent } from './components/line-chart-mobile/line-chart-mobile.component';
 
 
 @NgModule({
@@ -69,7 +71,9 @@ import { SpiderChartMobileComponent } from './components/spider-chart-mobile/spi
     SearchInputMobileComponent,
     CardTopicsMobileComponent,
     CommunityMobileComponent,
-    SpiderChartMobileComponent
+    SpiderChartMobileComponent,
+    CircleChartMobileComponent,
+    LineChartMobileComponent
   ],
 })
 export class HubComponentModule {}
