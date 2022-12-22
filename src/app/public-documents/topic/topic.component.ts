@@ -86,7 +86,9 @@ export class TopicComponent implements OnInit {
           this.permission = false;
         }
       },
-      complete: () => { }
+      complete: () => {
+        this.fetchVotes();
+      }
     });
 
     // *** load document
@@ -122,16 +124,6 @@ export class TopicComponent implements OnInit {
       complete: () => {
         this.isDataAvailable = true;
       }
-    });
-
-    // *** load votes
-    this.voteService.fetchVotesByTopicID({ _id: this.topicID }).subscribe({
-      error: (error: any) => { },
-      next: (reply: any) => {
-        this.votes = reply.length;
-        this.userVoted = this.checkUserVote(reply);
-      },
-      complete: () => { }
     });
 
     // *** load favourites
@@ -248,6 +240,7 @@ export class TopicComponent implements OnInit {
   }
 
   checkUserVote(votes: any[]) {
+    let vote = votes.filter((x: any) => { return x['createdBy'] == this.user['_id']; });
     return votes.find((vote) => vote.createdBy === this.user._id)?._id || 0;
   }
 
@@ -405,5 +398,20 @@ export class TopicComponent implements OnInit {
     return data.sort((a: any, b: any) => {
       return b.stats.score - a.stats.score;
     });
+  }
+
+  fetchVotes() {
+    this.voteService.fetchVotesByTopicID({ _id: this.topicID }).subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        this.votes = reply.length;
+        this.userVoted = this.checkUserVote(reply);
+      },
+      complete: () => { }
+    });
+  }
+
+  getVoteStatus(event: any) {
+    this.fetchVotes();
   }
 }

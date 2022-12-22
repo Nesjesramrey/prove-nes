@@ -36,9 +36,14 @@
     <div class="set-12 txt-center row vote-tools">
       <p>Relevancia ciudadana</p>
       <p><strong>{{topic?.stats?.score || 0}} / 100</strong></p>
-      <button type="button" mat-raised-button color="warn" class="votebtn">
+
+      <button type="button" mat-raised-button color="warn" class="votebtn" (click)="openVoteDialog()"
+        *ngIf="!userVoted">
         <small>Vota</small>
       </button>
+
+      <div class="set-12 vote-count" *ngIf="userVoted">Votos: {{ votes }}</div>
+
       <div class="set-12 ctrls">
         <button type="button" disabled>
           <mat-icon>favorite</mat-icon>

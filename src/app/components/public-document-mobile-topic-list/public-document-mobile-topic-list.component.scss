@@ -1,7 +1,7 @@
 :host {
   width: 100%;
   background: #00031d;
-  padding: 20px;
+  // padding: 20px;
   float: left;
 
   .topic-item {
@@ -34,11 +34,28 @@
   }
 
   .empty-list {
-    padding: 10px;
+    padding: 20px;
     color: #71F5AD;
 
     button {
       margin-top: 20px;
+    }
+  }
+
+  .topic-list {
+    padding: 20px;
+  }
+
+  .list-head {
+    padding: 20px;
+    background: #171b3b;
+    border-bottom: 1px solid rgba($color: #ffffff, $alpha: 0.3);
+
+    input {
+      width: 100%;
+      padding: 10px;
+      background: #ffffff;
+      border-radius: 5px;
     }
   }
 }

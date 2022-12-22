@@ -74,6 +74,7 @@ import { PublicDocumentMobileSolutionViewComponent } from './public-document-mob
 import { TestimonialListComponent } from './testimonial-list/testimonial-list.component';
 import { TestimonialSingleViewComponent } from './testimonial-single-view/testimonial-single-view.component';
 import { TestimonialImageSliderComponent } from './testimonial-image-slider/testimonial-image-slider.component';
+import { VoteDialogComponent } from './vote-dialog/vote-dialog.component';
 
 @NgModule({
   imports: [
@@ -151,7 +152,8 @@ import { TestimonialImageSliderComponent } from './testimonial-image-slider/test
     PublicDocumentMobileSolutionViewComponent,
     TestimonialListComponent,
     TestimonialSingleViewComponent,
-    TestimonialImageSliderComponent
+    TestimonialImageSliderComponent,
+    VoteDialogComponent
   ],
   exports: [
     AppPageletComponent,
@@ -207,7 +209,8 @@ import { TestimonialImageSliderComponent } from './testimonial-image-slider/test
     PublicDocumentMobileSolutionViewComponent,
     TestimonialListComponent,
     TestimonialSingleViewComponent,
-    TestimonialImageSliderComponent
+    TestimonialImageSliderComponent,
+    VoteDialogComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
@@ -237,7 +240,8 @@ import { TestimonialImageSliderComponent } from './testimonial-image-slider/test
     RequestEditPermissionComponent,
     GiveEditPermissionComponent,
     TestimonialListComponent,
-    TestimonialSingleViewComponent
+    TestimonialSingleViewComponent,
+    VoteDialogComponent
   ],
   providers: [],
 })
