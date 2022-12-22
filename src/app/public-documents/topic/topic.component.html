@@ -109,5 +109,6 @@
 
 <!-- mobile -->
 <div class="set-12" *ngIf="isDataAvailable && isMobile">
-  <div class="public-document-mobile-topic-view" [document]="document" [topic]="topic" [user]="user"></div>
+  <div class="public-document-mobile-topic-view" [document]="document" [topic]="topic" [user]="user"
+    [userVoted]="userVoted" [votes]="votes" (topicVoted)="getVoteStatus($event)"></div>
 </div>

@@ -23,10 +23,12 @@ export class ModalVotesComponent implements OnInit {
     this.solutionID = data.solution;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
+
   valueQualification(value: any) {
     this.qualification = value;
   }
+
   killDialog() {
     this.dialogRef.close();
   }
@@ -37,14 +39,17 @@ export class ModalVotesComponent implements OnInit {
       solution: this.solutionID,
       value: this.qualification,
     };
+
     this.voteService.createNewVoto(data).subscribe((reply: any) => {
       if (reply.message == 'create success') {
         this.result = '#D9D9D9';
       }
+
       if (reply.message == 'removed success') {
         this.result = 'primary';
       }
     });
+
     this.dialogRef.close(this.result);
   }
 }

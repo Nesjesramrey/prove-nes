@@ -1,0 +1,16 @@
+<div class="set-12 dialog-head">
+  <div class="set-9">Vota</div>
+  <div class="set-3">
+    <button type="button" mat-mini-fab color="primary" (click)="killDialog()">
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div class="set-12 dialog-body">
+  <div class="set-12 btn-hldr" *ngFor="let type of voteTypes; let i = index">
+    <button type="button" (click)="selectRate(i)" [class.selected]="type.selected">
+      <small>{{type.title}}</small>
+    </button>
+  </div>
+</div>

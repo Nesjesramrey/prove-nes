@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
 import { TestimonialListComponent } from '../testimonial-list/testimonial-list.component';
+import { VoteDialogComponent } from '../vote-dialog/vote-dialog.component';
 
 @Component({
   selector: '.public-document-mobile-topic-view',
@@ -20,6 +21,10 @@ export class PublicDocumentMobileTopicViewComponent implements OnInit {
   public categoryID: string = '';
   public subcategoryID: string = '';
   public topicID: string = '';
+  @Input('userVoted') public userVoted: any = null;
+  @Input('votes') public votes: any = null;
+  @Output() public topicVoted = new EventEmitter<any>();
+
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -35,8 +40,10 @@ export class PublicDocumentMobileTopicViewComponent implements OnInit {
   ngOnInit(): void {
     let category = this.document['layouts'].filter((x: any) => { return x['_id'] == this.categoryID });
     this.category = category[0];
+
     let subcategory = category[0]['subLayouts'].filter((x: any) => { return x['_id'] == this.subcategoryID; });
     this.subcategory = subcategory[0];
+
     this.solutions = this.topic['solutions'];
   }
 
@@ -58,6 +65,19 @@ export class PublicDocumentMobileTopicViewComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) { }
+    });
+  }
+
+  openVoteDialog() {
+    const dialogRef = this.dialog.open<any>(VoteDialogComponent, {
+      width: '420px',
+      disableClose: true,
+      data: { topic: this.topicID },
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      console.log(reply);
+      this.topicVoted.emit({ action: 'vote' });
     });
   }
 }

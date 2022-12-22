@@ -14,6 +14,11 @@
     flex-shrink: 0;
   }
 
+  .rowflex {
+    display: flex;
+    align-items: center;
+  }
+
   mat-card {
     margin-bottom: 10px;
     border-radius: 0 !important;

@@ -6,7 +6,9 @@
   }">
 
     <div class="set-12 description">
-      <h3 class="txt-center">{{document.title}}</h3>
+      <p class="title">
+        <strong>{{document.title}}</strong>
+      </p>
       <div class="set-12 txt" *ngIf="document.description != null" [innerHtml]="(document.description.length > 100) ? 
         (document.description | slice: 0 : 100) + '...' : (document.description)"></div>
       <button type="button" (click)="openModalDescription()" *ngIf="document.description != null">Leer más</button>

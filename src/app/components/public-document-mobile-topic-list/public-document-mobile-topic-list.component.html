@@ -1,3 +1,7 @@
+<div class="set-12 list-head">
+  <input type="text" placeholder="Búscar tópicos..." (input)="applyFilter($event)">
+</div>
+
 <div class="set-12" *ngIf="topics.length == 0">
   <div class="empty-list">
     <p><small>No se encontraron tópicos.</small></p>
@@ -9,13 +13,15 @@
 </div>
 
 <div class="set-12" *ngIf="topics.length != 0">
-  <div class="set-12 topic-item" *ngFor="let topic of topics" (click)="linkMe(topic._id)">
-    <div class="set-10">
-      <small>{{topic?.title}}</small>
-    </div>
-    <div class="set-2">
-      <small>{{topic?.stats?.score}}</small>
-      <mat-icon>star_rate</mat-icon>
+  <div class="set-12 topic-list">
+    <div class="set-12 topic-item" *ngFor="let topic of topics" (click)="linkMe(topic._id)">
+      <div class="set-10">
+        <small>{{topic?.title}}</small>
+      </div>
+      <div class="set-2">
+        <small>{{topic?.stats?.score}}</small>
+        <mat-icon>star_rate</mat-icon>
+      </div>
     </div>
   </div>
 </div>

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
 
@@ -13,6 +14,7 @@ export class PublicDocumentMobileTopicListComponent implements OnInit {
   public subcategoryID: string = '';
   @Input('category') public category: any = null;
   public topics: any = null;
+  public dataSource = new MatTableDataSource<any>();
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -26,9 +28,18 @@ export class PublicDocumentMobileTopicListComponent implements OnInit {
   ngOnInit(): void {
     this.topics = this.category['topics'];
     // console.log(this.topics);
+    this.dataSource = new MatTableDataSource(this.topics);
   }
 
   linkMe(topicID: string) {
-    this.utilityService.linkMe('/documentos-publicos/' + this.documentID + '/categoria/' + this.categoryID + '/subcategoria/' + this.subcategoryID + '/tema/' + topicID);
+    this.utilityService.linkMe(
+      '/documentos-publicos/' + this.documentID + '/categoria/' + this.categoryID + '/subcategoria/' + this.subcategoryID + '/tema/' + topicID
+    );
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.topics = this.dataSource['filteredData'];
   }
 }
