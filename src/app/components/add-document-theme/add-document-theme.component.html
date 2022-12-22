@@ -5,7 +5,7 @@
 <div class="set-12" *ngIf="isDataAvailable">
   <div class="set-12 dialog-head">
     <div class="set-9">
-      <h3>Agregar Problema</h3>
+      <h3>Agregar tópico</h3>
     </div>
     <div class="set-3 txt-right">
       <button type="button" mat-icon-button color="primary" (click)="killDialog()" [disabled]="submitted">
@@ -13,7 +13,6 @@
       </button>
     </div>
   </div>
-
 
   <input type="file" #file (change)="onFileSelected($event)" multiple>
   <mat-stepper labelPosition="bottom" #stepper [disableRipple]="true" [linear]="true" [@.disabled]="true">
@@ -59,7 +58,7 @@
             </div>
           </div>
 
-          <div class="set-12" *ngIf="dialogData.coverage != undefined">
+          <div class="set-12 coverage-name" *ngIf="dialogData.coverage != undefined">
             <p>
               <small>
                 <i>Cobertura: <strong>{{dialogData.coverage.name}}</strong></i>
@@ -68,9 +67,6 @@
           </div>
 
           <div class="set-12 txt-right ctrls">
-            <button type="button" mat-raised-button color="accent" [disabled]="submitted" (click)="killDialog()">
-              <small>Cancelar</small>
-            </button>
             <button type="submit" mat-raised-button color="primary" [disabled]="addThemeFormGroup.invalid || submitted"
               *ngIf="!canAddSolution">
               <small>Guardar</small>
@@ -121,9 +117,6 @@
           </div> -->
 
           <div class="set-12 txt-right ctrls">
-            <button type="button" mat-raised-button color="accent" [disabled]="submitted" (click)="killDialog()">
-              <small>Cancelar</small>
-            </button>
             <button type="submit" mat-raised-button color="primary"
               [disabled]="addSolutionFormGroup.invalid || submitted">
               <small>Guardar</small>

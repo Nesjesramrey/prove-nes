@@ -9,9 +9,9 @@ import { VoteService } from 'src/app/services/vote.service';
 })
 export class VoteDialogComponent implements OnInit {
   public voteTypes: any[] = [
-    { title: 'Bueno', score: 1, selected: false },
-    { title: 'Regular', score: 2, selected: false },
-    { title: 'Malo', score: 3, selected: false }
+    { title: 'No relevante', score: 1, selected: false },
+    { title: 'Relevante', score: 2, selected: false },
+    { title: 'Muy relevante', score: 3, selected: false }
   ];
 
   constructor(

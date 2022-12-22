@@ -1,12 +1,19 @@
 <div class="set-12 list-head">
-  <input type="text" placeholder="Búscar tópicos..." (input)="applyFilter($event)">
+  <div class="set-10">
+    <input type="text" placeholder="Búscar tópicos..." (input)="applyFilter($event)">
+  </div>
+  <div class="set-2 txt-right">
+    <button type="button" mat-mini-fab color="warn" (click)="popAddDocumentTopic()">
+      <mat-icon>add_circle</mat-icon>
+    </button>
+  </div>
 </div>
 
 <div class="set-12" *ngIf="topics.length == 0">
   <div class="empty-list">
     <p><small>No se encontraron tópicos.</small></p>
     <p><small>Sé el primero en agregar un tópico.</small></p>
-    <button type="button" mat-raised-button color="accent">
+    <button type="button" mat-raised-button color="accent" (click)="popAddDocumentTopic()">
       <small>Agregar tópico</small>
     </button>
   </div>
@@ -19,7 +26,7 @@
         <small>{{topic?.title}}</small>
       </div>
       <div class="set-2">
-        <small>{{topic?.stats?.score}}</small>
+        <small>{{topic?.stats?.score || 0}}</small>
         <mat-icon>star_rate</mat-icon>
       </div>
     </div>

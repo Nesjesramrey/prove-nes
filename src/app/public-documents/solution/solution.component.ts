@@ -77,7 +77,9 @@ export class SolutionComponent implements OnInit {
       next: (reply: any) => {
         this.user = reply;
       },
-      complete: () => { }
+      complete: () => {
+        this.fetchVotes();
+      }
     });
 
     // *** load document
@@ -105,55 +107,6 @@ export class SolutionComponent implements OnInit {
       complete: () => {
         this.isDataAvailable = true;
       }
-    });
-
-    // *** load category
-    // this.layoutService.fetchSingleLayoutById({ _id: this.categoryID }).subscribe({
-    //   error: (error: any) => { },
-    //   next: (reply: any) => {
-    //     this.category = reply;
-    //   },
-    //   complete: () => { }
-    // });
-
-    // *** load sub category
-    // this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID }).subscribe({
-    //   error: (error: any) => { },
-    //   next: (reply: any) => {
-    //     this.subcategory = reply;
-    //   },
-    //   complete: () => { }
-    // });
-
-    // *** load topic
-    // this.topicService.fetchSingleTopicById({ _id: this.topicID }).subscribe({
-    //   error: (error: any) => { },
-    //   next: (reply: any) => {
-    //     this.topic = reply;
-    //     this.topic['shortTitle'] = this.getshortTitle(this.topic['title']);
-    //   },
-    //   complete: () => { }
-    // });
-
-    // *** load solution
-    // this.solutionService.fetchSingleSolutionById({ _id: this.solutionID }).subscribe({
-    //   error: (error: any) => { },
-    //   next: (reply: any) => {
-    //     this.solution = reply;
-    //     this.solution['shortTitle'] = this.getshortTitle(this.solution['title']);
-    //     this.stats = this.solution['stats'];
-    //   },
-    //   complete: () => { }
-    // });
-
-    // *** load votes
-    this.voteService.fetchVotesBySolutionID({ _id: this.solutionID }).subscribe({
-      error: (error: any) => { },
-      next: (reply: any) => {
-        this.votes = reply;
-        this.userVoted = this.checkUserVote(reply);
-      },
-      complete: () => { }
     });
 
     // *** load favourites
@@ -380,6 +333,20 @@ export class SolutionComponent implements OnInit {
     });
   }
 
+  fetchVotes() {
+    this.voteService.fetchVotesBySolutionID({ _id: this.solutionID }).subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        this.votes = reply.length;
+        this.userVoted = this.checkUserVote(reply);
+      },
+      complete: () => { }
+    });
+  }
+
+  getVoteStatus(event: any) {
+    this.fetchVotes();
+  }
 }
 
 export interface ITestimony {

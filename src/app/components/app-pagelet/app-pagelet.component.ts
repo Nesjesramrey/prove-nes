@@ -11,6 +11,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SearchService } from 'src/app/services/search.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { UserService } from 'src/app/services/user.service';
+import { SearchDialogComponent } from '../search-dialog/search-dialog.component';
 
 @Component({
   selector: '.app-pagelet',
@@ -97,7 +98,7 @@ export class AppPageletComponent implements OnInit {
         });
       }
     });
-    
+
     this.userService.onLogin.subscribe((data: any) => {
       // console.log('data: ', data);
       this.user = data;
@@ -229,5 +230,17 @@ export class AppPageletComponent implements OnInit {
   displayMobileMenu() {
     this.open = !this.open;
     this.openMenu.emit({ open: this.open });
+  }
+
+  popSearchDialog() {
+    const dialogRef = this.dialog.open<any>(SearchDialogComponent, {
+      width: '420px',
+      data: {
+        document_id: this.coverDocument['_id']
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => { });
   }
 }

@@ -119,5 +119,6 @@
 
 <!-- mobile -->
 <div class="set-12" *ngIf="isDataAvailable && isMobile">
-  <div class="public-document-mobile-solution-view" [document]="document" [solution]="solution" [user]="user"></div>
+  <div class="public-document-mobile-solution-view" [document]="document" [solution]="solution" [user]="user"
+    [userVoted]="userVoted" [votes]="votes" [allFavorites]="allFavorites" (solutionVoted)="getVoteStatus($event)"></div>
 </div>

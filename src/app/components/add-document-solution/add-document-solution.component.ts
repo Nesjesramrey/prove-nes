@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, HostBinding } from '@angular/core';
 import {
   MatDialog,
   MatDialogRef,
@@ -8,6 +8,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SolutionService } from 'src/app/services/solution.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-add-document-solution',
@@ -58,6 +59,8 @@ export class AddDocumentSolutionComponent implements OnInit {
       ]
     ]
   };
+  public isMobile: boolean = false;
+  @HostBinding('class') public class: string = '';
 
   constructor(
     public dialogRef: MatDialogRef<AddDocumentSolutionComponent>,
@@ -65,9 +68,12 @@ export class AddDocumentSolutionComponent implements OnInit {
     public formBuilder: FormBuilder,
     public solutionService: SolutionService,
     public utilityService: UtilityService,
-    @Inject(MAT_DIALOG_DATA) public dialogData: any
+    @Inject(MAT_DIALOG_DATA) public dialogData: any,
+    public deviceDetectorService: DeviceDetectorService
   ) {
     // console.log(this.dialogData);
+    this.isMobile = this.deviceDetectorService.isMobile();
+    if (this.isMobile) { this.class = 'fixmobile'; }
   }
 
   ngOnInit(): void {
