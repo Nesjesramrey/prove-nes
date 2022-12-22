@@ -34,6 +34,8 @@ import { CommunityMobileComponent } from './components/community-mobile/communit
 import { SpiderChartMobileComponent } from './components/spider-chart-mobile/spider-chart-mobile.component';
 import { CircleChartMobileComponent } from './components/circle-chart-mobile/circle-chart-mobile.component';
 import { LineChartMobileComponent } from './components/line-chart-mobile/line-chart-mobile.component';
+import { ProfileMobileComponent } from './profile-mobile/profile-mobile.component';
+import { FooterMobileComponent } from './components/footer-mobile/footer-mobile.component';
 
 
 @NgModule({
@@ -74,6 +76,8 @@ import { LineChartMobileComponent } from './components/line-chart-mobile/line-ch
     SpiderChartMobileComponent,
     CircleChartMobileComponent,
     LineChartMobileComponent, 
+    ProfileMobileComponent, 
+    FooterMobileComponent
   ],
 })
 export class HubComponentModule {}

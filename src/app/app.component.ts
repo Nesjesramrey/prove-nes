@@ -144,20 +144,19 @@ export class AppComponent implements OnInit {
   }
 
   onProfile() {
-    this.open = !this.open;
+    this.isProfile = !this.isProfile;
     setTimeout(() => {
       return this.angularFireAuth.signOut().then(() => {
         if (this.path == '/') {
           window.location.reload();
         } else {
-          this.router.navigateByUrl('/hub/documentos', {
+          
+          this.router.navigateByUrl('/hub/profile', {
             state: { status: 'reload' },
           });
-          this.isProfile = !this.isProfile;
-          this.open = !this.open;
         }
       });
-    }, 300);
+    }, 1000);
   }
   onSignOut() {
     this.open = !this.open;
