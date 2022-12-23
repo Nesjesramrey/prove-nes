@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
+import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
+
 
 @Component({
   selector: 'spider-chart-mobile',
@@ -7,48 +8,49 @@ import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
   styleUrls: ['./spider-chart-mobile.component.scss'],
 })
 export class SpiderChartMobileComponent implements OnInit {
-  // Radar
-  public radarChartOptions: ChartConfiguration['options'] = {
+  public spiderChartOptions: ChartConfiguration['options'] = {
     responsive: true,
-  };
-  public radarChartLabels: string[] = [
-    'Eating',
-    'Drinking',
-    'Sleeping',
-    'Designing',
-    'Coding',
-    'Cycling',
-    'Running',
+    scales: {
+      r: {
+        grid: {
+          circular: true,
+          // offset: 10,
+          // drawTicks: true,
+          // tickWidth: 10,
+          // borderWidth: 10,
+          // borderDash: [5, 5],
+          // drawBorder: true,
+          color: '#fff',
+          // borderColor: 'red',
+        },
+        beginAtZero: true,
+        suggestedMin: 0,
+        suggestedMax: 100,
+        ticks: {
+          display: false,
+          color: 'green'
+        },
+      },
+    },
+   }
+  // Radar
+  public spiderChartLabels:string[] = ['Designer', 'Developer', 'Tester', 'Clients', 'HR'];
+ 
+  public spiderChartData:any = [
+    {data: [20, 40, 15, 30, 12], label: 'Company A'},
+  
   ];
+  public spiderChartType: ChartType = 'radar';
 
-  public radarChartData: ChartData<'radar'> = {
-    labels: this.radarChartLabels,
-    datasets: [
-      { data: [65, 59, 90, 81, 56, 55, 40], label: 'Series A' },
-      { data: [28, 48, 40, 19, 96, 27, 100], label: 'Series B' },
-    ],
-  };
-  public radarChartType: ChartType = 'radar';
-
+ 
   // events
-  public chartClicked({
-    event,
-    active,
-  }: {
-    event: ChartEvent;
-    active: {}[];
-  }): void {
-    console.log(event, active);
+  public chartClicked(e:any):void {
+    console.log(e);
   }
-
-  public chartHovered({
-    event,
-    active,
-  }: {
-    event: ChartEvent;
-    active: {}[];
-  }): void {
-    console.log(event, active);
+ 
+  public chartHovered(e:any):void {
+    console.log(e);
+  
   }
 
   constructor() {}

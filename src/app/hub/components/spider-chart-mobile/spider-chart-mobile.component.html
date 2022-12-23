@@ -2,10 +2,12 @@
   <canvas
     id="canvas"
     baseChart
-    class="chart"
-    [data]="radarChartData"
-    [options]="radarChartOptions"
-    [type]="radarChartType"
+    [datasets]="spiderChartData"
+    [labels]="spiderChartLabels"
+    [type]="spiderChartType"
+    (chartHover)="chartHovered($event)"
+    (chartClick)="chartClicked($event)"
+    [legend]="false"
   >
     >
   </canvas>
