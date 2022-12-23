@@ -150,13 +150,12 @@ export class AppComponent implements OnInit {
         if (this.path == '/') {
           window.location.reload();
         } else {
-          
           this.router.navigateByUrl('/hub/profile', {
             state: { status: 'reload' },
           });
         }
       });
-    }, 1000);
+    }, 100);
   }
   onSignOut() {
     this.open = !this.open;

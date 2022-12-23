@@ -40,8 +40,6 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { NgChartsModule } from 'ng2-charts';
 import { DndModule } from 'ngx-drag-drop';
-import { NgCircleProgressModule } from 'ng-circle-progress';
- 
 
 // dev
 const firebaseConfig = {
@@ -91,8 +89,6 @@ const socketConfig: SocketIoConfig = {
     SocketIoModule.forRoot(socketConfig),
     AppMaterialModule,
     DndModule,
-    NgCircleProgressModule
-    
   ],
   providers: [
     { provide: HAMMER_GESTURE_CONFIG, useClass: LyHammerGestureConfig },
@@ -113,4 +109,4 @@ const socketConfig: SocketIoConfig = {
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
