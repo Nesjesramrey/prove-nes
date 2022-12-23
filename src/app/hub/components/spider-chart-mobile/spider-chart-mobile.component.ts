@@ -1,100 +1,57 @@
-import { ViewChild, Component, Input, OnInit } from '@angular/core';
-import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
+import { Component, Input, OnInit } from '@angular/core';
+import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
+
 @Component({
   selector: 'spider-chart-mobile',
   templateUrl: './spider-chart-mobile.component.html',
   styleUrls: ['./spider-chart-mobile.component.scss'],
 })
 export class SpiderChartMobileComponent implements OnInit {
-  @ViewChild('canvas') canvas: any;
-  public mychart: any;
-  public spiderChartOptions: ChartConfiguration['options'] = {
+  // Radar
+  public radarChartOptions: ChartConfiguration['options'] = {
     responsive: true,
-    plugins: {
-      title: {
-        display: false,
-        text: '',
-      },
-      legend: {
-        display: false,
-      },
-    },
-    datasets: {
-      radar: {
-        borderWidth: 1,
-        borderColor: '#54f093',
-        fill: true,
-        pointRadius: 5,
-        pointBackgroundColor: '#54f093',
-        backgroundColor: 'rgba(173, 255, 47, 0.4)',
-      },
-    },
-    scales: {
-      r: {
-        grid: {
-          circular: true,
-          // offset: 10,
-          // drawTicks: true,
-          // tickWidth: 10,
-          // borderWidth: 10,
-          // borderDash: [5, 5],
-          // drawBorder: true,
-          // color: '#fff',
-          // borderColor: 'red',
-        },
-        beginAtZero: true,
-        suggestedMin: 0,
-        suggestedMax: 100,
-        ticks: {
-          display: false,
-        },
-      },
-    },
   };
-  @Input() withBorder: boolean = true;
-  @Input() data: any[] = [];
-  public spiderData: ChartData<'radar'> = {
-    labels: [],
-    datasets: [{ data: [] }],
+  public radarChartLabels: string[] = [
+    'Eating',
+    'Drinking',
+    'Sleeping',
+    'Designing',
+    'Coding',
+    'Cycling',
+    'Running',
+  ];
+
+  public radarChartData: ChartData<'radar'> = {
+    labels: this.radarChartLabels,
+    datasets: [
+      { data: [65, 59, 90, 81, 56, 55, 40], label: 'Series A' },
+      { data: [28, 48, 40, 19, 96, 27, 100], label: 'Series B' },
+    ],
   };
-  public spiderChartType: ChartType = 'radar';
+  public radarChartType: ChartType = 'radar';
+
+  // events
+  public chartClicked({
+    event,
+    active,
+  }: {
+    event: ChartEvent;
+    active: {}[];
+  }): void {
+    console.log(event, active);
+  }
+
+  public chartHovered({
+    event,
+    active,
+  }: {
+    event: ChartEvent;
+    active: {}[];
+  }): void {
+    console.log(event, active);
+  }
 
   constructor() {}
 
-  ngOnInit(): void {
-    this.loadChart();
-  }
-
-  ngAfterContentInit() {
-    // var ctx = <HTMLCanvasElement>document.querySelector('#canvas');
-    // var context = ctx.getContext('2d')!;
-    // var gradientColor = context.createLinearGradient(0, 0, 0, 200);
-    // gradientColor.addColorStop(0, 'green');
-    // gradientColor.addColorStop(1, 'red');
-    // gradientColor.addColorStop(1, 'pink');
-    // gradientColor.addColorStop(1, 'orange');
-    // return gradientColor;
-  }
-
-  loadChart() {
-    if (this.data.length === 0) {
-      this.spiderData = {
-        labels: [],
-        datasets: [{ data: [] }],
-      };
-      return;
-    }
-    const labels: any = [];
-    const datasets: any = [];
-
-    this.data.map((item) => {
-      labels.push(item.category.name);
-      datasets.push(item.stats.score);
-    });
-
-    this.spiderData = {
-      labels,
-      datasets: [{ data: datasets }],
-    };
-  }
+  ngOnInit(): void {}
 }
