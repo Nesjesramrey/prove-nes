@@ -1,4 +1,5 @@
 :host {
+  width: 100%;
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -22,6 +23,7 @@
     background: #306EFF;
     z-index: 17;
     border-radius: 100%;
+    margin-left: 90%;
 
     mat-icon {
       color: #ffffff;
@@ -64,6 +66,10 @@
     &.fixedpos {
       top: -35px;
     }
+  }
+
+  button.tool:disabled {
+    background: #e5e5e5;
   }
 
   .fixedpos {
