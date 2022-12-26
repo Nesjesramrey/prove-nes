@@ -76,6 +76,7 @@ import { TestimonialSingleViewComponent } from './testimonial-single-view/testim
 import { TestimonialImageSliderComponent } from './testimonial-image-slider/testimonial-image-slider.component';
 import { VoteDialogComponent } from './vote-dialog/vote-dialog.component';
 import { SearchDialogComponent } from './search-dialog/search-dialog.component';
+import { AddDocumentTopicFullComponent } from './add-document-topic-full/add-document-topic-full.component';
 
 @NgModule({
   imports: [
@@ -155,7 +156,8 @@ import { SearchDialogComponent } from './search-dialog/search-dialog.component';
     TestimonialSingleViewComponent,
     TestimonialImageSliderComponent,
     VoteDialogComponent,
-    SearchDialogComponent
+    SearchDialogComponent,
+    AddDocumentTopicFullComponent
   ],
   exports: [
     AppPageletComponent,
@@ -213,7 +215,8 @@ import { SearchDialogComponent } from './search-dialog/search-dialog.component';
     TestimonialSingleViewComponent,
     TestimonialImageSliderComponent,
     VoteDialogComponent,
-    SearchDialogComponent
+    SearchDialogComponent,
+    AddDocumentTopicFullComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
@@ -245,7 +248,8 @@ import { SearchDialogComponent } from './search-dialog/search-dialog.component';
     TestimonialListComponent,
     TestimonialSingleViewComponent,
     VoteDialogComponent,
-    SearchDialogComponent
+    SearchDialogComponent,
+    AddDocumentTopicFullComponent
   ],
   providers: [],
 })

@@ -1,8 +1,14 @@
 <div class="set-12 dialog-head">
+  <div class="set-8">
+    <span>Testimonios</span>
+    <input type="file" #file (change)="onFileSelected($event)" multiple>
+    <!-- <div class="set 12 head-titles">
+      <span>Testimonios</span>
+      <div class="line"></div>
+    </div> -->
+  </div>
+
   <div class="set-4">
-    <button type="button" mat-mini-fab color="primary" (click)="killDialog()" [disabled]="submitted">
-      <mat-icon>cancel</mat-icon>
-    </button>
     <button type="button" mat-mini-fab color="primary" [disabled]="submitted" (click)="stepNext()"
       *ngIf="selectedIndex == 0">
       <mat-icon>add_circle</mat-icon>
@@ -11,16 +17,10 @@
       *ngIf="selectedIndex == 1">
       <mat-icon>arrow_back</mat-icon>
     </button>
+    <button type="button" mat-mini-fab color="primary" (click)="killDialog()" [disabled]="submitted">
+      <mat-icon>cancel</mat-icon>
+    </button>
   </div>
-
-  <div class="set-8">
-    <span>Testimonios</span>
-    <!-- <div class="set 12 head-titles">
-      <span>Testimonios</span>
-      <div class="line"></div>
-    </div> -->
-  </div>
-  <input type="file" #file (change)="onFileSelected($event)" multiple>
 </div>
 
 <div class="set-12 dialog-body">
