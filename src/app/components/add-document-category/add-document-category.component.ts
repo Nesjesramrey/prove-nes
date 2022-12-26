@@ -292,18 +292,9 @@ export class AddDocumentCategoryComponent implements OnInit {
         };
 
         Array.from(this.stepOneFormGroup.controls['files']['value']).forEach(
-          (file: any) => {
-            data['formData'].append('files', file);
-          }
-        );
-        data['formData'].append(
-          'description',
-          this.stepOneFormGroup.value.description
-        );
-        data['formData'].append(
-          'category',
-          this.stepTwoFormGroup.value.layout
-        );
+          (file: any) => { data['formData'].append('files', file); });
+        data['formData'].append('description', this.stepOneFormGroup.value.description);
+        data['formData'].append('category', this.stepTwoFormGroup.value.layout);
 
         this.layoutService.createNewSubLayout(data).subscribe((reply: any) => {
           // console.log(reply);
@@ -318,14 +309,8 @@ export class AddDocumentCategoryComponent implements OnInit {
       };
 
       Array.from(this.stepOneFormGroup.controls['files']['value']).forEach(
-        (file: any) => {
-          data['formData'].append('files', file);
-        }
-      );
-      data['formData'].append(
-        'description',
-        this.stepOneFormGroup.value.description
-      );
+        (file: any) => { data['formData'].append('files', file); });
+      data['formData'].append('description', this.stepOneFormGroup.value.description);
       data['formData'].append('category', this.stepTwoFormGroup.value.layout);
 
       this.layoutService.createNewLayoutOnly(data).subscribe((reply: any) => {

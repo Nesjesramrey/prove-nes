@@ -62,6 +62,7 @@ export class PublicDocumentMobileRadarChartComponent implements OnInit {
     if (this.document != null) {
       this.document['layouts'].filter((x: any) => {
         this.radarChartLabels.push(x['category']['name']);
+        if (x['stats'] == null) { x['stats'] = { score: 0 } };
         this.radarChartData['datasets'][0]['data'].push(x['stats']['score']);
       });
     }

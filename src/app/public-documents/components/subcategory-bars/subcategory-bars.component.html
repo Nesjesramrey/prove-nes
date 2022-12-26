@@ -2,7 +2,7 @@
   <div class="featured-users-circles"></div>
 </div>
 
-<div class="set-12 bars">
+<div class="set-12 bars" *ngIf="layouts.length != 0">
   <div class="set-12 inner-bar" *ngFor="let layout of layouts">
     <!-- <button type="button" class="linker" matTooltip="Abrir categoría" matTooltipClass="tooltip"
       matTooltipPosition="left" *ngIf="layoutSelected == layout._id && layoutSelected != ''"
@@ -27,4 +27,8 @@
       <small>{{ layout.category.name }}</small>
     </button>
   </div>
+</div>
+
+<div class="set-12 empty-bars" *ngIf="layouts.length == 0">
+  No hay categorías disponibles
 </div>

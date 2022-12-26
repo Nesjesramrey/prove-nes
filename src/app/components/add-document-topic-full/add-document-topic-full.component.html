@@ -4,14 +4,16 @@
 
 <div class="set-12" *ngIf="isDataAvailable">
   <div class="set-12 dialog-head">
-    <div class="set-10">Agregar tópico</div>
+    <div class="set-10">
+      <span>Agregar tópico</span>
+      <input type="file" #file (change)="onFileSelected($event)" multiple>
+    </div>
 
     <div class="set-2 txt-right">
       <button type="button" mat-mini-fab color="primary" (click)="killDialog()" [disabled]="submitted">
         <mat-icon>cancel</mat-icon>
       </button>
     </div>
-    <input type="file" #file (change)="onFileSelected($event)" multiple>
   </div>
 
   <div class="set-12 dialog-body">

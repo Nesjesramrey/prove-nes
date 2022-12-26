@@ -109,4 +109,15 @@
       }
     }
   }
+
+  .empty-bars {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #71f5ad;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14pt;
+  }
 }
