@@ -350,7 +350,7 @@ export class TopicComponent implements OnInit {
   }
 
   popAddCommentsDialog() {
-    let coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.topic['coverage'][0] });
+    let coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.topic['coverage'][0]['_id'] });
     if (coverage.length == 0) {
       this.utilityService.openErrorSnackBar('Selecciona una cobertura.');
       return;

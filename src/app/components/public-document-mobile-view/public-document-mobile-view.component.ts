@@ -19,7 +19,9 @@ export class PublicDocumentMobileViewComponent implements OnInit {
     public dialog: MatDialog
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    // console.log(this.document);
+  }
 
   getCoverageMenuStatus(data: any) {
     this.open = data['open'];

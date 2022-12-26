@@ -199,6 +199,10 @@ export class SubcategoryComponent implements OnInit {
       }
     });
   }
+
+  getTopicStatus(event: any) {
+    // console.log(event);
+  }
 }
 
 export interface DataTable {

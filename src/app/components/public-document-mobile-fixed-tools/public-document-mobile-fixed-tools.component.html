@@ -1,10 +1,12 @@
 <div class="set-12">
   <button type="button" class="tool" [class.fixedpos]="open">
-    <mat-icon>warning</mat-icon>
+    <!-- <mat-icon>warning</mat-icon> -->
+    <span>Solución</span>
   </button>
 
-  <button type="button" class="tool" [class.fixedpos]="open">
-    <mat-icon>insights</mat-icon>
+  <button type="button" class="tool" [class.fixedpos]="open" (click)="popAddTopicDialog()">
+    <!-- <mat-icon>insights</mat-icon> -->
+    <span>Tópico</span>
   </button>
 </div>
 
