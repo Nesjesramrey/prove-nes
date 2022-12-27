@@ -80,13 +80,13 @@
 
     <div class="set-12 innernav">
       <div class="set-12 innerbtn">
-        <button type="button">
+        <button type="button" (click)="linkMe('home')">
           <span>Quienes somos</span>
         </button>
-        <button type="button" (click)="open = !open">
+        <button type="button" (click)="linkMe('home')">
           <span>Mision/Video</span>
         </button>
-        <button type="button">
+        <button type="button" (click)="linkMe('home')">
           <span>Pensamiento colectivo</span>
         </button>
       </div>
@@ -106,13 +106,12 @@
         type="button"
         (click)="open = !open; isProfile = !isProfile"
       >
-        <mat-icon color="accent">keyboard_arrow_left</mat-icon>
+        <mat-icon color="accent" class="arrow-left">keyboard_arrow_left</mat-icon>
       </button>
     </div>
     <div class="topnav-profile">
       <div>Perfil</div>
     </div>
-
     <div class="set-6 txt-right" (click)="isProfile = !isProfile">
       <button type="button">
         <mat-icon color="accent">close</mat-icon>
@@ -122,19 +121,19 @@
 
   <div class="set-12 innernav">
     <div class="set-12 innerbtn">
-      <button type="button" (click)="onProfile()">
+      <button type="button" (click)="linkMe('profile')">
         <span>Mi perfil</span>
       </button>
       <button type="button">
         <span>Asociaciones</span>
       </button>
-      <button type="button" (click)="onProfile()">
+      <button type="button" >
         <span>Documentos</span>
       </button>
-      <button type="button" (click)="onProfile()">
+      <button type="button" >
         <span>Dashboard</span>
       </button>
-      <button type="button" (click)="onProfile()">
+      <button type="button" >
         <span>Configuracion</span>
       </button>
       <button type="button" (click)="onSignOut()">

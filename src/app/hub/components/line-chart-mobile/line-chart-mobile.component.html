@@ -1,7 +1,7 @@
 <div class="card-line-chart mt-1">
   <h3>Top 5 de soluciones más votadas</h3>
-  <div class="topic-progress mt-1">
-    <span>Deporte todos los dias</span><span>1</span>
+  <div class="topic-progress mt-1"  *ngFor="let solution of solutions">
+    <span>{{solution.title}}</span>
     <br />
     <mat-progress-bar
       class="mt-1"
@@ -10,15 +10,7 @@
       value="40"
     ></mat-progress-bar>
   </div>
-  <div class="topic-progress mt-1">
-    <span>Construir escuelas en 2 años</span><span>1</span>
-    <br />
-    <mat-progress-bar
-      class="mt-1"
-      mode="determinate"
-      value="40"
-    ></mat-progress-bar>
-  </div>
+ 
   <div class="vote-button-container mt-3">
     <button type="button" mat-raised-button color="accent">Vota</button>
   </div>

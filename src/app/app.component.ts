@@ -143,20 +143,45 @@ export class AppComponent implements OnInit {
     this.isProfile = data['isProfile'];
   }
 
-  onProfile() {
-    this.isProfile = !this.isProfile;
+  linkMe(url: string) {
+    switch (url) {
+      case 'home':
+        this.open = !this.open;
+        this.router.navigateByUrl('/');
+        break;
+
+      case 'login':
+        this.router.navigateByUrl('/hub/ingresar');
+        break;
+
+      case 'join':
+        this.router.navigateByUrl('/hub/registro');
+        break;
+
+      case 'profile':
+        this.isProfile = !this.isProfile;
+        this.router.navigateByUrl('/hub/' + this.user['_id']);
+        break;
+
+      case 'notifications':
+        this.router.navigateByUrl('/hub/notificaciones');
+        break;
+
+      case 'userList':
+        this.router.navigateByUrl('/admin/usuarios');
+        break;
+    }
+  }
+
+  onHome() {
+    this.open = !this.open;
     setTimeout(() => {
       return this.angularFireAuth.signOut().then(() => {
-        if (this.path == '/') {
-          window.location.reload();
-        } else {
-          this.router.navigateByUrl('/hub/profile', {
-            state: { status: 'reload' },
-          });
-        }
+        this.router.navigateByUrl('/')
       });
     }, 100);
   }
+
   onSignOut() {
     this.open = !this.open;
     setTimeout(() => {
