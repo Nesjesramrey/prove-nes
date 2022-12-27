@@ -77,6 +77,7 @@ import { TestimonialImageSliderComponent } from './testimonial-image-slider/test
 import { VoteDialogComponent } from './vote-dialog/vote-dialog.component';
 import { SearchDialogComponent } from './search-dialog/search-dialog.component';
 import { AddDocumentTopicFullComponent } from './add-document-topic-full/add-document-topic-full.component';
+import { SocialShareDialogComponent } from './social-share-dialog/social-share-dialog.component';
 
 @NgModule({
   imports: [
@@ -157,7 +158,8 @@ import { AddDocumentTopicFullComponent } from './add-document-topic-full/add-doc
     TestimonialImageSliderComponent,
     VoteDialogComponent,
     SearchDialogComponent,
-    AddDocumentTopicFullComponent
+    AddDocumentTopicFullComponent,
+    SocialShareDialogComponent
   ],
   exports: [
     AppPageletComponent,
@@ -216,7 +218,8 @@ import { AddDocumentTopicFullComponent } from './add-document-topic-full/add-doc
     TestimonialImageSliderComponent,
     VoteDialogComponent,
     SearchDialogComponent,
-    AddDocumentTopicFullComponent
+    AddDocumentTopicFullComponent,
+    SocialShareDialogComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
@@ -249,7 +252,8 @@ import { AddDocumentTopicFullComponent } from './add-document-topic-full/add-doc
     TestimonialSingleViewComponent,
     VoteDialogComponent,
     SearchDialogComponent,
-    AddDocumentTopicFullComponent
+    AddDocumentTopicFullComponent,
+    SocialShareDialogComponent
   ],
   providers: [],
 })

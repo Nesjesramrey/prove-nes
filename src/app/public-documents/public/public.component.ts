@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SolutionService } from 'src/app/services/solution.service';
 import { LayoutService } from 'src/app/services/layout.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: '.public-page',
@@ -28,6 +29,7 @@ export class PublicComponent implements OnInit {
   public allDocumentSolutions: any[] = [];
   public isMobile: boolean = false;
   @HostBinding('class') public class: string = '';
+  public user: any = null;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -35,7 +37,8 @@ export class PublicComponent implements OnInit {
     public dialog: MatDialog,
     public solutionService: SolutionService,
     public layoutService: LayoutService,
-    public deviceDetectorService: DeviceDetectorService
+    public deviceDetectorService: DeviceDetectorService,
+    public userService: UserService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.isMobile = this.deviceDetectorService.isMobile();
@@ -44,6 +47,15 @@ export class PublicComponent implements OnInit {
 
   ngOnInit(): void {
     if (history.state.status != undefined) { window.location.reload(); };
+
+    // *** load user
+    this.user = this.userService.fetchFireUser().subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        this.user = reply;
+      },
+      complete: () => { }
+    });
 
     // *** load document
     this.documentService.fetchSingleDocumentById({ _id: this.documentID }).subscribe({
@@ -84,32 +96,10 @@ export class PublicComponent implements OnInit {
           });
         });
       },
-      complete: () => { 
+      complete: () => {
         this.isDataAvailable = true;
       }
     });
-
-    // *** load top solutions
-    // this.solutionService.getTopSolutionsByDocument(this.documentID).subscribe({
-    //   error: (error: any) => { },
-    //   next: (reply: any) => {
-    //     this.topSolutions = reply;
-    //     this.topSolutions.filter((x: any) => {
-    //       this.topSolutionsIds.push(x['_id']);
-    //     });
-    //   },
-    //   complete: () => { }
-    // });
-
-    // *** yoorco request for chart data
-    // this.layoutService.getTopLayoutByDocument(this.documentID).subscribe({
-    //   error: (error: any) => { },
-    //   next: (reply: any) => {
-    //     this.topLayouts = reply;
-    //     console.log('topLayouts: ', this.topLayouts);
-    //   },
-    //   complete: () => { }
-    // });
   }
 
   popImageViewer() {

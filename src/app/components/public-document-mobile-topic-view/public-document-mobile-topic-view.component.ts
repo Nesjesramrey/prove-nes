@@ -54,6 +54,7 @@ export class PublicDocumentMobileTopicViewComponent implements OnInit {
     if (favorite.length != 0) {
       this.isFavorite = true;
     } else { this.isFavorite = false; }
+    // console.log(this.topic);
   }
 
   linkMe(url: string) {
