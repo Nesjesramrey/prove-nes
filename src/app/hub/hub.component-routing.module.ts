@@ -11,6 +11,8 @@ import { SignUpMobileComponent } from './sign-up-mobile/sign-up-mobile.component
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { SingleUserComponent } from './single-user/single-user.component';
 import { UserNotificationsComponent } from './user-notifications/user-notifications.component';
+import { UserDocumentsComponent } from './user-documents/user-documents.component';
+import { ProfileMobileComponent } from './profile-mobile/profile-mobile.component';
 
 const routes: Routes = [
   {
@@ -53,7 +55,18 @@ const routes: Routes = [
         component: AppConfigurationComponent,
         canActivate: [CanActivateLoggedInGuard],
       },
+      {
+        path: 'documentos',
+        component: UserDocumentsComponent,
+        canActivate: [CanActivateLoggedInGuard],
+      },
+      {
+        path: 'profile',
+        component: ProfileMobileComponent,
+        canActivate: [CanActivateLoggedInGuard],
+      },
       { path: ':userID', component: SingleUserComponent, canActivate: [] },
+      
     ],
   },
 ];

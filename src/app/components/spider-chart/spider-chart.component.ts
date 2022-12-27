@@ -14,11 +14,11 @@ export class SpiderChartComponent implements OnInit {
     plugins: {
       title: {
         display: false,
-        text: ''
+        text: '',
       },
       legend: {
-        display: false
-      }
+        display: false,
+      },
     },
     datasets: {
       radar: {
@@ -60,7 +60,7 @@ export class SpiderChartComponent implements OnInit {
   };
   public spiderChartType: ChartType = 'radar';
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     this.loadChart();

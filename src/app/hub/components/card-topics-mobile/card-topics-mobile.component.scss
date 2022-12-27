@@ -1,0 +1,62 @@
+.topic-card {
+  padding: 10px;
+  background: #ffffff;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.24);
+  border-radius: 5px;
+  width: 330px;
+  height: 110px;
+}
+
+.topic-header {
+  display: flex;
+}
+
+.topic-title {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  width: 232px;
+  height: 20px;
+  text-align: left;
+}
+
+.topic-viewmore {
+  width: 59px;
+  height: 17px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  /* identical to box height */
+  text-decoration-line: underline;
+}
+
+.topic-body {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  margin-left: 5px;
+}
+
+.topic-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.topic-icons {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 18px;
+}
+
+.topic-footer {
+  margin-bottom: 5px;
+}

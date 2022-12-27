@@ -1,0 +1,26 @@
+.people{
+    display: flex;
+    flex-direction: row;
+}
+
+.img-people {
+    width: 32px;
+    height: 32px;
+  }
+
+.about{
+    width: 200px;
+}
+
+.name{
+    font-size: 14px;
+    padding: 3px;
+}
+.status{
+    font-size: 12px;
+    padding: 3px;
+}
+
+.name, .status{
+    width: 200px;
+}

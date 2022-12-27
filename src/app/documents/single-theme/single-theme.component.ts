@@ -100,7 +100,6 @@ export class SingleThemeComponent implements OnInit {
 
   ngOnInit(): void {
     this.actionControlActivityList = this.utilityService.actionControlActivityList;
-
     let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
     let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID, });
     let subcategory: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.subcategoryID, });
@@ -123,6 +122,7 @@ export class SingleThemeComponent implements OnInit {
 
       this.sliderImages = this.topic['images'];
       this.solutions = this.topic['solutions'];
+      console.log(this.solutions)
       this.dataSource = new MatTableDataSource(this.solutions);
       this.user = reply[4];
       this.user['activityName'] = this.user['activities'][0]['value'];

@@ -26,6 +26,17 @@ import { MapBoxComponent } from './components/map-box/map-box.component';
 import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
 import { SignInMobileComponent } from './sign-in-mobile/sign-in-mobile.component';
 import { SignUpMobileComponent } from './sign-up-mobile/sign-up-mobile.component';
+import { UserDocumentsComponent } from './user-documents/user-documents.component';
+import { TabsMobileComponent } from './components/tabs-mobile/tabs-mobile.component';
+import { SearchInputMobileComponent } from './components/search-input-mobile/search-input-mobile.component';
+import { CardTopicsMobileComponent } from './components/card-topics-mobile/card-topics-mobile.component';
+import { CommunityMobileComponent } from './components/community-mobile/community-mobile.component';
+import { SpiderChartMobileComponent } from './components/spider-chart-mobile/spider-chart-mobile.component';
+import { CircleChartMobileComponent } from './components/circle-chart-mobile/circle-chart-mobile.component';
+import { LineChartMobileComponent } from './components/line-chart-mobile/line-chart-mobile.component';
+import { ProfileMobileComponent } from './profile-mobile/profile-mobile.component';
+import { FooterMobileComponent } from './components/footer-mobile/footer-mobile.component';
+
 
 @NgModule({
   imports: [
@@ -45,6 +56,7 @@ import { SignUpMobileComponent } from './sign-up-mobile/sign-up-mobile.component
     LyDialogModule,
     IvyCarouselModule,
     NgChartsModule,
+  
   ],
   declarations: [
     HubComponent,
@@ -56,6 +68,16 @@ import { SignUpMobileComponent } from './sign-up-mobile/sign-up-mobile.component
     PasswordRecoveryComponent,
     SignInMobileComponent,
     SignUpMobileComponent,
+    UserDocumentsComponent,
+    TabsMobileComponent,
+    SearchInputMobileComponent,
+    CardTopicsMobileComponent,
+    CommunityMobileComponent,
+    SpiderChartMobileComponent,
+    CircleChartMobileComponent,
+    LineChartMobileComponent, 
+    ProfileMobileComponent, 
+    FooterMobileComponent
   ],
 })
 export class HubComponentModule {}

@@ -1,0 +1,15 @@
+<div class="mt-1">
+  <canvas
+    id="canvas"
+    baseChart
+    [options]="spiderChartOptions"
+    [datasets]="spiderChartData"
+    [labels]="spiderChartLabels"
+    [type]="spiderChartType"
+    (chartHover)="chartHovered($event)"
+    (chartClick)="chartClicked($event)"
+    [legend]="false"
+  >
+    >
+  </canvas>
+</div>
