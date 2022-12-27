@@ -9,6 +9,7 @@ import { DescriptionViewerComponent } from 'src/app/components/description-viewe
   styleUrls: ['./public-document-mobile-view.component.scss']
 })
 export class PublicDocumentMobileViewComponent implements OnInit {
+  @Input('user') public user: any = null;
   @Input('document') public document: any = null;
   @Input('topSolutions') public topSolutions: any = null;
   @Input('storedSolutions') public storedSolutions: any = null;
@@ -19,7 +20,7 @@ export class PublicDocumentMobileViewComponent implements OnInit {
     public dialog: MatDialog
   ) { }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     // console.log(this.document);
   }
 
