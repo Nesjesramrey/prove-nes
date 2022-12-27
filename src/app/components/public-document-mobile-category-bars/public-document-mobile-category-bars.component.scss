@@ -5,7 +5,7 @@
   position: relative;
   float: left;
   width: 100%;
-  padding-bottom: 30px;
+  padding-bottom: 20px;
 
   .containercategory {
     margin: 0px 0px 0px 2rem;
@@ -60,12 +60,12 @@
 
     .grayback {
       height: 44px;
-      // width: 10%;
+      width: calc(100% - 20px);
       background: rgba(255, 255, 255, 0.5);
       position: absolute;
       top: 0;
       left: 0;
-      z-index: 7;
+      z-index: 4;
       border-top-right-radius: 50px;
       border-bottom-right-radius: 50px;
       display: flex;
@@ -75,25 +75,27 @@
     }
 
     .gradbar {
-      height: 24px;
+      height: 9px;
       max-width: calc(100% - 70px);
       width: calc(43% - 20px);
       background: linear-gradient(180deg, #71F5AD 0%, #0EAA70 100%);
       border-radius: 50px;
-      margin: 0 0 0 20px;
+      margin: 20px 0 0 20px;
       position: relative;
-      z-index: 4;
+      z-index: 7;
     }
 
     .catname {
       // width: calc(40% - 70px);
       position: absolute;
+      top: 5px;
+      left: 0;
       display: flex;
       align-items: center;
-      margin-left: 35px;
+      margin-left: 20px;
       z-index: 9;
       font-weight: bold;
-      color: #131313;
+      color: #ffffff;
       transition: all .2s linear;
     }
 
@@ -138,6 +140,10 @@
         color: #ffffff;
       }
     }
+  }
+
+  .inner-bar:last-child {
+    margin-bottom: 0;
   }
 
   .placebtn {

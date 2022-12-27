@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatList, MatListOption } from '@angular/material/list';
+import { DescriptionViewerComponent } from 'src/app/components/description-viewer/description-viewer.component';
 
 @Component({
   selector: '.public-document-mobile-view',
@@ -9,13 +11,16 @@ import { MatList, MatListOption } from '@angular/material/list';
 export class PublicDocumentMobileViewComponent implements OnInit {
   @Input('document') public document: any = null;
   @Input('topSolutions') public topSolutions: any = null;
+  @Input('storedSolutions') public storedSolutions: any = null;
   public open: boolean = false;
   @ViewChild('states') public states!: any;
 
-  constructor() { }
+  constructor(
+    public dialog: MatDialog
+  ) { }
 
-  ngOnInit(): void {
-    // console.log(this.topSolutions);
+  ngOnInit(): void { 
+    // console.log(this.document);
   }
 
   getCoverageMenuStatus(data: any) {
@@ -24,7 +29,7 @@ export class PublicDocumentMobileViewComponent implements OnInit {
 
   displayCoverageMenu() {
     this.open = !this.open;
-    this.states['selectedOptions']['selected'].filter((x: any) => { x['value'] = ''; });
+    // this.states['selectedOptions']['selected'].filter((x: any) => { x['value'] = ''; });
   }
 
   onCoverageSelected(option: MatListOption[]) {
@@ -32,5 +37,37 @@ export class PublicDocumentMobileViewComponent implements OnInit {
     let coverage: any = [];
     option.filter((x: any) => { selection.push(x['value']); });
     coverage = this.document['coverage'].filter((x: any) => { return selection.includes(x['_id']); });
+  }
+
+  openModalDescription() {
+    const dialogRef = this.dialog.open<DescriptionViewerComponent>(
+      DescriptionViewerComponent, {
+      data: {
+        title: this.document['title'],
+        text: this.document['description']
+      },
+      disableClose: true,
+      panelClass: 'viewer-dialog',
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  onFilterSolutions() {
+    let ids: any[] = [];
+    this.states['selectedOptions']['selected'].filter((x: any) => { ids.push(x['value']); });
+
+    this.topSolutions = [];
+    this.storedSolutions.filter((x: any) => {
+      if (x['stats'] == null) { x['stats'] = { score: 0 } }
+
+      x['coverage'].filter((c: any) => {
+        if (ids.includes(c['_id'])) { this.topSolutions.push(x); }
+      });
+    });
+
+    this.displayCoverageMenu();
   }
 }

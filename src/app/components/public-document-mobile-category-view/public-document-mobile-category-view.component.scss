@@ -46,7 +46,7 @@
         margin: 0;
       }
 
-      h3 {
+      p.title {
         margin-bottom: 20px;
       }
 
@@ -55,6 +55,17 @@
         font-size: 9pt;
         margin-top: 20px;
         text-decoration: underline;
+      }
+    }
+
+    .crumbs-menu {
+      position: absolute;
+      z-index: 7;
+      top: 10px;
+      right: 10px;
+
+      mat-icon {
+        color: #71F5AD;
       }
     }
   }
@@ -68,6 +79,7 @@
       width: 90%;
       margin: 0 5%;
       text-align: center;
+      zoom: 0.7;
     }
 
     .image-box {
@@ -110,5 +122,53 @@
         color: #FF6D00;
       }
     }
+  }
+
+  .coverage-menu {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    background: white;
+    z-index: 101;
+    transition: all .2s linear;
+    padding-top: 20px;
+
+    .menuhead {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+
+      .set-10 {
+        padding-left: 20px;
+      }
+
+      .set-2 {
+        text-align: right;
+        padding-right: 10px;
+      }
+    }
+
+    .ctrls {
+      margin-top: 20px;
+      padding: 0 20px;
+      text-align: right;
+    }
+  }
+
+  .menuopen {
+    left: 0 !important;
+  }
+
+  ::ng-deep .mat-list-base .mat-list-item .mat-list-item-content-reverse,
+  .mat-list-base .mat-list-option .mat-list-item-content-reverse {
+    padding: 0 20px !important;
+  }
+
+  ::ng-deep .mat-list-base .mat-list-item,
+  .mat-list-base .mat-list-option {
+    height: auto !important;
+    padding: 5px 0 !important;
   }
 }

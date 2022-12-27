@@ -1,0 +1,52 @@
+:host {
+  .dialog-head {
+    display: flex;
+    align-items: center;
+
+    * {
+      margin: 0;
+    }
+
+    .set-3 {
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        mat-icon {
+          font-size: 17pt;
+        }
+      }
+    }
+  }
+
+  .dialog-body {
+    margin-top: 30px;
+
+    .btn-hldr {
+      margin-bottom: 10px;
+    }
+
+    .btn-hldr:last-child {
+      margin-bottom: 0;
+    }
+
+    button {
+      width: 100%;
+      background: #E1F2EC;
+      padding: 15px;
+      border-radius: 5px;
+      font-size: 13pt;
+      font-weight: bold;
+      box-shadow: 0px 1px 3px rgb(0 0 0 / 25%) !important;
+      transition: all .2s linear;
+    }
+
+    .selected {
+      background: linear-gradient(180deg, #71F5AD 0%, #0EAA70 100%) !important;
+    }
+  }
+}

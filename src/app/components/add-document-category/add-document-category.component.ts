@@ -87,7 +87,6 @@ export class AddDocumentCategoryComponent implements OnInit {
     public formBuilder: FormBuilder,
     public layoutService: LayoutService,
     public dialog: MatDialog,
-    public utilityservice: UtilityService
   ) {
     // console.log(this.dialogData);
     this.dialogData['document']['layouts'].filter((x: any) => {
@@ -187,7 +186,6 @@ export class AddDocumentCategoryComponent implements OnInit {
 
     this.auto.closePanel();
     this.categoryCtrl.disable();
-    console.log(this.newCategoryName);
   }
 
   categorySelected(event: MatAutocompleteSelectedEvent): void {
@@ -216,26 +214,40 @@ export class AddDocumentCategoryComponent implements OnInit {
     this.categoryCtrl.setValue(null);
   }
 
-  onCreateCategory(form: FormGroup) {
-    let data: any = {
-      name: this.addCategoryFormGroup.value.category,
-    };
+  onCreateCategory() {
+    // let data: any = {
+    //   name: this.addCategoryFormGroup.value.category,
+    // };
 
-    // console.log({ category: this.addCategoryFormGroup.value.category });
+    // this.utilityService.createNewCategory(data).subscribe((reply: any) => {
+    //   if (reply['status'] == false) {
+    //     this.utilityService.openErrorSnackBar(reply['error']);
+    //     return;
+    //   }
+    //   this.utilityService.openSuccessSnackBar(reply['message']);
+    //   this.categories.push(reply['clasification']);
+    //   this.categoriesString.push(reply['clasification']['name']);
+    //   this.setFilteredCategories();
+    //   this.addCategoryFormGroup.reset();
+    //   this.new_category = false;
+    // });
+    this.utilityService.createNewCategory({ name: this.newCategoryName }).subscribe({
+      error: (error: any) => {
+        this.utilityService.openErrorSnackBar(this.utilityService.errorOops);
+      },
+      next: (reply: any) => {
+        this.utilityService.openSuccessSnackBar(this.utilityService.saveSuccess);
+        this.categories.push(reply);
+        this.layout = [];
+        this.layout.push(reply['_id']);
+        this.categoriesString.push(reply['name']);
+        this.selectedCategories = [];
+        this.selectedCategories.push(reply['name']);
 
-    this.utilityService.createNewCategory(data).subscribe((reply: any) => {
-      // console.log(reply);
-      if (reply['status'] == false) {
-        this.utilityService.openErrorSnackBar(reply['error']);
-        return;
-      }
-      // console.log({ reply: reply });
-      this.utilityService.openSuccessSnackBar(reply['message']);
-      this.categories.push(reply['clasification']);
-      this.categoriesString.push(reply['clasification']['name']);
-      this.setFilteredCategories();
-      this.addCategoryFormGroup.reset();
-      this.new_category = false;
+        this.stepTwoFormGroup.patchValue({ layout: this.layout });
+        this.setFilteredCategories();
+      },
+      complete: () => { }
     });
   }
 
@@ -253,7 +265,7 @@ export class AddDocumentCategoryComponent implements OnInit {
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
         // console.log(reply);
-        this.utilityservice.openSuccessSnackBar('¡Se agrego correctamente!');
+        this.utilityService.openSuccessSnackBar('¡Se agrego correctamente!');
 
         this.categories.push(reply);
         this.layout = [];
@@ -280,18 +292,9 @@ export class AddDocumentCategoryComponent implements OnInit {
         };
 
         Array.from(this.stepOneFormGroup.controls['files']['value']).forEach(
-          (file: any) => {
-            data['formData'].append('files', file);
-          }
-        );
-        data['formData'].append(
-          'description',
-          this.stepOneFormGroup.value.description
-        );
-        data['formData'].append(
-          'category',
-          this.stepTwoFormGroup.value.layout
-        );
+          (file: any) => { data['formData'].append('files', file); });
+        data['formData'].append('description', this.stepOneFormGroup.value.description);
+        data['formData'].append('category', this.stepTwoFormGroup.value.layout);
 
         this.layoutService.createNewSubLayout(data).subscribe((reply: any) => {
           // console.log(reply);
@@ -306,14 +309,8 @@ export class AddDocumentCategoryComponent implements OnInit {
       };
 
       Array.from(this.stepOneFormGroup.controls['files']['value']).forEach(
-        (file: any) => {
-          data['formData'].append('files', file);
-        }
-      );
-      data['formData'].append(
-        'description',
-        this.stepOneFormGroup.value.description
-      );
+        (file: any) => { data['formData'].append('files', file); });
+      data['formData'].append('description', this.stepOneFormGroup.value.description);
       data['formData'].append('category', this.stepTwoFormGroup.value.layout);
 
       this.layoutService.createNewLayoutOnly(data).subscribe((reply: any) => {

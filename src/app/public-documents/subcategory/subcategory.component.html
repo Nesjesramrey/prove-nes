@@ -2,7 +2,8 @@
   <mat-spinner></mat-spinner>
 </div>
 
-<div class="set-12" *ngIf="isDataAvailable">
+<!-- desktop -->
+<div class="set-12" *ngIf="isDataAvailable && !isMobile">
   <div class="set-12">
     <breadcrumbs-component>
       <li>Documentos</li>
@@ -200,4 +201,10 @@
       </mat-card>
     </div>
   </div>
+</div>
+
+<!-- mobile -->
+<div class="set-12" *ngIf="isDataAvailable && isMobile">
+  <div class="public-document-mobile-subcategory-view" [document]="document" [category]="subcategory"></div>
+  <div class="public-document-mobile-fixed-tools" (topicAdded)="getTopicStatus($event)"></div>
 </div>

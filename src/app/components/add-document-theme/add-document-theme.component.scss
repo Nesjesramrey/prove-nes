@@ -36,10 +36,6 @@
     padding: 10px !important;
   }
 
-  // ::ng-deep .angular-editor-textarea {
-  //   resize: none !important;
-  // }
-
   ::ng-deep .angular-editor .angular-editor-wrapper .angular-editor-textarea {
     background: transparent !important;
     margin: 0 !important;
@@ -152,6 +148,10 @@
     }
   }
 
+  .coverage-name {
+    margin-bottom: 20px;
+  }
+
   .loading {
     mat-spinner {
       position: absolute;
@@ -160,4 +160,9 @@
       transform: translate(-50%, -50%);
     }
   }
+}
+
+:host(.fixmobile) {
+  margin: 0 !important;
+  width: 100%;
 }

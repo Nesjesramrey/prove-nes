@@ -8,7 +8,10 @@ import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 })
 export class PublicDocumentMobileRadarChartComponent implements OnInit {
   @Input('document') public document: any = null;
-  public topics: any[] = [];
+  @Input('layout') public layout: any = null;
+  @Input('isLayout') public isLayout: boolean = false;
+  @Input('isSubLayout') public isSubLayout: boolean = false;
+  @Input('topics') public topics: any[] = [];
   public radarChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     plugins: {
@@ -33,15 +36,7 @@ export class PublicDocumentMobileRadarChartComponent implements OnInit {
     scales: {
       r: {
         grid: {
-          circular: true,
-          // offset: 10,
-          // drawTicks: true,
-          // tickWidth: 10,
-          // borderWidth: 10,
-          // borderDash: [5, 5],
-          // drawBorder: true,
-          // color: '#fff',
-          // borderColor: 'red',
+          circular: true
         },
         beginAtZero: true,
         suggestedMin: 0,
@@ -64,10 +59,29 @@ export class PublicDocumentMobileRadarChartComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.document['layouts'].filter((x: any) => {
-      this.radarChartLabels.push(x['category']['name']);
-      this.radarChartData['datasets'][0]['data'].push(x['stats']['score']);
-    });
+    if (this.document != null) {
+      this.document['layouts'].filter((x: any) => {
+        this.radarChartLabels.push(x['category']['name']);
+        if (x['stats'] == null) { x['stats'] = { score: 0 } };
+        this.radarChartData['datasets'][0]['data'].push(x['stats']['score']);
+      });
+    }
+
+    if (this.isLayout) {
+      this.layout['subLayouts'].filter((x: any) => {
+        this.radarChartLabels.push(x['category']['name']);
+        this.radarChartData['datasets'][0]['data'].push(x['stats']['score']);
+      });
+    }
+
+    if (this.isSubLayout) {
+      if (this.topics.length != 0) {
+        this.topics.filter((x: any) => {
+          this.radarChartLabels.push(x['title']);
+          this.radarChartData['datasets'][0]['data'].push(x['stats']['score']);
+        });
+      }
+    }
   }
 
   chartClicked({ event, active }: { event: ChartEvent, active: {}[] }): void {

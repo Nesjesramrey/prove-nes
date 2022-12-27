@@ -1,1 +1,32 @@
-<p>public-document-mobile-subcategory-bars works!</p>
+<!-- <button type="button" class="placebtn" *ngIf="document.coverage.length > 1" (click)="displayCoverageMenu()">
+  <img src="../../../assets/images/mapa-mex.png" [alt]="document.title">
+</button> -->
+
+<!-- <div class="set-12 featured-users">
+  <div class="featured-users-circles"></div>
+</div> -->
+
+<div class="set-12 bars" *ngIf="layouts.length != 0">
+  <div class="set-12 inner-bar" *ngFor="let layout of layouts">
+    <div class="grayback">
+      <button type="button" class="fav">
+        <mat-icon>favorite</mat-icon>
+      </button>
+    </div>
+
+    <div class="gradbar" [style.min-width.%]="40" [style.max-width]="'calc(100% - 70px)'"
+      [style.width.%]="layout.stats.score" *ngIf="layout.stats != null"></div>
+
+    <button type="button" class="catname" (click)="displayLayoutData(layout)" [style.min-width.%]="75"
+      [style.width.%]="layout.stats.score - 3" [matTooltip]="layout.stats.score + '%'" matTooltipClass="tooltip"
+      matTooltipPosition="right"
+      (click)="linkMe('/documentos-publicos/' + document_id + '/categoria/' + category_id + '/subcategoria/' + layout._id)"
+      *ngIf="layout.stats != null">
+      {{ layout.category.name }}
+    </button>
+  </div>
+</div>
+
+<div class="set-12 empty-bars" *ngIf="layouts.length == 0">
+  No hay categorías disponibles.
+</div>

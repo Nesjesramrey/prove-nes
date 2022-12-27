@@ -2,12 +2,7 @@
   <div class="modal-head">
     <h3 class="title">Selecciona una calificación:</h3>
     <div class="cancel">
-      <button
-        type="button"
-        mat-icon-button
-        color="primary"
-        (click)="killDialog()"
-      >
+      <button type="button" mat-icon-button color="primary" (click)="killDialog()">
         <mat-icon>cancel</mat-icon>
       </button>
     </div>
@@ -22,22 +17,13 @@
       <tbody class="table-body">
         <tr>
           <td>
-            <mat-radio-button
-              value="1"
-              (click)="valueQualification((value = 1))"
-            ></mat-radio-button>
+            <mat-radio-button value="1" (click)="valueQualification((value = 1))"></mat-radio-button>
           </td>
           <td>
-            <mat-radio-button
-              value="2"
-              (click)="valueQualification((value = 2))"
-            ></mat-radio-button>
+            <mat-radio-button value="2" (click)="valueQualification((value = 2))"></mat-radio-button>
           </td>
           <td>
-            <mat-radio-button
-              value="3"
-              (click)="valueQualification((value = 3))"
-            ></mat-radio-button>
+            <mat-radio-button value="3" (click)="valueQualification((value = 3))"></mat-radio-button>
           </td>
         </tr>
       </tbody>

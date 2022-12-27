@@ -39,7 +39,7 @@
                   (matChipInputTokenEnd)="addCategory($event)" (keyup.enter)="onEnter($event)">
 
                 <button mat-button matSuffix mat-icon-button color="warn" matTooltip="Agregar categoría"
-                  [disabled]="!addCategoryValidated">
+                  [disabled]="!addCategoryValidated" (click)="onCreateCategory()">
                   <mat-icon>add_circle</mat-icon>
                 </button>
               </mat-chip-list>
@@ -50,8 +50,7 @@
                 </mat-option>
               </mat-autocomplete>
 
-              <mat-hint *ngIf="addCategoryValidated">** ¡Esa categoría no existe! <br /> ** Puedes agregarla con el
-                botón a la derecha.</mat-hint>
+              <mat-hint *ngIf="addCategoryValidated">** ¡Esa categoría no existe!</mat-hint>
             </mat-form-field>
           </div>
 
@@ -63,6 +62,13 @@
               [disabled]="stepTwoFormGroup.invalid">
               <small>Siguiente</small>
             </button>
+          </div>
+
+          <div class="set-12 helpers">
+            <p><small>** Busca o selecciona una categoría.</small></p>
+            <p><small>** Si tu categoría no existe, presiona <strong>ENTER</strong> y a continuación el botón de agregar
+                a
+                la derecha.</small></p>
           </div>
         </div>
       </mat-step>

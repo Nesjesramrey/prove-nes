@@ -1,7 +1,6 @@
-<button type="button" class="placebtn" *ngIf="document.coverage.length > 1" (click)="displayCoverageMenu()">
-  <!-- <mat-icon>place</mat-icon> -->
+<!-- <button type="button" class="placebtn" *ngIf="document.coverage.length > 1" (click)="displayCoverageMenu()">
   <img src="../../../assets/images/mapa-mex.png" [alt]="document.title">
-</button>
+</button> -->
 
 <div class="set-12 featured-users">
   <div class="featured-users-circles"></div>
@@ -9,7 +8,7 @@
 
 <div class="set-12 bars">
   <div class="set-12 inner-bar" *ngFor="let layout of layouts">
-    <div class="grayback" [style.width]="layout.stats.score + '%'">
+    <div class="grayback">
       <button type="button" class="fav">
         <mat-icon>favorite</mat-icon>
       </button>
@@ -17,11 +16,10 @@
 
     <div class="gradbar" [style.min-width.%]="1" [style.max-width]="'calc(100% - 70px)'"
       [style.width.%]="layout.stats.score" [matTooltip]="layout.stats.score + '%'" matTooltipClass="tooltip"
-      matTooltipPosition="right"></div>
+      matTooltipPosition="right" (click)="linkMe(layout._id)"></div>
 
-    <button type="button" class="catname"
-      (click)="linkMe('/documentos-publicos/' + document_id + '/categoria/' + layout._id)">
-      <small>{{ layout.category.name }}</small>
+    <button type="button" class="catname" (click)="linkMe(layout._id)">
+      {{ layout.category.name }}
     </button>
   </div>
 </div>

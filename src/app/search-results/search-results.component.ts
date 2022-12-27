@@ -23,7 +23,7 @@ export class SearchResultsComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchService.searchSubject.subscribe((reply: any) => {
-      console.log(reply);
+      // console.log(reply);
       this.searchResults = reply;
       if (this.searchResults == null) {
         this.utilityService.linkMe('/404');

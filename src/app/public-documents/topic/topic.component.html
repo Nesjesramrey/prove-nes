@@ -2,7 +2,8 @@
   <mat-spinner></mat-spinner>
 </div>
 
-<div class="set-12" *ngIf="isDataAvailable">
+<!-- desktop -->
+<div class="set-12" *ngIf="isDataAvailable && !isMobile">
   <div class="set-12">
     <breadcrumbs-component>
       <li>...</li>
@@ -104,4 +105,11 @@
       </public-documents-testimonials>
     </div>
   </div>
+</div>
+
+<!-- mobile -->
+<div class="set-12" *ngIf="isDataAvailable && isMobile">
+  <div class="public-document-mobile-topic-view" [document]="document" [topic]="topic" [user]="user"
+    [userVoted]="userVoted" [votes]="votes" [allFavorites]="allFavorites" (topicVoted)="getVoteStatus($event)"
+    (addSolution)="openModalSolution($event)"></div>
 </div>

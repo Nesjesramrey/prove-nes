@@ -1,0 +1,73 @@
+<div class="set-12 cards">
+  <mat-card class="set-12">
+    <div class="set-12 row rowflex">
+      <div class="set-10">
+        <strong>{{solution?.title}}</strong>
+      </div>
+
+      <div class="set-2 txt-right">
+        <button type="button" class="crumbs-menu" mat-icon-button color="primary" [matMenuTriggerFor]="crumbsMenu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #crumbsMenu="matMenu">
+          <button mat-menu-item (click)="linkMe('/documentos-publicos/' + documentID)">
+            <mat-icon>arrow_left</mat-icon>
+            <span>Mexicolectivo</span>
+          </button>
+          <button mat-menu-item (click)="linkMe('/documentos-publicos/' + documentID + '/categoria/' + categoryID)">
+            <mat-icon>arrow_left</mat-icon>
+            <span>{{category.category.name}}</span>
+          </button>
+          <button mat-menu-item
+            (click)="linkMe('/documentos-publicos/' + documentID + '/categoria/' + categoryID + '/subcategoria/' + subcategoryID)">
+            <mat-icon>arrow_left</mat-icon>
+            <span>{{subcategory.category.name}}</span>
+          </button>
+          <button mat-menu-item
+            (click)="linkMe('/documentos-publicos/' + documentID + '/categoria/' + categoryID + '/subcategoria/' + subcategoryID + '/tema/' + topicID)">
+            <mat-icon>arrow_left</mat-icon>
+            <span>{{topic.title}}</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>location_on</mat-icon>
+            <span>{{solution.title}}</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+
+    <div class="set-12 row" [innerHTML]="solution?.description"></div>
+
+    <div class="set-12 txt-center row vote-tools">
+      <p>Relevancia ciudadana</p>
+      <p><strong>{{solution?.stats?.score || 0}} / 100</strong></p>
+
+      <button type="button" mat-raised-button color="warn" class="votebtn" (click)="openVoteDialog()"
+        *ngIf="!userVoted">
+        <small>Vota</small>
+      </button>
+
+      <div class="set-12 vote-count" *ngIf="userVoted">Votos: {{ votes }}</div>
+
+      <div class="set-12 ctrls">
+        <button type="button" (click)="addFavorites()">
+          <mat-icon color="primary" *ngIf="!isFavorite">favorite</mat-icon>
+          <mat-icon color="accent" *ngIf="isFavorite">favorite</mat-icon>
+        </button>
+        <button type="button" disabled>
+          <mat-icon>share</mat-icon>
+        </button>
+        <button type="button" disabled>
+          <mat-icon>forum</mat-icon>
+        </button>
+        <button type="button" (click)="openTestimoniesDialog()">
+          <mat-icon>report</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-card>
+</div>
+
+<div class="set-12 foot">
+  <div class="app-footer"></div>
+</div>

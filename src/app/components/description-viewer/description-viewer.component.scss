@@ -40,4 +40,17 @@
     height: auto;
     overflow-wrap: break-word;
   }
+
+  .ctrls {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+:host(.fixmobile) {
+  margin: 0 !important;
+  width: 100%;
+  padding-bottom: 40px;
 }

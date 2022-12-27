@@ -67,6 +67,16 @@ import { PublicDocumentMobileTopTenComponent } from './public-document-mobile-to
 import { PublicDocumentMobileCategoryViewComponent } from './public-document-mobile-category-view/public-document-mobile-category-view.component';
 import { PublicDocumentMobileFixedToolsComponent } from './public-document-mobile-fixed-tools/public-document-mobile-fixed-tools.component';
 import { PublicDocumentMobileSubcategoryBarsComponent } from './public-document-mobile-subcategory-bars/public-document-mobile-subcategory-bars.component';
+import { PublicDocumentMobileSubcategoryViewComponent } from './public-document-mobile-subcategory-view/public-document-mobile-subcategory-view.component';
+import { PublicDocumentMobileTopicListComponent } from './public-document-mobile-topic-list/public-document-mobile-topic-list.component';
+import { PublicDocumentMobileTopicViewComponent } from './public-document-mobile-topic-view/public-document-mobile-topic-view.component';
+import { PublicDocumentMobileSolutionViewComponent } from './public-document-mobile-solution-view/public-document-mobile-solution-view.component';
+import { TestimonialListComponent } from './testimonial-list/testimonial-list.component';
+import { TestimonialSingleViewComponent } from './testimonial-single-view/testimonial-single-view.component';
+import { TestimonialImageSliderComponent } from './testimonial-image-slider/testimonial-image-slider.component';
+import { VoteDialogComponent } from './vote-dialog/vote-dialog.component';
+import { SearchDialogComponent } from './search-dialog/search-dialog.component';
+import { AddDocumentTopicFullComponent } from './add-document-topic-full/add-document-topic-full.component';
 
 @NgModule({
   imports: [
@@ -137,7 +147,17 @@ import { PublicDocumentMobileSubcategoryBarsComponent } from './public-document-
     PublicDocumentMobileTopTenComponent,
     PublicDocumentMobileCategoryViewComponent,
     PublicDocumentMobileFixedToolsComponent,
-    PublicDocumentMobileSubcategoryBarsComponent
+    PublicDocumentMobileSubcategoryBarsComponent,
+    PublicDocumentMobileSubcategoryViewComponent,
+    PublicDocumentMobileTopicListComponent,
+    PublicDocumentMobileTopicViewComponent,
+    PublicDocumentMobileSolutionViewComponent,
+    TestimonialListComponent,
+    TestimonialSingleViewComponent,
+    TestimonialImageSliderComponent,
+    VoteDialogComponent,
+    SearchDialogComponent,
+    AddDocumentTopicFullComponent
   ],
   exports: [
     AppPageletComponent,
@@ -186,7 +206,17 @@ import { PublicDocumentMobileSubcategoryBarsComponent } from './public-document-
     PublicDocumentMobileTopTenComponent,
     PublicDocumentMobileCategoryViewComponent,
     PublicDocumentMobileFixedToolsComponent,
-    PublicDocumentMobileSubcategoryBarsComponent
+    PublicDocumentMobileSubcategoryBarsComponent,
+    PublicDocumentMobileSubcategoryViewComponent,
+    PublicDocumentMobileTopicListComponent,
+    PublicDocumentMobileTopicViewComponent,
+    PublicDocumentMobileSolutionViewComponent,
+    TestimonialListComponent,
+    TestimonialSingleViewComponent,
+    TestimonialImageSliderComponent,
+    VoteDialogComponent,
+    SearchDialogComponent,
+    AddDocumentTopicFullComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
@@ -214,7 +244,12 @@ import { PublicDocumentMobileSubcategoryBarsComponent } from './public-document-
     WelcomeDialogComponent,
     AddCategoryDialogComponent,
     RequestEditPermissionComponent,
-    GiveEditPermissionComponent
+    GiveEditPermissionComponent,
+    TestimonialListComponent,
+    TestimonialSingleViewComponent,
+    VoteDialogComponent,
+    SearchDialogComponent,
+    AddDocumentTopicFullComponent
   ],
   providers: [],
 })

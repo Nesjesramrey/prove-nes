@@ -1,0 +1,18 @@
+<form class="set-12" [formGroup]="searchFormGroup" (submit)="onSearch(searchFormGroup)">
+  <mat-form-field appearance="outline">
+    <mat-label>Búscar en Mexicolectivo...</mat-label>
+    <input type="text" matInput cdkFocusInitial formControlName="search">
+    <button type="button" matSuffix>
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <div class="set-12 ctrls">
+    <button type="button" mat-button color="warn" (click)="killDialog()">
+      <small>Cancelar</small>
+    </button>
+    <button type="submit" mat-mini-fab color="primary" [disabled]="searchFormGroup.invalid">
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+</form>
