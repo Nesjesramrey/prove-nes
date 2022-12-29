@@ -23,6 +23,16 @@
     .icon {
       margin: 0 5px !important;
     }
+
+    .facebook-net {
+      a {
+        display: block;
+        width: 30px;
+        height: 30px;
+        border-bottom: 100%;
+        overflow: hidden;
+      }
+    }
   }
 
   .sheet-media {

@@ -29,10 +29,19 @@ export class InviteDialogComponent implements OnInit {
 
   onInvite(formGroup: FormGroup) {
     this.submitted = true;
-    let data: any = {
-      email: formGroup['value']['email']
-    };
-    console.log(data);
+    let data: any = { email: formGroup['value']['email'] };
+    this.utilityService.inviteUserToMexicolectivo(data).subscribe({
+      error: (error: any) => {
+        this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+        this.killDialog();
+      },
+      next: (reply: any) => {
+        this.utilityService.openSuccessSnackBar(this.utilityService['emailSendSuccess']);
+      },
+      complete: () => {
+        this.killDialog();
+      }
+    });
   }
 
   killDialog() {
