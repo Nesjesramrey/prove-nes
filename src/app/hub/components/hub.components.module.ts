@@ -18,8 +18,7 @@ import { AdminTemplateMobileComponent } from './admin-template-mobile/admin-temp
     ReactiveFormsModule,
     AppMaterialModule,
     IvyCarouselModule,
-    NgChartsModule,
-  
+    NgChartsModule
   ],
   declarations: [
     AdminTemplateComponent,

@@ -1,93 +1,122 @@
 <div class="set-12 loading" *ngIf="!isDataAvailable">
     <mat-spinner></mat-spinner>
-  </div>
+</div>
 
-<div class="form-profile " *ngIf="isDataAvailable && isMobile"> 
-            <form>
-                <h2>Tu perfil</h2>
-                <div class="set-12 avatarhldr mt-2">
-                    <button class="avatar">
-                      <img src="{{ user.avatarImage }}" alt="{{ user.firstname }}" *ngIf="user.avatarImage != null" />
-                      <span *ngIf="user.avatarImage == null">
-                        {{ user.firstname | firstword | firstletter
-                        }}{{ user.lastname | firstword | firstletter }}
-                      </span>
-                    </button>
-                  </div>
-                <div>
-                <mat-form-field appearance="outline">
-                    <mat-label>Nombre</mat-label>
-                    <input matInput placeholder="Nombre" [value]="user.firstname">
-                </mat-form-field>
 
-                <mat-form-field appearance="outline">
-                    <mat-label>Apellido</mat-label>
-                    <input matInput placeholder="Apellido" [value]="user.lastname">
-                </mat-form-field>
+<!-- <div class="set-12" *ngIf="isDataAvailable">
+    <form [formGroup]="formGroup" (submit)="onUpdateUserData(formGroup)">
+        <mat-form-field appearance="outline">
+            <mat-label>Nombre(s)</mat-label>
+            <input type="text" matInput formControlName="firstname">
+        </mat-form-field>
 
-                <mat-form-field appearance="outline">
-                    <mat-label>Genero</mat-label>
-                    <mat-select>
-                        <mat-option *ngFor="let genre of genres" [value]="genre.value">
-                            {{genre.viewValue}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Apellido(s)</mat-label>
+            <input type="text" matInput formControlName="lastname">
+        </mat-form-field>
 
-                <mat-form-field appearance="outline">
-                    <mat-label>Código Postal</mat-label>
-                    <input matInput placeholder="CDMX">
-                </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Correo electrónico</mat-label>
+            <input type="text" matInput formControlName="email">
+        </mat-form-field>
 
-                <mat-form-field appearance="outline">
-                    <mat-label>Ocupacion</mat-label>
-                    <input matInput placeholder="Empleado">
-                </mat-form-field>
+        <div class="set-12 ctrls">
+            <button type="button" mat-raised-button color="warn">
+                <small>Cancelar</small>
+            </button>
+            <button type="submit" mat-raised-button color="primary" [disabled]="formGroup.invalid">
+                <small>Guardar</small>
+            </button>
+        </div>
+    </form>
+</div> -->
 
-                <mat-form-field appearance="outline">
-                    <mat-label>Telefono</mat-label>
-                    <input matInput placeholder="55-55-55-55-55" type="number">
-                </mat-form-field>
-            </div>
-            </form>
-           
-            <mat-checkbox (change)="showText = !showText">¿Perteneces a una asociación?</mat-checkbox>
-           <!--  <h4 >¿Perteneces a una asociación?</h4>
+<div class="form-profile " *ngIf="isDataAvailable && isMobile">
+    <form>
+        <h2>Tu perfil</h2>
+        <div class="set-12 avatarhldr mt-2">
+            <button class="avatar">
+                <img src="{{ user.avatarImage }}" alt="{{ user.firstname }}" *ngIf="user.avatarImage != null" />
+                <span *ngIf="user.avatarImage == null">
+                    {{ user.firstname | firstword | firstletter
+                    }}{{ user.lastname | firstword | firstletter }}
+                </span>
+            </button>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Nombre</mat-label>
+                <input matInput placeholder="Nombre" [value]="user.firstname">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Apellido</mat-label>
+                <input matInput placeholder="Apellido" [value]="user.lastname">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Genero</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let genre of genres" [value]="genre.value">
+                        {{genre.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Código Postal</mat-label>
+                <input matInput placeholder="CDMX">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Ocupacion</mat-label>
+                <input matInput placeholder="Empleado">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Telefono</mat-label>
+                <input matInput placeholder="55-55-55-55-55" type="number">
+            </mat-form-field>
+        </div>
+    </form>
+
+    <mat-checkbox (change)="showText = !showText">¿Perteneces a una asociación?</mat-checkbox>
+    <!--  <h4 >¿Perteneces a una asociación?</h4>
             <div class="mt-1 button-configuration"><button  mat-raised-button color="accent" (click)="showText = !showText">Siguiente</button>
             </div> -->
-            <div *ngIf="showText" > 
-                <h3 class="mt-1">Datos de la asociación</h3>         
-                 <form >
+    <div *ngIf="showText">
+        <h3 class="mt-1">Datos de la asociación</h3>
+        <form>
+            <mat-label>Tipo de asociación</mat-label>
+            <mat-form-field appearance="fill">
                 <mat-label>Tipo de asociación</mat-label>
-                <mat-form-field appearance="fill">
-                    <mat-label>Tipo de asociación</mat-label>
-                    <mat-select matInput required>
-                        <mat-option *ngFor="let asociation of asociations" [value]="asociation.value">
-                            {{asociation.viewValue}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-label>Nombre de tu Asociación</mat-label>
-                <mat-form-field appearance="outline">
-                    <mat-label>Nombre</mat-label>
-                    <input matInput placeholder="Nombre de la asociación">
-                </mat-form-field>
-                <mat-label>Describe tu asociación</mat-label>
-                <mat-form-field appearance="outline">
-                    <textarea matInput placeholder="Escribe una breve presentación"></textarea>
-                </mat-form-field>
-                <mat-label>Describe temas de tu interés</mat-label>
-                <mat-form-field appearance="outline">
-                    <textarea matInput placeholder="Escribe temas de tú interés"></textarea>
-                </mat-form-field>
+                <mat-select matInput required>
+                    <mat-option *ngFor="let asociation of asociations" [value]="asociation.value">
+                        {{asociation.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-label>Nombre de tu Asociación</mat-label>
+            <mat-form-field appearance="outline">
+                <mat-label>Nombre</mat-label>
+                <input matInput placeholder="Nombre de la asociación">
+            </mat-form-field>
+            <mat-label>Describe tu asociación</mat-label>
+            <mat-form-field appearance="outline">
+                <textarea matInput placeholder="Escribe una breve presentación"></textarea>
+            </mat-form-field>
+            <mat-label>Describe temas de tu interés</mat-label>
+            <mat-form-field appearance="outline">
+                <textarea matInput placeholder="Escribe temas de tú interés"></textarea>
+            </mat-form-field>
 
-                <!-- <div class="button-configuration">
+            <!-- <div class="button-configuration">
                     <button class="button-configuration" mat-raised-button color="accent" (click)="showText = !showText">Volver a tus datos</button>
                     
                 </div> -->
-            </form>
-        </div>
-        <div class="mt-3 button-configuration">
-        <button   mat-raised-button color="accent" (click)="showText = !showText">Registrate</button>
+        </form>
+    </div>
+    <div class="mt-3 button-configuration">
+        <button mat-raised-button color="accent" (click)="showText = !showText">Registrate</button>
     </div>
 </div>
