@@ -1,15 +1,7 @@
 <div class="set-12 mainhldr">
-  <div
-    class="app-pagelet"
-    [user]="user"
-    [path]="path"
-    [coverDocument]="coverDocument"
-    [open]="open"
-    (openMenu)="getMenuStatus($event)"
-    [open]="isProfile"
-    (openProfileMenu)="getMenuProfileStatus($event)"
-    *ngIf="isDataAvailable"
-  ></div>
+  <div class="app-pagelet" [user]="user" [path]="path" [coverDocument]="coverDocument" [open]="open"
+    (openMenu)="getMenuStatus($event)" [open]="isProfile" (openProfileMenu)="getMenuProfileStatus($event)"
+    *ngIf="isDataAvailable"></div>
 
   <router-outlet></router-outlet>
   <!-- <div class="message-box" [user]="user" *ngIf="isDataAvailable"></div> -->
@@ -17,11 +9,7 @@
 </div>
 
 <!--Mobile-->
-<div
-  class="set-12 mobilenav"
-  *ngIf="isDataAvailable && isMobile"
-  [class.menuopen]="open"
->
+<div class="set-12 mobilenav" *ngIf="isDataAvailable && isMobile" [class.menuopen]="open">
   <div class="set-12 topnav">
     <div class="set-6">
       <button type="button" (click)="utilityService.linkMe('/'); open = !open">
@@ -42,18 +30,12 @@
       </button>
     </div>
     <div class="set-12">
-      <button
-        type="button"
-        (click)="utilityService.linkMe('/hub/signin-mobile'); open = !open"
-      >
+      <button type="button" (click)="utilityService.linkMe('/hub/signin-mobile'); open = !open">
         Ingresar
       </button>
     </div>
     <div class="set-12">
-      <button
-        type="button"
-        (click)="utilityService.linkMe('/hub/signup-mobile'); open = !open"
-      >
+      <button type="button" (click)="utilityService.linkMe('/hub/signup-mobile'); open = !open">
         Registro
       </button>
     </div>
@@ -62,20 +44,14 @@
   <div class="set-12" *ngIf="user != null">
     <div class="set-12 avatarhldr">
       <button class="avatar">
-        <img
-          src="{{ user.avatarImage }}"
-          alt="{{ user.firstname }}"
-          *ngIf="user.avatarImage != null"
-        />
+        <img src="{{ user.avatarImage }}" alt="{{ user.firstname }}" *ngIf="user.avatarImage != null" />
         <span *ngIf="user.avatarImage == null">
           {{ user.firstname | firstword | firstletter
           }}{{ user.lastname | firstword | firstletter }}
         </span>
       </button>
       <div class="usrname">{{ user.firstname }} {{ user.lastname }}</div>
-      <mat-icon class="avatar-icon" (click)="open = !open; displayProfileMenu()"
-        >keyboard_arrow_right</mat-icon
-      >
+      <mat-icon class="avatar-icon" (click)="open = !open; displayProfileMenu()">keyboard_arrow_right</mat-icon>
     </div>
 
     <div class="set-12 innernav">
@@ -94,18 +70,10 @@
   </div>
 </div>
 
-<div
-  class="set-12 mobilenav"
-  *ngIf="isDataAvailable && isMobile"
-  [class.menuopen]="isProfile"
->
+<div class="set-12 mobilenav" *ngIf="isDataAvailable && isMobile" [class.menuopen]="isProfile">
   <div class="set-12 topnav">
     <div class="topnav-iconProfile">
-      <button
-        id="topnav-button-profile"
-        type="button"
-        (click)="open = !open; isProfile = !isProfile"
-      >
+      <button id="topnav-button-profile" type="button" (click)="open = !open; isProfile = !isProfile">
         <mat-icon color="accent" class="arrow-left">keyboard_arrow_left</mat-icon>
       </button>
     </div>
@@ -121,22 +89,22 @@
 
   <div class="set-12 innernav">
     <div class="set-12 innerbtn">
-      <button type="button" (click)="linkMe('profile')">
+      <button class="mt-4" type="button" (click)="linkMe('profile')">
         <span>Mi perfil</span>
       </button>
-      <button type="button">
+      <button class="mt-4" type="button">
         <span>Asociaciones</span>
       </button>
-      <button type="button" >
+      <button class="mt-4" type="button">
         <span>Documentos</span>
       </button>
-      <button type="button" >
+      <button class="mt-4" type="button">
         <span>Dashboard</span>
       </button>
-      <button type="button" >
+      <button class="mt-4" type="button" (click)="linkMe('configuracion')">
         <span>Configuracion</span>
       </button>
-      <button type="button" (click)="onSignOut()">
+      <button class="mt-4" type="button" (click)="onSignOut()">
         <mat-icon>power_settings_new</mat-icon> <span>Salir</span>
       </button>
     </div>

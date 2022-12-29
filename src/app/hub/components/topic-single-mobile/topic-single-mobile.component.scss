@@ -1,0 +1,27 @@
+:host{
+
+    .header-topic-single{
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .information-topic{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+    .topic-icons {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .footer-single-topic{
+        width: 100%;    
+        display: flex;
+        justify-content: center;  
+      }
+}

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import { TopicSingleMobileComponent } from '../topic-single-mobile/topic-single-mobile.component';
 
 @Component({
   selector: 'card-topics-mobile',
@@ -7,7 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CardTopicsMobileComponent implements OnInit {
 
-  constructor() { }
+  openDialog() {
+    
+    this.dialog.open(TopicSingleMobileComponent, {
+      height: '100%',
+      maxWidth: '100%',
+      
+    });
+  }
+
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }

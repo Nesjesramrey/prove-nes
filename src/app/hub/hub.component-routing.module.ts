@@ -61,8 +61,8 @@ const routes: Routes = [
         canActivate: [CanActivateLoggedInGuard],
       },
       {
-        path: 'profile',
-        component: ProfileMobileComponent,
+        path: 'configuracion',
+        component: AppConfigurationComponent,
         canActivate: [CanActivateLoggedInGuard],
       },
       { path: ':userID', component: SingleUserComponent, canActivate: [] },
