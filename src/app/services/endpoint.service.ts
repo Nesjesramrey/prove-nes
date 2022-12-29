@@ -137,8 +137,9 @@ export class EndPointService {
   // favorites
   public addFavoritesEndPoint: string = '/favorites/';
   public updateFavoritesEndPoint: string = '/favorites/';
-  public fetchFavoritesFromTopicEndPonint: string = '/favorites/topic/';
-  public fetchFavoritesFromSolutionEndPonint: string = '/favorites/solution/';
+  public fetchFavoritesFromlayoutEndPoint: string = '/favorites/layout/';
+  public fetchFavoritesFromTopicEndPoint: string = '/favorites/topic/';
+  public fetchFavoritesFromSolutionEndPoint: string = '/favorites/solution/';
 
   // visit
   public sendVisitEndPoint: string = '/visit/';

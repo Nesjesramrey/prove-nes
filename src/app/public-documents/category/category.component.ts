@@ -8,6 +8,7 @@ import { ImageViewerComponent } from 'src/app/components/image-viewer/image-view
 import { MatDialog } from '@angular/material/dialog';
 import { SolutionService } from 'src/app/services/solution.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-category-page',
@@ -15,6 +16,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
   styleUrls: ['./category.component.scss'],
 })
 export class CategoryComponent implements OnInit {
+  public user: any = null;
   public document: any = null;
   public coverage: any[] = [];
   public coverageSelected: any = null;
@@ -45,7 +47,8 @@ export class CategoryComponent implements OnInit {
     public utilityService: UtilityService,
     public dialog: MatDialog,
     public solutionService: SolutionService,
-    public deviceDetectorService: DeviceDetectorService
+    public deviceDetectorService: DeviceDetectorService,
+    public userService: UserService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
@@ -55,6 +58,15 @@ export class CategoryComponent implements OnInit {
 
   ngOnInit(): void {
     if (history['state']['coverage'] != undefined) { this.coverageSelected = history['state']['coverage']; };
+
+    // *** load user
+    this.user = this.userService.fetchFireUser().subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        this.user = reply;
+      },
+      complete: () => { }
+    });
 
     // *** load document
     this.documentService.fetchSingleDocumentById({ _id: this.documentID }).subscribe({
@@ -98,7 +110,7 @@ export class CategoryComponent implements OnInit {
 
         this.topLayouts = this.selectedCategory['subLayouts'];
       },
-      complete: () => { 
+      complete: () => {
         this.isDataAvailable = true;
       }
     })

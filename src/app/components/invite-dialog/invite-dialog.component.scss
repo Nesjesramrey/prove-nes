@@ -1,0 +1,27 @@
+:host {
+  .dialog-head {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .ctrls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    * {
+      margin: 0;
+    }
+
+    mat-spinner {
+      margin-left: 20px;
+    }
+  }
+}

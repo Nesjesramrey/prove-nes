@@ -1,12 +1,19 @@
 <div class="set-12">
-  <button type="button" class="tool" [class.fixedpos]="open" disabled>
-    <!-- <mat-icon>warning</mat-icon> -->
-    <small>Nueva solución</small>
+  <button type="button" class="tool" [class.fixedpos]="open" (click)="popSearchDialog()">
+    <mat-icon>search</mat-icon>
+    <!-- <small>Búsqueda</small> -->
   </button>
-
+  <button type="button" class="tool" [class.fixedpos]="open">
+    <mat-icon>warning</mat-icon>
+    <!-- <small>Denuncia</small> -->
+  </button>
   <button type="button" class="tool" [class.fixedpos]="open" (click)="popAddTopicDialog()">
-    <!-- <mat-icon>insights</mat-icon> -->
-    <small>Nuevo tópico</small>
+    <mat-icon>note_add</mat-icon>
+    <!-- <small>Tópico</small> -->
+  </button>
+  <button type="button" class="tool" [class.fixedpos]="open" (click)="popInviteDialog()">
+    <mat-icon>send</mat-icon>
+    <!-- <small>Invitar</small> -->
   </button>
 </div>
 
