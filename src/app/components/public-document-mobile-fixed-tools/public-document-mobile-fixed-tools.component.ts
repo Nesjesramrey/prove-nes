@@ -1,8 +1,9 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DocumentService } from 'src/app/services/document.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { AddDocumentTopicFullComponent } from '../add-document-topic-full/add-document-topic-full.component';
+import { ComplaintDialogComponent } from '../complaint-dialog/complaint-dialog.component';
 import { InviteDialogComponent } from '../invite-dialog/invite-dialog.component';
 import { SearchDialogComponent } from '../search-dialog/search-dialog.component';
 
@@ -12,6 +13,7 @@ import { SearchDialogComponent } from '../search-dialog/search-dialog.component'
   styleUrls: ['./public-document-mobile-fixed-tools.component.scss']
 })
 export class PublicDocumentMobileFixedToolsComponent implements OnInit {
+  @Input('user') public user: any = null;
   public open: boolean = false;
   public topic: any = null;
   @Output() public topicAdded = new EventEmitter<any>();
@@ -81,6 +83,23 @@ export class PublicDocumentMobileFixedToolsComponent implements OnInit {
           if (reply != undefined) { }
         });
       }
+    });
+  }
+
+  popComplaintsDialog() {
+    this.displayMenu();
+
+    const dialogRef = this.dialog.open<any>(ComplaintDialogComponent, {
+      width: '100%',
+      data: {
+        user: this.user
+      },
+      disableClose: true,
+      panelClass: 'full-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
     });
   }
 }
