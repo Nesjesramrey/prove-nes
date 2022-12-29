@@ -80,6 +80,7 @@ export class EndPointService {
   public fetchAllActivitiesEndPoint: string = '/activity';
   public fetchAssociationTypologyEndPoint: string = '/association_typology';
   public fetchAllStatesMexEndPoint: string = '/utility/fetch-all-states-mex';
+  public inviteUserToMexicolectivoEndPoint: string = '/package/invite/email';
 
   // uploads
   public uploadUserAvatarEndPoint: string = '/upload/upload-avatar-file';
