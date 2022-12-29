@@ -10,6 +10,7 @@ import { DescriptionViewerComponent } from '../description-viewer/description-vi
   styleUrls: ['./public-document-mobile-category-view.component.scss']
 })
 export class PublicDocumentMobileCategoryViewComponent implements OnInit {
+  @Input('user') public user: any = null;
   @Input('document') public document: any = null;
   @Input('category') public category: any = null;
   @Input('topSolutions') public topSolutions: any = null;
@@ -41,7 +42,10 @@ export class PublicDocumentMobileCategoryViewComponent implements OnInit {
       DescriptionViewerComponent, {
       data: {
         title: this.category['category']['name'],
-        text: this.category['description']
+        text: this.category['description'],
+        user: this.user,
+        location: 'layout',
+        layoutID: this.category['_id']
       },
       disableClose: true,
       panelClass: 'viewer-dialog',

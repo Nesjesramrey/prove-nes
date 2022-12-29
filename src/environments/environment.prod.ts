@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  version: "2022.12.27.1",
+  version: "2022.12.29.1",
   // dev
   apiEndPoint: 'http://pando-backend-dev-env-1.us-east-1.elasticbeanstalk.com/api/v1',
   apiSocket: 'http://pando-backend-dev-env-1.us-east-1.elasticbeanstalk.com'

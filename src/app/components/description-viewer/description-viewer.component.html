@@ -33,10 +33,11 @@
   </div>
 
   <div class="set-12 ctrls">
-    <button type="button" mat-icon-button color="primary" disabled>
+    <button type="button" mat-icon-button [color]="isFavorite ? 'warn' : 'primary'" (click)="handleFavorites()"
+      *ngIf="location != 'document'" disabled>
       <mat-icon>favorite</mat-icon>
     </button>
-    <button type="button" mat-icon-button color="primary" disabled>
+    <button type="button" mat-icon-button color="primary" (click)="openBottomSheet()">
       <mat-icon>share</mat-icon>
     </button>
     <button type="button" mat-icon-button color="primary" disabled>
