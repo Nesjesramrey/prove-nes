@@ -159,5 +159,8 @@ export class EndPointService {
   public markPermissionAsAttendedEndPoint: string = '/permission/';
   public fetchPermissionByIdEndPoint: string = '/permission/';
 
+  // complaint
+  public fileComplaintEndPoint: string = '/complaint';
+
   constructor() { }
 }

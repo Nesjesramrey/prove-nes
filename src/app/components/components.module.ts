@@ -80,6 +80,7 @@ import { SearchDialogComponent } from './search-dialog/search-dialog.component';
 import { AddDocumentTopicFullComponent } from './add-document-topic-full/add-document-topic-full.component';
 import { ShareSheetComponent } from './share-sheet/share-sheet.component';
 import { InviteDialogComponent } from './invite-dialog/invite-dialog.component';
+import { ComplaintDialogComponent } from './complaint-dialog/complaint-dialog.component';
 
 @NgModule({
   imports: [
@@ -163,7 +164,8 @@ import { InviteDialogComponent } from './invite-dialog/invite-dialog.component';
     SearchDialogComponent,
     AddDocumentTopicFullComponent,
     ShareSheetComponent,
-    InviteDialogComponent
+    InviteDialogComponent,
+    ComplaintDialogComponent
   ],
   exports: [
     AppPageletComponent,
@@ -224,7 +226,8 @@ import { InviteDialogComponent } from './invite-dialog/invite-dialog.component';
     SearchDialogComponent,
     AddDocumentTopicFullComponent,
     ShareSheetComponent,
-    InviteDialogComponent
+    InviteDialogComponent,
+    ComplaintDialogComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
@@ -259,7 +262,8 @@ import { InviteDialogComponent } from './invite-dialog/invite-dialog.component';
     SearchDialogComponent,
     AddDocumentTopicFullComponent,
     ShareSheetComponent,
-    InviteDialogComponent
+    InviteDialogComponent,
+    ComplaintDialogComponent
   ],
   providers: [],
 })
