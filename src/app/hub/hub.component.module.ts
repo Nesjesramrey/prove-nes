@@ -36,6 +36,7 @@ import { CircleChartMobileComponent } from './components/circle-chart-mobile/cir
 import { LineChartMobileComponent } from './components/line-chart-mobile/line-chart-mobile.component';
 import { ProfileMobileComponent } from './profile-mobile/profile-mobile.component';
 import { FooterMobileComponent } from './components/footer-mobile/footer-mobile.component';
+import { TopicSingleMobileComponent } from './components/topic-single-mobile/topic-single-mobile.component';
 
 
 @NgModule({
@@ -77,7 +78,8 @@ import { FooterMobileComponent } from './components/footer-mobile/footer-mobile.
     CircleChartMobileComponent,
     LineChartMobileComponent, 
     ProfileMobileComponent, 
-    FooterMobileComponent
+    FooterMobileComponent,
+    TopicSingleMobileComponent
   ],
 })
 export class HubComponentModule {}

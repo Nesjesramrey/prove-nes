@@ -150,25 +150,14 @@ export class AppComponent implements OnInit {
         this.router.navigateByUrl('/');
         break;
 
-      case 'login':
-        this.router.navigateByUrl('/hub/ingresar');
-        break;
+        case 'profile':
+          this.isProfile = !this.isProfile;
+          this.router.navigateByUrl('/hub/' + this.user['_id']);
+          break;
 
-      case 'join':
-        this.router.navigateByUrl('/hub/registro');
-        break;
-
-      case 'profile':
+      case 'configuracion':
         this.isProfile = !this.isProfile;
-        this.router.navigateByUrl('/hub/' + this.user['_id']);
-        break;
-
-      case 'notifications':
-        this.router.navigateByUrl('/hub/notificaciones');
-        break;
-
-      case 'userList':
-        this.router.navigateByUrl('/admin/usuarios');
+        this.router.navigateByUrl('/hub/configuracion');
         break;
     }
   }

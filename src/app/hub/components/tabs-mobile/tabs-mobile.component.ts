@@ -80,13 +80,13 @@ export class TabsMobileComponent implements OnInit {
 
     forkJoin([document, category, subcategory, topic, user,]).subscribe((reply: any) => {
       this.document = reply[0];
-      console.log(this.document)
+      //console.log(this.document)
       this.user = reply[4]
       //console.log(this.user)
       this.topic = reply[3]
       //console.log(this.topic)
       this.solutions = this.topic['solutions'];
-      console.log(this.solutions)
+      //console.log(this.solutions)
      
       
     })
