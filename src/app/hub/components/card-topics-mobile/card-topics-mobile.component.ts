@@ -14,7 +14,7 @@ export class CardTopicsMobileComponent implements OnInit {
     this.dialog.open(TopicSingleMobileComponent, {
       height: '100%',
       maxWidth: '100%',
-      
+      panelClass: 'full-screen-mobile'
     });
   }
 

@@ -71,15 +71,15 @@ export class SpiderChartMobileComponent implements OnInit {
   public spiderChartType: ChartType = 'radar';
 
  
-  // events
-  public chartClicked(e:any):void {
-    console.log(e);
-  }
+  // // events
+  // public chartClicked(e:any):void {
+  //   console.log(e);
+  // }
  
-  public chartHovered(e:any):void {
-    console.log(e);
+  // public chartHovered(e:any):void {
+  //   console.log(e);
   
-  }
+  // }
 
   constructor() {}
 

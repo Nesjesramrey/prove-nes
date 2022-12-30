@@ -1,4 +1,6 @@
 :host {
+  width: 100%;
+  padding: 20px;
 
   .avatar {
     width: 64px;
@@ -26,15 +28,4 @@
       float: left;
     }
   }
-
-
-  .form-profile {
-    padding: 20px;
-  }
-.button-configuration{
-  display: flex;
-  justify-content: flex-end;
-}
-
-
 }

@@ -3,28 +3,4 @@
   float: left;
   padding: 0 20px;
 
-  .input-wrapper {
-    position: relative;
-    width: 90%;
-    border: 1px solid #ccc;
-    background: #FFFFFF;
-    border-radius: 5px;
-  }
-
-  .input {
-    box-sizing: border-box;
-    color: #191919;
-    padding: 15px 15px 15px 35px;
-    width: 100%;
-  }
-
-  .input-icon {
-    color: #71F5AD;
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
 }

@@ -7,14 +7,14 @@ import { LayoutService } from 'src/app/services/layout.service';
 import { SolutionService } from 'src/app/services/solution.service';
 import { TopicService } from 'src/app/services/topic.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { Observable, forkJoin,  } from 'rxjs';
+import { Observable, forkJoin, } from 'rxjs';
 import { UtilityService } from 'src/app/services/utility.service';
 @Component({
   selector: 'line-chart-mobile',
   templateUrl: './line-chart-mobile.component.html',
   styleUrls: ['./line-chart-mobile.component.scss']
 })
-export class LineChartMobileComponent  implements OnInit {
+export class LineChartMobileComponent implements OnInit {
   public userID: string = '';
   public documentID: string = '';
   public accessToken: any = null;
@@ -58,19 +58,11 @@ export class LineChartMobileComponent  implements OnInit {
 
   ) {
     this.userID = this.activatedRoute['snapshot']['params']['userID'];
-      // this.userService.fetchFireUser().subscribe({
-      //   error: (error) => {
-      //     switch (error['status']) {
-      //     }},
-      //   next: (reply: any) => {
-      //     this.user = reply;
-      //   },
-      //   complete: () => {},
-      // });
-    } 
+
+  }
 
   ngOnInit(): void {
-    console.log(this.userID)
+    //console.log(this.userID)
     this.actionControlActivityList = this.utilityService.actionControlActivityList;
     let document: Observable<any> = this.documentService.fetchDocumentsByCollaborator({ _id: this.userID, });
     let category: Observable<any> = this.layoutService.fetchSingleLayoutById({ _id: this.categoryID, });
@@ -82,13 +74,22 @@ export class LineChartMobileComponent  implements OnInit {
       this.document = reply[0];
       //console.log(this.document)
       this.user = reply[4]
-      console.log(this.user)
+      //console.log(this.user)
       this.topic = reply[3]
       //console.log(this.topic)
-      this.solutions = this.topic['solutions'];
-      //console.log(this.solutions)
+      this.solutions = [
+
+        { _id: '6399ff980eddadeae501cfaa', title: 'Solucion Codster', description: '<font face="Arial">Solucion codster</font>', coverage: Array(1), images: Array(0), },
      
-      
+        { _id: '63aa5768b485bf366eeab1e7', title: 'Solucion Codster 2', description: '<font face="Arial">Segunda prueba</font>', coverage: Array(1), images: Array(0), },
+       
+        { _id: '63ab2159b485bf366eeaee3d', title: 'Deporte todos los dias', description: '<font face="Arial">Una mejor condicion</font>', coverage: Array(1), images: Array(0), },
+        
+        { _id: '63ab2179b485bf366eeaee42', title: 'Construir 1000 escuelas en dos años', description: '<font face="Arial">Mejorar las condiciones&#160;</font>', coverage: Array(1), images: Array(0), }
+      ]
+      //console.log(this.solutions)
+
+
     })
   }
 }

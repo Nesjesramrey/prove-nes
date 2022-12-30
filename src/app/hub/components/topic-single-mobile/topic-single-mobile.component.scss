@@ -1,27 +1,28 @@
-:host{
+:host {
+    .topic-single-mobile {
+        mat-card-content {
+            h3{
+                margin-bottom: 10px;
+            }
 
-    .header-topic-single{
-        display: flex;
-        justify-content: flex-start;
+            div {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+        }
+        mat-card-footer {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+
     }
 
-    .information-topic{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
 
-    }
-
-    .topic-icons {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-      }
-
-      .footer-single-topic{
-        width: 100%;    
-        display: flex;
-        justify-content: center;  
-      }
 }

@@ -1,20 +1,7 @@
-::ng-deep .mat-tab-header {
-  background: #ffffff;
-}
+:host{
+
 
 .mat-tab-group ::ng-deep .mat-tab-header .mat-tab-header-pagination {
   display: none;
 }
-::ng-deep .mat-tab-label {
-  font-size: 16px;
-}
-
-::ng-deep .mat-tab-body {
-  margin-left: 0px;
-}
-
-.achieve-title {
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 20px;
 }

@@ -43,7 +43,7 @@
   <!---User is  login-->
   <div class="set-12" *ngIf="user != null">
     <div class="set-12 avatarhldr">
-      <button class="avatar">
+      <button type="button" class="avatar">
         <img src="{{ user.avatarImage }}" alt="{{ user.firstname }}" *ngIf="user.avatarImage != null" />
         <span *ngIf="user.avatarImage == null">
           {{ user.firstname | firstword | firstletter

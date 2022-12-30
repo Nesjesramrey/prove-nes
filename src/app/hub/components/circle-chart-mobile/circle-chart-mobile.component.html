@@ -1,35 +1,18 @@
 <div class="circleChart mt-1">
-  
   <div style="position: relative">
-    <mat-progress-spinner
-    
-      class="custom-spinner"
-      [diameter]="150"
-      [strokeWidth]="15"
-      [value]="progressValue"
-      color="accent" 
-    >
-      ></mat-progress-spinner
-    >
-    <div
-      class="textProgressValue"
-      style="
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      "
-    >
+    <mat-progress-spinner class="custom-spinner" [diameter]="150" [strokeWidth]="15" [value]="progressValue"
+      color="accent">
+      ></mat-progress-spinner>
+    <span class="textProgressValue">
       {{ progressValue }}%
-    </div>
+    </span>
   </div>
-  <div class="circleChartInformation">
-    <div class="infoProgressValue">{{ progressValue }}%</div>
-    <div class="mt-1">De libres profesionistas en tu red</div>
-    <div class="mt-1">
+  <div>
+    <span><strong>{{ progressValue }}%</strong> De libres profesionistas en tu red</span>
+    <span class="mt-1">
       <button type="button" mat-raised-button color="accent">
         Editar ocupación
       </button>
-    </div>
+    </span>
   </div>
 </div>
