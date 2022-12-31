@@ -1,0 +1,78 @@
+<div class="set-12 datahldr">
+  <div class="set-12 img-hldr" [ngStyle]="{
+    'background-image': subcategory.images.length != 0 ? 
+    'url(' + subcategory.images[0] + ')' : 'url(' + 'assets/images/1200x-1.jpeg' + ')' 
+  }">
+
+    <div class="set-12 description">
+      <p class="title">
+        <strong>{{subcategory.category.name}}</strong>
+      </p>
+      <div class="set-12 txt" *ngIf="subcategory.description != null" [innerHtml]="(subcategory.description.length > 100) ? (subcategory.description | slice: 0 : 100) + '...' :
+    (subcategory.description)"></div>
+      <button type="button" (click)="openModalDescription()" *ngIf="subcategory.description != null">Leer más</button>
+    </div>
+
+    <button type="button" class="crumbs-menu" mat-icon-button color="accent" [matMenuTriggerFor]="crumbsMenu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #crumbsMenu="matMenu">
+      <button mat-menu-item (click)="linkMe('/documentos-publicos/' + documentID)">
+        <mat-icon>arrow_left</mat-icon>
+        <span>Mexicolectivo</span>
+      </button>
+      <button mat-menu-item (click)="linkMe('/documentos-publicos/' + documentID + '/categoria/' + categoryID)">
+        <mat-icon>arrow_left</mat-icon>
+        <span>{{category.category.name}}</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>location_on</mat-icon>
+        <span>{{subcategory.category.name}}</span>
+      </button>
+    </mat-menu>
+
+    <div class="overlay"></div>
+  </div>
+
+  <div class="set-12 carddata">
+    <mat-card>
+      <div class="set-6">
+        <div class="image-box gray-icon-color">
+          <mat-icon>group</mat-icon>
+        </div>
+        <div class="set-12 texts-box">
+          <p class="name">
+            <small>Usuarios</small>
+          </p>
+          <p class="amount">
+            <small>{{subcategory.stats?.users}}</small>
+          </p>
+        </div>
+      </div>
+
+      <div class="set-6">
+        <div class="set-12">
+          <div class="image-box red-icon-color">
+            <mat-icon>front_hand</mat-icon>
+          </div>
+        </div>
+        <div class="set-12 texts-box">
+          <p class="name">
+            <small>Interacciones</small>
+          </p>
+          <p class="amount">
+            <small>{{subcategory.stats?.interactions}}</small>
+          </p>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <div class="set-12 topic-list">
+    <div class="public-document-mobile-topic-list" [document]="document" [category]="subcategory"></div>
+  </div>
+
+  <div class="set-12">
+    <div class="app-footer"></div>
+  </div>
+</div>

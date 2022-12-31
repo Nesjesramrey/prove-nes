@@ -1,10 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, HostBinding, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AddDocumentThemeComponent } from '../add-document-theme/add-document-theme.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TestimonyService } from 'src/app/services/testimony.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { UtilityService } from 'src/app/services/utility.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-add-document-testimony',
@@ -58,16 +59,21 @@ export class AddDocumentTestimonyComponent implements OnInit {
   };
   public fileNames: any = [];
   public user: any = null;
+  public isMobile: boolean = false;
+  @HostBinding('class') public class: string = '';
 
   constructor(
     public formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<AddDocumentThemeComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public testimonyService: TestimonyService,
-    public utilityService: UtilityService
+    public utilityService: UtilityService,
+    public deviceDetectorService: DeviceDetectorService
   ) {
-    // console.log(this.dialogData);
+    console.log(this.dialogData);
     this.user = this.dialogData['user'];
+    this.isMobile = this.deviceDetectorService.isMobile();
+    if (this.isMobile) { this.class = 'fixmobile'; }
   }
 
   ngOnInit(): void {

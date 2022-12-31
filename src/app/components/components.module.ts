@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 import { AppMaterialModule } from '../app-material.module';
 import { NgChartsModule } from 'ng2-charts';
@@ -67,6 +68,19 @@ import { PublicDocumentMobileTopTenComponent } from './public-document-mobile-to
 import { PublicDocumentMobileCategoryViewComponent } from './public-document-mobile-category-view/public-document-mobile-category-view.component';
 import { PublicDocumentMobileFixedToolsComponent } from './public-document-mobile-fixed-tools/public-document-mobile-fixed-tools.component';
 import { PublicDocumentMobileSubcategoryBarsComponent } from './public-document-mobile-subcategory-bars/public-document-mobile-subcategory-bars.component';
+import { PublicDocumentMobileSubcategoryViewComponent } from './public-document-mobile-subcategory-view/public-document-mobile-subcategory-view.component';
+import { PublicDocumentMobileTopicListComponent } from './public-document-mobile-topic-list/public-document-mobile-topic-list.component';
+import { PublicDocumentMobileTopicViewComponent } from './public-document-mobile-topic-view/public-document-mobile-topic-view.component';
+import { PublicDocumentMobileSolutionViewComponent } from './public-document-mobile-solution-view/public-document-mobile-solution-view.component';
+import { TestimonialListComponent } from './testimonial-list/testimonial-list.component';
+import { TestimonialSingleViewComponent } from './testimonial-single-view/testimonial-single-view.component';
+import { TestimonialImageSliderComponent } from './testimonial-image-slider/testimonial-image-slider.component';
+import { VoteDialogComponent } from './vote-dialog/vote-dialog.component';
+import { SearchDialogComponent } from './search-dialog/search-dialog.component';
+import { AddDocumentTopicFullComponent } from './add-document-topic-full/add-document-topic-full.component';
+import { ShareSheetComponent } from './share-sheet/share-sheet.component';
+import { InviteDialogComponent } from './invite-dialog/invite-dialog.component';
+import { ComplaintDialogComponent } from './complaint-dialog/complaint-dialog.component';
 
 @NgModule({
   imports: [
@@ -85,7 +99,8 @@ import { PublicDocumentMobileSubcategoryBarsComponent } from './public-document-
     LyIconModule,
     NgChartsModule,
     AppSharedModule,
-    AngularEditorModule
+    AngularEditorModule,
+    ClipboardModule
   ],
   declarations: [
     AppPageletComponent,
@@ -137,7 +152,20 @@ import { PublicDocumentMobileSubcategoryBarsComponent } from './public-document-
     PublicDocumentMobileTopTenComponent,
     PublicDocumentMobileCategoryViewComponent,
     PublicDocumentMobileFixedToolsComponent,
-    PublicDocumentMobileSubcategoryBarsComponent
+    PublicDocumentMobileSubcategoryBarsComponent,
+    PublicDocumentMobileSubcategoryViewComponent,
+    PublicDocumentMobileTopicListComponent,
+    PublicDocumentMobileTopicViewComponent,
+    PublicDocumentMobileSolutionViewComponent,
+    TestimonialListComponent,
+    TestimonialSingleViewComponent,
+    TestimonialImageSliderComponent,
+    VoteDialogComponent,
+    SearchDialogComponent,
+    AddDocumentTopicFullComponent,
+    ShareSheetComponent,
+    InviteDialogComponent,
+    ComplaintDialogComponent
   ],
   exports: [
     AppPageletComponent,
@@ -186,7 +214,20 @@ import { PublicDocumentMobileSubcategoryBarsComponent } from './public-document-
     PublicDocumentMobileTopTenComponent,
     PublicDocumentMobileCategoryViewComponent,
     PublicDocumentMobileFixedToolsComponent,
-    PublicDocumentMobileSubcategoryBarsComponent
+    PublicDocumentMobileSubcategoryBarsComponent,
+    PublicDocumentMobileSubcategoryViewComponent,
+    PublicDocumentMobileTopicListComponent,
+    PublicDocumentMobileTopicViewComponent,
+    PublicDocumentMobileSolutionViewComponent,
+    TestimonialListComponent,
+    TestimonialSingleViewComponent,
+    TestimonialImageSliderComponent,
+    VoteDialogComponent,
+    SearchDialogComponent,
+    AddDocumentTopicFullComponent,
+    ShareSheetComponent,
+    InviteDialogComponent,
+    ComplaintDialogComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
@@ -214,7 +255,15 @@ import { PublicDocumentMobileSubcategoryBarsComponent } from './public-document-
     WelcomeDialogComponent,
     AddCategoryDialogComponent,
     RequestEditPermissionComponent,
-    GiveEditPermissionComponent
+    GiveEditPermissionComponent,
+    TestimonialListComponent,
+    TestimonialSingleViewComponent,
+    VoteDialogComponent,
+    SearchDialogComponent,
+    AddDocumentTopicFullComponent,
+    ShareSheetComponent,
+    InviteDialogComponent,
+    ComplaintDialogComponent
   ],
   providers: [],
 })

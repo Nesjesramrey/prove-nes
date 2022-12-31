@@ -23,9 +23,9 @@ export class CommentService {
   }
 
   createNewComment(data: any) {
-    console.log(data);
     return this.httpClient.post(
-      this.endpointSrvc.apiEndPoint + this.endpointSrvc.createNewCommentEndPoint + `${data.id}` + `/?type=${data.type}`, data.data
+      // this.endpointSrvc.apiEndPoint + this.endpointSrvc.createNewCommentEndPoint + `${data.id}` + `/?type=${data.type}`, data.data
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.createNewCommentEndPoint + `${data.id}`, data.data
     );
   }
 
@@ -90,14 +90,20 @@ export class CommentService {
   }
 
   fetchCommentById(data: any) {
-    return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchCommentByIdEndPoint + `${data['comment_id']}`, {});
+    return this.httpClient.get(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchCommentByIdEndPoint + `${data['comment_id']}`, {}
+    );
   }
 
   killDocumentComment(data: any) {
-    return this.httpClient.delete(this.endpointSrvc.apiEndPoint + this.endpointSrvc.killDocumentCommentEndPoint + `${data['comment_id']}`, {});
+    return this.httpClient.delete(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.killDocumentCommentEndPoint + `${data['comment_id']}`, {}
+    );
   }
 
   replyDocumentComments(data: any) {
-    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.replyDocumentCommentsEndPoint + `${data['comment_id']}` + '/response', data);
+    return this.httpClient.post(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.replyDocumentCommentsEndPoint + `${data['comment_id']}` + '/response', data
+    );
   }
 }

@@ -1,0 +1,12 @@
+<div class="slider">
+  <img *ngFor="let image of images; let i = index" [src]="image" />
+</div>
+
+<!-- <div class="ctrls" *ngIf="images.length > 1">
+  <button type="button" mat-mini-fab color="primary" (click)="previousImage()">
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+  <button type="button" mat-mini-fab color="primary" (click)="nextImage()">
+    <mat-icon>chevron_right</mat-icon>
+  </button>
+</div> -->

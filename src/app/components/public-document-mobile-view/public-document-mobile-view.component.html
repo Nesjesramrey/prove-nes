@@ -1,13 +1,29 @@
 <div class="set-12 datahldr">
   <div class="set-12 img-hldr" [ngStyle]="{
-    'background-image': document.images.length != 0 ? 'url(' + document.images[0] + ')' : 'url(' + 'assets/images/1200x-1.jpeg' + ')' 
+    'background-image': document.images.length != 0 ? 
+    'url(' + document.images[0] + ')' : 
+    'url(' + 'assets/images/1200x-1.jpeg' + ')' 
   }">
+
     <div class="set-12 description">
-      <h3 class="txt-center">{{document.title}}</h3>
-      <div class="set-12 txt" *ngIf="document.description != null" [innerHtml]="(document.description.length > 100) ? (document.description | slice: 0 : 100) + '...' :
-    (document.description)"></div>
-      <button type="button">Leer más</button>
+      <p class="title">
+        <strong>{{document.title}}</strong>
+      </p>
+      <div class="set-12 txt" *ngIf="document.description != null" [innerHtml]="(document.description.length > 100) ? 
+        (document.description | slice: 0 : 100) + '...' : (document.description)"></div>
+      <button type="button" (click)="openModalDescription()" *ngIf="document.description != null">Leer más</button>
     </div>
+
+    <button type="button" class="crumbs-menu" mat-icon-button color="accent" [matMenuTriggerFor]="crumbsMenu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #crumbsMenu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>location_on</mat-icon>
+        <span>Mexicolectivo</span>
+      </button>
+    </mat-menu>
+
     <div class="overlay"></div>
   </div>
 
@@ -47,7 +63,7 @@
 
   <div class="set-12 layoutshldr">
     <div class="public-document-mobile-category-bars" [document]="document" [document_id]="document._id"
-      [layouts]="document.layouts" [open]="open" (openMenu)="getCoverageMenuStatus($event)"></div>
+      [layouts]="document.layouts"></div>
   </div>
 </div>
 
@@ -56,17 +72,19 @@
 </div>
 
 <div class="set-12 topten">
-  <div class="public-document-mobile-top-ten" [solutions]="topSolutions"></div>
+  <div class="public-document-mobile-top-ten" [solutions]="topSolutions" [open]="open"
+    (openMenu)="getCoverageMenuStatus($event)"></div>
 </div>
 
 <div class="set-12">
   <div class="app-footer"></div>
 </div>
 
+<!-- coverage menu -->
 <div class="set-12 coverage-menu" [class.menuopen]="open">
   <div class="set-12 menuhead">
     <div class="set-10">
-      Filtrar por cobertura
+      Coberturas disponibles:
     </div>
     <div class="set-2">
       <button mat-icon-button color="primary" (click)="displayCoverageMenu()">
@@ -82,5 +100,11 @@
         <small>{{state.name}}</small>
       </mat-list-option>
     </mat-selection-list>
+  </div>
+
+  <div class="set-12 ctrls">
+    <button type="button" mat-raised-button color="warn" (click)="onFilterSolutions()">
+      <small>Filtrar</small>
+    </button>
   </div>
 </div>

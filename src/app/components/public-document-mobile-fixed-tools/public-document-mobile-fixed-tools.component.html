@@ -1,14 +1,23 @@
 <div class="set-12">
-  <button type="button" class="tool" [class.fixedpos]="open">
-    <mat-icon>warning</mat-icon>
+  <button type="button" class="tool" [class.fixedpos]="open" (click)="popSearchDialog()">
+    <mat-icon>search</mat-icon>
+    <!-- <small>Búsqueda</small> -->
   </button>
-
-  <button type="button" class="tool" [class.fixedpos]="open">
-    <mat-icon>insights</mat-icon>
+  <button type="button" class="tool" [class.fixedpos]="open" (click)="popComplaintsDialog()">
+    <mat-icon>warning</mat-icon>
+    <!-- <small>Denuncia</small> -->
+  </button>
+  <button type="button" class="tool" [class.fixedpos]="open" (click)="popAddTopicDialog()">
+    <mat-icon>note_add</mat-icon>
+    <!-- <small>Tópico</small> -->
+  </button>
+  <button type="button" class="tool" [class.fixedpos]="open" (click)="popInviteDialog()">
+    <mat-icon>send</mat-icon>
+    <!-- <small>Invitar</small> -->
   </button>
 </div>
 
 <button type="button" class="opener" (click)="displayMenu()">
-  <mat-icon *ngIf="!open">menu_open</mat-icon>
+  <mat-icon *ngIf="!open">add_circle</mat-icon>
   <mat-icon *ngIf="open">cancel</mat-icon>
 </button>

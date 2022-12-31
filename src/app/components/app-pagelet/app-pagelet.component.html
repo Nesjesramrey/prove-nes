@@ -3,6 +3,7 @@
     <div class="set-4" [class.set-12]="isMobile">
       <img src="../../../assets/images/mexicolectivo-full-green.png" (click)="linkMe('home')" />
     </div>
+
     <div class="set-8 search-hldr" *ngIf="!isMobile">
       <form [formGroup]="searchFormGroup" (submit)="onSearch(searchFormGroup)">
         <input type="text" placeholder="Búscar en Mexicolectivo..." class="bar-search" formControlName="search">
@@ -66,6 +67,10 @@
   </div>
 
   <div class="set-6 navigation" *ngIf="isMobile">
+    <button type="button" (click)="popSearchDialog()">
+      <mat-icon color="accent">search</mat-icon>
+    </button>
+
     <button type="button" (click)="displayMobileMenu()">
       <mat-icon color="accent">menu</mat-icon>
     </button>

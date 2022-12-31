@@ -1,0 +1,26 @@
+<div class="set-12 dialog-head">
+  <div class="set-10">
+    <p>{{testimony.name || 'Sin título'}}</p>
+    <p *ngIf="!testimony.isAnonymous">
+      <small>By: {{testimony.createdBy.firstname}} {{testimony.createdBy.lastname}}</small>
+    </p>
+    <p *ngIf="testimony.isAnonymous"><small>By: Anónimo</small></p>
+    <p>
+      <small>{{testimony.createdAt | date: 'mediumDate'}} - {{testimony.createdAt | date: 'mediumTime'}}</small>
+    </p>
+  </div>
+
+  <div class="set-2">
+    <button type="button" mat-mini-fab color="primary" (click)="killDialog()">
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div class="set-12 dialog-body">
+  <p [innerHTML]="testimony.description"></p>
+
+  <div class="set-12 slider" *ngIf="testimony.images.length != 0">
+    <div class=" testimonial-image-slider" [images]="testimony.images"></div>
+  </div>
+</div>

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CanActivateLoggedInGuard } from '../guards/logged-in.guard';
 import { CanActivateVisitGuard } from '../guards/visit-public.guard';
 import { CategoryComponent } from './category/category.component';
 import { ModalVotesComponent } from './components/modal-votes/modal-votes.component';
@@ -17,27 +18,27 @@ const routes: Routes = [
       {
         path: ':documentID',
         component: PublicComponent,
-        canActivate: [CanActivateVisitGuard],
+        canActivate: [CanActivateLoggedInGuard, CanActivateVisitGuard],
       },
       {
         path: ':documentID/categoria/:categoryID',
         component: CategoryComponent,
-        canActivate: [CanActivateVisitGuard],
+        canActivate: [CanActivateLoggedInGuard, CanActivateVisitGuard],
       },
       {
         path: ':documentID/categoria/:categoryID/subcategoria/:subcategoryID',
         component: SubcategoryComponent,
-        canActivate: [CanActivateVisitGuard],
+        canActivate: [CanActivateLoggedInGuard, CanActivateVisitGuard],
       },
       {
         path: ':documentID/categoria/:categoryID/subcategoria/:subcategoryID/tema/:topicID',
         component: TopicComponent,
-        canActivate: [CanActivateVisitGuard],
+        canActivate: [CanActivateLoggedInGuard, CanActivateVisitGuard],
       },
       {
         path: ':documentID/categoria/:categoryID/subcategoria/:subcategoryID/tema/:topicID/solucion/:solutionID',
         component: SolutionComponent,
-        canActivate: [CanActivateVisitGuard],
+        canActivate: [CanActivateLoggedInGuard, CanActivateVisitGuard],
       },
     ],
   },

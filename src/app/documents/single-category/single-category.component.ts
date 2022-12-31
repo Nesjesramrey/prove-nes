@@ -206,7 +206,6 @@ export class SingleCategoryComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
-        console.log(reply);
         this.subcategories.push(reply[0]);
         this.dataSource = new MatTableDataSource(this.subcategories);
 
