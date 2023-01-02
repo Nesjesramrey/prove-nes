@@ -31,6 +31,10 @@
       </div>
     </div>
 
+    <div class="set-12 authorhldr">
+      <small>Autor: <strong>{{topic?.createdBy?.firstname}} {{topic?.createdBy?.lastname}}</strong></small>
+    </div>
+
     <div class="set-12 row" [innerHTML]="topic?.description"></div>
 
     <div class="set-12 txt-center row vote-tools">
