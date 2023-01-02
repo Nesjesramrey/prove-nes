@@ -135,9 +135,10 @@
     top: 0;
     left: -100%;
     background: white;
-    z-index: 101;
+    z-index: 201;
     transition: all .2s linear;
-    padding-top: 20px;
+    padding: 20px 0;
+    overflow: auto;
 
     .menuhead {
       display: flex;
