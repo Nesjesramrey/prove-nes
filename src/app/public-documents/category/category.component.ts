@@ -74,7 +74,11 @@ export class CategoryComponent implements OnInit {
       next: (reply: any) => {
         this.document = reply;
         this.coverage = this.document['coverage'];
-        if (this.coverageSelected == null) { this.coverageSelected = this.coverage[0]['_id']; };
+        if (this.coverageSelected == null) {
+          let coverageSelected = this.coverage.filter((x: any) => { return x['name'] == 'Nacional'; });
+          this.coverageSelected = coverageSelected[0]['_id'] || this.coverage[0]['_id'];
+          // this.coverageSelected = this.coverage[0]['_id']; 
+        };
 
         this.selectedCategory = this.document['layouts'].filter((x: any) => { return x['_id'] == this.categoryID });
         this.selectedCategory = this.selectedCategory[0];
