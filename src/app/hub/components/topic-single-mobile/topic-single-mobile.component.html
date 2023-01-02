@@ -7,11 +7,8 @@
 
     <mat-card>
         <mat-card-content>
-            <h3>FALTA DE EMPLEO FORMAL</h3>
-            <p>La falta de empleo formal ha orillado a la sociedad mexicana a buscar empleos informales en todos los
-                sectores y ramas económicas del país. Aunado a esto, muchos de los empleos informales del país están
-                dedicados a
-                actividades ilegales o se encuentran domina dos por grupos delictivos...</p>
+            <h3>{{data.title}}</h3>
+            <p  [innerHTML]="data.description"></p>
             <div>
                 <button mat-fab style="background-color: primary">
                     <mat-icon>thumb_up</mat-icon>

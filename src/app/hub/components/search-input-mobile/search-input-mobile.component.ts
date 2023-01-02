@@ -17,7 +17,7 @@ export class SearchInputMobileComponent implements OnInit {
   ngOnInit(): void {
 
     this.formGroup = this.formBuilder.group({
-      contents: ["", [Validators]],
+      contents: [""],
     })
   }
 

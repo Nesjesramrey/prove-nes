@@ -13,6 +13,10 @@ export class SolutionService {
     public endpointSrvc: EndPointService
   ) { }
 
+  fetchAllSolution() {
+    return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAllSolution, );
+  }
+
   fetchSingleSolutionById(data: any) {
     return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchSingleSolutionByIdEndPoint + `${data['_id']}`, {});
   }

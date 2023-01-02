@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalVotesComponent } from 'src/app/public-documents/components/modal-votes/modal-votes.component';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit, Inject } from '@angular/core';
+import { VoteDialogComponent } from 'src/app/components/vote-dialog/vote-dialog.component';
+import { MatDialog,  MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { DialogData } from '../card-topics-mobile/card-topics-mobile.component';
+
+
 
 
 @Component({
@@ -11,16 +14,21 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class TopicSingleMobileComponent implements OnInit {
   public userVoted: number = 0;
+  public topic: any = null;
   public topicID: string = '';
+  public DialogData: any = null
+  
+
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public dialog: MatDialog,
     public activatedRoute: ActivatedRoute,
-  ) {
-    this.topicID = this.activatedRoute['snapshot']['params']['topicID'];
-   }
+  ) {}
 
   ngOnInit(): void {
+
+    
     
   }
   loadTopic() {
@@ -29,12 +37,12 @@ export class TopicSingleMobileComponent implements OnInit {
 
 
   openModalVote() {
-    const dialogRef = this.dialog.open<ModalVotesComponent>(
-      ModalVotesComponent,
+    const dialogRef = this.dialog.open<VoteDialogComponent>(
+      VoteDialogComponent,
       {
         width: '500px',
         disableClose: true,
-        data: { topic: this.topicID },
+        data: { topic: this.topic },
       }
     );
     dialogRef.afterClosed().subscribe((reply: any) => {
@@ -43,3 +51,4 @@ export class TopicSingleMobileComponent implements OnInit {
   }
 
 }
+

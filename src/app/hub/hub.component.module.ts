@@ -37,6 +37,8 @@ import { LineChartMobileComponent } from './components/line-chart-mobile/line-ch
 import { ProfileMobileComponent } from './profile-mobile/profile-mobile.component';
 import { FooterMobileComponent } from './components/footer-mobile/footer-mobile.component';
 import { TopicSingleMobileComponent } from './components/topic-single-mobile/topic-single-mobile.component';
+import { CardGoalsMobileComponent } from './components/card-goals-mobile/card-goals-mobile.component';
+import { CardSolutionsMobileComponent } from './components/card-solutions-mobile/card-solutions-mobile.component';
 
 
 @NgModule({
@@ -73,6 +75,8 @@ import { TopicSingleMobileComponent } from './components/topic-single-mobile/top
     TabsMobileComponent,
     SearchInputMobileComponent,
     CardTopicsMobileComponent,
+    CardGoalsMobileComponent,
+    CardSolutionsMobileComponent,
     CommunityMobileComponent,
     SpiderChartMobileComponent,
     CircleChartMobileComponent,
