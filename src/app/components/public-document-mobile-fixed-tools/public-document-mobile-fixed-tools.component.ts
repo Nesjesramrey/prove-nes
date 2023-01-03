@@ -14,6 +14,7 @@ import { SearchDialogComponent } from '../search-dialog/search-dialog.component'
 })
 export class PublicDocumentMobileFixedToolsComponent implements OnInit {
   @Input('user') public user: any = null;
+  @Input('isCollaborator') public isCollaborator: boolean = false;
   public open: boolean = false;
   public topic: any = null;
   @Output() public topicAdded = new EventEmitter<any>();
@@ -25,7 +26,9 @@ export class PublicDocumentMobileFixedToolsComponent implements OnInit {
     public utilityService: UtilityService
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    console.log(this.isCollaborator);
+  }
 
   displayMenu() {
     this.open = !this.open;

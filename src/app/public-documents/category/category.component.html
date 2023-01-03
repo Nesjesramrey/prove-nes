@@ -89,5 +89,5 @@
 <div class="set-12" *ngIf="isDataAvailable && isMobile">
   <div class="public-document-mobile-category-view" [user]="user" [document]="document" [category]="selectedCategory"
     [topSolutions]="topSolutions" [storedSolutions]="storedSolutions"></div>
-  <div class="public-document-mobile-fixed-tools"></div>
+  <div class="public-document-mobile-fixed-tools" [user]="user" [isCollaborator]="isCollaborator"></div>
 </div>

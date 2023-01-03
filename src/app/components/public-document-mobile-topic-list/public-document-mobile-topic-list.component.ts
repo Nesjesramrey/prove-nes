@@ -16,6 +16,7 @@ export class PublicDocumentMobileTopicListComponent implements OnInit {
   public subcategoryID: string = '';
   @Input('document') public document: any = null;
   @Input('category') public category: any = null;
+  @Input('isCollaborator') public isCollaborator: any = null;
   public topics: any = null;
   public dataSource = new MatTableDataSource<any>();
   public coverage: any = null;
