@@ -7,7 +7,7 @@
     <mat-icon>warning</mat-icon>
     <!-- <small>Denuncia</small> -->
   </button>
-  <button type="button" class="tool" [class.fixedpos]="open" (click)="popAddTopicDialog()">
+  <button type="button" class="tool" [class.fixedpos]="open" (click)="popAddTopicDialog()" [disabled]="!isCollaborator">
     <mat-icon>note_add</mat-icon>
     <!-- <small>Tópico</small> -->
   </button>

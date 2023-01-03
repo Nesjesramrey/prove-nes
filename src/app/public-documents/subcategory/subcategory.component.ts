@@ -1,6 +1,6 @@
 import { Component, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { forkJoin, Observable, Subject } from 'rxjs';
 import { DocumentService } from 'src/app/services/document.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LayoutService } from 'src/app/services/layout.service';
@@ -10,6 +10,7 @@ import { CustomMatDataSource } from '../custom-class/custom-table.component';
 import { MatSort } from '@angular/material/sort';
 import { AddDocumentThemeComponent } from 'src/app/components/add-document-theme/add-document-theme.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: '.subcategory-page',
@@ -40,6 +41,8 @@ export class SubcategoryComponent implements OnInit {
   public panelDataUpdated: Subject<any> = new Subject();
   public isMobile: boolean = false;
   @HostBinding('class') public class: string = '';
+  public user: any = null;
+  public isCollaborator: boolean = false;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -48,7 +51,8 @@ export class SubcategoryComponent implements OnInit {
     public layoutService: LayoutService,
     public utilityService: UtilityService,
     public router: Router,
-    public deviceDetectorService: DeviceDetectorService
+    public deviceDetectorService: DeviceDetectorService,
+    public userService: UserService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
@@ -60,48 +64,111 @@ export class SubcategoryComponent implements OnInit {
   ngOnInit(): void {
     if (history['state']['coverage'] != undefined) { this.coverageSelected = history['state']['coverage']; };
 
-    this.documentService.fetchSingleDocumentById({ _id: this.documentID }).subscribe({
-      error: (error: any) => { },
-      next: (reply: any) => {
-        this.document = reply;
-        this.coverage = this.document['coverage'];
-        if (this.coverageSelected == null) {
-          let coverageSelected = this.coverage.filter((x: any) => { return x['name'] == 'Nacional'; });
-          this.coverageSelected = coverageSelected[0]['_id'] || this.coverage[0]['_id'];
-          // this.coverageSelected = this.coverage[0]['_id']; 
-        };
+    let user: Observable<any> = this.userService.fetchFireUser();
+    let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
 
-        let category = this.document['layouts'].filter((x: any) => { return x['_id'] == this.categoryID });
-        this.category = category[0];
+    forkJoin([user, document]).subscribe((reply: any) => {
+      this.user = reply[0];
+      this.user['role'] = this.user['activities'][0]['value'];
 
-        let subcategory = this.category['subLayouts'].filter((x: any) => { return x['_id'] == this.subcategoryID });
-        this.subcategory = subcategory[0];
-        this.stats = this.subcategory['stats'];
+      this.document = reply[1];
+      this.coverage = this.document['coverage'];
+      if (this.coverageSelected == null) {
+        let coverageSelected = this.coverage.filter((x: any) => { return x['name'] == 'Nacional'; });
+        this.coverageSelected = coverageSelected[0]['_id'] || this.coverage[0]['_id'];
+      };
 
-        this.topicsDataSource = this.subcategory['topics'];
-        this.subcategory['topics'].filter((x: any) => {
-          x['coverage'].filter((y: any) => {
-            if (y['_id'] == this.coverageSelected) { this.panelTopicsData.push(x); }
+      let category = this.document['layouts'].filter((x: any) => { return x['_id'] == this.categoryID });
+      this.category = category[0];
+
+      let subcategory = this.category['subLayouts'].filter((x: any) => { return x['_id'] == this.subcategoryID });
+      this.subcategory = subcategory[0];
+      this.stats = this.subcategory['stats'];
+
+      this.topicsDataSource = this.subcategory['topics'];
+      this.subcategory['topics'].filter((x: any) => {
+        x['coverage'].filter((y: any) => {
+          if (y['_id'] == this.coverageSelected) { this.panelTopicsData.push(x); }
+        });
+      });
+
+      const dataSolution: any = [];
+      this.subcategory.topics.map((item: any) => [...item.solutions]).forEach((_: any, index: number) => {
+        dataSolution.push(...this.subcategory.topics.map((item: any) => [...item.solutions])[index]);
+      });
+      dataSolution.filter((x: any) => {
+        x['coverage'].filter((y: any) => {
+          if (y['_id'] == this.coverageSelected) { this.solutionsDataSource.push(x); }
+        });
+      });
+
+      this.TopicDataSource = new CustomMatDataSource(this.panelTopicsData);
+      this.SolutionDataSource = new CustomMatDataSource(this.solutionsDataSource);
+
+      switch (this.user['role']) {
+        case 'administrator':
+          this.isCollaborator = true;
+          break;
+
+        case 'editor':
+          this.isCollaborator = true;
+          break;
+
+        case 'citizen':
+          let collaborator: any = this.document['collaborators'].filter((x: any) => {
+            return x['user']['_id'] == this.user['_id'];
           });
-        });
-
-        const dataSolution: any = [];
-        this.subcategory.topics.map((item: any) => [...item.solutions]).forEach((_: any, index: number) => {
-          dataSolution.push(...this.subcategory.topics.map((item: any) => [...item.solutions])[index]);
-        });
-        dataSolution.filter((x: any) => {
-          x['coverage'].filter((y: any) => {
-            if (y['_id'] == this.coverageSelected) { this.solutionsDataSource.push(x); }
-          });
-        });
-
-        this.TopicDataSource = new CustomMatDataSource(this.panelTopicsData);
-        this.SolutionDataSource = new CustomMatDataSource(this.solutionsDataSource);
-      },
-      complete: () => {
-        this.isDataAvailable = true;
+          if (collaborator.length != 0) { this.isCollaborator = true; }
+          break;
       }
+
+      setTimeout(() => {
+        this.isDataAvailable = true;
+      });
     });
+
+    // *** load document
+    // this.documentService.fetchSingleDocumentById({ _id: this.documentID }).subscribe({
+    //   error: (error: any) => { },
+    //   next: (reply: any) => {
+    //     this.document = reply;
+    //     this.coverage = this.document['coverage'];
+    //     if (this.coverageSelected == null) {
+    //       let coverageSelected = this.coverage.filter((x: any) => { return x['name'] == 'Nacional'; });
+    //       this.coverageSelected = coverageSelected[0]['_id'] || this.coverage[0]['_id'];
+    //     };
+
+    //     let category = this.document['layouts'].filter((x: any) => { return x['_id'] == this.categoryID });
+    //     this.category = category[0];
+
+    //     let subcategory = this.category['subLayouts'].filter((x: any) => { return x['_id'] == this.subcategoryID });
+    //     this.subcategory = subcategory[0];
+    //     this.stats = this.subcategory['stats'];
+
+    //     this.topicsDataSource = this.subcategory['topics'];
+    //     this.subcategory['topics'].filter((x: any) => {
+    //       x['coverage'].filter((y: any) => {
+    //         if (y['_id'] == this.coverageSelected) { this.panelTopicsData.push(x); }
+    //       });
+    //     });
+
+    //     const dataSolution: any = [];
+    //     this.subcategory.topics.map((item: any) => [...item.solutions]).forEach((_: any, index: number) => {
+    //       dataSolution.push(...this.subcategory.topics.map((item: any) => [...item.solutions])[index]);
+    //     });
+    //     dataSolution.filter((x: any) => {
+    //       x['coverage'].filter((y: any) => {
+    //         if (y['_id'] == this.coverageSelected) { this.solutionsDataSource.push(x); }
+    //       });
+    //     });
+
+    //     this.TopicDataSource = new CustomMatDataSource(this.panelTopicsData);
+    //     this.SolutionDataSource = new CustomMatDataSource(this.solutionsDataSource);
+    //   },
+    //   complete: () => {
+    //     this.isDataAvailable = true;
+    //   }
+    // });
   }
 
   redirectSolution(id: string) {
