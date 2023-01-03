@@ -545,9 +545,21 @@ mat-form-field {
     background-size: 100%;
   }
 
+  .instagram-net:disabled {
+    background: url("./assets/images/iconfinder_social_media_applications_3-instagram_4102579-disabled.png") no-repeat;
+    background-size: 100%;
+    opacity: 0.4;
+  }
+
   .whatsapp-net {
     background: url("./assets/images/3225179_app_logo_media_popular_social_icon.png") no-repeat;
     background-size: 100%;
+  }
+
+  .whatsapp-net:disabled {
+    background: url("./assets/images/3225179_app_logo_media_popular_social_icon-disabled.png") no-repeat;
+    background-size: 100%;
+    opacity: 0.4;
   }
 
   .linkedin-net {
@@ -555,9 +567,21 @@ mat-form-field {
     background-size: 100%;
   }
 
+  .linkedin-net:disabled {
+    background: url("./assets/images/3225190_app_linkedin_logo_media_popular_icon-disabled.png") no-repeat;
+    background-size: 100%;
+    opacity: 0.4;
+  }
+
   .youtube-net {
     background: url("./assets/images/3225180_app_logo_media_popular_social_icon.png") no-repeat;
     background-size: 100%;
+  }
+
+  .youtube-net:disabled {
+    background: url("./assets/images/3225180_app_logo_media_popular_social_icon-disabled.png") no-repeat;
+    background-size: 100%;
+    opacity: 0.4;
   }
 
   .twitter-net {
@@ -565,9 +589,21 @@ mat-form-field {
     background-size: 100%;
   }
 
+  .twitter-net:disabled {
+    background: url("./assets/images/3225183_app_logo_media_popular_social_icon-disabled.png") no-repeat;
+    background-size: 100%;
+    opacity: 0.4;
+  }
+
   .tiktok-net {
     background: url("./assets/images/7693284_tiktok_social media_apps_logo_icon.png") no-repeat;
     background-size: 100%;
+  }
+
+  .tiktok-net:disabled {
+    background: url("./assets/images/7693284_tiktok_social-media_apps_logo_icon-disabled.png") no-repeat;
+    background-size: 100%;
+    opacity: 0.4;
   }
 }
 
