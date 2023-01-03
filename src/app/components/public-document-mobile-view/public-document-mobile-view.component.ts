@@ -45,7 +45,9 @@ export class PublicDocumentMobileViewComponent implements OnInit {
       DescriptionViewerComponent, {
       data: {
         title: this.document['title'],
-        text: this.document['description']
+        text: this.document['description'],
+        user: this.user,
+        location: 'document'
       },
       disableClose: true,
       panelClass: 'viewer-dialog',

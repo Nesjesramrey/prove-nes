@@ -1,0 +1,37 @@
+<div class="set-12 sheet-head">
+  <img src="../../../assets/images/mexicolectivo-small-blue.png" alt="">
+  <div class="set-12">
+    <p><small>{{user?.firstname}} {{user?.lastname}}</small></p>
+    <p><small>{{user?.email}}</small></p>
+  </div>
+</div>
+
+<div class="set-12 sheet-media networks">
+  <button type="button" class="icon facebook-net">
+    <div class="fb-share-button" data-href="https://mexicolectivo.com/" data-layout="button_count" data-size="small">
+      <a target="_blank"
+        href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmexicolectivo.com%2F&amp;src=sdkpreparse"
+        class="fb-xfbml-parse-ignore"></a>
+    </div>
+  </button>
+  <button type="button" class="icon instagram-net" disabled></button>
+  <button type="button" class="icon whatsapp-net" disabled></button>
+  <button type="button" class="icon linkedin-net" disabled></button>
+  <button type="button" class="icon youtube-net" disabled></button>
+  <button type="button" class="icon twitter-net" disabled></button>
+  <button type="button" class="icon tiktok-net" disabled></button>
+</div>
+
+<div class="set-12 doc-link">
+  <mat-form-field appearance="outline">
+    <mat-label>Copiar</mat-label>
+    <input type="text" matInput [value]="url" readonly #text>
+  </mat-form-field>
+
+  <div class="set-12 txt-right">
+    <button type="button" mat-raised-button color="primary" [cdkCopyToClipboard]="text.value"
+      (click)="copyToClipboard()">
+      <small>Copiar</small>
+    </button>
+  </div>
+</div>

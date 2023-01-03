@@ -73,15 +73,16 @@ export class AddDocumentTopicFullComponent implements OnInit {
 
   ngOnInit(): void {
     this.addTopicFormGroup = this.formBuilder.group({
-      coverage: ['', [Validators.required]],
       layout: ['', [Validators.required]],
       sublayout: ['', [Validators.required]],
+      coverage: ['', [Validators.required]],
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
       files: ['', []]
     });
 
     this.addTopicFormGroup.get('sublayout')?.disable();
+    this.addTopicFormGroup.get('coverage')?.disable();
     this.addTopicFormGroup.get('title')?.disable();
     this.addTopicFormGroup.get('description')?.disable();
 
@@ -101,8 +102,14 @@ export class AddDocumentTopicFullComponent implements OnInit {
   onLayoutSelected(event: any) {
     this.sublayouts = event['value']['subLayouts'];
     this.addTopicFormGroup.get('sublayout')?.enable();
+  }
+
+  onSubLayoutSelected(event: any) {
+    this.addTopicFormGroup.get('coverage')?.enable();
+  }
+
+  onCoverageSelected(event: any) {
     this.addTopicFormGroup.get('title')?.enable();
-    this.addTopicFormGroup.get('description')?.enable();
   }
 
   onFileSelected(event: any) {

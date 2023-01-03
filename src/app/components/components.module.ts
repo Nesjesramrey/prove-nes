@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 import { AppMaterialModule } from '../app-material.module';
 import { NgChartsModule } from 'ng2-charts';
@@ -77,7 +78,9 @@ import { TestimonialImageSliderComponent } from './testimonial-image-slider/test
 import { VoteDialogComponent } from './vote-dialog/vote-dialog.component';
 import { SearchDialogComponent } from './search-dialog/search-dialog.component';
 import { AddDocumentTopicFullComponent } from './add-document-topic-full/add-document-topic-full.component';
-import { SocialShareDialogComponent } from './social-share-dialog/social-share-dialog.component';
+import { ShareSheetComponent } from './share-sheet/share-sheet.component';
+import { InviteDialogComponent } from './invite-dialog/invite-dialog.component';
+import { ComplaintDialogComponent } from './complaint-dialog/complaint-dialog.component';
 
 @NgModule({
   imports: [
@@ -96,7 +99,8 @@ import { SocialShareDialogComponent } from './social-share-dialog/social-share-d
     LyIconModule,
     NgChartsModule,
     AppSharedModule,
-    AngularEditorModule
+    AngularEditorModule,
+    ClipboardModule
   ],
   declarations: [
     AppPageletComponent,
@@ -159,7 +163,9 @@ import { SocialShareDialogComponent } from './social-share-dialog/social-share-d
     VoteDialogComponent,
     SearchDialogComponent,
     AddDocumentTopicFullComponent,
-    SocialShareDialogComponent
+    ShareSheetComponent,
+    InviteDialogComponent,
+    ComplaintDialogComponent
   ],
   exports: [
     AppPageletComponent,
@@ -219,7 +225,9 @@ import { SocialShareDialogComponent } from './social-share-dialog/social-share-d
     VoteDialogComponent,
     SearchDialogComponent,
     AddDocumentTopicFullComponent,
-    SocialShareDialogComponent
+    ShareSheetComponent,
+    InviteDialogComponent,
+    ComplaintDialogComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
@@ -253,7 +261,9 @@ import { SocialShareDialogComponent } from './social-share-dialog/social-share-d
     VoteDialogComponent,
     SearchDialogComponent,
     AddDocumentTopicFullComponent,
-    SocialShareDialogComponent
+    ShareSheetComponent,
+    InviteDialogComponent,
+    ComplaintDialogComponent
   ],
   providers: [],
 })

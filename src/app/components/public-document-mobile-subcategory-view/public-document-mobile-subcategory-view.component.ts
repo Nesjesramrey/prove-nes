@@ -10,6 +10,8 @@ import { DescriptionViewerComponent } from '../description-viewer/description-vi
   styleUrls: ['./public-document-mobile-subcategory-view.component.scss']
 })
 export class PublicDocumentMobileSubcategoryViewComponent implements OnInit {
+  @Input('user') public user: any = null;
+  @Input('isCollaborator') public isCollaborator: any = null;
   @Input('document') public document: any = null;
   public category: any = null;
   @Input('category') public subcategory: any = null;

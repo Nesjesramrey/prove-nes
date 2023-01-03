@@ -16,6 +16,7 @@ export class UtilityService {
   public saveSuccess: string = 'Se guardo correctamente.';
   public userAddedSuccesss: string = 'El usuario se agrego correctamente.';
   public actionControlActivityList: any = ['administrator', 'editor'];
+  public emailSendSuccess: string = 'El correo electrónico se envió correctamente.'
 
   constructor(
     public snackbar: MatSnackBar,
@@ -73,16 +74,13 @@ export class UtilityService {
 
   fetchAllStates() {
     return this.httpClient.get(
-      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAllStatesEndPoint,
-      {}
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAllStatesEndPoint, {}
     );
   }
 
   fetchAllStatesMex() {
     return this.httpClient.get(
-      this.endpointSrvc.apiEndPoint +
-      this.endpointSrvc.fetchAllStatesMexEndPoint,
-      {}
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAllStatesMexEndPoint, {}
     );
   }
 
@@ -94,34 +92,25 @@ export class UtilityService {
 
   fetchAllCategories() {
     return this.httpClient.get(
-      this.endpointSrvc.apiEndPoint +
-      this.endpointSrvc.fetchAllCategoriesEndPoint,
-      {}
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAllCategoriesEndPoint, {}
     );
   }
 
   fetchAllActivities() {
     return this.httpClient.get(
-      this.endpointSrvc.apiEndPoint +
-      this.endpointSrvc.fetchAllActivitiesEndPoint,
-      {}
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAllActivitiesEndPoint, {}
     );
   }
 
   fetchAssociationTypology() {
     return this.httpClient.get(
-      this.endpointSrvc.apiEndPoint +
-      this.endpointSrvc.fetchAssociationTypologyEndPoint,
-      {}
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAssociationTypologyEndPoint, {}
     );
   }
 
   dataURIToBlob(dataURI: string) {
     const splitDataURI = dataURI.split(',');
-    const byteString =
-      splitDataURI[0].indexOf('base64') >= 0
-        ? atob(splitDataURI[1])
-        : decodeURI(splitDataURI[1]);
+    const byteString = splitDataURI[0].indexOf('base64') >= 0 ? atob(splitDataURI[1]) : decodeURI(splitDataURI[1]);
     const mimeString = splitDataURI[0].split(':')[1].split(';')[0];
     const ia = new Uint8Array(byteString.length);
     for (let i = 0; i < byteString.length; i++) {
@@ -135,10 +124,7 @@ export class UtilityService {
     for (let title of arrayTitles) {
       if (title.length > 0) {
         const arrayTitle = title.split(' ');
-        title =
-          arrayTitle.length <= 4
-            ? title
-            : `${arrayTitle[0]} ${arrayTitle[1]} ${arrayTitle[2]} ${arrayTitle[3]}...`;
+        title = arrayTitle.length <= 4 ? title : `${arrayTitle[0]} ${arrayTitle[1]} ${arrayTitle[2]} ${arrayTitle[3]}...`;
         resultTitle.push(title);
       }
     }
@@ -153,5 +139,11 @@ export class UtilityService {
   ) {
     const array = [document, category, subCategory, topic];
     return this.formatBreadscrumbs(array);
+  }
+
+  inviteUserToMexicolectivo(data: any) {
+    return this.httpClient.post(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.inviteUserToMexicolectivoEndPoint, data
+    );
   }
 }

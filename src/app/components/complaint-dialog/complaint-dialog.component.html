@@ -1,0 +1,42 @@
+<div class="set-12 dialog-head">
+  <div class="set-10">
+    <h3>Denuncia</h3>
+  </div>
+  <div class="set-2 txt-right">
+    <button type="button" mat-mini-fab color="primary" (click)="killDialog()" [disabled]="submitted">
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div class="set-12 dialog-body">
+  <div class="set-12 txt-center">
+    <p>
+      <small>Publicar como:</small>
+    </p>
+    <button type="button" mat-stroked-button color="warn" (click)="visibility()" class="anon">
+      <div class="set-12" *ngIf="!isAnonymous">
+        <mat-icon>visibility</mat-icon>
+        <small>{{user.firstname}} {{user.lastname}}</small>
+      </div>
+
+      <div class="set-12" *ngIf="isAnonymous">
+        <mat-icon>visibility_off</mat-icon>
+        <small>Anónimo</small>
+      </div>
+    </button>
+  </div>
+
+  <form class="set-12" [formGroup]="complaintFormGroup" (submit)="onFileComplaint(complaintFormGroup)">
+    <div class="set-12 editor-form">
+      <angular-editor formControlName="description" [config]="editorConfig"></angular-editor>
+    </div>
+
+    <div class="set-12 ctrls">
+      <button type="submit" mat-raised-button color="primary" [disabled]="complaintFormGroup.invalid || submitted">
+        <small>Denunciar</small>
+      </button>
+      <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
+    </div>
+  </form>
+</div>

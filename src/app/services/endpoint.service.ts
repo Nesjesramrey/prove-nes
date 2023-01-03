@@ -83,6 +83,7 @@ export class EndPointService {
   public fetchAllActivitiesEndPoint: string = '/activity';
   public fetchAssociationTypologyEndPoint: string = '/association_typology';
   public fetchAllStatesMexEndPoint: string = '/utility/fetch-all-states-mex';
+  public inviteUserToMexicolectivoEndPoint: string = '/package/invite/email';
 
   // uploads
   public uploadUserAvatarEndPoint: string = '/upload/upload-avatar-file';
@@ -140,8 +141,9 @@ export class EndPointService {
   // favorites
   public addFavoritesEndPoint: string = '/favorites/';
   public updateFavoritesEndPoint: string = '/favorites/';
-  public fetchFavoritesFromTopicEndPonint: string = '/favorites/topic/';
-  public fetchFavoritesFromSolutionEndPonint: string = '/favorites/solution/';
+  public fetchFavoritesFromlayoutEndPoint: string = '/favorites/layout/';
+  public fetchFavoritesFromTopicEndPoint: string = '/favorites/topic/';
+  public fetchFavoritesFromSolutionEndPoint: string = '/favorites/solution/';
 
   // visit
   public sendVisitEndPoint: string = '/visit/';
@@ -159,6 +161,9 @@ export class EndPointService {
   public requestAccessPermissionEndPoint: string = '/permission';
   public markPermissionAsAttendedEndPoint: string = '/permission/';
   public fetchPermissionByIdEndPoint: string = '/permission/';
+
+  // complaint
+  public fileComplaintEndPoint: string = '/complaint';
 
   constructor() { }
 }

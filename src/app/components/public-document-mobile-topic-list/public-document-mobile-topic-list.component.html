@@ -3,7 +3,7 @@
     <input type="text" placeholder="Búscar tópicos..." (input)="applyFilter($event)">
   </div>
   <div class="set-2 txt-right">
-    <button type="button" mat-mini-fab color="warn" (click)="popAddDocumentTopic()">
+    <button type="button" mat-mini-fab color="warn" (click)="popAddDocumentTopic()" [disabled]="!isCollaborator">
       <mat-icon>add_circle</mat-icon>
     </button>
   </div>
