@@ -88,19 +88,32 @@ export class AppConfigurationComponent implements OnInit {
 
   onUpdateUserData(form: FormGroup) {
     let data: any = {
+      user_id: this.user._id,
       firstname: form['value']['firstname'],
       lastname: form['value']['lastname'],
       gender: form['value']['gender'],
       postalcode: form['value']['postalcode'],
       ocupation: form['value']['ocupation'],
-      phone: form['value']['phone'],
+      phone: form['value']['phone'], 
       associationName: form['value']['associationName'],
       associationTypology: form['value']['associationTypology'],
       associationDescription: form['value']['associationDescription'],
-      associationInterests: form['value']['associationInterests'],
-      
+      associationInterests: form['value']['associationInterests'],     
     };
-    console.log(data);
+   
+    this.userService.addAssociation(data).subscribe({
+      error: (error) => {
+        switch (error['status']) { }
+      },
+      next: (reply: any) => {
+        //console.log(reply)
+
+      },
+      complete: () => {
+        this.isDataAvailable = true;
+      },
+    });
+
   }
 
   addHappyItem(event: MatChipInputEvent) {

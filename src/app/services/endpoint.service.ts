@@ -21,6 +21,7 @@ export class EndPointService {
   public fetchUserByFirebaseUIDEndPoint: string =
     '/user/fetch-user-by-firebase-uid';
   public saveLayoutsCategoryPreferenceEndPoint: string = '/user/';
+  public addAssociationEndPoint: string = '/user/';
 
   // documents
   public createNewDocumentEndPoint: string = '/document';

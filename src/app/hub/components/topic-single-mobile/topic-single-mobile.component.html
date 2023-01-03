@@ -4,29 +4,26 @@
         <h3 class="set-11">Temas</h3>
         <mat-icon class="set-1" mat-dialog-close>close</mat-icon>
     </div>
+    <div>
+        <h3>{{data.title}}</h3>
+        <p [innerHTML]="data.description"></p>
+        <div class="info">
+            <button class="" mat-fab style="background-color: primary">
+                <mat-icon>thumb_up</mat-icon>
+            </button>
+            <span class=" mt-1">Relevancia ciudadana</span>
+            <span class=" mt-1">8</span>
+            <button class="" type="button" *ngIf="!userVoted" mat-raised-button color="accent" (click)="openModalVote()">
+                <strong>Votar</strong>
+            </button>
+        </div>
+        <div class="icons">
+            <mat-icon class="topic-icons">favorite</mat-icon>
+            <mat-icon class="topic-icons">check_circle</mat-icon>
+            <mat-icon class="topic-icons">share</mat-icon>
+            <mat-icon class="topic-icons">report</mat-icon>
+            <mat-icon class="topic-icons">forum</mat-icon>
+        </div>
 
-    <mat-card>
-        <mat-card-content>
-            <h3>{{data.title}}</h3>
-            <p  [innerHTML]="data.description"></p>
-            <div>
-                <button mat-fab style="background-color: primary">
-                    <mat-icon>thumb_up</mat-icon>
-                </button>
-                <span class="mt-1">Relevancia ciudadana</span>
-                <span class="mt-1">8</span>
-                <button type="button" *ngIf="!userVoted" mat-raised-button color="accent" (click)="openModalVote()">
-                    <strong>Votar</strong>
-                  </button>
-            </div>
-            <mat-card-footer>
-                <mat-icon class="topic-icons">favorite</mat-icon>
-                <mat-icon class="topic-icons">check_circle</mat-icon>
-                <mat-icon class="topic-icons">share</mat-icon>
-                <mat-icon class="topic-icons">report</mat-icon>
-                <mat-icon class="topic-icons">forum</mat-icon>
-            </mat-card-footer>
-        </mat-card-content>
-
-    </mat-card>
+    </div>
 </div>

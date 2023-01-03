@@ -1,10 +1,13 @@
 :host {
+
+
   .menuopen {
     left: 0 !important;
   }
 
   .mobilenav {
     position: fixed;
+   
   }
 
   .innernav {
@@ -26,16 +29,11 @@
     }
   }
 
-  .topnav-profile {
-    color: #54f093;
-  }
-  .avatar-icon {
+  .arrow-rigth {
     position: absolute;
     right: 0;
   }
-  .arrow-left{
-    position: absolute;
-    left: 0;
-    top: 27px;
-  }
+
+ 
+
 }
