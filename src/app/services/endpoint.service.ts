@@ -58,7 +58,7 @@ export class EndPointService {
   public createNewSubLayoutEndPoint: string = '/sublayout/layout/';
 
   // topics
-  public fetchSingleAllTopic: string = '/topic/';
+  public fetchSuggestionTopicByUser: string = '/topic/suggestion/by_user/';
   public fetchSingleTopicByIdEndPoint: string = '/topic/';
   public createNewTopicEndPoint: string = '/topic/layout/';
   public uploadTopicFilesEndPoint: string = '/topic/';

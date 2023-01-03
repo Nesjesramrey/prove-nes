@@ -40,10 +40,10 @@ export class TopicService {
     );
   }
 
-  fetchAllTopic() {
+  fetchSuggestionTopic() {
     return this.httpClient.get(
       this.endpointSrvc.apiEndPoint +
-      this.endpointSrvc.fetchSingleAllTopic
+      this.endpointSrvc.fetchSuggestionTopicByUser
     );
   }
 }

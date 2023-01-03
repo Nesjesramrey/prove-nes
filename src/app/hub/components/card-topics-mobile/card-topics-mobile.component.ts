@@ -62,13 +62,13 @@ export class CardTopicsMobileComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.topicService.fetchAllTopic().subscribe({
+    this.topicService.fetchSuggestionTopic().subscribe({
       error: (error) => {
         switch (error['status']) { }
       },
       next: (reply: any) => {
         this.topics = reply;
-        //console.log(this.topics);
+        console.log(this.topics);
       },
       complete: () => {
         this.isDataAvailable = true;
