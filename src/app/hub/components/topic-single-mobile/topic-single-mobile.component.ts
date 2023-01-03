@@ -19,7 +19,6 @@ export class TopicSingleMobileComponent implements OnInit {
   public DialogData: any = null
   
 
-
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public dialog: MatDialog,
@@ -35,20 +34,22 @@ export class TopicSingleMobileComponent implements OnInit {
     
   }
 
-
   openModalVote() {
+    console.log(this.data)
     const dialogRef = this.dialog.open<VoteDialogComponent>(
       VoteDialogComponent,
       {
         width: '500px',
         disableClose: true,
-        data: { topic: this.topic },
+        data: { topic: this.data.id },
       }
     );
     dialogRef.afterClosed().subscribe((reply: any) => {
       this.loadTopic();
     });
-  }
+  };
+ 
+
 
 }
 

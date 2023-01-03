@@ -22,14 +22,14 @@ export class CardTopicsMobileComponent implements OnInit {
 
 
   openDialog(id: any) {
-    console.log(id)
+    //console.log(id)
     this.topicService.fetchSingleTopicById({ _id: id }).subscribe({
       error: (error) => {
         switch (error['status']) { }
       },
       next: (reply: any) => {
         this.topic = reply;
-        console.log(this.topic);
+        //console.log(this.topic);
         this.dialog.open(TopicSingleMobileComponent, {
           data: {
             id: this.topic._id,
