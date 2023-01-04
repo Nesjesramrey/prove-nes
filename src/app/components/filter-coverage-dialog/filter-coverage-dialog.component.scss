@@ -1,0 +1,20 @@
+:host {
+  .dialog-head {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+
+    .set-3 {
+      button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+
+  ::ng-deep .mat-form-field-wrapper {
+    margin: 0;
+    padding: 0;
+  }
+}

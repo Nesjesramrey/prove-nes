@@ -1,0 +1,19 @@
+<div class="set-12 dialog-head">
+  <div class="set-9">Coberturas</div>
+  <div class="set-3 txt-right">
+    <button type="button" mat-mini-fab color="primary" (click)="killDialog()">
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div class="set-12 dialog-body">
+  <mat-form-field appearance="outline">
+    <mat-label>Seleccionar</mat-label>
+    <mat-select (selectionChange)="onCoverageSelected($event)">
+      <mat-option *ngFor="let state of coverage" [value]="state._id">
+        <small>{{state.name}}</small>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
