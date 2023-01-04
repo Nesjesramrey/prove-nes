@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
 import { AddDocumentThemeComponent } from '../add-document-theme/add-document-theme.component';
+import { FilterCoverageDialogComponent } from '../filter-coverage-dialog/filter-coverage-dialog.component';
 
 @Component({
   selector: '.public-document-mobile-topic-list',
@@ -18,6 +19,7 @@ export class PublicDocumentMobileTopicListComponent implements OnInit {
   @Input('category') public category: any = null;
   @Input('isCollaborator') public isCollaborator: any = null;
   public topics: any = null;
+  public storedTopics: any = null;
   public dataSource = new MatTableDataSource<any>();
   public coverage: any = null;
   public coverageSelected: any = null;
@@ -34,6 +36,7 @@ export class PublicDocumentMobileTopicListComponent implements OnInit {
 
   ngOnInit(): void {
     this.topics = this.category['topics'];
+    this.storedTopics = this.category['topics'];
     // console.log(this.topics);
     this.dataSource = new MatTableDataSource(this.topics);
     this.coverage = this.document['coverage'];
@@ -79,6 +82,25 @@ export class PublicDocumentMobileTopicListComponent implements OnInit {
           this.topics.unshift(reply);
         }
         this.dataSource = new MatTableDataSource(this.topics);
+      }
+    });
+  }
+
+  filterTopicCoverage() {
+    const dialogRef = this.dialog.open<any>(
+      FilterCoverageDialogComponent, {
+      width: '100%',
+      data: {
+        coverage: this.document['coverage']
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        this.topics = this.storedTopics.filter((x: any) => {
+          return x['coverage'][0]['_id'] == reply['selectedCoverage'];
+        });
       }
     });
   }
