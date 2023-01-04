@@ -26,9 +26,7 @@ export class PublicDocumentMobileFixedToolsComponent implements OnInit {
     public utilityService: UtilityService
   ) { }
 
-  ngOnInit(): void {
-    console.log(this.isCollaborator);
-  }
+  ngOnInit(): void { }
 
   displayMenu() {
     this.open = !this.open;
