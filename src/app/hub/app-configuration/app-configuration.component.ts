@@ -73,13 +73,13 @@ export class AppConfigurationComponent implements OnInit {
           firstname: [this.user['firstname'], [Validators.required]],
           lastname: [this.user['lastname'], [Validators.required]],
           gender: ['', [Validators.required]],
-          postalcode: ['', [Validators.required]],
+          postalcode: [this.user['zipcode'],[Validators.required]],
           ocupation: ['', [Validators.required]],
-          phone: ['', [Validators.required]],
+          phone: [this.user['phone'], [Validators.required]],
           associationName: [this.user['associationName'], [Validators.required]],
           associationTypology: [this.user['associationTypology'], [Validators.required]],
           associationDescription: [this.user['associationDescription'], [Validators.required]],
-          interests: [this.readInterests(this.user.associationInterests), []],
+          interests: ["", [Validators.required]],
         });
       },
       complete: () => {
@@ -132,17 +132,5 @@ export class AppConfigurationComponent implements OnInit {
     }
   }
 
-  readInterests (interests: any) {
-    let listInterests : any = [];
-    if (interests.length == 0 ){
-      return "No has ingresado ningun interes"
-    }
-  interests.map((interest: { name: any; }) => {
-     listInterests.push(interest.name)
-     1
-    });
-    //console.log(listInterests)
-    return listInterests
-  }
 }
 

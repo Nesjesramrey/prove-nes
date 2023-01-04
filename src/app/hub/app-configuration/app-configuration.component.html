@@ -65,7 +65,7 @@
 
             <mat-form-field appearance="outline">
                 <mat-label>Código Postal</mat-label>
-                <input matInput formControlName="postalcode">
+                <input type="text" matInput formControlName="postalcode">
             </mat-form-field>
 <!-- 
             <mat-form-field appearance="outline">
@@ -74,8 +74,8 @@
             </mat-form-field> -->
 
             <mat-form-field appearance="outline">
-                <mat-label>Telefono</mat-label>
-                <input matInput formControlName="phone">
+                <mat-label>Télefono</mat-label>
+                <input type="text" matInput formControlName="phone">
             </mat-form-field>
         </div>
 
@@ -102,7 +102,7 @@
                 <textarea matInput formControlName="associationDescription"></textarea>
             </mat-form-field>
             <mat-form-field appearance="outline">
-                <mat-label>Interesés</mat-label>
+                <mat-label>Intereses</mat-label>
                 <mat-chip-list #happyChipList>
                     <mat-chip *ngFor="let item of happyArray" (removed)="removeHappyItem(item)">
                         {{item.name}}
