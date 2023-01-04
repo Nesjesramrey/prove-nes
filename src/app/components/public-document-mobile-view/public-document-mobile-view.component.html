@@ -72,8 +72,8 @@
 </div>
 
 <div class="set-12 topten">
-  <div class="public-document-mobile-top-ten" [solutions]="topSolutions" [open]="open"
-    (openMenu)="getCoverageMenuStatus($event)"></div>
+  <div class="public-document-mobile-top-ten" [coverage]="document?.coverage" [storedSolutions]="storedSolutions"
+    [solutions]="topSolutions" [open]="open" (openMenu)="getCoverageMenuStatus($event)"></div>
 </div>
 
 <div class="set-12">

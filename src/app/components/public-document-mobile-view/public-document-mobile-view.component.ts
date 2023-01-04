@@ -38,6 +38,7 @@ export class PublicDocumentMobileViewComponent implements OnInit {
     let coverage: any = [];
     option.filter((x: any) => { selection.push(x['value']); });
     coverage = this.document['coverage'].filter((x: any) => { return selection.includes(x['_id']); });
+    console.log(coverage);
   }
 
   openModalDescription() {

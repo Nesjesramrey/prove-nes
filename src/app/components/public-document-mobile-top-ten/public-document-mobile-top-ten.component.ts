@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { UtilityService } from 'src/app/services/utility.service';
+import { FilterCoverageDialogComponent } from '../filter-coverage-dialog/filter-coverage-dialog.component';
 
 @Component({
   selector: '.public-document-mobile-top-ten',
@@ -7,12 +9,15 @@ import { UtilityService } from 'src/app/services/utility.service';
   styleUrls: ['./public-document-mobile-top-ten.component.scss']
 })
 export class PublicDocumentMobileTopTenComponent implements OnInit {
+  @Input('coverage') public coverage: any = null;
   @Input('solutions') public solutions: any = null;
+  @Input('storedSolutions') public storedSolutions: any = null;
   @Input('open') public open: boolean = false;
   @Output() public openMenu = new EventEmitter<any>();
 
   constructor(
-    public utilityService: UtilityService
+    public utilityService: UtilityService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -34,7 +39,24 @@ export class PublicDocumentMobileTopTenComponent implements OnInit {
   }
 
   displayCoverageMenu() {
-    this.open = !this.open;
-    this.openMenu.emit({ open: this.open });
+    // this.open = !this.open;
+    // this.openMenu.emit({ open: this.open });
+
+    const dialogRef = this.dialog.open<any>(
+      FilterCoverageDialogComponent, {
+      width: '100%',
+      data: {
+        coverage: this.coverage
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        this.solutions = this.storedSolutions.filter((x: any) => {
+          return x['coverage'][0]['_id'] == reply['selectedCoverage'];
+        });
+      }
+    });
   }
 }
