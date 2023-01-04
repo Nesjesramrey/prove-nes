@@ -17,12 +17,22 @@
                 <strong>Votar</strong>
             </button>
         </div>
-        <div class="icons">
-            <mat-icon class="topic-icons">favorite</mat-icon>
-            <mat-icon class="topic-icons">check_circle</mat-icon>
-            <mat-icon class="topic-icons">share</mat-icon>
-            <mat-icon class="topic-icons">report</mat-icon>
-            <mat-icon class="topic-icons">forum</mat-icon>
+        <div class="set-12 icons">
+            <button type="button" mat-icon-button color="primary" (click)="openBottomSheet()">
+                <mat-icon>favorite</mat-icon>
+            </button>
+            <button type="button" mat-icon-button color="primary" disabled>
+                <mat-icon>check_circle</mat-icon>
+            </button>
+            <button type="button" mat-icon-button color="primary" (click)="openBottomSheet()">
+                <mat-icon>share</mat-icon>
+            </button>
+            <button type="button" mat-icon-button color="primary" disabled>
+                <mat-icon>report</mat-icon>
+            </button>
+            <button type="button" mat-icon-button color="primary" disabled>
+                <mat-icon>forum</mat-icon>
+            </button>
         </div>
 
     </div>

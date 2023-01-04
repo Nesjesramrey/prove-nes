@@ -1,5 +1,5 @@
 <div class="set-12 topic-card">
-    <mat-card  *ngFor="let topic of topics">
+    <mat-card *ngFor="let topic of topics">
         <div>
             <h3 class="set-9 ">{{topic.title}}</h3>
             <span class="set-3" (click)="openDialog(topic._id)">Ver más</span>
@@ -7,11 +7,21 @@
         </div>
 
         <div class="set-12 icons">
-            <mat-icon>favorite</mat-icon>
-            <mat-icon>check_circle</mat-icon>
-            <mat-icon>share</mat-icon>
-            <mat-icon>report</mat-icon>
-            <mat-icon>forum</mat-icon>
+            <button type="button" mat-icon-button color="primary" (click)="addFavorites()">
+                <mat-icon *ngIf="!isFavorite">favorite</mat-icon>
+              </button>
+            <button type="button" mat-icon-button color="primary" disabled>
+                <mat-icon>check_circle</mat-icon>
+            </button>
+            <button type="button" mat-icon-button color="primary" (click)="openBottomSheet()">
+                <mat-icon>share</mat-icon>
+            </button>
+            <button type="button" mat-icon-button color="primary" disabled>
+                <mat-icon>report</mat-icon>
+            </button>
+            <button type="button" mat-icon-button color="primary" disabled>
+                <mat-icon>forum</mat-icon>
+            </button>
         </div>
     </mat-card>
 </div>

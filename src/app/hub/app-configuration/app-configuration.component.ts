@@ -7,6 +7,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 
+
 interface Gender {
   value: string;
   viewValue: string;
@@ -34,9 +35,10 @@ export class AppConfigurationComponent implements OnInit {
     { value: 'otro', viewValue: 'Otro' },
   ];
   asociations: Asociation[] = [
-    { value: 'ONG', viewValue: 'ONG' },
-    { value: 'AC', viewValue: 'Asocación Civil' },
-    { value: 'Otra', viewValue: 'Otra' },
+    { value: '6399e5c7c878ad9b63dde6a2', viewValue: 'Ciudadanía' },
+    { value: '6399e5c7c878ad9b63dde6a5', viewValue: 'Activista' },
+    { value: '6399e5c7c878ad9b63dde6a4', viewValue: 'OSC' },
+    { value: '6399e5c7c878ad9b63dde6a6', viewValue: 'Estudiante' },
   ];
 
   public accessToken: any = null;
@@ -65,7 +67,7 @@ export class AppConfigurationComponent implements OnInit {
       },
       next: (reply: any) => {
         this.user = reply;
-        console.log(this.user);
+        //console.log(this.user);
 
         this.formGroup = this.formBuilder.group({
           firstname: [this.user['firstname'], [Validators.required]],
@@ -77,7 +79,7 @@ export class AppConfigurationComponent implements OnInit {
           associationName: [this.user['associationName'], [Validators.required]],
           associationTypology: [this.user['associationTypology'], [Validators.required]],
           associationDescription: [this.user['associationDescription'], [Validators.required]],
-          associationInterests: [this.user['associationInterests'], [Validators.required]],
+          interests: [this.readInterests(this.user.associationInterests), []],
         });
       },
       complete: () => {
@@ -92,36 +94,35 @@ export class AppConfigurationComponent implements OnInit {
       firstname: form['value']['firstname'],
       lastname: form['value']['lastname'],
       gender: form['value']['gender'],
-      postalcode: form['value']['postalcode'],
+      zipcode: form['value']['postalcode'],
       ocupation: form['value']['ocupation'],
       phone: form['value']['phone'], 
       associationName: form['value']['associationName'],
       associationTypology: form['value']['associationTypology'],
       associationDescription: form['value']['associationDescription'],
-      associationInterests: form['value']['associationInterests'],     
+      associationInterests: JSON.stringify(this.happyArray) || null,     
     };
-   
     this.userService.addAssociation(data).subscribe({
       error: (error) => {
         switch (error['status']) { }
       },
       next: (reply: any) => {
-        //console.log(reply)
-
+        console.log(data)
       },
       complete: () => {
         this.isDataAvailable = true;
       },
     });
-
   }
 
   addHappyItem(event: MatChipInputEvent) {
     const value = (event.value || '').trim();
     if (value) {
       this.happyArray.push({ name: value });
+      //console.log(this.happyArray)
     }
     event.chipInput!.clear();
+ 
   }
 
   removeHappyItem(item: any) {
@@ -130,4 +131,18 @@ export class AppConfigurationComponent implements OnInit {
       this.happyArray.splice(index, 1);
     }
   }
+
+  readInterests (interests: any) {
+    let listInterests : any = [];
+    if (interests.length == 0 ){
+      return "No has ingresado ningun interes"
+    }
+  interests.map((interest: { name: any; }) => {
+     listInterests.push(interest.name)
+     1
+    });
+    //console.log(listInterests)
+    return listInterests
+  }
 }
+

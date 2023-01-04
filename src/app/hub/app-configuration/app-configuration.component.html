@@ -67,11 +67,11 @@
                 <mat-label>Código Postal</mat-label>
                 <input matInput formControlName="postalcode">
             </mat-form-field>
-
+<!-- 
             <mat-form-field appearance="outline">
                 <mat-label>Ocupacion</mat-label>
                 <input matInput formControlName="ocupation">
-            </mat-form-field>
+            </mat-form-field> -->
 
             <mat-form-field appearance="outline">
                 <mat-label>Telefono</mat-label>
@@ -91,17 +91,18 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-label>Nombre de tu Asociación</mat-label>
+            
             <mat-form-field appearance="outline">
-                <mat-label>Nombre</mat-label>
+                <mat-label>Nombre de Asociación</mat-label>
                 <input matInput formControlName="associationName">
             </mat-form-field>
-            <mat-label>Describe tu asociación</mat-label>
+           
             <mat-form-field appearance="outline">
+                <mat-label>Describe tu asociación</mat-label>
                 <textarea matInput formControlName="associationDescription"></textarea>
             </mat-form-field>
-            <mat-label>Describe temas de tu interés</mat-label>
             <mat-form-field appearance="outline">
+                <mat-label>Interesés</mat-label>
                 <mat-chip-list #happyChipList>
                     <mat-chip *ngFor="let item of happyArray" (removed)="removeHappyItem(item)">
                         {{item.name}}
@@ -109,7 +110,7 @@
                             <mat-icon>cancel</mat-icon>
                         </button>
                     </mat-chip>
-                    <input formControlName="associationInterests" placeholder="..." [matChipInputFor]="happyChipList"
+                    <input formControlName="interests" placeholder="..." [matChipInputFor]="happyChipList"
                         [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
                         (matChipInputTokenEnd)="addHappyItem($event)">
                 </mat-chip-list>

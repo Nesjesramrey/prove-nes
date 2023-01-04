@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit, Input } from '@angular/core';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TopicSingleMobileComponent } from '../topic-single-mobile/topic-single-mobile.component';
+import { FavoritesService } from 'src/app/services/favorites.service';
 import { UserService } from 'src/app/services/user.service';
 import { TopicService } from 'src/app/services/topic.service';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { ShareSheetComponent } from 'src/app/components/share-sheet/share-sheet.component';
 
 export interface DialogData {
   id: null;
@@ -21,6 +24,9 @@ export class CardTopicsMobileComponent implements OnInit {
   public topics: any = null;
   public topic: any = null;
   public isDataAvailable: boolean = false;
+  public isFavorite: boolean = false;
+  public location: string = '';
+  @Input('allFavorites') public allFavorites: any = null;
 
 
   openDialog(id: any) {
@@ -48,27 +54,27 @@ export class CardTopicsMobileComponent implements OnInit {
         this.isDataAvailable = true;
       },
     })
-   
   }
-
-
 
   constructor(
     public dialog: MatDialog,
     public topicService: TopicService,
     public userService: UserService,
-    ) { }
+    public matBottomSheet: MatBottomSheet,
+    public favoritesService: FavoritesService
+    ) { 
+     ;
+    }
   
 
   ngOnInit(): void {
-
     this.topicService.fetchSuggestionTopic().subscribe({
       error: (error) => {
         switch (error['status']) { }
       },
       next: (reply: any) => {
         this.topics = reply;
-        console.log(this.topics);
+        //console.log(this.topics);
       },
       complete: () => {
         this.isDataAvailable = true;
@@ -92,4 +98,49 @@ export class CardTopicsMobileComponent implements OnInit {
 
   }
 
+  openBottomSheet(): void {
+    const bottomSheetRef = this.matBottomSheet.open(ShareSheetComponent, {
+      data: {
+        user: this.user
+      }
+    });
+
+    bottomSheetRef.afterDismissed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  };
+
+  getUserFavorited() {
+    return this.allFavorites.filter((item: any) => item['createdBy'] === this.user['_id']);
+  }
+
+  addFavorites() {
+    let favorited = this.getUserFavorited();
+    if (favorited.length > 0) {
+      let data = {
+        _id: favorited[0]._id,
+        favorites: true,
+      };
+
+      this.favoritesService.updateFavorites(data).subscribe((reply: any) => {
+        if (reply.message == 'favorite update success') {
+          this.isFavorite = true;
+        }
+      });
+    } else {
+      let data = {
+        topic:  this.topic.id,
+        favorites: true,
+      };
+
+      this.favoritesService.addFavorites(data).subscribe((reply: any) => {
+        console.log(reply);
+        if (reply.message == 'favorites add success') {
+          this.isFavorite = true;
+        }
+      });
+    }
+  }
+
+  
 }

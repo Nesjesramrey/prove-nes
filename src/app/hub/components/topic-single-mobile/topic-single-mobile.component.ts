@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { DialogData } from '../card-topics-mobile/card-topics-mobile.component';
 import { UserService } from 'src/app/services/user.service';
 import { TopicService } from 'src/app/services/topic.service';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { ShareSheetComponent } from 'src/app/components/share-sheet/share-sheet.component';
 
 
 
@@ -31,6 +33,7 @@ export class TopicSingleMobileComponent implements OnInit {
     public activatedRoute: ActivatedRoute,
     public userService: UserService,
     public topicService: TopicService,
+    public matBottomSheet: MatBottomSheet,
   ) {}
 
   ngOnInit(): void {
@@ -72,9 +75,20 @@ export class TopicSingleMobileComponent implements OnInit {
         this.topicVoted.emit({ action: 'vote' });
       });
 
-    ;
+
   };
  
+  openBottomSheet(): void {
+    const bottomSheetRef = this.matBottomSheet.open(ShareSheetComponent, {
+      data: {
+        user: this.user
+      }
+    });
+
+    bottomSheetRef.afterDismissed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
 
 
 }
