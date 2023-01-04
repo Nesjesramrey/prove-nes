@@ -79,5 +79,20 @@
     mat-spinner {
       margin-left: 20px;
     }
+
+    button {
+      margin-left: 10px;
+    }
+
+    button:first-child {
+      margin-left: 0;
+    }
+  }
+
+  .file-hldr {
+    font-weight: bold;
+    font-style: italic;
+    margin: 0 0 20px 0;
+    text-align: center;
   }
 }
