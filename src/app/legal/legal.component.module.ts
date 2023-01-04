@@ -5,13 +5,15 @@ import { LegalComponentRoutingModule } from './legal.component-routing.module';
 import { LegalComponent } from './legal.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { TermsComponent } from './terms/terms.component';
+import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    LegalComponentRoutingModule
+    LegalComponentRoutingModule,
+    ComponentsModule
   ],
   declarations: [
     LegalComponent,

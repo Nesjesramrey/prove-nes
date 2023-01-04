@@ -53,6 +53,7 @@ export class ComplaintDialogComponent implements OnInit {
       ]
     ]
   };
+  public fileNames: any = [];
 
   constructor(
     public dialogRef: MatDialogRef<ComplaintDialogComponent>,
@@ -67,7 +68,8 @@ export class ComplaintDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.complaintFormGroup = this.formBuilder.group({
-      description: ['', [Validators.required]]
+      description: ['', [Validators.required]],
+      files: ['', []]
     });
   }
 
@@ -75,12 +77,21 @@ export class ComplaintDialogComponent implements OnInit {
     this.isAnonymous = !this.isAnonymous;
   }
 
+  onFileSelected(event: any) {
+    Array.from(event.target.files).forEach((file: any) => { this.fileNames.push(file['name']); });
+    this.complaintFormGroup.patchValue({ files: event.target.files });
+    this.complaintFormGroup.updateValueAndValidity();
+    // console.log(this.complaintFormGroup.controls['files']['value']);
+  }
+
   onFileComplaint(form: FormGroup) {
     this.submitted = true;
-    let data: any = {
-      description: form['value']['description'],
-      isAnonymous: this.isAnonymous
-    };
+    let data = new FormData();
+
+    Array.from(this.complaintFormGroup.controls['files']['value'])
+      .forEach((file: any) => { data.append('files', file); });
+    data.append('description', this.complaintFormGroup.value.description);
+    data.append('isAnonymous', (this.isAnonymous).toString());
 
     this.complaintService.fileComplaint(data).subscribe({
       error: (error: any) => {
