@@ -2,6 +2,16 @@
   width: 100%;
   padding: 20px;
 
+  .form-profile{
+    h3{
+      margin-bottom: 10px;
+    }
+
+    mat-checkbox{
+      margin-bottom: 10px;
+    }
+  }
+
   .avatar {
     width: 64px;
     height: 64px;
@@ -27,5 +37,9 @@
       object-fit: cover;
       float: left;
     }
+  }
+
+  .ctrls{
+    margin-top: 20px;
   }
 }

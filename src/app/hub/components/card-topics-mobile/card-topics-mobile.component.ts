@@ -8,7 +8,8 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ShareSheetComponent } from 'src/app/components/share-sheet/share-sheet.component';
 
 export interface DialogData {
-  id: null;
+  userID: null;
+  topicID: null;
   title: null;
   description: null;
 }
@@ -83,7 +84,7 @@ export class CardTopicsMobileComponent implements OnInit {
         this.dialog.open(TopicSingleMobileComponent, {
           data: {
             userID: this.user._id,
-            id: this.topic._id,
+            topicID: this.topic._id,
             title: this.topic.title,
             description: this.topic.description
           },

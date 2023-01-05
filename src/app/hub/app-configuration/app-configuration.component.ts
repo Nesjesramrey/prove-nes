@@ -110,6 +110,7 @@ export class AppConfigurationComponent implements OnInit {
         console.log(data)
       },
       complete: () => {
+        location.reload();
         this.isDataAvailable = true;
       },
     });

@@ -1,28 +1,33 @@
-<div class="set-12 topic-single-mobile ">
-
-    <div class="set-12">
-        <h3 class="set-11">Temas</h3>
-        <mat-icon class="set-1" mat-dialog-close>close</mat-icon>
-    </div>
-    <div>
-        <h3>{{data.title}}</h3>
-        <p [innerHTML]="data.description"></p>
-        <div class="info">
-            <button class="" mat-fab style="background-color: primary">
-                <mat-icon>thumb_up</mat-icon>
-            </button>
-            <span class=" mt-1">Relevancia ciudadana</span>
-            <span class=" mt-1">8</span>
-            <button class="" type="button" *ngIf="!userVoted" mat-raised-button color="accent" (click)="openModalVote()">
-                <strong>Votar</strong>
+<div class="set-12 card-topic">
+    <div class="set-12 dialog-head ">
+        <div class="set-10">
+            <h3>Temas</h3>
+        </div>
+        <div class="set-2">
+            <button type="button" mat-mini-fab color="primary" mat-dialog-close>
+                <mat-icon >close</mat-icon>
             </button>
         </div>
+    </div>
+
+    <div class="set-12 dialog-body">
+        <span><strong>{{data.title}}</strong></span>
+        <p  [innerHTML]="data.description"></p>
+        <div class="info">
+            <span class=" mt-2">Relevancia ciudadana</span>
+            <span class=" mt-2">8</span>
+            <div class="mt-2">
+                <button type="button" *ngIf="!userVoted" mat-raised-button color="accent" (click)="openModalVote()">
+                    <strong>Votar</strong>
+                </button>
+            </div>
+        </div>
         <div class="set-12 icons">
-            <button type="button" mat-icon-button (click)="addFavorites()" disabled>
+            <!-- <button type="button" mat-icon-button (click)="addFavorites()" disabled>
                 <mat-icon color="primary" *ngIf="!isFavorite">favorite</mat-icon>
                 <mat-icon color="accent" *ngIf="isFavorite">favorite</mat-icon>
-              </button>
-            <button type="button" mat-icon-button color="primary" disabled >
+              </button> -->
+            <button type="button" mat-icon-button color="primary" disabled>
                 <mat-icon>check_circle</mat-icon>
             </button>
             <button type="button" mat-icon-button color="primary" (click)="openBottomSheet()">

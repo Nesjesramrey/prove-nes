@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, Input, Output, EventEmitter } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { DialogData } from '../card-topics-mobile/card-topics-mobile.component';
 import { UserService } from 'src/app/services/user.service';
@@ -18,14 +18,14 @@ import { VoteDialogComponent } from 'src/app/components/vote-dialog/vote-dialog.
 })
 export class TopicSingleMobileComponent implements OnInit {
   public user: any = null;
-  public votes: number = 0;
-  public userVoted: number = 0;
   public topic: any = null;
-  public topicID: string = '';
+  public topicID: any = null;
   public DialogData: any = null;
   public isDataAvailable: boolean = false;
   public isFavorite: boolean = false;
   public allFavorites: any[] = [];
+  @Input('votes') public votes: any = null;
+  @Input('userVoted') public userVoted: any = null;
   @Output() public topicVoted = new EventEmitter<any>();
 
 
@@ -38,10 +38,15 @@ export class TopicSingleMobileComponent implements OnInit {
     public favoritesService: FavoritesService,
     public voteService: VoteService,
     public matBottomSheet: MatBottomSheet,
-  ) { }
+  ) { 
+   
+  }
 
-  ngOnInit(): void {
+  ngOnInit(
 
+
+  ): void {
+  
     this.userService.fetchFireUser().subscribe({
       error: (error) => {
         switch (error['status']) { }
@@ -53,7 +58,8 @@ export class TopicSingleMobileComponent implements OnInit {
       complete: () => {
         this.isDataAvailable = true;
       },
-    });
+    });  
+    
   };
 
 
@@ -65,31 +71,33 @@ export class TopicSingleMobileComponent implements OnInit {
 
 
   openModalVote() {
-    //console.log(this.data)
+    console.log(this.data.topicID)
+
     const dialogRef = this.dialog.open<VoteDialogComponent>(
       VoteDialogComponent,
       {
         width: '500px',
         disableClose: true,
-        data: { topic: this.data.id },
+        data: { topic: this.data.topicID },
       }
     );
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       this.topicVoted.emit({ action: 'vote' });
-      this.loadTopic()
+       this.loadTopic()
     });
 
   };
 
   loadTopic(){
-    this.voteService.fetchVotesByTopicID({ _id: this.data.id }).subscribe({
+    this.voteService.fetchVotesByTopicID({ _id: this.data.topicID }).subscribe({
       error: (error) => {
         switch (error['status']) { }
       },
       next: (reply: any) => {
+        console.log(reply)
         this.userVoted = this.checkUserVote(reply);
-        //console.log(this.userVoted);
+        console.log(this.userVoted);
       },
       complete: () => {
         this.isDataAvailable = true;
