@@ -53,6 +53,7 @@ export class AppComponent implements OnInit {
   public open: boolean = false;
   public isProfile: boolean = false;
   public openProfileMenu = new EventEmitter<any>();
+  
 
   constructor(
     readonly sRenderer: StyleRenderer,
@@ -148,6 +149,11 @@ export class AppComponent implements OnInit {
       case 'home':
         this.open = !this.open;
         this.router.navigateByUrl('/');
+        break;
+
+        case 'quienesSomos':
+        this.open = !this.open;
+        this.router.navigateByUrl('/#quienesSomos');
         break;
 
         case 'profile':

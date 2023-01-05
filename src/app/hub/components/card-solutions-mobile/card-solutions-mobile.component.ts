@@ -17,7 +17,7 @@ export class CardSolutionsMobileComponent implements OnInit {
    { }
 
   ngOnInit(): void {
-    this.solutionService.fetchAllSolution().subscribe({
+    this.solutionService.fetchTopSolution().subscribe({
       error: (error) => {
         switch (error['status']) { }
       },

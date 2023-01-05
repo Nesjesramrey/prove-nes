@@ -1,14 +1,14 @@
 import { Component, OnInit, Inject, Input, Output, EventEmitter } from '@angular/core';
-import { VoteDialogComponent } from 'src/app/components/vote-dialog/vote-dialog.component';
-import { MatDialog,  MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { DialogData } from '../card-topics-mobile/card-topics-mobile.component';
 import { UserService } from 'src/app/services/user.service';
 import { TopicService } from 'src/app/services/topic.service';
+import { FavoritesService } from 'src/app/services/favorites.service';
+import { VoteService } from 'src/app/services/vote.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ShareSheetComponent } from 'src/app/components/share-sheet/share-sheet.component';
-
-
+import { VoteDialogComponent } from 'src/app/components/vote-dialog/vote-dialog.component';
 
 
 @Component({
@@ -19,13 +19,15 @@ import { ShareSheetComponent } from 'src/app/components/share-sheet/share-sheet.
 export class TopicSingleMobileComponent implements OnInit {
   public user: any = null;
   public votes: number = 0;
-  @Input('userVoted') public userVoted: any = null;
-  @Output() public topicVoted = new EventEmitter<any>();
+  public userVoted: number = 0;
   public topic: any = null;
   public topicID: string = '';
   public DialogData: any = null;
   public isDataAvailable: boolean = false;
-  
+  public isFavorite: boolean = false;
+  public allFavorites: any[] = [];
+  @Output() public topicVoted = new EventEmitter<any>();
+
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -33,8 +35,10 @@ export class TopicSingleMobileComponent implements OnInit {
     public activatedRoute: ActivatedRoute,
     public userService: UserService,
     public topicService: TopicService,
+    public favoritesService: FavoritesService,
+    public voteService: VoteService,
     public matBottomSheet: MatBottomSheet,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
 
@@ -50,7 +54,7 @@ export class TopicSingleMobileComponent implements OnInit {
         this.isDataAvailable = true;
       },
     });
-  }
+  };
 
 
   checkUserVote(votes: any[]) {
@@ -58,7 +62,7 @@ export class TopicSingleMobileComponent implements OnInit {
     return votes.find((vote) => vote.createdBy === this.user._id)?._id || 0;
   }
 
-  
+
 
   openModalVote() {
     //console.log(this.data)
@@ -70,14 +74,30 @@ export class TopicSingleMobileComponent implements OnInit {
         data: { topic: this.data.id },
       }
     );
-    
-      dialogRef.afterClosed().subscribe((reply: any) => {
-        this.topicVoted.emit({ action: 'vote' });
-      });
 
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      this.topicVoted.emit({ action: 'vote' });
+      this.loadTopic()
+    });
 
   };
- 
+
+  loadTopic(){
+    this.voteService.fetchVotesByTopicID({ _id: this.data.id }).subscribe({
+      error: (error) => {
+        switch (error['status']) { }
+      },
+      next: (reply: any) => {
+        this.userVoted = this.checkUserVote(reply);
+        //console.log(this.userVoted);
+      },
+      complete: () => {
+        this.isDataAvailable = true;
+      },
+    });
+      
+  }
+
   openBottomSheet(): void {
     const bottomSheetRef = this.matBottomSheet.open(ShareSheetComponent, {
       data: {
@@ -90,6 +110,38 @@ export class TopicSingleMobileComponent implements OnInit {
     });
   }
 
+  getUserFavorited() {
+    return this.allFavorites.filter((item: any) => item['createdBy'] === this.user['_id']);
+  }
 
+  addFavorites() {
+    let favorited = this.getUserFavorited();
+
+    if (favorited.length > 0) {
+      let data = {
+        _id: favorited[0]._id,
+        favorites: true,
+      };
+      console.log(data);
+      return;
+
+      this.favoritesService.updateFavorites(data).subscribe((reply: any) => {
+        if (reply.message == 'favorite update success') {
+          this.isFavorite = true;
+        }
+      });
+    } else {
+      let data = {
+        topic: this.topicID,
+        favorites: true,
+      };
+
+      this.favoritesService.addFavorites(data).subscribe((reply: any) => {
+        if (reply.message == 'favorites add success') {
+          this.isFavorite = true;
+        }
+      });
+    }
+  };
 }
 

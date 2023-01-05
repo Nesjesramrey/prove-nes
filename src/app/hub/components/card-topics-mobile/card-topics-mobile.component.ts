@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnInit,} from '@angular/core';
+import { MatDialog,} from '@angular/material/dialog';
 import { TopicSingleMobileComponent } from '../topic-single-mobile/topic-single-mobile.component';
 import { FavoritesService } from 'src/app/services/favorites.service';
 import { UserService } from 'src/app/services/user.service';
@@ -26,8 +26,50 @@ export class CardTopicsMobileComponent implements OnInit {
   public isDataAvailable: boolean = false;
   public isFavorite: boolean = false;
   public location: string = '';
-  @Input('allFavorites') public allFavorites: any = null;
+  public allFavorites: any[] = [];
+ 
+  constructor(
+    public dialog: MatDialog,
+    public topicService: TopicService,
+    public userService: UserService,
+    public matBottomSheet: MatBottomSheet,
+    public favoritesService: FavoritesService,
+  
+    ) { 
+      //this.location = this.dialogData['location'];
+    }
+  
 
+  ngOnInit(): void {
+
+    this.topicService.fetchSuggestionTopic().subscribe({
+      error: (error) => {
+        switch (error['status']) { }
+      },
+      next: (reply: any) => {
+        this.topics = reply;
+        //console.log(this.topics);
+      },
+      complete: () => {
+        this.isDataAvailable = true;
+      },
+    })
+
+    this.userService.fetchFireUser().subscribe({
+      error: (error) => {
+        switch (error['status']) { }
+      },
+      next: (reply: any) => {
+        this.user = reply;
+        //console.log(this.user);
+      },
+      complete: () => {
+        this.isDataAvailable = true;
+      },
+    })
+    
+
+  }
 
   openDialog(id: any) {
     //console.log(id)
@@ -54,48 +96,6 @@ export class CardTopicsMobileComponent implements OnInit {
         this.isDataAvailable = true;
       },
     })
-  }
-
-  constructor(
-    public dialog: MatDialog,
-    public topicService: TopicService,
-    public userService: UserService,
-    public matBottomSheet: MatBottomSheet,
-    public favoritesService: FavoritesService
-    ) { 
-     ;
-    }
-  
-
-  ngOnInit(): void {
-    this.topicService.fetchSuggestionTopic().subscribe({
-      error: (error) => {
-        switch (error['status']) { }
-      },
-      next: (reply: any) => {
-        this.topics = reply;
-        //console.log(this.topics);
-      },
-      complete: () => {
-        this.isDataAvailable = true;
-      },
-    })
-
-    this.userService.fetchFireUser().subscribe({
-      error: (error) => {
-        switch (error['status']) { }
-      },
-      next: (reply: any) => {
-        this.user = reply;
-        //console.log(this.user);
-      },
-      complete: () => {
-        this.isDataAvailable = true;
-      },
-    })
-
-
-
   }
 
   openBottomSheet(): void {

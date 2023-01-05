@@ -68,7 +68,7 @@ export class EndPointService {
   public createNewPermissionEndPoint: string = '/permission/';
 
   // solutions
-  public fetchAllSolution: string = '/solution/';
+  public fetchTopSolution: string = '/solution/top';
   public fetchSingleSolutionByIdEndPoint: string = '/solution/';
   public createNewSolutionEndPoint: string = '/solution/topic/';
   public getTopSolutionByDocumentEndPoint: string = '/solution/document/';
