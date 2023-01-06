@@ -23,7 +23,7 @@ export class TopicSingleMobileComponent implements OnInit {
   public DialogData: any = null;
   public isDataAvailable: boolean = false;
   public isFavorite: boolean = false;
-  public allFavorites: any[] = [];
+  @Input('allFavorites') public allFavorites: any = null;
   @Input('votes') public votes: any = null;
   @Input('userVoted') public userVoted: any = null;
   @Output() public topicVoted = new EventEmitter<any>();
@@ -45,8 +45,8 @@ export class TopicSingleMobileComponent implements OnInit {
   ngOnInit(
 
 
-  ): void {
-  
+  ): void {  
+
     this.userService.fetchFireUser().subscribe({
       error: (error) => {
         switch (error['status']) { }
@@ -59,8 +59,8 @@ export class TopicSingleMobileComponent implements OnInit {
         this.isDataAvailable = true;
       },
     });  
-    
-  };
+
+  }
 
 
   checkUserVote(votes: any[]) {
@@ -69,10 +69,7 @@ export class TopicSingleMobileComponent implements OnInit {
   }
 
 
-
   openModalVote() {
-    console.log(this.data.topicID)
-
     const dialogRef = this.dialog.open<VoteDialogComponent>(
       VoteDialogComponent,
       {
@@ -81,23 +78,21 @@ export class TopicSingleMobileComponent implements OnInit {
         data: { topic: this.data.topicID },
       }
     );
-
     dialogRef.afterClosed().subscribe((reply: any) => {
       this.topicVoted.emit({ action: 'vote' });
        this.loadTopic()
     });
-
   };
 
   loadTopic(){
-    this.voteService.fetchVotesByTopicID({ _id: this.data.topicID }).subscribe({
+    //console.log(this.userVoted)
+    this.voteService.fetchVotesByTopicID({ _id: this.topicID }).subscribe({
       error: (error) => {
         switch (error['status']) { }
       },
       next: (reply: any) => {
-        console.log(reply)
         this.userVoted = this.checkUserVote(reply);
-        console.log(this.userVoted);
+        //console.log(this.userVoted);
       },
       complete: () => {
         this.isDataAvailable = true;

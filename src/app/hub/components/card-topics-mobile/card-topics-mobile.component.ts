@@ -42,6 +42,18 @@ export class CardTopicsMobileComponent implements OnInit {
   
 
   ngOnInit(): void {
+    this.userService.fetchFireUser().subscribe({
+      error: (error) => {
+        switch (error['status']) { }
+      },
+      next: (reply: any) => {
+        this.user = reply;
+        //console.log(this.user);
+      },
+      complete: () => {
+        this.isDataAvailable = true;
+      },
+    })
 
     this.topicService.fetchSuggestionTopic().subscribe({
       error: (error) => {
@@ -55,21 +67,6 @@ export class CardTopicsMobileComponent implements OnInit {
         this.isDataAvailable = true;
       },
     })
-
-    this.userService.fetchFireUser().subscribe({
-      error: (error) => {
-        switch (error['status']) { }
-      },
-      next: (reply: any) => {
-        this.user = reply;
-        //console.log(this.user);
-      },
-      complete: () => {
-        this.isDataAvailable = true;
-      },
-    })
-    
-
   }
 
   openDialog(id: any) {
