@@ -39,6 +39,11 @@
     }
   }
 
+#textarea-description::-webkit-scrollbar {
+    display: none;
+  }
+
+
   .ctrls{
     margin-top: 20px;
   }
