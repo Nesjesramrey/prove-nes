@@ -15,8 +15,13 @@
     }
 
     .icons {
-      display: flex;
-      justify-content: space-between;
+      display: inline-flex;
+      margin: 0px;
+      justify-content: center;
+      button{
+        margin: 0px 5px;
+      }
+      
      
 
       button {

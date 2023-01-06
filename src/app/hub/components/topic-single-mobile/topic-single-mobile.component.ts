@@ -9,7 +9,7 @@ import { VoteService } from 'src/app/services/vote.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ShareSheetComponent } from 'src/app/components/share-sheet/share-sheet.component';
 import { VoteDialogComponent } from 'src/app/components/vote-dialog/vote-dialog.component';
-
+import { TestimonialListComponent } from 'src/app/components/testimonial-list/testimonial-list.component';
 
 @Component({
   selector: 'topic-single-mobile',
@@ -17,8 +17,8 @@ import { VoteDialogComponent } from 'src/app/components/vote-dialog/vote-dialog.
   styleUrls: ['./topic-single-mobile.component.scss']
 })
 export class TopicSingleMobileComponent implements OnInit {
-  public user: any = null;
-  public topic: any = null;
+  @Input('topic') public topic: any = null;
+  @Input('user') public user: any = null;
   public topicID: any = null;
   public DialogData: any = null;
   public isDataAvailable: boolean = false;
@@ -54,11 +54,22 @@ export class TopicSingleMobileComponent implements OnInit {
       next: (reply: any) => {
         this.user = reply;
         //console.log(this.user);
+        // *** load favourites
+        this.favoritesService.fetchFavoritesByTopicID({ _id: this.data.topicID }).subscribe({
+          error: (error: any) => { },
+          next: (reply: any) => {
+            this.allFavorites = reply['data'];
+            this.isFavorite = this.checkFavorites();
+            this.loadTopic()
+          },
+          
+          complete: () => { }
+        });
       },
       complete: () => {
         this.isDataAvailable = true;
       },
-    });  
+    })
 
   }
 
@@ -86,7 +97,7 @@ export class TopicSingleMobileComponent implements OnInit {
 
   loadTopic(){
     //console.log(this.userVoted)
-    this.voteService.fetchVotesByTopicID({ _id: this.topicID }).subscribe({
+    this.voteService.fetchVotesByTopicID({ _id: this.data.topicID }).subscribe({
       error: (error) => {
         switch (error['status']) { }
       },
@@ -98,6 +109,17 @@ export class TopicSingleMobileComponent implements OnInit {
         this.isDataAvailable = true;
       },
     });
+
+      // *** load favourites
+      this.favoritesService.fetchFavoritesByTopicID({ _id: this.data.topicID }).subscribe({
+        error: (error: any) => { },
+        next: (reply: any) => {
+          this.allFavorites = reply['data'];
+
+          this.isFavorite = this.checkFavorites();
+        },
+        complete: () => { }
+      });
       
   }
 
@@ -114,19 +136,17 @@ export class TopicSingleMobileComponent implements OnInit {
   }
 
   getUserFavorited() {
-    return this.allFavorites.filter((item: any) => item['createdBy'] === this.user['_id']);
+    return this.allFavorites.filter((item: any) => item['createdBy'] === this.data.userID);
   }
+
 
   addFavorites() {
     let favorited = this.getUserFavorited();
-
     if (favorited.length > 0) {
       let data = {
         _id: favorited[0]._id,
         favorites: true,
       };
-      console.log(data);
-      return;
 
       this.favoritesService.updateFavorites(data).subscribe((reply: any) => {
         if (reply.message == 'favorite update success') {
@@ -135,16 +155,56 @@ export class TopicSingleMobileComponent implements OnInit {
       });
     } else {
       let data = {
-        topic: this.topicID,
+        topic: this.data.topicID,
         favorites: true,
       };
-
       this.favoritesService.addFavorites(data).subscribe((reply: any) => {
         if (reply.message == 'favorites add success') {
           this.isFavorite = true;
         }
+        this.allFavorites = [reply.data];
       });
     }
-  };
+  }
+
+
+  removeFavorites() {
+    let favorited = this.getUserFavorited();
+    let data = {
+      _id: favorited[0]._id,
+      favorites: false,
+    };
+    this.favoritesService.updateFavorites(data).subscribe((reply: any) => {
+      if (reply.message == 'favorite update success') {
+        this.isFavorite = false;
+      }
+    });
+  }
+
+  checkFavorites() {
+    let favorited = this.getUserFavorited();
+    if (favorited.length > 0) {
+      return favorited[0].favorites;
+    }
+    return false;
+  }
+
+
+  openTestimoniesDialog() {
+    const dialogRef = this.dialog.open<any>(TestimonialListComponent, {
+      data: {
+        location: 'topic',
+        topic: this.data.topic,
+        topicID: this.data.topicID,
+        user: this.data.user
+      },
+      disableClose: true,
+      panelClass: 'full-dialog',
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
 }
 

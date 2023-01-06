@@ -1,9 +1,18 @@
 :host {
-  .circleChart {
-    display: flex;
-    background: #ffffff;
-    padding: 20px;
 
+ float: left;
+
+
+  .circleChart {
+    display: inline-flex;
+    background: #ffffff;
+    
+    div{
+      margin: 10px 5px;
+      button{
+        margin-top: 20px;
+      }
+    }
     .textProgressValue {
       font-weight: 700;
       color: #306eff;

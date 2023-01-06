@@ -1,5 +1,5 @@
-import { Component, OnInit,} from '@angular/core';
-import { MatDialog,} from '@angular/material/dialog';
+import { Component, OnInit, Input, Output } from '@angular/core';
+import { MatDialog, } from '@angular/material/dialog';
 import { TopicSingleMobileComponent } from '../topic-single-mobile/topic-single-mobile.component';
 import { FavoritesService } from 'src/app/services/favorites.service';
 import { UserService } from 'src/app/services/user.service';
@@ -8,10 +8,12 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ShareSheetComponent } from 'src/app/components/share-sheet/share-sheet.component';
 
 export interface DialogData {
+  user: null;
   userID: null;
+  topic: null;
   topicID: null;
-  title: null;
-  description: null;
+  topicTitle: null;
+  topicDescription: null;
 }
 
 
@@ -26,20 +28,19 @@ export class CardTopicsMobileComponent implements OnInit {
   public topic: any = null;
   public isDataAvailable: boolean = false;
   public isFavorite: boolean = false;
-  public location: string = '';
-  public allFavorites: any[] = [];
- 
+  public allFavorites: any = null;
+
   constructor(
     public dialog: MatDialog,
     public topicService: TopicService,
     public userService: UserService,
     public matBottomSheet: MatBottomSheet,
     public favoritesService: FavoritesService,
-  
-    ) { 
-      //this.location = this.dialogData['location'];
-    }
-  
+
+  ) {
+
+  }
+
 
   ngOnInit(): void {
     this.userService.fetchFireUser().subscribe({
@@ -49,6 +50,17 @@ export class CardTopicsMobileComponent implements OnInit {
       next: (reply: any) => {
         this.user = reply;
         //console.log(this.user);
+
+        // *** load favourites
+        this.favoritesService.fetchFavoritesByTopicID({ _id: '6399ea5161aaa9ec2660b014' }).subscribe({
+          error: (error: any) => { },
+          next: (reply: any) => {
+            this.allFavorites = reply['data'];
+            //console.log(this.allFavorites)
+            this.isFavorite = this.checkFavorites();
+          },
+          complete: () => { }
+        });
       },
       complete: () => {
         this.isDataAvailable = true;
@@ -67,6 +79,10 @@ export class CardTopicsMobileComponent implements OnInit {
         this.isDataAvailable = true;
       },
     })
+
+
+
+
   }
 
   openDialog(id: any) {
@@ -80,10 +96,12 @@ export class CardTopicsMobileComponent implements OnInit {
         //console.log(this.topic);
         this.dialog.open(TopicSingleMobileComponent, {
           data: {
+            user: this.user,
             userID: this.user._id,
+            topic: this.topic,
             topicID: this.topic._id,
-            title: this.topic.title,
-            description: this.topic.description
+            topicTitle: this.topic.title,
+            topicDescription: this.topic.description
           },
           height: '100%',
           maxWidth: '100%',
@@ -108,8 +126,10 @@ export class CardTopicsMobileComponent implements OnInit {
     });
   };
 
+  
+
   getUserFavorited() {
-    return this.allFavorites.filter((item: any) => item['createdBy'] === this.user['_id']);
+    return this.allFavorites.filter((item: any) => item['createdBy'] === this.user._id);
   }
 
   addFavorites() {
@@ -127,7 +147,7 @@ export class CardTopicsMobileComponent implements OnInit {
       });
     } else {
       let data = {
-        topic:  this.topic.id,
+        topic: '6399ea5161aaa9ec2660b014',
         favorites: true,
       };
 
@@ -140,5 +160,26 @@ export class CardTopicsMobileComponent implements OnInit {
     }
   }
 
-  
+  removeFavorites() {
+    let favorited = this.getUserFavorited();
+    let data = {
+      _id: favorited[0]._id,
+      favorites: false,
+    };
+    this.favoritesService.updateFavorites(data).subscribe((reply: any) => {
+      if (reply.message == 'favorite update success') {
+        this.isFavorite = false;
+      }
+    });
+  }
+
+  checkFavorites() {
+    let favorited = this.getUserFavorited();
+    if (favorited.length > 0) {
+      return favorited[0].favorites;
+    }
+    return false;
+  }
+
+
 }

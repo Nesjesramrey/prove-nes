@@ -1,5 +1,5 @@
-<div class="circleChart mt-1">
-  <div style="position: relative">
+<div class="circleChart">
+  <div class="circleprogress" style="position: relative">
     <mat-progress-spinner class="custom-spinner" [diameter]="150" [strokeWidth]="15" [value]="progressValue"
       color="accent">
       ></mat-progress-spinner>
@@ -7,12 +7,10 @@
       {{ progressValue }}%
     </span>
   </div>
-  <div>
+  <div class="infocircle">
     <span><strong>{{ progressValue }}%</strong> De libres profesionistas en tu red</span>
-    <span class="mt-1">
       <button type="button" mat-raised-button color="accent">
         Editar ocupación
       </button>
-    </span>
-  </div>
+      </div>
 </div>
