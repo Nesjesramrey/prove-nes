@@ -2,8 +2,10 @@
   <mat-spinner></mat-spinner>
 </div>
 
-<div class="set-12 innerhldr" *ngIf="isDataAvailable">
+<!--Desk-->
+<div class="set-12 innerhldr" *ngIf="isDataAvailable && !isMobile">
   <div class="set-4 col-lft">
+    <button type="button" (click)="linkMe('/documentos')" ></button>
     <mat-card class="set-12">
       <div class="set-12 cardimg">
         <div class="set-12 empty-img">
@@ -36,6 +38,7 @@
           <mat-icon color="accent">photo_camera</mat-icon>
         </div>
       </button>
+     
 
       <div class="set-12 cardbody">
         <!-- <button type="button" class="roundblue cardmore" (click)="linkMe('/hub/configuracion')"
@@ -59,23 +62,21 @@
         </div>
       </div>
     </mat-card>
-
+    <button type="button"  (click)="linkMe('hub/documentos')" >Documentos</button>
     <mat-card class="set-12">
       <div class="app-map-box"></div>
     </mat-card>
   </div>
+</div>
 
-  <div class="set-8 col-rgt">
-    <div class="set-12" *ngIf="userActivities.includes('administrator')">
-      <div class="admin-template" [user]="user" [documents]="documents"></div>
-    </div>
 
-    <div class="set-12" *ngIf="userActivities.includes('editor')">
-      <div class="editor-template" [user]="user" [documents]="documents"></div>
-    </div>
+<!--Mobile-->
+<div class="set-12 " *ngIf="isDataAvailable && isMobile">
+ 
+ 
+  <tabs-mobile></tabs-mobile>
+ 
 
-    <div class="set-12" *ngIf="userActivities.includes('citizen')">
-      <div class="c-type-template" [user]="user" [documents]="documents"></div>
-    </div>
-  </div>
+
+
 </div>

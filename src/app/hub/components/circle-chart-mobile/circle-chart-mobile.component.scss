@@ -1,0 +1,32 @@
+:host {
+
+ float: left;
+
+
+  .circleChart {
+    display: inline-flex;
+    background: #ffffff;
+    
+    div{
+      margin: 10px 5px;
+      button{
+        margin-top: 20px;
+      }
+    }
+    .textProgressValue {
+      font-weight: 700;
+      color: #306eff;
+
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+    }
+
+  }
+
+
+
+
+}

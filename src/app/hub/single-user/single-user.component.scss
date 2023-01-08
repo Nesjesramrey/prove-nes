@@ -1,8 +1,10 @@
 :host {
   width: 100%;
-  margin-top: 80px;
+  margin-top: 5px;
   margin-bottom: 100px;
   float: left;
+
+  
 
   mat-spinner {
     position: absolute !important;
@@ -164,4 +166,13 @@
       margin-bottom: 0;
     }
   }
+  .mat-tab-group ::ng-deep .mat-tab-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  
+
 }
+

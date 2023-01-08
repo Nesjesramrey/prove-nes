@@ -8,6 +8,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DocumentService } from 'src/app/services/document.service';
 import { UserService } from 'src/app/services/user.service';
 import { UtilityService } from 'src/app/services/utility.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: '.single-user-page',
@@ -22,6 +23,7 @@ export class SingleUserComponent implements OnInit {
   public userActivities: any = [];
   public documents: any = [];
   public haveRootPermissions: boolean = false;
+  public isMobile: boolean = false;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -30,10 +32,12 @@ export class SingleUserComponent implements OnInit {
     public authenticationSrvc: AuthenticationService,
     public userSrvc: UserService,
     public documentSrvc: DocumentService,
-    public utilityService: UtilityService
+    public utilityService: UtilityService,
+    public deviceDetectorService: DeviceDetectorService,
   ) {
     this.userID = this.activatedRoute['snapshot']['params']['userID'];
     this.isAuthenticated = this.authenticationSrvc['isAuthenticated'];
+    this.isMobile = this.deviceDetectorService.isMobile();
   }
 
   ngOnInit(): void {

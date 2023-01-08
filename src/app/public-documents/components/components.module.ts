@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppMaterialModule } from '../../app-material.module';
-import { NgChartsModule } from 'ng2-charts';
 import { AppSharedModule } from '../../app-shared.module';
 
 import { LyToolbarModule } from '@alyle/ui/toolbar';
@@ -51,7 +50,6 @@ import { SubcategoryBarsComponent } from './subcategory-bars/subcategory-bars.co
     LyImageCropperModule,
     LySliderModule,
     LyIconModule,
-    NgChartsModule,
     AppSharedModule,
     MatDialogModule,
   ],

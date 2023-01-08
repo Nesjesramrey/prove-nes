@@ -39,4 +39,11 @@ export class TopicService {
       this.endpointSrvc.apiEndPoint + this.endpointSrvc.updateTopicDataEndPoint + `${data['topic_id']}`, data
     );
   }
+
+  fetchSuggestionTopic() {
+    return this.httpClient.get(
+      this.endpointSrvc.apiEndPoint +
+      this.endpointSrvc.fetchSuggestionTopicByUser
+    );
+  }
 }
