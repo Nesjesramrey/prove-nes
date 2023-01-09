@@ -3,17 +3,24 @@
 </div>
 
 <div class="form-profile " *ngIf="isDataAvailable && isMobile">
+    <h3>Mi perfil</h3>
+    <div class="avatarhldr">
+        <div class="profile">
+        <input #fileInput type="file" (change)="openCropperDialog($event)" accept="image/*" hidden />
+        <button type="button" class="avatar" (click)="fileInput.click()">
+            <img src="{{ user.avatarImage }}" alt="{{ user.firstname }} {{ user.lastname }}"
+                *ngIf="user.avatarImage != null" />
+            <span *ngIf="user.avatarImage == null">
+                {{ user.firstname | firstword | firstletter
+                }}{{ user.lastname | firstword | firstletter }}
+            </span>
+            <div class="overlay" matTooltip="Cargar imágen" matTooltipClass="tooltip">
+                <mat-icon color="accent">photo_camera</mat-icon>
+            </div>
+        </button>
+    </div>
+    </div>
     <form [formGroup]="formGroup" (submit)="onUpdateUserData(formGroup)">
-        <h3>Tu perfil</h3>
-        <div class="set-12 avatarhldr">
-            <button type="button" class="avatar">
-                <img src="{{ user.avatarImage }}" alt="{{ user.firstname }}" *ngIf="user.avatarImage != null" />
-                <span *ngIf="user.avatarImage == null">
-                    {{ user.firstname | firstword | firstletter
-                    }}{{ user.lastname | firstword | firstletter }}
-                </span>
-            </button>
-        </div>
         <div>
             <mat-form-field appearance="outline">
                 <mat-label>Nombre(s)</mat-label>
@@ -29,7 +36,7 @@
                 <mat-label>Genero</mat-label>
                 <mat-select formControlName="gender">
                     <mat-option *ngFor="let genre of genders" [value]="genre.value">
-                        {{genre.viewValue}}
+                        <small>{{genre.viewValue}}</small>
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -52,13 +59,13 @@
 
 
         <mat-checkbox (change)="showText = !showText">¿Perteneces a una asociación?</mat-checkbox>
-        <div *ngIf="showText">
+        <div class="associationSection" *ngIf="showText">
             <h3 class="mt-1">Datos de la asociación</h3>
             <mat-form-field appearance="outline">
                 <mat-label>Tipo de asociación</mat-label>
                 <mat-select matInput formControlName="associationTypology">
                     <mat-option *ngFor="let asociation of asociations" [value]="asociation.value">
-                        {{asociation.viewValue}}
+                        <small>{{asociation.viewValue}}</small>
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -70,8 +77,8 @@
 
             <mat-form-field appearance="outline">
                 <mat-label>Describe tu asociación</mat-label>
-                <textarea id="textarea-description" cdkTextareaAutosize
-                 matInput formControlName="associationDescription"></textarea>
+                <textarea id="textarea-description" cdkTextareaAutosize matInput
+                    formControlName="associationDescription"></textarea>
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Intereses</mat-label>
@@ -90,14 +97,14 @@
                     <strong>"Playas"</strong>
                 </mat-hint>
             </mat-form-field>
-
         </div>
-        <div class="set-12 ctrls ">
-            <button class="set-6" type="button" mat-raised-button color="warn" disabled>
+
+        <div class="ctrls">
+            <button class="set-12" type="button" mat-raised-button color="warn">
                 <small>Cancelar</small>
             </button>
-            <button class="set-6" type="submit" mat-raised-button color="primary"
-                (click)="onUpdateUserData">Actualizar</button>
+            <button class="set-12" type="submit" mat-raised-button color="primary" (click)="onUpdateUserData"
+                [disabled]="formGroup.invalid">Actualizar</button>
         </div>
     </form>
 </div>

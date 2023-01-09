@@ -6,6 +6,9 @@ import { UserService } from 'src/app/services/user.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
+import { LyDialog } from '@alyle/ui/dialog';
+import { SetAvatarDialogComponent } from 'src/app/components/set-avatar-dialog/set-avatar-dialog.component';
+
 
 
 interface Gender {
@@ -54,7 +57,8 @@ export class AppConfigurationComponent implements OnInit {
     public utilityService: UtilityService,
     public userService: UserService,
     public deviceDetectorService: DeviceDetectorService,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public dialog: LyDialog,
   ) {
     this.accessToken = this.authenticationSrvc.fetchAccessToken;
     this.isMobile = this.deviceDetectorService.isMobile();
@@ -67,7 +71,7 @@ export class AppConfigurationComponent implements OnInit {
       },
       next: (reply: any) => {
         this.user = reply;
-        //console.log(this.user);
+        console.log(this.user);
 
         this.formGroup = this.formBuilder.group({
           firstname: [this.user['firstname'], [Validators.required]],
@@ -85,6 +89,21 @@ export class AppConfigurationComponent implements OnInit {
       complete: () => {
         this.isDataAvailable = true;
       },
+    });
+  }
+
+  
+  openCropperDialog(event: Event) {
+    const dialogRef = this.dialog.open<SetAvatarDialogComponent, Event>(SetAvatarDialogComponent, {
+      width: 300,
+      data: event,
+      disableClose: true
+    });
+
+    dialogRef.afterClosed.subscribe((reply: any) => {
+      if (reply != undefined) {
+        window.location.reload();
+      }
     });
   }
 

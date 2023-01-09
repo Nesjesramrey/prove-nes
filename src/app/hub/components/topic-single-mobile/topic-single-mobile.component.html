@@ -3,36 +3,32 @@
         <div class="set-10">
             <h3>Temas</h3>
         </div>
-        <div class="set-2">
+        <div class="set-2 txt-right">
             <button type="button" mat-mini-fab color="primary" mat-dialog-close>
-                <mat-icon >close</mat-icon>
+                <mat-icon>cancel</mat-icon>
             </button>
         </div>
     </div>
 
     <div class="set-12 dialog-body">
         <span><strong>{{data.topicTitle}}</strong></span>
-        <p  [innerHTML]="data.topicDescription"></p>
-        <div class="info">
-            <!-- <span class=" mt-2">Relevancia ciudadana</span>
-            <span class=" mt-2">8</span> -->
-            <div class="mt-2">
-                <button type="button" *ngIf="!userVoted" mat-raised-button color="accent" (click)="openModalVote()">
-                    <strong>Votar</strong>
-                </button>
-            </div>
-            <div class="set-12 vote-count" *ngIf="userVoted">Votos: {{ votes }}</div>
+        <p [innerHTML]="data.topicDescription"></p>
+        <div class="set-12 info">
+            <button type="button" *ngIf="!userVoted" mat-raised-button color="accent" (click)="openModalVote()">
+                <strong>Votar</strong>
+            </button>
+            <p  *ngIf="userVoted">Votos: {{ votes }}</p>
         </div>
         <div class="set-12 icons">
-            <button type="button" mat-icon-button color="primary" matTooltip="Agregar a favoritos" matTooltipClass="tooltip"
-            (click)="addFavorites()" *ngIf="!isFavorite">
-            <mat-icon>favorite</mat-icon>
-          </button>
+            <button type="button" mat-icon-button color="primary" matTooltip="Agregar a favoritos"
+                matTooltipClass="tooltip" (click)="addFavorites()" *ngIf="!isFavorite">
+                <mat-icon>favorite</mat-icon>
+            </button>
 
-          <button type="button" mat-icon-button color="accent" matTooltip="Agregar a favoritos" matTooltipClass="tooltip"
-            (click)="removeFavorites()" *ngIf="isFavorite">
-            <mat-icon>favorite</mat-icon>
-          </button>
+            <button type="button" mat-icon-button color="accent" matTooltip="Agregar a favoritos"
+                matTooltipClass="tooltip" (click)="removeFavorites()" *ngIf="isFavorite">
+                <mat-icon>favorite</mat-icon>
+            </button>
             <!-- <button type="button" mat-icon-button color="primary" disabled>
                 <mat-icon>check_circle</mat-icon>
             </button> -->

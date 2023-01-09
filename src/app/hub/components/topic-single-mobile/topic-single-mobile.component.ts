@@ -23,6 +23,7 @@ export class TopicSingleMobileComponent implements OnInit {
   public DialogData: any = null;
   public isDataAvailable: boolean = false;
   public isFavorite: any = null;
+  public test: any = null;
   @Input('allFavorites') public allFavorites: any = null;
   @Input('votes') public votes: any = null;
   @Input('userVoted') public userVoted: any = null;
@@ -39,7 +40,7 @@ export class TopicSingleMobileComponent implements OnInit {
     public voteService: VoteService,
     public matBottomSheet: MatBottomSheet,
   ) { 
-   
+
   }
 
   ngOnInit(
@@ -70,6 +71,8 @@ export class TopicSingleMobileComponent implements OnInit {
         this.isDataAvailable = true;
       },
     })
+
+
 
   }
 
