@@ -19,6 +19,7 @@ export class PublicDocumentMobileFixedToolsComponent implements OnInit {
   public topic: any = null;
   @Output() public topicAdded = new EventEmitter<any>();
   public document: any = null;
+  public isDataAvailable: boolean = false;
 
   constructor(
     public dialog: MatDialog,
@@ -26,7 +27,13 @@ export class PublicDocumentMobileFixedToolsComponent implements OnInit {
     public utilityService: UtilityService
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.documentService.fetchCoverDocument().subscribe({
+      error: (error: any) => { this.utilityService.openErrorSnackBar(this.utilityService['errorOops']); },
+      next: (reply: any) => { this.document = reply; },
+      complete: () => { this.isDataAvailable = true; }
+    });
+  }
 
   displayMenu() {
     this.open = !this.open;
@@ -50,7 +57,10 @@ export class PublicDocumentMobileFixedToolsComponent implements OnInit {
     this.displayMenu();
 
     const dialogRef = this.dialog.open<any>(AddDocumentTopicFullComponent, {
-      data: {},
+      data: {
+        user: this.user,
+        document: this.document
+      },
       disableClose: true,
       panelClass: 'full-dialog'
     });
@@ -67,23 +77,15 @@ export class PublicDocumentMobileFixedToolsComponent implements OnInit {
   popSearchDialog() {
     this.displayMenu();
 
-    this.documentService.fetchCoverDocument().subscribe({
-      error: (error: any) => {
-        this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+    const dialogRef = this.dialog.open<any>(SearchDialogComponent, {
+      data: {
+        document_id: this.document['_id']
       },
-      next: (reply: any) => {
-        this.document = reply;
-        const dialogRef = this.dialog.open<any>(SearchDialogComponent, {
-          data: {
-            document_id: this.document['_id']
-          },
-          disableClose: true
-        });
+      disableClose: true
+    });
 
-        dialogRef.afterClosed().subscribe((reply: any) => {
-          if (reply != undefined) { }
-        });
-      }
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
     });
   }
 

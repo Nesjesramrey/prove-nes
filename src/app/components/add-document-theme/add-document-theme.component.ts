@@ -7,6 +7,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 import { SolutionService } from 'src/app/services/solution.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { DocumentService } from 'src/app/services/document.service';
 
 @Component({
   selector: '.add-document-theme',
@@ -73,7 +74,8 @@ export class AddDocumentThemeComponent implements OnInit {
     public topicService: TopicService,
     public utilityService: UtilityService,
     public solutionService: SolutionService,
-    public deviceDetectorService: DeviceDetectorService
+    public deviceDetectorService: DeviceDetectorService,
+    public documentService: DocumentService
   ) {
     // console.log(this.dialogData);
     this.isMobile = this.deviceDetectorService.isMobile();
@@ -93,9 +95,15 @@ export class AddDocumentThemeComponent implements OnInit {
       files: ['', []],
     });
 
-    setTimeout(() => {
-      this.isDataAvailable = true;
-    }, 1000);
+    this.documentService.fetchAccessControlList({ document_id: this.dialogData['documentID'] }).subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        console.log(reply);
+      },
+      complete: () => {
+        this.isDataAvailable = true;
+      }
+    });
   }
 
   killDialog() {

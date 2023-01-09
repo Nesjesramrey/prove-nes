@@ -57,10 +57,24 @@
     button {
       margin-left: 10px;
     }
+
+    button:first-child {
+      margin-left: 0;
+    }
   }
 
   .file-hldr {
     margin-bottom: 20px;
+  }
+
+  .minifab {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    mat-icon {
+      font-size: 17pt;
+    }
   }
 
   .loading {

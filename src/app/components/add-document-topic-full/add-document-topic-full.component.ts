@@ -5,6 +5,8 @@ import { DocumentService } from 'src/app/services/document.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { TopicService } from 'src/app/services/topic.service';
 import { UtilityService } from 'src/app/services/utility.service';
+import { forkJoin, Observable } from 'rxjs';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: '.add-document-topic-full',
@@ -59,6 +61,9 @@ export class AddDocumentTopicFullComponent implements OnInit {
   };
   public fileNames: any[] = [];
   public topic: any = null;
+  public user: any = null;
+  public acl: any = null;
+  public availableLayouts: any = [];
 
   constructor(
     public dialogRef: MatDialogRef<AddDocumentTopicFullComponent>,
@@ -66,9 +71,14 @@ export class AddDocumentTopicFullComponent implements OnInit {
     public formBuilder: FormBuilder,
     public documentService: DocumentService,
     public topicService: TopicService,
-    public utilityService: UtilityService
+    public utilityService: UtilityService,
+    public userService: UserService
   ) {
     // console.log(this.dialogData);
+    this.user = this.dialogData['user'];
+    this.document = this.dialogData['document'];
+    // this.coverage = this.document['coverage'];
+    this.layouts = this.document['layouts'];
   }
 
   ngOnInit(): void {
@@ -86,25 +96,31 @@ export class AddDocumentTopicFullComponent implements OnInit {
     this.addTopicFormGroup.get('title')?.disable();
     this.addTopicFormGroup.get('description')?.disable();
 
-    this.documentService.fetchCoverDocument().subscribe({
-      error: (error: any) => { },
-      next: (reply: any) => {
-        this.document = reply;
-        this.coverage = reply['coverage'];
-        this.layouts = reply['layouts'];
+    this.documentService.fetchAccessControlList({ document_id: this.document['_id'] }).subscribe({
+      error: (error: any) => {
+        this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+        this.killDialog();
       },
-      complete: () => {
-        this.isDataAvailable = true;
-      }
-    })
+      next: (reply: any) => {
+        this.acl = reply;
+        this.availableLayouts = this.acl['layouts'].filter((x: any) => { return x['states'].length != 0; });
+      },
+      complete: () => { this.isDataAvailable = true; }
+    });
   }
 
   onLayoutSelected(event: any) {
-    this.sublayouts = event['value']['subLayouts'];
+    this.sublayouts = event['value']['subLayouts'].filter((x: any) => { return x['states'].length != 0; });
+    // reset values
+    this.coverage = null;
     this.addTopicFormGroup.get('sublayout')?.enable();
+    this.addTopicFormGroup.get('coverage')?.disable();
+    this.addTopicFormGroup.patchValue({ sublayout: '' });
+    this.addTopicFormGroup.patchValue({ coverage: '' });
   }
 
   onSubLayoutSelected(event: any) {
+    this.coverage = event['value']['states'];
     this.addTopicFormGroup.get('coverage')?.enable();
   }
 
@@ -122,7 +138,7 @@ export class AddDocumentTopicFullComponent implements OnInit {
     this.submitted = true;
 
     let data: any = {
-      layout_id: formGroup['value']['sublayout']['_id'],
+      layout_id: formGroup['value']['sublayout']['id'],
       formData: new FormData()
     };
 
@@ -130,7 +146,7 @@ export class AddDocumentTopicFullComponent implements OnInit {
       .forEach((file: any) => { data['formData'].append('files', file); });
     data['formData'].append('title', formGroup['value']['title']);
     data['formData'].append('description', formGroup['value']['description']);
-    data['formData'].append('coverage', JSON.stringify([formGroup['value']['coverage']['_id']]));
+    data['formData'].append('coverage', JSON.stringify([formGroup['value']['coverage']['id']]));
 
     this.topicService.createNewTopic(data).subscribe({
       error: (error: any) => {

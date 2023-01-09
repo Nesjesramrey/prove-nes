@@ -7,10 +7,11 @@
     <div class="set-10">
       <span>Agregar tópico</span>
       <input type="file" #file (change)="onFileSelected($event)" multiple>
+      <input type="file" #photo accept="image/*" capture="environment">
     </div>
 
     <div class="set-2 txt-right">
-      <button type="button" mat-mini-fab color="primary" (click)="killDialog()" [disabled]="submitted">
+      <button type="button" mat-mini-fab color="primary" (click)="killDialog()" [disabled]="submitted" class="minifab">
         <mat-icon>cancel</mat-icon>
       </button>
     </div>
@@ -21,8 +22,8 @@
       <mat-form-field appearance="outline">
         <mat-label>Categoría</mat-label>
         <mat-select (selectionChange)="onLayoutSelected($event)" formControlName="layout">
-          <mat-option *ngFor="let layout of layouts" [value]="layout">
-            <small>{{layout?.category?.name}}</small>
+          <mat-option *ngFor="let layout of availableLayouts" [value]="layout">
+            <small>{{layout?.name}}</small>
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -31,7 +32,7 @@
         <mat-label>Sub categoría</mat-label>
         <mat-select (selectionChange)="onSubLayoutSelected($event)" formControlName="sublayout">
           <mat-option *ngFor="let layout of sublayouts" [value]="layout">
-            <small>{{layout?.category?.name}}</small>
+            <small>{{layout?.name}}</small>
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -61,8 +62,11 @@
       </div>
 
       <div class="set-12 ctrls">
-        <button type="button" mat-mini-fab color="primary" (click)="file.click()">
+        <button type="button" mat-mini-fab color="primary" (click)="photo.click()" class="minifab">
           <mat-icon>cloud_upload</mat-icon>
+        </button>
+        <button type="button" mat-mini-fab color="primary" (click)="file.click()" class="minifab">
+          <mat-icon>add_a_photo</mat-icon>
         </button>
         <button type="submit" mat-raised-button color="primary" [disabled]="addTopicFormGroup.invalid || submitted">
           <small>Guardar</small>
