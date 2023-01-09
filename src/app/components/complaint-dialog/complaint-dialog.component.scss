@@ -3,6 +3,17 @@
   float: left;
   padding: 20px;
 
+  .dialog-head {
+    display: flex;
+    align-items: center;
+
+    .set-2 {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+  }
+
   ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
     margin: 0;
   }
@@ -86,6 +97,12 @@
 
     button:first-child {
       margin-left: 0;
+    }
+
+    .round {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 

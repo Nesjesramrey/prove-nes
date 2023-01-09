@@ -8,14 +8,42 @@
 </div>
 
 <div class="set-12 dialog-body">
-  <form [formGroup]="inviteFormGroup" (submit)="onInvite(inviteFormGroup)">
+  <div class="set-12">
+    <small>Selecciona un medio</small>
+  </div>
+
+  <div class="set-12 networks">
+    <button type="button" class="icon whatsapp-net" (click)="onSelectMedia('whatsapp')">&nbsp;</button>
+    <button type="button" class="icon email-net" (click)="onSelectMedia('email')">
+      <mat-icon>email</mat-icon>
+    </button>
+  </div>
+
+  <form class="set-12" [formGroup]="inviteByEmailFormGroup" (submit)="onEmailInvite(inviteByEmailFormGroup)"
+    *ngIf="media == 'email'">
     <mat-form-field appearance="outline">
       <mat-label>Correo electrónico</mat-label>
       <input type="text" matInput formControlName="email">
     </mat-form-field>
 
     <div class="set-12 ctrls">
-      <button type="submit" mat-raised-button color="primary" [disabled]="inviteFormGroup.invalid || submitted">
+      <button type="submit" mat-raised-button color="primary" [disabled]="inviteByEmailFormGroup.invalid || submitted">
+        <small>Invitar</small>
+      </button>
+      <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
+    </div>
+  </form>
+
+  <form class="set-12" [formGroup]="inviteByWhatsAppFormGroup" (submit)="onPhoneInvite(inviteByWhatsAppFormGroup)"
+    *ngIf="media == 'whatsapp'">
+    <mat-form-field appearance="outline">
+      <mat-label>Teléfono</mat-label>
+      <input type="text" matInput formControlName="phone">
+    </mat-form-field>
+
+    <div class="set-12 ctrls">
+      <button type="submit" mat-raised-button color="primary"
+        [disabled]="inviteByWhatsAppFormGroup.invalid || submitted">
         <small>Invitar</small>
       </button>
       <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
