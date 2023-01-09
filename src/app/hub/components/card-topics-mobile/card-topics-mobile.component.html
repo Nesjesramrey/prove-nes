@@ -6,7 +6,7 @@
         
         <div class="set-12 icons">
             <button type="button" mat-icon-button color="primary" matTooltip="Agregar a favoritos" matTooltipClass="tooltip"
-            (click)="addFavorites()" *ngIf="!isFavorite" disabled>
+            (click)="addFavorites(topic._id)" *ngIf="!isFavorite" disabled>
             <mat-icon>favorite</mat-icon>
           </button>
 

@@ -22,7 +22,7 @@ export class TopicSingleMobileComponent implements OnInit {
   public topicID: any = null;
   public DialogData: any = null;
   public isDataAvailable: boolean = false;
-  public isFavorite: boolean = false;
+  public isFavorite: any = null;
   @Input('allFavorites') public allFavorites: any = null;
   @Input('votes') public votes: any = null;
   @Input('userVoted') public userVoted: any = null;
@@ -104,7 +104,20 @@ export class TopicSingleMobileComponent implements OnInit {
       next: (reply: any) => {
         this.userVoted = this.checkUserVote(reply);
         //console.log(this.userVoted);
+        this.voteService.fetchVotesByTopicID({ _id: this.data.topicID }).subscribe({
+          error: (error) => {
+            switch (error['status']) { }
+          },
+          next: (reply: any) => {
+            this.votes = reply.length;
+            //console.log(this.userVoted);
+          },
+          complete: () => {
+            this.isDataAvailable = true;
+          },
+        });
       },
+      
       complete: () => {
         this.isDataAvailable = true;
       },
