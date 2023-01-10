@@ -68,6 +68,7 @@ export class ComplaintDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.complaintFormGroup = this.formBuilder.group({
+      title: ['', [Validators.required]],
       description: ['', [Validators.required]],
       files: ['', []]
     });
@@ -90,6 +91,7 @@ export class ComplaintDialogComponent implements OnInit {
 
     Array.from(this.complaintFormGroup.controls['files']['value'])
       .forEach((file: any) => { data.append('files', file); });
+    data.append('title', this.complaintFormGroup.value.title);
     data.append('description', this.complaintFormGroup.value.description);
     data.append('isAnonymous', (this.isAnonymous).toString());
 

@@ -529,6 +529,9 @@ mat-form-field {
     overflow: hidden;
     border-radius: 100%;
     margin-left: 15px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     // border: 3px solid rgba($color: #f1f1f1, $alpha: 1.0);
     // -webkit-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
     // -moz-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
@@ -604,6 +607,14 @@ mat-form-field {
     background: url("./assets/images/7693284_tiktok_social-media_apps_logo_icon-disabled.png") no-repeat;
     background-size: 100%;
     opacity: 0.4;
+  }
+
+  .email-net {
+    background: #00031d;
+
+    mat-icon {
+      color: #ffffff;
+    }
   }
 }
 
@@ -855,7 +866,7 @@ mat-card {
         float: left;
       }
     }
-  
+
   }
 }
 

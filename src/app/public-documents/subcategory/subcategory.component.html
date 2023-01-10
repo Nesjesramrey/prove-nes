@@ -207,5 +207,6 @@
 <div class="set-12" *ngIf="isDataAvailable && isMobile">
   <div class="public-document-mobile-subcategory-view" [user]="user" [isCollaborator]="isCollaborator"
     [document]="document" [category]="subcategory"></div>
-  <!-- <div class="public-document-mobile-fixed-tools" (topicAdded)="getTopicStatus($event)"></div> -->
+  <div class="public-document-mobile-fixed-tools" [isCollaborator]="isCollaborator"
+    (topicAdded)="getTopicStatus($event)"></div>
 </div>
