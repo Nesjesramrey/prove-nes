@@ -1,4 +1,8 @@
-<div class="set-12 card-topic">
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div class="set-12 card-topic"  *ngIf="isDataAvailable && isMobile">
     <div class="set-12 dialog-head ">
         <div class="set-10">
             <h3>Temas</h3>

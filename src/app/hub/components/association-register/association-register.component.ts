@@ -9,7 +9,6 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { LyDialog } from '@alyle/ui/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { SetAvatarDialogComponent } from 'src/app/components/set-avatar-dialog/set-avatar-dialog.component';
-import { AssociationRegisterComponent } from '../components/association-register/association-register.component';
 
 
 interface Gender {
@@ -23,11 +22,11 @@ interface Asociation {
 }
 
 @Component({
-  selector: '.app-configuration-page',
-  templateUrl: './app-configuration.component.html',
-  styleUrls: ['./app-configuration.component.scss'],
+  selector: 'app-association-register',
+  templateUrl: './association-register.component.html',
+  styleUrls: ['./association-register.component.scss']
 })
-export class AppConfigurationComponent implements OnInit {
+export class AssociationRegisterComponent implements OnInit {
   public formGroup!: FormGroup;
   public happyArray: any[] = [];
   public unhappyArray: any[] = [];
@@ -176,18 +175,6 @@ export class AppConfigurationComponent implements OnInit {
     }
   }
 
-  openDialogAssociationRegister() {
-    
-    this.dialogData.open(AssociationRegisterComponent, {
-      data: {
-     
-      },
-      height: '100%',
-      maxWidth: '100%',
-      panelClass: 'full-dialog'
-    });
- 
-}
+
 
 }
-

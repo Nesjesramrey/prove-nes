@@ -1,0 +1,31 @@
+:host {
+    padding: 20px;
+    float: left;
+    width: 100%;
+  
+    .form-association {
+      mat-form-field{
+        margin-bottom: 20px;
+      }
+      
+   
+      .associationSection {
+        margin-bottom: 20px;
+      }
+  
+      #textarea-description::-webkit-scrollbar {
+        display: none;
+      }
+  
+      .ctrls {
+        display: flex;
+        justify-content: center;
+  
+        button {
+          margin: 0px 5px;
+        }
+      }
+  
+    }
+  
+}

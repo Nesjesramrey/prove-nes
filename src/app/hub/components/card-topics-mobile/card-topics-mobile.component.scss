@@ -8,6 +8,9 @@
     mat-card {
       margin-bottom: 10px;
     }
+    mat-card:last-child{
+      margin-bottom: 0px;
+    }
 
     p {
       margin-top: 10px;
