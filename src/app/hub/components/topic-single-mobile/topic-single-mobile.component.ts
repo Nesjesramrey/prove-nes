@@ -66,13 +66,15 @@ export class TopicSingleMobileComponent implements OnInit {
             this.allFavorites = reply['data'];
             this.isFavorite = this.checkFavorites();
             this.loadTopic()
-          },
-          
-          complete: () => { }
+          }, 
+          complete: () => { 
+            setTimeout(() => {
+              this.isDataAvailable = true;
+            }, 600);
+          }
         });
       },
       complete: () => {
-        this.isDataAvailable = true;
       },
     })
 
@@ -120,13 +122,10 @@ export class TopicSingleMobileComponent implements OnInit {
             //console.log(this.userVoted);
           },
           complete: () => {
-            this.isDataAvailable = true;
           },
         });
       },
-      
       complete: () => {
-        this.isDataAvailable = true;
       },
     });
 
