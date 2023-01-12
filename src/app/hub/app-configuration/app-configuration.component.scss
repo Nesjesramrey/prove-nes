@@ -4,7 +4,7 @@
   height: auto;
 
   .form-profile {
-    mat-form-field{
+    mat-form-field:last-child{
       margin-bottom: 20px;
     }
     .avatarhldr{

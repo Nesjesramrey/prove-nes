@@ -65,14 +65,12 @@
                             <mat-icon>cancel</mat-icon>
                         </button>
                     </mat-chip>
-                    <input formControlName="interestsTopic" placeholder="" [matChipInputFor]="happyChipList"
+                    <input formControlName="associationInterests" placeholder="" [matChipInputFor]="happyChipList"
                         [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
                         (matChipInputTokenEnd)="addHappyItem($event)">
                     <button matSuffix><mat-icon>delete</mat-icon></button>
                 </mat-chip-list>
-                <mat-hint>** Presiona <strong>ENTER</strong> después de escribir algo que te haga féliz, ej:
-                    <strong>"Playas"</strong>
-                </mat-hint>
+               
             </mat-form-field>
 
             <mat-form-field appearance="outline">
@@ -84,61 +82,23 @@
                             <mat-icon>cancel</mat-icon>
                         </button>
                     </mat-chip>
-                    <input formControlName="uninterestsTopic" placeholder="" [matChipInputFor]="unhappyChipList"
+                    <input formControlName="uninterestingTopics" placeholder="" [matChipInputFor]="unhappyChipList"
                         [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
                         (matChipInputTokenEnd)="addUnhappyItem($event)">
                     <button matSuffix><mat-icon>delete</mat-icon></button>
                 </mat-chip-list>
-                <mat-hint>** Presiona <strong>ENTER</strong> después de escribir algo que te entriztesca, ej:
-                    <strong>"Delincuencia"</strong>
+                <mat-hint>** Presiona <strong>ENTER</strong> después de escribir algo que te haga feliz entriztesca, ej:
+                    <strong>"Comida o Delincuencia"</strong>
                 </mat-hint>
             </mat-form-field>
         </div>
 
 
         <mat-checkbox (change)="openDialogAssociationRegister()">¿Perteneces a una asociación?</mat-checkbox>
-        <!-- <div class="associationSection" *ngIf="showText">
-            <h3 class="mt-1">Datos de la asociación</h3>
-            <mat-form-field appearance="outline">
-                <mat-label>Tipo de asociación</mat-label>
-                <mat-select matInput formControlName="associationTypology">
-                    <mat-option *ngFor="let asociation of asociations" [value]="asociation.value">
-                        <small>{{asociation.viewValue}}</small>
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-                <mat-label>Nombre de Asociación</mat-label>
-                <input matInput formControlName="associationName">
-            </mat-form-field>
-
-            <mat-form-field appearance="outline">
-                <mat-label>Describe tu asociación</mat-label>
-                <textarea id="textarea-description" cdkTextareaAutosize matInput
-                    formControlName="associationDescription"></textarea>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Intereses</mat-label>
-                <mat-chip-list #happyChipList>
-                    <mat-chip *ngFor="let item of happyArray" (removed)="removeHappyItem(item)">
-                        {{item.name}}
-                        <button matChipRemove>
-                            <mat-icon>cancel</mat-icon>
-                        </button>
-                    </mat-chip>
-                    <input formControlName="associationInterests" placeholder="..." [matChipInputFor]="happyChipList"
-                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-                        (matChipInputTokenEnd)="addHappyItem($event)">
-                </mat-chip-list>
-                <mat-hint>** Presiona <strong>ENTER</strong> después de escribir algo que te haga féliz, ej:
-                    <strong>"Playas"</strong>
-                </mat-hint>
-            </mat-form-field>
-        </div>-->
+    
 
         <div class="ctrls">
-            <button class="set-12" type="button" mat-raised-button color="warn">
+            <button class="set-12" type="button" mat-raised-button color="warn" >
                 <small>Cancelar</small>
             </button>
             <button class="set-12" type="submit" mat-raised-button color="primary" (click)="onUpdateUserData"

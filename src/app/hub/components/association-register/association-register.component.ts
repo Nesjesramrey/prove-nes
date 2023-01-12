@@ -6,9 +6,7 @@ import { UserService } from 'src/app/services/user.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { LyDialog } from '@alyle/ui/dialog';
-import { MatDialog } from '@angular/material/dialog';
-import { SetAvatarDialogComponent } from 'src/app/components/set-avatar-dialog/set-avatar-dialog.component';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 
 interface Gender {
@@ -60,7 +58,7 @@ export class AssociationRegisterComponent implements OnInit {
     public deviceDetectorService: DeviceDetectorService,
     public formBuilder: FormBuilder,
     public dialogData: MatDialog,
-    public dialog: LyDialog,
+    public dialogRef: MatDialogRef<AssociationRegisterComponent>,
   ) {
     this.accessToken = this.authenticationSrvc.fetchAccessToken;
     this.isMobile = this.deviceDetectorService.isMobile();
@@ -97,35 +95,14 @@ export class AssociationRegisterComponent implements OnInit {
   }
 
   
-  openCropperDialog(event: Event) {
-    const dialogRef = this.dialog.open<SetAvatarDialogComponent, Event>(SetAvatarDialogComponent, {
-      width: 300,
-      data: event,
-      disableClose: true
-    });
-
-    dialogRef.afterClosed.subscribe((reply: any) => {
-      if (reply != undefined) {
-        window.location.reload();
-      }
-    });
-  }
 
   onUpdateUserData(form: FormGroup) {
     let data: any = {
-      user_id: this.user._id,
-      firstname: form['value']['firstname'],
-      lastname: form['value']['lastname'],
-      gender: form['value']['gender'],
-      zipcode: form['value']['postalcode'],
-      ocupation: form['value']['ocupation'],
-      phone: form['value']['phone'], 
       associationName: form['value']['associationName'],
       associationTypology: form['value']['associationTypology'],
       associationDescription: form['value']['associationDescription'],
       interestsTopic: JSON.stringify(this.happyArray) || null,
-      uninterestsTopic: JSON.stringify(this.unhappyArray) || null,   
-      associationInterests:form['value']['associationInterests'],        
+      uninterestsTopic: JSON.stringify(this.unhappyArray) || null,          
     };
     this.userService.addAssociation(data).subscribe({
       error: (error) => {
@@ -175,6 +152,10 @@ export class AssociationRegisterComponent implements OnInit {
     }
   }
 
+  killDialog() {
+    this.dialogRef.close();
+    location.reload()
+  }
 
 
 }

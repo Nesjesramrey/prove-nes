@@ -87,8 +87,7 @@ export class AppConfigurationComponent implements OnInit {
           associationTypology: [this.user['associationTypology'], [Validators.required]],
           associationDescription: [this.user['associationDescription'], [Validators.required]],
           associationInterests: ["", [Validators.required]],
-          interestsTopic: ["", [Validators.required]],
-          uninterestsTopic: ["", [Validators.required]],
+          uninterestingTopics: ["", [Validators.required]],
         });
       },
       complete: () => {
@@ -121,12 +120,8 @@ export class AppConfigurationComponent implements OnInit {
       zipcode: form['value']['postalcode'],
       ocupation: form['value']['ocupation'],
       phone: form['value']['phone'], 
-      associationName: form['value']['associationName'],
-      associationTypology: form['value']['associationTypology'],
-      associationDescription: form['value']['associationDescription'],
-      interestsTopic: JSON.stringify(this.happyArray) || null,
-      uninterestsTopic: JSON.stringify(this.unhappyArray) || null,   
-      associationInterests:form['value']['associationInterests'],        
+      uninterestingTopics: JSON.stringify(this.unhappyArray) || null,   
+      associationInterests: JSON.stringify(this.happyArray) || null,         
     };
     this.userService.addAssociation(data).subscribe({
       error: (error) => {
