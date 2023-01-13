@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DeviceDetectorService } from 'ngx-device-detector';;
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
 import { UtilityService } from 'src/app/services/utility.service';
@@ -11,13 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SetAvatarDialogComponent } from 'src/app/components/set-avatar-dialog/set-avatar-dialog.component';
 import { AssociationRegisterComponent } from '../components/association-register/association-register.component';
 
-
 interface Gender {
-  value: string;
-  viewValue: string;
-}
-
-interface Asociation {
   value: string;
   viewValue: string;
 }
@@ -39,12 +33,6 @@ export class AppConfigurationComponent implements OnInit {
     { value: 'femenino', viewValue: 'Femenino' },
     { value: 'otro', viewValue: 'Otro' },
   ];
-  asociations: Asociation[] = [
-    { value: '6399e5c7c878ad9b63dde6a2', viewValue: 'Ciudadanía' },
-    { value: '6399e5c7c878ad9b63dde6a5', viewValue: 'Activista' },
-    { value: '6399e5c7c878ad9b63dde6a4', viewValue: 'OSC' },
-    { value: '6399e5c7c878ad9b63dde6a6', viewValue: 'Estudiante' },
-  ];
 
   public accessToken: any = null;
   public user: any = null;
@@ -52,7 +40,7 @@ export class AppConfigurationComponent implements OnInit {
   public isDataAvailable: boolean = false;
   public isMobile: boolean = false;
   public showText: boolean = false;
-  public isLinear: boolean = true
+  public isLinear: boolean = true;
 
   constructor(
     public authenticationSrvc: AuthenticationService,
@@ -61,7 +49,7 @@ export class AppConfigurationComponent implements OnInit {
     public deviceDetectorService: DeviceDetectorService,
     public formBuilder: FormBuilder,
     public dialogData: MatDialog,
-    public dialog: LyDialog,
+    public dialog: LyDialog
   ) {
     this.accessToken = this.authenticationSrvc.fetchAccessToken;
     this.isMobile = this.deviceDetectorService.isMobile();
@@ -70,7 +58,8 @@ export class AppConfigurationComponent implements OnInit {
   ngOnInit(): void {
     this.userService.fetchFireUser().subscribe({
       error: (error) => {
-        switch (error['status']) { }
+        switch (error['status']) {
+        }
       },
       next: (reply: any) => {
         this.user = reply;
@@ -80,14 +69,10 @@ export class AppConfigurationComponent implements OnInit {
           firstname: [this.user['firstname'], [Validators.required]],
           lastname: [this.user['lastname'], [Validators.required]],
           gender: ['', [Validators.required]],
-          postalcode: [this.user['zipcode'],[Validators.required]],
-          ocupation: ['', [Validators.required]],
+          postalcode: [this.user['zipcode'], [Validators.required]],
           phone: [this.user['phone'], [Validators.required]],
-          associationName: [this.user['associationName'], [Validators.required]],
-          associationTypology: [this.user['associationTypology'], [Validators.required]],
-          associationDescription: [this.user['associationDescription'], [Validators.required]],
-          associationInterests: ["", [Validators.required]],
-          uninterestingTopics: ["", [Validators.required]],
+          associationInterests: ['', [Validators.required]],
+          uninterestingTopics: ['', [Validators.required]],
         });
       },
       complete: () => {
@@ -96,14 +81,15 @@ export class AppConfigurationComponent implements OnInit {
     });
   }
 
-  
   openCropperDialog(event: Event) {
-    const dialogRef = this.dialog.open<SetAvatarDialogComponent, Event>(SetAvatarDialogComponent, {
-      width: 300,
-      data: event,
-      disableClose: true
-    });
-
+    const dialogRef = this.dialog.open<SetAvatarDialogComponent, Event>(
+      SetAvatarDialogComponent,
+      {
+        width: 300,
+        data: event,
+        disableClose: true,
+      }
+    );
     dialogRef.afterClosed.subscribe((reply: any) => {
       if (reply != undefined) {
         window.location.reload();
@@ -119,20 +105,20 @@ export class AppConfigurationComponent implements OnInit {
       gender: form['value']['gender'],
       zipcode: form['value']['postalcode'],
       ocupation: form['value']['ocupation'],
-      phone: form['value']['phone'], 
-      uninterestingTopics: JSON.stringify(this.unhappyArray) || null,   
-      associationInterests: JSON.stringify(this.happyArray) || null,         
+      phone: form['value']['phone'],
+      uninterestingTopics: JSON.stringify(this.unhappyArray) || null,
+      associationInterests: JSON.stringify(this.happyArray) || null,
     };
     this.userService.addAssociation(data).subscribe({
       error: (error) => {
-        switch (error['status']) { }
+        switch (error['status']) {
+        }
       },
       next: (reply: any) => {
-        console.log(data)
+        console.log(data);
       },
       complete: () => {
-        location.reload();
-        this.isDataAvailable = true;
+        window.location.reload();
       },
     });
   }
@@ -144,7 +130,6 @@ export class AppConfigurationComponent implements OnInit {
       //console.log(this.happyArray)
     }
     event.chipInput!.clear();
- 
   }
 
   removeHappyItem(item: any) {
@@ -161,7 +146,6 @@ export class AppConfigurationComponent implements OnInit {
       //console.log(this.happyArray)
     }
     event.chipInput!.clear();
- 
   }
 
   removeUnhappyItem(item: any) {
@@ -172,17 +156,24 @@ export class AppConfigurationComponent implements OnInit {
   }
 
   openDialogAssociationRegister() {
-    
     this.dialogData.open(AssociationRegisterComponent, {
-      data: {
-     
-      },
+      data: {},
       height: '100%',
       maxWidth: '100%',
-      panelClass: 'full-dialog'
+      panelClass: 'full-dialog',
     });
- 
-}
+  }
 
-}
+  clearForm() {
+    //this.formGroup.reset();
+    this.formGroup.controls['gender'].reset();
+  }
 
+  clearInputUnhappy(){
+    this.unhappyArray = [];
+  }
+
+  clearInputHappy(){
+    this.happyArray = [];
+  }
+}

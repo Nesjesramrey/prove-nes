@@ -9,10 +9,6 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 
-interface Gender {
-  value: string;
-  viewValue: string;
-}
 
 interface Asociation {
   value: string;
@@ -31,11 +27,8 @@ export class AssociationRegisterComponent implements OnInit {
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   public addOnBlur = true;
 
-  genders: Gender[] = [
-    { value: 'masculino', viewValue: 'Masculino' },
-    { value: 'femenino', viewValue: 'Femenino' },
-    { value: 'otro', viewValue: 'Otro' },
-  ];
+
+
   asociations: Asociation[] = [
     { value: '6399e5c7c878ad9b63dde6a2', viewValue: 'Ciudadanía' },
     { value: '6399e5c7c878ad9b63dde6a5', viewValue: 'Activista' },
@@ -74,14 +67,19 @@ export class AssociationRegisterComponent implements OnInit {
         console.log(this.user);
 
         this.formGroup = this.formBuilder.group({
-          firstname: [this.user['firstname'], [Validators.required]],
-          lastname: [this.user['lastname'], [Validators.required]],
-          gender: ['', [Validators.required]],
-          postalcode: [this.user['zipcode'],[Validators.required]],
-          ocupation: ['', [Validators.required]],
-          phone: [this.user['phone'], [Validators.required]],
-          associationName: [this.user['associationName'], [Validators.required]],
           associationTypology: [this.user['associationTypology'], [Validators.required]],
+          associationName: [this.user['associationName'], [Validators.required]],
+          associationNameComercial: ["", [Validators.required]],
+          associationRFC: ["", [Validators.required]],
+          associationStreetAddress: ["", [Validators.required]],
+          associationNoExtAddress: ["", [Validators.required]],
+          associationTownAddress: ["", [Validators.required]],
+          associationZipCodeAddress: ["", [Validators.required]],
+          associationCityAddress: ["", [Validators.required]],
+          associationEstateAddress: ["", [Validators.required]],
+          associationNameContact: ["", [Validators.required]],
+          associationPhoneContact: ["", [Validators.required]],
+          associationEmailContact: ["", [Validators.required]],
           associationDescription: [this.user['associationDescription'], [Validators.required]],
           associationInterests: ["", [Validators.required]],
           interestsTopic: ["", [Validators.required]],
@@ -155,6 +153,11 @@ export class AssociationRegisterComponent implements OnInit {
   killDialog() {
     this.dialogRef.close();
     location.reload()
+  }
+
+  clearForm() {
+    //this.formGroup.reset();
+    this.formGroup.reset();
   }
 
 
