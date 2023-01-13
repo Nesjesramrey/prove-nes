@@ -1,27 +1,26 @@
 :host {
-
+ padding: 20px;
  float: left;
 
 
   .circleChart {
-    div{
-      margin: 10px 5px;
-      button{
-        margin-top: 20px;
+    .circleprogress{
+      position: relative;
+      margin: 0 5px;
+      .textProgressValue {
+        font-weight: 700;
+        color: #306eff;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+  
       }
     }
-    .circleprogress{
-      position: relative
+    .circleinfo{
+      margin: 0px 5px;
     }
-    .textProgressValue {
-      font-weight: 700;
-      color: #306eff;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-
-    }
+    
 
   }
 

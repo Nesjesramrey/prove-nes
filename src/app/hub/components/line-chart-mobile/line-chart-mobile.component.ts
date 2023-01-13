@@ -16,6 +16,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 })
 export class LineChartMobileComponent implements OnInit {
   public userID: string = '';
+  public progressValue: any ="";
 
 
 
@@ -37,6 +38,7 @@ export class LineChartMobileComponent implements OnInit {
 
   ngOnInit(): void {
     //console.log(this.userID)
+    this.progressValue = 90;
 
 
    
