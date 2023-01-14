@@ -41,6 +41,8 @@ export class PublicDocumentMobileCategoryViewComponent implements OnInit {
     const dialogRef = this.dialog.open<DescriptionViewerComponent>(
       DescriptionViewerComponent, {
       data: {
+        document: this.document,
+        layout: this.category,
         title: this.category['category']['name'],
         text: this.category['description'],
         user: this.user,

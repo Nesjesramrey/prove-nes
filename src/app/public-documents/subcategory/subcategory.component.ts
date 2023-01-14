@@ -272,7 +272,7 @@ export class SubcategoryComponent implements OnInit {
   }
 
   getTopicStatus(event: any) {
-    console.log(event);
+    // console.log(event);
   }
 }
 
