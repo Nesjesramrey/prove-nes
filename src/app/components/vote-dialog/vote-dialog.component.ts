@@ -19,7 +19,7 @@ export class VoteDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public voteService: VoteService
   ) {
-    // console.log(this.dialogData);
+   
   }
 
   ngOnInit(): void { }

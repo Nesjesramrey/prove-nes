@@ -1,7 +1,7 @@
 <div class="set-12 dialog-head">
+  <input type="file" #file (change)="onFileSelected($event)" accept="image/*" capture="environment" multiple>
   <div class="set-10">
     <h3>Denuncia</h3>
-    <input type="file" #file (change)="onFileSelected($event)" multiple>
   </div>
   <div class="set-2 txt-right">
     <button type="button" mat-mini-fab color="primary" (click)="killDialog()" [disabled]="submitted">
@@ -29,6 +29,11 @@
   </div>
 
   <form class="set-12" [formGroup]="complaintFormGroup" (submit)="onFileComplaint(complaintFormGroup)">
+    <mat-form-field appearance="outline">
+      <mat-label>Titulo</mat-label>
+      <input type="text" matInput formControlName="title">
+    </mat-form-field>
+
     <div class="set-12 editor-form">
       <angular-editor formControlName="description" [config]="editorConfig"></angular-editor>
     </div>
@@ -41,7 +46,7 @@
 
     <div class="set-12 ctrls">
       <button type="button" mat-mini-fab color="primary" (click)="file.click()"
-        [disabled]="complaintFormGroup.invalid || submitted">
+        [disabled]="complaintFormGroup.invalid || submitted" class="round">
         <mat-icon>cloud_upload</mat-icon>
       </button>
       <button type="submit" mat-raised-button color="primary" [disabled]="complaintFormGroup.invalid || submitted">

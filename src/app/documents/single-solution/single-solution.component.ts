@@ -125,6 +125,7 @@ export class SingleSolutionComponent implements OnInit {
       this.topics = this.subcategory['topics'];
       this.topic = reply[3];
       this.solution = reply[4];
+      console.log(this.solution)
 
       this.sliderImages = this.solution['images'];
       this.user = reply[5];

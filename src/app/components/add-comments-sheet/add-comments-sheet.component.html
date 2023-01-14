@@ -1,0 +1,52 @@
+<h3>Agregar comentario</h3>
+<div class="set-12 locations">
+  <p *ngIf="documentLocation == 'document'">
+    <small>Comentar en: <strong>{{document?.title}}</strong></small>
+  </p>
+  <p *ngIf="documentLocation == 'layout'">
+    <small>Comentar en: <strong>{{layout?.category?.name}}</strong></small>
+  </p>
+  <p *ngIf="documentLocation == 'subLayout'">
+    <small>Comentar en: <strong>{{layout?.category?.name}}</strong></small>
+  </p>
+  <p *ngIf="documentLocation == 'topic'">
+    <small>Comentar en: <strong>{{topic?.title}}</strong></small>
+  </p>
+  <p *ngIf="documentLocation == 'solution'">
+    <small>Comentar en: <strong>{{solution?.title}}</strong></small>
+  </p>
+</div>
+
+<form class="set-12" [formGroup]="commentFormGroup" (submit)="onCreateComment(commentFormGroup)">
+  <mat-form-field appearance="outline">
+    <mat-label>Cobertura</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let item of coverage" [value]="item">
+        <small>{{ item.name }}</small>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Comentario</mat-label>
+    <textarea matInput cdkTextareaAutosize formControlName="message"></textarea>
+  </mat-form-field>
+
+  <div class="set-12 txt-right">
+    <button type="button" mat-mini-fab color="warn" (click)="file.click()" matTooltip="Adjuntar archivo"
+      matTooltipClass="tooltip" class="bwico">
+      <mat-icon>attach_file</mat-icon>
+    </button>
+    <input type="file" #file>
+  </div>
+
+  <div class="set-12 ctrls">
+    <button type="button" mat-raised-button color="accent" (click)="killSheet()" [disabled]="submitted">
+      <small>Cancelar</small>
+    </button>
+    <button type="submit" mat-raised-button color="primary" [disabled]="commentFormGroup.invalid || submitted">
+      <small>Comentar</small>
+    </button>
+    <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
+  </div>
+</form>

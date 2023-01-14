@@ -1,0 +1,15 @@
+<div class="set-12 solution-card">
+  <mat-card>
+        <h3>Top soluciones más votadas</h3>
+    <div  *ngFor="let solution of solutions">
+            <h5 class="set-9 ">{{solution.title}}</h5>
+            <br />
+            <mat-progress-bar
+              class="mt-1"
+              color="accent"
+              mode="determinate"
+              value="40"
+            ></mat-progress-bar>
+    </div>
+  </mat-card>
+</div>

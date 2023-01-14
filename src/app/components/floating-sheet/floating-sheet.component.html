@@ -1,0 +1,37 @@
+<div class="set-12 sheet-head">
+  <img src="../../../assets/images/mexicolectivo-small-blue.png" alt="">
+  <div class="set-12">
+    <p><small>{{user?.firstname}} {{user?.lastname}}</small></p>
+    <p><small>{{user?.email}}</small></p>
+  </div>
+</div>
+
+<div class="set-12">
+  <div class="set-12 btnhldr">
+    <button type="button" class="tool" mat-raised-button color="warn" (click)="popComplaintsDialog()">
+      <mat-icon>warning</mat-icon>
+      <small>Denuncia</small>
+    </button>
+  </div>
+
+  <div class="set-12 btnhldr">
+    <button type="button" mat-raised-button color="warn" (click)="popAddTopicDialog()" *ngIf="isCollaborator">
+      <mat-icon>note_add</mat-icon>
+      <small>Tópico</small>
+    </button>
+  </div>
+
+  <div class="set-12 btnhldr">
+    <button type="button" mat-raised-button color="warn" (click)="popInviteDialog()">
+      <mat-icon>send</mat-icon>
+      <small>Invitar</small>
+    </button>
+  </div>
+
+  <div class="set-12 btnhldr">
+    <button type="button" mat-raised-button color="warn" (click)="popSearchDialog()">
+      <mat-icon>search</mat-icon>
+      <small>Búsqueda</small>
+    </button>
+  </div>
+</div>

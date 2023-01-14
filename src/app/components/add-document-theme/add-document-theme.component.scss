@@ -13,6 +13,14 @@
     * {
       margin: 0;
     }
+
+    .set-3 {
+      button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
   }
 
   ::ng-deep .mat-step-header:hover,

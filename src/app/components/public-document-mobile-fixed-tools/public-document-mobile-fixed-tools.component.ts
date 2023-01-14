@@ -1,9 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 import { DocumentService } from 'src/app/services/document.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { AddDocumentTopicFullComponent } from '../add-document-topic-full/add-document-topic-full.component';
 import { ComplaintDialogComponent } from '../complaint-dialog/complaint-dialog.component';
+import { FloatingSheetComponent } from '../floating-sheet/floating-sheet.component';
 import { InviteDialogComponent } from '../invite-dialog/invite-dialog.component';
 import { SearchDialogComponent } from '../search-dialog/search-dialog.component';
 
@@ -19,17 +22,52 @@ export class PublicDocumentMobileFixedToolsComponent implements OnInit {
   public topic: any = null;
   @Output() public topicAdded = new EventEmitter<any>();
   public document: any = null;
+  public isDataAvailable: boolean = false;
+  public documentID: any = null;
+  public categoryID: any = null;
+  public subcategoryID: any = null;
+  public topicID: any = null;
+  public solutionID: any = null;
 
   constructor(
     public dialog: MatDialog,
     public documentService: DocumentService,
-    public utilityService: UtilityService
-  ) { }
+    public utilityService: UtilityService,
+    public matBottomSheet: MatBottomSheet,
+    public activatedRoute: ActivatedRoute
+  ) {
+    this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
+    this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
+    this.subcategoryID = this.activatedRoute['snapshot']['params']['subcategoryID'];
+    this.topicID = this.activatedRoute['snapshot']['params']['topicID'];
+    this.solutionID = this.activatedRoute['snapshot']['params']['solutionID'];
+  }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.documentService.fetchCoverDocument().subscribe({
+      error: (error: any) => { this.utilityService.openErrorSnackBar(this.utilityService['errorOops']); },
+      next: (reply: any) => { this.document = reply; },
+      complete: () => { this.isDataAvailable = true; }
+    });
+  }
 
   displayMenu() {
-    this.open = !this.open;
+    // this.open = !this.open;
+    const bottomSheetRef = this.matBottomSheet.open(FloatingSheetComponent, {
+      data: {
+        user: this.user,
+        isCollaborator: this.isCollaborator,
+        documentID: this.documentID,
+        categoryID: this.categoryID,
+        subcategoryID: this.subcategoryID,
+        topicID: this.topicID,
+        solutionID: this.solutionID
+      }
+    });
+
+    bottomSheetRef.afterDismissed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
   }
 
   popInviteDialog() {
@@ -50,7 +88,10 @@ export class PublicDocumentMobileFixedToolsComponent implements OnInit {
     this.displayMenu();
 
     const dialogRef = this.dialog.open<any>(AddDocumentTopicFullComponent, {
-      data: {},
+      data: {
+        user: this.user,
+        document: this.document
+      },
       disableClose: true,
       panelClass: 'full-dialog'
     });
@@ -67,23 +108,15 @@ export class PublicDocumentMobileFixedToolsComponent implements OnInit {
   popSearchDialog() {
     this.displayMenu();
 
-    this.documentService.fetchCoverDocument().subscribe({
-      error: (error: any) => {
-        this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+    const dialogRef = this.dialog.open<any>(SearchDialogComponent, {
+      data: {
+        document_id: this.document['_id']
       },
-      next: (reply: any) => {
-        this.document = reply;
-        const dialogRef = this.dialog.open<any>(SearchDialogComponent, {
-          data: {
-            document_id: this.document['_id']
-          },
-          disableClose: true
-        });
+      disableClose: true
+    });
 
-        dialogRef.afterClosed().subscribe((reply: any) => {
-          if (reply != undefined) { }
-        });
-      }
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
     });
   }
 

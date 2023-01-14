@@ -82,4 +82,8 @@ export class UserService {
   saveLayoutsCategoryPreference(data: any) {
     return this.httpClient.put(this.endpointSrvc.apiEndPoint + this.endpointSrvc.saveLayoutsCategoryPreferenceEndPoint + `${data['user_id']}` + '/layout_category_preference', data);
   }
+
+  addAssociation(data: any) {
+    return this.httpClient.put(this.endpointSrvc.apiEndPoint + this.endpointSrvc.addAssociationEndPoint + `${data['user_id']}`, data);
+  }
 }

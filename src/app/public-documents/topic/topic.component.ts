@@ -51,6 +51,7 @@ export class TopicComponent implements OnInit {
   public coverageSelected: any = null;
   public isMobile: boolean = false;
   @HostBinding('class') public class: string = '';
+  public isCollaborator: boolean = false;
 
   constructor(
     public dialog: MatDialog,
@@ -75,27 +76,22 @@ export class TopicComponent implements OnInit {
   ngOnInit(): void {
     if (history['state']['coverage'] != undefined) { this.coverageSelected = history['state']['coverage']; };
 
-    // *** load user
-    this.user = this.userService.fetchFireUser().subscribe({
+    let user: Observable<any> = this.userService.fetchFireUser();
+    let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
+
+    forkJoin([user, document]).subscribe({
       error: (error: any) => { },
       next: (reply: any) => {
-        this.user = reply;
+        this.user = reply[0];
+        this.user['role'] = this.user['activities'][0]['value'];
+
         if (['administrator', 'editor'].includes(this.user.activities?.[0]?.value)) {
           this.permission = true;
         } else {
           this.permission = false;
         }
-      },
-      complete: () => {
-        this.fetchVotes();
-      }
-    });
 
-    // *** load document
-    this.documentService.fetchSingleDocumentById({ _id: this.documentID }).subscribe({
-      error: (reply: any) => { },
-      next: (reply: any) => {
-        this.document = reply;
+        this.document = reply[1];
         this.coverage = this.document['coverage'];
 
         let category = this.document['layouts'].filter((x: any) => { return x['_id'] == this.categoryID; });
@@ -119,12 +115,101 @@ export class TopicComponent implements OnInit {
         this.topic['shortTitle'] = this.getshortTitle(this.topic['title']);
 
         this.coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.topic['coverage'][0]['_id']; });
-        if (this.coverageSelected == null) { this.coverageSelected = this.coverage[0]['_id']; }
+        if (this.coverageSelected == null) { this.coverageSelected = this.coverage[0]['_id']; };
+
+        switch (this.user['role']) {
+          case 'administrator':
+            this.isCollaborator = true;
+            break;
+
+          case 'editor':
+            this.isCollaborator = true;
+            break;
+
+          case 'citizen':
+            let collaborator: any = this.document['collaborators'].filter((x: any) => {
+              return x['user']['_id'] == this.user['_id'];
+            });
+            if (collaborator.length != 0) { this.isCollaborator = true; }
+            break;
+        }
       },
       complete: () => {
+        this.fetchVotes();
         this.isDataAvailable = true;
       }
     });
+
+    // *** load user
+    // this.userService.fetchFireUser().subscribe({
+    //   error: (error: any) => { },
+    //   next: (reply: any) => {
+    //     this.user = reply;
+    //     this.user['role'] = this.user['activities'][0]['value'];
+
+    //     if (['administrator', 'editor'].includes(this.user.activities?.[0]?.value)) {
+    //       this.permission = true;
+    //     } else {
+    //       this.permission = false;
+    //     }
+
+    //     switch (this.user['role']) {
+    //       case 'administrator':
+    //         this.isCollaborator = true;
+    //         break;
+
+    //       case 'editor':
+    //         this.isCollaborator = true;
+    //         break;
+
+    //       case 'citizen':
+    //         let collaborator: any = this.document['collaborators'].filter((x: any) => {
+    //           return x['user']['_id'] == this.user['_id'];
+    //         });
+    //         if (collaborator.length != 0) { this.isCollaborator = true; }
+    //         break;
+    //     }
+    //   },
+    //   complete: () => {
+    //     this.fetchVotes();
+    //     this.isDataAvailable = true;
+    //   }
+    // });
+
+    // *** load document
+    // this.documentService.fetchSingleDocumentById({ _id: this.documentID }).subscribe({
+    //   error: (reply: any) => { },
+    //   next: (reply: any) => {
+    //     this.document = reply;
+    //     this.coverage = this.document['coverage'];
+
+    //     let category = this.document['layouts'].filter((x: any) => { return x['_id'] == this.categoryID; });
+    //     this.category = category[0];
+
+    //     let subcategory = this.category['subLayouts'].filter((x: any) => { return x['_id'] == this.subcategoryID; });
+    //     this.subcategory = subcategory[0];
+
+    //     let topic = this.subcategory['topics'].filter((x: any) => { return x['_id'] == this.topicID; });
+    //     this.topic = topic[0];
+    //     this.stats = this.topic['stats'];
+
+    //     this.solutionsData = this.topic['solutions'];
+    //     this.solutionsData.filter((x: any) => {
+    //       if (x['stats'] == null) {
+    //         x['stats'] = { score: 0 }
+    //       }
+    //     });
+    //     this.SolutionDataSource = new MatTableDataSource(this.sortSolutions(this.solutionsData));
+
+    //     this.topic['shortTitle'] = this.getshortTitle(this.topic['title']);
+
+    //     this.coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.topic['coverage'][0]['_id']; });
+    //     if (this.coverageSelected == null) { this.coverageSelected = this.coverage[0]['_id']; }
+    //   },
+    //   complete: () => {
+    //     this.isDataAvailable = true;
+    //   }
+    // });
 
     // *** load favourites
     this.favoritesService.fetchFavoritesByTopicID({ _id: this.topicID }).subscribe({

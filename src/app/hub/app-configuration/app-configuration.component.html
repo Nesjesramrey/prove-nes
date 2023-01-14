@@ -1,0 +1,103 @@
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div class="form-profile " *ngIf="isDataAvailable && isMobile">
+    <form [formGroup]="formGroup" (submit)="onUpdateUserData(formGroup)">
+        <h3>Tu perfil</h3>
+        <div class="set-12 avatarhldr">
+            <button type="button" class="avatar">
+                <img src="{{ user.avatarImage }}" alt="{{ user.firstname }}" *ngIf="user.avatarImage != null" />
+                <span *ngIf="user.avatarImage == null">
+                    {{ user.firstname | firstword | firstletter
+                    }}{{ user.lastname | firstword | firstletter }}
+                </span>
+            </button>
+        </div>
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Nombre(s)</mat-label>
+                <input type="text" matInput formControlName="firstname">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Apellido(s)</mat-label>
+                <input type="text" matInput formControlName="lastname">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Genero</mat-label>
+                <mat-select formControlName="gender">
+                    <mat-option *ngFor="let genre of genders" [value]="genre.value">
+                        {{genre.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Código Postal</mat-label>
+                <input type="text" matInput formControlName="postalcode">
+            </mat-form-field>
+            <!-- 
+            <mat-form-field appearance="outline">
+                <mat-label>Ocupacion</mat-label>
+                <input matInput formControlName="ocupation">
+            </mat-form-field> -->
+
+            <mat-form-field appearance="outline">
+                <mat-label>Télefono</mat-label>
+                <input type="text" matInput formControlName="phone">
+            </mat-form-field>
+        </div>
+
+
+        <mat-checkbox (change)="showText = !showText">¿Perteneces a una asociación?</mat-checkbox>
+        <div *ngIf="showText">
+            <h3 class="mt-1">Datos de la asociación</h3>
+            <mat-form-field appearance="outline">
+                <mat-label>Tipo de asociación</mat-label>
+                <mat-select matInput formControlName="associationTypology">
+                    <mat-option *ngFor="let asociation of asociations" [value]="asociation.value">
+                        {{asociation.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Nombre de Asociación</mat-label>
+                <input matInput formControlName="associationName">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Describe tu asociación</mat-label>
+                <textarea id="textarea-description" cdkTextareaAutosize
+                 matInput formControlName="associationDescription"></textarea>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Intereses</mat-label>
+                <mat-chip-list #happyChipList>
+                    <mat-chip *ngFor="let item of happyArray" (removed)="removeHappyItem(item)">
+                        {{item.name}}
+                        <button matChipRemove>
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                    </mat-chip>
+                    <input formControlName="interests" placeholder="..." [matChipInputFor]="happyChipList"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                        (matChipInputTokenEnd)="addHappyItem($event)">
+                </mat-chip-list>
+                <mat-hint>** Presiona <strong>ENTER</strong> después de escribir algo que te haga féliz, ej:
+                    <strong>"Playas"</strong>
+                </mat-hint>
+            </mat-form-field>
+
+        </div>
+        <div class="set-12 ctrls ">
+            <button class="set-6" type="button" mat-raised-button color="warn" disabled>
+                <small>Cancelar</small>
+            </button>
+            <button class="set-6" type="submit" mat-raised-button color="primary"
+                (click)="onUpdateUserData">Actualizar</button>
+        </div>
+    </form>
+</div>

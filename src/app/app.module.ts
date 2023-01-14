@@ -88,7 +88,7 @@ const socketConfig: SocketIoConfig = {
     NgChartsModule,
     SocketIoModule.forRoot(socketConfig),
     AppMaterialModule,
-    DndModule
+    DndModule,
   ],
   providers: [
     { provide: HAMMER_GESTURE_CONFIG, useClass: LyHammerGestureConfig },
@@ -109,4 +109,4 @@ const socketConfig: SocketIoConfig = {
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

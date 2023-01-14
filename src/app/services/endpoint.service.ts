@@ -21,6 +21,7 @@ export class EndPointService {
   public fetchUserByFirebaseUIDEndPoint: string =
     '/user/fetch-user-by-firebase-uid';
   public saveLayoutsCategoryPreferenceEndPoint: string = '/user/';
+  public addAssociationEndPoint: string = '/user/';
 
   // documents
   public createNewDocumentEndPoint: string = '/document';
@@ -57,6 +58,7 @@ export class EndPointService {
   public createNewSubLayoutEndPoint: string = '/sublayout/layout/';
 
   // topics
+  public fetchSuggestionTopicByUser: string = '/topic/suggestion/by_user/';
   public fetchSingleTopicByIdEndPoint: string = '/topic/';
   public createNewTopicEndPoint: string = '/topic/layout/';
   public uploadTopicFilesEndPoint: string = '/topic/';
@@ -66,6 +68,7 @@ export class EndPointService {
   public createNewPermissionEndPoint: string = '/permission/';
 
   // solutions
+  public fetchTopSolution: string = '/solution/top';
   public fetchSingleSolutionByIdEndPoint: string = '/solution/';
   public createNewSolutionEndPoint: string = '/solution/topic/';
   public getTopSolutionByDocumentEndPoint: string = '/solution/document/';

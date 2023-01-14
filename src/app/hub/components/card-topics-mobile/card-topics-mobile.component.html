@@ -1,0 +1,31 @@
+<div class="set-12 topic-card">
+    <mat-card *ngFor="let topic of topics">
+        <div class="dialog-body">
+            <span class="set-12 "><strong>{{topic.title}}</strong></span>
+        </div>
+        
+        <div class="set-12 icons">
+            <button type="button" mat-icon-button color="primary" matTooltip="Agregar a favoritos" matTooltipClass="tooltip"
+            (click)="addFavorites()" *ngIf="!isFavorite" disabled>
+            <mat-icon>favorite</mat-icon>
+          </button>
+
+          <button type="button" mat-icon-button color="accent" matTooltip="Agregar a favoritos" matTooltipClass="tooltip"
+            (click)="removeFavorites()" *ngIf="isFavorite" disabled>
+            <mat-icon>favorite</mat-icon>
+          </button>
+            <!-- <button type="button" mat-icon-button color="primary" disabled>
+                <mat-icon>check_circle</mat-icon>
+            </button> -->
+            <button type="button" mat-icon-button color="primary" (click)="openBottomSheet()">
+                <mat-icon>share</mat-icon>
+            </button>
+            <!-- <button type="button" mat-icon-button color="primary" disabled>
+                <mat-icon>report</mat-icon>
+            </button> -->
+            <button type="button" mat-icon-button color="primary"  (click)="openDialog(topic._id)">
+                <mat-icon>visibility</mat-icon>
+            </button>
+        </div> 
+    </mat-card>
+</div>
