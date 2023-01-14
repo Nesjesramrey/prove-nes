@@ -6,8 +6,7 @@
   <div class="set-12 dialog-head">
     <div class="set-10">
       <span>Agregar tópico</span>
-      <input type="file" #file (change)="onFileSelected($event)" multiple>
-      <input type="file" #photo accept="image/*" capture="environment">
+      <input type="file" #file (change)="onFileSelected($event)" accept="image/*" capture="environment" multiple>
     </div>
 
     <div class="set-2 txt-right">
@@ -62,11 +61,9 @@
       </div>
 
       <div class="set-12 ctrls">
-        <button type="button" mat-mini-fab color="primary" (click)="photo.click()" class="minifab">
+        <button type="button" mat-mini-fab color="primary" (click)="file.click()" class="minifab"
+          [disabled]="addTopicFormGroup.invalid || submitted">
           <mat-icon>cloud_upload</mat-icon>
-        </button>
-        <button type="button" mat-mini-fab color="primary" (click)="file.click()" class="minifab">
-          <mat-icon>add_a_photo</mat-icon>
         </button>
         <button type="submit" mat-raised-button color="primary" [disabled]="addTopicFormGroup.invalid || submitted">
           <small>Guardar</small>

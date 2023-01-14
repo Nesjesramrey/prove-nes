@@ -82,6 +82,8 @@ import { ShareSheetComponent } from './share-sheet/share-sheet.component';
 import { InviteDialogComponent } from './invite-dialog/invite-dialog.component';
 import { ComplaintDialogComponent } from './complaint-dialog/complaint-dialog.component';
 import { FilterCoverageDialogComponent } from './filter-coverage-dialog/filter-coverage-dialog.component';
+import { FloatingSheetComponent } from './floating-sheet/floating-sheet.component';
+import { AddCommentsSheetComponent } from './add-comments-sheet/add-comments-sheet.component';
 
 @NgModule({
   imports: [
@@ -167,7 +169,9 @@ import { FilterCoverageDialogComponent } from './filter-coverage-dialog/filter-c
     ShareSheetComponent,
     InviteDialogComponent,
     ComplaintDialogComponent,
-    FilterCoverageDialogComponent
+    FilterCoverageDialogComponent,
+    FloatingSheetComponent,
+    AddCommentsSheetComponent
   ],
   exports: [
     AppPageletComponent,
@@ -230,7 +234,9 @@ import { FilterCoverageDialogComponent } from './filter-coverage-dialog/filter-c
     ShareSheetComponent,
     InviteDialogComponent,
     ComplaintDialogComponent,
-    FilterCoverageDialogComponent
+    FilterCoverageDialogComponent,
+    FloatingSheetComponent,
+    AddCommentsSheetComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
@@ -267,7 +273,9 @@ import { FilterCoverageDialogComponent } from './filter-coverage-dialog/filter-c
     ShareSheetComponent,
     InviteDialogComponent,
     ComplaintDialogComponent,
-    FilterCoverageDialogComponent
+    FilterCoverageDialogComponent,
+    FloatingSheetComponent,
+    AddCommentsSheetComponent
   ],
   providers: [],
 })

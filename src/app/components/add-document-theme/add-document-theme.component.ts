@@ -66,6 +66,15 @@ export class AddDocumentThemeComponent implements OnInit {
   };
   @HostBinding('class') public class: string = '';
   public isMobile: boolean = false;
+  public acl: any = null;
+  public availableLayouts: any = [];
+  public user: any = null;
+  public coverage: any = null;
+  public document: any = null;
+  public coverageSelected: any = '';
+  public documentID: string = '';
+  public categoryID: string = '';
+  public subcategoryID: string = '';
 
   constructor(
     public formBuilder: FormBuilder,
@@ -79,11 +88,17 @@ export class AddDocumentThemeComponent implements OnInit {
   ) {
     // console.log(this.dialogData);
     this.isMobile = this.deviceDetectorService.isMobile();
-    if (this.isMobile) { this.class = 'fixmobile'; }
+    if (this.isMobile) { this.class = 'fixmobile'; };
+    this.user = this.dialogData['user'];
+    this.document = this.dialogData['document'];
+    this.documentID = this.dialogData['documentID'];
+    this.categoryID = this.dialogData['categoryID'];
+    this.subcategoryID = this.dialogData['subcategoryID'];
   }
 
   ngOnInit(): void {
     this.addThemeFormGroup = this.formBuilder.group({
+      coverage: ['', [Validators.required]],
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
       files: ['', []]
@@ -98,7 +113,30 @@ export class AddDocumentThemeComponent implements OnInit {
     this.documentService.fetchAccessControlList({ document_id: this.dialogData['documentID'] }).subscribe({
       error: (error: any) => { },
       next: (reply: any) => {
-        console.log(reply);
+        this.acl = reply;
+        this.availableLayouts = this.acl['layouts'].filter((x: any) => { return x['states'].length != 0; });
+        this.user['activityName'] = this.user['activities'][0]['value'];
+        switch (this.user['activityName']) {
+          case 'administrator':
+            this.coverage = this.document['coverage'];
+            break;
+
+          case 'editor':
+            this.coverage = this.document['coverage'];
+            break;
+
+          case 'citizen':
+            let currentLayout: any = null;
+            this.availableLayouts.filter((x: any) => {
+              if (x['id'] == this.categoryID) {
+                currentLayout = x['subLayouts'].filter((y: any) => {
+                  return y['id'] == this.subcategoryID;
+                });
+              }
+            });
+            this.coverage = currentLayout[0]['states'];
+            break;
+        };
       },
       complete: () => {
         this.isDataAvailable = true;
@@ -108,6 +146,10 @@ export class AddDocumentThemeComponent implements OnInit {
 
   killDialog() {
     this.dialogRef.close(this.topic);
+  }
+
+  onCoverageSelected(event: any) {
+    this.coverageSelected = event['value'];
   }
 
   onFileSelected(event: any) {
@@ -127,7 +169,7 @@ export class AddDocumentThemeComponent implements OnInit {
       .forEach((file: any) => { data['formData'].append('files', file); });
     data['formData'].append('title', form['value']['title']);
     data['formData'].append('description', form['value']['description']);
-    data['formData'].append('coverage', JSON.stringify([this.dialogData['coverage']['_id']]));
+    data['formData'].append('coverage', JSON.stringify([this.coverageSelected]));
 
     this.topicService.createNewTopic(data).subscribe({
       error: (error) => {

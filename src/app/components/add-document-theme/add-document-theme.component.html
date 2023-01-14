@@ -8,7 +8,7 @@
       <h3>Agregar tópico</h3>
     </div>
     <div class="set-3 txt-right">
-      <button type="button" mat-icon-button color="primary" (click)="killDialog()" [disabled]="submitted">
+      <button type="button" mat-mini-fab color="primary" (click)="killDialog()" [disabled]="submitted">
         <mat-icon>cancel</mat-icon>
       </button>
     </div>
@@ -23,6 +23,15 @@
 
       <div class="set-12 step-content">
         <form [formGroup]="addThemeFormGroup" (submit)="onCreateTopic(addThemeFormGroup)">
+          <mat-form-field appearance="outline">
+            <mat-label>Cobertura</mat-label>
+            <mat-select (selectionChange)="onCoverageSelected($event)" formControlName="coverage">
+              <mat-option *ngFor="let state of coverage" [value]="state._id">
+                <small>{{state?.name}}</small>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
           <div class="set-12" *ngIf="!canAddSolution">
             <mat-form-field appearance="outline">
               <mat-label>Título</mat-label>
@@ -58,13 +67,13 @@
             </div>
           </div>
 
-          <div class="set-12 coverage-name" *ngIf="dialogData.coverage != undefined">
+          <!-- <div class="set-12 coverage-name" *ngIf="dialogData.coverage != undefined">
             <p>
               <small>
                 <i>Cobertura: <strong>{{dialogData.coverage.name}}</strong></i>
               </small>
             </p>
-          </div>
+          </div> -->
 
           <div class="set-12 txt-right ctrls">
             <button type="submit" mat-raised-button color="primary" [disabled]="addThemeFormGroup.invalid || submitted"
