@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
 import { DocumentService } from 'src/app/services/document.service';
@@ -30,7 +30,7 @@ export class LineChartMobileComponent implements OnInit {
     public solutionService: SolutionService,
     public topicService: TopicService,
     public utilityService: UtilityService,
-
+    public router: Router,
   ) {
     this.userID = this.activatedRoute['snapshot']['params']['userID'];
 
@@ -38,9 +38,13 @@ export class LineChartMobileComponent implements OnInit {
 
   ngOnInit(): void {
     //console.log(this.userID)
-    this.progressValue = 90;
-
-
-   
+    this.progressValue = 90;   
+  }
+  linkMe(url: string) {
+    switch (url) {
+      case 'configuration':
+        this.router.navigateByUrl('/hub/configuracion');
+        break;
+    }
   }
 }

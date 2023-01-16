@@ -70,7 +70,7 @@ export class TopicSingleMobileComponent implements OnInit {
           complete: () => { 
             setTimeout(() => {
               this.isDataAvailable = true;
-            }, 800);
+            }, 500);
           }
         });
       },

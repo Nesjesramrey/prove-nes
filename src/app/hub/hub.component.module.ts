@@ -40,6 +40,8 @@ import { TopicSingleMobileComponent } from './components/topic-single-mobile/top
 import { CardGoalsMobileComponent } from './components/card-goals-mobile/card-goals-mobile.component';
 import { CardSolutionsMobileComponent } from './components/card-solutions-mobile/card-solutions-mobile.component';
 import { AssociationRegisterComponent } from './components/association-register/association-register.component';
+import { AssociationsComponent } from './associations/associations.component';
+import { SheetFeedComponent } from './components/sheet-feed/sheet-feed.component';
 
 @NgModule({
   imports: [
@@ -84,7 +86,9 @@ import { AssociationRegisterComponent } from './components/association-register/
     ProfileMobileComponent, 
     FooterMobileComponent,
     TopicSingleMobileComponent,
-    AssociationRegisterComponent
+    AssociationRegisterComponent,
+    AssociationsComponent,
+    SheetFeedComponent
   ],
 })
 export class HubComponentModule {}

@@ -76,13 +76,8 @@ export class CardTopicsMobileComponent implements OnInit {
         //console.log(this.topics);
       },
       complete: () => {
-        this.isDataAvailable = true;
       },
     })
-
-
-
-
   }
 
   openDialog(id: any) {
@@ -109,7 +104,6 @@ export class CardTopicsMobileComponent implements OnInit {
         });
       },
       complete: () => {
-        this.isDataAvailable = true;
       },
     })
   }
