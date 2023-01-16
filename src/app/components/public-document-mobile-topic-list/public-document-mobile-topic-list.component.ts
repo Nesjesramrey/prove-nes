@@ -15,6 +15,7 @@ export class PublicDocumentMobileTopicListComponent implements OnInit {
   public documentID: string = '';
   public categoryID: string = '';
   public subcategoryID: string = '';
+  @Input('user') public user: any = null;
   @Input('document') public document: any = null;
   @Input('category') public category: any = null;
   @Input('isCollaborator') public isCollaborator: any = null;
@@ -66,8 +67,10 @@ export class PublicDocumentMobileTopicListComponent implements OnInit {
       data: {
         documentID: this.documentID,
         document: this.document,
-        categoryID: this.subcategoryID,
-        coverage: coverage[0]
+        categoryID: this.categoryID,
+        subcategoryID: this.subcategoryID,
+        coverage: coverage[0],
+        user: this.user
       },
       disableClose: true,
       panelClass: 'full-dialog'

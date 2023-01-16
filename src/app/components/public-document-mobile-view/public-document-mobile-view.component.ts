@@ -38,13 +38,14 @@ export class PublicDocumentMobileViewComponent implements OnInit {
     let coverage: any = [];
     option.filter((x: any) => { selection.push(x['value']); });
     coverage = this.document['coverage'].filter((x: any) => { return selection.includes(x['_id']); });
-    console.log(coverage);
+    // console.log(coverage);
   }
 
   openModalDescription() {
     const dialogRef = this.dialog.open<DescriptionViewerComponent>(
       DescriptionViewerComponent, {
       data: {
+        document: this.document,
         title: this.document['title'],
         text: this.document['description'],
         user: this.user,

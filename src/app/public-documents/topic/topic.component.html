@@ -112,4 +112,5 @@
   <div class="public-document-mobile-topic-view" [document]="document" [topic]="topic" [user]="user"
     [userVoted]="userVoted" [votes]="votes" [allFavorites]="allFavorites" (topicVoted)="getVoteStatus($event)"
     (addSolution)="openModalSolution($event)"></div>
+  <div class="public-document-mobile-fixed-tools" [user]="user" [isCollaborator]="isCollaborator"></div>
 </div>

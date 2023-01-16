@@ -54,10 +54,10 @@
           <mat-icon color="accent" *ngIf="isFavorite">favorite</mat-icon>
         </button>
 
-        <button type="button" disabled>
+        <button type="button" (click)="popShareSheet()">
           <mat-icon>share</mat-icon>
         </button>
-        <button type="button" disabled>
+        <button type="button" (click)="handleComments()">
           <mat-icon>forum</mat-icon>
         </button>
         <button type="button" (click)="openTestimoniesDialog()">

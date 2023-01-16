@@ -40,8 +40,12 @@ export class PublicDocumentMobileSubcategoryViewComponent implements OnInit {
     const dialogRef = this.dialog.open<DescriptionViewerComponent>(
       DescriptionViewerComponent, {
       data: {
+        document: this.document,
+        layout: this.subcategory,
         title: this.subcategory['category']['name'],
-        text: this.subcategory['description']
+        text: this.subcategory['description'],
+        user: this.user,
+        location: 'subLayout'
       },
       disableClose: true,
       panelClass: 'viewer-dialog',

@@ -14,7 +14,7 @@ export class FilterCoverageDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<FilterCoverageDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
   ) {
-    console.log(this.dialogData);
+    // console.log(this.dialogData);
     this.coverage = this.dialogData['coverage'];
   }
 

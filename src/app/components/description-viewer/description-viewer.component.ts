@@ -3,6 +3,7 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { FavoritesService } from 'src/app/services/favorites.service';
+import { AddCommentsSheetComponent } from '../add-comments-sheet/add-comments-sheet.component';
 import { ShareSheetComponent } from '../share-sheet/share-sheet.component';
 
 @Component({
@@ -19,6 +20,8 @@ export class DescriptionViewerComponent implements OnInit {
   public allFavorites: any[] = [];
   public isFavorite: boolean = false;
   public location: string = '';
+  public document: any = null;
+  public layout: any = null;
 
   constructor(
     public dialogRef: MatDialogRef<DescriptionViewerComponent>,
@@ -27,8 +30,10 @@ export class DescriptionViewerComponent implements OnInit {
     public favoritesService: FavoritesService,
     public matBottomSheet: MatBottomSheet
   ) {
-    // console.log(this.dialogData);
+    console.log(this.dialogData);
     this.user = this.dialogData['user'];
+    this.document = this.dialogData['document'] || null;
+    this.layout = this.dialogData['layout'] || null;
     this.location = this.dialogData['location'];
     this.isMobile = this.deviceDetectorService.isMobile();
     if (this.isMobile) { this.class = 'fixmobile'; }
@@ -45,7 +50,7 @@ export class DescriptionViewerComponent implements OnInit {
           next: (reply: any) => {
             this.allFavorites = reply['data'];
             let favorite: any = this.allFavorites.filter((f: any) => { return f['relationId'] == this.dialogData['layoutID']; });
-            console.log(favorite[0]);
+            // console.log(favorite[0]);
             if (favorite.length == 0) {
               this.isFavorite = false;
             } else {
@@ -80,7 +85,7 @@ export class DescriptionViewerComponent implements OnInit {
     switch (this.location) {
       case 'layout':
         favorite = this.allFavorites.filter((f: any) => { return f['relationId'] == this.dialogData['layoutID']; });
-        if (favorite.length == 0) { 
+        if (favorite.length == 0) {
           data = {
 
           }
@@ -88,6 +93,21 @@ export class DescriptionViewerComponent implements OnInit {
         break;
     }
 
-    console.log(favorite[0]);
+    // console.log(favorite[0]);
+  }
+
+  handleComments() {
+    const bottomSheetRef = this.matBottomSheet.open(AddCommentsSheetComponent, {
+      data: {
+        document: this.document,
+        layout: this.layout,
+        user: this.user,
+        location: this.location
+      }
+    });
+
+    bottomSheetRef.afterDismissed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
   }
 }

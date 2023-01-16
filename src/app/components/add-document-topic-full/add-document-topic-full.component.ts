@@ -103,14 +103,40 @@ export class AddDocumentTopicFullComponent implements OnInit {
       },
       next: (reply: any) => {
         this.acl = reply;
-        this.availableLayouts = this.acl['layouts'].filter((x: any) => { return x['states'].length != 0; });
+        this.user['activityName'] = this.user['activities'][0]['value'];
+
+        switch (this.user['activityName']) {
+          case 'administrator':
+            this.availableLayouts = this.acl['layouts'];
+            break;
+
+          case 'editor':
+            this.availableLayouts = this.acl['layouts'];
+            break;
+
+          case 'citizen':
+            this.availableLayouts = this.acl['layouts'].filter((x: any) => { return x['states'].length != 0; });
+            break;
+        };
       },
       complete: () => { this.isDataAvailable = true; }
     });
   }
 
   onLayoutSelected(event: any) {
-    this.sublayouts = event['value']['subLayouts'].filter((x: any) => { return x['states'].length != 0; });
+    switch (this.user['activityName']) {
+      case 'administrator':
+        this.sublayouts = event['value']['subLayouts'];
+        break;
+
+      case 'editor':
+        this.sublayouts = event['value']['subLayouts'];
+        break;
+
+      case 'citizen':
+        this.sublayouts = event['value']['subLayouts'].filter((x: any) => { return x['states'].length != 0; });
+        break;
+    }
     // reset values
     this.coverage = null;
     this.addTopicFormGroup.get('sublayout')?.enable();
@@ -120,7 +146,20 @@ export class AddDocumentTopicFullComponent implements OnInit {
   }
 
   onSubLayoutSelected(event: any) {
-    this.coverage = event['value']['states'];
+    switch (this.user['activityName']) {
+      case 'administrator':
+        this.coverage = this.document['coverage'];
+        break;
+
+      case 'editor':
+        this.coverage = this.document['coverage'];
+        break;
+
+      case 'citizen':
+        this.coverage = event['value']['states'];
+        break;
+    }
+
     this.addTopicFormGroup.get('coverage')?.enable();
   }
 

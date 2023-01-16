@@ -1,8 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { FavoritesService } from 'src/app/services/favorites.service';
 import { UtilityService } from 'src/app/services/utility.service';
+import { AddCommentsSheetComponent } from '../add-comments-sheet/add-comments-sheet.component';
+import { ShareSheetComponent } from '../share-sheet/share-sheet.component';
 import { TestimonialListComponent } from '../testimonial-list/testimonial-list.component';
 import { VoteDialogComponent } from '../vote-dialog/vote-dialog.component';
 
@@ -33,7 +36,8 @@ export class PublicDocumentMobileTopicViewComponent implements OnInit {
     public activatedRoute: ActivatedRoute,
     public utilityservice: UtilityService,
     public dialog: MatDialog,
-    public favoritesService: FavoritesService
+    public favoritesService: FavoritesService,
+    public matBottomSheet: MatBottomSheet
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
@@ -126,5 +130,32 @@ export class PublicDocumentMobileTopicViewComponent implements OnInit {
 
   popAddSolutionDialog() {
     this.addSolution.emit({ add: true });
+  }
+
+  popShareSheet() {
+    const bottomSheetRef = this.matBottomSheet.open(ShareSheetComponent, {
+      data: {
+        user: this.user
+      }
+    });
+
+    bottomSheetRef.afterDismissed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  handleComments() {
+    const bottomSheetRef = this.matBottomSheet.open(AddCommentsSheetComponent, {
+      data: {
+        document: this.document,
+        topic: this.topic,
+        user: this.user,
+        location: 'topic'
+      }
+    });
+
+    bottomSheetRef.afterDismissed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
   }
 }
