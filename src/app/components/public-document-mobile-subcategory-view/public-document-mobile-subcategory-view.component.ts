@@ -45,7 +45,7 @@ export class PublicDocumentMobileSubcategoryViewComponent implements OnInit {
         title: this.subcategory['category']['name'],
         text: this.subcategory['description'],
         user: this.user,
-        location: 'layout'
+        location: 'subLayout'
       },
       disableClose: true,
       panelClass: 'viewer-dialog',
