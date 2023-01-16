@@ -20,8 +20,8 @@
 <form class="set-12" [formGroup]="commentFormGroup" (submit)="onCreateComment(commentFormGroup)">
   <mat-form-field appearance="outline">
     <mat-label>Cobertura</mat-label>
-    <mat-select>
-      <mat-option *ngFor="let item of coverage" [value]="item">
+    <mat-select (selectionChange)="onCoverageSelected($event)" formControlName="coverage">
+      <mat-option *ngFor="let item of coverage" [value]="item._id">
         <small>{{ item.name }}</small>
       </mat-option>
     </mat-select>
@@ -34,10 +34,16 @@
 
   <div class="set-12 txt-right">
     <button type="button" mat-mini-fab color="warn" (click)="file.click()" matTooltip="Adjuntar archivo"
-      matTooltipClass="tooltip" class="bwico">
+      matTooltipClass="tooltip" class="bwico" [disabled]="commentFormGroup.invalid || submitted">
       <mat-icon>attach_file</mat-icon>
     </button>
-    <input type="file" #file>
+    <input type="file" #file (change)="onFileSelected($event)">
+  </div>
+
+  <div class="set-12 file-hldr" *ngIf="fileNames.length != 0">
+    <p *ngFor="let name of fileNames">
+      <small>{{name}}</small>
+    </p>
   </div>
 
   <div class="set-12 ctrls">
