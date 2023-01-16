@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DeviceDetectorService } from 'ngx-device-detector';;
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -42,7 +42,8 @@ export class AssociationRegisterComponent implements OnInit {
   public isDataAvailable: boolean = false;
   public isMobile: boolean = false;
   public showText: boolean = false;
-  public isLinear: boolean = true
+  public isLinear: boolean = true;
+  @Output () public checked: boolean = true
 
   constructor(
     public authenticationSrvc: AuthenticationService,
@@ -64,7 +65,7 @@ export class AssociationRegisterComponent implements OnInit {
       },
       next: (reply: any) => {
         this.user = reply;
-        console.log(this.user);
+        //console.log(this.user);
 
         this.formGroup = this.formBuilder.group({
           associationTypology: [this.user['associationTypology'], [Validators.required]],
@@ -102,7 +103,7 @@ export class AssociationRegisterComponent implements OnInit {
       interestsTopic: JSON.stringify(this.happyArray) || null,
       uninterestsTopic: JSON.stringify(this.unhappyArray) || null,          
     };
-    this.userService.addAssociation(data).subscribe({
+    this.userService.updateProfile(data).subscribe({
       error: (error) => {
         switch (error['status']) { }
       },
@@ -152,7 +153,7 @@ export class AssociationRegisterComponent implements OnInit {
 
   killDialog() {
     this.dialogRef.close();
-    location.reload()
+   location.reload() 
   }
 
   clearForm() {

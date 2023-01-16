@@ -22,6 +22,7 @@ interface Gender {
   styleUrls: ['./app-configuration.component.scss'],
 })
 export class AppConfigurationComponent implements OnInit {
+  public checked = false;
   public formGroup!: FormGroup;
   public happyArray: any[] = [];
   public unhappyArray: any[] = [];
@@ -63,7 +64,7 @@ export class AppConfigurationComponent implements OnInit {
       },
       next: (reply: any) => {
         this.user = reply;
-        console.log(this.user);
+        //console.log(this.user);
 
         this.formGroup = this.formBuilder.group({
           firstname: [this.user['firstname'], [Validators.required]],
@@ -73,6 +74,7 @@ export class AppConfigurationComponent implements OnInit {
           phone: [this.user['phone'], [Validators.required]],
           associationInterests: ['', [Validators.required]],
           uninterestingTopics: ['', [Validators.required]],
+          checked: [false]
         });
       },
       complete: () => {
@@ -109,7 +111,8 @@ export class AppConfigurationComponent implements OnInit {
       uninterestingTopics: JSON.stringify(this.unhappyArray) || null,
       associationInterests: JSON.stringify(this.happyArray) || null,
     };
-    this.userService.addAssociation(data).subscribe({
+    
+    this.userService.updateProfile(data).subscribe({
       error: (error) => {
         switch (error['status']) {
         }
@@ -156,12 +159,13 @@ export class AppConfigurationComponent implements OnInit {
   }
 
   openDialogAssociationRegister() {
-    this.dialogData.open(AssociationRegisterComponent, {
+      this.dialogData.open(AssociationRegisterComponent, {
       data: {},
       height: '100%',
       maxWidth: '100%',
       panelClass: 'full-dialog',
     });
+    
   }
 
   clearForm() {
