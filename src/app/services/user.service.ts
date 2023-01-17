@@ -86,4 +86,5 @@ export class UserService {
  updateProfile(data: any) {
     return this.httpClient.put(this.endpointSrvc.apiEndPoint + this.endpointSrvc.addAssociationEndPoint + `${data['user_id']}`, data);
   }
+
 }

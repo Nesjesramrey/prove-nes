@@ -9,7 +9,7 @@
       </button>
     </div>
   </div>
-  <form [formGroup]="formGroup" (submit)="onUpdateUserData(formGroup)">
+  <form [formGroup]="formGroup" (submit)="onCreateAssociation(formGroup)">
     <mat-form-field appearance="outline">
       <mat-label><small>Tipo de asociación</small></mat-label>
       <mat-select matInput formControlName="associationTypology">
@@ -38,36 +38,40 @@
       <mat-label>Razón social</mat-label>
       <input matInput formControlName="associationNameComercial" />
     </mat-form-field>
-    <mat-form-field appearance="outline">
+    <!-- <mat-form-field appearance="outline">
       <mat-label>R.F.C.</mat-label>
       <input matInput formControlName="associationRFC" />
-    </mat-form-field>
+    </mat-form-field> -->
     <p><strong>Domicilio</strong></p>
     <mat-form-field appearance="outline">
       <mat-label>Calle</mat-label>
-      <input matInput formControlName="associationStreetAddress" />
+      <input matInput formControlName="associationStreet" />
     </mat-form-field>
-    <div class="twoInputs ">
-      <mat-form-field class="set-5" appearance="outline">
+    
+      <mat-form-field  appearance="outline">
         <mat-label>No. Ext.</mat-label>
-        <input matInput formControlName="associationNoExtAddress" />
+        <input matInput formControlName="associationNumExt" />
       </mat-form-field>
-      <mat-form-field class="set-6" appearance="outline">
+      <mat-form-field  appearance="outline">
+        <mat-label>No. Int.</mat-label>
+        <input matInput formControlName="associationNumInt" />
+      </mat-form-field>
+      <mat-form-field  appearance="outline">
         <mat-label>Codigo Postal</mat-label>
-        <input matInput formControlName="associationZipCodeAddress" />
+        <input matInput formControlName="associationZipCode" />
       </mat-form-field>
-    </div>
+
     <mat-form-field appearance="outline">
       <mat-label>Colonia</mat-label>
-      <input matInput formControlName="associationTownAddress" />
+      <input matInput formControlName="associationTown" />
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Ciudad</mat-label>
-      <input matInput formControlName="associationCityAddress" />
+      <input matInput formControlName="associationCity" />
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Estado</mat-label>
-      <input matInput formControlName="associationEstateAddress" />
+      <input matInput formControlName="associationState" />
     </mat-form-field>
     <!-- <mat-form-field appearance="outline">
       <mat-label>Nombre del contacto</mat-label>
@@ -82,59 +86,74 @@
       <input type="email" matInput formControlName="associationEmailContact" />
     </mat-form-field> -->
     <mat-form-field appearance="outline">
-      <mat-label>Intereses</mat-label>
+      <mat-label>¿Qué te hace feliz de México?</mat-label>
       <mat-chip-list #happyChipList>
         <mat-chip
           *ngFor="let item of happyArray"
           (removed)="removeHappyItem(item)"
         >
           {{ item.name }}
-          <button matChipRemove>
+          <button type="button" matChipRemove>
             <mat-icon>cancel</mat-icon>
           </button>
         </mat-chip>
         <input
-          formControlName="associationInterests"
-          placeholder="..."
+          formControlName="interestsTopic"
+          placeholder=""
           [matChipInputFor]="happyChipList"
           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
           [matChipInputAddOnBlur]="addOnBlur"
           (matChipInputTokenEnd)="addHappyItem($event)"
         />
+        <button type="button" matSuffix (click)="clearInputHappy()">
+          <mat-icon>cancel</mat-icon>
+        </button>
       </mat-chip-list>
-      <!-- <mat-hint
-        >** Presiona <strong>ENTER</strong> después de escribir algo que te haga
-        féliz, ej:
-        <strong>"Playas"</strong>
-      </mat-hint> -->
     </mat-form-field>
+
     <mat-form-field appearance="outline">
-      <mat-label>Desintereses</mat-label>
-      <mat-chip-list #happyChipList>
+      <mat-label>¿Qué te entristece de México?</mat-label>
+      <mat-chip-list #unhappyChipList>
         <mat-chip
-          *ngFor="let item of happyArray"
-          (removed)="removeHappyItem(item)"
+          *ngFor="let item of unhappyArray"
+          (removed)="removeUnhappyItem(item)"
         >
           {{ item.name }}
-          <button matChipRemove>
+          <button type="button" matChipRemove>
             <mat-icon>cancel</mat-icon>
           </button>
         </mat-chip>
         <input
-          formControlName="associationInterests"
-          placeholder="..."
-          [matChipInputFor]="happyChipList"
+          formControlName="uninterestsTopic"
+          placeholder=""
+          [matChipInputFor]="unhappyChipList"
           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
           [matChipInputAddOnBlur]="addOnBlur"
-          (matChipInputTokenEnd)="addHappyItem($event)"
+          (matChipInputTokenEnd)="addUnhappyItem($event)"
         />
+        <button type="button" matSuffix (click)="clearInputUnhappy()">
+          <mat-icon>cancel</mat-icon>
+        </button>
       </mat-chip-list>
       <mat-hint
-        >** Presiona <strong>ENTER</strong> después de escribir algo que te haga
-        féliz, ej:
-        <strong>"Playas"</strong>
+        >** Presiona <strong>ENTER</strong> después de escribir algo que te
+        haga feliz entriztesca, ej:
+        <strong>"Comida o Delincuencia"</strong>
       </mat-hint>
     </mat-form-field>
+    <div class="addfile">
+      <button type="button" mat-raised-button color="warn" (click)="file.click()" matTooltip="Adjuntar archivo"
+        matTooltipClass="tooltip" class="bwico">
+        <mat-icon>attach_file</mat-icon>
+      </button>
+      <input type="file" #file (change)="onFileSelected($event)">
+    <br>
+      <mat-hint
+        ><small>** Adjuntar <strong>Acta Constitutiva, </strong>
+        <strong>Poder Notarial</strong><strong> e Identificación Oficial</strong>
+      </small>
+      </mat-hint>
+    </div>
 
     <div class="ctrls">
       <button
@@ -151,8 +170,9 @@
         type="submit"
         mat-raised-button
         color="primary"
-        (click)="(onUpdateUserData)"
+        (click)="(onCreateAssociation)"
         [disabled]="formGroup.invalid"
+       
       >
         Guardar
       </button>
