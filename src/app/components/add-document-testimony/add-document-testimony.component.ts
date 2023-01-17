@@ -70,7 +70,7 @@ export class AddDocumentTestimonyComponent implements OnInit {
     public utilityService: UtilityService,
     public deviceDetectorService: DeviceDetectorService
   ) {
-    console.log(this.dialogData);
+    // console.log(this.dialogData);
     this.user = this.dialogData['user'];
     this.isMobile = this.deviceDetectorService.isMobile();
     if (this.isMobile) { this.class = 'fixmobile'; }
