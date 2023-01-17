@@ -1,5 +1,5 @@
 <div class="set-12 loading" *ngIf="!isDataAvailable">
-  <mat-spinner diameter="50"></mat-spinner>
+  <mat-spinner></mat-spinner>
 </div>
 
 <div class="set-12" *ngIf="isDataAvailable">
@@ -8,7 +8,7 @@
       <h3>Agregar Solución</h3>
     </div>
     <div class="set-3 txt-right">
-      <button type="button" mat-icon-button color="primary" (click)="killDialog()" [disabled]="submitted">
+      <button type="button" mat-mini-fab color="primary" (click)="killDialog()" [disabled]="submitted">
         <mat-icon>cancel</mat-icon>
       </button>
     </div>
@@ -28,25 +28,7 @@
         <angular-editor formControlName="description" [config]="editorConfig"></angular-editor>
       </div>
 
-      <!-- <div class="set-12 inpts">
-        <div class="set-9">
-          <mat-form-field appearance="outline">
-            <mat-label>Descripción</mat-label>
-            <textarea matInput cdkTextareaAutosize formControlName="description"></textarea>
-          </mat-form-field>
-        </div>
-  
-        <div class="set-3">
-          <button type="button" class="upload-img" (click)="file.click()">
-            <mat-icon>add_a_photo</mat-icon>
-          </button>
-        </div>
-      </div> -->
-
       <div class="set-12 txt-right ctrls">
-        <!-- <button type="button" mat-raised-button color="accent" [disabled]="submitted" (click)="killDialog()">
-          <small>Cancelar</small>
-        </button> -->
         <button type="submit" mat-raised-button color="primary" [disabled]="addSolutionFormGroup.invalid || submitted">
           <small>Guardar</small>
         </button>

@@ -16,9 +16,15 @@
     </div>
 
     <div class="set-12 table-head">
-      <div class="set-6 head-titles">
-        <span>Soluciones</span>
-        <div class="line"></div>
+      <div class="set-6 head-add">
+        <button type="button" mat-mini-fab color="primary" matTooltip="Agregar solución" matTooltipClass="tooltip"
+          (click)="openModalSolution(null)">
+          <mat-icon>add_circle</mat-icon>
+        </button>
+        <div class="set-12 head-titles">
+          <span>Soluciones</span>
+          <div class="line"></div>
+        </div>
       </div>
 
       <div class="set-6">
@@ -34,7 +40,7 @@
       </div>
     </div>
 
-    <table *ngIf="allSolutions.length > 0; else notSolution" mat-table [dataSource]="data" matSort>
+    <table *ngIf="allSolutions.length > 0; else notSolution" mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="title">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Ordenar por título">
           Título

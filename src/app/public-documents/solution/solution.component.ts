@@ -16,6 +16,8 @@ import { ImageViewerComponent } from 'src/app/components/image-viewer/image-view
 import { FavoritesService } from 'src/app/services/favorites.service';
 import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { ShareSheetComponent } from 'src/app/components/share-sheet/share-sheet.component';
 
 @Component({
   selector: '.solution-page',
@@ -59,7 +61,8 @@ export class SolutionComponent implements OnInit {
     public voteService: VoteService,
     public UserService: UserService,
     public favoritesService: FavoritesService,
-    public deviceDetectorService: DeviceDetectorService
+    public deviceDetectorService: DeviceDetectorService,
+    public matBottomSheet: MatBottomSheet
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
@@ -346,6 +349,19 @@ export class SolutionComponent implements OnInit {
 
   getVoteStatus(event: any) {
     this.fetchVotes();
+  }
+
+  openBottomSheet(): void {
+    const bottomSheetRef = this.matBottomSheet.open(ShareSheetComponent, {
+      data: {
+        user: this.user
+      },
+      panelClass: 'desktop-sheet'
+    });
+
+    bottomSheetRef.afterDismissed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
   }
 }
 

@@ -60,6 +60,12 @@ export class UserService {
     );
   }
 
+  fetchUserCount() {
+    return this.httpClient.get(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchUserCountEndPoint, {}
+    );
+  }
+
   addUserPermissions(data: any) {
     return this.httpClient.put(
       this.endpointSrvc.apiEndPoint +
