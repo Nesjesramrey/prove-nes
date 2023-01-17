@@ -74,7 +74,7 @@ export class AppConfigurationComponent implements OnInit {
           phone: [this.user['phone'], [Validators.required]],
           associationInterests: ['', [Validators.required]],
           uninterestingTopics: ['', [Validators.required]],
-          checked: [false]
+          
         });
       },
       complete: () => {
@@ -165,7 +165,7 @@ export class AppConfigurationComponent implements OnInit {
       maxWidth: '100%',
       panelClass: 'full-dialog',
     });
-    
+    this.checked = !this.checked
   }
 
   clearForm() {

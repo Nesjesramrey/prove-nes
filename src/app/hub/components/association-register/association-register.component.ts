@@ -153,7 +153,6 @@ export class AssociationRegisterComponent implements OnInit {
 
   killDialog() {
     this.dialogRef.close();
-   location.reload() 
   }
 
   clearForm() {
