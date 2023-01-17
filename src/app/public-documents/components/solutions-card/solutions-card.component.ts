@@ -2,6 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { ActivatedRoute } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
 import { MatSort } from '@angular/material/sort';
+import { MatDialog } from '@angular/material/dialog';
+import { AddDocumentSolutionComponent } from 'src/app/components/add-document-solution/add-document-solution.component';
+import { MatTableDataSource } from '@angular/material/table';
+
 
 @Component({
   selector: 'solutions-card',
@@ -14,18 +18,21 @@ export class SolutionsCardComponent implements OnInit {
   public subcategoryID: string = '';
   public topicID: string = '';
   public displayedColumns: string[] = ['title', 'stats.score'];
+  public dataSource = new MatTableDataSource;
   @Input() data: any = [];
   @Input() document: any = [];
   @ViewChild(MatSort) sort: MatSort = new MatSort();
   @Output() public sendSolutionData = new EventEmitter<any>();
   @Input() coverage: any = null;
   @Input() coverageSelected: any = null;
+  @Input('topic') topic: any = null;
   public solutions: any[] = [];
   public allSolutions: any[] = [];
 
   constructor(
     private utilityService: UtilityService,
-    public activatedRoute: ActivatedRoute
+    public activatedRoute: ActivatedRoute,
+    public dialog: MatDialog
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
@@ -41,6 +48,8 @@ export class SolutionsCardComponent implements OnInit {
         if (y['_id'] == this.coverageSelected) { this.solutions.push(x); }
       });
     });
+
+    this.dataSource = new MatTableDataSource(this.solutions);
   }
 
   ngAfterViewInit() {
@@ -68,6 +77,32 @@ export class SolutionsCardComponent implements OnInit {
       x['coverage'].filter((y: any) => {
         if (y == this.coverageSelected) { this.solutions.push(x); }
       });
+    });
+  }
+
+  openModalSolution(event: any) {
+    let coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.topic['coverage'][0]['_id'] });
+    if (coverage.length == 0) {
+      this.utilityService.openErrorSnackBar('Selecciona una cobertura.');
+      return;
+    }
+
+    const dialogRef = this.dialog.open<AddDocumentSolutionComponent>(AddDocumentSolutionComponent, {
+      data: {
+        themeID: this.topicID,
+        coverage: coverage[0]
+      },
+      disableClose: true,
+      panelClass: 'full-dialog'
+    }
+    );
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        const solution = reply.solutions[0];
+        this.solutions.unshift(solution);
+        this.dataSource = new MatTableDataSource(this.solutions);
+      }
     });
   }
 }

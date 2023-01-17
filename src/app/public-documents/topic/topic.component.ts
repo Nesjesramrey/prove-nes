@@ -18,6 +18,8 @@ import { CustomMatDataSource } from '../custom-class/custom-table.component';
 import { FavoritesService } from 'src/app/services/favorites.service';
 import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { ShareSheetComponent } from 'src/app/components/share-sheet/share-sheet.component';
 
 @Component({
   selector: '.topic-page',
@@ -63,7 +65,8 @@ export class TopicComponent implements OnInit {
     public voteService: VoteService,
     public userService: UserService,
     public favoritesService: FavoritesService,
-    public deviceDetectorService: DeviceDetectorService
+    public deviceDetectorService: DeviceDetectorService,
+    public matBottomSheet: MatBottomSheet
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
@@ -78,8 +81,9 @@ export class TopicComponent implements OnInit {
 
     let user: Observable<any> = this.userService.fetchFireUser();
     let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
+    let favorite: Observable<any> = this.favoritesService.fetchFavoritesByTopicID({ _id: this.topicID });
 
-    forkJoin([user, document]).subscribe({
+    forkJoin([user, document, favorite]).subscribe({
       error: (error: any) => { },
       next: (reply: any) => {
         this.user = reply[0];
@@ -133,92 +137,14 @@ export class TopicComponent implements OnInit {
             if (collaborator.length != 0) { this.isCollaborator = true; }
             break;
         }
+
+        this.allFavorites = reply[2]['data'];
+        this.isFavorites = this.checkFavorites();
       },
       complete: () => {
         this.fetchVotes();
         this.isDataAvailable = true;
       }
-    });
-
-    // *** load user
-    // this.userService.fetchFireUser().subscribe({
-    //   error: (error: any) => { },
-    //   next: (reply: any) => {
-    //     this.user = reply;
-    //     this.user['role'] = this.user['activities'][0]['value'];
-
-    //     if (['administrator', 'editor'].includes(this.user.activities?.[0]?.value)) {
-    //       this.permission = true;
-    //     } else {
-    //       this.permission = false;
-    //     }
-
-    //     switch (this.user['role']) {
-    //       case 'administrator':
-    //         this.isCollaborator = true;
-    //         break;
-
-    //       case 'editor':
-    //         this.isCollaborator = true;
-    //         break;
-
-    //       case 'citizen':
-    //         let collaborator: any = this.document['collaborators'].filter((x: any) => {
-    //           return x['user']['_id'] == this.user['_id'];
-    //         });
-    //         if (collaborator.length != 0) { this.isCollaborator = true; }
-    //         break;
-    //     }
-    //   },
-    //   complete: () => {
-    //     this.fetchVotes();
-    //     this.isDataAvailable = true;
-    //   }
-    // });
-
-    // *** load document
-    // this.documentService.fetchSingleDocumentById({ _id: this.documentID }).subscribe({
-    //   error: (reply: any) => { },
-    //   next: (reply: any) => {
-    //     this.document = reply;
-    //     this.coverage = this.document['coverage'];
-
-    //     let category = this.document['layouts'].filter((x: any) => { return x['_id'] == this.categoryID; });
-    //     this.category = category[0];
-
-    //     let subcategory = this.category['subLayouts'].filter((x: any) => { return x['_id'] == this.subcategoryID; });
-    //     this.subcategory = subcategory[0];
-
-    //     let topic = this.subcategory['topics'].filter((x: any) => { return x['_id'] == this.topicID; });
-    //     this.topic = topic[0];
-    //     this.stats = this.topic['stats'];
-
-    //     this.solutionsData = this.topic['solutions'];
-    //     this.solutionsData.filter((x: any) => {
-    //       if (x['stats'] == null) {
-    //         x['stats'] = { score: 0 }
-    //       }
-    //     });
-    //     this.SolutionDataSource = new MatTableDataSource(this.sortSolutions(this.solutionsData));
-
-    //     this.topic['shortTitle'] = this.getshortTitle(this.topic['title']);
-
-    //     this.coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.topic['coverage'][0]['_id']; });
-    //     if (this.coverageSelected == null) { this.coverageSelected = this.coverage[0]['_id']; }
-    //   },
-    //   complete: () => {
-    //     this.isDataAvailable = true;
-    //   }
-    // });
-
-    // *** load favourites
-    this.favoritesService.fetchFavoritesByTopicID({ _id: this.topicID }).subscribe({
-      error: (error: any) => { },
-      next: (reply: any) => {
-        this.allFavorites = reply['data'];
-        this.isFavorites = this.checkFavorites();
-      },
-      complete: () => { }
     });
   }
 
@@ -267,9 +193,7 @@ export class TopicComponent implements OnInit {
   }
 
   getUserFavorited() {
-    return this.allFavorites.filter(
-      (item: any) => item.createdBy === this.user._id
-    );
+    return this.allFavorites.filter((item: any) => item.createdBy === this.user._id);
   }
 
   addFavorites() {
@@ -498,5 +422,18 @@ export class TopicComponent implements OnInit {
 
   getVoteStatus(event: any) {
     this.fetchVotes();
+  }
+
+  openBottomSheet(): void {
+    const bottomSheetRef = this.matBottomSheet.open(ShareSheetComponent, {
+      data: {
+        user: this.user
+      },
+      panelClass: 'desktop-sheet'
+    });
+
+    bottomSheetRef.afterDismissed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
   }
 }

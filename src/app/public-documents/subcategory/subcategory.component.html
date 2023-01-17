@@ -36,14 +36,29 @@
             <div class="cover"></div>
           </div>
         </div>
+
         <div class="set-12 infohldr">
           <p class="set-12 card-title">{{ subcategory.category.name }}</p>
           <expanded-text [text]="subcategory.description" [minLength]="200" [title]="subcategory.category.name">
           </expanded-text>
         </div>
+
+        <div class="set-12 cardctrls">
+          <button type="button" mat-mini-fab color="primary" disabled>
+            <mat-icon>favorite</mat-icon>
+          </button>
+          <button type="button" mat-mini-fab color="primary" matTooltip="Compartir" matTooltipClass="tooltip"
+            (click)="openBottomSheet()">
+            <mat-icon>share</mat-icon>
+          </button>
+          <button type="button" mat-mini-fab color="primary" matTooltip="Comentar" matTooltipClass="tooltip"
+            (click)="handleComments()">
+            <mat-icon>forum</mat-icon>
+          </button>
+        </div>
       </mat-card>
 
-      <horizontal-stats [users]="stats?.users" [interactions]="stats?.interactions"></horizontal-stats>
+      <horizontal-stats [users]="userCount" [interactions]="stats?.interactions"></horizontal-stats>
     </div>
 
     <div class="set-9 col-rgt">
