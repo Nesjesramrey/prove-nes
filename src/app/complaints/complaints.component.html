@@ -1,0 +1,56 @@
+<div class="set-12">
+  <div class="set-4">
+    <mat-form-field appearance="outline">
+      <mat-label>Búscar...</mat-label>
+      <input matInput placeholder="Ej: Andrea" (keyup)="applyFilter($event)">
+      <button type="button" matSuffix>
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+  <div class="set-8">&nbsp;</div>
+</div>
+
+<div class="set-12">
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="author">
+      <th mat-header-cell *matHeaderCellDef>Autor</th>
+      <td mat-cell *matCellDef="let element"> {{element.createdBy.firstname}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef>Título</th>
+      <td mat-cell *matCellDef="let element"> {{element.title || 'NA'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef>Alta</th>
+      <td mat-cell *matCellDef="let element"> {{element.createdAt | date: 'mediumDate'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="menu">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button type="button" [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item type="button" (click)="attendComplaint(element)">
+            <mat-icon>headset_mic</mat-icon>
+            <small>Atender</small>
+          </button>
+
+          <button mat-menu-item type="button" (click)="killCompalint(element._id)">
+            <mat-icon>cancel</mat-icon>
+            <small>Eliminar</small>
+          </button>
+        </mat-menu>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator #paginator [pageSizeOptions]="[20, 40, 60, 80, 100]"></mat-paginator>
+</div>
