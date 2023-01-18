@@ -1,11 +1,15 @@
 :host {
     width: 100%;
     margin-top: 5px;
-    margin-bottom: 100px;
     float: left;
   
     
-  
+    .innerhldr {
+ 
+      margin-top: 100px;
+     
+    }
+
     mat-spinner {
       position: absolute !important;
       top: 50%;
