@@ -3,11 +3,9 @@
   float: left;
   width: 100%;
 
-
-
   .form-association {
     .dialog-head{
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
     ::ng-deep .mat-horizontal-stepper-header-container {
       display: none !important;
@@ -19,8 +17,20 @@
       background: none !important;
     }
 
+    .addressNum{
+      display: inline-flex;
+      mat-form-field{
+        margin: 0 10px;
+      }
+    }
+    
+
     #textarea-description::-webkit-scrollbar {
       display: none;
+    }
+
+    .bwico{
+      margin-bottom: 10px;
     }
 
     .ctrls {
@@ -41,6 +51,30 @@
         margin-left: 20px;
       }
     }
-   
+    .legals {
+      margin-top: 20px;
+  
+      p {
+        margin-bottom: 10px;
+      }
+  
+      .row {
+        display: flex;
+        margin-bottom: 4px;
+  
+        * {
+          margin: 0;
+        }
+  
+        a {
+          margin-left: 5px !important;
+        }
+      }
+    }
+  
+    .activation-legend {
+      margin-top: 10px;
+    }
   }
+  
 }

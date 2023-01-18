@@ -10,6 +10,7 @@ import { MatStepper } from '@angular/material/stepper';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { forkJoin, Observable } from 'rxjs';
 
 
 
@@ -24,9 +25,11 @@ interface Asociation {
   styleUrls: ['./association-register.component.scss']
 })
 export class AssociationRegisterComponent implements OnInit {
+  public submitted: boolean = false;
   public searchFormGroup!: FormGroup;
   public dataAssociationFormGroup!: FormGroup;
   public dataComercialFormGroup!: FormGroup;
+  public legalsFormGroup!: FormGroup;
   public happyArray: any[] = [];
   public unhappyArray: any[] = [];
   @ViewChild('stepper') public stepper!: MatStepper;
@@ -44,6 +47,7 @@ export class AssociationRegisterComponent implements OnInit {
 
   public accessToken: any = null;
   public user: any = null;
+  public states: any = [];
   public payload: any = null;
   public isDataAvailable: boolean = false;
   public isMobile: boolean = false;
@@ -67,6 +71,16 @@ export class AssociationRegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let states: Observable<any> = this.utilityService.fetchAllStates();
+
+    forkJoin([states,]).subscribe((reply: any) => {
+      // console.log(reply);
+      this.states = reply[0];
+      let national = this.states.filter((state: any) => { return state['code'] == 'NAL'; });
+      this.states = this.states.filter((state: any) => { return state['code'] != 'NAL'; });
+      this.states.unshift(national[0]);
+    });
+  
 
     this.searchFormGroup = this.formBuilder.group({
       search: ['', [Validators.required]],
@@ -99,10 +113,16 @@ export class AssociationRegisterComponent implements OnInit {
           file: ["", ]
       
         });
+
       },
       complete: () => {
         this.isDataAvailable = true;
       },
+    });
+
+    this.legalsFormGroup = this.formBuilder.group({
+      terms: [true, [Validators.required]],
+      privacy: [true, [Validators.required]]
     });
   }
 
@@ -121,6 +141,8 @@ export class AssociationRegisterComponent implements OnInit {
   }
 
   onCreateAssociation() {
+    console.log('click')
+    this.submitted = true;
     let data: any = {
       formData: new FormData(),
          
@@ -152,6 +174,7 @@ export class AssociationRegisterComponent implements OnInit {
       },
       complete: () => {
         //location.reload();
+        this.killDialog()
         this.isDataAvailable = true;
       },
     });
@@ -225,6 +248,13 @@ export class AssociationRegisterComponent implements OnInit {
               },
     });
 
+  }
+
+  onSelectCoverage(evt: any) {
+    let national = this.states.filter((state: any) => { return state['_id'] == evt['value']; });
+    // if (evt['value'] == national[0]['_id']) {
+    //   this.coverageSelect.options.forEach((item: MatOption) => item.disabled = true);
+    // }
   }
 
 }

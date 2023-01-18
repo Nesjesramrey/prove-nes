@@ -11,7 +11,7 @@
   <mat-step>
     <div class="set-12 dialog-head">
       <div class="set-10">
-        <h3>Datos de la asociación</h3>
+        <h3>Aquí encuentras tu asociación</h3>
       </div>
       <div class="set-2 txt-right">
         <button
@@ -42,6 +42,7 @@
       >
         <small>Siguiente</small>
       </button>
+      <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
     </div>
   </mat-step>
   <!-- Step 2 Data Association-->
@@ -56,6 +57,7 @@
           mat-mini-fab
           color="primary"
           (click)="killDialog()"
+          
         >
           <mat-icon>cancel</mat-icon>
         </button>
@@ -92,9 +94,10 @@
       <button mat-raised-button color="warn" matStepperPrevious>
         <small>Atras</small>
       </button>
-      <button mat-raised-button color="warn" matStepperNext>
+      <button mat-raised-button color="warn" matStepperNext [disabled]="dataAssociationFormGroup.invalid">
         <small>Siguiente</small>
       </button>
+      <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
     </div>
   </mat-step>
 
@@ -102,7 +105,7 @@
   <mat-step>
     <div class="set-12 dialog-head">
       <div class="set-10">
-        <h3>Datos de la asociación</h3>
+        <h3>Datos comerciales</h3>
       </div>
       <div class="set-2 txt-right">
         <button
@@ -121,25 +124,24 @@
         <input matInput formControlName="associationNameComercial" />
       </mat-form-field>
    
-      <p><strong>Domicilio</strong></p>
       <mat-form-field appearance="outline">
         <mat-label>Calle</mat-label>
         <input matInput formControlName="associationStreet" />
       </mat-form-field>
-
-      <mat-form-field appearance="outline">
+      <div class="set-12 addressNum">
+      <mat-form-field class="set-5" appearance="outline">
         <mat-label>No. Ext.</mat-label>
         <input matInput formControlName="associationNumExt" />
       </mat-form-field>
-      <mat-form-field appearance="outline">
+      <mat-form-field class="set-5" appearance="outline">
         <mat-label>No. Int.</mat-label>
         <input matInput formControlName="associationNumInt" />
       </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Codigo Postal</mat-label>
-        <input matInput formControlName="associationZipCode" />
-      </mat-form-field>
-
+    </div>
+    <mat-form-field  appearance="outline">
+      <mat-label>Codigo Postal</mat-label>
+      <input matInput formControlName="associationZipCode" />
+    </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Colonia</mat-label>
         <input matInput formControlName="associationTown" />
@@ -149,13 +151,21 @@
         <input matInput formControlName="associationCity" />
       </mat-form-field>
       <mat-form-field appearance="outline">
-        <mat-label>Estado</mat-label>
-        <input matInput formControlName="associationState" />
+        <mat-label>Cobertura</mat-label>
+        <mat-select formControlName="associationState" multiple (selectionChange)="onSelectCoverage($event)" #coverageSelect>
+          <!-- <mat-option value="all">
+            <small>Nacional</small>
+          </mat-option> -->
+          <mat-option *ngFor="let state of states" [value]="state._id">
+            <small>{{state.name | titlecase}}</small>
+          </mat-option>
+        </mat-select>
       </mat-form-field>
       <div class="addfile">
         <button
           type="button"
           mat-raised-button
+          mat-mini-fab 
           color="warn"
           (click)="file.click()"
           matTooltip="Adjuntar archivo"
@@ -179,16 +189,17 @@
       <button mat-raised-button color="warn" matStepperPrevious>
         <small>Atras</small>
       </button>
-      <button mat-raised-button color="warn" matStepperNext>
+      <button mat-raised-button color="warn" matStepperNext [disabled]="dataComercialFormGroup.invalid">
         <small>Siguiente</small>
       </button>
+      <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
     </div>
   </mat-step>
   <!--Step 4 que te hace feliz-->
   <mat-step>
     <div class="set-12 dialog-head">
       <div class="set-10">
-        <h3>Datos de la asociación</h3>
+        <h3>Tus intereses</h3>
       </div>
       <div class="set-2 txt-right">
         <button
@@ -240,6 +251,7 @@
       <button mat-raised-button color="warn" matStepperNext>
         <small>Siguiente</small>
       </button>
+      <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
     </div>
   </mat-step>
 
@@ -247,7 +259,7 @@
   <mat-step>
     <div class="set-12 dialog-head">
       <div class="set-10">
-        <h3>Datos de la asociación</h3>
+        <h3>¡Has terminado!</h3>
       </div>
       <div class="set-2 txt-right">
         <button
@@ -260,7 +272,7 @@
         </button>
       </div>
     </div>
-    <form>
+    <form [formGroup]="legalsFormGroup">
       <mat-form-field appearance="outline">
         <mat-label>¿Qué te entristece de México?</mat-label>
         <mat-chip-list #unhappyChipList>
@@ -290,6 +302,38 @@
           <strong>" Delincuencia"</strong>
         </mat-hint>
       </mat-form-field>
+      <div class="set-12 legals">
+        <p>
+          <small>He leído y estoy de acuerdo con:</small>
+        </p>
+        <div class="set-12 row">
+          <mat-checkbox
+            color="primary"
+            formControlName="terms"
+          ></mat-checkbox>
+          <a href="#">
+            <small>Términos y condiciones</small>
+          </a>
+        </div>
+        <div class="set-12 row">
+          <mat-checkbox
+            color="primary"
+            formControlName="privacy"
+          ></mat-checkbox>
+          <a href="#">
+            <small>Política de privacidad</small>
+          </a>
+        </div>
+        <div class="set-12 activation-legend">
+          <!-- <p>
+            <small>
+              Al hacer <strong>click</strong> en
+              <strong>"Registrarme"</strong>, te envíaremos un correo de
+              activación. **
+            </small>
+          </p> -->
+        </div>
+      </div>
     </form>
     <div class="set-12 ctrls">
       <button mat-raised-button color="warn" matStepperPrevious>
@@ -303,35 +347,15 @@
       >
         <small>Registrarme</small>
       </button>
+      <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
       
     </div>
   </mat-step>
-    <!--
+   
       
 
     
 
-      <div class="ctrls">
-        <button
-          class="set-12"
-          type="button"
-          mat-raised-button
-          color="warn"
-          (click)="clearForm()"
-        >
-          <small>Cancelar</small>
-        </button>
-        <button
-          class="set-12"
-          type="submit"
-          mat-raised-button
-          color="primary"
-          (click)="(onCreateAssociation)"
-          [disabled]="formGroup.invalid"
-        >
-          Guardar
-        </button>
-      </div>
-    </form> -->
+     
   </mat-stepper>
 </div>

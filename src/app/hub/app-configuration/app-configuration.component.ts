@@ -73,11 +73,11 @@ export class AppConfigurationComponent implements OnInit {
         this.formGroup = this.formBuilder.group({
           firstname: [this.user['firstname'], [Validators.required]],
           lastname: [this.user['lastname'], [Validators.required]],
-          gender: ['', [Validators.required]],
-          postalcode: [this.user['zipcode'], [Validators.required]],
-          phone: [this.user['phone'], [Validators.required]],
-          associationInterests: ['', [Validators.required]],
-          uninterestingTopics: ['', [Validators.required]],
+          gender: ['', []],
+          postalcode: [this.user['zipcode'], []],
+          phone: [this.user['phone'], []],
+          associationInterests: ['', []],
+          uninterestingTopics: ['', []],
           
         });
       },
