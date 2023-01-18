@@ -57,6 +57,15 @@
       //   padding-right: 10px;
       // }
 
+      .head-add {
+        button {
+          display: flex;
+          align-items: center;
+          position: absolute;
+          z-index: 11;
+        }
+      }
+
       .set-6:nth-child(even) {
         padding-left: 20px;
       }
@@ -72,6 +81,14 @@
 
       ::ng-deep .mat-form-field-wrapper {
         padding-bottom: 0 !important;
+      }
+
+      .set-2 {
+        button {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
       }
     }
 

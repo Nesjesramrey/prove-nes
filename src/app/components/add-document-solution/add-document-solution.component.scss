@@ -41,6 +41,14 @@
     * {
       margin: 0;
     }
+
+    .set-3 {
+      button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
   }
 
   .submit-button {

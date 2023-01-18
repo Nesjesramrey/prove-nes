@@ -25,9 +25,18 @@ export class Top10ListComponent implements OnInit {
         x['stats'] = { layout: x['_id'], score: 0 }
       }
     });
+
+    this.sortData();
+    this.data = this.data.slice(0, 10);
   }
 
   linkMe(url: string) {
     this.utilityService.linkMe(url);
+  }
+
+  sortData() {
+    return this.data.sort((a: any, b: any) => {
+      return <any>(b['stats']['score']) - <any>(a['stats']['score']);
+    });
   }
 }

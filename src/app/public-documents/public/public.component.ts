@@ -8,6 +8,9 @@ import { LayoutService } from 'src/app/services/layout.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { UserService } from 'src/app/services/user.service';
 import { forkJoin, Observable } from 'rxjs';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { ShareSheetComponent } from 'src/app/components/share-sheet/share-sheet.component';
+import { AddCommentsSheetComponent } from 'src/app/components/add-comments-sheet/add-comments-sheet.component';
 
 @Component({
   selector: '.public-page',
@@ -32,6 +35,7 @@ export class PublicComponent implements OnInit {
   @HostBinding('class') public class: string = '';
   public user: any = null;
   public isCollaborator: boolean = false;
+  public userCount: number = 0;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -40,7 +44,8 @@ export class PublicComponent implements OnInit {
     public solutionService: SolutionService,
     public layoutService: LayoutService,
     public deviceDetectorService: DeviceDetectorService,
-    public userService: UserService
+    public userService: UserService,
+    public matBottomSheet: MatBottomSheet
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.isMobile = this.deviceDetectorService.isMobile();
@@ -52,8 +57,9 @@ export class PublicComponent implements OnInit {
 
     let user: Observable<any> = this.userService.fetchFireUser();
     let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
+    let userCount: Observable<any> = this.userService.fetchUserCount();
 
-    forkJoin([user, document]).subscribe((reply: any) => {
+    forkJoin([user, document, userCount]).subscribe((reply: any) => {
       this.user = reply[0];
       this.user['role'] = this.user['activities'][0]['value'];
 
@@ -65,7 +71,6 @@ export class PublicComponent implements OnInit {
       if (this.coverageSelected == null) {
         let coverageSelected = this.coverage.filter((x: any) => { return x['name'] == 'Nacional'; });
         this.coverageSelected = coverageSelected[0]['_id'] || this.coverage[0]['_id'];
-        // this.coverageSelected = this.coverage[0]['_id']; 
       };
 
       this.layouts.filter((x: any) => {
@@ -113,64 +118,12 @@ export class PublicComponent implements OnInit {
           break;
       }
 
+      this.userCount = reply[2]['total'];
+
       setTimeout(() => {
         this.isDataAvailable = true;
       });
     });
-
-    // *** load user
-    // this.user = this.userService.fetchFireUser().subscribe({
-    //   error: (error: any) => { },
-    //   next: (reply: any) => { this.user = reply; },
-    //   complete: () => { }
-    // });
-
-    // *** load document
-    // this.documentService.fetchSingleDocumentById({ _id: this.documentID }).subscribe({
-    //   error: (error: any) => { },
-    //   next: (reply: any) => {
-    //     this.document = reply;
-    //     this.coverage = this.document['coverage'];
-    //     this.layouts = this.document['layouts'];
-    //     this.collaborators = this.document['collaborators'];
-
-    //     if (this.coverageSelected == null) {
-    //       let coverageSelected = this.coverage.filter((x: any) => { return x['name'] == 'Nacional'; });
-    //       this.coverageSelected = coverageSelected[0]['_id'] || this.coverage[0]['_id'];
-    //     };
-
-    //     this.layouts.filter((x: any) => {
-    //       x['subLayouts'].filter((y: any) => {
-    //         y['topics'].filter((t: any) => {
-    //           t['solutions'].filter((s: any) => {
-    //             s['url'] = '/documentos-publicos/' + this.document['_id'] +
-    //               '/categoria/' + x['_id'] +
-    //               '/subcategoria/' + y['_id'] +
-    //               '/tema/' + t['_id'] +
-    //               '/solucion/' + s['_id'];
-    //             this.allDocumentSolutions.push(s);
-    //           });
-    //         });
-    //       });
-    //     });
-
-    //     this.allDocumentSolutions.filter((x) => { this.topSolutionsIds.push(x['_id']); });
-    //     let solutions = this.allDocumentSolutions.filter((e: any) => {
-    //       return this.topSolutionsIds.includes(e['_id']);
-    //     }, this.topSolutionsIds);
-
-    //     this.topSolutions = [];
-    //     this.storedSolutions = solutions;
-    //     this.storedSolutions.filter((x: any) => {
-    //       x['coverage'].filter((c: any) => {
-    //         if (c['_id'] == this.coverageSelected) { this.topSolutions.push(x); }
-    //       });
-    //     });
-    //   },
-    //   complete: () => {
-    //     this.isDataAvailable = true;
-    //   }
-    // });
   }
 
   popImageViewer() {
@@ -206,6 +159,34 @@ export class PublicComponent implements OnInit {
     this.dataViewport.nativeElement.scrollIntoView({
       behavior: 'smooth',
       block: 'center',
+    });
+  }
+
+  openBottomSheet(): void {
+    const bottomSheetRef = this.matBottomSheet.open(ShareSheetComponent, {
+      data: {
+        user: this.user
+      },
+      panelClass: 'desktop-sheet'
+    });
+
+    bottomSheetRef.afterDismissed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  handleComments() {
+    const bottomSheetRef = this.matBottomSheet.open(AddCommentsSheetComponent, {
+      data: {
+        document: this.document,
+        user: this.user,
+        location: 'document'
+      },
+      panelClass: 'desktop-sheet'
+    });
+
+    bottomSheetRef.afterDismissed().subscribe((reply: any) => {
+      if (reply != undefined) { }
     });
   }
 }

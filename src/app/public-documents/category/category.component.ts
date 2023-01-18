@@ -9,6 +9,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { SolutionService } from 'src/app/services/solution.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { UserService } from 'src/app/services/user.service';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { ShareSheetComponent } from 'src/app/components/share-sheet/share-sheet.component';
+import { AddCommentsSheetComponent } from 'src/app/components/add-comments-sheet/add-comments-sheet.component';
 
 @Component({
   selector: 'app-category-page',
@@ -40,6 +43,7 @@ export class CategoryComponent implements OnInit {
   public isMobile: boolean = false;
   @HostBinding('class') public class: string = '';
   public isCollaborator: boolean = false;
+  public userCount: number = 0;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -49,7 +53,8 @@ export class CategoryComponent implements OnInit {
     public dialog: MatDialog,
     public solutionService: SolutionService,
     public deviceDetectorService: DeviceDetectorService,
-    public userService: UserService
+    public userService: UserService,
+    public matBottomSheet: MatBottomSheet
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
@@ -62,8 +67,9 @@ export class CategoryComponent implements OnInit {
 
     let user: Observable<any> = this.userService.fetchFireUser();
     let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
+    let userCount: Observable<any> = this.userService.fetchUserCount();
 
-    forkJoin([user, document]).subscribe((reply: any) => {
+    forkJoin([user, document, userCount]).subscribe((reply: any) => {
       this.user = reply[0];
       this.user['role'] = this.user['activities'][0]['value'];
 
@@ -124,6 +130,8 @@ export class CategoryComponent implements OnInit {
           if (collaborator.length != 0) { this.isCollaborator = true; }
           break;
       }
+
+      this.userCount = reply[2]['total'];
 
       setTimeout(() => {
         this.isDataAvailable = true;
@@ -215,4 +223,33 @@ export class CategoryComponent implements OnInit {
   }
 
   getLayoutData(layout: any) { this.dataViewport.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+
+  openBottomSheet(): void {
+    const bottomSheetRef = this.matBottomSheet.open(ShareSheetComponent, {
+      data: {
+        user: this.user
+      },
+      panelClass: 'desktop-sheet'
+    });
+
+    bottomSheetRef.afterDismissed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  handleComments() {
+    const bottomSheetRef = this.matBottomSheet.open(AddCommentsSheetComponent, {
+      data: {
+        document: this.document,
+        layout: this.selectedCategory,
+        user: this.user,
+        location: 'layout'
+      },
+      panelClass: 'desktop-sheet'
+    });
+
+    bottomSheetRef.afterDismissed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
 }
