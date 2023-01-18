@@ -1,0 +1,36 @@
+<div class="set-3">&nbsp;</div>
+
+<div class="set-6">
+  <div class="set-12 author">
+    <div class="set-10">
+      <p>
+        <small>Autor: <strong>{{complaint?.createdBy?.firstname}} {{complaint?.createdBy?.lastname}}</strong></small>
+      </p>
+      <p>
+        <small>Alta: <strong>{{complaint?.createdAt | date: 'mediumDate'}} - {{complaint?.createdAt | date:
+            'mediumTime'}}</strong></small>
+      </p>
+      <p>
+        <small *ngIf="complaint?.attendedAt">Atendida en: <strong>{{complaint?.attendedAt}}</strong></small>
+        <small *ngIf="!complaint?.attendedAt">Atendida en: <strong>NA</strong></small>
+      </p>
+    </div>
+
+    <div class="set-2 txt-right">
+      <button type="button" mat-mini-fab color="primary" (click)="killDialog()" matTooltip="Salir"
+        matTooltipClass="tooltip">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="set-12">
+    <h3 class="ctitle">{{complaint?.title || 'Nueva Denuncia'}}</h3>
+    <div [innerHTML]="complaint?.description"></div>
+  </div>
+
+  <div class="set-12 gallery" *ngIf="complaint?.images?.length != 0">
+    <!-- <slider-images></slider-images> -->
+    <img [src]="item" [alt]="complaint?.title" *ngFor=" let item of complaint?.images" />
+  </div>
+</div>

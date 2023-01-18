@@ -63,6 +63,10 @@
         <mat-icon>groups</mat-icon>
         <span>Usuarios</span>
       </button>
+      <button mat-menu-item (click)="linkMe('complaints')" *ngIf="userActivities.includes('moderator')">
+        <mat-icon>warning</mat-icon>
+        <span>Denuncias</span>
+      </button>
     </mat-menu>
   </div>
 

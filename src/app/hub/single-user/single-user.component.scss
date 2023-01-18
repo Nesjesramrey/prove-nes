@@ -4,7 +4,11 @@
   margin-bottom: 100px;
   float: left;
 
-  
+  .innerhldr {
+
+    margin-top: 80px;
+    
+  }
 
   mat-spinner {
     position: absolute !important;
@@ -172,8 +176,10 @@
     align-items: center;
     justify-content: center;
   }
-  .btn-documentos{
-  margin: 0 100px
+
+  button{
+    margin-top: 10px;
+
   }
 
 }
