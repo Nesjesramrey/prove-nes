@@ -16,4 +16,22 @@ export class ComplaintService {
       this.endpointSrvc.apiEndPoint + this.endpointSrvc.fileComplaintEndPoint, data
     );
   }
+
+  fetchAllComplaints() {
+    return this.httpClient.get(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAllComplaintsEndPoint, {}
+    );
+  }
+
+  fetchComplaintById(data: any) {
+    return this.httpClient.get(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchComplaintByIdEndPoint, data
+    );
+  }
+
+  killComplaint(data: any) {
+    return this.httpClient.delete(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.killComplaintEndPoint + `/${data['complaint_id']}`, data
+    );
+  }
 }
