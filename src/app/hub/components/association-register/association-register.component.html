@@ -1,7 +1,10 @@
 <div class="form-association" *ngIf="isDataAvailable && isMobile">
   
   <mat-stepper
-  #stepper  
+  #stepper
+  [disableRipple]="true"
+  [linear]="true"
+  [@.disabled]="true"
   >
 
   <!--Search your association or register-->
