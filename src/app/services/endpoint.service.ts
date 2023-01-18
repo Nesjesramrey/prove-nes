@@ -154,6 +154,9 @@ export class EndPointService {
 
   // complaint
   public fileComplaintEndPoint: string = '/complaint';
+  public fetchAllComplaintsEndPoint: string = '/complaint';
+  public fetchComplaintByIdEndPoint: string = '/complaint/';
+  public killComplaintEndPoint: string = '/complaint/';
 
   constructor() { }
 }

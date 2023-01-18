@@ -84,6 +84,7 @@ import { ComplaintDialogComponent } from './complaint-dialog/complaint-dialog.co
 import { FilterCoverageDialogComponent } from './filter-coverage-dialog/filter-coverage-dialog.component';
 import { FloatingSheetComponent } from './floating-sheet/floating-sheet.component';
 import { AddCommentsSheetComponent } from './add-comments-sheet/add-comments-sheet.component';
+import { SingleComplaintComponent } from './single-complaint/single-complaint.component';
 
 @NgModule({
   imports: [
@@ -171,7 +172,8 @@ import { AddCommentsSheetComponent } from './add-comments-sheet/add-comments-she
     ComplaintDialogComponent,
     FilterCoverageDialogComponent,
     FloatingSheetComponent,
-    AddCommentsSheetComponent
+    AddCommentsSheetComponent,
+    SingleComplaintComponent
   ],
   exports: [
     AppPageletComponent,
@@ -236,7 +238,8 @@ import { AddCommentsSheetComponent } from './add-comments-sheet/add-comments-she
     ComplaintDialogComponent,
     FilterCoverageDialogComponent,
     FloatingSheetComponent,
-    AddCommentsSheetComponent
+    AddCommentsSheetComponent,
+    SingleComplaintComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
@@ -275,7 +278,8 @@ import { AddCommentsSheetComponent } from './add-comments-sheet/add-comments-she
     ComplaintDialogComponent,
     FilterCoverageDialogComponent,
     FloatingSheetComponent,
-    AddCommentsSheetComponent
+    AddCommentsSheetComponent,
+    SingleComplaintComponent
   ],
   providers: [],
 })
