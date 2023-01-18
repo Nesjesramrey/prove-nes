@@ -156,7 +156,9 @@ export class EndPointService {
   public fileComplaintEndPoint: string = '/complaint';
 
   //association
-  public createAssociationEndpoint: string ='/association'
+  public createAssociationEndpoint: string ='/association';
+  public searchAssociationEndpoint: string ='/association?name=';
+ 
 
   constructor() { }
 }

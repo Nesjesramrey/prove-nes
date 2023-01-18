@@ -32,5 +32,8 @@ export class AssociationService {
     );
 }
 
+searchAssociation(name: string) {
+  return this.httpClient.get(this.endpointSrvc.apiEndPoint + this.endpointSrvc.searchAssociationEndpoint + name);
+}
  
 }

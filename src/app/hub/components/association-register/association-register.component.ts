@@ -1,10 +1,12 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DeviceDetectorService } from 'ngx-device-detector';;
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
 import { AssociationService } from 'src/app/services/association.service';
 import { UtilityService } from 'src/app/services/utility.service';
+import { SearchService } from 'src/app/services/search.service';
+import { MatStepper } from '@angular/material/stepper';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -22,9 +24,12 @@ interface Asociation {
   styleUrls: ['./association-register.component.scss']
 })
 export class AssociationRegisterComponent implements OnInit {
-  public formGroup!: FormGroup;
+  public searchFormGroup!: FormGroup;
+  public dataAssociationFormGroup!: FormGroup;
+  public dataComercialFormGroup!: FormGroup;
   public happyArray: any[] = [];
   public unhappyArray: any[] = [];
+  @ViewChild('stepper') public stepper!: MatStepper;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   public addOnBlur = true;
 
@@ -52,6 +57,7 @@ export class AssociationRegisterComponent implements OnInit {
     public userService: UserService,
     public associationService: AssociationService,
     public deviceDetectorService: DeviceDetectorService,
+    public searchService: SearchService,
     public formBuilder: FormBuilder,
     public dialogData: MatDialog,
     public dialogRef: MatDialogRef<AssociationRegisterComponent>,
@@ -61,6 +67,11 @@ export class AssociationRegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.searchFormGroup = this.formBuilder.group({
+      search: ['', [Validators.required]],
+    });
+
     this.userService.fetchFireUser().subscribe({
       error: (error) => {
         switch (error['status']) { }
@@ -69,9 +80,14 @@ export class AssociationRegisterComponent implements OnInit {
         this.user = reply;
         //console.log(this.user);
 
-        this.formGroup = this.formBuilder.group({
+        this.dataAssociationFormGroup = this.formBuilder.group({
           associationTypology: ["", [Validators.required]],
           associationName: ["", [Validators.required]],
+          associationDescription: ["", [Validators.required]],
+         
+        });
+        this.dataComercialFormGroup = this.formBuilder.group({
+        
           associationNameComercial: ["", [Validators.required]],
           associationStreet: ["", [Validators.required]],
           associationNumExt: ["", [Validators.required]],
@@ -80,10 +96,8 @@ export class AssociationRegisterComponent implements OnInit {
           associationZipCode: ["", [Validators.required]],
           associationCity: ["", [Validators.required]],
           associationState: ["", [Validators.required]],
-          associationDescription: ["", [Validators.required]],
-          interestsTopic: ["", []],
-          uninterestsTopic: ["", []],
-          file: ["",[]],
+          file: ["", ]
+      
         });
       },
       complete: () => {
@@ -101,27 +115,27 @@ export class AssociationRegisterComponent implements OnInit {
     if (fileSize > 3) {
       this.utilityService.openErrorSnackBar('Solo archivos de hasta 3 MB.');
     } else {
-      this.formGroup.patchValue({ file: input.files[0] });
-      this.formGroup.updateValueAndValidity();
+      this.dataComercialFormGroup.patchValue({ file: input.files[0] });
+      this.dataComercialFormGroup.updateValueAndValidity();
     }
   }
 
-  onCreateAssociation(form: FormGroup) {
+  onCreateAssociation() {
     let data: any = {
       formData: new FormData(),
          
     };
-    data['formData'].append('files', form.controls['file']['value']);
-    data['formData'].append('name', form['value']['associationName'],)
-    data['formData'].append('typology', form['value']['associationTypology']),
-    data['formData'].append('description', form['value']['associationDescription']),
-    data['formData'].append('businessName', form['value']['associationNameComercial']),
-    data['formData'].append('street', form['value']['associationStreet']),
-    data['formData'].append('externalNumber', form['value']['associationNumExt']),
-    data['formData'].append('internalNumber', form['value']['associationNumInt']),
-    data['formData'].append('colonia', form['value']['associationTown']),
-    data['formData'].append('ciudad', form['value']['associationCity']),
-    data['formData'].append('estado', form['value']['associationState']),
+    data['formData'].append('files', this.dataComercialFormGroup.controls['file']['value']);
+    data['formData'].append('name', this.dataAssociationFormGroup['value']['associationName'],)
+    data['formData'].append('typology', this.dataAssociationFormGroup['value']['associationTypology']),
+    data['formData'].append('description', this.dataAssociationFormGroup['value']['associationDescription']),
+    data['formData'].append('businessName', this.dataComercialFormGroup['value']['associationNameComercial']),
+    data['formData'].append('street', this.dataComercialFormGroup['value']['associationStreet']),
+    data['formData'].append('externalNumber', this.dataComercialFormGroup['value']['associationNumExt']),
+    data['formData'].append('internalNumber', this.dataComercialFormGroup['value']['associationNumInt']),
+    data['formData'].append('colonia', this.dataComercialFormGroup['value']['associationTown']),
+    data['formData'].append('ciudad', this.dataComercialFormGroup['value']['associationCity']),
+    data['formData'].append('estado', this.dataComercialFormGroup['value']['associationState']),
     data['formData'].append('interestTopics',  JSON.stringify(this.happyArray) || null),
     data['formData'].append('uninterestTopics', JSON.stringify(this.unhappyArray) || null),      
     console.log(data)
@@ -183,7 +197,7 @@ export class AssociationRegisterComponent implements OnInit {
 
   clearForm() {
     //this.formGroup.reset();
-    this.formGroup.reset();
+    this.dataComercialFormGroup.reset();
   }
 
   clearInputUnhappy(){
@@ -194,5 +208,23 @@ export class AssociationRegisterComponent implements OnInit {
     this.happyArray = [];
   }
 
+
+  onSearch(formGroup: FormGroup) {
+    let data: any = {
+      filter: formGroup['value']['search'],  
+    };
+    console.log(data['filter']),
+    this.associationService.searchAssociation(data['filter']).subscribe({
+      error: (error: any) => {
+        
+      },
+      next: (reply: any) => {
+        console.log(reply)
+      },
+      complete: () => { 
+              },
+    });
+
+  }
 
 }

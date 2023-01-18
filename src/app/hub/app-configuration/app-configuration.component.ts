@@ -50,13 +50,17 @@ export class AppConfigurationComponent implements OnInit {
     public deviceDetectorService: DeviceDetectorService,
     public formBuilder: FormBuilder,
     public dialogData: MatDialog,
-    public dialog: LyDialog
+    public dialog: LyDialog,
+    public utilitySrvc: UtilityService,
   ) {
     this.accessToken = this.authenticationSrvc.fetchAccessToken;
     this.isMobile = this.deviceDetectorService.isMobile();
   }
 
   ngOnInit(): void {
+
+
+
     this.userService.fetchFireUser().subscribe({
       error: (error) => {
         switch (error['status']) {
@@ -180,4 +184,6 @@ export class AppConfigurationComponent implements OnInit {
   clearInputHappy(){
     this.happyArray = [];
   }
+
+
 }
