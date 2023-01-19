@@ -15,13 +15,15 @@ export class PasswordRecoveryComponent implements OnInit {
   public formPassword!: FormGroup;
   public submitted: boolean = false;
   public hide: boolean = true;
+
   constructor(
     public angularFireAuth: AngularFireAuth,
     public formBuilder: FormBuilder,
     public userService: UserService,
     public utilitySrvc: UtilityService,
     public router: Router
-  ) {}
+  ) { }
+
   ngOnInit(): void {
     this.formPassword = this.formBuilder.group({
       email: [
@@ -34,10 +36,12 @@ export class PasswordRecoveryComponent implements OnInit {
       ],
     });
   }
+
   changePassword(form: FormGroup) {
     let user: Observable<any> = this.userService.passwordRecovery({
       email: form['value']['email'],
     });
+
     user.subscribe((response) => {
       this.utilitySrvc.openSuccessSnackBar(
         'Se envio la contraseña al correo electronico.'

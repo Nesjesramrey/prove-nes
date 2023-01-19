@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
 import { DocumentService } from 'src/app/services/document.service';
+import { MatDialog } from '@angular/material/dialog';
+import { RecoverPasswordComponent } from 'src/app/components/recover-password/recover-password.component';
 
 @Component({
   selector: '.sign-in-mobile',
@@ -22,7 +24,8 @@ export class SignInMobileComponent implements OnInit {
     public utilityService: UtilityService,
     public angularFireAuth: AngularFireAuth,
     public router: Router,
-    public documentService: DocumentService
+    public documentService: DocumentService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -41,6 +44,19 @@ export class SignInMobileComponent implements OnInit {
     setTimeout(() => {
       this.isDataAvailable = true;
     }, 300);
+  }
+
+  recoverPassword() {
+    const dialogRef = this.dialog.open<RecoverPasswordComponent>(
+      RecoverPasswordComponent, {
+      width: '420px',
+      data: {},
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
   }
 
   onSignIn(form: FormGroup) {

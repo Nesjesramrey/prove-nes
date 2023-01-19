@@ -44,11 +44,10 @@ export class UserService {
       data
     );
   }
+
   passwordRecovery(data: any) {
     return this.httpClient.post(
-      this.endpointSrvc.apiEndPoint +
-      this.endpointSrvc.passwordRecoveryEndPoint,
-      data
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.passwordRecoveryEndPoint, data
     );
   }
 

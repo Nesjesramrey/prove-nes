@@ -15,7 +15,7 @@ import { UtilityService } from '../services/utility.service';
 export class DashboardComponent implements OnInit {
   public isDataAvailable: boolean = false;
   public document: any = null;
-  public mailingListFormGroup!: FormGroup;
+  // public mailingListFormGroup!: FormGroup;
   public submitted: boolean = false;
   public isAuthenticated: boolean = false;
   public isMobile: boolean = false;
@@ -41,20 +41,15 @@ export class DashboardComponent implements OnInit {
       search: ['', [Validators.required]]
     });
 
-    this.documentService.fetchCoverDocument()
-      .subscribe((reply: any) => {
-        this.document = reply;
-        // console.log('document: ', this.document);
-        this.isDataAvailable = true;
-      });
-
-    setTimeout(() => {
-      this.isDataAvailable = true;
-    }, 1000);
-
-    this.mailingListFormGroup = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.pattern(this.utilitySrvc.emailPattern), this.utilitySrvc.emailDomainValidator]]
+    this.documentService.fetchCoverDocument().subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => { this.document = reply; },
+      complete: () => { this.isDataAvailable = true; }
     });
+
+    // this.mailingListFormGroup = this.formBuilder.group({
+    //   email: ['', [Validators.required, Validators.pattern(this.utilitySrvc.emailPattern), this.utilitySrvc.emailDomainValidator]]
+    // });
   }
 
   onSearch(formGroup: FormGroup) {
@@ -72,14 +67,6 @@ export class DashboardComponent implements OnInit {
       },
       complete: () => { }
     });
-  }
-
-  onSubscribe(formGroup: FormGroup) {
-    this.submitted = true;
-    let data: any = {
-      email: formGroup['value']['email']
-    };
-    // console.log(data);
   }
 
   linkMe(url: string) {
