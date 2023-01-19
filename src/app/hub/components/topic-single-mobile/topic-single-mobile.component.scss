@@ -5,38 +5,18 @@
   width: 100%;
 
 
-  .info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-
-
   .dialog-head {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-
-    * {
-      margin: 0;
-    }
-
-    .set-4 {
-      display: flex;
-      justify-content: flex-end;
-    }
+    margin-bottom: 40px;
 
     button {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-
-      mat-icon {
-        font-size: 14pt;
-      }
+      justify-content: center;
+      margin: 0;
     }
+  }
 
     button:last-child {
       margin: 0;
@@ -47,7 +27,15 @@
     margin-top: 30px;
     p{
       margin-top: 10px;
+      text-align: justify;
     }
+  }
+
+  .info {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 
   .icons {
@@ -59,4 +47,3 @@
     }
   }
 
-}

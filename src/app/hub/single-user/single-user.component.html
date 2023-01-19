@@ -5,7 +5,7 @@
 <!--Desk-->
 <div class="set-12 innerhldr" *ngIf="isDataAvailable && !isMobile">
   <div class="set-4 col-lft">
-    <button type="button" (click)="linkMe('/documentos')" ></button>
+    <button type="button" (click)="linkMe('/documentos')"></button>
     <mat-card class="set-12">
       <div class="set-12 cardimg">
         <div class="set-12 empty-img">
@@ -38,7 +38,6 @@
           <mat-icon color="accent">photo_camera</mat-icon>
         </div>
       </button>
-     
 
       <div class="set-12 cardbody">
         <!-- <button type="button" class="roundblue cardmore" (click)="linkMe('/hub/configuracion')"
@@ -59,26 +58,23 @@
               ><strong class="txt-blue">0</strong></small
             >
           </p>
+
           <p class="set-12">
           <button class="set-12" type="button" mat-raised-button color="accent" (click)="linkMe('hub/documentos')" >Mis Documentos</button>
         </p>
+
         </div>
       </div>
+    
     </mat-card>
+
     <mat-card class="set-12">
       <div class="app-map-box"></div>
     </mat-card>
   </div>
 </div>
 
-
 <!--Mobile-->
-<div class="set-12 " *ngIf="isDataAvailable && isMobile">
- 
- 
+<div class="set-12" *ngIf="isDataAvailable && isMobile">
   <tabs-mobile></tabs-mobile>
- 
-
-
-
 </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { UserService } from 'src/app/services/user.service';
 import { DocumentService } from 'src/app/services/document.service';
 import { LayoutService } from 'src/app/services/layout.service';
@@ -44,6 +45,7 @@ export class TabsMobileComponent implements OnInit {
   public userCoverageObj: any[] = [];
   public userCoverageStr: any[] = [];
   public topicCoverage: any = null;
+  public isMobile: boolean = false;
 
 
 
@@ -56,14 +58,15 @@ export class TabsMobileComponent implements OnInit {
     public solutionService: SolutionService,
     public topicService: TopicService,
     public utilityService: UtilityService,
-
+    public deviceDetectorService: DeviceDetectorService,
   ) {
+    this.isMobile = this.deviceDetectorService.isMobile();
     this.userID = this.activatedRoute['snapshot']['params']['userID'];
 
   }
 
   ngOnInit(): void {
-    //console.log(this.userID)
+    this.isDataAvailable = true
  
    
   }

@@ -73,11 +73,11 @@
 <div class="set-12 mobilenav" *ngIf="isDataAvailable && isMobile" [class.menuopen]="isProfile">
   <div class="set-12 topnav">
 
-    <button class="set-1" type="button" (click)="open = !open; isProfile = !isProfile">
-      <mat-icon color="accent" >keyboard_arrow_left</mat-icon>
+    <button class="set-1 txt-left" type="button" (click)="open = !open; isProfile = !isProfile">
+      <mat-icon class="" color="accent" >keyboard_arrow_left</mat-icon>
     </button>
     <button class="set-10" type="button" (click)="linkMe('profile');">
-      Pérfil
+      Perfil
     </button>
     <button type="button" class="set-1" (click)="isProfile = !isProfile">
       <mat-icon color="accent">close</mat-icon>
@@ -87,22 +87,22 @@
 
   <div class="set-12 innernav">
     <div class="set-12 innerbtn">
-      <button class="mt-4" type="button" (click)="linkMe('profile')">
+      <button  type="button" (click)="linkMe('profile')">
         <span>Mi perfil</span>
       </button>
-      <button class="mt-4" type="button" disabled>
+      <button  type="button" (click)="linkMe('associations')">
         <span>Asociaciones</span>
       </button>
-      <button class="mt-4" type="button" disabled>
+      <button  type="button" disabled>
         <span>Documentos</span>
       </button>
-      <button class="mt-4" type="button" disabled>
+      <button  type="button" disabled>
         <span>Dashboard</span>
       </button>
-      <button class="mt-4" type="button" (click)="linkMe('configuracion')">
+      <button  type="button" (click)="linkMe('configuration')">
         <span>Configuracion</span>
       </button>
-      <button class="mt-4" type="button" (click)="onSignOut()">
+      <button  type="button" (click)="onSignOut()">
         <!-- <mat-icon>power_settings_new</mat-icon> --> <span>Salir</span> 
       </button>
     </div>

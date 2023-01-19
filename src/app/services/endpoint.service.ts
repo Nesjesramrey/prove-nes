@@ -158,5 +158,10 @@ export class EndPointService {
   public fetchComplaintByIdEndPoint: string = '/complaint/';
   public killComplaintEndPoint: string = '/complaint/';
 
+  //association
+  public createAssociationEndpoint: string ='/association';
+  public searchAssociationEndpoint: string ='/association?name=';
+ 
+
   constructor() { }
 }
