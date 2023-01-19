@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppMaterialModule } from './app-material.module';
 import { FirstWordPipe } from './pipes/firstword.pipe';
 import { FirstLetterPipe } from './pipes/firstletter.pipe';
+import { PhoneFormatPipe } from './pipes/phonenumber.pipe';
+
 
 @NgModule({
   imports: [
@@ -14,11 +16,13 @@ import { FirstLetterPipe } from './pipes/firstletter.pipe';
   ],
   declarations: [
     FirstWordPipe,
-    FirstLetterPipe
+    FirstLetterPipe,
+    PhoneFormatPipe
   ],
   exports: [
     FirstWordPipe,
-    FirstLetterPipe
+    FirstLetterPipe,
+    PhoneFormatPipe
   ],
   entryComponents: []
 })

@@ -76,13 +76,8 @@ export class CardTopicsMobileComponent implements OnInit {
         //console.log(this.topics);
       },
       complete: () => {
-        this.isDataAvailable = true;
       },
     })
-
-
-
-
   }
 
   openDialog(id: any) {
@@ -109,7 +104,6 @@ export class CardTopicsMobileComponent implements OnInit {
         });
       },
       complete: () => {
-        this.isDataAvailable = true;
       },
     })
   }
@@ -132,7 +126,7 @@ export class CardTopicsMobileComponent implements OnInit {
     return this.allFavorites.filter((item: any) => item['createdBy'] === this.user._id);
   }
 
-  addFavorites() {
+  addFavorites(idTopic:  any) {
     let favorited = this.getUserFavorited();
     if (favorited.length > 0) {
       let data = {
@@ -147,7 +141,7 @@ export class CardTopicsMobileComponent implements OnInit {
       });
     } else {
       let data = {
-        topic: '6399ea5161aaa9ec2660b014',
+        topic: idTopic,
         favorites: true,
       };
 

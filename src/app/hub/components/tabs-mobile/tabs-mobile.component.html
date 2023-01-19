@@ -1,10 +1,14 @@
-<div class="set-12">
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="set-12"  *ngIf="isDataAvailable && isMobile">
   <mat-tab-group animationDuration="0ms">
     <mat-tab label="Temas">
       <search-input-mobile></search-input-mobile>
       <card-topics-mobile></card-topics-mobile>
     </mat-tab>
-    <mat-tab label="Pérfil">
+    <mat-tab label="Mi perfil">
       <spider-chart-mobile></spider-chart-mobile>
       <circle-chart-mobile></circle-chart-mobile>
       <card-solutions-mobile></card-solutions-mobile>

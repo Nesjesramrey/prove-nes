@@ -23,10 +23,10 @@
     </mat-form-field>
 
     <div class=" set-12 ctrls">
+      <button type="button" class="recover" (click)="recoverPassword()">Recuperar contraseña</button>
       <button type="submit" mat-raised-button color="primary" [disabled]="signInFormGroup.invalid || submitted">
         <small>Ingresar</small>
       </button>
-      <!-- <button type="button" class="recover">Recuperar contraseña</button> -->
     </div>
   </form>
 </div>

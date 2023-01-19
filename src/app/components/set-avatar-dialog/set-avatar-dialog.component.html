@@ -41,7 +41,7 @@
   <button ly-button raised bg="accent" (click)="dialogRef.close()" [disabled]="submitted">Cancelar</button>
   <button ly-button raised bg="primary" (click)="uploadAvatarImage()" [disabled]="submitted"
     *ngIf="!isMobile">Guardar</button>
-  <button ly-button raised bg="primary" (click)="sendAvatarImage()" [disabled]="submitted"
+  <button ly-button raised bg="primary" (click)="uploadAvatarImage()" [disabled]="submitted"
     *ngIf="isMobile">Guardar</button>
   <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
 </div>

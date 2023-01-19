@@ -85,6 +85,7 @@ import { FilterCoverageDialogComponent } from './filter-coverage-dialog/filter-c
 import { FloatingSheetComponent } from './floating-sheet/floating-sheet.component';
 import { AddCommentsSheetComponent } from './add-comments-sheet/add-comments-sheet.component';
 import { SingleComplaintComponent } from './single-complaint/single-complaint.component';
+import { RecoverPasswordComponent } from './recover-password/recover-password.component';
 
 @NgModule({
   imports: [
@@ -173,7 +174,8 @@ import { SingleComplaintComponent } from './single-complaint/single-complaint.co
     FilterCoverageDialogComponent,
     FloatingSheetComponent,
     AddCommentsSheetComponent,
-    SingleComplaintComponent
+    SingleComplaintComponent,
+    RecoverPasswordComponent
   ],
   exports: [
     AppPageletComponent,
@@ -239,7 +241,8 @@ import { SingleComplaintComponent } from './single-complaint/single-complaint.co
     FilterCoverageDialogComponent,
     FloatingSheetComponent,
     AddCommentsSheetComponent,
-    SingleComplaintComponent
+    SingleComplaintComponent,
+    RecoverPasswordComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
@@ -279,7 +282,8 @@ import { SingleComplaintComponent } from './single-complaint/single-complaint.co
     FilterCoverageDialogComponent,
     FloatingSheetComponent,
     AddCommentsSheetComponent,
-    SingleComplaintComponent
+    SingleComplaintComponent,
+    RecoverPasswordComponent
   ],
   providers: [],
 })

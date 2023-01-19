@@ -815,8 +815,15 @@ mat-card {
     background: #00031d;
 
     button {
-      font-size: 11pt;
-      color: #54f093;
+      // font-size: 11pt;
+      // color: #54f093;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      mat-icon {
+        font-size: 21pt !important;
+      }
     }
   }
 

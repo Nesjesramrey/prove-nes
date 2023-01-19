@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { DialogData } from '../card-topics-mobile/card-topics-mobile.component';
 import { UserService } from 'src/app/services/user.service';
 import { TopicService } from 'src/app/services/topic.service';
@@ -10,6 +11,7 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ShareSheetComponent } from 'src/app/components/share-sheet/share-sheet.component';
 import { VoteDialogComponent } from 'src/app/components/vote-dialog/vote-dialog.component';
 import { TestimonialListComponent } from 'src/app/components/testimonial-list/testimonial-list.component';
+
 
 @Component({
   selector: 'topic-single-mobile',
@@ -22,11 +24,13 @@ export class TopicSingleMobileComponent implements OnInit {
   public topicID: any = null;
   public DialogData: any = null;
   public isDataAvailable: boolean = false;
-  public isFavorite: boolean = false;
+  public isFavorite: any = null;
+  public test: any = null;
   @Input('allFavorites') public allFavorites: any = null;
   @Input('votes') public votes: any = null;
   @Input('userVoted') public userVoted: any = null;
   @Output() public topicVoted = new EventEmitter<any>();
+  public isMobile: boolean = false;
 
 
   constructor(
@@ -38,8 +42,9 @@ export class TopicSingleMobileComponent implements OnInit {
     public favoritesService: FavoritesService,
     public voteService: VoteService,
     public matBottomSheet: MatBottomSheet,
+    public deviceDetectorService: DeviceDetectorService,
   ) { 
-   
+    this.isMobile = this.deviceDetectorService.isMobile();
   }
 
   ngOnInit(
@@ -61,15 +66,19 @@ export class TopicSingleMobileComponent implements OnInit {
             this.allFavorites = reply['data'];
             this.isFavorite = this.checkFavorites();
             this.loadTopic()
-          },
-          
-          complete: () => { }
+          }, 
+          complete: () => { 
+            setTimeout(() => {
+              this.isDataAvailable = true;
+            }, 500);
+          }
         });
       },
       complete: () => {
-        this.isDataAvailable = true;
       },
     })
+
+
 
   }
 
@@ -104,9 +113,19 @@ export class TopicSingleMobileComponent implements OnInit {
       next: (reply: any) => {
         this.userVoted = this.checkUserVote(reply);
         //console.log(this.userVoted);
+        this.voteService.fetchVotesByTopicID({ _id: this.data.topicID }).subscribe({
+          error: (error) => {
+            switch (error['status']) { }
+          },
+          next: (reply: any) => {
+            this.votes = reply.length;
+            //console.log(this.userVoted);
+          },
+          complete: () => {
+          },
+        });
       },
       complete: () => {
-        this.isDataAvailable = true;
       },
     });
 
@@ -206,5 +225,7 @@ export class TopicSingleMobileComponent implements OnInit {
       if (reply != undefined) { }
     });
   }
+
+
 }
 
