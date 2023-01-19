@@ -54,6 +54,9 @@ export class AssociationRegisterComponent implements OnInit {
   public showText: boolean = false;
   public isLinear: boolean = true;
   @Output () public checked: boolean = true
+  public isAssociationAvailable: boolean = false;
+  public isNotAssociationAvailable: boolean = false;
+  public dataAssociation: any = []
 
   constructor(
     public authenticationSrvc: AuthenticationService,
@@ -242,7 +245,17 @@ export class AssociationRegisterComponent implements OnInit {
         
       },
       next: (reply: any) => {
-        console.log(reply)
+        console.log(reply.length)
+        if (reply.length == 0){
+          this.isNotAssociationAvailable = true
+          this.isAssociationAvailable = false
+        }
+        else{
+          this.dataAssociation = reply
+          this.isNotAssociationAvailable = false
+          this.isAssociationAvailable = true
+          console.log(this.dataAssociation[0].name)
+        }
       },
       complete: () => { 
               },

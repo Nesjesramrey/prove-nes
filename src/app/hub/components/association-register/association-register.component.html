@@ -30,7 +30,8 @@
           <mat-label>Buscar tu asociación</mat-label>
           <input matInput formControlName="search" />
         </mat-form-field>
-        <mat-hint><small>Si no la encuentras dar click en siguiente para registrarla</small></mat-hint>
+        <p *ngIf="isNotAssociationAvailable">No encontramos tu asociación da click en siguiente para registrarla</p>
+        <p *ngIf="isAssociationAvailable">Puedes vincularte a <strong>{{dataAssociation[0].name}}</strong></p>
       </form>
     </div>
     <div class="set-12 ctrls">
@@ -152,7 +153,7 @@
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Cobertura</mat-label>
-        <mat-select formControlName="associationState" multiple (selectionChange)="onSelectCoverage($event)" #coverageSelect>
+        <mat-select formControlName="associationState" (selectionChange)="onSelectCoverage($event)" #stateSelect>
           <!-- <mat-option value="all">
             <small>Nacional</small>
           </mat-option> -->
