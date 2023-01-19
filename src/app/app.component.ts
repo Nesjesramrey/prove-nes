@@ -53,7 +53,6 @@ export class AppComponent implements OnInit {
   public open: boolean = false;
   public isProfile: boolean = false;
   public openProfileMenu = new EventEmitter<any>();
-  
 
   constructor(
     readonly sRenderer: StyleRenderer,
@@ -151,17 +150,22 @@ export class AppComponent implements OnInit {
         this.router.navigateByUrl('/');
         break;
 
-        case 'quienesSomos':
+      case 'quienesSomos':
         this.open = !this.open;
         this.router.navigateByUrl('/#quienesSomos');
         break;
 
-        case 'profile':
-          this.isProfile = !this.isProfile;
-          this.router.navigateByUrl('/hub/' + this.user['_id']);
-          break;
+      case 'profile':
+        this.isProfile = !this.isProfile;
+        this.router.navigateByUrl('/hub/' + this.user['_id']);
+        break;
 
-      case 'configuracion':
+      case 'associations':
+        this.isProfile = !this.isProfile;
+        this.router.navigateByUrl('/hub/asociaciones');
+        break;
+
+      case 'configuration':
         this.isProfile = !this.isProfile;
         this.router.navigateByUrl('/hub/configuracion');
         break;
@@ -172,7 +176,7 @@ export class AppComponent implements OnInit {
     this.open = !this.open;
     setTimeout(() => {
       return this.angularFireAuth.signOut().then(() => {
-        this.router.navigateByUrl('/')
+        this.router.navigateByUrl('/');
       });
     }, 100);
   }

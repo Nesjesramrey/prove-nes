@@ -12,7 +12,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { SingleUserComponent } from './single-user/single-user.component';
 import { UserNotificationsComponent } from './user-notifications/user-notifications.component';
 import { UserDocumentsComponent } from './user-documents/user-documents.component';
-import { ProfileMobileComponent } from './profile-mobile/profile-mobile.component';
+import { AssociationsComponent } from './associations/associations.component';
 
 const routes: Routes = [
   {
@@ -63,6 +63,11 @@ const routes: Routes = [
       {
         path: 'configuracion',
         component: AppConfigurationComponent,
+        canActivate: [CanActivateLoggedInGuard],
+      },
+      {
+        path: 'asociaciones',
+        component: AssociationsComponent,
         canActivate: [CanActivateLoggedInGuard],
       },
       { path: ':userID', component: SingleUserComponent, canActivate: [] },

@@ -44,11 +44,10 @@ export class UserService {
       data
     );
   }
+
   passwordRecovery(data: any) {
     return this.httpClient.post(
-      this.endpointSrvc.apiEndPoint +
-      this.endpointSrvc.passwordRecoveryEndPoint,
-      data
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.passwordRecoveryEndPoint, data
     );
   }
 
@@ -89,7 +88,8 @@ export class UserService {
     return this.httpClient.put(this.endpointSrvc.apiEndPoint + this.endpointSrvc.saveLayoutsCategoryPreferenceEndPoint + `${data['user_id']}` + '/layout_category_preference', data);
   }
 
-  addAssociation(data: any) {
+ updateProfile(data: any) {
     return this.httpClient.put(this.endpointSrvc.apiEndPoint + this.endpointSrvc.addAssociationEndPoint + `${data['user_id']}`, data);
   }
+
 }

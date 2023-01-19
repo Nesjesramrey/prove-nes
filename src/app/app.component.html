@@ -12,13 +12,13 @@
 <div class="set-12 mobilenav" *ngIf="isDataAvailable && isMobile" [class.menuopen]="open">
   <div class="set-12 topnav">
     <div class="set-6">
-      <button type="button" mat-mini-fab color="accent" (click)="utilityService.linkMe('/'); open = !open">
-        <mat-icon>home</mat-icon>
+      <button type="button" (click)="utilityService.linkMe('/'); open = !open">
+        <mat-icon color="accent">home</mat-icon>
       </button>
     </div>
     <div class="set-6 txt-right">
-      <button type="button" mat-mini-fab (click)="open = !open">
-        <mat-icon>cancel</mat-icon>
+      <button type="button" (click)="open = !open">
+        <mat-icon color="accent">cancel</mat-icon>
       </button>
     </div>
   </div>
@@ -78,33 +78,33 @@
 <div class="set-12 mobilenav" *ngIf="isDataAvailable && isMobile" [class.menuopen]="isProfile">
   <div class="set-12 topnav">
     <div class="set-1">
-      <button type="button" mat-mini-fab color="accent" (click)="open = !open; isProfile = !isProfile">
-        <mat-icon>keyboard_arrow_left</mat-icon>
+      <button type="button" (click)="open = !open; isProfile = !isProfile">
+        <mat-icon color="accent">keyboard_arrow_left</mat-icon>
       </button>
     </div>
     <div class="set-10">&nbsp;</div>
     <div class="set-1">
-      <button type="button" mat-mini-fab color="accent" (click)="isProfile = !isProfile">
-        <mat-icon>cancel</mat-icon>
+      <button type="button" (click)="isProfile = !isProfile">
+        <mat-icon color="accent">cancel</mat-icon>
       </button>
     </div>
   </div>
 
   <div class="set-12 innernav">
     <div class="set-12 innerbtn">
-      <button class="mt-4" type="button" (click)="linkMe('profile')">
+      <button  type="button" (click)="linkMe('profile')">
         <span>Mi perfil</span>
       </button>
-      <button class="mt-4" type="button" disabled>
+      <button  type="button" (click)="linkMe('associations')">
         <span>Asociaciones</span>
       </button>
-      <button class="mt-4" type="button" disabled>
+      <button  type="button" disabled>
         <span>Documentos</span>
       </button>
-      <button class="mt-4" type="button" disabled>
+      <button  type="button" disabled>
         <span>Dashboard</span>
       </button>
-      <button class="mt-4" type="button" (click)="linkMe('configuracion')">
+      <button  type="button" (click)="linkMe('configuration')">
         <span>Configuracion</span>
       </button>
       <button class="mt-4" type="button" (click)="onSignOut()">
