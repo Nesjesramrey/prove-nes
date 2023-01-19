@@ -57,10 +57,12 @@ export class PublicDocumentMobileSolutionViewComponent implements OnInit {
     let topic = subcategory[0]['topics'].filter((x: any) => { return x['_id'] == this.topicID; });
     this.topic = topic[0];
 
-    let favorite = this.allFavorites.filter((item: any) => item['createdBy'] == this.user['_id']);
-    if (favorite.length != 0) {
-      this.isFavorite = true;
-    } else { this.isFavorite = false; }
+    setTimeout(() => {
+      let favorite = this.allFavorites.filter((item: any) => item['createdBy'] == this.user['_id']);
+      if (favorite.length != 0) {
+        this.isFavorite = true;
+      } else { this.isFavorite = false; }
+    }, 100);
   }
 
   openTestimoniesDialog() {
@@ -90,29 +92,21 @@ export class PublicDocumentMobileSolutionViewComponent implements OnInit {
 
   addFavorites() {
     let favorited = this.getUserFavorited();
-
     if (favorited.length > 0) {
-      let data = {
+      let data: any = {
         _id: favorited[0]._id,
         favorites: true,
       };
-
       this.favoritesService.updateFavorites(data).subscribe((reply: any) => {
-        if (reply.message == 'favorite update success') {
-          this.isFavorite = true;
-        }
+        if (reply.message == 'favorite update success') { this.isFavorite = true; }
       });
     } else {
       let data = {
         solution: this.solutionID,
         favorites: true,
       };
-
       this.favoritesService.addFavorites(data).subscribe((reply: any) => {
-        console.log(reply);
-        if (reply.message == 'favorites add success') {
-          this.isFavorite = true;
-        }
+        if (reply.message == 'favorites add success') { this.isFavorite = true; }
       });
     }
   }
