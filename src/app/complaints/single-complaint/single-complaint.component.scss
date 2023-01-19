@@ -1,0 +1,23 @@
+:host {
+  width: 100%;
+  float: left;
+  margin-top: 80px;
+  padding: 40px;
+
+  .loading {
+    mat-spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .col-lft {
+    padding-right: 40px;
+  }
+
+  .col-rgt {
+    padding-left: 0 !important;
+  }
+}

@@ -17,6 +17,7 @@ export class SliderImagesComponent implements OnInit {
   @Input() layout: any = null;
   @Input() topic: any = null;
   @Input() solution: any = null;
+  @Input() complaint: any = null;
   @ViewChild('contentScroll') public contentScroll!: ElementRef<HTMLDivElement>;
 
   constructor(

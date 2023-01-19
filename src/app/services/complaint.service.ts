@@ -25,7 +25,7 @@ export class ComplaintService {
 
   fetchComplaintById(data: any) {
     return this.httpClient.get(
-      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchComplaintByIdEndPoint, data
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchComplaintByIdEndPoint + `/${data['complaintID']}`, {}
     );
   }
 

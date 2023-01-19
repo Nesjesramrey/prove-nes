@@ -1,13 +1,6 @@
 <div class="set-12 list-head">
   <div class="set-8">
-    <input type="text" placeholder="Búscar tópicos..." (input)="applyFilter($event)">
-    <!-- <mat-form-field appearance="outline">
-      <mat-label>Búscar tópicos...</mat-label>
-      <input matInput type="text" (keyup)="applyFilter($event)">
-      <button matSuffix mat-icon-button>
-        <mat-icon>search</mat-icon>
-      </button>
-    </mat-form-field> -->
+    <input type="text" placeholder="Búscar temas..." (input)="applyFilter($event)">
   </div>
   <div class="set-4 txt-right">
     <button type="button" mat-mini-fab color="warn" (click)="filterTopicCoverage()">
@@ -19,13 +12,19 @@
   </div>
 </div>
 
-<div class="set-12" *ngIf="topics.length == 0">
+<div class="set-12" *ngIf="topics.length == 0 && isCollaborator">
   <div class="empty-list">
-    <p><small>No se encontraron tópicos.</small></p>
-    <p><small>Sé el primero en agregar un tópico.</small></p>
+    <p><small>No se encontraron temáticas.</small></p>
+    <p><small>Sé el primero en agregar una temática.</small></p>
     <button type="button" mat-raised-button color="accent" (click)="popAddDocumentTopic()">
-      <small>Agregar tópico</small>
+      <small>Agregar tema</small>
     </button>
+  </div>
+</div>
+
+<div class="set-12" *ngIf="topics.length == 0 && !isCollaborator">
+  <div class="empty-list">
+    <p><small>No se encontraron temáticas.</small></p>
   </div>
 </div>
 
