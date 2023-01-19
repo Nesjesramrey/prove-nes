@@ -84,7 +84,7 @@ import { ComplaintDialogComponent } from './complaint-dialog/complaint-dialog.co
 import { FilterCoverageDialogComponent } from './filter-coverage-dialog/filter-coverage-dialog.component';
 import { FloatingSheetComponent } from './floating-sheet/floating-sheet.component';
 import { AddCommentsSheetComponent } from './add-comments-sheet/add-comments-sheet.component';
-import { SingleComplaintComponent } from './single-complaint/single-complaint.component';
+import { SingleComplaintDialogComponent } from './single-complaint-dialog/single-complaint-dialog.component';
 import { RecoverPasswordComponent } from './recover-password/recover-password.component';
 
 @NgModule({
@@ -174,7 +174,7 @@ import { RecoverPasswordComponent } from './recover-password/recover-password.co
     FilterCoverageDialogComponent,
     FloatingSheetComponent,
     AddCommentsSheetComponent,
-    SingleComplaintComponent,
+    SingleComplaintDialogComponent,
     RecoverPasswordComponent
   ],
   exports: [
@@ -241,7 +241,7 @@ import { RecoverPasswordComponent } from './recover-password/recover-password.co
     FilterCoverageDialogComponent,
     FloatingSheetComponent,
     AddCommentsSheetComponent,
-    SingleComplaintComponent,
+    SingleComplaintDialogComponent,
     RecoverPasswordComponent
   ],
   entryComponents: [
@@ -282,7 +282,7 @@ import { RecoverPasswordComponent } from './recover-password/recover-password.co
     FilterCoverageDialogComponent,
     FloatingSheetComponent,
     AddCommentsSheetComponent,
-    SingleComplaintComponent,
+    SingleComplaintDialogComponent,
     RecoverPasswordComponent
   ],
   providers: [],

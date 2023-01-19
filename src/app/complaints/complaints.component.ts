@@ -3,7 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { forkJoin, Observable } from 'rxjs';
-import { SingleComplaintComponent } from '../components/single-complaint/single-complaint.component';
+import { SingleComplaintDialogComponent } from '../components/single-complaint-dialog/single-complaint-dialog.component';
+import { WindowAlertComponent } from '../components/window-alert/window-alert.component';
 import { ComplaintService } from '../services/complaint.service';
 import { UtilityService } from '../services/utility.service';
 
@@ -29,7 +30,7 @@ export class ComplaintsComponent implements OnInit {
     forkJoin([complaints]).subscribe((reply: any) => {
       // console.log(reply);
       this.complaints = reply[0];
-      console.log(this.complaints);
+      // console.log(this.complaints);
       this.dataSource = new MatTableDataSource(this.complaints);
       this.dataSource.paginator = this.paginator;
     });
@@ -41,8 +42,8 @@ export class ComplaintsComponent implements OnInit {
   }
 
   attendComplaint(complaint: any) {
-    const dialogRef = this.dialog.open<SingleComplaintComponent>(
-      SingleComplaintComponent, {
+    const dialogRef = this.dialog.open<SingleComplaintDialogComponent>(
+      SingleComplaintDialogComponent, {
       // width: '640px',
       data: {
         complaint: complaint
@@ -57,16 +58,29 @@ export class ComplaintsComponent implements OnInit {
   }
 
   killCompalint(complaint_id: string) {
-    let data: any = { complaint_id: complaint_id };
-    this.complaintService.killComplaint(data).subscribe({
-      error: (error: any) => { this.utilityService.openErrorSnackBar(this.utilityService['errorOops']); },
-      next: (reply: any) => {
+    let complaint: any = this.complaints.filter((x: any) => { return x['_id'] == complaint_id; });
+
+    const dialogRef = this.dialog.open<WindowAlertComponent>(
+      WindowAlertComponent, {
+      width: '420px',
+      data: {
+        windowType: 'complaint',
+        complaint: complaint[0]
+      },
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
         this.complaints = this.complaints.filter((x: any) => { return x['_id'] != complaint_id; });
         this.dataSource = new MatTableDataSource(this.complaints);
         this.dataSource.paginator = this.paginator;
-        this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
-      },
-      complete: () => { }
+      }
     });
+  }
+
+  popSingleComplaint(complaint_id: string) {
+    console.log(complaint_id);
+    window.open('/denuncias/' + complaint_id);
   }
 }

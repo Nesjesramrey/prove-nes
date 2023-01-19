@@ -38,7 +38,12 @@
         <mat-menu #menu="matMenu">
           <button mat-menu-item type="button" (click)="attendComplaint(element)">
             <mat-icon>headset_mic</mat-icon>
-            <small>Atender</small>
+            <small>Abrir aquí</small>
+          </button>
+
+          <button mat-menu-item type="button" (click)="popSingleComplaint(element._id)">
+            <mat-icon>launch</mat-icon>
+            <small>Abrir en ventana</small>
           </button>
 
           <button mat-menu-item type="button" (click)="killCompalint(element._id)">
