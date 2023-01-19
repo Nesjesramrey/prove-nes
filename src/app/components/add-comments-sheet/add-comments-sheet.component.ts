@@ -39,7 +39,6 @@ export class AddCommentsSheetComponent implements OnInit {
   ) {
     // console.log(this.sheetData);
     this.document = this.sheetData['document'];
-    this.coverage = this.document['coverage'];
     this.documentLocation = this.sheetData['location'];
   }
 
@@ -62,16 +61,19 @@ export class AddCommentsSheetComponent implements OnInit {
     switch (this.sheetData['location']) {
       case 'document':
         this.locationID = this.sheetData['document']['_id'];
+        this.coverage = this.document['coverage'];
         break;
 
       case 'layout':
         this.documentID = this.document['_id'];
+        this.coverage = this.document['coverage'];
         this.layout = this.sheetData['layout'];
         this.locationID = this.sheetData['layout']['_id'];
         break;
 
       case 'subLayout':
         this.documentID = this.document['_id'];
+        this.coverage = this.document['coverage'];
         this.layout = this.sheetData['layout'];
         this.locationID = this.sheetData['layout']['_id'];
         break;
@@ -79,12 +81,14 @@ export class AddCommentsSheetComponent implements OnInit {
       case 'topic':
         this.documentID = this.document['_id'];
         this.topic = this.sheetData['topic'];
+        this.coverage = this.topic['coverage'];
         this.locationID = this.sheetData['topic']['_id'];
         break;
 
       case 'solution':
         this.documentID = this.document['_id'];
         this.solution = this.sheetData['solution'];
+        this.coverage = this.solution['coverage'];
         this.locationID = this.sheetData['solution']['_id'];
         break;
     };

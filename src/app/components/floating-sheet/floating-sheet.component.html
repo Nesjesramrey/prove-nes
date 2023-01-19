@@ -22,6 +22,13 @@
   </div>
 
   <div class="set-12 btnhldr">
+    <button type="button" mat-raised-button color="warn" *ngIf="!isCollaborator" disabled>
+      <mat-icon>mail</mat-icon>
+      <small>Mensaje a Editor</small>
+    </button>
+  </div>
+
+  <div class="set-12 btnhldr">
     <button type="button" mat-raised-button color="warn" (click)="popInviteDialog()">
       <mat-icon>send</mat-icon>
       <small>Invitar</small>
