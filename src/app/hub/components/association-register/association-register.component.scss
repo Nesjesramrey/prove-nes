@@ -8,39 +8,39 @@
       width: 100% !important;
       padding: 0px;
       margin: 0 !important;
-  
-  
+
       .listhldr {
         .listitem {
-          
-          .set-12
-           {
+          .set-12 {
             width: 100%;
           }
-  
+
           .set-12 {
             margin-bottom: 10px;
           }
-          .joinButton{
+          .joinButton {
             display: flex;
             justify-content: center;
           }
         }
       }
     }
-    .dialog-head{
+    .dialog-head {
       margin-bottom: 20px;
     }
     ::ng-deep .mat-horizontal-stepper-header-container {
       display: none !important;
     }
-    
-    .search-hldr{
-      .joinButton{
+
+    .search-hldr {
+      .joinButton {
         display: flex;
         justify-content: flex-end;
-        margin-top: 10px;
-        
+        margin-top: 20px;
+        margin-bottom: 20px;
+        button {
+          width: 85px;
+        }
       }
     }
 
@@ -49,66 +49,78 @@
       background: none !important;
     }
 
-    .addressNum{
-      display: inline-flex;
-    }
     ::ng-deep .mat-form-field-infix{
-      float:left;
-      width: 130px;
+      width: 50%;
     }
- 
+    .addressNum {
+      display: flex;
+      justify-content: space-between;
+     mat-form-field{
+      width: 49%;
+   
+     }
+     
+     
+    }
+    // ::ng-deep .mat-form-field-infix {
+    //   width: 130px;
+    // }
 
     #textarea-description::-webkit-scrollbar {
       display: none;
     }
 
-    .bwico{
+    .bwico {
       margin-bottom: 10px;
+    }
+
+    .mat-hint {
+      font-size: 13px;
     }
 
     .ctrls {
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      margin-top: 20px;
-  
+
       * {
         margin: 0;
       }
-  
-      button:not(:first-child) {
+      button {
+        margin-top: 10px;
         margin-left: 10px;
       }
-  
+
       mat-spinner {
         margin-left: 20px;
       }
     }
     .legals {
       margin-top: 20px;
-  
+
       p {
         margin-bottom: 10px;
       }
-  
+
       .row {
         display: flex;
         margin-bottom: 4px;
-  
+
         * {
           margin: 0;
         }
-  
+
         a {
           margin-left: 5px !important;
         }
       }
     }
-  
+
     .activation-legend {
       margin-top: 10px;
     }
   }
+  
   .listhldr {
     margin-top: 10px;
 

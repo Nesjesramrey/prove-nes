@@ -41,15 +41,15 @@
             </mat-hint>
           </mat-form-field>
           <div class="set-12 joinButton">
-          <button
-            type="button"
-            mat-raised-button
-            color="warn"
-            (click)="(onSearch(searchFormGroup))"
-          >
-            <small>Buscar</small>
-          </button>
-        </div>
+            <button
+              type="button"
+              mat-raised-button
+              color="warn"
+              (click)="onSearch(searchFormGroup)"
+            >
+              <small>Buscar</small>
+            </button>
+          </div>
 
           <div
             class="innerhldr"
@@ -87,7 +87,12 @@
                     ></small>
                   </p>
                   <div class="set-12 joinButton">
-                    <button type="button" mat-raised-button color="primary" (click)="joinAssociation(association._id)">
+                    <button
+                      type="button"
+                      mat-raised-button
+                      color="primary"
+                      (click)="joinAssociation(association._id)"
+                    >
                       <small>Unirme</small>
                     </button>
                   </div>
@@ -97,18 +102,15 @@
           </div>
         </form>
       </div>
+      <mat-hint *ngIf="isNotAssociationAvailable"
+        >**Presiona <strong>Registar</strong> si no encontraste tu asociación
+      </mat-hint>
       <div class="set-12 ctrls" *ngIf="isNotAssociationAvailable">
         <button mat-raised-button color="warn" matStepperNext>
-          <small>Siguiente</small>
+          <small>Registrar</small>
         </button>
         <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
       </div>
-      <mat-hint *ngIf="isNotAssociationAvailable"
-        ><small
-          >** Presiona <strong>Siguiente</strong> si no encontraste tu
-          asociación
-        </small>
-      </mat-hint>
     </mat-step>
     <!-- Step 2 Data Association-->
     <mat-step>
@@ -133,10 +135,10 @@
           <mat-label><small>Tipo de asociación</small></mat-label>
           <mat-select matInput formControlName="associationTypology">
             <mat-option
-              *ngFor="let association of asociations"
-              [value]="association.value"
+              *ngFor="let association of associationTypology"
+              [value]="association._id"
             >
-              <small>{{ association.viewValue }}</small>
+              <small>{{ association.name }}</small>
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -198,11 +200,11 @@
           <input matInput formControlName="associationStreet" />
         </mat-form-field>
         <div class="set-12 addressNum">
-          <mat-form-field class="set-5" appearance="outline">
+          <mat-form-field appearance="outline">
             <mat-label>No. Ext.</mat-label>
             <input matInput formControlName="associationNumExt" />
           </mat-form-field>
-          <mat-form-field class="set-5" appearance="outline">
+          <mat-form-field appearance="outline">
             <mat-label>No. Int.</mat-label>
             <input matInput formControlName="associationNumInt" />
           </mat-form-field>
@@ -224,6 +226,7 @@
           <mat-select
             formControlName="associationState"
             (selectionChange)="onSelectCoverage($event)"
+            multiple
             #stateSelect
           >
             <!-- <mat-option value="all">
@@ -234,7 +237,10 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <div class="addfile">
+        <div class="set-12 addfile">
+          <p class="set-10">
+            <small>** Adjuntar <strong>Acta Constitutiva, </strong> </small>
+          </p>
           <button
             type="button"
             mat-raised-button
@@ -243,17 +249,21 @@
             (click)="file.click()"
             matTooltip="Adjuntar archivo"
             matTooltipClass="tooltip"
-            class="bwico"
+            class="set-1 bwico"
           >
-            <mat-icon>attach_file</mat-icon>
+            <mat-icon><small>attach_file</small></mat-icon>
           </button>
-          <input type="file" #file (change)="onFileSelected($event)" />
-          <br />
-          <mat-hint
-            ><small>** Adjuntar <strong>Acta Constitutiva, </strong> </small>
-          </mat-hint>
+          <input
+            class="set-1"
+            type="file"
+            #file
+            (change)="onFileSelected($event)"
+          />
         </div>
-        <div class="addfile">
+        <div class="set-12 addfile">
+          <p class="set-10">
+            <small>** Adjuntar <strong>Identificacion Oficial </strong> </small>
+          </p>
           <button
             type="button"
             mat-raised-button
@@ -262,20 +272,21 @@
             (click)="file.click()"
             matTooltip="Adjuntar archivo"
             matTooltipClass="tooltip"
-            class="bwico"
+            class="set-1 bwico"
           >
-            <mat-icon>attach_file</mat-icon>
+            <mat-icon><small>attach_file</small></mat-icon>
           </button>
-          <input type="file" #file (change)="onFileSelected($event)" />
-          <br />
-          <mat-hint
-            ><small
-              >** Adjuntar
-              <strong>Poder Notarial</strong>
-            </small>
-          </mat-hint>
+          <input
+            class="set-1"
+            type="file"
+            #file
+            (change)="onFileSelected($event)"
+          />
         </div>
-        <div class="addfile">
+        <div class="set-12 addfile">
+          <p class="set-10">
+            <small>** Adjuntar <strong>Poder notarial </strong> </small>
+          </p>
           <button
             type="button"
             mat-raised-button
@@ -284,17 +295,16 @@
             (click)="file.click()"
             matTooltip="Adjuntar archivo"
             matTooltipClass="tooltip"
-            class="bwico"
+            class="set-1 bwico"
           >
-            <mat-icon>attach_file</mat-icon>
+            <mat-icon><small>attach_file</small></mat-icon>
           </button>
-          <input type="file" #file (change)="onFileSelected($event)" />
-          <br />
-          <mat-hint
-            ><small
-              >** Adjuntar ><strong> e Identificación Oficial</strong>
-            </small>
-          </mat-hint>
+          <input
+            class="set-1"
+            type="file"
+            #file
+            (change)="onFileSelected($event)"
+          />
         </div>
       </form>
       <div class="set-12 ctrls">
@@ -354,9 +364,10 @@
             </button>
           </mat-chip-list>
           <mat-hint
-            >** Presiona <strong>ENTER</strong> después de escribir algo que te
-            ga feliz, ej:
-            <strong>" Playas"</strong>
+            ><small
+              >** Presiona <strong>ENTER</strong> después de escribir algo que
+              te ga feliz, ej: <strong>" Playas"</strong></small
+            >
           </mat-hint>
         </mat-form-field>
       </form>
@@ -413,9 +424,11 @@
             </button>
           </mat-chip-list>
           <mat-hint
-            >** Presiona <strong>ENTER</strong> después de escribir algo que te
-            entriztesca, ej:
-            <strong>" Delincuencia"</strong>
+            ><small
+              >** Presiona <strong>ENTER</strong> después de escribir algo que
+              te entriztesca, ej:
+              <strong>" Delincuencia"</strong>
+            </small>
           </mat-hint>
         </mat-form-field>
         <div class="set-12 legals">

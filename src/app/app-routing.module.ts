@@ -23,6 +23,10 @@ const routes: Routes = [
       import('./public-documents/public-documents.component.module').then(module => module.PublicDocumentsModule)
   },
   {
+    path: 'asociaciones', loadChildren: () =>
+      import('./associations/associations.component.module').then(module => module.AssociationsComponentModule)
+  },
+  {
     path: 'legales', loadChildren: () =>
       import('./legal/legal.component.module').then(module => module.LegalComponentModule)
   },

@@ -59,7 +59,7 @@ export class AppConfigurationComponent implements OnInit {
 
   ngOnInit(): void {
 
-
+    
 
     this.userService.fetchFireUser().subscribe({
       error: (error) => {
@@ -69,7 +69,11 @@ export class AppConfigurationComponent implements OnInit {
       next: (reply: any) => {
         this.user = reply;
         //console.log(this.user);
+        this.happyArray = JSON.parse(this.user.associationInterests)
+        this.unhappyArray = JSON.parse(this.user.uninterestingTopics)
+        //console.log(this.user.uninterestingTopics)
 
+       
         this.formGroup = this.formBuilder.group({
           firstname: [this.user['firstname'], [Validators.required]],
           lastname: [this.user['lastname'], [Validators.required]],
@@ -78,7 +82,6 @@ export class AppConfigurationComponent implements OnInit {
           phone: [this.user['phone'], []],
           associationInterests: ['', []],
           uninterestingTopics: ['', []],
-          
         });
       },
       complete: () => {
@@ -122,7 +125,7 @@ export class AppConfigurationComponent implements OnInit {
         }
       },
       next: (reply: any) => {
-        console.log(data);
+        //console.log(data);
       },
       complete: () => {
         window.location.reload();

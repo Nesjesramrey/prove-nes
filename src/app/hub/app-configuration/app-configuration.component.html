@@ -88,7 +88,7 @@
             </button>
           </mat-chip>
           <input
-            formControlName="associationInterests"
+           
             placeholder=""
             [matChipInputFor]="happyChipList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
@@ -134,10 +134,10 @@
     </div>
 
     <mat-checkbox (change)="openDialogAssociationRegister()"  *ngIf="!checked"
-      ><small>¿Perteneces a una asociación?</small></mat-checkbox
+      ><mat-hint><small>¿Perteneces a una asociación?</small></mat-hint></mat-checkbox
     >
     <mat-checkbox (change)="openDialogAssociationRegister()"  *ngIf="checked"
-    >¿Perteneces a una asociación?</mat-checkbox
+    ><mat-hint><small>¿Perteneces a una asociación?</small></mat-hint></mat-checkbox
   >
 
     <div class="ctrls">

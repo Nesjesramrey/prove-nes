@@ -1,0 +1,65 @@
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+    <mat-spinner></mat-spinner>
+  </div>
+  
+  <!--Desk-->
+  <div class="set-12 innerhldr" *ngIf="isDataAvailable && !isMobile"></div>
+  
+  <!--Mobile-->
+  <div class="set-12" *ngIf="isDataAvailable && isMobile">
+    <div class="set-12 col-lft">
+      <button type="button"></button>
+      <mat-card class="set-12">
+        <div class="set-12 cardimg">
+          <div class="set-12 empty-img">
+            <mat-icon>panorama</mat-icon>
+          </div>
+        </div>
+  
+        <input #fileInput type="file" accept="image/*" hidden />
+        <button type="button" class="avatar">
+          <img
+            src="{{ user.avatarImage }}"
+            alt="{{ user.firstname }} {{ user.lastname }}"
+            *ngIf="user.avatarImage != null"
+          />
+          <span *ngIf="user.avatarImage == null">
+            {{ user.firstname | firstword | firstletter
+            }}{{ user.lastname | firstword | firstletter }}
+          </span>
+          <div
+            class="overlay"
+            matTooltip="Cargar imágen"
+            matTooltipClass="tool tip"
+          >
+            <mat-icon color="accent">photo_camera</mat-icon>
+          </div>
+        </button>
+  
+        <div class="set-12 cardbody">
+          <h3 class="txt-center">{{ user.firstname }} {{ user.lastname }}</h3>
+          <div class="set-12 usrinfo">
+            <p class="set-12">
+              <small class="set-6"><strong>Semblanza</strong></small>
+            </p>
+            <p class="set-12">
+              <small class="set-12">
+                {{ semblanza | slice : 0 : 300 }}
+                <small *ngIf="semblanza.length > 500"
+                  ><strong>... ver mas</strong></small
+                ></small
+              >
+            </p>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+    <div class="set-12 publications">
+    <mat-card>  
+        <button mat-raised-button color="accent" (click)="openBottomSheet()">
+          <small>¿Qué quieres publicar?</small>
+        </button>
+    </mat-card>
+  </div>
+  </div>
+  

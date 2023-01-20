@@ -162,7 +162,7 @@ export class AppComponent implements OnInit {
 
       case 'associations':
         this.isProfile = !this.isProfile;
-        this.router.navigateByUrl('/hub/asociaciones');
+        this.router.navigateByUrl('/asociaciones');
         break;
 
       case 'configuration':

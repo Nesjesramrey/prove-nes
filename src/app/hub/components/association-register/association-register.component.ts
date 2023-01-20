@@ -35,16 +35,7 @@ export class AssociationRegisterComponent implements OnInit {
   @ViewChild('stepper') public stepper!: MatStepper;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   public addOnBlur = true;
-
-
-
-  asociations: Asociation[] = [
-    { value: '6399e5c7c878ad9b63dde6a2', viewValue: 'Ciudadanía' },
-    { value: '6399e5c7c878ad9b63dde6a5', viewValue: 'Activista' },
-    { value: '6399e5c7c878ad9b63dde6a4', viewValue: 'OSC' },
-    { value: '6399e5c7c878ad9b63dde6a6', viewValue: 'Estudiante' },
-  ];
-
+  public associationTypology: any = null;
   public accessToken: any = null;
   public user: any = null;
   public states: any = [];
@@ -75,6 +66,15 @@ export class AssociationRegisterComponent implements OnInit {
 
   ngOnInit(): void {
     let states: Observable<any> = this.utilityService.fetchAllStates();
+
+    this.utilityService.fetchAssociationTypology().subscribe({
+      error: (error: any) => {
+      },
+      next: (reply: any) => {
+        this.associationTypology = reply;
+      },
+      complete: () => { }
+    });
 
     forkJoin([states,]).subscribe((reply: any) => {
       // console.log(reply);
@@ -164,9 +164,9 @@ export class AssociationRegisterComponent implements OnInit {
     data['formData'].append('interestTopics',  JSON.stringify(this.happyArray) || null),
     data['formData'].append('uninterestTopics', JSON.stringify(this.unhappyArray) || null),      
     console.log(data)
-    for (let [key, value] of data['formData']) {
-      console.log(`${key}: ${value}`)
-    }
+    // for (let [key, value] of data['formData']) {
+    //   console.log(`${key}: ${value}`)
+    // }
     this.associationService.createAssociation(data['formData']).subscribe({
       
       error: (error) => {
@@ -229,6 +229,8 @@ export class AssociationRegisterComponent implements OnInit {
   clearSearchForm() {
     //this.formGroup.reset();
     this.searchFormGroup.reset();
+    this.isAssociationAvailable = false;
+    this.isNotAssociationAvailable = false;
   }
 
   clearInputUnhappy(){
@@ -245,13 +247,13 @@ export class AssociationRegisterComponent implements OnInit {
     let data: any = {
       filter: formGroup['value']['search'],  
     };
-    console.log(data['filter']),
+    //console.log(data['filter']),
     this.associationService.searchAssociation(data['filter']).subscribe({
       error: (error: any) => {
         
       },
       next: (reply: any) => {
-        console.log(reply.length)
+        //console.log(reply.length)
         if (reply.length == 0){
           this.isAssociationAvailable = false
           this.isNotAssociationAvailable = true
