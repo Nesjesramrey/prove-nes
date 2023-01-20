@@ -9,7 +9,7 @@ import { CTypeTemplateComponent } from './c-type-template/c-type-template.compon
 import { MapBoxComponent } from './map-box/map-box.component';
 import { NgChartsModule } from 'ng2-charts';
 import { AdminTemplateMobileComponent } from './admin-template-mobile/admin-template-mobile.component';
-
+import { CardTopicsDesktopComponent } from './card-topics-desktop/card-topics-desktop.component';
 
 @NgModule({
   imports: [
@@ -26,14 +26,15 @@ import { AdminTemplateMobileComponent } from './admin-template-mobile/admin-temp
     EditorTemplateComponent,
     CTypeTemplateComponent,
     MapBoxComponent,
-   
+    CardTopicsDesktopComponent
   ],
   exports: [
     AdminTemplateComponent,
     AdminTemplateMobileComponent,
     EditorTemplateComponent,
     CTypeTemplateComponent,
-    MapBoxComponent
+    MapBoxComponent,
+    CardTopicsDesktopComponent
   ],
   entryComponents: [],
   providers: [],

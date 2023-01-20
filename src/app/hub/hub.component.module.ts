@@ -61,7 +61,7 @@ import { SheetFeedComponent } from './components/sheet-feed/sheet-feed.component
     LyDialogModule,
     IvyCarouselModule,
     NgChartsModule,
-  
+    HubComponentsModule
   ],
   declarations: [
     HubComponent,
@@ -82,8 +82,8 @@ import { SheetFeedComponent } from './components/sheet-feed/sheet-feed.component
     CommunityMobileComponent,
     SpiderChartMobileComponent,
     CircleChartMobileComponent,
-    LineChartMobileComponent, 
-    ProfileMobileComponent, 
+    LineChartMobileComponent,
+    ProfileMobileComponent,
     FooterMobileComponent,
     TopicSingleMobileComponent,
     AssociationRegisterComponent,
@@ -91,4 +91,4 @@ import { SheetFeedComponent } from './components/sheet-feed/sheet-feed.component
     SheetFeedComponent
   ],
 })
-export class HubComponentModule {}
+export class HubComponentModule { }
