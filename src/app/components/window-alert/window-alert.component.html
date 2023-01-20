@@ -84,3 +84,30 @@
     </div>
   </div>
 </div>
+
+<!-- kill complaint -->
+<div class="set-12" *ngIf="isDataAvailable && windowType == 'complaint'">
+  <div class="set-12 dialog-body">
+    <div class="set-12 alert-txt">
+      <h1>¡Alerta!</h1>
+      <mat-icon>warning</mat-icon>
+    </div>
+    <div class="set-12">
+      <p>Se eliminará la denuncia de:</p>
+      <h1 class="txt-center" *ngIf="!complaint.isAnonymous">
+        {{complaint.createdBy.firstname}} {{complaint.createdBy.lastname}}
+      </h1>
+      <h1 class="txt-center" *ngIf="complaint.isAnonymous">Anónimo</h1>
+      <p>¿Deseas continuar?</p>
+    </div>
+    <div class="set-12 ctrls">
+      <button type="button" mat-raised-button color="accent" (click)="killDialog()" [disabled]="submitted">
+        <small>Cancelar</small>
+      </button>
+      <button type="button" mat-raised-button color="primary" [disabled]="submitted" (click)="killComplaint()">
+        <small>Continuar</small>
+      </button>
+      <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
+    </div>
+  </div>
+</div>

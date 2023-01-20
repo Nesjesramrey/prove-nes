@@ -2,10 +2,9 @@
   <mat-spinner></mat-spinner>
 </div>
 
-<!--Desk-->
-<div class="set-12 innerhldr" *ngIf="isDataAvailable && !isMobile">
-  <div class="set-4 col-lft">
-    <button type="button" (click)="linkMe('/documentos')"></button>
+<!-- desktop -->
+<div class="set-12 pagehldr" *ngIf="isDataAvailable && !isMobile">
+  <div class="set-3 col-lft">
     <mat-card class="set-12">
       <div class="set-12 cardimg">
         <div class="set-12 empty-img">
@@ -13,68 +12,112 @@
         </div>
       </div>
 
-      <input
-        #fileInput
-        type="file"
-        (change)="openCropperDialog($event)"
-        accept="image/*"
-        hidden
-      />
+      <input #fileInput type="file" (change)="openCropperDialog($event)" accept="image/*" hidden />
       <button type="button" class="avatar" (click)="fileInput.click()">
-        <img
-          src="{{ user.avatarImage }}"
-          alt="{{ user.firstname }} {{ user.lastname }}"
-          *ngIf="user.avatarImage != null"
-        />
+        <img src="{{ user.avatarImage }}" alt="{{ user.firstname }} {{ user.lastname }}"
+          *ngIf="user.avatarImage != null" />
         <span *ngIf="user.avatarImage == null">
-          {{ user.firstname | firstword | firstletter
-          }}{{ user.lastname | firstword | firstletter }}
+          {{ user.firstname | firstword | firstletter }}{{ user.lastname | firstword | firstletter }}
         </span>
-        <div
-          class="overlay"
-          matTooltip="Cargar imágen"
-          matTooltipClass="tooltip"
-        >
+        <div class="overlay" matTooltip="Cargar imágen" matTooltipClass="tooltip">
           <mat-icon color="accent">photo_camera</mat-icon>
         </div>
       </button>
 
       <div class="set-12 cardbody">
-        <!-- <button type="button" class="roundblue cardmore" (click)="linkMe('/hub/configuracion')"
+        <button type="button" mat-mini-fab color="primary" class="cardmore" [matMenuTriggerFor]="menu"
           matTooltip="Configuración" matTooltipClass="tooltip">
-          <mat-icon color="primary">settings</mat-icon>
-        </button> -->
-        <h3 class="txt-center">{{ user.firstname }} {{ user.lastname }}</h3>
-        <div class="set-12 usrinfo">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="linkMe('hub/documentos')">
+            <mat-icon>folder</mat-icon>
+            <small>Mis Documentos</small>
+          </button>
+          <button mat-menu-item disabled>
+            <mat-icon>settings</mat-icon>
+            <small>Configuración</small>
+          </button>
+          <button mat-menu-item disabled>
+            <mat-icon>power_settings_new</mat-icon>
+            <small>Salir</small>
+          </button>
+        </mat-menu>
+
+        <p>
+          <strong>
+            <small>{{ user.firstname }} {{ user.lastname }}</small>
+          </strong>
+        </p>
+        <p>
+          <small>{{user.email}}</small>
+        </p>
+        <p>
+          <small>{{user.createdAt | date: 'mediumDate'}}</small>
+        </p>
+        <!-- <div class="set-12 usrinfo">
           <p class="set-12">
             <small class="set-6">Documentos:</small>
-            <small class="set-6 txt-right"
-              ><strong class="txt-blue">0</strong></small
-            >
+            <small class="set-6 txt-right"><strong class="txt-blue">0</strong></small>
           </p>
           <p class="set-12">
             <small class="set-6">Colaboradores:</small>
-            <small class="set-6 txt-right"
-              ><strong class="txt-blue">0</strong></small
-            >
+            <small class="set-6 txt-right"><strong class="txt-blue">0</strong></small>
           </p>
-
-          <p class="set-12">
-          <button class="set-12" type="button" mat-raised-button color="accent" (click)="linkMe('hub/documentos')" >Mis Documentos</button>
-        </p>
-
-        </div>
+        </div> -->
       </div>
-    
     </mat-card>
 
-    <mat-card class="set-12">
+    <!-- <mat-card class="set-12">
       <div class="app-map-box"></div>
-    </mat-card>
+    </mat-card> -->
+  </div>
+
+  <div class="set-9 col-rgt">
+    <mat-tab-group [disableRipple]="true" [@.disabled]="true">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>insights</mat-icon>
+          <span>Temas</span>
+        </ng-template>
+
+        <div class="set-12">
+          <div class="card-topics-desktop"></div>
+        </div>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>person</mat-icon>
+          <span>Mi Perfil</span>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab disabled>
+        <ng-template mat-tab-label>
+          <mat-icon>group</mat-icon>
+          <span>Comunidad</span>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab disabled>
+        <ng-template mat-tab-label>
+          <mat-icon>military_tech</mat-icon>
+          <span>Metas</span>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab disabled>
+        <ng-template mat-tab-label>
+          <mat-icon>forum</mat-icon>
+          <span>Mensajes</span>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </div>
 
-<!--Mobile-->
+<!-- mobile -->
 <div class="set-12" *ngIf="isDataAvailable && isMobile">
   <tabs-mobile></tabs-mobile>
 </div>

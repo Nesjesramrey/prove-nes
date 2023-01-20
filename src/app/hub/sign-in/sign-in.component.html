@@ -52,12 +52,16 @@
 
     <div class="set-12 form-ctrls">
       <div class="set-6">
-        <small>¿No tienes cuenta?
-          <a href="#" routerLink="/hub/registro"> Registro </a></small>
-        <!-- <small>
-          <a href="#" routerLink="/hub/olvide-contrasena">
-            ¿Olvidaste tu contraseña?
-          </a></small> -->
+        <div class="set-12">
+          <small>¿No tienes cuenta?
+            <a href="#" routerLink="/hub/registro">Registro</a>
+          </small>
+        </div>
+        <div class="set-12">
+          <small>
+            <a href="javascript:void(0)" (click)="recoverPassword()">¿Olvidaste tu contraseña?</a>
+          </small>
+        </div>
       </div>
       <br />
       <div class="set-6 txt-right">

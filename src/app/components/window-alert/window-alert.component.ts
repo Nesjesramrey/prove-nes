@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ComplaintService } from 'src/app/services/complaint.service';
 import { DocumentService } from 'src/app/services/document.service';
 import { LayoutService } from 'src/app/services/layout.service';
 import { UtilityService } from 'src/app/services/utility.service';
@@ -16,13 +17,15 @@ export class WindowAlertComponent implements OnInit {
   public layout: any = null;
   public collaborator: any = null;
   public submitted: boolean = false;
+  public complaint: any = null;
 
   constructor(
     public dialogRef: MatDialogRef<WindowAlertComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public documentService: DocumentService,
     public utilityService: UtilityService,
-    public layoutService: LayoutService
+    public layoutService: LayoutService,
+    public complaintService: ComplaintService
   ) {
     // console.log(this.dialogData);
     this.windowType = this.dialogData['windowType'];
@@ -36,13 +39,16 @@ export class WindowAlertComponent implements OnInit {
       case 'kill-collaborator':
         this.collaborator = this.dialogData['user'];
         break;
+      case 'complaint':
+        this.complaint = this.dialogData['complaint'];
+        break;
     }
   }
 
   ngOnInit(): void {
     setTimeout(() => {
       this.isDataAvailable = true;
-    }, 1000);
+    }, 700);
   }
 
   setAsCover() {
@@ -97,6 +103,18 @@ export class WindowAlertComponent implements OnInit {
     let data: any = {
       user_id: this.collaborator['_id']
     };
+  }
+
+  killComplaint() {
+    let data: any = { complaint_id: this.complaint['_id'] };
+    this.complaintService.killComplaint(data).subscribe({
+      error: (error: any) => { this.utilityService.openErrorSnackBar(this.utilityService['errorOops']); },
+      next: (reply: any) => {
+        this.dialogRef.close(reply);
+        this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
+      },
+      complete: () => { }
+    });
   }
 
   killDialog() {

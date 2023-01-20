@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { RecoverPasswordComponent } from 'src/app/components/recover-password/recover-password.component';
 import { WelcomeDialogComponent } from 'src/app/components/welcome-dialog/welcome-dialog.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DocumentService } from 'src/app/services/document.service';
@@ -87,5 +88,18 @@ export class SignInComponent implements OnInit {
             break;
         }
       });
+  }
+
+  recoverPassword() {
+    const dialogRef = this.dialog.open<RecoverPasswordComponent>
+      (RecoverPasswordComponent, {
+        width: '420px',
+        data: {},
+        disableClose: true,
+      });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
   }
 }

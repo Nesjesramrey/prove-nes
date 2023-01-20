@@ -1,8 +1,7 @@
 <div class="set-12 page loading" *ngIf="!isDataAvailable">
-  <mat-spinner></mat-spinner>
+  <mat-spinner color="accent"></mat-spinner>
 </div>
 
-<!-- mobile -->
 <div class="set-12 page" *ngIf="isDataAvailable" [class.fixdesk]="!isMobile">
   <div class="set-12 mb-page">
     <!-- <div class="set-12">
@@ -66,7 +65,7 @@
 
   <div class="set-12 mb-page">
     <div class="mb-inner">
-      <h3 id="quienesSomos" >¿Quienes somos?</h3>
+      <h3 id="quienesSomos">¿Quienes somos?</h3>
       <p>Una colectiva plural, abierta y propositiva.</p>
       <p>Una colectiva que privilegia el proyecto antes que las personas.</p>
       <p>Una colectiva que SÍ busca incidir en la agenda pública y política en el marco de la coyuntura electoral del
@@ -191,91 +190,4 @@
   <div class="set-12">
     <div class="app-footer"></div>
   </div>
-
-  <!-- <div class="set-12 mb-page">
-    <mat-card class="set-12">
-      <div class="set-2">
-        <img src="../../assets/images/cover-icon-05.png" alt="">
-      </div>
-      <div class="set-10">
-        <strong>
-          <span>Participa en nuestra plataforma, entra al Pensamiento Colectivo <a href="">Aquí</a></span>
-        </strong>
-      </div>
-    </mat-card>
-  </div> -->
 </div>
-
-<!-- desktop -->
-<!-- <div class="set-12 page" *ngIf="isDataAvailable && !isMobile">
-  <div class="set-12 ds-page"></div>
-
-  <div class="set-12 ds-page">
-    <div class="set-6">
-      <div class="globe">
-        <img src="../../assets/images/text-globe.png" alt="">
-        <p>¿Quiénes Somos?</p>
-      </div>
-      <div class="section-txt">
-        <div class="set-2">&nbsp;</div>
-        <div class="set-8">
-          <p>
-            Somos un <strong>colectivo ciudadano</strong> diverso: lo que tenemos en común es querer que México salga
-            adelante de la crisis que hoy vive.
-          </p>
-          <p>
-            Somos una herramienta para que la sociedad civil que hoy está desorganizada, se organice para opinar
-            construir,
-            participar e incidir rumbo al 2024.
-          </p>
-          <p>
-            Somos una plataforma para activar y ejercer el poder ciudadano, más allá de los partidos.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="set-6">
-      <div class="globe">
-        <p>¿Qué Queremos?</p>
-        <img src="../../assets/images/text-globe.png" alt="">
-      </div>
-      <div class="section-txt">
-        <div class="set-2">&nbsp;</div>
-        <div class="set-8">
-          <p>
-            Queremos ser parte del cambio ciudadano que México necesita.
-          </p>
-          <p>
-            Queremos ser la plataforma más grande y activa para la participación de la sociedad civil rumbo al cambio
-            político que viene en 2024.
-          </p>
-          <p>
-            Queremos ser un semillero del talento que ya existe en México y que necesita espacios para colaborar y
-            hacerse
-            escuchar.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="set-12 ds-page">
-    <mat-icon>description</mat-icon>
-    <div class="contents">
-      <p>PENSAMIENTO</p>
-      <p>COLECTIVO</p>
-      <p>Un documento vivo <strong>100% ciudadano</strong> que se construye <strong>con tu participación</strong> y la
-        de especialistas.
-      </p>
-      <p>
-        Una declaración de principios y <strong>plan de acción</strong> para el México que queremos en colectivo.
-      </p>
-    </div>
-    <button type="button" (click)="linkMe('/documentos-publicos/' + document._id)">Entrar</button>
-  </div>
-
-  <div class="set-12 ds-page">
-    <div class="app-footer"></div>
-  </div>
-</div> -->

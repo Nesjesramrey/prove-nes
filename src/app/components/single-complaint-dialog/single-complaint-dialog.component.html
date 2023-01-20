@@ -2,7 +2,7 @@
 
 <div class="set-6">
   <div class="set-12 author">
-    <div class="set-10">
+    <div class="set-8">
       <p>
         <small>Autor: <strong>{{complaint?.createdBy?.firstname}} {{complaint?.createdBy?.lastname}}</strong></small>
       </p>
@@ -16,7 +16,13 @@
       </p>
     </div>
 
-    <div class="set-2 txt-right">
+    <div class="set-4 ctrls">
+      <button type="button" mat-mini-fab color="primary" matTooltip="Mensaje" matTooltipClass="tooltip">
+        <mat-icon>forum</mat-icon>
+      </button>
+      <button type="button" mat-mini-fab color="primary" matTooltip="Compartir" matTooltipClass="tooltip">
+        <mat-icon>share</mat-icon>
+      </button>
       <button type="button" mat-mini-fab color="primary" (click)="killDialog()" matTooltip="Salir"
         matTooltipClass="tooltip">
         <mat-icon>cancel</mat-icon>
@@ -30,7 +36,6 @@
   </div>
 
   <div class="set-12 gallery" *ngIf="complaint?.images?.length != 0">
-    <!-- <slider-images></slider-images> -->
-    <img [src]="item" [alt]="complaint?.title" *ngFor=" let item of complaint?.images" />
+    <slider-images [images]="complaint?.images" [complaint]="complaint"></slider-images>
   </div>
 </div>

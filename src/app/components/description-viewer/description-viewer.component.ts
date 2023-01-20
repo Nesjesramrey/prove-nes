@@ -30,7 +30,7 @@ export class DescriptionViewerComponent implements OnInit {
     public favoritesService: FavoritesService,
     public matBottomSheet: MatBottomSheet
   ) {
-    console.log(this.dialogData);
+    // console.log(this.dialogData);
     this.user = this.dialogData['user'];
     this.document = this.dialogData['document'] || null;
     this.layout = this.dialogData['layout'] || null;
