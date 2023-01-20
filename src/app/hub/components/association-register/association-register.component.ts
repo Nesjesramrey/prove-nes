@@ -56,7 +56,7 @@ export class AssociationRegisterComponent implements OnInit {
   @Output () public checked: boolean = true
   public isAssociationAvailable: boolean = false;
   public isNotAssociationAvailable: boolean = false;
-  public dataAssociation: any = []
+  public associations: any = []
 
   constructor(
     public authenticationSrvc: AuthenticationService,
@@ -144,7 +144,7 @@ export class AssociationRegisterComponent implements OnInit {
   }
 
   onCreateAssociation() {
-    console.log('click')
+    //console.log('click')
     this.submitted = true;
     let data: any = {
       formData: new FormData(),
@@ -226,6 +226,11 @@ export class AssociationRegisterComponent implements OnInit {
     this.dataComercialFormGroup.reset();
   }
 
+  clearSearchForm() {
+    //this.formGroup.reset();
+    this.searchFormGroup.reset();
+  }
+
   clearInputUnhappy(){
     this.unhappyArray = [];
   }
@@ -236,6 +241,7 @@ export class AssociationRegisterComponent implements OnInit {
 
 
   onSearch(formGroup: FormGroup) {
+   
     let data: any = {
       filter: formGroup['value']['search'],  
     };
@@ -247,14 +253,14 @@ export class AssociationRegisterComponent implements OnInit {
       next: (reply: any) => {
         console.log(reply.length)
         if (reply.length == 0){
-          this.isNotAssociationAvailable = true
           this.isAssociationAvailable = false
+          this.isNotAssociationAvailable = true
+          
         }
         else{
-          this.dataAssociation = reply
+          this.associations = reply
           this.isNotAssociationAvailable = false
           this.isAssociationAvailable = true
-          console.log(this.dataAssociation[0].name)
         }
       },
       complete: () => { 
@@ -269,5 +275,25 @@ export class AssociationRegisterComponent implements OnInit {
     //   this.coverageSelect.options.forEach((item: MatOption) => item.disabled = true);
     // }
   }
+   joinAssociation(id_association: any){
+    let data: any;
+    data = {
+      userID: this.user._id,
+      associationID: id_association
+    }
+    console.log(data)
+    this.userService.joinUserWithAssociation(data).subscribe({
+      error: (error) => {
+        switch (error['status']) { }
+      },
+      next: (reply: any) => {
+        console.log(reply)
+      },
+      complete: () => {
+      },
+    });
+    
+   }
+ 
 
 }

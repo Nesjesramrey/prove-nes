@@ -134,22 +134,14 @@
     </div>
 
     <mat-checkbox (change)="openDialogAssociationRegister()"  *ngIf="!checked"
-      >¿Perteneces a una asociación?</mat-checkbox
+      ><small>¿Perteneces a una asociación?</small></mat-checkbox
     >
     <mat-checkbox (change)="openDialogAssociationRegister()"  *ngIf="checked"
     >¿Perteneces a una asociación?</mat-checkbox
   >
 
     <div class="ctrls">
-      <button
-        class="set-12"
-        type="button"
-        mat-raised-button
-        color="warn"
-        (click)="clearForm()"
-      >
-        <small>Cancelar</small>
-      </button>
+    
       <button
         class="set-12"
         type="submit"

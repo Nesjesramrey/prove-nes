@@ -4,6 +4,30 @@
   width: 100%;
 
   .form-association {
+    .fixmob {
+      width: 100% !important;
+      padding: 0px;
+      margin: 0 !important;
+  
+  
+      .listhldr {
+        .listitem {
+          
+          .set-12
+           {
+            width: 100%;
+          }
+  
+          .set-12 {
+            margin-bottom: 10px;
+          }
+          .joinButton{
+            display: flex;
+            justify-content: center;
+          }
+        }
+      }
+    }
     .dialog-head{
       margin-bottom: 20px;
     }
@@ -11,6 +35,14 @@
       display: none !important;
     }
     
+    .search-hldr{
+      .joinButton{
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 10px;
+        
+      }
+    }
 
     .mat-stepper-horizontal,
     .mat-stepper-vertical {
@@ -19,11 +51,12 @@
 
     .addressNum{
       display: inline-flex;
-      mat-form-field{
-        margin: 0 15px;
-      }
     }
-    
+    ::ng-deep .mat-form-field-infix{
+      float:left;
+      width: 130px;
+    }
+ 
 
     #textarea-description::-webkit-scrollbar {
       display: none;
@@ -76,5 +109,37 @@
       margin-top: 10px;
     }
   }
-  
+  .listhldr {
+    margin-top: 10px;
+
+    .listitem {
+      padding: 10px;
+      border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
+      display: flex;
+      align-items: center;
+
+      * {
+        margin: 0;
+      }
+
+      .set-4 {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        * {
+          margin: 0;
+        }
+      }
+    }
+
+    .listitem:first-child {
+      padding-top: 0;
+    }
+
+    .listitem:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+  }
 }
