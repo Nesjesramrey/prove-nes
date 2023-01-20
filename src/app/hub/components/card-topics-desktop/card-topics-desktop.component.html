@@ -1,0 +1,21 @@
+<div class="set-12">
+  <div class="set-4" *ngFor="let topic of topics">
+    <mat-card class="set-12">
+      <div class="set-12 titlehldr">
+        <button type="button">{{topic?.title}}</button>
+      </div>
+
+      <div class="set-12 ctrls">
+        <button type="button">
+          <mat-icon>favorite</mat-icon>
+        </button>
+        <button type="button">
+          <mat-icon>share</mat-icon>
+        </button>
+        <button type="button">
+          <mat-icon>forum</mat-icon>
+        </button>
+      </div>
+    </mat-card>
+  </div>
+</div>

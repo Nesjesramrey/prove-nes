@@ -1,13 +1,10 @@
 :host {
   width: 100%;
-  margin-top: 5px;
-  margin-bottom: 100px;
   float: left;
 
-  .innerhldr {
-
+  .pagehldr {
+    padding: 40px;
     margin-top: 80px;
-    
   }
 
   mat-spinner {
@@ -32,7 +29,7 @@
   }
 
   .col-rgt {
-    padding-left: 30px;
+    padding-left: 40px;
   }
 
   .row:not(:first-child) {
@@ -68,7 +65,7 @@
   }
 
   .cardbody {
-    padding: 90px 20px 20px 20px;
+    padding: 110px 20px 20px 20px;
   }
 
   .avatar {
@@ -130,7 +127,7 @@
 
   .cardmore {
     position: absolute;
-    top: 170px;
+    top: 160px;
     right: 20px;
   }
 
@@ -170,6 +167,7 @@
       margin-bottom: 0;
     }
   }
+
   .mat-tab-group ::ng-deep .mat-tab-header {
     display: flex;
     flex-direction: row;
@@ -177,10 +175,7 @@
     justify-content: center;
   }
 
-  button{
+  button {
     margin-top: 10px;
-
   }
-
 }
-

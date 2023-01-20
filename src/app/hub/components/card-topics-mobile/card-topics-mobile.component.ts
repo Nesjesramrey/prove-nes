@@ -16,7 +16,6 @@ export interface DialogData {
   topicDescription: null;
 }
 
-
 @Component({
   selector: 'card-topics-mobile',
   templateUrl: './card-topics-mobile.component.html',
@@ -40,7 +39,6 @@ export class CardTopicsMobileComponent implements OnInit {
   ) {
 
   }
-
 
   ngOnInit(): void {
     this.userService.fetchFireUser().subscribe({
@@ -120,13 +118,11 @@ export class CardTopicsMobileComponent implements OnInit {
     });
   };
 
-  
-
   getUserFavorited() {
     return this.allFavorites.filter((item: any) => item['createdBy'] === this.user._id);
   }
 
-  addFavorites(idTopic:  any) {
+  addFavorites(idTopic: any) {
     let favorited = this.getUserFavorited();
     if (favorited.length > 0) {
       let data = {
@@ -174,6 +170,4 @@ export class CardTopicsMobileComponent implements OnInit {
     }
     return false;
   }
-
-
 }
