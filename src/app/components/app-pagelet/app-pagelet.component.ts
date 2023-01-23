@@ -147,6 +147,10 @@ export class AppPageletComponent implements OnInit {
       case 'complaints':
         this.router.navigateByUrl('/denuncias');
         break;
+
+      case 'testimonials':
+        this.router.navigateByUrl('/testimonios');
+        break;
     }
   }
 

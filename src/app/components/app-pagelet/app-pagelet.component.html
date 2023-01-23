@@ -67,6 +67,10 @@
         <mat-icon>warning</mat-icon>
         <span>Denuncias</span>
       </button>
+      <button mat-menu-item (click)="linkMe('testimonials')" *ngIf="userActivities.includes('moderator')">
+        <mat-icon>announcement</mat-icon>
+        <span>Testímonios</span>
+      </button>
     </mat-menu>
   </div>
 
