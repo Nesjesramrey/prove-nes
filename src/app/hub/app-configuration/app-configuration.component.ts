@@ -65,7 +65,7 @@ export class AppConfigurationComponent implements OnInit {
       },
       next: (reply: any) => {
         this.user = reply;
-        if ((this.user.associationInterests == null || this.user.associationInterests[0].length == 0 )) {
+        if ((this.user.associationInterests == null )) {
           console.log('error')
           this.happyArray = [];
         } else {
