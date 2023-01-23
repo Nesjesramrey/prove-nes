@@ -1,0 +1,41 @@
+<div class="set-3">&nbsp;</div>
+
+<div class="set-6">
+  <div class="set-12 author">
+    <div class="set-8">
+      <p>
+        <small>Autor: <strong>{{testimony?.createdBy?.firstname}} {{testimony?.createdBy?.lastname}}</strong></small>
+      </p>
+      <p>
+        <small>Alta: <strong>{{testimony?.createdAt | date: 'mediumDate'}} - {{testimony?.createdAt | date:
+            'mediumTime'}}</strong></small>
+      </p>
+      <p>
+        <small *ngIf="testimony?.attendedAt">Atendida en: <strong>{{testimony?.attendedAt}}</strong></small>
+        <small *ngIf="!testimony?.attendedAt">Atendida en: <strong>NA</strong></small>
+      </p>
+    </div>
+
+    <div class="set-4 ctrls">
+      <button type="button" mat-mini-fab color="primary" matTooltip="Mensaje" matTooltipClass="tooltip">
+        <mat-icon>forum</mat-icon>
+      </button>
+      <button type="button" mat-mini-fab color="primary" matTooltip="Compartir" matTooltipClass="tooltip">
+        <mat-icon>share</mat-icon>
+      </button>
+      <button type="button" mat-mini-fab color="primary" (click)="killDialog()" matTooltip="Salir"
+        matTooltipClass="tooltip">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="set-12">
+    <h3 class="ctitle">{{testimony?.name || 'Nueva Denuncia'}}</h3>
+    <div [innerHTML]="testimony?.description"></div>
+  </div>
+
+  <div class="set-12 gallery" *ngIf="testimony?.images?.length != 0">
+    <slider-images [images]="testimony?.images" [complaint]="testimony"></slider-images>
+  </div>
+</div>

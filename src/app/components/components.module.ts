@@ -86,6 +86,7 @@ import { FloatingSheetComponent } from './floating-sheet/floating-sheet.componen
 import { AddCommentsSheetComponent } from './add-comments-sheet/add-comments-sheet.component';
 import { SingleComplaintDialogComponent } from './single-complaint-dialog/single-complaint-dialog.component';
 import { RecoverPasswordComponent } from './recover-password/recover-password.component';
+import { SingleTestimonyDialogComponent } from './single-testimony-dialog/single-testimony-dialog.component';
 
 @NgModule({
   imports: [
@@ -175,7 +176,8 @@ import { RecoverPasswordComponent } from './recover-password/recover-password.co
     FloatingSheetComponent,
     AddCommentsSheetComponent,
     SingleComplaintDialogComponent,
-    RecoverPasswordComponent
+    RecoverPasswordComponent,
+    SingleTestimonyDialogComponent
   ],
   exports: [
     AppPageletComponent,
@@ -242,7 +244,8 @@ import { RecoverPasswordComponent } from './recover-password/recover-password.co
     FloatingSheetComponent,
     AddCommentsSheetComponent,
     SingleComplaintDialogComponent,
-    RecoverPasswordComponent
+    RecoverPasswordComponent,
+    SingleTestimonyDialogComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
@@ -283,7 +286,8 @@ import { RecoverPasswordComponent } from './recover-password/recover-password.co
     FloatingSheetComponent,
     AddCommentsSheetComponent,
     SingleComplaintDialogComponent,
-    RecoverPasswordComponent
+    RecoverPasswordComponent,
+    SingleTestimonyDialogComponent
   ],
   providers: [],
 })
