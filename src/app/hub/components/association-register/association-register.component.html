@@ -135,10 +135,11 @@
           <mat-label><small>Tipo de asociación</small></mat-label>
           <mat-select matInput formControlName="associationTypology">
             <mat-option
+              (click)="onChangeAssociationType(association.name)"
               *ngFor="let association of associationTypology"
               [value]="association._id"
             >
-              <small>{{ association.name }}</small>
+              <small>{{ association.name }} </small>
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -176,7 +177,13 @@
     <mat-step>
       <div class="set-12 dialog-head">
         <div class="set-10">
-          <h3>Datos comerciales</h3>
+          <h3 *ngIf="associationType == 'Empresa'">Datos comerciales</h3>
+          <h3 *ngIf="associationType == 'Sociedad Civil'">Datos asociación</h3>
+          <h3 *ngIf="associationType == 'Maraton Estudiantil'">
+            Datos Maratón Estudiantil
+          </h3>
+          <h3 *ngIf="associationType == 'Activista'">Datos Activista</h3>
+          <h3 *ngIf="associationType == 'Estudiante'">Datos Estudiante</h3>
         </div>
         <div class="set-2 txt-right">
           <button
@@ -190,8 +197,24 @@
         </div>
       </div>
       <form [formGroup]="dataComercialFormGroup">
-        <mat-form-field appearance="outline">
-          <mat-label>Razón social</mat-label>
+        <mat-form-field
+          *ngIf="
+            associationType == 'Empresa' ||
+            associationType == 'Sociedad Civil' ||
+            associationType == 'Maraton Estudiantil'
+          "
+          appearance="outline"
+        >
+          <mat-label
+            *ngIf="
+              associationType == 'Empresa' ||
+              associationType == 'Sociedad Civil'
+            "
+            >Razón o denominación social</mat-label
+          >
+          <mat-label *ngIf="associationType == 'Maraton Estudiantil'"
+            >Universidad a la que perteneces</mat-label
+          >
           <input matInput formControlName="associationNameComercial" />
         </mat-form-field>
 
@@ -237,9 +260,10 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <div class="set-12 addfile">
+        <div  *ngIf="associationType == 'Empresa' || associationType == 'Sociedad Civil' || associationType == 'Maraton Estudiantil'" class="set-12 addfile">
           <p class="set-10">
-            <small>** Adjuntar <strong>Acta Constitutiva, </strong> </small>
+            <small *ngIf="associationType == 'Empresa'">** Adjuntar <strong>Acta Constitutiva</strong> </small>
+            <small *ngIf="associationType == 'Sociedad Civil' || associationType == 'Maraton Estudiantil'">** Adjuntar <strong>Acta Organización</strong> </small>
           </p>
           <button
             type="button"
@@ -283,7 +307,7 @@
             (change)="onFileSelected($event)"
           />
         </div>
-        <div class="set-12 addfile">
+        <div  *ngIf="associationType == 'Empresa' || associationType == 'Sociedad Civil'" class="set-12 addfile">
           <p class="set-10">
             <small>** Adjuntar <strong>Poder notarial </strong> </small>
           </p>

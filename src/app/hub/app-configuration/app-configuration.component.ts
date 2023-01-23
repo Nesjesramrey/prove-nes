@@ -84,8 +84,8 @@ export class AppConfigurationComponent implements OnInit {
           gender: ['', []],
           postalcode: [this.user['zipcode'], []],
           phone: [this.user['phone'], []],
-          associationInterests: [this.happyArray, []],
-          uninterestingTopics: [this.unhappyArray, []],
+          associationInterests: ['', []],
+          uninterestingTopics: ['', []],
         });
       },
       complete: () => {

@@ -47,7 +47,8 @@ export class AssociationRegisterComponent implements OnInit {
   @Output () public checked: boolean = true
   public isAssociationAvailable: boolean = false;
   public isNotAssociationAvailable: boolean = false;
-  public associations: any = []
+  public associations: any = [];
+  public associationType: any = null;
 
   constructor(
     public authenticationSrvc: AuthenticationService,
@@ -283,7 +284,7 @@ export class AssociationRegisterComponent implements OnInit {
       userID: this.user._id,
       associationID: id_association
     }
-    console.log(data)
+    //console.log(data)
     this.userService.joinUserWithAssociation(data).subscribe({
       error: (error) => {
         switch (error['status']) { }
@@ -294,8 +295,11 @@ export class AssociationRegisterComponent implements OnInit {
       complete: () => {
       },
     });
-    
    }
  
+   onChangeAssociationType(associationType: any){
+    this.associationType = associationType;
+    console.log(this.associationType)
+   }
 
 }
