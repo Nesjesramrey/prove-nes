@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet';
 import { UserService } from 'src/app/services/user.service';
-import { SheetFeedComponent } from '../components/sheet-feed/sheet-feed.component';
+import { SheetFeedComponent } from '../../components/sheet-feed/sheet-feed.component';
 
 
 

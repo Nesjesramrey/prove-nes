@@ -72,7 +72,7 @@ export class AppConfigurationComponent implements OnInit {
     
           this.happyArray = JSON.parse(this.user.associationInterests);
         }
-        if ((this.user.uninterestingTopics == null || this.user.uninterestingTopics[0].length == 0  )) {
+        if ((this.user.uninterestingTopics == null )) {
           this.unhappyArray = [];
         } else {
           this.unhappyArray = JSON.parse(this.user.uninterestingTopics);
