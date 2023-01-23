@@ -180,9 +180,12 @@ export class SubcategoryComponent implements OnInit {
   }
 
   redirectSolution(id: string) {
-    const topic = this.topicsDataSource.filter((item: any) =>
-      item.solutions.filter((s: any) => (s._id === id ? item._id : ''))
-    )[0];
+    let topic: any = null;
+    this.topicsDataSource.filter((x: any) => {
+      x['solutions'].filter((y: any) => {
+        if (y['_id'] == id) { topic = x; }
+      });
+    });
 
     const path = `documentos-publicos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/tema/${topic._id}/solucion/${id}`;
     this.utilityService.linkMe(path);
