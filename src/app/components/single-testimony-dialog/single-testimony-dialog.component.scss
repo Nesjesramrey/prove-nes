@@ -1,0 +1,38 @@
+:host {
+  width: 100%;
+  padding: 40px;
+  float: left;
+
+  .author {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+
+    .ctrls {
+      text-align: right;
+
+      button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 10px;
+
+        mat-icon {
+          font-size: 17pt;
+        }
+      }
+
+      button:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+
+  .ctitle {
+    margin-bottom: 10px;
+  }
+
+  .gallery {
+    margin-top: 20px;
+  }
+}

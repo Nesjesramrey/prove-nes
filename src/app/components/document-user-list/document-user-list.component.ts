@@ -4,6 +4,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { UserService } from 'src/app/services/user.service';
 import { WindowAlertComponent } from '../window-alert/window-alert.component';
 
 @Component({
@@ -27,7 +28,8 @@ export class DocumentUserListComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<DocumentUserListComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public userService: UserService
   ) {
     // console.log(this.dialogData);
     this.users = this.dialogData['users'];
@@ -71,9 +73,13 @@ export class DocumentUserListComponent implements OnInit {
   }
 
   configUser(user: any) {
-    let data: any = {
-      user_id: user['_id']
-    };
+    let data: any = { _id: user['_id'] };
+    this.userService.fetchUserById(data).subscribe({
+      error: () => { },
+      next: (reply: any) => {
+        console.log(reply);
+      }
+    });
   }
 
   KillUser(user: any) {

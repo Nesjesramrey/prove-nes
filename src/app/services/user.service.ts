@@ -39,9 +39,8 @@ export class UserService {
   }
 
   fetchUserById(data: any) {
-    return this.httpClient.post(
-      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchUserByIdEndPoint,
-      data
+    return this.httpClient.get(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchUserByIdEndPoint + `${data['_id']}`, {}
     );
   }
 
@@ -88,7 +87,7 @@ export class UserService {
     return this.httpClient.put(this.endpointSrvc.apiEndPoint + this.endpointSrvc.saveLayoutsCategoryPreferenceEndPoint + `${data['user_id']}` + '/layout_category_preference', data);
   }
 
- updateProfile(data: any) {
+  updateProfile(data: any) {
     return this.httpClient.put(this.endpointSrvc.apiEndPoint + this.endpointSrvc.addAssociationEndPoint + `${data['user_id']}`, data);
   }
 

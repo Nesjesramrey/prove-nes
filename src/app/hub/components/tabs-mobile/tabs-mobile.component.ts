@@ -10,6 +10,7 @@ import { TopicService } from 'src/app/services/topic.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable, forkJoin, } from 'rxjs';
 import { UtilityService } from 'src/app/services/utility.service';
+
 @Component({
   selector: 'tabs-mobile',
   templateUrl: './tabs-mobile.component.html',
@@ -47,8 +48,6 @@ export class TabsMobileComponent implements OnInit {
   public topicCoverage: any = null;
   public isMobile: boolean = false;
 
-
-
   constructor(
     public activatedRoute: ActivatedRoute,
     public authenticationService: AuthenticationService,
@@ -62,12 +61,9 @@ export class TabsMobileComponent implements OnInit {
   ) {
     this.isMobile = this.deviceDetectorService.isMobile();
     this.userID = this.activatedRoute['snapshot']['params']['userID'];
-
   }
 
   ngOnInit(): void {
     this.isDataAvailable = true
- 
-   
   }
 }

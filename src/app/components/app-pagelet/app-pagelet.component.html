@@ -41,23 +41,26 @@
         }}{{ user.lastname | firstword | firstletter }}
       </span>
     </button>
+
     <button type="button" class="btn-ico" *ngIf="user != null" (click)="linkMe('notifications')"
       matTooltip="Notificaciones" matTooltipClass="tooltip">
       <mat-icon [matBadge]="unreadNotifications" matBadgeColor="warn" *ngIf="unreadNotifications != 0">notifications
       </mat-icon>
       <mat-icon *ngIf="unreadNotifications == 0">notifications</mat-icon>
     </button>
+
     <button type="button" class="btn-ico" *ngIf="user != null" (click)="onSignOut()" matTooltip="Salir"
       matTooltipClass="tooltip">
       <mat-icon>power_settings_new</mat-icon>
     </button>
+
     <button type="button" class="btn-ico" [matMenuTriggerFor]="menu" *ngIf="user != null">
       <mat-icon>menu</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="resetPassword(user.email)">
-        <mat-icon>lock</mat-icon>
-        <span>Cambiar contraseña</span>
+      <button mat-menu-item (click)="popPDF()">
+        <mat-icon>groups</mat-icon>
+        <span>Encuentro colectivo</span>
       </button>
       <button mat-menu-item (click)="linkMe('userList')" *ngIf="userActivities.includes('moderator')">
         <mat-icon>groups</mat-icon>
@@ -66,6 +69,14 @@
       <button mat-menu-item (click)="linkMe('complaints')" *ngIf="userActivities.includes('moderator')">
         <mat-icon>warning</mat-icon>
         <span>Denuncias</span>
+      </button>
+      <button mat-menu-item (click)="linkMe('testimonials')" *ngIf="userActivities.includes('moderator')">
+        <mat-icon>announcement</mat-icon>
+        <span>Testímonios</span>
+      </button>
+      <button mat-menu-item (click)="resetPassword(user.email)">
+        <mat-icon>lock</mat-icon>
+        <span>Cambiar contraseña</span>
       </button>
     </mat-menu>
   </div>
