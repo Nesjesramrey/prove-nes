@@ -251,4 +251,8 @@ export class AppPageletComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => { });
   }
+
+  popPDF() {
+    window.open('https://static-assets-pando.s3.amazonaws.com/assets/200123_MxC_DIGITAL.pdf');
+  }
 }
