@@ -65,14 +65,14 @@ export class AppConfigurationComponent implements OnInit {
       },
       next: (reply: any) => {
         this.user = reply;
-        if ((this.user.associationInterests == null )) {
-          console.log('error')
+        if ((this.user.associationInterests == null || this.user.associationInterests.length == 0 )) {
+          //console.log('error')
           this.happyArray = [];
         } else {
     
           this.happyArray = JSON.parse(this.user.associationInterests);
         }
-        if ((this.user.uninterestingTopics == null )) {
+        if ((this.user.uninterestingTopics == null || this.user.uninterestingTopics.length == 0 )) {
           this.unhappyArray = [];
         } else {
           this.unhappyArray = JSON.parse(this.user.uninterestingTopics);
@@ -81,11 +81,11 @@ export class AppConfigurationComponent implements OnInit {
         this.formGroup = this.formBuilder.group({
           firstname: [this.user['firstname'], [Validators.required]],
           lastname: [this.user['lastname'], [Validators.required]],
-          // gender: ['', []],
+          gender: ['', []],
           postalcode: [this.user['zipcode'], []],
           phone: [this.user['phone'], []],
-          associationInterests: ['', []],
-          uninterestingTopics: ['', []],
+          associationInterests: [this.happyArray, []],
+          uninterestingTopics: [this.unhappyArray, []],
         });
       },
       complete: () => {
@@ -115,7 +115,7 @@ export class AppConfigurationComponent implements OnInit {
       user_id: this.user._id,
       firstname: form['value']['firstname'],
       lastname: form['value']['lastname'],
-      // gender: form['value']['gender'],
+      gender: form['value']['gender'],
       zipcode: form['value']['postalcode'],
       ocupation: form['value']['ocupation'],
       phone: form['value']['phone'],
