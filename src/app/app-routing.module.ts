@@ -39,6 +39,10 @@ const routes: Routes = [
       import('./complaints/complaints.component.module').then(module => module.ComplaintsComponentModule)
   },
   {
+    path: 'testimonios', loadChildren: () =>
+      import('./testimonials/testimonials.component.module').then(module => module.TestimonialsComponentModule)
+  },
+  {
     path: '404', loadChildren: () =>
       import('./not-found/not-found.component.module').then(module => module.NotFoundComponentModule)
   },

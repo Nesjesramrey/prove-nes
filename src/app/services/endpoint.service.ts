@@ -17,7 +17,8 @@ export class EndPointService {
   public fetchAllUsersEndPoint: string = '/user';
   public addUserPermissionsEndPoint: string = '/user/';
   public uploadAvatarImageEndPoint: string = '/user/';
-  public fetchUserByIdEndPoint: string = '/user/fetch-user-by-id';
+  // public fetchUserByIdEndPoint: string = '/user/fetch-user-by-id';
+  public fetchUserByIdEndPoint: string = '/user/';
   public fetchUserByFirebaseUIDEndPoint: string = '/user/fetch-user-by-firebase-uid';
   public saveLayoutsCategoryPreferenceEndPoint: string = '/user/';
   public addAssociationEndPoint: string = '/user/';
@@ -105,6 +106,7 @@ export class EndPointService {
   // testimony
   public fetchSingleTestimonyByIdEndPoint: string = '/testimony/';
   public createNewTestimonyEndPoint: string = '/testimony/';
+  public fetchAllTestimoniesEndPoint: string = '/testimony';
 
   // comment
   public fetchSingleCommentByIdEndPoint: string = '/comment/';
@@ -160,9 +162,9 @@ export class EndPointService {
   public killComplaintEndPoint: string = '/complaint/';
 
   //association
-  public createAssociationEndpoint: string ='/association';
-  public searchAssociationEndpoint: string ='/association?name=';
- 
+  public createAssociationEndpoint: string = '/association';
+  public searchAssociationEndpoint: string = '/association?name=';
+
 
   constructor() { }
 }

@@ -24,4 +24,10 @@ export class TestimonyService {
       this.endpointSrvc.apiEndPoint + this.endpointSrvc.createNewTestimonyEndPoint + `${data.id}`, data['formData']
     );
   }
+
+  fetchAllTestimonies() {
+    return this.httpClient.get(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAllTestimoniesEndPoint, {}
+    );
+  }
 }
