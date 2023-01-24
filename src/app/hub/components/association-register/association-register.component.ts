@@ -1,8 +1,10 @@
 import { Component, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { DeviceDetectorService } from 'ngx-device-detector';;
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
+import { DocumentService } from 'src/app/services/document.service';
 import { AssociationService } from 'src/app/services/association.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { SearchService } from 'src/app/services/search.service';
@@ -35,18 +37,13 @@ export class AssociationRegisterComponent implements OnInit {
   @ViewChild('stepper') public stepper!: MatStepper;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   public addOnBlur = true;
-
-
-
-  asociations: Asociation[] = [
-    { value: '6399e5c7c878ad9b63dde6a2', viewValue: 'Ciudadanía' },
-    { value: '6399e5c7c878ad9b63dde6a5', viewValue: 'Activista' },
-    { value: '6399e5c7c878ad9b63dde6a4', viewValue: 'OSC' },
-    { value: '6399e5c7c878ad9b63dde6a6', viewValue: 'Estudiante' },
-  ];
-
+  public associationTypology: any = null;
   public accessToken: any = null;
   public user: any = null;
+  public document: any = null;
+  public layouts: any = null;
+  public sublayouts: any = null;
+  public layoutsCategoryPreference: any[] = [];
   public states: any = [];
   public payload: any = null;
   public isDataAvailable: boolean = false;
@@ -56,12 +53,15 @@ export class AssociationRegisterComponent implements OnInit {
   @Output () public checked: boolean = true
   public isAssociationAvailable: boolean = false;
   public isNotAssociationAvailable: boolean = false;
-  public dataAssociation: any = []
+  public viewSubLayouts: boolean = false;
+  public associations: any = [];
+  public associationType: any = null;
 
   constructor(
     public authenticationSrvc: AuthenticationService,
     public utilityService: UtilityService,
     public userService: UserService,
+    public documentService: DocumentService,
     public associationService: AssociationService,
     public deviceDetectorService: DeviceDetectorService,
     public searchService: SearchService,
@@ -75,6 +75,15 @@ export class AssociationRegisterComponent implements OnInit {
 
   ngOnInit(): void {
     let states: Observable<any> = this.utilityService.fetchAllStates();
+
+    this.utilityService.fetchAssociationTypology().subscribe({
+      error: (error: any) => {
+      },
+      next: (reply: any) => {
+        this.associationTypology = reply;
+      },
+      complete: () => { }
+    });
 
     forkJoin([states,]).subscribe((reply: any) => {
       // console.log(reply);
@@ -116,6 +125,26 @@ export class AssociationRegisterComponent implements OnInit {
           file: ["", ]
       
         });
+        this.documentService.fetchCoverDocument().subscribe({
+          error: (error: any) => {
+            setTimeout(() => {
+              this.isDataAvailable = true;
+            }, 100);
+          },
+          next: (reply: any) => {
+            this.document = reply;
+            this.layouts = this.document['layouts'];
+            this.sublayouts = this.layouts[0]['subLayouts'];
+            this.layouts.filter((x: any, i: any) => {
+              let obj: any = {
+                priority: i,
+                category: x['category']['_id']
+              }
+              this.layoutsCategoryPreference.push(obj);
+            });
+          },
+          complete: () => { }
+        });
 
       },
       complete: () => {
@@ -144,7 +173,7 @@ export class AssociationRegisterComponent implements OnInit {
   }
 
   onCreateAssociation() {
-    console.log('click')
+    //console.log('click')
     this.submitted = true;
     let data: any = {
       formData: new FormData(),
@@ -162,7 +191,8 @@ export class AssociationRegisterComponent implements OnInit {
     data['formData'].append('ciudad', this.dataComercialFormGroup['value']['associationCity']),
     data['formData'].append('estado', this.dataComercialFormGroup['value']['associationState']),
     data['formData'].append('interestTopics',  JSON.stringify(this.happyArray) || null),
-    data['formData'].append('uninterestTopics', JSON.stringify(this.unhappyArray) || null),      
+    data['formData'].append('uninterestTopics', JSON.stringify(this.unhappyArray) || null),
+    data['formData'].append('layoutsCategoryPreference', JSON.stringify(this.layoutsCategoryPreference) || null),      
     console.log(data)
     for (let [key, value] of data['formData']) {
       console.log(`${key}: ${value}`)
@@ -226,6 +256,13 @@ export class AssociationRegisterComponent implements OnInit {
     this.dataComercialFormGroup.reset();
   }
 
+  clearSearchForm() {
+    //this.formGroup.reset();
+    this.searchFormGroup.reset();
+    this.isAssociationAvailable = false;
+    this.isNotAssociationAvailable = false;
+  }
+
   clearInputUnhappy(){
     this.unhappyArray = [];
   }
@@ -236,25 +273,26 @@ export class AssociationRegisterComponent implements OnInit {
 
 
   onSearch(formGroup: FormGroup) {
+   
     let data: any = {
       filter: formGroup['value']['search'],  
     };
-    console.log(data['filter']),
+    //console.log(data['filter']),
     this.associationService.searchAssociation(data['filter']).subscribe({
       error: (error: any) => {
         
       },
       next: (reply: any) => {
-        console.log(reply.length)
+        //console.log(reply.length)
         if (reply.length == 0){
-          this.isNotAssociationAvailable = true
           this.isAssociationAvailable = false
+          this.isNotAssociationAvailable = true
+          
         }
         else{
-          this.dataAssociation = reply
+          this.associations = reply
           this.isNotAssociationAvailable = false
           this.isAssociationAvailable = true
-          console.log(this.dataAssociation[0].name)
         }
       },
       complete: () => { 
@@ -269,5 +307,57 @@ export class AssociationRegisterComponent implements OnInit {
     //   this.coverageSelect.options.forEach((item: MatOption) => item.disabled = true);
     // }
   }
+   joinAssociation(id_association: any){
+    let data: any;
+    data = {
+      userID: this.user._id,
+      associationID: id_association
+    }
+    //console.log(data)
+    this.userService.joinUserWithAssociation(data).subscribe({
+      error: (error) => {
+        switch (error['status']) { }
+      },
+      next: (reply: any) => {
+        console.log(reply)
+      },
+      complete: () => {
+      },
+    });
+   }
+ 
+   onChangeAssociationType(associationType: any){
+    this.associationType = associationType;
+    console.log(this.associationType)
+   }
+
+   dragAndDropLayout(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.layouts, event.previousIndex, event.currentIndex);
+    this.layoutsCategoryPreference = [];
+    this.layouts.filter((x: any, i: any) => {
+      let obj: any = {
+        priority: i,
+        category: x['category']['_id']
+      }
+      this.layoutsCategoryPreference.push(obj);
+      
+    });
+    // console.log(this.layoutsCategoryPreference);
+  }
+  dragAndDropSubLayout(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.sublayouts, event.previousIndex, event.currentIndex);
+  }
+
+  onLayoutSelected(layout: any) {
+    // this.viewSubLayouts = true;
+    // this.sublayouts = layout['subLayouts'];
+  }
+
+  hideSubLayouts() {
+    this.viewSubLayouts = false;
+  }   
 
 }
+
+   
+

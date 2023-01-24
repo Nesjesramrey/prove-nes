@@ -55,17 +55,10 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-
       <mat-form-field appearance="outline">
         <mat-label>Código Postal</mat-label>
         <input type="text" matInput formControlName="postalcode" />
       </mat-form-field>
-      <!-- 
-            <mat-form-field appearance="outline">
-                <mat-label>Ocupacion</mat-label>
-                <input matInput formControlName="ocupation">
-            </mat-form-field> -->
-
       <mat-form-field appearance="outline">
         <mat-label>Télefono</mat-label>
         <input
@@ -88,7 +81,7 @@
             </button>
           </mat-chip>
           <input
-            formControlName="associationInterests"
+          formControlName="associationInterests"
             placeholder=""
             [matChipInputFor]="happyChipList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
@@ -134,22 +127,14 @@
     </div>
 
     <mat-checkbox (change)="openDialogAssociationRegister()"  *ngIf="!checked"
-      >¿Perteneces a una asociación?</mat-checkbox
+      ><mat-hint><small>¿Perteneces a una asociación?</small></mat-hint></mat-checkbox
     >
     <mat-checkbox (change)="openDialogAssociationRegister()"  *ngIf="checked"
-    >¿Perteneces a una asociación?</mat-checkbox
+    ><mat-hint><small>¿Perteneces a una asociación?</small></mat-hint></mat-checkbox
   >
 
     <div class="ctrls">
-      <button
-        class="set-12"
-        type="button"
-        mat-raised-button
-        color="warn"
-        (click)="clearForm()"
-      >
-        <small>Cancelar</small>
-      </button>
+    
       <button
         class="set-12"
         type="submit"

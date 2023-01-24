@@ -1,0 +1,56 @@
+:host {
+    .sheet-head {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
+      margin-bottom: 20px;
+  
+      * {
+        margin: 0;
+      }
+  
+      img {
+        width: 20%;
+        margin-right: 20px;
+      }
+    }
+  
+    .icons {
+      margin: 0 !important;
+  
+      .icon {
+        margin: 0 5px !important;
+      }
+
+      .buttonActions{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+  
+      .actionsAssociation {
+        background-color: accent;
+        background-size: 100%;
+        opacity: 0.4;
+        a {
+          display: block;
+          width: 30px;
+          height: 30px;
+          border-bottom: 100%;
+          overflow: hidden;
+        }
+      }
+    }
+  
+    .actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      //padding-bottom: 20px;
+      border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
+      //margin-bottom: 20px !important;
+    }
+  }

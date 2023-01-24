@@ -51,16 +51,13 @@ export class AppConfigurationComponent implements OnInit {
     public formBuilder: FormBuilder,
     public dialogData: MatDialog,
     public dialog: LyDialog,
-    public utilitySrvc: UtilityService,
+    public utilitySrvc: UtilityService
   ) {
     this.accessToken = this.authenticationSrvc.fetchAccessToken;
     this.isMobile = this.deviceDetectorService.isMobile();
   }
 
   ngOnInit(): void {
-
-
-
     this.userService.fetchFireUser().subscribe({
       error: (error) => {
         switch (error['status']) {
@@ -68,7 +65,18 @@ export class AppConfigurationComponent implements OnInit {
       },
       next: (reply: any) => {
         this.user = reply;
-        //console.log(this.user);
+        if ((this.user.associationInterests == null || this.user.associationInterests.length == 0 )) {
+          //console.log('error')
+          this.happyArray = [];
+        } else {
+    
+          this.happyArray = JSON.parse(this.user.associationInterests);
+        }
+        if ((this.user.uninterestingTopics == null || this.user.uninterestingTopics.length == 0 )) {
+          this.unhappyArray = [];
+        } else {
+          this.unhappyArray = JSON.parse(this.user.uninterestingTopics);
+        }
 
         this.formGroup = this.formBuilder.group({
           firstname: [this.user['firstname'], [Validators.required]],
@@ -78,7 +86,6 @@ export class AppConfigurationComponent implements OnInit {
           phone: [this.user['phone'], []],
           associationInterests: ['', []],
           uninterestingTopics: ['', []],
-          
         });
       },
       complete: () => {
@@ -115,14 +122,14 @@ export class AppConfigurationComponent implements OnInit {
       uninterestingTopics: JSON.stringify(this.unhappyArray) || null,
       associationInterests: JSON.stringify(this.happyArray) || null,
     };
-    
+
     this.userService.updateProfile(data).subscribe({
       error: (error) => {
         switch (error['status']) {
         }
       },
       next: (reply: any) => {
-        console.log(data);
+        //console.log(data);
       },
       complete: () => {
         window.location.reload();
@@ -163,13 +170,13 @@ export class AppConfigurationComponent implements OnInit {
   }
 
   openDialogAssociationRegister() {
-      this.dialogData.open(AssociationRegisterComponent, {
+    this.dialogData.open(AssociationRegisterComponent, {
       data: {},
       height: '100%',
       maxWidth: '100%',
       panelClass: 'full-dialog',
     });
-    this.checked = !this.checked
+    this.checked = !this.checked;
   }
 
   clearForm() {
@@ -177,13 +184,11 @@ export class AppConfigurationComponent implements OnInit {
     this.formGroup.controls['gender'].reset();
   }
 
-  clearInputUnhappy(){
+  clearInputUnhappy() {
     this.unhappyArray = [];
   }
 
-  clearInputHappy(){
+  clearInputHappy() {
     this.happyArray = [];
   }
-
-
 }

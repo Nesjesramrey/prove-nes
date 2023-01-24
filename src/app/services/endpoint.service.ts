@@ -23,6 +23,7 @@ export class EndPointService {
   public saveLayoutsCategoryPreferenceEndPoint: string = '/user/';
   public addAssociationEndPoint: string = '/user/';
   public fetchUserCountEndPoint: string = '/user/count';
+  public joinUserWithAssociationEndPoint: string = '/user/'
 
   // documents
   public createNewDocumentEndPoint: string = '/document';
@@ -162,6 +163,7 @@ export class EndPointService {
 
   //association
   public createAssociationEndpoint: string = '/association';
+  public fetchAssociationByIdEndPoint: string = '/association/';
   public searchAssociationEndpoint: string = '/association?name=';
 
 
