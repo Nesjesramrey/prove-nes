@@ -180,6 +180,22 @@
     color: #696969;
   }
 
+  .headtools {
+    display: flex;
+    align-items: center;
+
+    .set-9 {
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+
   .table-head {
     display: flex;
     align-items: center;

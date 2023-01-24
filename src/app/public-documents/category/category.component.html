@@ -42,21 +42,19 @@
         </div>
 
         <div class="set-12 cardctrls">
-          <button type="button" mat-mini-fab color="primary" disabled>
+          <button type="button" disabled>
             <mat-icon>favorite</mat-icon>
           </button>
-          <button type="button" mat-mini-fab color="primary" matTooltip="Compartir" matTooltipClass="tooltip"
-            (click)="openBottomSheet()">
+          <button type="button" matTooltip="Compartir" matTooltipClass="tooltip" (click)="openBottomSheet()">
             <mat-icon>share</mat-icon>
           </button>
-          <button type="button" mat-mini-fab color="primary" matTooltip="Comentar" matTooltipClass="tooltip"
-            (click)="handleComments()">
+          <button type="button" matTooltip="Comentar" matTooltipClass="tooltip" (click)="handleComments()">
             <mat-icon>forum</mat-icon>
           </button>
         </div>
       </mat-card>
 
-      <horizontal-stats [users]="userCount" [interactions]="stats?.interactions"></horizontal-stats>
+      <horizontal-stats [users]="stats?.users" [interactions]="stats?.interactions"></horizontal-stats>
 
       <div class="set-12">
         <vertical-stats [topics]="document?.stats?.topics" [solutions]="stats?.solutions"></vertical-stats>
