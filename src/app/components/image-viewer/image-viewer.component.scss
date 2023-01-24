@@ -13,17 +13,21 @@
 
   .viewer-display {
 
-    button {
-      padding: 40px;
-      opacity: 0.3;
-      transition: all .2s linear;
-      border: 1px dashed rgba($color: #ffffff, $alpha: 1.0);
-      border-radius: 5px;
+    .imgldr {
+      text-align: center;
+      margin-bottom: 40px;
     }
 
+    // button {
+    //   padding: 10px;
+    //   opacity: 0.3;
+    //   transition: all .2s linear;
+    //   border: 1px dashed rgba($color: #ffffff, $alpha: 1.0);
+    //   border-radius: 5px;
+    // }
+
     mat-icon {
-      color: #ffffff;
-      font-size: 70pt;
+      font-size: 14pt;
     }
 
     p {
@@ -31,9 +35,9 @@
       color: #ffffff;
     }
 
-    button:hover {
-      opacity: 1;
-    }
+    // button:hover {
+    //   opacity: 1;
+    // }
 
     mat-spinner {
       margin: 20px auto 10px auto;

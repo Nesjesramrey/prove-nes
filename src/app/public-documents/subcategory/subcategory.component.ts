@@ -262,8 +262,10 @@ export class SubcategoryComponent implements OnInit {
       data: {
         documentID: this.documentID,
         document: this.document,
-        categoryID: this.subcategoryID,
-        coverage: coverage[0]
+        categoryID: this.categoryID,
+        subcategoryID: this.subcategoryID,
+        coverage: coverage[0],
+        user: this.user
       },
       disableClose: true,
       panelClass: 'full-dialog'

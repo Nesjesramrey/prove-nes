@@ -73,7 +73,11 @@ export class DashboardComponent implements OnInit {
     if (this.isAuthenticated) {
       this.utilitySrvc.linkMe(url);
     } else {
-      this.utilitySrvc.linkMe('/hub/ingresar');
+      if (this.isMobile) {
+        this.utilitySrvc.linkMe('/hub/signin-mobile');
+      } else {
+        this.utilitySrvc.linkMe('/hub/ingresar');
+      }
     }
   }
 }
