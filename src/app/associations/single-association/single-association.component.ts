@@ -40,9 +40,10 @@ export class SingleAssociationComponent implements OnInit {
       },
       next: (reply: any) => {
         this.association = reply;
-        console.log(this.association)
+        //console.log(this.association)
       },
       complete: () => {
+        this.isDataAvailable = true
        }
     });   
 

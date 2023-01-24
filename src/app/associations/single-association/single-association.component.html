@@ -18,12 +18,12 @@
   
         <input #fileInput type="file" accept="image/*" hidden />
         <button type="button" class="avatar">
-          <img
+          <!-- <img
             src="{{ association.avatarImage }}"
             alt="{{ association.name }} "
             *ngIf="association.avatarImage != null"
-          />
-          <span *ngIf="association.avatarImage == null">
+          /> -->
+          <span >
             {{ association.name | firstword | firstletter
             }}
           </span>

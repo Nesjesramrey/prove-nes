@@ -191,11 +191,12 @@ export class AssociationRegisterComponent implements OnInit {
     data['formData'].append('ciudad', this.dataComercialFormGroup['value']['associationCity']),
     data['formData'].append('estado', this.dataComercialFormGroup['value']['associationState']),
     data['formData'].append('interestTopics',  JSON.stringify(this.happyArray) || null),
-    data['formData'].append('uninterestTopics', JSON.stringify(this.unhappyArray) || null),      
+    data['formData'].append('uninterestTopics', JSON.stringify(this.unhappyArray) || null),
+    data['formData'].append('layoutsCategoryPreference', JSON.stringify(this.layoutsCategoryPreference) || null),      
     console.log(data)
-    // for (let [key, value] of data['formData']) {
-    //   console.log(`${key}: ${value}`)
-    // }
+    for (let [key, value] of data['formData']) {
+      console.log(`${key}: ${value}`)
+    }
     this.associationService.createAssociation(data['formData']).subscribe({
       
       error: (error) => {
@@ -339,6 +340,7 @@ export class AssociationRegisterComponent implements OnInit {
         category: x['category']['_id']
       }
       this.layoutsCategoryPreference.push(obj);
+      
     });
     // console.log(this.layoutsCategoryPreference);
   }

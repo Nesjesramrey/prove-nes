@@ -25,7 +25,7 @@
               </small>
             </mat-hint>
           </mat-form-field>
-          <div class="set-12 joinButton">
+          <div class="set-12 searchButton">
             <button type="button" mat-raised-button color="warn" (click)="onSearch(searchFormGroup)">
               <small>Buscar</small>
             </button>
@@ -42,7 +42,7 @@
                   <strong> No hay resultados que mostrar.</strong>
                 </p>
                 <p>
-                  <strong>Para registrarte deberas acreditar la representación de tu organización</strong>
+                  Para registrarte deberas acreditar la representación de tu organización
                 </p>
               </div>
             </div>
@@ -73,7 +73,7 @@
       </div>
       <mat-hint *ngIf="isNotAssociationAvailable">**Presiona <strong>Registar</strong>
       </mat-hint>
-      <div class="set-12 ctrls" *ngIf="isNotAssociationAvailable">
+      <div class="set-12 ctrls register" *ngIf="isNotAssociationAvailable">
         <button mat-raised-button color="warn" matStepperNext>
           <small>Registrar</small>
         </button>
@@ -125,15 +125,15 @@
     </mat-step>
     <!-- Step 2.1-->
     <mat-step>
-      <div class="set-12">
-        <p>
-          <small *ngIf="!viewSubLayouts"
-            >Organiza las categorías por interés</small
-          >
+      <div  class="set-12 category">
+        <p class="txt-center" *ngIf="!viewSubLayouts">
+          Arrastra y acomoda las categorías segun tu intereses.
+          
           <small *ngIf="viewSubLayouts"
             >Organiza las sub categorías por interés</small
           >
         </p>
+        <p class="txt-center"><mat-icon >touch_app</mat-icon></p>
       </div>
 
       <div
@@ -256,34 +256,37 @@
         <div
           *ngIf="associationType == 'Empresa' || associationType == 'Sociedad Civil' || associationType == 'Maraton Estudiantil'"
           class="set-12 addfile">
-          <p class="set-10">
-            <small *ngIf="associationType == 'Empresa'">** Adjuntar <strong>Acta Constitutiva</strong> </small>
-            <small *ngIf="associationType == 'Sociedad Civil' || associationType == 'Maraton Estudiantil'">** Adjuntar
-              <strong>Acta Organización</strong> </small>
-          </p>
-          <button type="button" mat-raised-button mat-mini-fab color="warn" (click)="file.click()"
-            matTooltip="Adjuntar archivo" matTooltipClass="tooltip" class="set-1 bwico">
-            <mat-icon><small>attach_file</small></mat-icon>
+          <!-- <p class="set-10">
+         
+          </p> -->
+          <button type="button" mat-raised-button  color="primary" (click)="file.click()"
+            matTooltip="Adjuntar archivo" matTooltipClass="tooltip" class="set-8 bwico" disabled>
+            <!-- <mat-icon><small>attach_file</small></mat-icon> -->
+            <small *ngIf="associationType == 'Empresa'">Adjuntar <strong>Acta Constitutiva</strong> </small>
+            <small *ngIf="associationType == 'Sociedad Civil' || associationType == 'Maraton Estudiantil'">Adjuntar
+              <strong>Acta de Organización</strong> </small>
           </button>
           <input class="set-1" type="file" #file (change)="onFileSelected($event)" />
         </div>
         <div class="set-12 addfile">
-          <p class="set-10">
-            <small>** Adjuntar <strong>Identificacion Oficial </strong> </small>
-          </p>
-          <button type="button" mat-raised-button mat-mini-fab color="warn" (click)="file.click()"
-            matTooltip="Adjuntar archivo" matTooltipClass="tooltip" class="set-1 bwico">
-            <mat-icon><small>attach_file</small></mat-icon>
+          <!-- <p class="set-10">
+           
+          </p> -->
+          <button type="button" mat-raised-button  color="primary" (click)="file.click()"
+            matTooltip="Adjuntar archivo" matTooltipClass="tooltip" class="set-8 bwico" disabled>
+            <!-- <mat-icon><small>attach_file</small></mat-icon> -->
+            <small>Adjuntar <strong>Identificacion Oficial </strong> </small>
           </button>
           <input class="set-1" type="file" #file (change)="onFileSelected($event)" />
         </div>
         <div *ngIf="associationType == 'Empresa' || associationType == 'Sociedad Civil'" class="set-12 addfile">
-          <p class="set-10">
-            <small>** Adjuntar <strong>Poder notarial </strong> </small>
-          </p>
-          <button type="button" mat-raised-button mat-mini-fab color="warn" (click)="file.click()"
-            matTooltip="Adjuntar archivo" matTooltipClass="tooltip" class="set-1 bwico">
-            <mat-icon><small>attach_file</small></mat-icon>
+          <!-- <p class="set-10">
+            
+          </p> -->
+          <button type="button" mat-raised-button  color="primary" (click)="file.click()"
+            matTooltip="Adjuntar archivo" matTooltipClass="tooltip" class="set-8 bwico" disabled>
+            <small>Adjuntar <strong>Poder notarial </strong> </small>
+            <!-- <mat-icon><small>attach_file</small></mat-icon> -->
           </button>
           <input class="set-1" type="file" #file (change)="onFileSelected($event)" />
         </div>
