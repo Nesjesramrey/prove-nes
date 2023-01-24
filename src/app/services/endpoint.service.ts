@@ -163,6 +163,7 @@ export class EndPointService {
 
   //association
   public createAssociationEndpoint: string = '/association';
+  public fetchAssociationByIdEndPoint: string = '/association/';
   public searchAssociationEndpoint: string = '/association?name=';
 
 

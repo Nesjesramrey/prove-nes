@@ -6,7 +6,7 @@ import { SingleAssociationComponent } from './single-association/single-associat
 
 const routes: Routes = [
   { path: '', children: [{ path: '', component: AssociationsComponent,  }] },
-  { path: 'asociacion', component: SingleAssociationComponent, canActivate: [] },
+  { path:  ':associationID', component: SingleAssociationComponent, canActivate: [] },
 
 ];
 

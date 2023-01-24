@@ -1,8 +1,10 @@
 import { Component, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { DeviceDetectorService } from 'ngx-device-detector';;
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
+import { DocumentService } from 'src/app/services/document.service';
 import { AssociationService } from 'src/app/services/association.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { SearchService } from 'src/app/services/search.service';
@@ -38,6 +40,10 @@ export class AssociationRegisterComponent implements OnInit {
   public associationTypology: any = null;
   public accessToken: any = null;
   public user: any = null;
+  public document: any = null;
+  public layouts: any = null;
+  public sublayouts: any = null;
+  public layoutsCategoryPreference: any[] = [];
   public states: any = [];
   public payload: any = null;
   public isDataAvailable: boolean = false;
@@ -47,6 +53,7 @@ export class AssociationRegisterComponent implements OnInit {
   @Output () public checked: boolean = true
   public isAssociationAvailable: boolean = false;
   public isNotAssociationAvailable: boolean = false;
+  public viewSubLayouts: boolean = false;
   public associations: any = [];
   public associationType: any = null;
 
@@ -54,6 +61,7 @@ export class AssociationRegisterComponent implements OnInit {
     public authenticationSrvc: AuthenticationService,
     public utilityService: UtilityService,
     public userService: UserService,
+    public documentService: DocumentService,
     public associationService: AssociationService,
     public deviceDetectorService: DeviceDetectorService,
     public searchService: SearchService,
@@ -116,6 +124,26 @@ export class AssociationRegisterComponent implements OnInit {
           associationState: ["", [Validators.required]],
           file: ["", ]
       
+        });
+        this.documentService.fetchCoverDocument().subscribe({
+          error: (error: any) => {
+            setTimeout(() => {
+              this.isDataAvailable = true;
+            }, 100);
+          },
+          next: (reply: any) => {
+            this.document = reply;
+            this.layouts = this.document['layouts'];
+            this.sublayouts = this.layouts[0]['subLayouts'];
+            this.layouts.filter((x: any, i: any) => {
+              let obj: any = {
+                priority: i,
+                category: x['category']['_id']
+              }
+              this.layoutsCategoryPreference.push(obj);
+            });
+          },
+          complete: () => { }
         });
 
       },
@@ -302,4 +330,32 @@ export class AssociationRegisterComponent implements OnInit {
     console.log(this.associationType)
    }
 
+   dragAndDropLayout(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.layouts, event.previousIndex, event.currentIndex);
+    this.layoutsCategoryPreference = [];
+    this.layouts.filter((x: any, i: any) => {
+      let obj: any = {
+        priority: i,
+        category: x['category']['_id']
+      }
+      this.layoutsCategoryPreference.push(obj);
+    });
+    // console.log(this.layoutsCategoryPreference);
+  }
+  dragAndDropSubLayout(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.sublayouts, event.previousIndex, event.currentIndex);
+  }
+
+  onLayoutSelected(layout: any) {
+    // this.viewSubLayouts = true;
+    // this.sublayouts = layout['subLayouts'];
+  }
+
+  hideSubLayouts() {
+    this.viewSubLayouts = false;
+  }   
+
 }
+
+   
+

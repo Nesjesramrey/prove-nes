@@ -1,10 +1,5 @@
 <div class="form-association" *ngIf="isDataAvailable && isMobile">
-  <mat-stepper
-    #stepper
-    [disableRipple]="true"
-    [linear]="true"
-    [@.disabled]="true"
-  >
+  <mat-stepper #stepper [disableRipple]="true" [linear]="true" [@.disabled]="true">
     <!--Search your association or register-->
     <mat-step>
       <div class="set-12 dialog-head">
@@ -12,50 +7,31 @@
           <h3>Aquí encuentras tu asociación</h3>
         </div>
         <div class="set-2 txt-right">
-          <button
-            type="button"
-            mat-mini-fab
-            color="primary"
-            (click)="killDialog()"
-          >
+          <button type="button" mat-mini-fab color="primary" (click)="killDialog()">
             <mat-icon>cancel</mat-icon>
           </button>
         </div>
       </div>
       <div class="search-hldr" *ngIf="isMobile">
-        <form
-          [formGroup]="searchFormGroup"
-          (submit)="onSearch(searchFormGroup)"
-        >
+        <form [formGroup]="searchFormGroup" (submit)="onSearch(searchFormGroup)">
           <mat-form-field appearance="outline">
             <mat-label>Buscar tu asociación</mat-label>
             <input matInput formControlName="search" />
             <button type="button" matSuffix (click)="clearSearchForm()">
               <mat-icon>cancel</mat-icon>
             </button>
-            <mat-hint
-              ><small
-                >** Presiona <strong>ENTER O BUSCAR</strong> después de escribir
+            <mat-hint><small>** Presiona <strong>ENTER O BUSCAR</strong> después de escribir
                 tu busqueda
               </small>
             </mat-hint>
           </mat-form-field>
           <div class="set-12 joinButton">
-            <button
-              type="button"
-              mat-raised-button
-              color="warn"
-              (click)="onSearch(searchFormGroup)"
-            >
+            <button type="button" mat-raised-button color="warn" (click)="onSearch(searchFormGroup)">
               <small>Buscar</small>
             </button>
           </div>
 
-          <div
-            class="innerhldr"
-            *ngIf="isDataAvailable"
-            [class.fixmob]="isMobile"
-          >
+          <div class="innerhldr" *ngIf="isDataAvailable" [class.fixmob]="isMobile">
             <div class="set-12" *ngIf="isNotAssociationAvailable">
               <!-- <div class="set-12 head-titles" *ngIf="isNotAssociationAvailable || isAssociationAvailable">
                   <span>Resultados de tu búsqueda:</span>
@@ -63,36 +39,29 @@
                 </div> -->
               <div class="set-12 listhldr">
                 <p>
-                  <strong> No hay resultados que mostrar. </strong>
+                  <strong> No hay resultados que mostrar.</strong>
+                </p>
+                <p>
+                  <strong>Para registrarte deberas acreditar la representación de tu organización</strong>
                 </p>
               </div>
             </div>
 
             <div class="set-12 listhldr" *ngIf="isAssociationAvailable">
-              <div
-                class="set-12 listitem"
-                *ngFor="let association of associations"
-              >
+              <div class="set-12 listitem" *ngFor="let association of associations">
                 <div class="set-12">
                   <span>
                     <strong>{{ association.name }}</strong>
                   </span>
                   <p *ngIf="association.description != null" class="desc">
-                    <small
-                      [innerHtml]="
+                    <small [innerHtml]="
                         association.description.length > 100
                           ? (association.description | slice : 0 : 100) + '..'
                           : association.description
-                      "
-                    ></small>
+                      "></small>
                   </p>
                   <div class="set-12 joinButton">
-                    <button
-                      type="button"
-                      mat-raised-button
-                      color="primary"
-                      (click)="joinAssociation(association._id)"
-                    >
+                    <button type="button" mat-raised-button color="primary" (click)="joinAssociation(association._id)">
                       <small>Unirme</small>
                     </button>
                   </div>
@@ -102,8 +71,7 @@
           </div>
         </form>
       </div>
-      <mat-hint *ngIf="isNotAssociationAvailable"
-        >**Presiona <strong>Registar</strong> si no encontraste tu asociación
+      <mat-hint *ngIf="isNotAssociationAvailable">**Presiona <strong>Registar</strong>
       </mat-hint>
       <div class="set-12 ctrls" *ngIf="isNotAssociationAvailable">
         <button mat-raised-button color="warn" matStepperNext>
@@ -119,12 +87,7 @@
           <h3>Datos de la asociación</h3>
         </div>
         <div class="set-2 txt-right">
-          <button
-            type="button"
-            mat-mini-fab
-            color="primary"
-            (click)="killDialog()"
-          >
+          <button type="button" mat-mini-fab color="primary" (click)="killDialog()">
             <mat-icon>cancel</mat-icon>
           </button>
         </div>
@@ -134,11 +97,8 @@
         <mat-form-field appearance="outline">
           <mat-label><small>Tipo de asociación</small></mat-label>
           <mat-select matInput formControlName="associationTypology">
-            <mat-option
-              (click)="onChangeAssociationType(association.name)"
-              *ngFor="let association of associationTypology"
-              [value]="association._id"
-            >
+            <mat-option (click)="onChangeAssociationType(association.name)"
+              *ngFor="let association of associationTypology" [value]="association._id">
               <small>{{ association.name }} </small>
             </mat-option>
           </mat-select>
@@ -149,27 +109,77 @@
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Describe tu asociación</mat-label>
-          <textarea
-            id="textarea-description"
-            cdkTextareaAutosize
-            matInput
-            formControlName="associationDescription"
-          ></textarea>
+          <textarea id="textarea-description" cdkTextareaAutosize matInput
+            formControlName="associationDescription"></textarea>
         </mat-form-field>
       </form>
       <div class="set-12 ctrls">
         <button mat-raised-button color="warn" matStepperPrevious>
           <small>Atras</small>
         </button>
-        <button
-          mat-raised-button
-          color="warn"
-          matStepperNext
-          [disabled]="dataAssociationFormGroup.invalid"
-        >
+        <button mat-raised-button color="warn" matStepperNext [disabled]="dataAssociationFormGroup.invalid">
           <small>Siguiente</small>
         </button>
         <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
+      </div>
+    </mat-step>
+    <!-- Step 2.1-->
+    <mat-step>
+      <div class="set-12">
+        <p>
+          <small *ngIf="!viewSubLayouts"
+            >Organiza las categorías por interés</small
+          >
+          <small *ngIf="viewSubLayouts"
+            >Organiza las sub categorías por interés</small
+          >
+        </p>
+      </div>
+
+      <div
+        cdkDropList
+        class="set-12 drag-list"
+        (cdkDropListDropped)="dragAndDropLayout($event)"
+        *ngIf="!viewSubLayouts"
+      >
+        <div
+          class="set-12 drag-box"
+          *ngFor="let layout of layouts"
+          cdkDrag
+          (click)="onLayoutSelected(layout)"
+        >
+          <strong>{{ layout.category.name }}</strong>
+        </div>
+      </div>
+
+      <div
+        cdkDropList
+        class="set-12 drag-sublist"
+        (cdkDropListDropped)="dragAndDropSubLayout($event)"
+        *ngIf="viewSubLayouts"
+      >
+        <div class="set-12 drag-box" *ngFor="let layout of sublayouts" cdkDrag>
+          <strong>{{ layout.category.name }}</strong>
+        </div>
+        <div class="set-12 innerctrls">
+          <button
+            type="button"
+            mat-mini-fab
+            color="primary"
+            (click)="hideSubLayouts()"
+          >
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="set-12 ctrls">
+        <button mat-raised-button color="warn" matStepperPrevious>
+          <small>Atras</small>
+        </button>
+        <button mat-raised-button color="warn" matStepperNext>
+          <small>Siguiente</small>
+        </button>
       </div>
     </mat-step>
 
@@ -186,35 +196,22 @@
           <h3 *ngIf="associationType == 'Estudiante'">Datos Estudiante</h3>
         </div>
         <div class="set-2 txt-right">
-          <button
-            type="button"
-            mat-mini-fab
-            color="primary"
-            (click)="killDialog()"
-          >
+          <button type="button" mat-mini-fab color="primary" (click)="killDialog()">
             <mat-icon>cancel</mat-icon>
           </button>
         </div>
       </div>
       <form [formGroup]="dataComercialFormGroup">
-        <mat-form-field
-          *ngIf="
+        <mat-form-field *ngIf="
             associationType == 'Empresa' ||
             associationType == 'Sociedad Civil' ||
             associationType == 'Maraton Estudiantil'
-          "
-          appearance="outline"
-        >
-          <mat-label
-            *ngIf="
+          " appearance="outline">
+          <mat-label *ngIf="
               associationType == 'Empresa' ||
               associationType == 'Sociedad Civil'
-            "
-            >Razón o denominación social</mat-label
-          >
-          <mat-label *ngIf="associationType == 'Maraton Estudiantil'"
-            >Universidad a la que perteneces</mat-label
-          >
+            ">Razón o denominación social</mat-label>
+          <mat-label *ngIf="associationType == 'Maraton Estudiantil'">Universidad a la que perteneces</mat-label>
           <input matInput formControlName="associationNameComercial" />
         </mat-form-field>
 
@@ -246,12 +243,8 @@
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Estado</mat-label>
-          <mat-select
-            formControlName="associationState"
-            (selectionChange)="onSelectCoverage($event)"
-            multiple
-            #stateSelect
-          >
+          <mat-select formControlName="associationState" (selectionChange)="onSelectCoverage($event)" multiple
+            #stateSelect>
             <!-- <mat-option value="all">
             <small>Nacional</small>
           </mat-option> -->
@@ -260,87 +253,46 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <div  *ngIf="associationType == 'Empresa' || associationType == 'Sociedad Civil' || associationType == 'Maraton Estudiantil'" class="set-12 addfile">
+        <div
+          *ngIf="associationType == 'Empresa' || associationType == 'Sociedad Civil' || associationType == 'Maraton Estudiantil'"
+          class="set-12 addfile">
           <p class="set-10">
             <small *ngIf="associationType == 'Empresa'">** Adjuntar <strong>Acta Constitutiva</strong> </small>
-            <small *ngIf="associationType == 'Sociedad Civil' || associationType == 'Maraton Estudiantil'">** Adjuntar <strong>Acta Organización</strong> </small>
+            <small *ngIf="associationType == 'Sociedad Civil' || associationType == 'Maraton Estudiantil'">** Adjuntar
+              <strong>Acta Organización</strong> </small>
           </p>
-          <button
-            type="button"
-            mat-raised-button
-            mat-mini-fab
-            color="warn"
-            (click)="file.click()"
-            matTooltip="Adjuntar archivo"
-            matTooltipClass="tooltip"
-            class="set-1 bwico"
-          >
+          <button type="button" mat-raised-button mat-mini-fab color="warn" (click)="file.click()"
+            matTooltip="Adjuntar archivo" matTooltipClass="tooltip" class="set-1 bwico">
             <mat-icon><small>attach_file</small></mat-icon>
           </button>
-          <input
-            class="set-1"
-            type="file"
-            #file
-            (change)="onFileSelected($event)"
-          />
+          <input class="set-1" type="file" #file (change)="onFileSelected($event)" />
         </div>
         <div class="set-12 addfile">
           <p class="set-10">
             <small>** Adjuntar <strong>Identificacion Oficial </strong> </small>
           </p>
-          <button
-            type="button"
-            mat-raised-button
-            mat-mini-fab
-            color="warn"
-            (click)="file.click()"
-            matTooltip="Adjuntar archivo"
-            matTooltipClass="tooltip"
-            class="set-1 bwico"
-          >
+          <button type="button" mat-raised-button mat-mini-fab color="warn" (click)="file.click()"
+            matTooltip="Adjuntar archivo" matTooltipClass="tooltip" class="set-1 bwico">
             <mat-icon><small>attach_file</small></mat-icon>
           </button>
-          <input
-            class="set-1"
-            type="file"
-            #file
-            (change)="onFileSelected($event)"
-          />
+          <input class="set-1" type="file" #file (change)="onFileSelected($event)" />
         </div>
-        <div  *ngIf="associationType == 'Empresa' || associationType == 'Sociedad Civil'" class="set-12 addfile">
+        <div *ngIf="associationType == 'Empresa' || associationType == 'Sociedad Civil'" class="set-12 addfile">
           <p class="set-10">
             <small>** Adjuntar <strong>Poder notarial </strong> </small>
           </p>
-          <button
-            type="button"
-            mat-raised-button
-            mat-mini-fab
-            color="warn"
-            (click)="file.click()"
-            matTooltip="Adjuntar archivo"
-            matTooltipClass="tooltip"
-            class="set-1 bwico"
-          >
+          <button type="button" mat-raised-button mat-mini-fab color="warn" (click)="file.click()"
+            matTooltip="Adjuntar archivo" matTooltipClass="tooltip" class="set-1 bwico">
             <mat-icon><small>attach_file</small></mat-icon>
           </button>
-          <input
-            class="set-1"
-            type="file"
-            #file
-            (change)="onFileSelected($event)"
-          />
+          <input class="set-1" type="file" #file (change)="onFileSelected($event)" />
         </div>
       </form>
       <div class="set-12 ctrls">
         <button mat-raised-button color="warn" matStepperPrevious>
           <small>Atras</small>
         </button>
-        <button
-          mat-raised-button
-          color="warn"
-          matStepperNext
-          [disabled]="dataComercialFormGroup.invalid"
-        >
+        <button mat-raised-button color="warn" matStepperNext [disabled]="dataComercialFormGroup.invalid">
           <small>Siguiente</small>
         </button>
         <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
@@ -353,12 +305,7 @@
           <h3>Tus intereses</h3>
         </div>
         <div class="set-2 txt-right">
-          <button
-            type="button"
-            mat-mini-fab
-            color="primary"
-            (click)="killDialog()"
-          >
+          <button type="button" mat-mini-fab color="primary" (click)="killDialog()">
             <mat-icon>cancel</mat-icon>
           </button>
         </div>
@@ -367,31 +314,20 @@
         <mat-form-field appearance="outline">
           <mat-label>¿Qué te hace feliz de México?</mat-label>
           <mat-chip-list #happyChipList>
-            <mat-chip
-              *ngFor="let item of happyArray"
-              (removed)="removeHappyItem(item)"
-            >
+            <mat-chip *ngFor="let item of happyArray" (removed)="removeHappyItem(item)">
               {{ item.name }}
               <button type="button" matChipRemove>
                 <mat-icon>cancel</mat-icon>
               </button>
             </mat-chip>
-            <input
-              placeholder=""
-              [matChipInputFor]="happyChipList"
-              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-              [matChipInputAddOnBlur]="addOnBlur"
-              (matChipInputTokenEnd)="addHappyItem($event)"
-            />
+            <input placeholder="" [matChipInputFor]="happyChipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="addHappyItem($event)" />
             <button type="button" matSuffix (click)="clearInputHappy()">
               <mat-icon>cancel</mat-icon>
             </button>
           </mat-chip-list>
-          <mat-hint
-            ><small
-              >** Presiona <strong>ENTER</strong> después de escribir algo que
-              te ga feliz, ej: <strong>" Playas"</strong></small
-            >
+          <mat-hint><small>** Presiona <strong>ENTER</strong> después de escribir algo que
+              te ga feliz, ej: <strong>" Playas"</strong></small>
           </mat-hint>
         </mat-form-field>
       </form>
@@ -413,12 +349,7 @@
           <h3>¡Has terminado!</h3>
         </div>
         <div class="set-2 txt-right">
-          <button
-            type="button"
-            mat-mini-fab
-            color="primary"
-            (click)="killDialog()"
-          >
+          <button type="button" mat-mini-fab color="primary" (click)="killDialog()">
             <mat-icon>cancel</mat-icon>
           </button>
         </div>
@@ -427,29 +358,20 @@
         <mat-form-field appearance="outline">
           <mat-label>¿Qué te entristece de México?</mat-label>
           <mat-chip-list #unhappyChipList>
-            <mat-chip
-              *ngFor="let item of unhappyArray"
-              (removed)="removeUnhappyItem(item)"
-            >
+            <mat-chip *ngFor="let item of unhappyArray" (removed)="removeUnhappyItem(item)">
               {{ item.name }}
               <button type="button" matChipRemove>
                 <mat-icon>cancel</mat-icon>
               </button>
             </mat-chip>
-            <input
-              placeholder=""
-              [matChipInputFor]="unhappyChipList"
-              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-              [matChipInputAddOnBlur]="addOnBlur"
-              (matChipInputTokenEnd)="addUnhappyItem($event)"
-            />
+            <input placeholder="" [matChipInputFor]="unhappyChipList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+              (matChipInputTokenEnd)="addUnhappyItem($event)" />
             <button type="button" matSuffix (click)="clearInputUnhappy()">
               <mat-icon>cancel</mat-icon>
             </button>
           </mat-chip-list>
-          <mat-hint
-            ><small
-              >** Presiona <strong>ENTER</strong> después de escribir algo que
+          <mat-hint><small>** Presiona <strong>ENTER</strong> después de escribir algo que
               te entriztesca, ej:
               <strong>" Delincuencia"</strong>
             </small>
@@ -460,19 +382,13 @@
             <small>He leído y estoy de acuerdo con:</small>
           </p>
           <div class="set-12 row">
-            <mat-checkbox
-              color="primary"
-              formControlName="terms"
-            ></mat-checkbox>
+            <mat-checkbox color="primary" formControlName="terms"></mat-checkbox>
             <a href="#">
               <small>Términos y condiciones</small>
             </a>
           </div>
           <div class="set-12 row">
-            <mat-checkbox
-              color="primary"
-              formControlName="privacy"
-            ></mat-checkbox>
+            <mat-checkbox color="primary" formControlName="privacy"></mat-checkbox>
             <a href="#">
               <small>Política de privacidad</small>
             </a>
@@ -492,12 +408,7 @@
         <button mat-raised-button color="warn" matStepperPrevious>
           <small>Atras</small>
         </button>
-        <button
-          type="button"
-          mat-raised-button
-          color="primary"
-          (click)="onCreateAssociation()"
-        >
+        <button type="button" mat-raised-button color="primary" (click)="onCreateAssociation()">
           <small>Registrarme</small>
         </button>
         <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>

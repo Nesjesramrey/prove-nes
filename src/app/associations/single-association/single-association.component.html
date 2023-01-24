@@ -19,13 +19,13 @@
         <input #fileInput type="file" accept="image/*" hidden />
         <button type="button" class="avatar">
           <img
-            src="{{ user.avatarImage }}"
-            alt="{{ user.firstname }} {{ user.lastname }}"
-            *ngIf="user.avatarImage != null"
+            src="{{ association.avatarImage }}"
+            alt="{{ association.name }} "
+            *ngIf="association.avatarImage != null"
           />
-          <span *ngIf="user.avatarImage == null">
-            {{ user.firstname | firstword | firstletter
-            }}{{ user.lastname | firstword | firstletter }}
+          <span *ngIf="association.avatarImage == null">
+            {{ association.name | firstword | firstletter
+            }}
           </span>
           <div
             class="overlay"
@@ -37,15 +37,15 @@
         </button>
   
         <div class="set-12 cardbody">
-          <h3 class="txt-center">{{ user.firstname }} {{ user.lastname }}</h3>
+          <h3 class="txt-center">{{ association.name}} </h3>
           <div class="set-12 usrinfo">
             <p class="set-12">
               <small class="set-6"><strong>Semblanza</strong></small>
             </p>
             <p class="set-12">
               <small class="set-12">
-                {{ semblanza | slice : 0 : 300 }}
-                <small *ngIf="semblanza.length > 500"
+                {{ association.description | slice : 0 : 300 }}
+                <small *ngIf="association.description.length > 300"
                   ><strong>... ver mas</strong></small
                 ></small
               >
