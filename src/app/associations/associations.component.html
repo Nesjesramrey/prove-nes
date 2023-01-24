@@ -7,9 +7,9 @@
           <strong>{{ association.businessName }}</strong>
         </h4>
         <p>
-          <span>{{ association.description }}</span>
+          <span><small>{{ association.description }}</small></span>
         </p>
-        <div class="set-12 joinButton">
+        <div class="set-12 singleAssociationButton">
             <button type="button" mat-raised-button color="warn" (click)="linkMe('profile', association._id)" >
               <small>Ir a perfil</small>
             </button>
