@@ -136,24 +136,20 @@ export class AuthenticationService {
     );
   }
 
-  facebookAuth() {
-    return this.authLogin(new FacebookAuthProvider());
-  }
-
-  authLogin(provider: any) {
-    return this.angularFireAuth.signInWithPopup(provider)
-      .then((result: any) => {
-        console.log(result);
-        console.log('You have been successfully logged in!');
-      })
-      .catch((error: any) => {
-        // console.log(error);
-        switch (error['code']) {
-          case 'auth/popup-closed-by-user':
-            this.utilityService.openErrorSnackBar('Acceso denegado por usuario.');
-            break;
-        }
-      });
+  facebookAuth(): Observable<firebase.default.auth.UserCredential> {
+    return new Observable<firebase.default.auth.UserCredential>((observer) => {
+      const provider = new FacebookAuthProvider();
+      provider.addScope("public_profile");
+      provider.addScope("email");
+      
+      this.angularFireAuth.signInWithPopup(provider)        
+        .then((result: firebase.default.auth.UserCredential) => {
+          observer.next(result);
+        })
+        .catch((error) => {
+          observer.error(error);
+        });  
+    });
   }
 
   /**

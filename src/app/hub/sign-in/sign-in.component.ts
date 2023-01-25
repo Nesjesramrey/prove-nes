@@ -102,4 +102,29 @@ export class SignInComponent implements OnInit {
       if (reply != undefined) { }
     });
   }
+
+  facebookAuth() {
+    this.authenticationSrvc.facebookAuth().subscribe({
+      next: (credential) => {
+        console.log(credential);        
+      },
+      error: (error) => {
+        switch (error['code']) {
+          case 'auth/popup-closed-by-user': {
+            this.utilitySrvc.openSuccessSnackBar('Acceso denegado por usuario.');
+            break;
+          }
+          
+          default: {
+            this.utilitySrvc.openErrorSnackBar('Lo sentimos, no hemos podido realizar la autenticación');
+            break;
+          }
+        }
+      },
+      complete: () => {
+        console.log("Terminado");
+        
+      },
+    })
+  }
 }
