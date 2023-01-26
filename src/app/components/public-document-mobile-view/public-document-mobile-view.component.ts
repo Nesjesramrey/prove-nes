@@ -15,6 +15,7 @@ export class PublicDocumentMobileViewComponent implements OnInit {
   @Input('storedSolutions') public storedSolutions: any = null;
   public open: boolean = false;
   @ViewChild('states') public states!: any;
+  @Input('userCount') public userCount: any = 0;
 
   constructor(
     public dialog: MatDialog

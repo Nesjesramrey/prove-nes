@@ -7,6 +7,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { catchError, from, Observable, of, switchMap } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { UtilityService } from './utility.service';
+import { FacebookAuthProvider } from 'firebase/auth';
 
 @Injectable()
 export class AuthenticationService {
@@ -21,7 +22,7 @@ export class AuthenticationService {
     public angularFireStore: AngularFirestore,
     public angularFireAuth: AngularFireAuth,
     public ngZone: NgZone,
-    public utilityService: UtilityService
+    public utilityService: UtilityService,
   ) {
     // this.angularFireAuth.idToken.subscribe({
     //   next(value) {
@@ -119,23 +120,40 @@ export class AuthenticationService {
 
   validateEmail(data: any) {
     return this.httpClient.post(
-      this.endpointSrvc.apiEndPoint + this.endpointSrvc.validateEmailEndPoint,
-      data
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.validateEmailEndPoint, data
     );
   }
 
   signin(data: any) {
     return this.httpClient.post(
-      this.endpointSrvc.apiEndPoint + this.endpointSrvc.signinEndPoint,
-      data
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.signinEndPoint, data
     );
   }
 
   signup(data: any) {
     return this.httpClient.post(
-      this.endpointSrvc.apiEndPoint + this.endpointSrvc.signupEndPoint,
-      data
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.signupEndPoint, data
     );
+  }
+
+  facebookAuth() {
+    return this.authLogin(new FacebookAuthProvider());
+  }
+
+  authLogin(provider: any) {
+    return this.angularFireAuth.signInWithPopup(provider)
+      .then((result: any) => {
+        console.log(result);
+        console.log('You have been successfully logged in!');
+      })
+      .catch((error: any) => {
+        // console.log(error);
+        switch (error['code']) {
+          case 'auth/popup-closed-by-user':
+            this.utilityService.openErrorSnackBar('Acceso denegado por usuario.');
+            break;
+        }
+      });
   }
 
   /**
@@ -145,8 +163,7 @@ export class AuthenticationService {
    */
   signout(data: any) {
     return this.httpClient.post(
-      this.endpointSrvc.apiEndPoint + this.endpointSrvc.signoutEndPoint,
-      data
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.signoutEndPoint, data
     );
   }
 
