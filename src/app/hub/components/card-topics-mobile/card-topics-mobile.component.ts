@@ -28,6 +28,7 @@ export class CardTopicsMobileComponent implements OnInit {
   public isDataAvailable: boolean = false;
   public isFavorite: boolean = false;
   public allFavorites: any = null;
+  public myFavorites: any = [];
 
   constructor(
     public dialog: MatDialog,
@@ -49,16 +50,6 @@ export class CardTopicsMobileComponent implements OnInit {
         this.user = reply;
         //console.log(this.user);
 
-        // *** load favourites
-        this.favoritesService.fetchFavoritesByTopicID({ _id: '6399ea5161aaa9ec2660b014' }).subscribe({
-          error: (error: any) => { },
-          next: (reply: any) => {
-            this.allFavorites = reply['data'];
-            //console.log(this.allFavorites)
-            this.isFavorite = this.checkFavorites();
-          },
-          complete: () => { }
-        });
       },
       complete: () => {
         this.isDataAvailable = true;
@@ -71,9 +62,12 @@ export class CardTopicsMobileComponent implements OnInit {
       },
       next: (reply: any) => {
         this.topics = reply;
-        //console.log(this.topics);
+        //console.log(this.topics)
+         // *** load favourites
+      
       },
       complete: () => {
+       
       },
     })
   }
@@ -166,8 +160,24 @@ export class CardTopicsMobileComponent implements OnInit {
   checkFavorites() {
     let favorited = this.getUserFavorited();
     if (favorited.length > 0) {
+      this.myFavorites.push(favorited[0])
       return favorited[0].favorites;
     }
     return false;
   }
+   checkMyFavorites(){
+    this.topics.forEach((topicID: any)=>{
+      this.favoritesService.fetchFavoritesByTopicID({ _id: topicID._id }).subscribe({
+        error: (error: any) => { },
+        next: (reply: any) => {
+        this.allFavorites = reply['data'];
+         this.checkFavorites();
+        },
+        complete: () => { 
+        }
+      });
+    })
+   }
+
+
 }

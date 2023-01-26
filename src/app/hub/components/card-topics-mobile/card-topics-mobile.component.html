@@ -5,9 +5,9 @@
             <span class="set-12 "><strong>{{topic.title | slice:0:35}}<strong *ngIf="(topic.title).length > 35">...</strong></strong></span>
         </div>
         
-        <div class="set-12 icons">
+        <div class="set-12 icons" >
             <button type="button" mat-icon-button color="primary" matTooltip="Agregar a favoritos" matTooltipClass="tooltip"
-            (click)="addFavorites(topic._id)" *ngIf="!isFavorite" disabled>
+            (click)="addFavorites(topic._id)"  disabled>
             <mat-icon>favorite</mat-icon>
           </button>
 

@@ -133,6 +133,7 @@ export class TopicSingleMobileComponent implements OnInit {
       this.favoritesService.fetchFavoritesByTopicID({ _id: this.data.topicID }).subscribe({
         error: (error: any) => { },
         next: (reply: any) => {
+          //console.log(reply)
           this.allFavorites = reply['data'];
 
           this.isFavorite = this.checkFavorites();
