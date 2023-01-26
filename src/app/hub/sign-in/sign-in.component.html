@@ -7,12 +7,12 @@
   <div class="set-12 imgdisplay">
     <div class="set-12 imgoverlay"></div>
     <div class="set-12 displayform">
-      <button type="button" class="facebooksignin" (click)="authenticationSrvc.facebookAuth()">
+      <button type="button" class="facebooksignin" (click)="facebookAuth()">
         <img src="../../../assets/images/facebook-white.png" alt="" />
         <span>Seguir con Facebook</span>
       </button>
 
-      <button type="button" class="googlesignin">
+      <button type="button" class="googlesignin" (click)="authenticationSrvc.googleAuth()">
         <img src="../../../assets/images/google-icon.png" alt="" />
         <span>Seguir con Google</span>
       </button>
