@@ -1,12 +1,30 @@
+<div class="set-12 headtools">
+  <small>Filtrar</small> <button type="button" [matMenuTriggerFor]="menu"><mat-icon>filter_list</mat-icon></button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="loadSuggestedTopics()">
+      <mat-icon>assistant</mat-icon>
+      <small>Sugerencias</small>
+    </button>
+    <button mat-menu-item (click)="loadFavoriteTopics()">
+      <mat-icon>favorite</mat-icon>
+      <small>Favoritos</small>
+    </button>
+    <button mat-menu-item (click)="loadVotedTopics()">
+      <mat-icon>thumb_up_alt</mat-icon>
+      <small>Relevantes</small>
+    </button>
+  </mat-menu>
+</div>
+
 <div class="set-12">
   <div class="set-4" *ngFor="let topic of topics">
     <mat-card class="set-12">
       <div class="set-12 titlehldr">
-        <button type="button">{{topic?.title}}</button>
+        <button type="button" (click)="linkMe(topic)">{{topic?.title}}</button>
       </div>
 
       <div class="set-12 ctrls">
-        <button type="button">
+        <button type="button" (click)="addFavorite(topic)">
           <mat-icon>favorite</mat-icon>
         </button>
         <button type="button">

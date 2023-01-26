@@ -82,11 +82,11 @@
         </ng-template>
 
         <div class="set-12">
-          <div class="card-topics-desktop"></div>
+          <div class="card-topics-desktop" [user]="user"></div>
         </div>
       </mat-tab>
 
-      <mat-tab>
+      <mat-tab disabled>
         <ng-template mat-tab-label>
           <mat-icon>person</mat-icon>
           <span>Mi Perfil</span>

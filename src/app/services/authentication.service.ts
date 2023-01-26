@@ -8,6 +8,7 @@ import { catchError, from, Observable, of, switchMap } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { UtilityService } from './utility.service';
 import { FacebookAuthProvider } from 'firebase/auth';
+import * as auth from 'firebase/auth';
 
 @Injectable()
 export class AuthenticationService {
@@ -141,14 +142,36 @@ export class AuthenticationService {
       const provider = new FacebookAuthProvider();
       provider.addScope("public_profile");
       provider.addScope("email");
-      
-      this.angularFireAuth.signInWithPopup(provider)        
+
+      this.angularFireAuth.signInWithPopup(provider)
         .then((result: firebase.default.auth.UserCredential) => {
           observer.next(result);
         })
         .catch((error) => {
           observer.error(error);
-        });  
+        });
+    });
+  }
+
+  authLogin(provider: any) {
+    return this.angularFireAuth.signInWithPopup(provider)
+      .then((result: any) => {
+        console.log(result);
+        this.ngZone.run(() => {
+          // this.router.navigate(['dashboard']);
+        });
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
+  }
+
+  googleAuth() {
+    return this.authLogin(new auth.GoogleAuthProvider()).then((reply: any) => {
+      if (reply) {
+        console.log(reply);
+        // this.router.navigate(['dashboard']);
+      }
     });
   }
 
