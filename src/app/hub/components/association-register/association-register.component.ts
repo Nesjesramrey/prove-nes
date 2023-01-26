@@ -55,6 +55,7 @@ export class AssociationRegisterComponent implements OnInit {
   public isNotAssociationAvailable: boolean = false;
   public viewSubLayouts: boolean = false;
   public associations: any = [];
+  public fileNames: any = [];
   public associationType: any = null;
 
   constructor(
@@ -114,7 +115,7 @@ export class AssociationRegisterComponent implements OnInit {
         });
         this.dataComercialFormGroup = this.formBuilder.group({
         
-          associationNameComercial: ["", [Validators.required]],
+          associationNameComercial: ["", []],
           associationStreet: ["", [Validators.required]],
           associationNumExt: ["", [Validators.required]],
           associationNumInt: ["", []],
@@ -122,8 +123,7 @@ export class AssociationRegisterComponent implements OnInit {
           associationZipCode: ["", [Validators.required]],
           associationCity: ["", [Validators.required]],
           associationState: ["", [Validators.required]],
-          file: ["", ]
-      
+          files: ["", ],      
         });
         this.documentService.fetchCoverDocument().subscribe({
           error: (error: any) => {
@@ -159,27 +159,25 @@ export class AssociationRegisterComponent implements OnInit {
   }
 
   onFileSelected(event: any) {
-    this.validateSize(event.target);
+    // this.validateSize(event.target);
+    Array.from(event.target.files).forEach((file: any) => {
+      this.fileNames.push(file);
+    });
+    this.dataComercialFormGroup.patchValue({ files: this.fileNames });
+    this.dataComercialFormGroup.updateValueAndValidity();
   }
 
-  validateSize(input: any) {
-    const fileSize = input.files[0].size / 1024 / 1024;
-    if (fileSize > 3) {
-      this.utilityService.openErrorSnackBar('Solo archivos de hasta 3 MB.');
-    } else {
-      this.dataComercialFormGroup.patchValue({ file: input.files[0] });
-      this.dataComercialFormGroup.updateValueAndValidity();
-    }
-  }
+
 
   onCreateAssociation() {
-    //console.log('click')
+    //console.log('click')  
     this.submitted = true;
     let data: any = {
       formData: new FormData(),
          
     };
-    data['formData'].append('files', this.dataComercialFormGroup.controls['file']['value']);
+    Array.from(this.dataComercialFormGroup.controls['files']['value'])
+    .forEach((file: any) => { data['formData'].append('files', file); });
     data['formData'].append('name', this.dataAssociationFormGroup['value']['associationName'],)
     data['formData'].append('typology', this.dataAssociationFormGroup['value']['associationTypology']),
     data['formData'].append('description', this.dataAssociationFormGroup['value']['associationDescription']),
@@ -192,11 +190,10 @@ export class AssociationRegisterComponent implements OnInit {
     data['formData'].append('estado', this.dataComercialFormGroup['value']['associationState']),
     data['formData'].append('interestTopics',  JSON.stringify(this.happyArray) || null),
     data['formData'].append('uninterestTopics', JSON.stringify(this.unhappyArray) || null),
-    data['formData'].append('layoutsCategoryPreference', JSON.stringify(this.layoutsCategoryPreference) || null),      
-    console.log(data)
-    for (let [key, value] of data['formData']) {
-      console.log(`${key}: ${value}`)
-    }
+    data['formData'].append('layoutsCategoryPreference', JSON.stringify(this.layoutsCategoryPreference) || null)      
+    // for (let [key, value] of data['formData']) {
+    //   console.log(`${key}: ${value}`)
+    // }
     this.associationService.createAssociation(data['formData']).subscribe({
       
       error: (error) => {
@@ -303,9 +300,6 @@ export class AssociationRegisterComponent implements OnInit {
 
   onSelectCoverage(evt: any) {
     let national = this.states.filter((state: any) => { return state['_id'] == evt['value']; });
-    // if (evt['value'] == national[0]['_id']) {
-    //   this.coverageSelect.options.forEach((item: MatOption) => item.disabled = true);
-    // }
   }
    joinAssociation(id_association: any){
     let data: any;
@@ -328,7 +322,7 @@ export class AssociationRegisterComponent implements OnInit {
  
    onChangeAssociationType(associationType: any){
     this.associationType = associationType;
-    console.log(this.associationType)
+    //console.log(this.associationType)
    }
 
    dragAndDropLayout(event: CdkDragDrop<string[]>) {
