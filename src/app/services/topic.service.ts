@@ -13,18 +13,13 @@ export class TopicService {
 
   createNewTopic(data: any) {
     return this.httpClient.post(
-      this.endpointSrvc.apiEndPoint +
-      this.endpointSrvc.createNewTopicEndPoint +
-      `${data['layout_id']}`,
-      data['formData']
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.createNewTopicEndPoint + `${data['layout_id']}`, data['formData']
     );
   }
 
   fetchSingleTopicById(data: any) {
     return this.httpClient.get(
-      this.endpointSrvc.apiEndPoint +
-      this.endpointSrvc.fetchSingleTopicByIdEndPoint +
-      `${data['_id']}`
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchSingleTopicByIdEndPoint + `${data['_id']}`
     );
   }
 
@@ -42,8 +37,19 @@ export class TopicService {
 
   fetchSuggestionTopic() {
     return this.httpClient.get(
-      this.endpointSrvc.apiEndPoint +
-      this.endpointSrvc.fetchSuggestionTopicByUser
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchSuggestionTopicByUser
+    );
+  }
+
+  fetchFavoriteTopicsByUser(data: any) {
+    return this.httpClient.get(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchFavoriteTopicsByUserEndPoint + data['userID'] + '/favorites'
+    );
+  }
+
+  fetchVotedTopicsByUser(data: any) {
+    return this.httpClient.get(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchVotedTopicsByUserEndPoint + data['userID'] + '/voted'
     );
   }
 }
