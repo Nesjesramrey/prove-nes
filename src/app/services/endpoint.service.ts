@@ -63,6 +63,8 @@ export class EndPointService {
   public createNewTopicEndPoint: string = '/topic/layout/';
   public uploadTopicFilesEndPoint: string = '/topic/';
   public updateTopicDataEndPoint: string = '/topic/';
+  public fetchFavoriteTopicsByUserEndPoint: string = '/topic/user/';
+  public fetchVotedTopicsByUserEndPoint: string = '/topic/user/';
 
   // permission
   public createNewPermissionEndPoint: string = '/permission/';
