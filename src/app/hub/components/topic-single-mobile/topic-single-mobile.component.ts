@@ -5,11 +5,13 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { DialogData } from '../card-topics-mobile/card-topics-mobile.component';
 import { UserService } from 'src/app/services/user.service';
 import { TopicService } from 'src/app/services/topic.service';
+import { UtilityService } from 'src/app/services/utility.service';
 import { FavoritesService } from 'src/app/services/favorites.service';
 import { VoteService } from 'src/app/services/vote.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ShareSheetComponent } from 'src/app/components/share-sheet/share-sheet.component';
 import { VoteDialogComponent } from 'src/app/components/vote-dialog/vote-dialog.component';
+import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
 import { TestimonialListComponent } from 'src/app/components/testimonial-list/testimonial-list.component';
 
 
@@ -21,6 +23,7 @@ import { TestimonialListComponent } from 'src/app/components/testimonial-list/te
 export class TopicSingleMobileComponent implements OnInit {
   @Input('topic') public topic: any = null;
   @Input('user') public user: any = null;
+  public document: any = null;
   public topicID: any = null;
   public DialogData: any = null;
   public isDataAvailable: boolean = false;
@@ -31,6 +34,8 @@ export class TopicSingleMobileComponent implements OnInit {
   @Input('userVoted') public userVoted: any = null;
   @Output() public topicVoted = new EventEmitter<any>();
   public isMobile: boolean = false;
+  public coverage: any = null;
+  public coverageSelected: any = null;
 
 
   constructor(
@@ -43,6 +48,8 @@ export class TopicSingleMobileComponent implements OnInit {
     public voteService: VoteService,
     public matBottomSheet: MatBottomSheet,
     public deviceDetectorService: DeviceDetectorService,
+    public utilityService: UtilityService,
+
   ) { 
     this.isMobile = this.deviceDetectorService.isMobile();
   }
@@ -51,6 +58,7 @@ export class TopicSingleMobileComponent implements OnInit {
 
 
   ): void {  
+    if (history['state']['coverage'] != undefined) { this.coverageSelected = history['state']['coverage']; };
 
     this.userService.fetchFireUser().subscribe({
       error: (error) => {
@@ -226,6 +234,30 @@ export class TopicSingleMobileComponent implements OnInit {
       if (reply != undefined) { }
     });
   }
+
+  popAddCommentsDialog() {
+    let coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.topic['coverage'][0]['_id'] });
+    if (coverage.length == 0) {
+      this.utilityService.openErrorSnackBar('Selecciona una cobertura.');
+      return;
+    }
+
+    const dialogRef = this.dialog.open<AddCommentsComponent>(AddCommentsComponent, {
+      width: '640px',
+      data: {
+        location: 'topic',
+        document: this.document,
+        topic: this.topic,
+        coverage: coverage[0]
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
 
 
 }

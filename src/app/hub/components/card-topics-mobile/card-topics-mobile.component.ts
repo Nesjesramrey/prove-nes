@@ -3,6 +3,7 @@ import { MatDialog, } from '@angular/material/dialog';
 import { TopicSingleMobileComponent } from '../topic-single-mobile/topic-single-mobile.component';
 import { FavoritesService } from 'src/app/services/favorites.service';
 import { UserService } from 'src/app/services/user.service';
+import { UtilityService } from 'src/app/services/utility.service';
 import { TopicService } from 'src/app/services/topic.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ShareSheetComponent } from 'src/app/components/share-sheet/share-sheet.component';
@@ -22,8 +23,8 @@ export interface DialogData {
   styleUrls: ['./card-topics-mobile.component.scss']
 })
 export class CardTopicsMobileComponent implements OnInit {
-  public user: any = null;
   public topics: any = null;
+  @Input('user') public user: any = null;
   public topic: any = null;
   public isDataAvailable: boolean = false;
   public isFavorite: boolean = false;
@@ -36,6 +37,7 @@ export class CardTopicsMobileComponent implements OnInit {
     public userService: UserService,
     public matBottomSheet: MatBottomSheet,
     public favoritesService: FavoritesService,
+    public utilityService: UtilityService
 
   ) {
 
@@ -55,21 +57,7 @@ export class CardTopicsMobileComponent implements OnInit {
         this.isDataAvailable = true;
       },
     })
-
-    this.topicService.fetchSuggestionTopic().subscribe({
-      error: (error) => {
-        switch (error['status']) { }
-      },
-      next: (reply: any) => {
-        this.topics = reply;
-        //console.log(this.topics)
-         // *** load favourites
-      
-      },
-      complete: () => {
-       
-      },
-    })
+    this.loadSuggestedTopics();
   }
 
   openDialog(id: any) {
@@ -112,72 +100,60 @@ export class CardTopicsMobileComponent implements OnInit {
     });
   };
 
-  getUserFavorited() {
-    return this.allFavorites.filter((item: any) => item['createdBy'] === this.user._id);
+  linkMe(topic: any) {
+    let url: any = '/documentos-publicos/' + topic['parents']['document'] +
+      '/categoria/' + topic['parents']['layout'] +
+      '/subcategoria/' + topic['parents']['sublayout'] +
+      '/tema/' + topic['_id'];
+    this.utilityService.linkMe(url);
   }
 
-  addFavorites(idTopic: any) {
-    let favorited = this.getUserFavorited();
-    if (favorited.length > 0) {
-      let data = {
-        _id: favorited[0]._id,
-        favorites: true,
-      };
-
-      this.favoritesService.updateFavorites(data).subscribe((reply: any) => {
-        if (reply.message == 'favorite update success') {
-          this.isFavorite = true;
-        }
-      });
-    } else {
-      let data = {
-        topic: idTopic,
-        favorites: true,
-      };
-
-      this.favoritesService.addFavorites(data).subscribe((reply: any) => {
-        console.log(reply);
-        if (reply.message == 'favorites add success') {
-          this.isFavorite = true;
-        }
-      });
-    }
-  }
-
-  removeFavorites() {
-    let favorited = this.getUserFavorited();
+  addFavorite(topic: any) {
     let data = {
-      _id: favorited[0]._id,
-      favorites: false,
+      topic: topic['_id'],
+      favorites: true,
     };
-    this.favoritesService.updateFavorites(data).subscribe((reply: any) => {
-      if (reply.message == 'favorite update success') {
-        this.isFavorite = false;
+
+    this.favoritesService.addFavorites(data).subscribe({
+      error: (error: any) => {
+        this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+      },
+      next: (reply: any) => {
+        this.topics = this.topics.filter((x: any) => { return x['_id'] != topic['_id'] });
+        this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
       }
     });
   }
 
-  checkFavorites() {
-    let favorited = this.getUserFavorited();
-    if (favorited.length > 0) {
-      this.myFavorites.push(favorited[0])
-      return favorited[0].favorites;
-    }
-    return false;
+  loadSuggestedTopics() {
+    this.topicService.fetchSuggestionTopic().subscribe({
+      error: (error) => {
+        switch (error['status']) { }
+      },
+      next: (reply: any) => {
+        this.topics = reply;
+      },
+      complete: () => { }
+    });
   }
-   checkMyFavorites(){
-    this.topics.forEach((topicID: any)=>{
-      this.favoritesService.fetchFavoritesByTopicID({ _id: topicID._id }).subscribe({
-        error: (error: any) => { },
-        next: (reply: any) => {
-        this.allFavorites = reply['data'];
-         this.checkFavorites();
-        },
-        complete: () => { 
-        }
-      });
-    })
-   }
+
+  loadFavoriteTopics() {
+    this.topicService.fetchFavoriteTopicsByUser({ userID: this.user['_id'] }).subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        this.topics = reply;
+      }
+    });
+  }
+
+  loadVotedTopics() {
+    this.topicService.fetchVotedTopicsByUser({ userID: this.user['_id'] }).subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        this.topics = reply;
+      }
+    });
+  }
 
 
 }

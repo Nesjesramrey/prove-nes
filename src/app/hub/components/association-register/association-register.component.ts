@@ -13,6 +13,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { forkJoin, Observable } from 'rxjs';
+import { ModalAuthorizationJoinComponent } from '../modal-authorization-join/modal-authorization-join.component';
 
 interface Asociation {
   value: string;
@@ -109,12 +110,12 @@ export class AssociationRegisterComponent implements OnInit {
         //console.log(this.user);
 
         this.dataAssociationFormGroup = this.formBuilder.group({
-          associationTypology: ['', [Validators.required]],
+          associationTypologys: ['', [Validators.required]],
           associationName: ['', [Validators.required]],
           associationDescription: ['', [Validators.required]],
         });
         this.dataComercialFormGroup = this.formBuilder.group({
-          associationNameComercial: ['', []],
+          associationNameComercial: [''],
           associationStreet: ['', [Validators.required]],
           associationNumExt: ['', [Validators.required]],
           associationNumInt: ['', []],
@@ -124,6 +125,29 @@ export class AssociationRegisterComponent implements OnInit {
           associationState: ['', [Validators.required]],
           files: [''],
         });
+
+        this.dataAssociationFormGroup
+          .get('associationTypologys')
+          ?.valueChanges.subscribe((checkedValue) => {
+            //console.log(checkedValue);
+            if (
+              checkedValue == '6399e5c7c878ad9b63dde6a2' ||
+              checkedValue == '6399e5c7c878ad9b63dde6a3' ||
+              checkedValue == '6399e5c7c878ad9b63dde6a4'
+            ) {
+              this.dataComercialFormGroup.controls[
+                'associationNameComercial'
+              ].setValidators([Validators.required]);
+            } else {
+              this.dataComercialFormGroup.controls[
+                'associationNameComercial'
+              ].clearValidators();
+            }
+            this.dataComercialFormGroup.controls[
+              'associationNameComercial'
+            ].updateValueAndValidity();
+          });
+
         this.documentService.fetchCoverDocument().subscribe({
           error: (error: any) => {
             setTimeout(() => {
@@ -182,7 +206,7 @@ export class AssociationRegisterComponent implements OnInit {
     );
     data['formData'].append(
       'typology',
-      this.dataAssociationFormGroup['value']['associationTypology']
+      this.dataAssociationFormGroup['value']['associationTypologys']
     ),
       data['formData'].append(
         'description',
@@ -328,7 +352,7 @@ export class AssociationRegisterComponent implements OnInit {
       return state['_id'] == evt['value'];
     });
   }
-  
+
   joinAssociation(id_association: any) {
     let data: any;
     data = {
@@ -336,14 +360,15 @@ export class AssociationRegisterComponent implements OnInit {
       associationID: id_association,
     };
     //console.log(data)
-    this.userService.joinUserWithAssociation(data).subscribe({
-      error: (error) => {
-        switch (error['status']) {
-        }
-      },
-      next: (reply: any) => {},
-      complete: () => {},
-    });
+    // this.userService.joinUserWithAssociation(data).subscribe({
+    //   error: (error) => {
+    //     switch (error['status']) {
+    //     }
+    //   },
+    //   next: (reply: any) => {},
+    //   complete: () => {},
+    // });
+    this.openModalAuthorization();
   }
 
   onChangeAssociationType(associationType: any) {
@@ -374,5 +399,15 @@ export class AssociationRegisterComponent implements OnInit {
 
   hideSubLayouts() {
     this.viewSubLayouts = false;
+  }
+
+  openModalAuthorization() {
+    this.dialogData.open(ModalAuthorizationJoinComponent, {
+      data: {},
+      height: '25%',
+      width: '70%',
+      panelClass: 'authorization-dialog',
+    });
+    this.checked = !this.checked;
   }
 }

@@ -137,9 +137,9 @@
       <form [formGroup]="dataAssociationFormGroup">
         <mat-form-field appearance="outline">
           <mat-label><small>Tipo de asociación</small></mat-label>
-          <mat-select matInput formControlName="associationTypology">
+          <mat-select matInput formControlName="associationTypologys">
             <mat-option
-              (click)="onChangeAssociationType(association.name)"
+              (click)="onChangeAssociationType(association._id)"
               *ngFor="let association of associationTypology"
               [value]="association._id"
             >
@@ -239,13 +239,13 @@
     <mat-step>
       <div class="set-12 dialog-head">
         <div class="set-10">
-          <h3 *ngIf="associationType == 'Empresa'">Datos comerciales</h3>
-          <h3 *ngIf="associationType == 'Sociedad Civil'">Datos asociación</h3>
-          <h3 *ngIf="associationType == 'Maraton Estudiantil'">
+          <h3 *ngIf="associationType ==  '6399e5c7c878ad9b63dde6a2'">Datos comerciales</h3>
+          <h3 *ngIf="associationType == '6399e5c7c878ad9b63dde6a3'">Datos asociación</h3>
+          <h3 *ngIf="associationType == '6399e5c7c878ad9b63dde6a4'">
             Datos Maratón Estudiantil
           </h3>
-          <h3 *ngIf="associationType == 'Activista'">Datos Activista</h3>
-          <h3 *ngIf="associationType == 'Estudiante'">Datos Estudiante</h3>
+          <h3 *ngIf="associationType == '6399e5c7c878ad9b63dde6a5'">Datos Publicador</h3>
+          <h3 *ngIf="associationType == '6399e5c7c878ad9b63dde6a6'">Datos Estudiante</h3>
         </div>
         <div class="set-2 txt-right">
           <button
@@ -261,20 +261,20 @@
       <form [formGroup]="dataComercialFormGroup">
         <mat-form-field
           *ngIf="
-            associationType == 'Empresa' ||
-            associationType == 'Sociedad Civil' ||
-            associationType == 'Maraton Estudiantil'
+            associationType ==  '6399e5c7c878ad9b63dde6a2' ||
+            associationType == '6399e5c7c878ad9b63dde6a3' ||
+            associationType == '6399e5c7c878ad9b63dde6a4'
           "
           appearance="outline"
         >
           <mat-label
             *ngIf="
-              associationType == 'Empresa' ||
-              associationType == 'Sociedad Civil'
+              associationType ==  '6399e5c7c878ad9b63dde6a2' ||
+              associationType == '6399e5c7c878ad9b63dde6a3'
             "
             >Razón o denominación social</mat-label
           >
-          <mat-label *ngIf="associationType == 'Maraton Estudiantil'"
+          <mat-label *ngIf="associationType == '6399e5c7c878ad9b63dde6a4'"
             >Universidad a la que perteneces</mat-label
           >
           <input matInput formControlName="associationNameComercial" />
@@ -307,7 +307,7 @@
           <input matInput formControlName="associationCity" />
         </mat-form-field>
         <mat-form-field appearance="outline">
-          <mat-label>Estado</mat-label>
+          <mat-label>Cobertura</mat-label>
           <mat-select
             formControlName="associationState"
             (selectionChange)="onSelectCoverage($event)"
@@ -321,9 +321,9 @@
         </mat-form-field>
         <div
           *ngIf="
-            associationType == 'Empresa' ||
-            associationType == 'Sociedad Civil' ||
-            associationType == 'Maraton Estudiantil'
+            associationType ==  '6399e5c7c878ad9b63dde6a2' ||
+            associationType == '6399e5c7c878ad9b63dde6a3' ||
+            associationType == '6399e5c7c878ad9b63dde6a4'
           "
           class="set-12 addfile"
         >
@@ -335,13 +335,13 @@
             class="set-8 bwico"
           >
             <!-- <mat-icon><small>attach_file</small></mat-icon> -->
-            <small *ngIf="associationType == 'Empresa'"
+            <small *ngIf="associationType ==  '6399e5c7c878ad9b63dde6a2'"
               >Adjuntar <strong>Acta Constitutiva</strong>
             </small>
             <small
               *ngIf="
-                associationType == 'Sociedad Civil' ||
-                associationType == 'Maraton Estudiantil'
+                associationType == '6399e5c7c878ad9b63dde6a3' ||
+                associationType == '6399e5c7c878ad9b63dde6a4'
               "
               >Adjuntar <strong>Acta de Organización</strong>
             </small>
@@ -375,8 +375,8 @@
         <div class="set-12 addfile">
           <button
             *ngIf="
-              associationType == 'Empresa' ||
-              associationType == 'Sociedad Civil'
+              associationType == '6399e5c7c878ad9b63dde6a2' ||
+              associationType == '6399e5c7c878ad9b63dde6a3'
             "
             type="button"
             mat-raised-button
