@@ -41,6 +41,7 @@ import { CardGoalsMobileComponent } from './components/card-goals-mobile/card-go
 import { CardSolutionsMobileComponent } from './components/card-solutions-mobile/card-solutions-mobile.component';
 import { AssociationRegisterComponent } from './components/association-register/association-register.component';
 import { SheetFeedComponent } from '../components/sheet-feed/sheet-feed.component';
+import { ModalAuthorizationJoinComponent } from './components/modal-authorization-join/modal-authorization-join.component';
 
 @NgModule({
   imports: [
@@ -86,7 +87,8 @@ import { SheetFeedComponent } from '../components/sheet-feed/sheet-feed.componen
     FooterMobileComponent,
     TopicSingleMobileComponent,
     AssociationRegisterComponent,
-    SheetFeedComponent
+    SheetFeedComponent,
+    ModalAuthorizationJoinComponent
   ],
 })
 export class HubComponentModule { }

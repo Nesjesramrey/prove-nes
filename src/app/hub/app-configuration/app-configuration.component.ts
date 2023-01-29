@@ -65,17 +65,32 @@ export class AppConfigurationComponent implements OnInit {
       },
       next: (reply: any) => {
         this.user = reply;
-        if ((this.user.associationInterests == null || this.user.associationInterests.length == 0 )) {
+        if (
+          this.user.associationInterests == null ||
+          this.user.associationInterests.length == 0
+        ) {
           //console.log('error')
           this.happyArray = [];
         } else {
-    
-          this.happyArray = JSON.parse(this.user.associationInterests);
+          if (typeof this.user.associationInterests[0] == 'object') {
+            this.happyArray = this.user.associationInterests;
+          } else {
+            this.happyArray = JSON.parse(this.user.associationInterests);
+          }
+          //
         }
-        if ((this.user.uninterestingTopics == null || this.user.uninterestingTopics.length == 0 )) {
+        if (
+          this.user.uninterestingTopics == null ||
+          this.user.uninterestingTopics.length == 0
+        ) {
           this.unhappyArray = [];
         } else {
-          this.unhappyArray = JSON.parse(this.user.uninterestingTopics);
+          if (typeof this.user.uninterestingTopics[0] == 'object') {
+            this.unhappyArray = this.user.uninterestingTopics;
+          } else {
+            this.unhappyArray = JSON.parse(this.user.uninterestingTopics);
+          }
+          //;
         }
 
         this.formGroup = this.formBuilder.group({

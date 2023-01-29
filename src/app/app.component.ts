@@ -52,6 +52,7 @@ export class AppComponent implements OnInit {
   public isMobile: boolean = false;
   public open: boolean = false;
   public isProfile: boolean = false;
+  public document: any = null;
   public openProfileMenu = new EventEmitter<any>();
 
   constructor(
@@ -77,6 +78,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('Project version', environment.version);
+   
 
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
@@ -118,6 +120,14 @@ export class AppComponent implements OnInit {
         this.isDataAvailable = true;
       });
     }
+
+    this.documentService.fetchCoverDocument().subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        this.document = reply;
+        
+      },
+    });
   }
 
   openCompleteRegistration() {
@@ -159,6 +169,12 @@ export class AppComponent implements OnInit {
         this.isProfile = !this.isProfile;
         this.router.navigateByUrl('/hub/' + this.user['_id']);
         break;
+
+        case 'documents':
+          this.isProfile = !this.isProfile;
+          this.router.navigateByUrl('/documentos-publicos/' + this.document['_id']);
+          break;
+
 
       case 'associations':
         this.isProfile = !this.isProfile;
