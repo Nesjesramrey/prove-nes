@@ -78,7 +78,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('Project version', environment.version);
-   
+
 
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
@@ -89,11 +89,11 @@ export class AppComponent implements OnInit {
       });
 
     this.documentService.fetchCoverDocument().subscribe({
-      error: (error: any) => {},
+      error: (error: any) => { },
       next: (reply: any) => {
         this.coverDocument = reply;
       },
-      complete: () => {},
+      complete: () => { },
     });
 
     if (this.accessToken != null) {
@@ -113,7 +113,7 @@ export class AppComponent implements OnInit {
             this.openCompleteRegistration();
           }
         },
-        complete: () => {},
+        complete: () => { },
       });
     } else {
       setTimeout(() => {
@@ -125,7 +125,7 @@ export class AppComponent implements OnInit {
       error: (error: any) => { },
       next: (reply: any) => {
         this.document = reply;
-        
+
       },
     });
   }
@@ -156,36 +156,40 @@ export class AppComponent implements OnInit {
   linkMe(url: string) {
     switch (url) {
       case 'home':
-        this.open = !this.open;
         this.router.navigateByUrl('/');
         break;
 
       case 'quienesSomos':
-        this.open = !this.open;
         this.router.navigateByUrl('/#quienesSomos');
         break;
 
       case 'profile':
-        this.isProfile = !this.isProfile;
+        // this.isProfile = !this.isProfile;
         this.router.navigateByUrl('/hub/' + this.user['_id']);
         break;
 
-        case 'documents':
-          this.isProfile = !this.isProfile;
-          this.router.navigateByUrl('/documentos-publicos/' + this.document['_id']);
-          break;
-
+      case 'documents':
+        // this.isProfile = !this.isProfile;
+        // this.router.navigateByUrl('/documentos-publicos/' + this.document['_id']);
+        this.router.navigateByUrl('/documentos/');
+        break;
 
       case 'associations':
-        this.isProfile = !this.isProfile;
+        // this.isProfile = !this.isProfile;
         this.router.navigateByUrl('/asociaciones');
         break;
 
       case 'configuration':
-        this.isProfile = !this.isProfile;
+        // this.isProfile = !this.isProfile;
         this.router.navigateByUrl('/hub/configuracion');
         break;
+
+      case 'entry-point':
+        window.open('https://static-assets-pando.s3.amazonaws.com/assets/200123_MxC_DIGITAL.pdf');
+        break;
     }
+
+    this.open = !this.open;
   }
 
   onHome() {

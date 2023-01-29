@@ -1,13 +1,11 @@
 :host {
-
-
   .menuopen {
     left: 0 !important;
   }
 
   .mobilenav {
     position: fixed;
-   
+
   }
 
   .innernav {
@@ -19,8 +17,8 @@
         margin-bottom: 20px;
 
         mat-icon {
-          
           font-size: 13pt;
+          margin-right: 20px;
         }
       }
     }
