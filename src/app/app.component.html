@@ -53,7 +53,10 @@
       </button>
       <div class="usrname set-8">{{ user.firstname }} {{ user.lastname }}</div>
       <div class="set-1 arrow-rigth">
-        <button type="button" (click)="open = !open; displayProfileMenu()">
+        <!-- <button type="button" (click)="open = !open; displayProfileMenu()">
+          <mat-icon color="accent">keyboard_arrow_right</mat-icon>
+        </button> -->
+        <button type="button">
           <mat-icon color="accent">keyboard_arrow_right</mat-icon>
         </button>
       </div>
@@ -61,7 +64,26 @@
 
     <div class="set-12 innernav">
       <div class="set-12 innerbtn">
-        <button type="button" (click)="linkMe('quienesSomos')">
+        <button type="button" (click)="linkMe('entry-point')">
+          <span>Documento Punto de Partida</span>
+        </button>
+        <button type="button" (click)="linkMe('profile')">
+          <mat-icon>person</mat-icon> <span>Mi perfil</span>
+        </button>
+        <button type="button" (click)="linkMe('associations')">
+          <mat-icon>groups</mat-icon> <span>Mis asociaciones</span>
+        </button>
+        <button type="button" (click)="linkMe('documents')">
+          <mat-icon>description</mat-icon> <span>Mis Documentos</span>
+        </button>
+        <button type="button" (click)="linkMe('configuration')">
+          <mat-icon>settings</mat-icon> <span>Configuración</span>
+        </button>
+        <button class="mt-4" type="button" (click)="onSignOut()">
+          <mat-icon>power_settings_new</mat-icon> <span>Salir</span>
+        </button>
+
+        <!-- <button type="button" (click)="linkMe('quienesSomos')">
           <span>Quienes somos</span>
         </button>
         <button type="button" (click)="linkMe('home')">
@@ -69,7 +91,7 @@
         </button>
         <button type="button" (click)="linkMe('home')">
           <span>Pensamiento colectivo</span>
-        </button>
+        </button> -->
       </div>
     </div>
   </div>
@@ -92,19 +114,19 @@
 
   <div class="set-12 innernav">
     <div class="set-12 innerbtn">
-      <button  type="button" (click)="linkMe('profile')">
+      <button type="button" (click)="linkMe('profile')">
         <span>Mi perfil</span>
       </button>
-      <button  type="button" (click)="linkMe('associations')">
+      <button type="button" (click)="linkMe('associations')">
         <span>Mis asociaciones</span>
       </button>
-      <!-- <button  type="button" disabled>
-        <span>Documentos</span>
+      <button type="button" (click)="linkMe('documents')">
+        <span>Documentos publicos</span>
       </button>
-      <button  type="button" disabled>
+      <!--  <button  type="button" disabled>
         <span>Dashboard</span>
       </button> -->
-      <button  type="button" (click)="linkMe('configuration')">
+      <button type="button" (click)="linkMe('configuration')">
         <span>Configuracion</span>
       </button>
       <button class="mt-4" type="button" (click)="onSignOut()">

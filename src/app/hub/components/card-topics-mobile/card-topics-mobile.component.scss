@@ -8,7 +8,7 @@
     mat-card {
       margin-bottom: 10px;
     }
-    mat-card:last-child{
+    mat-card:last-child {
       margin-bottom: 20px;
     }
 
@@ -17,11 +17,11 @@
       margin-bottom: 10px;
     }
 
-    .dialog-body{
-      span{
+    .dialog-body {
+      span {
         font-size: 10pt;
       }
-      span:hover{
+      span:hover {
         text-decoration: underline;
       }
     }
@@ -30,11 +30,9 @@
       display: inline-flex;
       margin: 0px;
       justify-content: center;
-      button{
+      button {
         margin: 0px 5px;
       }
-      
-     
 
       button {
         mat-icon {
@@ -42,6 +40,19 @@
         }
       }
     }
-    
+  }
+  .headtools {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+
+    * {
+      margin: 0;
+    }
+
+    button {
+      margin-left: 10px;
+    }
   }
 }

@@ -15,8 +15,10 @@
     </div>
 
     <div class="set-12 dialog-body">
+        <div class="dialog-topic">
         <span><strong>{{data.topicTitle}}</strong></span>
-        <p [innerHTML]="data.topicDescription"></p>
+        <p><small  [innerHTML]="data.topicDescription"></small></p>
+    </div>
         <div class="set-12 info">
             <button type="button" *ngIf="!userVoted" mat-raised-button color="accent" (click)="openModalVote()">
                 <strong>Votar</strong>
@@ -39,12 +41,15 @@
             <button type="button" mat-icon-button color="primary" (click)="openBottomSheet()">
                 <mat-icon>share</mat-icon>
             </button>
-            <!-- <button type="button" mat-icon-button color="primary" (click)="openTestimoniesDialog()">
-                <mat-icon>report</mat-icon>
-            </button>
+            <!-- 
             <button type="button" mat-icon-button color="primary" disabled>
                 <mat-icon>forum</mat-icon>
             </button> -->
+            
+            <button type="button" mat-icon-button color="primary" matTooltip="Agregar comentario" matTooltipClass="tooltip"
+              (click)="popAddCommentsDialog()">
+              <mat-icon>forum</mat-icon>
+            </button>
         </div>
 
     </div>

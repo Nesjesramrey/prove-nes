@@ -1,4 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { AddCommentsSheetComponent } from 'src/app/components/add-comments-sheet/add-comments-sheet.component';
+import { ShareSheetComponent } from 'src/app/components/share-sheet/share-sheet.component';
 import { FavoritesService } from 'src/app/services/favorites.service';
 import { TopicService } from 'src/app/services/topic.service';
 import { UtilityService } from 'src/app/services/utility.service';
@@ -11,15 +14,17 @@ import { UtilityService } from 'src/app/services/utility.service';
 export class CardTopicsDesktopComponent implements OnInit {
   public topics: any = null;
   @Input('user') public user: any = null;
+  public viewing: string = '';
 
   constructor(
     public topicService: TopicService,
     public favoritesService: FavoritesService,
-    public utilityService: UtilityService
+    public utilityService: UtilityService,
+    public matBottomSheet: MatBottomSheet
   ) { }
 
   ngOnInit(): void {
-    this.loadSuggestedTopics();
+    this.loadSuggestedTopics('suggestions');
   }
 
   linkMe(topic: any) {
@@ -47,33 +52,57 @@ export class CardTopicsDesktopComponent implements OnInit {
     });
   }
 
-  loadSuggestedTopics() {
+  loadSuggestedTopics(type: string) {
     this.topicService.fetchSuggestionTopic().subscribe({
       error: (error) => {
         switch (error['status']) { }
       },
-      next: (reply: any) => {
-        this.topics = reply;
-      },
-      complete: () => { }
+      next: (reply: any) => { this.topics = reply; },
+      complete: () => { this.viewing = type; }
     });
   }
 
-  loadFavoriteTopics() {
+  loadFavoriteTopics(type: string) {
     this.topicService.fetchFavoriteTopicsByUser({ userID: this.user['_id'] }).subscribe({
       error: (error: any) => { },
-      next: (reply: any) => {
-        this.topics = reply;
-      }
+      next: (reply: any) => { this.topics = reply; },
+      complete: () => { this.viewing = type; }
     });
   }
 
-  loadVotedTopics() {
+  loadVotedTopics(type: string) {
     this.topicService.fetchVotedTopicsByUser({ userID: this.user['_id'] }).subscribe({
       error: (error: any) => { },
-      next: (reply: any) => {
-        this.topics = reply;
-      }
+      next: (reply: any) => { this.topics = reply; },
+      complete: () => { this.viewing = type; }
+    });
+  }
+
+  openShareSheet(): void {
+    const bottomSheetRef = this.matBottomSheet.open(ShareSheetComponent, {
+      data: {
+        user: this.user
+      },
+      panelClass: 'desktop-sheet'
+    });
+
+    bottomSheetRef.afterDismissed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  handleComments() {
+    const bottomSheetRef = this.matBottomSheet.open(AddCommentsSheetComponent, {
+      data: {
+        // document: this.document,
+        user: this.user,
+        location: 'document'
+      },
+      panelClass: 'desktop-sheet'
+    });
+
+    bottomSheetRef.afterDismissed().subscribe((reply: any) => {
+      if (reply != undefined) { }
     });
   }
 }

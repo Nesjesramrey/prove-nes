@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { DeviceDetectorService } from 'ngx-device-detector';;
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
 import { DocumentService } from 'src/app/services/document.service';
@@ -13,8 +13,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { forkJoin, Observable } from 'rxjs';
-
-
+import { ModalAuthorizationJoinComponent } from '../modal-authorization-join/modal-authorization-join.component';
 
 interface Asociation {
   value: string;
@@ -24,7 +23,7 @@ interface Asociation {
 @Component({
   selector: 'app-association-register',
   templateUrl: './association-register.component.html',
-  styleUrls: ['./association-register.component.scss']
+  styleUrls: ['./association-register.component.scss'],
 })
 export class AssociationRegisterComponent implements OnInit {
   public submitted: boolean = false;
@@ -50,11 +49,12 @@ export class AssociationRegisterComponent implements OnInit {
   public isMobile: boolean = false;
   public showText: boolean = false;
   public isLinear: boolean = true;
-  @Output () public checked: boolean = true
+  @Output() public checked: boolean = true;
   public isAssociationAvailable: boolean = false;
   public isNotAssociationAvailable: boolean = false;
   public viewSubLayouts: boolean = false;
   public associations: any = [];
+  public fileNames: any = [];
   public associationType: any = null;
 
   constructor(
@@ -67,7 +67,7 @@ export class AssociationRegisterComponent implements OnInit {
     public searchService: SearchService,
     public formBuilder: FormBuilder,
     public dialogData: MatDialog,
-    public dialogRef: MatDialogRef<AssociationRegisterComponent>,
+    public dialogRef: MatDialogRef<AssociationRegisterComponent>
   ) {
     this.accessToken = this.authenticationSrvc.fetchAccessToken;
     this.isMobile = this.deviceDetectorService.isMobile();
@@ -77,22 +77,24 @@ export class AssociationRegisterComponent implements OnInit {
     let states: Observable<any> = this.utilityService.fetchAllStates();
 
     this.utilityService.fetchAssociationTypology().subscribe({
-      error: (error: any) => {
-      },
+      error: (error: any) => {},
       next: (reply: any) => {
         this.associationTypology = reply;
       },
-      complete: () => { }
+      complete: () => {},
     });
 
-    forkJoin([states,]).subscribe((reply: any) => {
+    forkJoin([states]).subscribe((reply: any) => {
       // console.log(reply);
       this.states = reply[0];
-      let national = this.states.filter((state: any) => { return state['code'] == 'NAL'; });
-      this.states = this.states.filter((state: any) => { return state['code'] != 'NAL'; });
+      let national = this.states.filter((state: any) => {
+        return state['code'] == 'NAL';
+      });
+      this.states = this.states.filter((state: any) => {
+        return state['code'] != 'NAL';
+      });
       this.states.unshift(national[0]);
     });
-  
 
     this.searchFormGroup = this.formBuilder.group({
       search: ['', [Validators.required]],
@@ -100,31 +102,52 @@ export class AssociationRegisterComponent implements OnInit {
 
     this.userService.fetchFireUser().subscribe({
       error: (error) => {
-        switch (error['status']) { }
+        switch (error['status']) {
+        }
       },
       next: (reply: any) => {
         this.user = reply;
         //console.log(this.user);
 
         this.dataAssociationFormGroup = this.formBuilder.group({
-          associationTypology: ["", [Validators.required]],
-          associationName: ["", [Validators.required]],
-          associationDescription: ["", [Validators.required]],
-         
+          associationTypologys: ['', [Validators.required]],
+          associationName: ['', [Validators.required]],
+          associationDescription: ['', [Validators.required]],
         });
         this.dataComercialFormGroup = this.formBuilder.group({
-        
-          associationNameComercial: ["", [Validators.required]],
-          associationStreet: ["", [Validators.required]],
-          associationNumExt: ["", [Validators.required]],
-          associationNumInt: ["", []],
-          associationTown: ["", [Validators.required]],
-          associationZipCode: ["", [Validators.required]],
-          associationCity: ["", [Validators.required]],
-          associationState: ["", [Validators.required]],
-          file: ["", ]
-      
+          associationNameComercial: [''],
+          associationStreet: ['', [Validators.required]],
+          associationNumExt: ['', [Validators.required]],
+          associationNumInt: ['', []],
+          associationTown: ['', [Validators.required]],
+          associationZipCode: ['', [Validators.required]],
+          associationCity: ['', [Validators.required]],
+          associationState: ['', [Validators.required]],
+          files: [''],
         });
+
+        this.dataAssociationFormGroup
+          .get('associationTypologys')
+          ?.valueChanges.subscribe((checkedValue) => {
+            //console.log(checkedValue);
+            if (
+              checkedValue == '6399e5c7c878ad9b63dde6a2' ||
+              checkedValue == '6399e5c7c878ad9b63dde6a3' ||
+              checkedValue == '6399e5c7c878ad9b63dde6a4'
+            ) {
+              this.dataComercialFormGroup.controls[
+                'associationNameComercial'
+              ].setValidators([Validators.required]);
+            } else {
+              this.dataComercialFormGroup.controls[
+                'associationNameComercial'
+              ].clearValidators();
+            }
+            this.dataComercialFormGroup.controls[
+              'associationNameComercial'
+            ].updateValueAndValidity();
+          });
+
         this.documentService.fetchCoverDocument().subscribe({
           error: (error: any) => {
             setTimeout(() => {
@@ -138,14 +161,13 @@ export class AssociationRegisterComponent implements OnInit {
             this.layouts.filter((x: any, i: any) => {
               let obj: any = {
                 priority: i,
-                category: x['category']['_id']
-              }
+                category: x['category']['_id'],
+              };
               this.layoutsCategoryPreference.push(obj);
             });
           },
-          complete: () => { }
+          complete: () => {},
         });
-
       },
       complete: () => {
         this.isDataAvailable = true;
@@ -154,22 +176,17 @@ export class AssociationRegisterComponent implements OnInit {
 
     this.legalsFormGroup = this.formBuilder.group({
       terms: [true, [Validators.required]],
-      privacy: [true, [Validators.required]]
+      privacy: [true, [Validators.required]],
     });
   }
 
   onFileSelected(event: any) {
-    this.validateSize(event.target);
-  }
-
-  validateSize(input: any) {
-    const fileSize = input.files[0].size / 1024 / 1024;
-    if (fileSize > 3) {
-      this.utilityService.openErrorSnackBar('Solo archivos de hasta 3 MB.');
-    } else {
-      this.dataComercialFormGroup.patchValue({ file: input.files[0] });
-      this.dataComercialFormGroup.updateValueAndValidity();
-    }
+    // this.validateSize(event.target);
+    Array.from(event.target.files).forEach((file: any) => {
+      this.fileNames.push(file);
+    });
+    this.dataComercialFormGroup.patchValue({ files: this.fileNames });
+    this.dataComercialFormGroup.updateValueAndValidity();
   }
 
   onCreateAssociation() {
@@ -177,37 +194,76 @@ export class AssociationRegisterComponent implements OnInit {
     this.submitted = true;
     let data: any = {
       formData: new FormData(),
-         
     };
-    data['formData'].append('files', this.dataComercialFormGroup.controls['file']['value']);
-    data['formData'].append('name', this.dataAssociationFormGroup['value']['associationName'],)
-    data['formData'].append('typology', this.dataAssociationFormGroup['value']['associationTypology']),
-    data['formData'].append('description', this.dataAssociationFormGroup['value']['associationDescription']),
-    data['formData'].append('businessName', this.dataComercialFormGroup['value']['associationNameComercial']),
-    data['formData'].append('street', this.dataComercialFormGroup['value']['associationStreet']),
-    data['formData'].append('externalNumber', this.dataComercialFormGroup['value']['associationNumExt']),
-    data['formData'].append('internalNumber', this.dataComercialFormGroup['value']['associationNumInt']),
-    data['formData'].append('colonia', this.dataComercialFormGroup['value']['associationTown']),
-    data['formData'].append('ciudad', this.dataComercialFormGroup['value']['associationCity']),
-    data['formData'].append('estado', this.dataComercialFormGroup['value']['associationState']),
-    data['formData'].append('interestTopics',  JSON.stringify(this.happyArray) || null),
-    data['formData'].append('uninterestTopics', JSON.stringify(this.unhappyArray) || null),
-    data['formData'].append('layoutsCategoryPreference', JSON.stringify(this.layoutsCategoryPreference) || null),      
-    console.log(data)
-    for (let [key, value] of data['formData']) {
-      console.log(`${key}: ${value}`)
-    }
+    Array.from(this.dataComercialFormGroup.controls['files']['value']).forEach(
+      (file: any) => {
+        data['formData'].append('files', file);
+      }
+    );
+    data['formData'].append(
+      'name',
+      this.dataAssociationFormGroup['value']['associationName']
+    );
+    data['formData'].append(
+      'typology',
+      this.dataAssociationFormGroup['value']['associationTypologys']
+    ),
+      data['formData'].append(
+        'description',
+        this.dataAssociationFormGroup['value']['associationDescription']
+      ),
+      data['formData'].append(
+        'businessName',
+        this.dataComercialFormGroup['value']['associationNameComercial']
+      ),
+      data['formData'].append(
+        'street',
+        this.dataComercialFormGroup['value']['associationStreet']
+      ),
+      data['formData'].append(
+        'externalNumber',
+        this.dataComercialFormGroup['value']['associationNumExt']
+      ),
+      data['formData'].append(
+        'internalNumber',
+        this.dataComercialFormGroup['value']['associationNumInt']
+      ),
+      data['formData'].append(
+        'colonia',
+        this.dataComercialFormGroup['value']['associationTown']
+      ),
+      data['formData'].append(
+        'ciudad',
+        this.dataComercialFormGroup['value']['associationCity']
+      ),
+      data['formData'].append(
+        'estado',
+        this.dataComercialFormGroup['value']['associationState']
+      ),
+      data['formData'].append(
+        'interestTopics',
+        JSON.stringify(this.happyArray) || null
+      ),
+      data['formData'].append(
+        'uninterestTopics',
+        JSON.stringify(this.unhappyArray) || null
+      ),
+      data['formData'].append(
+        'layoutsCategoryPreference',
+        JSON.stringify(this.layoutsCategoryPreference) || null
+      );
+    // for (let [key, value] of data['formData']) {
+    //   console.log(`${key}: ${value}`)
+    // }
     this.associationService.createAssociation(data['formData']).subscribe({
-      
       error: (error) => {
-        switch (error['status']) { }
+        switch (error['status']) {
+        }
       },
-      next: (reply: any) => {
-        
-      },
+      next: (reply: any) => {},
       complete: () => {
         //location.reload();
-        this.killDialog()
+        this.killDialog();
         this.isDataAvailable = true;
       },
     });
@@ -220,7 +276,6 @@ export class AssociationRegisterComponent implements OnInit {
       //console.log(this.happyArray)
     }
     event.chipInput!.clear();
- 
   }
 
   removeHappyItem(item: any) {
@@ -237,7 +292,6 @@ export class AssociationRegisterComponent implements OnInit {
       //console.log(this.happyArray)
     }
     event.chipInput!.clear();
- 
   }
 
   removeUnhappyItem(item: any) {
@@ -263,84 +317,74 @@ export class AssociationRegisterComponent implements OnInit {
     this.isNotAssociationAvailable = false;
   }
 
-  clearInputUnhappy(){
+  clearInputUnhappy() {
     this.unhappyArray = [];
   }
 
-  clearInputHappy(){
+  clearInputHappy() {
     this.happyArray = [];
   }
 
-
   onSearch(formGroup: FormGroup) {
-   
     let data: any = {
-      filter: formGroup['value']['search'],  
+      filter: formGroup['value']['search'],
     };
     //console.log(data['filter']),
     this.associationService.searchAssociation(data['filter']).subscribe({
-      error: (error: any) => {
-        
-      },
+      error: (error: any) => {},
       next: (reply: any) => {
         //console.log(reply.length)
-        if (reply.length == 0){
-          this.isAssociationAvailable = false
-          this.isNotAssociationAvailable = true
-          
-        }
-        else{
-          this.associations = reply
-          this.isNotAssociationAvailable = false
-          this.isAssociationAvailable = true
+        if (reply.length == 0) {
+          this.isAssociationAvailable = false;
+          this.isNotAssociationAvailable = true;
+        } else {
+          this.associations = reply;
+          this.isNotAssociationAvailable = false;
+          this.isAssociationAvailable = true;
         }
       },
-      complete: () => { 
-              },
+      complete: () => {},
     });
-
   }
 
   onSelectCoverage(evt: any) {
-    let national = this.states.filter((state: any) => { return state['_id'] == evt['value']; });
-    // if (evt['value'] == national[0]['_id']) {
-    //   this.coverageSelect.options.forEach((item: MatOption) => item.disabled = true);
-    // }
+    let national = this.states.filter((state: any) => {
+      return state['_id'] == evt['value'];
+    });
   }
-   joinAssociation(id_association: any){
+
+  joinAssociation(id_association: any) {
     let data: any;
     data = {
       userID: this.user._id,
-      associationID: id_association
-    }
+      associationID: id_association,
+    };
     //console.log(data)
-    this.userService.joinUserWithAssociation(data).subscribe({
-      error: (error) => {
-        switch (error['status']) { }
-      },
-      next: (reply: any) => {
-        console.log(reply)
-      },
-      complete: () => {
-      },
-    });
-   }
- 
-   onChangeAssociationType(associationType: any){
-    this.associationType = associationType;
-    console.log(this.associationType)
-   }
+    // this.userService.joinUserWithAssociation(data).subscribe({
+    //   error: (error) => {
+    //     switch (error['status']) {
+    //     }
+    //   },
+    //   next: (reply: any) => {},
+    //   complete: () => {},
+    // });
+    this.openModalAuthorization();
+  }
 
-   dragAndDropLayout(event: CdkDragDrop<string[]>) {
+  onChangeAssociationType(associationType: any) {
+    this.associationType = associationType;
+    //console.log(this.associationType)
+  }
+
+  dragAndDropLayout(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.layouts, event.previousIndex, event.currentIndex);
     this.layoutsCategoryPreference = [];
     this.layouts.filter((x: any, i: any) => {
       let obj: any = {
         priority: i,
-        category: x['category']['_id']
-      }
+        category: x['category']['_id'],
+      };
       this.layoutsCategoryPreference.push(obj);
-      
     });
     // console.log(this.layoutsCategoryPreference);
   }
@@ -355,9 +399,15 @@ export class AssociationRegisterComponent implements OnInit {
 
   hideSubLayouts() {
     this.viewSubLayouts = false;
-  }   
+  }
 
+  openModalAuthorization() {
+    this.dialogData.open(ModalAuthorizationJoinComponent, {
+      data: {},
+      height: '25%',
+      width: '70%',
+      panelClass: 'authorization-dialog',
+    });
+    this.checked = !this.checked;
+  }
 }
-
-   
-

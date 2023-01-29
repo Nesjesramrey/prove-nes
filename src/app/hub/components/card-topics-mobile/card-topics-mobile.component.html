@@ -1,18 +1,30 @@
 <div class="set-12 topic-card">
+    <div class="set-12 headtools">
+        <small>Filtrar</small> <button type="button" [matMenuTriggerFor]="menu"><mat-icon>filter_list</mat-icon></button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="loadSuggestedTopics()">
+            <mat-icon>assistant</mat-icon>
+            <small>Sugerencias</small>
+          </button>
+          <button mat-menu-item (click)="loadFavoriteTopics()">
+            <mat-icon>favorite</mat-icon>
+            <small>Favoritos</small>
+          </button>
+          <button mat-menu-item (click)="loadVotedTopics()">
+            <mat-icon>thumb_up_alt</mat-icon>
+            <small>Relevantes</small>
+          </button>
+        </mat-menu>
+      </div>
     
     <mat-card *ngFor="let topic of topics">
         <div class="dialog-body"  (click)="openDialog(topic._id)">
             <span class="set-12 "><strong>{{topic.title | slice:0:35}}<strong *ngIf="(topic.title).length > 35">...</strong></strong></span>
         </div>
         
-        <div class="set-12 icons">
+        <div class="set-12 icons" >
             <button type="button" mat-icon-button color="primary" matTooltip="Agregar a favoritos" matTooltipClass="tooltip"
-            (click)="addFavorites(topic._id)" *ngIf="!isFavorite" disabled>
-            <mat-icon>favorite</mat-icon>
-          </button>
-
-          <button type="button" mat-icon-button color="accent" matTooltip="Agregar a favoritos" matTooltipClass="tooltip"
-            (click)="removeFavorites()" *ngIf="isFavorite" disabled>
+            (click)="addFavorite(topic._id)" >
             <mat-icon>favorite</mat-icon>
           </button>
             <!-- <button type="button" mat-icon-button color="primary" disabled>

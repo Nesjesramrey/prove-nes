@@ -1,15 +1,15 @@
 <div class="set-12 headtools">
   <small>Filtrar</small> <button type="button" [matMenuTriggerFor]="menu"><mat-icon>filter_list</mat-icon></button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="loadSuggestedTopics()">
+    <button mat-menu-item (click)="loadSuggestedTopics('suggestions')">
       <mat-icon>assistant</mat-icon>
       <small>Sugerencias</small>
     </button>
-    <button mat-menu-item (click)="loadFavoriteTopics()">
+    <button mat-menu-item (click)="loadFavoriteTopics('favorites')">
       <mat-icon>favorite</mat-icon>
       <small>Favoritos</small>
     </button>
-    <button mat-menu-item (click)="loadVotedTopics()">
+    <button mat-menu-item (click)="loadVotedTopics('voted')">
       <mat-icon>thumb_up_alt</mat-icon>
       <small>Relevantes</small>
     </button>
@@ -25,14 +25,15 @@
 
       <div class="set-12 ctrls">
         <button type="button" (click)="addFavorite(topic)">
-          <mat-icon>favorite</mat-icon>
+          <mat-icon *ngIf="viewing != 'favorites'">favorite</mat-icon>
+          <mat-icon *ngIf="viewing == 'favorites'" color="accent">favorite</mat-icon>
         </button>
-        <button type="button">
+        <!-- <button type="button" (click)="openShareSheet()">
           <mat-icon>share</mat-icon>
         </button>
-        <button type="button">
+        <button type="button" disabled>
           <mat-icon>forum</mat-icon>
-        </button>
+        </button> -->
       </div>
     </mat-card>
   </div>
