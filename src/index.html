@@ -49,6 +49,20 @@
   <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v15.0"
     nonce="9FNUI0zb"></script>
 
+  <!-- Inicio del código de Calixta Chat, pegar al final del body de la página  -->
+  <script>
+    !function () {
+      var w = window, d = document; function fx() {
+        window.CalixtaChat.launch(
+          { appName: "mexicolectivo", accessKey: "5215641590865" })
+      } s = d.createElement("script"
+      ), s.src = "https://calixtachat.s3.amazonaws.com/v1/calixtachat.min.js", s.type =
+        "text/javascript", document.getElementsByTagName("head")[0].appendChild(s), w.
+          attachEvent ? w.attachEvent("onload", fx) : w.addEventListener("load", fx, !1)
+    }();
+  </script>
+  <!-- Fin del código de Calixta Chat -->
+
   <div class="app"></div>
 </body>
 

@@ -19,7 +19,8 @@
       matTooltipPosition="right" (click)="linkMe(layout._id)"></div>
 
     <button type="button" class="catname" (click)="linkMe(layout._id)">
-      {{ layout.category.name }}
+      <!-- {{ layout.category.name }} -->
+      {{(layout.category.name.length > 30) ? (layout.category.name | slice: 0 : 30) + '...' : (layout.category.name)}}
     </button>
   </div>
 </div>

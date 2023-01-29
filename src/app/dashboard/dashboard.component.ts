@@ -20,6 +20,7 @@ export class DashboardComponent implements OnInit {
   public isAuthenticated: boolean = false;
   public isMobile: boolean = false;
   public searchFormGroup!: FormGroup;
+  public activeIndex: number = 0;
 
   constructor(
     public documentService: DocumentService,
@@ -79,5 +80,13 @@ export class DashboardComponent implements OnInit {
         this.utilitySrvc.linkMe('/hub/ingresar');
       }
     }
+  }
+
+  popPDF() {
+    window.open('https://static-assets-pando.s3.amazonaws.com/assets/200123_MxC_DIGITAL.pdf');
+  }
+
+  moveSlide(index: number) {
+    this.activeIndex = index
   }
 }

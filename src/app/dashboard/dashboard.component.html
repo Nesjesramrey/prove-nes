@@ -3,12 +3,46 @@
 </div>
 
 <div class="set-12 page" *ngIf="isDataAvailable" [class.fixdesk]="!isMobile">
-  <div class="set-12 mb-page">
-    <!-- <div class="set-12">
-      <form [formGroup]="searchFormGroup" (submit)="onSearch(searchFormGroup)">
-        <input type="text" placeholder="Búscar en Mexicolectivo..." formControlName="search">
-      </form>
-    </div> -->
+  <div class="set-12 innerpage">
+    <div class="set-12 sliderhldr">
+      <div class="set-8 slider">
+        <div class="set-12 slide" [class.active]="activeIndex == 0">
+          <div class="set-12">
+            <span class="txt70">somos</span> una plataforma para recoger e intercambiar <span class="txt70">ideas</span>
+          </div>
+        </div>
+
+        <div class="set-12 slide" [class.active]="activeIndex == 1">
+          <p>Conoce nuestro Documento Punto de Partida</p>
+          <button type="button" mat-raised-button color="accent" (click)="popPDF()">click aquí</button>
+        </div>
+
+        <div class="set-12 slide" [class.active]="activeIndex == 2">
+          <p>Alineamos nuestra plataforma a la agenda 2030 de la ONU</p>
+          <button type="button" mat-raised-button color="accent" (click)="linkMe('')">leer más</button>
+        </div>
+      </div>
+
+      <div class="set-4">
+        <button type="button" (click)="linkMe('/documentos-publicos/' + document._id)">
+          <p>¡quiero participar!</p>
+          <p>click aquí</p>
+        </button>
+      </div>
+    </div>
+
+    <div class="set-12 slidectrls">
+      <button type="button" class="sldierbtn" (click)="moveSlide(0)" [class.active]="activeIndex == 0">&nbsp;</button>
+      <button type="button" class="sldierbtn" (click)="moveSlide(1)" [class.active]="activeIndex == 1">&nbsp;</button>
+      <button type="button" class="sldierbtn" (click)="moveSlide(2)" [class.active]="activeIndex == 2">&nbsp;</button>
+    </div>
+
+    <div class="tri">&nbsp;</div>
+  </div>
+
+
+
+  <!-- <div class="set-12 mb-page">
     <p class="set-12">
       Mexicolectivo surge como una plataforma para recoger e intercambiar ideas, soluciones y diagnósticos, entre la
       ciudadanía y la sociedad civil organizada experta para incidir en la agenda pública.
@@ -185,9 +219,9 @@
       <button type="button" mat-raised-button color="accent"
         (click)="linkMe('/documentos-publicos/' + document._id)">Aquí</button>
     </div>
-  </mat-card>
+  </mat-card> -->
 
-  <div class="set-12">
+  <div class="set-12 footer">
     <div class="app-footer"></div>
   </div>
 </div>
