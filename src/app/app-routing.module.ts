@@ -43,6 +43,10 @@ const routes: Routes = [
       import('./testimonials/testimonials.component.module').then(module => module.TestimonialsComponentModule)
   },
   {
+    path: 'noticias', loadChildren: () =>
+      import('./news/news.component.module').then(module => module.NewsComponentModule)
+  },
+  {
     path: '404', loadChildren: () =>
       import('./not-found/not-found.component.module').then(module => module.NotFoundComponentModule)
   },

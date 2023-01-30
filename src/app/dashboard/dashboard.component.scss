@@ -30,7 +30,7 @@
       font-size: 40pt;
       text-align: right;
       font-weight: bold;
-      overflow-x: scroll;
+      overflow: hidden;
 
       .slide {
         width: 100%;
@@ -116,55 +116,41 @@
     right: 50%;
   }
 
-  .fixdesk {
-    .mb-page {
-      padding: 40px 25%;
+  .videohldr {
+    padding: 40px;
+    background: #09f19e;
+  }
+
+  .fixmobile {
+    .innerpage {
+      padding-top: 0;
     }
 
-    .mb-page:nth-child(1) {
-      margin-top: 80px;
-      font-size: 20pt;
+    .sliderhldr {
+      padding: 0 !important;
+      display: block !important;
 
-      form {
-        display: none;
+      .slider {
+        padding: 0 !important;
+        width: 100% !important;
+        font-size: 20pt !important;
+        border: 0 !important;
       }
 
-      p {
-        margin-top: 0;
+      .slide {
+        padding: 0 20px;
       }
-    }
 
-    .mb-page:nth-child(2) {
-      .row {
-        display: flex;
-        align-items: center;
-
-        * {
-          margin: 0;
-        }
-
-        .icon {
-          width: 15%;
-          margin-right: 40px;
-        }
-
-        .txt {
-          width: 85%;
-          font-size: 17pt;
-        }
+      .set-4 {
+        width: 100% !important;
+        padding: 20px;
       }
     }
 
-    // .mb-page:nth-child(9) {
-    //   padding: 0 !important;
-    // }
-
-    .horn {
-      width: 22%;
-      left: auto;
-      bottom: auto;
-      top: 110px;
-      right: 2%;
+    .slidectrls {
+      position: relative !important;
+      bottom: 0;
+      padding: 40px;
     }
   }
 }
