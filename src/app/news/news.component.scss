@@ -1,0 +1,19 @@
+:host {
+  width: 100%;
+  float: left;
+  padding: 40px;
+  margin-top: 80px;
+
+  p {
+    margin-bottom: 20px;
+  }
+
+  p.title {
+    font-size: 20pt;
+  }
+
+  ul {
+    list-style-position: inside;
+    margin-bottom: 20px;
+  }
+}

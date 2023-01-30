@@ -22,7 +22,8 @@
       matTooltipPosition="right"
       (click)="linkMe('/documentos-publicos/' + document_id + '/categoria/' + category_id + '/subcategoria/' + layout._id)"
       *ngIf="layout.stats != null">
-      {{ layout.category.name }}
+      <!-- {{ layout.category.name }} -->
+      {{(layout.category.name.length > 30) ? (layout.category.name | slice: 0 : 30) + '...' : (layout.category.name)}}
     </button>
   </div>
 </div>
