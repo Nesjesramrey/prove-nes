@@ -2,7 +2,7 @@
   <mat-spinner color="accent"></mat-spinner>
 </div>
 
-<div class="set-12 page" *ngIf="isDataAvailable" [class.fixdesk]="!isMobile">
+<div class="set-12 page" *ngIf="isDataAvailable" [class.fixmobile]="isMobile">
   <div class="set-12 innerpage">
     <div class="set-12 sliderhldr">
       <div class="set-8 slider">
@@ -19,7 +19,8 @@
 
         <div class="set-12 slide" [class.active]="activeIndex == 2">
           <p>Alineamos nuestra plataforma a la agenda 2030 de la ONU</p>
-          <button type="button" mat-raised-button color="accent" (click)="linkMe('')">leer más</button>
+          <button type="button" mat-raised-button color="accent" (click)="utilitySrvc.linkMe('/noticias')">leer
+            más</button>
         </div>
       </div>
 
@@ -39,6 +40,8 @@
 
     <div class="tri">&nbsp;</div>
   </div>
+
+  <div class="set-12 videohldr">&nbsp;</div>
 
 
 
