@@ -7,5 +7,5 @@ export const environment = {
 
   // prod
   apiEndPoint: 'https://webservice.mexicolectivo.com/api/v1',
-  apiSocket: 'https://webservice.mexicolectivo.com/'
+  apiSocket: 'https://webservice.mexicolectivo.com'
 };
