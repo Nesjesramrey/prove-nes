@@ -71,7 +71,7 @@ export class TestimonialListComponent implements OnInit {
     public utilityService: UtilityService,
     public dialog: MatDialog
   ) {
-    // console.log(this.dialogData);
+    console.log(this.dialogData);
     this.location = this.dialogData['location'];
     this.user = this.dialogData['user'];
   }
@@ -112,6 +112,18 @@ export class TestimonialListComponent implements OnInit {
   createTestimony() {
     this.submitted = true;
     const { topicID, location } = this.dialogData;
+    let weightArray: any = [];
+
+    Array.from(this.addTestimonyFormGroup.controls['files']['value']).forEach((file: any) => {
+      weightArray.push(file['size']);
+    });
+    let weight: any = weightArray.reduce((a: any, b: any) => a + b, 0);
+
+    if (weight > 5000) {
+      this.utilityService.openErrorSnackBar('El peso máximo de carga es de 5MB');
+      this.submitted = false;
+      return;
+    }
 
     let data = {
       formData: new FormData(),
@@ -121,6 +133,7 @@ export class TestimonialListComponent implements OnInit {
 
     Array.from(this.addTestimonyFormGroup.controls['files']['value'])
       .forEach((file: any) => { data['formData'].append('files', file); });
+    data['formData'].append('type', location);
     data['formData'].append('name', this.addTestimonyFormGroup.value.name);
     data['formData'].append('description', this.addTestimonyFormGroup.value.description);
     data['formData'].append('isAnonymous', (this.isAnonymous).toString());
