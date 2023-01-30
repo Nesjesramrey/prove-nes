@@ -25,19 +25,15 @@
 
   <!---User is not login-->
   <div class="set-12 innernav" *ngIf="user == null">
-    <div class="set-12">
+    <div class="set-12 innerbtn">
       <button type="button" (click)="utilityService.linkMe('/'); open = !open">
-        Inicio
+        <mat-icon>home</mat-icon> Inicio
       </button>
-    </div>
-    <div class="set-12">
       <button type="button" (click)="utilityService.linkMe('/hub/signin-mobile'); open = !open">
-        Ingresar
+        <mat-icon>login</mat-icon> Ingresar
       </button>
-    </div>
-    <div class="set-12">
       <button type="button" (click)="utilityService.linkMe('/hub/signup-mobile'); open = !open">
-        Registro
+        <mat-icon>app_registration</mat-icon> Registro
       </button>
     </div>
   </div>
@@ -64,18 +60,26 @@
 
     <div class="set-12 innernav">
       <div class="set-12 innerbtn">
+        <button type="button"
+          (click)="utilityService.linkMe('/documentos-publicos/' + coverDocument._id); open = !open">
+          <span>Mexicolectivo</span>
+        </button>
         <button type="button" (click)="linkMe('entry-point')">
           <span>Documento Punto de Partida</span>
         </button>
+        <button type="button" (click)="utilityService.linkMe('/noticias'); open = !open">
+          <span>Agenda 2023</span>
+        </button>
+
         <button type="button" (click)="linkMe('profile')">
           <mat-icon>person</mat-icon> <span>Mi perfil</span>
         </button>
         <button type="button" (click)="linkMe('associations')">
           <mat-icon>groups</mat-icon> <span>Mis asociaciones</span>
         </button>
-        <button type="button" (click)="linkMe('documents')">
+        <!-- <button type="button" (click)="linkMe('documents')">
           <mat-icon>description</mat-icon> <span>Mis Documentos</span>
-        </button>
+        </button> -->
         <button type="button" (click)="linkMe('configuration')">
           <mat-icon>settings</mat-icon> <span>Configuración</span>
         </button>
