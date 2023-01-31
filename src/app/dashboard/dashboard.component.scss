@@ -47,7 +47,7 @@
     }
 
     .set-4 {
-      padding-left: 30px;
+      padding-left: 40px;
 
       button {
         width: 100%;
@@ -117,7 +117,8 @@
   }
 
   .videohldr {
-    padding: 40px;
+    display: flex;
+    padding: 120px 40px 40px 40px;
     background: #09f19e;
   }
 
