@@ -54,18 +54,15 @@
       background: none !important;
     }
 
-    ::ng-deep .mat-form-field-infix{
+    ::ng-deep .mat-form-field-infix {
       width: 50%;
     }
     .addressNum {
       display: flex;
       justify-content: space-between;
-     mat-form-field{
-      width: 49%;
-   
-     }
-     
-     
+      mat-form-field {
+        width: 49%;
+      }
     }
     // ::ng-deep .mat-form-field-infix {
     //   width: 130px;
@@ -82,7 +79,8 @@
     .mat-hint {
       font-size: 13px;
     }
-    .ctrls, .register{
+    .ctrls,
+    .register {
       padding-right: 10px;
     }
     .ctrls {
@@ -127,140 +125,20 @@
       margin-top: 10px;
     }
   }
-  .drag-list {
-    width: 100%;
-    max-width: 100%;
-    min-height: 60px;
-    display: block;
-    border-radius: 4px;
-    overflow: hidden;
-    margin: 20px 0 10px 0;
 
-    .drag-box {
-      padding: 20px 10px;
-      color: rgba(0, 0, 0, 0.87);
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      box-sizing: border-box;
-      cursor: move;
-      font-size: 14px;
-      background: linear-gradient(180deg, #71F5AD 100%, #0EAA70 100%);
-      border: 1px dashed #00031D;
-      text-transform: uppercase;
-      margin-bottom: 5px;
-      border-radius: 5px;
-    }
-
-    .cdk-drag-preview {
-      box-sizing: border-box;
-      border-radius: 4px;
-      box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-        0 8px 10px 1px rgba(0, 0, 0, 0.14),
-        0 3px 14px 2px rgba(0, 0, 0, 0.12);
-    }
-
-    .cdk-drag-placeholder {
-      opacity: 0;
-    }
-
-    .cdk-drag-animating {
-      transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-    }
+ .mat-card{
+  background-color: #1e7e7f;
+  color:  white;
+  box-shadow: none;
+  border: none;
+  .mat-checkbox{
+    margin-top: 15px;
   }
+ }
 
-  .drag-sublist {
-    width: 100%;
-    max-width: 100%;
-    min-height: 60px;
-    display: block;
-    border-radius: 4px;
-    overflow: hidden;
-    margin: 20px 0 10px 0;
-
-    .drag-box {
-      padding: 10px;
-      color: rgba(0, 0, 0, 0.87);
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      box-sizing: border-box;
-      cursor: move;
-      font-size: 14px;
-      background: linear-gradient(180deg, #E1F2EC 100%, #E1F2EC 100%);
-      border: 1px dashed #00031D;
-      text-transform: uppercase;
-      margin-bottom: 5px;
-      border-radius: 5px;
-    }
-
-    .cdk-drag-preview {
-      box-sizing: border-box;
-      border-radius: 4px;
-      box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-        0 8px 10px 1px rgba(0, 0, 0, 0.14),
-        0 3px 14px 2px rgba(0, 0, 0, 0.12);
-    }
-
-    .cdk-drag-placeholder {
-      opacity: 0;
-    }
-
-    .cdk-drag-animating {
-      transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-    }
-  }
-
-  .drag-chiplist {
-    width: 100%;
-    max-width: 100%;
-    min-height: 60px;
-    display: block;
-    border-radius: 4px;
-    overflow: hidden;
-    margin: 20px 0 10px 0;
-
-    .drag-chip {
-      cursor: move;
-      font-size: 9pt;
-      background: gainsboro;
-      border: 1px dashed #00031D;
-      display: inline-block;
-      margin-right: 10px;
-      margin-bottom: 10px;
-      border-radius: 30px;
-      padding: 5px 10px;
-    }
-
-    .cdk-drag-preview {
-      box-sizing: border-box;
-      border-radius: 4px;
-      box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-        0 8px 10px 1px rgba(0, 0, 0, 0.14),
-        0 3px 14px 2px rgba(0, 0, 0, 0.12);
-    }
-
-    .cdk-drag-placeholder {
-      opacity: 0;
-    }
-
-    .cdk-drag-animating {
-      transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-    }
-  }
-
-  .drag-list.cdk-drop-list-dragging .drag-box:not(.cdk-drag-placeholder) {
-    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-  }
-
-  .drag-sublist.cdk-drop-list-dragging .drag-box:not(.cdk-drag-placeholder) {
-    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-  }  
   .listhldr {
     margin-top: 10px;
-    p{
+    p {
       margin-bottom: 5px;
     }
 
@@ -294,16 +172,14 @@
       padding-bottom: 0;
     }
   }
-  .category{
-    
-      p{
-        .mat-icon{
-          font-size: 50pt;
-        }
-      
+  .category {
+    p {
+      .mat-icon {
+        font-size: 50pt;
+      }
     }
   }
-  .addfile{
+  .addfile {
     display: flex;
     justify-content: flex-end;
     padding-right: 5px;

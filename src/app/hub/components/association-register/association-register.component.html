@@ -178,53 +178,43 @@
     </mat-step>
     <!-- Step 2.1-->
     <mat-step>
-      <div class="set-12 category">
-        <p class="txt-center" *ngIf="!viewSubLayouts">
-          Arrastra y acomoda las categorías según tu intereses.
-          <small *ngIf="viewSubLayouts"
-            >Organiza las sub categorías por interés</small
-          >
-        </p>
-        <p class="txt-center"><mat-icon>touch_app</mat-icon></p>
-      </div>
-
-      <div
-        cdkDropList
-        class="set-12 drag-list"
-        (cdkDropListDropped)="dragAndDropLayout($event)"
-        *ngIf="!viewSubLayouts"
-      >
-        <div
-          class="set-12 drag-box"
-          *ngFor="let layout of layouts"
-          cdkDrag
-          (click)="onLayoutSelected(layout)"
-        >
-          <strong>{{ layout.category.name }}</strong>
+      <div class="set-12 dialog-head">
+        <div class="set-10">
+          <h3>¡Participa!</h3>
         </div>
-      </div>
-
-      <div
-        cdkDropList
-        class="set-12 drag-sublist"
-        (cdkDropListDropped)="dragAndDropSubLayout($event)"
-        *ngIf="viewSubLayouts"
-      >
-        <div class="set-12 drag-box" *ngFor="let layout of sublayouts" cdkDrag>
-          <strong>{{ layout.category.name }}</strong>
-        </div>
-        <div class="set-12 innerctrls">
+        <div class="set-2 txt-right">
           <button
             type="button"
             mat-mini-fab
             color="primary"
-            (click)="hideSubLayouts()"
+            (click)="killDialog()"
           >
-            <mat-icon>arrow_back</mat-icon>
+            <mat-icon>cancel</mat-icon>
           </button>
         </div>
       </div>
+      <div class="set-12 category">
+        <p class="txt-center" *ngIf="!viewSubLayouts">
+          Selecciona las categorías de tu interés.
+         
+        </p>
+        <p class="txt-center"><mat-icon>touch_app</mat-icon></p>
+      </div>
 
+      <mat-card class="set-12 list-Categories" *ngIf="!viewSubLayouts">
+        <mat-checkbox
+        class="set-12 categories"
+          *ngFor="let layout of layouts"
+          [value]="layout"
+          (change)="updateSelection(layout, $event)"
+          [labelPosition]="labelPosition"
+         
+        >
+          <span class="checkbox-label">{{ layout.category.name }}</span>
+        </mat-checkbox>
+
+      </mat-card>
+    
       <div class="set-12 ctrls">
         <button mat-raised-button color="warn" matStepperPrevious>
           <small>Atras</small>
@@ -233,19 +223,28 @@
           <small>Siguiente</small>
         </button>
       </div>
+
     </mat-step>
 
     <!-- Step 3 Data Comercial-->
     <mat-step>
       <div class="set-12 dialog-head">
         <div class="set-10">
-          <h3 *ngIf="associationType ==  '6399e5c7c878ad9b63dde6a2'">Datos comerciales</h3>
-          <h3 *ngIf="associationType == '6399e5c7c878ad9b63dde6a3'">Datos asociación</h3>
+          <h3 *ngIf="associationType == '6399e5c7c878ad9b63dde6a2'">
+            Datos comerciales
+          </h3>
+          <h3 *ngIf="associationType == '6399e5c7c878ad9b63dde6a3'">
+            Datos asociación
+          </h3>
           <h3 *ngIf="associationType == '6399e5c7c878ad9b63dde6a4'">
             Datos Maratón Estudiantil
           </h3>
-          <h3 *ngIf="associationType == '6399e5c7c878ad9b63dde6a5'">Datos Publicador</h3>
-          <h3 *ngIf="associationType == '6399e5c7c878ad9b63dde6a6'">Datos Estudiante</h3>
+          <h3 *ngIf="associationType == '6399e5c7c878ad9b63dde6a5'">
+            Datos Publicador
+          </h3>
+          <h3 *ngIf="associationType == '6399e5c7c878ad9b63dde6a6'">
+            Datos Estudiante
+          </h3>
         </div>
         <div class="set-2 txt-right">
           <button
@@ -261,7 +260,7 @@
       <form [formGroup]="dataComercialFormGroup">
         <mat-form-field
           *ngIf="
-            associationType ==  '6399e5c7c878ad9b63dde6a2' ||
+            associationType == '6399e5c7c878ad9b63dde6a2' ||
             associationType == '6399e5c7c878ad9b63dde6a3' ||
             associationType == '6399e5c7c878ad9b63dde6a4'
           "
@@ -269,7 +268,7 @@
         >
           <mat-label
             *ngIf="
-              associationType ==  '6399e5c7c878ad9b63dde6a2' ||
+              associationType == '6399e5c7c878ad9b63dde6a2' ||
               associationType == '6399e5c7c878ad9b63dde6a3'
             "
             >Razón o denominación social</mat-label
@@ -321,7 +320,7 @@
         </mat-form-field>
         <div
           *ngIf="
-            associationType ==  '6399e5c7c878ad9b63dde6a2' ||
+            associationType == '6399e5c7c878ad9b63dde6a2' ||
             associationType == '6399e5c7c878ad9b63dde6a3' ||
             associationType == '6399e5c7c878ad9b63dde6a4'
           "
@@ -335,7 +334,7 @@
             class="set-8 bwico"
           >
             <!-- <mat-icon><small>attach_file</small></mat-icon> -->
-            <small *ngIf="associationType ==  '6399e5c7c878ad9b63dde6a2'"
+            <small *ngIf="associationType == '6399e5c7c878ad9b63dde6a2'"
               >Adjuntar <strong>Acta Constitutiva</strong>
             </small>
             <small

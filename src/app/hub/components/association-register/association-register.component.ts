@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
@@ -56,6 +57,8 @@ export class AssociationRegisterComponent implements OnInit {
   public associations: any = [];
   public fileNames: any = [];
   public associationType: any = null;
+  public myCategoriesAssociation: any = [];
+  public labelPosition: any = "after";
 
   constructor(
     public authenticationSrvc: AuthenticationService,
@@ -360,14 +363,14 @@ export class AssociationRegisterComponent implements OnInit {
       associationID: id_association,
     };
     //console.log(data)
-    // this.userService.joinUserWithAssociation(data).subscribe({
-    //   error: (error) => {
-    //     switch (error['status']) {
-    //     }
-    //   },
-    //   next: (reply: any) => {},
-    //   complete: () => {},
-    // });
+    this.userService.joinUserWithAssociation(data).subscribe({
+      error: (error) => {
+        switch (error['status']) {
+        }
+      },
+      next: (reply: any) => {},
+      complete: () => {},
+    });
     this.openModalAuthorization();
   }
 
@@ -388,17 +391,17 @@ export class AssociationRegisterComponent implements OnInit {
     });
     // console.log(this.layoutsCategoryPreference);
   }
-  dragAndDropSubLayout(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.sublayouts, event.previousIndex, event.currentIndex);
-  }
 
-  onLayoutSelected(layout: any) {
-    // this.viewSubLayouts = true;
-    // this.sublayouts = layout['subLayouts'];
-  }
-
-  hideSubLayouts() {
-    this.viewSubLayouts = false;
+  updateSelection(value: any, event: MatCheckboxChange) {
+    let obj: any = {
+      category: value['category']['_id'],
+    };
+    event.checked
+      ? this.myCategoriesAssociation.push(obj)
+      : (this.myCategoriesAssociation = this.myCategoriesAssociation.filter(
+          (val: any) => val !== value
+        ));
+        console.log(this.myCategoriesAssociation)
   }
 
   openModalAuthorization() {
