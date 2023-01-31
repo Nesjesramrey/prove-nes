@@ -12,12 +12,12 @@
           </div>
         </div>
 
-        <div class="set-12 slide" [class.active]="activeIndex == 1">
+        <!-- <div class="set-12 slide" [class.active]="activeIndex == 1">
           <p>Conoce nuestro Documento Punto de Partida</p>
           <button type="button" mat-raised-button color="accent" (click)="popPDF()">click aquí</button>
-        </div>
+        </div> -->
 
-        <div class="set-12 slide" [class.active]="activeIndex == 2">
+        <div class="set-12 slide" [class.active]="activeIndex == 1">
           <p>Alineamos nuestra plataforma a la agenda 2030 de la ONU</p>
           <button type="button" mat-raised-button color="accent" (click)="utilitySrvc.linkMe('/noticias')">leer
             más</button>
@@ -35,7 +35,7 @@
     <div class="set-12 slidectrls">
       <button type="button" class="sldierbtn" (click)="moveSlide(0)" [class.active]="activeIndex == 0">&nbsp;</button>
       <button type="button" class="sldierbtn" (click)="moveSlide(1)" [class.active]="activeIndex == 1">&nbsp;</button>
-      <button type="button" class="sldierbtn" (click)="moveSlide(2)" [class.active]="activeIndex == 2">&nbsp;</button>
+      <!-- <button type="button" class="sldierbtn" (click)="moveSlide(2)" [class.active]="activeIndex == 2">&nbsp;</button> -->
     </div>
 
     <div class="tri">&nbsp;</div>
