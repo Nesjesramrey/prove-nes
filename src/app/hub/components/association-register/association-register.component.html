@@ -126,7 +126,7 @@
     </mat-step>
     <!-- Step 2.1-->
     <mat-step>
-<<<<<<< HEAD
+
       <div class="set-12 dialog-head">
         <div class="set-10">
           <h3>¡Participa!</h3>
@@ -139,31 +139,7 @@
             (click)="killDialog()"
           >
             <mat-icon>cancel</mat-icon>
-=======
-      <div class="set-12 category">
-        <p class="txt-center" *ngIf="!viewSubLayouts">
-          Arrastra y acomoda las categorías según tu intereses.
-          <small *ngIf="viewSubLayouts">Organiza las sub categorías por interés</small>
-        </p>
-        <p class="txt-center"><mat-icon>touch_app</mat-icon></p>
-      </div>
 
-      <div cdkDropList class="set-12 drag-list" (cdkDropListDropped)="dragAndDropLayout($event)"
-        *ngIf="!viewSubLayouts">
-        <div class="set-12 drag-box" *ngFor="let layout of layouts" cdkDrag (click)="onLayoutSelected(layout)">
-          <strong>{{ layout.category.name }}</strong>
-        </div>
-      </div>
-
-      <div cdkDropList class="set-12 drag-sublist" (cdkDropListDropped)="dragAndDropSubLayout($event)"
-        *ngIf="viewSubLayouts">
-        <div class="set-12 drag-box" *ngFor="let layout of sublayouts" cdkDrag>
-          <strong>{{ layout.category.name }}</strong>
-        </div>
-        <div class="set-12 innerctrls">
-          <button type="button" mat-mini-fab color="primary" (click)="hideSubLayouts()">
-            <mat-icon>arrow_back</mat-icon>
->>>>>>> Dev
           </button>
         </div>
       </div>
@@ -228,7 +204,7 @@
         </div>
       </div>
       <form [formGroup]="dataComercialFormGroup">
-<<<<<<< HEAD
+
         <mat-form-field
           *ngIf="
             associationType == '6399e5c7c878ad9b63dde6a2' ||
@@ -240,15 +216,8 @@
           <mat-label
             *ngIf="
               associationType == '6399e5c7c878ad9b63dde6a2' ||
-=======
-        <mat-form-field *ngIf="
-            associationType ==  '6399e5c7c878ad9b63dde6a2' ||
-            associationType == '6399e5c7c878ad9b63dde6a3' ||
-            associationType == '6399e5c7c878ad9b63dde6a4'
-          " appearance="outline">
-          <mat-label *ngIf="
-              associationType ==  '6399e5c7c878ad9b63dde6a2' ||
->>>>>>> Dev
+
+
               associationType == '6399e5c7c878ad9b63dde6a3'
             ">Razón o denominación social</mat-label>
           <mat-label *ngIf="associationType == '6399e5c7c878ad9b63dde6a4'">Universidad a la que perteneces</mat-label>
@@ -290,25 +259,20 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-<<<<<<< HEAD
+
         <div
           *ngIf="
             associationType == '6399e5c7c878ad9b63dde6a2' ||
-=======
-        <div *ngIf="
-            associationType ==  '6399e5c7c878ad9b63dde6a2' ||
->>>>>>> Dev
+
             associationType == '6399e5c7c878ad9b63dde6a3' ||
             associationType == '6399e5c7c878ad9b63dde6a4'
           " class="set-12 addfile">
           <button type="button" mat-raised-button color="primary" (click)="file.click()" class="set-8 bwico">
             <!-- <mat-icon><small>attach_file</small></mat-icon> -->
-<<<<<<< HEAD
+
             <small *ngIf="associationType == '6399e5c7c878ad9b63dde6a2'"
               >Adjuntar <strong>Acta Constitutiva</strong>
-=======
-            <small *ngIf="associationType ==  '6399e5c7c878ad9b63dde6a2'">Adjuntar <strong>Acta Constitutiva</strong>
->>>>>>> Dev
+
             </small>
             <small *ngIf="
                 associationType == '6399e5c7c878ad9b63dde6a3' ||
