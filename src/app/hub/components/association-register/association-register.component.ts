@@ -253,7 +253,7 @@ export class AssociationRegisterComponent implements OnInit {
       ),
       data['formData'].append(
         'layoutsCategoryPreference',
-        JSON.stringify(this.layoutsCategoryPreference) || null
+        JSON.stringify(this.myCategoriesAssociation) || null
       );
     // for (let [key, value] of data['formData']) {
     //   console.log(`${key}: ${value}`)
@@ -379,19 +379,6 @@ export class AssociationRegisterComponent implements OnInit {
     //console.log(this.associationType)
   }
 
-  dragAndDropLayout(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.layouts, event.previousIndex, event.currentIndex);
-    this.layoutsCategoryPreference = [];
-    this.layouts.filter((x: any, i: any) => {
-      let obj: any = {
-        priority: i,
-        category: x['category']['_id'],
-      };
-      this.layoutsCategoryPreference.push(obj);
-    });
-    // console.log(this.layoutsCategoryPreference);
-  }
-
   updateSelection(value: any, event: MatCheckboxChange) {
     let obj: any = {
       category: value['category']['_id'],
@@ -401,7 +388,7 @@ export class AssociationRegisterComponent implements OnInit {
       : (this.myCategoriesAssociation = this.myCategoriesAssociation.filter(
           (val: any) => val !== value
         ));
-        console.log(this.myCategoriesAssociation)
+        //console.log(this.myCategoriesAssociation)
   }
 
   openModalAuthorization() {

@@ -1,21 +1,21 @@
 <div class="set-12 topic-card">
-    <div class="set-12 headtools">
-        <small>Filtrar</small> <button type="button" [matMenuTriggerFor]="menu"><mat-icon>filter_list</mat-icon></button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="loadSuggestedTopics()">
-            <mat-icon>assistant</mat-icon>
-            <small>Sugerencias</small>
-          </button>
-          <button mat-menu-item (click)="loadFavoriteTopics()">
-            <mat-icon>favorite</mat-icon>
-            <small>Favoritos</small>
-          </button>
-          <button mat-menu-item (click)="loadVotedTopics()">
-            <mat-icon>thumb_up_alt</mat-icon>
-            <small>Relevantes</small>
-          </button>
-        </mat-menu>
-      </div>
+  <div class="set-12 headtools">
+    <small>Filtrar</small> <button type="button" [matMenuTriggerFor]="menu"><mat-icon>filter_list</mat-icon></button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="loadSuggestedTopics('suggestions')">
+        <mat-icon>assistant</mat-icon>
+        <small>Sugerencias</small>
+      </button>
+      <button mat-menu-item (click)="loadFavoriteTopics('favorites')">
+        <mat-icon>favorite</mat-icon>
+        <small>Favoritos</small>
+      </button>
+      <button mat-menu-item (click)="loadVotedTopics('voted')">
+        <mat-icon>thumb_up_alt</mat-icon>
+        <small>Relevantes</small>
+      </button>
+    </mat-menu>
+  </div>
     
     <mat-card *ngFor="let topic of topics">
         <div class="dialog-body"  (click)="openDialog(topic._id)">
@@ -23,9 +23,9 @@
         </div>
         
         <div class="set-12 icons" >
-            <button type="button" mat-icon-button color="primary" matTooltip="Agregar a favoritos" matTooltipClass="tooltip"
-            (click)="addFavorite(topic._id)" >
-            <mat-icon>favorite</mat-icon>
+          <button type="button" (click)="addFavorite(topic)">
+            <mat-icon *ngIf="viewing != 'favorites'">favorite</mat-icon>
+            <mat-icon *ngIf="viewing == 'favorites'" color="accent">favorite</mat-icon>
           </button>
             <!-- <button type="button" mat-icon-button color="primary" disabled>
                 <mat-icon>check_circle</mat-icon>
