@@ -1,17 +1,17 @@
 <div class="set-12" *ngIf="!isMobile" [class.fixdesk]="!isMobile">
   <img src="../../../assets/images/mexicolectivo-small-blue.png" alt="Mexicolectivo">
-  <p><small>Todos los derechos reservados.</small></p>
-  <p><small>&copy; Pando Servicios Digitales</small></p>
+  <p><small>Todos los derechos reservados. &copy; Pando Servicios Digitales</small></p>
   <p><small>https://mexicolectivo.com/</small></p>
   <p>
     <small>
-      <a href="javascript:void(0)" (click)="linkMe('/legales/terminos-condiciones')">Términos y condiciones</a>
+      <a href="javascript:void(0)" (click)="linkMe('/legales/terminos-condiciones')">Términos y condiciones</a> | <a
+        href="javascript:void(0)" (click)="linkMe('/legales/politica-privacidad')">Política de Privacidad</a>
     </small>
   </p>
 
   <div class="set-12 networks">
     <div class="set-12">
-      <p>Siguenos en:</p>
+      <p><small>Siguenos en:</small></p>
       <a class="icon facebook-net" target="_blank" href="https://www.facebook.com/mexicolectivo"></a>
     </div>
   </div>
@@ -19,18 +19,22 @@
 
 <div class="set-12" *ngIf="isMobile" [class.fixmobile]="isMobile">
   <img src="../../../assets/images/mexicolectivo-small-blue.png" alt="Mexicolectivo">
-  <p><small>Todos los derechos reservados.</small></p>
-  <p><small>&copy; Pando Servicios Digitales</small></p>
+  <p><small>Todos los derechos reservados. &copy; Pando Servicios Digitales</small></p>
   <p><small>https://mexicolectivo.com/</small></p>
   <p>
     <small>
       <a href="javascript:void(0)" (click)="linkMe('/legales/terminos-condiciones')">Términos y condiciones</a>
     </small>
   </p>
+  <p>
+    <small>
+      <a href="javascript:void(0)" (click)="linkMe('/legales/politica-privacidad')">Política de Privacidad</a>
+    </small>
+  </p>
 
   <div class="set-12 networks">
     <div class="set-12">
-      <p>Siguenos en:</p>
+      <p><small>Siguenos en:</small></p>
       <a class="icon facebook-net" target="_blank" href="https://www.facebook.com/mexicolectivo"></a>
     </div>
   </div>

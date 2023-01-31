@@ -58,10 +58,10 @@
       <mat-icon>menu</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="popPDF()">
+      <!-- <button mat-menu-item (click)="popPDF()">
         <mat-icon>groups</mat-icon>
         <span>Documento Punto de Partida</span>
-      </button>
+      </button> -->
       <button mat-menu-item (click)="linkMe('userList')" *ngIf="userActivities.includes('moderator')">
         <mat-icon>groups</mat-icon>
         <span>Usuarios</span>
