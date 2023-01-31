@@ -1,8 +1,11 @@
 :host {
   width: 100%;
   float: left;
-  padding: 40px;
   margin-top: 80px;
+
+  .set-6 {
+    padding: 40px;
+  }
 
   p {
     margin-bottom: 20px;

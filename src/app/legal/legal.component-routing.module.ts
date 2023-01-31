@@ -9,7 +9,7 @@ const routes: Routes = [
     path: '', children: [
       { path: '', redirectTo: '/404', pathMatch: 'full' },
       { path: '', component: LegalComponent },
-      { path: 'aviso-privacidad', component: PrivacyComponent, canActivate: [] },
+      { path: 'politica-privacidad', component: PrivacyComponent, canActivate: [] },
       { path: 'terminos-condiciones', component: TermsComponent, canActivate: [] }
     ]
   }
