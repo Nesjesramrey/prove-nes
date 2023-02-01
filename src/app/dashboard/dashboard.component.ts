@@ -86,6 +86,10 @@ export class DashboardComponent implements OnInit {
     window.open('https://static-assets-pando.s3.amazonaws.com/assets/punto-de-partida.pdf');
   }
 
+  popWomenPDF() {
+    window.open('https://static-assets-pando.s3.amazonaws.com/assets/mujeres.pdf');
+  }
+
   moveSlide(index: number) {
     this.activeIndex = index
   }
