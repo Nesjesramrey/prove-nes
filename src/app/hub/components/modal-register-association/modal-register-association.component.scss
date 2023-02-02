@@ -1,0 +1,25 @@
+:host {
+    width: 100%;
+    padding: 0px;
+  
+    .modal-Authorization {
+      padding: 0px;
+  
+      .head-Modal {
+        display: flex;
+        justify-content: flex-end;
+        button {
+          .mat-icon {
+            font-size: 20pt;
+         
+          }
+        }
+      }
+      .message {
+        padding: 15px;
+        p{
+          text-align: justify;
+        }
+      }
+    }
+  }

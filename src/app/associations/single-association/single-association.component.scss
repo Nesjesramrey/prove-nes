@@ -16,13 +16,13 @@
 
   
     mat-card {
-    //   padding: 0 !important;
-    //   border-radius: 4px !important;
-      position: relative;
+    padding: 0 !important;
+    padding-bottom: 10px !important;
+    position: relative;
     }
   
     h3 {
-      margin: 0 !important;
+      margin-top: 10px !important;
     }
 
     .row:not(:first-child) {
@@ -121,30 +121,18 @@
      
     .usrinfo {
       margin-top: 20px;
-  
+       
       p {
-        margin-bottom: 5px;
+        margin-bottom: 10px;
       }
   
       p:last-child {
         margin-bottom: 0;
       }
+    
     }
-   .publications{ 
-    mat-card{
-      display: flex;
-      justify-content: center;
-        margin-top: 10px;
-        p{
-            span{
-                padding: 9px;
-            }
-        }
-    }
-     
-   }
-   
-  
+
+ 
   }
   
   

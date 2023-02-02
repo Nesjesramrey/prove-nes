@@ -6,12 +6,29 @@
   <mat-tab-group [disableRipple]="true" [@.disabled]="true">
     <mat-tab label="Temas">
       <!-- <search-input-mobile></search-input-mobile> -->
-<card-topics-mobile></card-topics-mobile>
+      <card-topics-mobile></card-topics-mobile>
+    </mat-tab>
+    <mat-tab label="Soluciones">
+      <!-- <search-input-mobile></search-input-mobile> -->
+      <card-solutions-mobile></card-solutions-mobile>
+    
+
     </mat-tab>
     <!-- <mat-tab label="Mi perfil">
       <spider-chart-mobile></spider-chart-mobile>
       <circle-chart-mobile></circle-chart-mobile>
-      <card-solutions-mobile></card-solutions-mobile>
+      <mat-card>
+        <h3>Top soluciones más votadas</h3>
+        <div *ngFor="let solution of solutions">
+          <h5 class="set-9">{{ solution.title }}</h5>
+          <mat-progress-bar
+            class="mt-1"
+            color="accent"
+            mode="determinate"
+            value="40"
+          ></mat-progress-bar>
+        </div>
+              </mat-card>
       <line-chart-mobile></line-chart-mobile>
     </mat-tab> -->
     <!-- <mat-tab label="Comunidad">

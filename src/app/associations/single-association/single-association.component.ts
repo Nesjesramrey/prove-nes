@@ -16,7 +16,7 @@ export class SingleAssociationComponent implements OnInit {
   public isDataAvailable: boolean = false;
   public isMobile: boolean = false;
   @Input('user') public user: any = null;
-  public associationID: string = '';
+  public associationID: any = null;
   public semblanza: any = null;
   public association: any = null;
 
