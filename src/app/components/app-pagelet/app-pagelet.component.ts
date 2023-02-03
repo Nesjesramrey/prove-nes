@@ -12,6 +12,7 @@ import { SearchService } from 'src/app/services/search.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { UserService } from 'src/app/services/user.service';
 import { SearchDialogComponent } from '../search-dialog/search-dialog.component';
+import { ComplaintDialogComponent } from '../complaint-dialog/complaint-dialog.component';
 
 @Component({
   selector: '.app-pagelet',
@@ -254,5 +255,20 @@ export class AppPageletComponent implements OnInit {
 
   popPDF() {
     window.open('https://static-assets-pando.s3.amazonaws.com/assets/punto-de-partida.pdf');
+  }
+
+  popComplaintsDialog() {
+    const dialogRef = this.dialog.open<any>(ComplaintDialogComponent, {
+      width: '100%',
+      data: {
+        user: this.user
+      },
+      disableClose: true,
+      panelClass: 'side-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
   }
 }

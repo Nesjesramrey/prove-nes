@@ -1,8 +1,8 @@
 :host {
-  padding: 20px;
+  padding: 40px;
   float: left;
-  width: 70%;
-  margin: 0 15%;
+  // width: 50%;
+  // margin: 0 25%;
 
   ::ng-deep .angular-editor-toolbar {
     background: transparent !important;
@@ -10,10 +10,6 @@
     border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1) !important;
     padding: 10px !important;
   }
-
-  // ::ng-deep .angular-editor-textarea {
-  //   resize: none !important;
-  // }
 
   ::ng-deep .angular-editor .angular-editor-wrapper .angular-editor-textarea {
     background: transparent !important;
@@ -37,6 +33,72 @@
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+
+    .set-3 {
+      display: inline-flex;
+      justify-content: flex-end;
+
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+
+  .dialog-body {
+    .set-8 {
+      padding-right: 40px;
+    }
+
+    .rgthldr {
+      .set-6 {
+        margin-bottom: 20px;
+        height: 150px;
+        min-height: 150px;
+        max-height: 150px;
+        overflow: hidden;
+        position: relative;
+
+        button {
+          zoom: 0.7;
+        }
+
+        .overlay {
+          position: absolute;
+          top: 0;
+          width: calc(100% - 10px);
+          height: 100%;
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+          transition: all .2s linear;
+          background: rgba($color: #000000, $alpha: 0.6);
+        }
+
+        .overlay:hover {
+          opacity: 1;
+        }
+      }
+
+      .set-6:nth-child(odd) {
+        padding-right: 10px;
+        left: 0;
+      }
+
+      .set-6:nth-child(even) {
+        padding-left: 10px;
+        right: 0;
+      }
+
+      img {
+        width: 100%;
+        height: auto;
+        float: left;
+      }
+    }
   }
 
   textarea {
@@ -55,10 +117,17 @@
 
     button {
       margin-right: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     mat-spinner {
       margin-left: 10px;
+    }
+
+    mat-icon {
+      font-size: 17pt;
     }
   }
 

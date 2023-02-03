@@ -12,6 +12,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 export class ShareSheetComponent implements OnInit {
   public user: any = null;
   public url: string = '';
+  public card: any = null;
 
   constructor(
     public bottomSheetRef: MatBottomSheetRef<ShareSheetComponent>,
@@ -20,9 +21,13 @@ export class ShareSheetComponent implements OnInit {
     public router: Router,
     public utilityService: UtilityService
   ) {
-    // console.log(this.matBottomSheetData);
+    // console.log(this.sheetData);
     this.user = this.sheetData['user'];
     this.url = this.DOM.location.origin + this.router.url;
+    if (this.sheetData['card'] != undefined) {
+      this.card = this.sheetData['card'];
+      this.url = this.DOM.location.origin + this.router.url + '/' + this.card['_id'];
+    }
   }
 
   ngOnInit(): void { }

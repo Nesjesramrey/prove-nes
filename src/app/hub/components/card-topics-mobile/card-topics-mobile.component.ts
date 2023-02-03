@@ -30,6 +30,7 @@ export class CardTopicsMobileComponent implements OnInit {
   public isFavorite: boolean = false;
   public allFavorites: any = null;
   public myFavorites: any = [];
+  public viewing: string = '';
 
   constructor(
     public dialog: MatDialog,
@@ -57,8 +58,10 @@ export class CardTopicsMobileComponent implements OnInit {
         this.isDataAvailable = true;
       },
     })
-    this.loadSuggestedTopics();
+    this.loadSuggestedTopics('suggestions');
   }
+
+  
 
   openDialog(id: any) {
     //console.log(id)
@@ -125,33 +128,29 @@ export class CardTopicsMobileComponent implements OnInit {
     });
   }
 
-  loadSuggestedTopics() {
+  loadSuggestedTopics(type: string) {
     this.topicService.fetchSuggestionTopic().subscribe({
       error: (error) => {
         switch (error['status']) { }
       },
-      next: (reply: any) => {
-        this.topics = reply;
-      },
-      complete: () => { }
+      next: (reply: any) => { this.topics = reply; },
+      complete: () => { this.viewing = type; }
     });
   }
 
-  loadFavoriteTopics() {
+  loadFavoriteTopics(type: string) {
     this.topicService.fetchFavoriteTopicsByUser({ userID: this.user['_id'] }).subscribe({
       error: (error: any) => { },
-      next: (reply: any) => {
-        this.topics = reply;
-      }
+      next: (reply: any) => { this.topics = reply; },
+      complete: () => { this.viewing = type; }
     });
   }
 
-  loadVotedTopics() {
+  loadVotedTopics(type: string) {
     this.topicService.fetchVotedTopicsByUser({ userID: this.user['_id'] }).subscribe({
       error: (error: any) => { },
-      next: (reply: any) => {
-        this.topics = reply;
-      }
+      next: (reply: any) => { this.topics = reply; },
+      complete: () => { this.viewing = type; }
     });
   }
 
