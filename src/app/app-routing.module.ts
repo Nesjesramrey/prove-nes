@@ -43,6 +43,10 @@ const routes: Routes = [
       import('./testimonials/testimonials.component.module').then(module => module.TestimonialsComponentModule)
   },
   {
+    path: 'posts', loadChildren: () =>
+      import('./posts/posts.component.module').then(module => module.PostsComponentModule)
+  },
+  {
     path: 'noticias', loadChildren: () =>
       import('./news/news.component.module').then(module => module.NewsComponentModule)
   },

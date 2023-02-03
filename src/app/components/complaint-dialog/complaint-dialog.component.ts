@@ -1,9 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatStepper } from '@angular/material/stepper';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { ComplaintService } from 'src/app/services/complaint.service';
 import { UtilityService } from 'src/app/services/utility.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: '.complaint-dialog',
@@ -54,6 +56,10 @@ export class ComplaintDialogComponent implements OnInit {
     ]
   };
   public fileNames: any = [];
+  public files: any[] = [];
+  public urls = new Array<string>();
+  public postURL: string = '';
+  @ViewChild('stepper') private stepper!: MatStepper;
 
   constructor(
     public dialogRef: MatDialogRef<ComplaintDialogComponent>,
@@ -64,6 +70,7 @@ export class ComplaintDialogComponent implements OnInit {
   ) {
     // console.log(this.dialogData);
     this.user = this.dialogData['user'];
+    console.log(environment.production);
   }
 
   ngOnInit(): void {
@@ -79,10 +86,31 @@ export class ComplaintDialogComponent implements OnInit {
   }
 
   onFileSelected(event: any) {
-    Array.from(event.target.files).forEach((file: any) => { this.fileNames.push(file['name']); });
+    this.urls = [];
+    let files = event.target.files;
+    if (files) {
+      for (let file of files) {
+        let reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.urls.push(e.target.result);
+        }
+        reader.readAsDataURL(file);
+      }
+    }
+
+    Array.from(event.target.files)
+      .forEach((file: any) => { this.fileNames.push(file['name']); });
     this.complaintFormGroup.patchValue({ files: event.target.files });
     this.complaintFormGroup.updateValueAndValidity();
-    // console.log(this.complaintFormGroup.controls['files']['value']);
+
+    this.files = event['target']['files'];
+    let weight: any = this.validateFileSize(this.files);
+
+    if (weight > 5) {
+      this.utilityService.openErrorSnackBar('El peso máximo de carga es de 5MB');
+      this.complaintFormGroup.setErrors({ 'error': true });
+      this.submitted = false;
+    }
   }
 
   onFileComplaint(form: FormGroup) {
@@ -101,15 +129,48 @@ export class ComplaintDialogComponent implements OnInit {
         this.killDialog();
       },
       next: (reply: any) => {
+        this.postURL = 'https://mexicolectivo.com/posts/' + reply['_id'];
         this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
       },
       complete: () => {
-        this.killDialog();
+        this.stepNext();
+        this.submitted = false;
+        this.complaintFormGroup.reset();
+        // this.killDialog();
       }
     });
   }
 
+  popFile(index: number) {
+    this.urls = this.urls.filter((x: any, i: any) => { return i != index; });
+    this.fileNames = this.fileNames.filter((x: any, i: any) => { return i != index; });
+    let files: any = this.complaintFormGroup.controls['files']['value'];
+    files = Array.from(files).filter((x: any, i: any) => { return i != index; });
+    this.complaintFormGroup.patchValue({ files: files });
+    this.files = Array.from(this.files).filter((x: any, i: any) => { return i != index; });
+    let weight: any = this.validateFileSize(this.files);
+
+    if (weight > 5) {
+      this.utilityService.openErrorSnackBar('El peso máximo de carga es de 5MB');
+      this.complaintFormGroup.setErrors({ 'error': true });
+      this.submitted = false;
+    } else {
+      this.complaintFormGroup.updateValueAndValidity();
+    }
+  }
+
+  validateFileSize(files: any) {
+    let weightArray: any = [];
+    Array.from(files).forEach((file: any) => { weightArray.push(file['size'] / (1024 * 1024)); });
+    let weight: any = weightArray.reduce((a: any, b: any) => a + b, 0).toFixed(2);
+    return weight;
+  }
+
   killDialog() {
     this.dialogRef.close();
+  }
+
+  stepNext() {
+    this.stepper.next();
   }
 }

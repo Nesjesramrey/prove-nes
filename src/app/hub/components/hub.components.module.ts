@@ -10,6 +10,7 @@ import { MapBoxComponent } from './map-box/map-box.component';
 import { NgChartsModule } from 'ng2-charts';
 import { AdminTemplateMobileComponent } from './admin-template-mobile/admin-template-mobile.component';
 import { CardTopicsDesktopComponent } from './card-topics-desktop/card-topics-desktop.component';
+import { AttendComplaintDialogComponent } from './attend-complaint-dialog/attend-complaint-dialog.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { CardTopicsDesktopComponent } from './card-topics-desktop/card-topics-de
     EditorTemplateComponent,
     CTypeTemplateComponent,
     MapBoxComponent,
-    CardTopicsDesktopComponent
+    CardTopicsDesktopComponent,
+    AttendComplaintDialogComponent
   ],
   exports: [
     AdminTemplateComponent,
@@ -34,9 +36,12 @@ import { CardTopicsDesktopComponent } from './card-topics-desktop/card-topics-de
     EditorTemplateComponent,
     CTypeTemplateComponent,
     MapBoxComponent,
-    CardTopicsDesktopComponent
+    CardTopicsDesktopComponent,
+    AttendComplaintDialogComponent
   ],
-  entryComponents: [],
+  entryComponents: [
+    AttendComplaintDialogComponent
+  ],
   providers: [],
 })
 export class HubComponentsModule { }

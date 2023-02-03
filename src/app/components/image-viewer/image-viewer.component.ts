@@ -22,6 +22,7 @@ export class ImageViewerComponent implements OnInit {
   public fileNames: any = [];
   public submitted: boolean = false;
   public user: any = null;
+  public complaint: any = null;
 
   constructor(
     public dialogRef: MatDialogRef<ImageViewerComponent>,
@@ -40,6 +41,7 @@ export class ImageViewerComponent implements OnInit {
     this.solution = this.dialogData['solution'];
     this.user = this.dialogData['user'];
     this.user['activityName'] = this.user['activities'][0]['value'];
+    this.complaint = this.dialogData['complaint'];
     // console.log(this.user);
 
     switch (this.dialogData['location']) {
@@ -63,7 +65,7 @@ export class ImageViewerComponent implements OnInit {
         files: ['', [Validators.required]]
       });
       this.isDataAvailable = true;
-    }, 1000);
+    }, 300);
   }
 
   onFileSelected(event: any) {
