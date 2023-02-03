@@ -12,16 +12,15 @@
   </div>
 
   <div class="set-6 navigation" *ngIf="!isMobile">
-    <button *ngIf="permission == true && isPublic > 0" type="button" (click)="redirectEdition()">
+    <!-- <button *ngIf="permission == true && isPublic > 0" type="button" (click)="redirectEdition()">
       Ir a edición
     </button>
     <button *ngIf="permission == true && isPublic == -1" type="button" (click)="redirectEdition()">
       Ver público
-    </button>
-
-    <!-- <button type="button">
-      Pensamiento colectivo
     </button> -->
+
+    <!-- <button type="button" (click)="utilitySrvc.linkMe('/posts')">Publicaciones</button> -->
+
     <span class="sep">|</span>
 
     <!-- user not available -->
@@ -37,8 +36,7 @@
       [matTooltip]="user.firstname + ' ' + user.lastname" matTooltipClass="tooltip">
       <img src="{{ user.avatarImage }}" alt="{{ user.firstname }}" *ngIf="user.avatarImage != null" />
       <span *ngIf="user.avatarImage == null">
-        {{ user.firstname | firstword | firstletter
-        }}{{ user.lastname | firstword | firstletter }}
+        {{ user.firstname | firstword | firstletter }}{{ user.lastname | firstword | firstletter }}
       </span>
     </button>
 
@@ -74,8 +72,17 @@
         <mat-icon>announcement</mat-icon>
         <span>Testímonios</span>
       </button>
+
+      <button mat-menu-item (click)="popComplaintsDialog()">
+        <mat-icon>priority_high</mat-icon>
+        <span>Denuncia</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>record_voice_over</mat-icon>
+        <span>Mi Testimonio</span>
+      </button>
       <button mat-menu-item (click)="resetPassword(user.email)">
-        <mat-icon>lock</mat-icon>
+        <mat-icon>key</mat-icon>
         <span>Cambiar contraseña</span>
       </button>
     </mat-menu>

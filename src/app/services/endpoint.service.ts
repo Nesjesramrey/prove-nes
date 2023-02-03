@@ -162,6 +162,7 @@ export class EndPointService {
   public fetchAllComplaintsEndPoint: string = '/complaint';
   public fetchComplaintByIdEndPoint: string = '/complaint/';
   public killComplaintEndPoint: string = '/complaint/';
+  public attendComplaintEndPoint: string = '/complaint/';
 
   //association
   public createAssociationEndpoint: string = '/association';

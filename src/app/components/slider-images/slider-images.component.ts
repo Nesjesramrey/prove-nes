@@ -26,7 +26,9 @@ export class SliderImagesComponent implements OnInit {
     public layoutService: LayoutService
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    console.log(this.images);
+  }
 
   onBack() {
     const imagesLength = this.images.length - 1;

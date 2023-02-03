@@ -25,13 +25,19 @@ export class ComplaintService {
 
   fetchComplaintById(data: any) {
     return this.httpClient.get(
-      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchComplaintByIdEndPoint + `/${data['complaintID']}`, {}
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchComplaintByIdEndPoint + `${data['complaintID']}`, {}
     );
   }
 
   killComplaint(data: any) {
     return this.httpClient.delete(
-      this.endpointSrvc.apiEndPoint + this.endpointSrvc.killComplaintEndPoint + `/${data['complaint_id']}`, data
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.killComplaintEndPoint + `${data['complaint_id']}`, data
+    );
+  }
+
+  attendComplaint(data: any) {
+    return this.httpClient.put(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.attendComplaintEndPoint + `${data['complaintID']}` + '/attend', {}
     );
   }
 }

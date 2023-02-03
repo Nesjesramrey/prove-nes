@@ -11,16 +11,13 @@
 </div>
 
 <div class="set-12 dialog-body">
-  <div class="set-12 txt-center">
-    <p>
-      <small>Publicar como:</small>
-    </p>
-    <button type="button" mat-stroked-button color="warn" (click)="visibility()" class="anon">
+  <div class="set-12 publishas">
+    <small>Publicar como:</small>
+    <button type="button" mat-button color="warn" (click)="visibility()" class="anon">
       <div class="set-12" *ngIf="!isAnonymous">
         <mat-icon>visibility</mat-icon>
         <small>{{user.firstname}} {{user.lastname}}</small>
       </div>
-
       <div class="set-12" *ngIf="isAnonymous">
         <mat-icon>visibility_off</mat-icon>
         <small>Anónimo</small>
@@ -28,31 +25,85 @@
     </button>
   </div>
 
-  <form class="set-12" [formGroup]="complaintFormGroup" (submit)="onFileComplaint(complaintFormGroup)">
-    <mat-form-field appearance="outline">
-      <mat-label>Titulo</mat-label>
-      <input type="text" matInput formControlName="title">
-    </mat-form-field>
+  <div class="set-12">
+    <mat-stepper #stepper [disableRipple]="true" [linear]="true" [@.disabled]="true">
+      <mat-step>
+        <div class="set-12 stepconts">
+          <form class="set-12" [formGroup]="complaintFormGroup" (submit)="onFileComplaint(complaintFormGroup)">
+            <mat-form-field appearance="outline">
+              <mat-label>Titulo</mat-label>
+              <input type="text" matInput formControlName="title">
+            </mat-form-field>
 
-    <div class="set-12 editor-form">
-      <angular-editor formControlName="description" [config]="editorConfig"></angular-editor>
-    </div>
+            <div class="set-12 editor-form">
+              <angular-editor formControlName="description" [config]="editorConfig"></angular-editor>
+            </div>
 
-    <div class="set-12 file-hldr" *ngIf="fileNames.length != 0">
-      <p *ngFor="let name of fileNames">
-        <small>{{name}}</small>
-      </p>
-    </div>
+            <div class="set-12 ctrls">
+              <button type="button" mat-raised-button color="warn" matStepperNext
+                [disabled]="complaintFormGroup.invalid || submitted">
+                <small>Siguiente</small>
+              </button>
+              <!-- <button type="button" mat-mini-fab color="primary" (click)="file.click()"
+                [disabled]="complaintFormGroup.invalid || submitted" class="round">
+                <mat-icon>cloud_upload</mat-icon>
+              </button>
+              <button type="submit" mat-raised-button color="primary"
+                [disabled]="complaintFormGroup.invalid || submitted">
+                <small>Denunciar</small>
+              </button>
+              <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner> -->
+            </div>
+          </form>
+        </div>
+      </mat-step>
 
-    <div class="set-12 ctrls">
-      <button type="button" mat-mini-fab color="primary" (click)="file.click()"
-        [disabled]="complaintFormGroup.invalid || submitted" class="round">
-        <mat-icon>cloud_upload</mat-icon>
-      </button>
-      <button type="submit" mat-raised-button color="primary" [disabled]="complaintFormGroup.invalid || submitted">
-        <small>Denunciar</small>
-      </button>
-      <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
-    </div>
-  </form>
+      <mat-step>
+        <div class="set-12 stepconts">
+          <div class="set-12 file-hldr" *ngIf="urls.length != 0">
+            <div class="set-12 imgfile" *ngFor="let url of urls; let i = index">
+              <div class="set-12 filectrls">
+                <img [src]="url" />
+                <button type="button" (click)="popFile(i)">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+                <!-- <small>{{files[i]['size']}}</small> -->
+              </div>
+              <!-- <div class="set-12 txt-left">
+                <small>{{fileNames[i]}}</small>
+              </div> -->
+            </div>
+          </div>
+
+          <div class="set-12 ctrlsmid" *ngIf="fileNames.length == 0">
+            <button type="button" (click)="file.click()" [disabled]="complaintFormGroup.invalid || submitted"
+              class="wicon">
+              <mat-icon>cloud_upload</mat-icon>
+              <!-- <small>Cargar imágenes</small> -->
+              <h4>5MB</h4>
+            </button>
+          </div>
+
+          <div class="set-12 ctrls">
+            <button type="button" mat-raised-button color="warn" matStepperPrevious
+              [disabled]="complaintFormGroup.invalid || submitted">
+              <small>Anterior</small>
+            </button>
+            <button type="button" mat-raised-button color="primary" [disabled]="complaintFormGroup.invalid || submitted"
+              (click)="onFileComplaint(complaintFormGroup)">
+              <small>Denunciar</small>
+            </button>
+            <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
+          </div>
+        </div>
+      </mat-step>
+
+      <mat-step>
+        <div class="set-12 succes">
+          <h4>¡Gracias, tu denuncia se ha publicado!</h4>
+          <!-- <p>Puedes verla <a href="{{postURL}}" target="_blank">aquí</a></p> -->
+        </div>
+      </mat-step>
+    </mat-stepper>
+  </div>
 </div>

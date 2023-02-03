@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DocumentService } from 'src/app/services/document.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
   selector: '.edit-document-data-dialog',
@@ -11,7 +12,10 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 })
 export class EditDocumentDataComponent implements OnInit {
   public isDataAvailable: boolean = false;
+  public documentID: string = '';
   public document: any = null;
+  public documentImages: any = null;
+  public updatedImages: any[] = [];
   public formGroup!: FormGroup;
   public submitted: boolean = false;
   public htmlContent: any = '';
@@ -52,27 +56,37 @@ export class EditDocumentDataComponent implements OnInit {
       ]
     ]
   };
+  public displaySaveImagesControl: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<any>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public formBuilder: FormBuilder,
-    public documentServie: DocumentService
+    public documentServie: DocumentService,
+    public utilityService: UtilityService
   ) {
     // console.log(this.dialogData);
-    this.document = this.dialogData['document'];
-    // console.log('document: ', this.document);
+    this.documentID = this.dialogData['document']['_id'];
   }
 
   ngOnInit(): void {
-    this.formGroup = this.formBuilder.group({
-      title: [this.document['title'], [Validators.required]],
-      description: [this.document['description'], [Validators.required]]
+    this.documentServie.fetchSingleDocumentById({ _id: this.documentID }).subscribe({
+      error: (error: any) => {
+        this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+        this.killDialog();
+      },
+      next: (reply: any) => {
+        this.document = reply;
+        this.documentImages = reply['images'];
+      },
+      complete: () => {
+        this.formGroup = this.formBuilder.group({
+          title: [this.document['title'], [Validators.required]],
+          description: [this.document['description'], [Validators.required]]
+        });
+        this.isDataAvailable = true;
+      }
     });
-
-    setTimeout(() => {
-      this.isDataAvailable = true;
-    }, 1000);
   }
 
   editDocument(formGroup: FormGroup) {
@@ -94,6 +108,33 @@ export class EditDocumentDataComponent implements OnInit {
       },
       complete: () => { }
     })
+  }
+
+  killImage(index: number) {
+    this.displaySaveImagesControl = true;
+    let image = this.documentImages[index];
+    this.updatedImages.push(image.substring(image.lastIndexOf('/') + 1));
+    // this.documentImages.splice(index, 1);
+  }
+
+  updateDocumentImages() {
+    this.submitted = true;
+    let data: any = {
+      document_id: this.documentID,
+      images: this.updatedImages
+    }
+    this.documentServie.killDocumentImage(data).subscribe({
+      error: (error: any) => {
+        this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+      },
+      next: (reply: any) => {
+        this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
+      },
+      complete: () => {
+        this.displaySaveImagesControl = false;
+        this.submitted = false;
+      }
+    });
   }
 
   killDialog() {

@@ -662,7 +662,6 @@ mat-form-field {
   }
 }
 
-
 .viewer-dialog,
 .full-dialog {
   height: 100%;
@@ -675,7 +674,7 @@ mat-form-field {
   }
 }
 
-.authorization-dialog{
+.authorization-dialog {
   .mat-dialog-container {
     border-radius: 0 !important;
     padding: 0;
@@ -894,4 +893,21 @@ mat-card {
 
 .desktop-sheet {
   width: 420px;
+}
+
+#calixta-badge {
+  .calixta-style-tab {
+    z-index: 101 !important;
+  }
+}
+
+.insetbb {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 0 0 #fff;
+  -webkit-box-shadow: 0 1px 0 0 #fff;
+  -moz-box-shadow: 0 1px 0 0 #fff;
+}
+
+.txtred {
+  color: #ff0000;
 }

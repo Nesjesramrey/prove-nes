@@ -7,6 +7,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { UserService } from 'src/app/services/user.service';
 import { UtilityService } from 'src/app/services/utility.service';
+import { AttendComplaintDialogComponent } from '../components/attend-complaint-dialog/attend-complaint-dialog.component';
 
 @Component({
   selector: '.user-notifications-page',
@@ -106,6 +107,24 @@ export class UserNotificationsComponent implements OnInit {
         notification: notification
       },
       disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  popNewComplaintDialog(notification: any) {
+    this.markNotificationAsRead(notification);
+
+    const dialogRef = this.dialog.open<AttendComplaintDialogComponent>(AttendComplaintDialogComponent, {
+      // width: '640px',
+      data: {
+        payload: notification['metadata'],
+        user: this.user
+      },
+      disableClose: true,
+      panelClass: 'side-dialog'
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
