@@ -22,7 +22,7 @@
     }
   
     h3 {
-      margin-top: 10px !important;
+      margin-bottom: 10px !important;
     }
 
     .row:not(:first-child) {
@@ -30,7 +30,7 @@
     }
   
     .cardimg {
-      height: 190px;
+      height: 100px;
       overflow: hidden;
       border-top-left-radius: 4px;
       border-top-right-radius: 4px;
@@ -58,7 +58,8 @@
     }
   
     .cardbody {
-      padding: 40px 20px 20px 20px;
+      margin-top: 60px;
+      padding: 20px 20px 20px 20px;
     }
   
     .avatar {
@@ -70,7 +71,7 @@
       left: 50%;
       transform: translateX(-50%);
       background: #ffffff;
-      top: 135px;
+      top: 70px;
       border: 3px solid #ffffff;
   
       img {
@@ -118,17 +119,21 @@
       }
     }
   
-     
+     .community{
+      margin-bottom: 10px;
+      button{
+        span{
+          color: blue;
+        }
+      }
+     }
     .usrinfo {
-      margin-top: 20px;
-       
-      p {
-        margin-bottom: 10px;
-      }
+      margin-top: 0px;
+      
+     button{
+      margin-top: 10px;
+     }
   
-      p:last-child {
-        margin-bottom: 0;
-      }
     
     }
 
