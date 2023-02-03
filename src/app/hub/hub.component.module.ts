@@ -43,6 +43,7 @@ import { AssociationRegisterComponent } from './components/association-register/
 import { SheetFeedComponent } from '../components/sheet-feed/sheet-feed.component';
 import { ModalAuthorizationJoinComponent } from './components/modal-authorization-join/modal-authorization-join.component';
 import { ModalRegisterAssociationComponent } from './components/modal-register-association/modal-register-association.component';
+import { ModalMembersComponent } from './components/modal-members/modal-members.component';
 
 @NgModule({
   imports: [
@@ -90,7 +91,8 @@ import { ModalRegisterAssociationComponent } from './components/modal-register-a
     AssociationRegisterComponent,
     SheetFeedComponent,
     ModalAuthorizationJoinComponent,
-    ModalRegisterAssociationComponent
+    ModalRegisterAssociationComponent,
+    ModalMembersComponent
   ],
 })
 export class HubComponentModule { }
