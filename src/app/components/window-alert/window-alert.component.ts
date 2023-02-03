@@ -48,7 +48,7 @@ export class WindowAlertComponent implements OnInit {
   ngOnInit(): void {
     setTimeout(() => {
       this.isDataAvailable = true;
-    }, 700);
+    }, 300);
   }
 
   setAsCover() {

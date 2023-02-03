@@ -8,8 +8,8 @@
       <h3>{{document.title}}</h3>
     </div>
 
-    <div class="set-3 txt-right">
-      <button type="button" mat-icon-button color="primary" (click)="killDialog()" [disabled]="submitted"
+    <div class="set-3">
+      <button type="button" mat-mini-fab color="primary" (click)="killDialog()" [disabled]="submitted"
         matTooltip="Cerrar" matTooltipClass="tooltip">
         <mat-icon>cancel</mat-icon>
       </button>
@@ -17,29 +17,46 @@
   </div>
 
   <div class="set-12 dialog-body">
-    <form [formGroup]="formGroup" (submit)="editDocument(formGroup)">
-      <mat-form-field appearance="outline">
-        <mat-label>Titulo</mat-label>
-        <input type="text" matInput formControlName="title">
-      </mat-form-field>
+    <div class="set-8">
+      <form [formGroup]="formGroup" (submit)="editDocument(formGroup)">
+        <mat-form-field appearance="outline">
+          <mat-label>Titulo</mat-label>
+          <input type="text" matInput formControlName="title">
+        </mat-form-field>
 
-      <!-- <mat-form-field appearance="outline">
-        <mat-label>Descripción</mat-label>
-        <textarea matInput cdkTextareaAutosize formControlName="description"></textarea>
-      </mat-form-field> -->
-      <div class="set-12 editor-form">
-        <angular-editor formControlName="description" [config]="editorConfig"></angular-editor>
+        <div class="set-12 editor-form">
+          <angular-editor formControlName="description" [config]="editorConfig"></angular-editor>
+        </div>
+
+        <div class="set-12 ctrls">
+          <button type="button" mat-mini-fab color="primary" [disabled]="formGroup.invalid || submitted">
+            <mat-icon>cloud_upload</mat-icon>
+          </button>
+          <button type="submit" mat-raised-button color="primary" [disabled]="formGroup.invalid || submitted">
+            <small>Guardar</small>
+          </button>
+          <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
+        </div>
+      </form>
+    </div>
+
+    <div class="set-4 rgthldr">
+      <div class="set-12">
+        <div class="set-6" *ngFor="let item of documentImages; let i = index">
+          <div class="overlay">
+            <button type="button" mat-mini-fab color="accent" (click)="killImage(i)">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </div>
+          <img [src]="item" alt="">
+        </div>
       </div>
 
-      <div class="set-12 ctrls">
-        <!-- <button type="button" mat-raised-button color="accent" [disabled]="submitted" (click)="killDialog()">
-          <small>Cancelar</small>
-        </button> -->
-        <button type="submit" mat-raised-button color="primary" [disabled]="formGroup.invalid || submitted">
-          <small>Guardar</small>
+      <div class="set-12" *ngIf="displaySaveImagesControl">
+        <button type="button" mat-raised-button color="warn" (click)="updateDocumentImages()">
+          <small>Guardar cambios</small>
         </button>
-        <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>
       </div>
-    </form>
+    </div>
   </div>
 </div>

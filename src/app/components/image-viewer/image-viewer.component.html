@@ -62,6 +62,10 @@
     </div>
     <slider-images [images]="solution.images" [solution]="solution" *ngIf="solution.images != 0"></slider-images>
   </div>
+
+  <div class="viewer-display" *ngIf="dialogData.location == 'complaint'">
+    <slider-images [images]="complaint.images" [complaint]="complaint" *ngIf="complaint.images != 0"></slider-images>
+  </div>
 </div>
 
 <div class="set-12 dialog-body" *ngIf="isDataAvailable">

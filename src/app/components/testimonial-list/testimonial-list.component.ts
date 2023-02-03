@@ -119,7 +119,7 @@ export class TestimonialListComponent implements OnInit {
     });
     let weight: any = weightArray.reduce((a: any, b: any) => a + b, 0);
 
-    if (weight > 5000) {
+    if (weight > 5000000) {
       this.utilityService.openErrorSnackBar('El peso máximo de carga es de 5MB');
       this.submitted = false;
       return;

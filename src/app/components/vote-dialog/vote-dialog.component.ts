@@ -13,13 +13,15 @@ export class VoteDialogComponent implements OnInit {
     { title: 'Relevante', score: 2, selected: false },
     { title: 'Muy relevante', score: 3, selected: false }
   ];
+  public card: any = null;
 
   constructor(
     public dialogRef: MatDialogRef<VoteDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public voteService: VoteService
   ) {
-   
+    console.log(this.dialogData);
+    if (this.dialogData['card'] != undefined) { this.card = this.dialogData['card']; }
   }
 
   ngOnInit(): void { }
@@ -28,14 +30,14 @@ export class VoteDialogComponent implements OnInit {
     this.voteTypes.filter((x: any) => { x['selected'] = false; });
     let vote = this.voteTypes[index];
     vote['selected'] = true;
-
     let data: any = {
       topic: this.dialogData['topic'] || null,
       solution: this.dialogData['solution'] || null,
+      post: this.dialogData['post'] || null,
       value: vote['score']
     };
-
     this.voteService.createNewVoto(data).subscribe((reply: any) => {
+      console.log(reply);
       this.dialogRef.close(reply);
     });
   }

@@ -1,0 +1,45 @@
+<div class="set-12" *ngIf="isDataAvailable">
+  <div class="set-12 dialoghd">
+    <div class="set-9">
+      <div class="set-12">
+        <p>De: <strong>{{complaint['createdBy']['firstname']}} {{complaint['createdBy']['lastname']}}</strong></p>
+        <p class="dates">
+          <small>
+            {{complaint['createdAt'] | date: 'mediumDate'}} - {{complaint['createdAt'] | date: 'mediumTime'}}
+          </small>
+        </p>
+      </div>
+    </div>
+
+    <div class="set-3">
+      <mat-icon class="ic txtred" *ngIf="!complaint.isActive" matTooltip="Eliminado"
+        matTooltipClass="tooltip">not_interested</mat-icon>
+      <mat-icon class="ic" color="warn" *ngIf="complaint.isAttended" matTooltip="Verificado"
+        matTooltipClass="tooltip">verified</mat-icon>
+      <button type="button" mat-mini-fab color="primary" (click)="killDialog()">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="set-12 dialogbd">
+    <div class="set-12 hdctrls">
+      <div class="set-10"><strong>{{complaint['title']}}</strong></div>
+      <div class="set-2" *ngIf="complaint['images'].length != 0">
+        <button type="button" mat-icon-button color="primary" (click)="popImageViewer()">
+          <mat-icon>collections</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="set-12 com" [innerHTML]="complaint.description"></div>
+  </div>
+
+  <div class="set-12 dialogctrl">
+    <button type="button" mat-raised-button color="warn" (click)="killComplaint(complaint)" *ngIf="complaint.isActive">
+      <small>Eliminar</small>
+    </button>
+    <button type="button" mat-raised-button color="primary" (click)="publishComplaint()" *ngIf="!complaint.isAttended">
+      <small>Publicar</small>
+    </button>
+  </div>
+</div>
