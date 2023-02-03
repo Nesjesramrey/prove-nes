@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { MatDialog } from '@angular/material/dialog';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ComplaintService } from 'src/app/services/complaint.service';
@@ -18,6 +19,7 @@ import { VoteDialogComponent } from 'src/app/components/vote-dialog/vote-dialog.
 })
 export class SingleComplaintComponent implements OnInit {
   public complaintID: string = '';
+  public isMobile: boolean = false;
   public isDataAvailable: boolean = false;
   public complaint: any = null;
   public user: any = null;
@@ -25,6 +27,7 @@ export class SingleComplaintComponent implements OnInit {
 
   constructor(
     public activatedRoute: ActivatedRoute,
+    public deviceDetectorService: DeviceDetectorService,
     public complaintService: ComplaintService,
     public utilityService: UtilityService,
     public userService: UserService,
@@ -33,6 +36,7 @@ export class SingleComplaintComponent implements OnInit {
 
   ) {
     this.complaintID = this.activatedRoute['snapshot']['params']['complaintID'];
+    this.isMobile = this.deviceDetectorService.isMobile();
     // console.log(this.complaintID);
   }
 
