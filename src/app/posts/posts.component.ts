@@ -60,7 +60,7 @@ export class PostsComponent implements OnInit {
 
       this.cards = [...this.testimonials, ...this.complaints];
       this.cards.filter((x: any) => { x['comments'] = []; });
-      // console.log(this.cards);
+      console.log(this.cards);
 
       this.isDataAvailable = true;
     });
