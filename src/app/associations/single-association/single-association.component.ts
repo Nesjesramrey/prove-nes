@@ -1,10 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { AssociationService } from 'src/app/services/association.service';
 import { SheetFeedComponent } from 'src/app/components/sheet-feed/sheet-feed.component';
+import { ModalMembersComponent } from 'src/app/hub/components/modal-members/modal-members.component';
 
 @Component({
   selector: 'single-association',
@@ -16,7 +18,7 @@ export class SingleAssociationComponent implements OnInit {
   public isDataAvailable: boolean = false;
   public isMobile: boolean = false;
   @Input('user') public user: any = null;
-  public associationID: string = '';
+  public associationID: any = null;
   public semblanza: any = null;
   public association: any = null;
 
@@ -25,6 +27,7 @@ export class SingleAssociationComponent implements OnInit {
     public userservices: UserService,
     public associationservices: AssociationService,
     public matBottomSheet: MatBottomSheet,
+    public dialogData: MatDialog,
     public activatedRoute: ActivatedRoute,
   ) {
     this.isMobile = this.deviceDetectorService.isMobile();
@@ -59,6 +62,16 @@ export class SingleAssociationComponent implements OnInit {
        }
     });
 }
+openModalMembers() {
+  this.dialogData.open(ModalMembersComponent, {
+    data: {},
+    height: '100%',
+    width: '100%',
+    panelClass: 'full-dialog',
+  });
+  
+}
+
 openBottomSheet(): void {
   const bottomSheetRef = this.matBottomSheet.open(SheetFeedComponent, {
     data: {

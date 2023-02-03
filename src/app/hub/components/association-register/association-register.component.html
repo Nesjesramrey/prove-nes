@@ -33,10 +33,6 @@
 
           <div class="innerhldr" *ngIf="isDataAvailable" [class.fixmob]="isMobile">
             <div class="set-12" *ngIf="isNotAssociationAvailable">
-              <!-- <div class="set-12 head-titles" *ngIf="isNotAssociationAvailable || isAssociationAvailable">
-                  <span>Resultados de tu búsqueda:</span>
-                  <div class="line"></div>
-                </div> -->
               <div class="set-12 listhldr">
                 <p>
                   <strong> No hay resultados que mostrar.</strong>
@@ -62,8 +58,11 @@
                       "></small>
                   </p>
                   <div class="set-12 joinButton">
-                    <button type="button" mat-raised-button color="primary" (click)="joinAssociation(association._id)">
-                      <small>Unirme</small>
+                    <button *ngIf="association.createdBy === user._id" class="typeMember" type="button" mat-raised-button  color="accent">
+                      <small >Administrador</small>
+                    </button>
+                    <button *ngIf="association.createdBy != user._id" type="button" mat-raised-button color="primary" >
+                      <small >Unirme</small>
                     </button>
                   </div>
                 </div>

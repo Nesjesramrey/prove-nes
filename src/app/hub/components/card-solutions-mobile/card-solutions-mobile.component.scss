@@ -1,13 +1,58 @@
-:host{
-    width: 100%;
+:host {
+  width: 100%;
+  height: auto;
+  float: left;
+  padding: 0 20px;
+
+ 
+
+  .headtools {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+
+    * {
+      margin: 0;
+    }
+
+    button {
+      margin-left: 10px;
+    }
+  }
+
+  mat-card {
+    margin-bottom: 10px;
+    border-radius: 0%;
+    box-shadow: none;
+    padding: 10px;
+  }
+  mat-card:last-child {
+    margin-bottom: 20px;
+  }
   
-    mat-card{
-      background-color: transparent;
-      h3{
-        margin-bottom: 15px;
-      }
-      div{
-        margin-bottom: 15px;
+  .dialog-body {
+    padding: 0px !important;
+    span {
+      font-size: 10pt;
+    }
+    span:hover{
+      cursor: pointer;
+    }
+  }
+
+  .icons {
+    display: inline-flex;
+    margin: 0px;
+    justify-content: flex-end;
+    button {
+      margin: 0px 5px;
+    }
+
+    button {
+      mat-icon {
+        font-size: 13pt;
       }
     }
   }
+}

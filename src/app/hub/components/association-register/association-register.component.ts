@@ -15,6 +15,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { forkJoin, Observable } from 'rxjs';
 import { ModalAuthorizationJoinComponent } from '../modal-authorization-join/modal-authorization-join.component';
+import { ModalRegisterAssociationComponent } from '../modal-register-association/modal-register-association.component';
 
 interface Asociation {
   value: string;
@@ -55,10 +56,12 @@ export class AssociationRegisterComponent implements OnInit {
   public isNotAssociationAvailable: boolean = false;
   public viewSubLayouts: boolean = false;
   public associations: any = [];
+  public myAssociation: any = null;
+  public dataJoinAssociation: any = null;
   public fileNames: any = [];
   public associationType: any = null;
   public myCategoriesAssociation: any = [];
-  public labelPosition: any = "after";
+  public labelPosition: any = 'after';
 
   constructor(
     public authenticationSrvc: AuthenticationService,
@@ -195,6 +198,8 @@ export class AssociationRegisterComponent implements OnInit {
   onCreateAssociation() {
     //console.log('click')
     this.submitted = true;
+    let nameAssociation =
+      this.dataAssociationFormGroup['value']['associationName'];
     let data: any = {
       formData: new FormData(),
     };
@@ -256,17 +261,41 @@ export class AssociationRegisterComponent implements OnInit {
         JSON.stringify(this.myCategoriesAssociation) || null
       );
     // for (let [key, value] of data['formData']) {
-    //   console.log(`${key}: ${value}`)
-    // }
+    //   console.log(`${key}: ${value}`);
+    //}
     this.associationService.createAssociation(data['formData']).subscribe({
       error: (error) => {
         switch (error['status']) {
         }
       },
-      next: (reply: any) => {},
+      next: (reply: any) => {
+        this.associationService.searchAssociation(nameAssociation).subscribe({
+          error: (error: any) => {},
+          next: (reply: any) => {
+            this.myAssociation = reply;
+            this.dataJoinAssociation = {
+              userID: this.user._id,
+              associationID: this.myAssociation[0]._id,
+            };
+            this.userService
+              .joinUserWithAssociation(this.dataJoinAssociation)
+              .subscribe({
+                error: (error) => {
+                  switch (error['status']) {
+                  }
+                },
+                next: (reply: any) => {},
+                complete: () => {},
+              });
+          },
+
+          complete: () => {},
+        });
+        
+      },
       complete: () => {
-        //location.reload();
         this.killDialog();
+        this.openModalRegister();
         this.isDataAvailable = true;
       },
     });
@@ -388,11 +417,21 @@ export class AssociationRegisterComponent implements OnInit {
       : (this.myCategoriesAssociation = this.myCategoriesAssociation.filter(
           (val: any) => val !== value
         ));
-        //console.log(this.myCategoriesAssociation)
+    //console.log(this.myCategoriesAssociation)
   }
 
   openModalAuthorization() {
     this.dialogData.open(ModalAuthorizationJoinComponent, {
+      data: {},
+      height: '25%',
+      width: '70%',
+      panelClass: 'authorization-dialog',
+    });
+    this.checked = !this.checked;
+  }
+
+  openModalRegister() {
+    this.dialogData.open(ModalRegisterAssociationComponent, {
       data: {},
       height: '25%',
       width: '70%',
