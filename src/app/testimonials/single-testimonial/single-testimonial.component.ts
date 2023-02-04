@@ -10,13 +10,12 @@ import { UserService } from 'src/app/services/user.service';
 import { ShareSheetComponent } from 'src/app/components/share-sheet/share-sheet.component';
 import { VoteDialogComponent } from 'src/app/components/vote-dialog/vote-dialog.component';
 
-
 @Component({
-  selector: '.single-complaint',
-  templateUrl: './single-complaint.component.html',
-  styleUrls: ['./single-complaint.component.scss']
+  selector: 'single-testimonial',
+  templateUrl: './single-testimonial.component.html',
+  styleUrls: ['./single-testimonial.component.scss']
 })
-export class SingleComplaintComponent implements OnInit {
+export class SingleTestimonialComponent implements OnInit {
   public complaintID: string = '';
   public isMobile: boolean = false;
   public isDataAvailable: boolean = false;
@@ -32,12 +31,10 @@ export class SingleComplaintComponent implements OnInit {
     public userService: UserService,
     public matBottomSheet: MatBottomSheet,
     public dialog: MatDialog
-
   ) {
     this.complaintID = this.activatedRoute['snapshot']['params']['complaintID'];
     this.isMobile = this.deviceDetectorService.isMobile();
-    // console.log(this.complaintID);
-  }
+   }
 
   ngOnInit(): void {
     this.userService.fetchFireUser().subscribe({
@@ -91,5 +88,7 @@ export class SingleComplaintComponent implements OnInit {
     if (event.keyCode === 13) {
       card['comments'].push(event.target.value);
     }
+  
   }
+
 }

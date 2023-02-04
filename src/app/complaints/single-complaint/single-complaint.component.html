@@ -2,27 +2,6 @@
   <mat-spinner color="primary"></mat-spinner>
 </div>
 
-<!-- <div class="set-12" *ngIf="isDataAvailable">
-  <div class="set-9 col-lft">
-    <div class="set-12 author">
-      <p>
-        <small>Autor: <strong>{{complaint?.createdBy.firstname}} {{complaint?.createdBy.lastname}}</strong></small>
-      </p>
-      <p>
-        <small>Alta: <strong>{{complaint?.createdAt | date: 'mediumDate'}} - {{complaint?.createdAt | date:
-            'mediumTime'}}</strong></small>
-      </p>
-    </div>
-
-    <div class="set-12">
-      <h3 class="ctitle">{{complaint?.title || 'Nueva Denuncia'}}</h3>
-      <div class="set-12" [innerHTML]="complaint?.description"></div>
-    </div>
-  </div>
-
-  <div class="set-3 col-rgt"></div>
-</div> -->
-
 <!--Desk-->
 <div class="set-12" *ngIf="isDataAvailable && !isMobile" [class.fixdesk]="!isMobile">
   <div class="crdlst">

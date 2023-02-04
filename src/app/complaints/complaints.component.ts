@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { forkJoin, Observable } from 'rxjs';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { SingleComplaintDialogComponent } from '../components/single-complaint-dialog/single-complaint-dialog.component';
 import { WindowAlertComponent } from '../components/window-alert/window-alert.component';
 import { ComplaintService } from '../services/complaint.service';
@@ -15,6 +16,8 @@ import { UtilityService } from '../services/utility.service';
 })
 export class ComplaintsComponent implements OnInit {
   public complaints: any = null;
+  public isDataAvailable: boolean = false;
+  public isMobile: boolean = false;
   public displayedColumns: string[] = ['author', 'title', 'date', 'menu'];
   public dataSource!: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -22,8 +25,11 @@ export class ComplaintsComponent implements OnInit {
   constructor(
     public complaintService: ComplaintService,
     public utilityService: UtilityService,
-    public dialog: MatDialog
-  ) { }
+    public dialog: MatDialog,
+    public deviceDetectorService: DeviceDetectorService,
+  ) { 
+    this.isMobile = this.deviceDetectorService.isMobile();
+  }
 
   ngOnInit(): void {
     let complaints: Observable<any> = this.complaintService.fetchAllComplaints();
@@ -33,6 +39,7 @@ export class ComplaintsComponent implements OnInit {
       // console.log(this.complaints);
       this.dataSource = new MatTableDataSource(this.complaints);
       this.dataSource.paginator = this.paginator;
+      this.isDataAvailable = true
     });
   }
 

@@ -56,4 +56,9 @@ export class TestimonialsComponent implements OnInit {
       if (reply != undefined) { }
     });
   }
+
+  popSingleComplaint(complaint_id: string) {
+    console.log(complaint_id);
+    window.open('/testimonios/' + complaint_id);
+  }
 }

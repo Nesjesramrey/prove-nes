@@ -7,6 +7,7 @@ import { TestimonialsComponent } from './testimonials.component';
 import { AppMaterialModule } from '../app-material.module';
 import { ComponentsModule } from '../components/components.module';
 import { AppSharedModule } from '../app-shared.module';
+import { SingleTestimonialComponent } from './single-testimonial/single-testimonial.component';
 // import { SingleComplaintComponent } from './single-complaint/single-complaint.component';
 
 @NgModule({
@@ -21,7 +22,7 @@ import { AppSharedModule } from '../app-shared.module';
   ],
   declarations: [
     TestimonialsComponent,
-    // SingleComplaintComponent
+ SingleTestimonialComponent,
   ]
 })
 export class TestimonialsComponentModule { }
