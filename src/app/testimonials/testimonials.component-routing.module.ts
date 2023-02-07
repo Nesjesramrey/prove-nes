@@ -6,7 +6,7 @@ import { TestimonialsComponent } from './testimonials.component';
 
 const routes: Routes = [
   { path: '', children: [{ path: '', component: TestimonialsComponent, canActivate: [CanActivateAdminGuard] }] },
-  { path: ':testimonialID', component: SingleTestimonialComponent, canActivate: [] },
+  { path: ':testimonyID', component: SingleTestimonialComponent, canActivate: [] },
 ];
 
 @NgModule({

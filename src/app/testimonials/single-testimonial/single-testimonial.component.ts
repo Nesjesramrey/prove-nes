@@ -4,7 +4,7 @@ import { forkJoin, Observable } from 'rxjs';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { MatDialog } from '@angular/material/dialog';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { ComplaintService } from 'src/app/services/complaint.service';
+import { TestimonyService } from 'src/app/services/testimony.service';
 import { UtilityService } from 'src/app/services/utility.service';
 import { UserService } from 'src/app/services/user.service';
 import { ShareSheetComponent } from 'src/app/components/share-sheet/share-sheet.component';
@@ -16,23 +16,23 @@ import { VoteDialogComponent } from 'src/app/components/vote-dialog/vote-dialog.
   styleUrls: ['./single-testimonial.component.scss']
 })
 export class SingleTestimonialComponent implements OnInit {
-  public complaintID: string = '';
+  public testimonyID: string = '';
   public isMobile: boolean = false;
   public isDataAvailable: boolean = false;
-  public complaint: any = null;
+  public testimony: any = null;
   public user: any = null;
   public card: any[] = [];
 
   constructor(
     public activatedRoute: ActivatedRoute,
     public deviceDetectorService: DeviceDetectorService,
-    public complaintService: ComplaintService,
+    public testimonyService: TestimonyService,
     public utilityService: UtilityService,
     public userService: UserService,
     public matBottomSheet: MatBottomSheet,
     public dialog: MatDialog
   ) {
-    this.complaintID = this.activatedRoute['snapshot']['params']['complaintID'];
+    this.testimonyID = this.activatedRoute['snapshot']['params']['testimonyID'];
     this.isMobile = this.deviceDetectorService.isMobile();
    }
 
@@ -42,13 +42,12 @@ export class SingleTestimonialComponent implements OnInit {
       next: (reply: any) => { this.user = reply; },
       complete: () => { }
     });
-
-    let complaint: Observable<any> = this.complaintService.fetchComplaintById({ complaintID: this.complaintID });
-    forkJoin([complaint]).subscribe((reply: any) => {
-      // console.log(reply);
-      this.complaint = reply[0];
-      //console.log(this.complaint);
-      this.card = [this.complaint];
+    let testimony: Observable<any> = this.testimonyService.fetchSingleTestimonyById({ testimonyID: this.testimonyID });
+    forkJoin([testimony]).subscribe((reply: any) => {
+       //console.log(reply);
+      this.testimony = reply[0];
+      //console.log(this.testimony);
+      this.card = [this.testimony];
       this.card.filter((x: any) => { x['comments'] = []; });
       //console.log(this.card);
 

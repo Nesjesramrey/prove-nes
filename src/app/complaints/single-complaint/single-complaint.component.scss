@@ -1,177 +1,67 @@
 :host {
-  .fixdesk{
-  width: 100%;
-  float: left;
-  padding: 40px;
-  margin-top: 80px;
 
-  mat-card:not(:last-child) {
-    margin-bottom: 15px;
-  }
-
-  mat-card {
-    padding: 0;
-  }
-
-  .crdlst {
-    width: 44%;
-    margin: 0 28%;
-  }
-
-  .crdh {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 15px;
-    border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
-    background: #00031d;
-    color: rgba($color: #ffffff, $alpha: 0.7);
-
-    * {
-      margin: 0;
-    }
-
-    .avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 100%;
-      display: block;
-      background: blueviolet;
-      margin-right: 20px;
-      overflow: hidden;
-    }
-
-    .dates {
-      font-size: 9pt;
-    }
-  }
-
-  .crddsc {
-    padding: 5px 15px 15px 15px;
-    background: #00031d;
-    color: rgba($color: #ffffff, $alpha: 0.7);
-    font-size: 11pt;
-  }
-
-  .crdvp {
-    height: 300px;
-    min-height: 300px;
-    max-height: 300px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #dff1e7;
-
-    img.full {
-      width: 100%;
-    }
-  }
-
-  .crdft {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding: 15px;
-    border-top: 1px solid rgba($color: #000000, $alpha: 0.1);
-    background: #dff1e7;
-
-    * {
-      margin: 0;
-    }
-
-    .types {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      font-size: 9pt;
-
-      mat-icon {
-        margin-right: 5px;
-        font-size: 9pt;
-      }
-    }
-
-    .ctrls {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-
-      button {
-        margin-left: 10px;
-
-        mat-icon {
-          font-size: 14pt;
-        }
+  .card-is-loading {
+    width: 80%;
+    margin-top: 20px;
+      
+      .image,
+      h2,
+      p {
+        background: #f1e7e7;
+        background: linear-gradient(
+          110deg,
+          #ddd 8%,
+          #e8e8e8 18%,
+          #ddd 33%
+        );
+        border-radius: 5px;
+        background-size: 200% 100%;
+        animation: 1.5s shine linear infinite;
       }
 
-      button:first-child {
-        margin-left: 0;
+      .image {
+        height: 200px;
+        margin-top: 10px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      h2 {
+        margin-top: 10px;
+        height: 30px;
+      }
+
+      p {
+        margin-top: 10px;
+        height: 70px;
+      }
+    
+
+    @keyframes shine {
+      to {
+        background-position-x: -200%;
       }
     }
   }
-
-  .crdcom {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    border-top: 1px solid rgba($color: #000000, $alpha: 0.1);
-    background: #dff1e7;
-
-    .avatar {
-      width: 35px;
-      height: 35px;
-      border-radius: 100%;
-      overflow: hidden;
-      display: block;
-      background: purple;
-      margin-right: 10px;
-    }
-
-    input {
-      width: 100%;
-      height: 35px;
-      border-radius: 20px;
-      background: #f1f1f1;
-      padding: 0 15px;
-      border: 1px solid rgba($color: #000000, $alpha: 0.1);
-    }
-  }
-
-  .comlst {
-    padding: 15px;
-    background: #dff1e7;
-  }
-
-  .loading {
-    mat-spinner {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-  }
-}
-  .fixmobile{
+  .fixdesk {
     width: 100%;
     float: left;
-    padding: 0px;
-    margin-top: 0px;
-    margin-bottom: 30px;
-  
+    padding: 40px;
+    margin-top: 80px;
+
     mat-card:not(:last-child) {
       margin-bottom: 15px;
     }
-  
+
     mat-card {
       padding: 0;
     }
-  
+
     .crdlst {
-      width: 100%;
-      padding: 20px;
+      width: 44%;
+      margin: 0 28%;
     }
-  
+
     .crdh {
       display: flex;
       align-items: center;
@@ -180,11 +70,11 @@
       border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
       background: #00031d;
       color: rgba($color: #ffffff, $alpha: 0.7);
-  
+
       * {
         margin: 0;
       }
-  
+
       .avatar {
         width: 40px;
         height: 40px;
@@ -194,19 +84,19 @@
         margin-right: 20px;
         overflow: hidden;
       }
-  
+
       .dates {
         font-size: 9pt;
       }
     }
-  
+
     .crddsc {
       padding: 5px 15px 15px 15px;
       background: #00031d;
       color: rgba($color: #ffffff, $alpha: 0.7);
       font-size: 11pt;
     }
-  
+
     .crdvp {
       height: 300px;
       min-height: 300px;
@@ -216,12 +106,12 @@
       align-items: center;
       justify-content: center;
       background: #dff1e7;
-  
+
       img.full {
         width: 100%;
       }
     }
-  
+
     .crdft {
       display: flex;
       align-items: center;
@@ -229,49 +119,49 @@
       padding: 15px;
       border-top: 1px solid rgba($color: #000000, $alpha: 0.1);
       background: #dff1e7;
-  
+
       * {
         margin: 0;
       }
-  
+
       .types {
         display: flex;
         align-items: center;
         justify-content: flex-start;
         font-size: 9pt;
-  
+
         mat-icon {
           margin-right: 5px;
           font-size: 9pt;
         }
       }
-  
+
       .ctrls {
         display: flex;
         align-items: center;
         justify-content: flex-end;
-  
+
         button {
           margin-left: 10px;
-  
+
           mat-icon {
             font-size: 14pt;
           }
         }
-  
+
         button:first-child {
           margin-left: 0;
         }
       }
     }
-  
+
     .crdcom {
       display: flex;
       align-items: center;
       padding: 15px;
       border-top: 1px solid rgba($color: #000000, $alpha: 0.1);
       background: #dff1e7;
-  
+
       .avatar {
         width: 35px;
         height: 35px;
@@ -281,7 +171,161 @@
         background: purple;
         margin-right: 10px;
       }
-  
+
+      input {
+        width: 100%;
+        height: 35px;
+        border-radius: 20px;
+        background: #f1f1f1;
+        padding: 0 15px;
+        border: 1px solid rgba($color: #000000, $alpha: 0.1);
+      }
+    }
+
+    .comlst {
+      padding: 15px;
+      background: #dff1e7;
+    }
+
+    .loading {
+      mat-spinner {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+  .fixmobile {
+    width: 100%;
+    float: left;
+    padding: 0px;
+    margin-top: 0px;
+    margin-bottom: 30px;
+
+    mat-card:not(:last-child) {
+      margin-bottom: 15px;
+    }
+
+    mat-card {
+      padding: 0;
+    }
+
+    .crdlst {
+      width: 100%;
+      padding: 20px;
+    }
+
+    .crdh {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 15px;
+      border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
+      background: #00031d;
+      color: rgba($color: #ffffff, $alpha: 0.7);
+
+      * {
+        margin: 0;
+      }
+
+      .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+        display: block;
+        background: blueviolet;
+        margin-right: 20px;
+        overflow: hidden;
+      }
+
+      .dates {
+        font-size: 9pt;
+      }
+    }
+
+    .crddsc {
+      padding: 5px 15px 15px 15px;
+      background: #00031d;
+      color: rgba($color: #ffffff, $alpha: 0.7);
+      font-size: 11pt;
+    }
+
+    .crdvp {
+      height: 300px;
+      min-height: 300px;
+      max-height: 300px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #dff1e7;
+
+      img.full {
+        width: 100%;
+      }
+    }
+
+    .crdft {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 15px;
+      border-top: 1px solid rgba($color: #000000, $alpha: 0.1);
+      background: #dff1e7;
+
+      * {
+        margin: 0;
+      }
+
+      .types {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        font-size: 9pt;
+
+        mat-icon {
+          margin-right: 5px;
+          font-size: 9pt;
+        }
+      }
+
+      .ctrls {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        button {
+          margin-left: 10px;
+
+          mat-icon {
+            font-size: 14pt;
+          }
+        }
+
+        button:first-child {
+          margin-left: 0;
+        }
+      }
+    }
+
+    .crdcom {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      border-top: 1px solid rgba($color: #000000, $alpha: 0.1);
+      background: #dff1e7;
+
+      .avatar {
+        width: 35px;
+        height: 35px;
+        border-radius: 100%;
+        overflow: hidden;
+        display: block;
+        background: purple;
+        margin-right: 10px;
+      }
+
       input {
         width: 90%;
         height: 35px;
@@ -292,12 +336,12 @@
         margin-left: 10px;
       }
     }
-  
+
     .comlst {
       padding: 15px;
       background: #dff1e7;
     }
-  
+
     .loading {
       mat-spinner {
         position: absolute;

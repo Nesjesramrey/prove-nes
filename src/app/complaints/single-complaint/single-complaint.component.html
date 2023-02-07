@@ -1,6 +1,15 @@
-<div class="set-12 page loading" *ngIf="!isDataAvailable">
+<div class="set-12 page loading" *ngIf="!isDataAvailable && !isMobile">
   <mat-spinner color="primary"></mat-spinner>
+ 
 </div>
+<div class="card-is-loading"  *ngIf="!isDataAvailable && isMobile">
+  <div class="image"></div>
+  <div class="content">
+    <h2></h2>
+    <p></p>
+  </div>
+</div>
+
 
 <!--Desk-->
 <div class="set-12" *ngIf="isDataAvailable && !isMobile" [class.fixdesk]="!isMobile">

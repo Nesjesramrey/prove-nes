@@ -14,7 +14,7 @@ export class TestimonyService {
 
   fetchSingleTestimonyById(data: any) {
     return this.httpClient.get(
-      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchSingleTestimonyByIdEndPoint + `${data['_id']}`, {}
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchSingleTestimonyByIdEndPoint+ `${data['testimonyID']}`, {}
     );
   }
 
