@@ -161,5 +161,15 @@
       bottom: 0;
       padding: 40px;
     }
+
+    .videohldr {
+      display: block;
+      padding: 90px 0 0 0 !important;
+
+      iframe {
+        width: 100% !important;
+        height: 300px !important;
+      }
+    }
   }
 }
