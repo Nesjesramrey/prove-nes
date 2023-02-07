@@ -8,6 +8,7 @@ import { AppMaterialModule } from '../app-material.module';
 import { ComponentsModule } from '../components/components.module';
 import { AppSharedModule } from '../app-shared.module';
 import { SingleTestimonialComponent } from './single-testimonial/single-testimonial.component';
+import { PublicTestimonialsComponent } from './public-testimonials/public-testimonials.component';
 // import { SingleComplaintComponent } from './single-complaint/single-complaint.component';
 
 @NgModule({
@@ -18,11 +19,12 @@ import { SingleTestimonialComponent } from './single-testimonial/single-testimon
     TestimonialsComponentRoutingModule,
     AppMaterialModule,
     ComponentsModule,
-    AppSharedModule
+    AppSharedModule,
   ],
   declarations: [
     TestimonialsComponent,
- SingleTestimonialComponent,
-  ]
+    SingleTestimonialComponent,
+    PublicTestimonialsComponent,
+  ],
 })
-export class TestimonialsComponentModule { }
+export class TestimonialsComponentModule {}

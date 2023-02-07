@@ -3,11 +3,17 @@
 
 </div>
 
-<!--Desk-->
-<div *ngIf="isDataAvailable && !isMobile" [class.fixdesk]="!isMobile">
+<!--Desk Public-->
+<div *ngIf="isDataAvailable && !isMobile && !isPrivate " >
+  <public-complaints></public-complaints>
+</div>
+
+<!--Desk Private-->
+
+<div *ngIf="isDataAvailable && !isMobile && isPrivate " [class.fixdesk]="!isMobile">
   <div class="set-12">
     <div class="set-4">
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" >
         <mat-label>Búscar...</mat-label>
         <input matInput placeholder="Ej: Andrea" (keyup)="applyFilter($event)" disabled />
         <button type="button" matSuffix>
@@ -72,9 +78,12 @@
     <mat-paginator #paginator [pageSizeOptions]="[20, 40, 60, 80, 100]"></mat-paginator>
   </div>
 </div>
-
-<!--Mobile-->
-<div *ngIf="isDataAvailable && isMobile" [class.fixmobile]="isMobile">
+<!--Mobile Public-->
+<div *ngIf="isDataAvailable && isMobile && !isPrivate " >
+  <public-complaints>Nes</public-complaints>
+</div>
+<!--Mobile Private-->
+<div *ngIf="isDataAvailable && isMobile && isPrivate" [class.fixmobile]="isMobile">
   <div class="set-12">
     <div class="set-4">
       <mat-form-field appearance="outline">

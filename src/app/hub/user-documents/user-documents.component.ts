@@ -53,7 +53,7 @@ export class UserDocumentsComponent implements OnInit {
         if (this.userActivities.includes('moderator')) {
           setTimeout(() => {
             this.isDataAvailable = true;
-          }, 1000);
+          }, 2000);
         }
 
         if (this.userActivities.includes('administrator')) {
