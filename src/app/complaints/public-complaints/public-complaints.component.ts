@@ -80,7 +80,7 @@ export class PublicComplaintsComponent implements OnInit {
         });
       }
       });
-      //console.log(this.cards);
+      console.log(this.cards);
       this.isDataAvailable = true;
     });
   }
