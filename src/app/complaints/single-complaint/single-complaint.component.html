@@ -1,7 +1,8 @@
 <div class="set-12 page loading" *ngIf="!isDataAvailable && !isMobile">
   <mat-spinner color="primary"></mat-spinner>
- 
 </div>
+
+<!--Load Mobile Skeleton-->
 <div class="card-is-loading"  *ngIf="!isDataAvailable && isMobile">
   <div class="image"></div>
   <div class="content">
@@ -16,7 +17,20 @@
   <div class="crdlst">
     <mat-card >
       <div class="set-12 crdh">
-        <button type="button" class="avatar"></button>
+        <button type="button" class="avatar">
+          <img
+          src="{{ card[0].avatarImage }}"
+          alt="{{ complaint?.createdBy.firstname }} {{ complaint?.createdBy.lastname }}"
+          *ngIf="card[0].avatarImage != null"
+        />
+        <span *ngIf="card[0].avatarImage == null && card[0].createdBy == null ">
+          A          </span>
+        
+        <span *ngIf="card[0].avatarImage == null card[0].createdBy != null">
+          {{ complaint?.createdBy.firstname | firstword | firstletter
+          }}{{ complaint?.createdBy.lastname | firstword | firstletter }}
+        </span>
+        </button>
         <div>
           <p>
             <small *ngIf="!complaint?.isAnonymous">
@@ -81,7 +95,17 @@
   <div class="crdlst">
     <mat-card >
       <div class="set-12 crdh">
-        <button type="button" class="avatar"></button>
+        <button type="button" class="avatar">
+          <img
+          src="{{ card[0].avatarImage }}"
+          alt="{{ complaint?.createdBy.firstname }} {{ complaint?.createdBy.lastname }}"
+          *ngIf="card[0].avatarImage != null"
+        />
+        <span *ngIf="card[0].avatarImage == null">
+          {{ complaint?.createdBy.firstname | firstword | firstletter
+          }}{{ complaint?.createdBy.lastname | firstword | firstletter }}
+        </span>
+        </button>
         <div>
           <p>
             <small *ngIf="!complaint?.isAnonymous">

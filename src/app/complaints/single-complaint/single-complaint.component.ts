@@ -51,6 +51,24 @@ export class SingleComplaintComponent implements OnInit {
       //console.log(this.complaint);
       this.card = [this.complaint];
       this.card.filter((x: any) => { x['comments'] = []; });
+      let avatarImage: any = null;
+      this.card.filter((x: any) => {
+        if(x.createdBy === null){
+          x['avatarImage'] = null;
+        }
+        else{
+        let data: any = { _id: x.createdBy._id };
+        this.userService.fetchUserById(data).subscribe({
+          error: (error: any) => {},
+          next: (reply: any) => {
+            avatarImage = reply.avatarImage;
+            //console.log(avatarImage);
+            x['avatarImage'] = avatarImage;
+          },
+          complete: () => {},
+        });
+        }
+      });
       //console.log(this.card);
 
       setTimeout(() => {
