@@ -19,13 +19,13 @@
       <div class="set-12 crdh">
         <button type="button" class="avatar">
           <img
-          src="{{ user.avatarImage }}"
-          alt="{{ user.firstname }} {{ user.lastname }}"
-          *ngIf="user.avatarImage != null"
+          src="{{ card[0].avatarImage }}"
+          alt="{{ complaint?.createdBy.firstname }} {{ complaint?.createdBy.lastname }}"
+          *ngIf="card[0].avatarImage != null"
         />
-        <span *ngIf="user.avatarImage == null">
-          {{ user.firstname | firstword | firstletter
-          }}{{ user.lastname | firstword | firstletter }}
+        <span *ngIf="card[0].avatarImage == null">
+          {{ complaint?.createdBy.firstname | firstword | firstletter
+          }}{{ complaint?.createdBy.lastname | firstword | firstletter }}
         </span>
         </button>
         <div>
@@ -94,13 +94,13 @@
       <div class="set-12 crdh">
         <button type="button" class="avatar">
           <img
-          src="{{ user.avatarImage }}"
-          alt="{{ user.firstname }} {{ user.lastname }}"
-          *ngIf="user.avatarImage != null"
+          src="{{ card[0].avatarImage }}"
+          alt="{{ complaint?.createdBy.firstname }} {{ complaint?.createdBy.lastname }}"
+          *ngIf="card[0].avatarImage != null"
         />
-        <span *ngIf="user.avatarImage == null">
-          {{ user.firstname | firstword | firstletter
-          }}{{ user.lastname | firstword | firstletter }}
+        <span *ngIf="card[0].avatarImage == null">
+          {{ complaint?.createdBy.firstname | firstword | firstletter
+          }}{{ complaint?.createdBy.lastname | firstword | firstletter }}
         </span>
         </button>
         <div>

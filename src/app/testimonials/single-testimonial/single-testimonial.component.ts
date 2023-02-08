@@ -48,8 +48,23 @@ export class SingleTestimonialComponent implements OnInit {
       this.testimony = reply[0];
       //console.log(this.testimony);
       this.card = [this.testimony];
+      //console.log(this.card)
       this.card.filter((x: any) => { x['comments'] = []; });
-      //console.log(this.card);
+      let avatarImage: any = null;
+      this.card.filter((x: any) => {
+        let data: any = { _id: x.createdBy._id };
+        this.userService.fetchUserById(data).subscribe({
+          error: (error: any) => {},
+          next: (reply: any) => {
+            avatarImage = reply.avatarImage;
+            //console.log(avatarImage);
+            x['avatarImage'] = avatarImage;
+          },
+          complete: () => {},
+        });
+        
+      });
+      console.log(this.card);
 
       setTimeout(() => {
         this.isDataAvailable = true;

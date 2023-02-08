@@ -53,6 +53,20 @@ export class PublicTestimonialsComponent implements OnInit {
       this.testimonies.filter((x: any) => { x['type'] = 'Testimonio'; });
       this.cards = [...this.testimonies];
       this.cards.filter((x: any) => { x['comments'] = []; });
+      let avatarImage: any = null;
+      this.cards.filter((x: any) => {
+        let data: any = { _id: x.createdBy._id };
+        this.userService.fetchUserById(data).subscribe({
+          error: (error: any) => {},
+          next: (reply: any) => {
+            avatarImage = reply.avatarImage;
+            //console.log(avatarImage);
+            x['avatarImage'] = avatarImage;
+          },
+          complete: () => {},
+        });
+        
+      });
       //console.log(this.cards);
       this.isDataAvailable = true;
     });

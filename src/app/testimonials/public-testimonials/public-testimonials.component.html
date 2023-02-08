@@ -8,13 +8,13 @@
         <div class="set-12 crdh">
           <button type="button" class="avatar">
             <img
-            src="{{ user.avatarImage }}"
-            alt="{{ user.firstname }} {{ user.lastname }}"
-            *ngIf="user.avatarImage != null"
+            src="{{ card.avatarImage }}"
+            alt="{{ card.createdBy.firstname }} {{ card.createdBy.lastname }}"
+            *ngIf="card.avatarImage != null"
           />
-          <span *ngIf="user.avatarImage == null">
-            {{ user.firstname | firstword | firstletter
-            }}{{ user.lastname | firstword | firstletter }}
+          <span *ngIf="card.avatarImage == null">
+            {{ card.createdBy.firstname | firstword | firstletter
+            }}{{ card.createdBy.lastname | firstword | firstletter }}
           </span>
           </button>
           <div>

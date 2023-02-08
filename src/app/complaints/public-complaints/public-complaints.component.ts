@@ -67,8 +67,8 @@ export class PublicComplaintsComponent implements OnInit {
           error: (error: any) => {},
           next: (reply: any) => {
             avatarImage = reply.avatarImage;
-            console.log(avatarImage);
-            x['avatarImage{________________________________-'] = avatarImage;
+            //console.log(avatarImage);
+            x['avatarImage'] = avatarImage;
           },
           complete: () => {},
         });
