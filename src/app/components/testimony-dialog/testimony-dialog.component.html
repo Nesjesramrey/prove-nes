@@ -1,7 +1,7 @@
 <div class="set-12 dialog-head">
   <input type="file" #file (change)="onFileSelected($event)" accept="image/*" capture="environment" multiple>
   <div class="set-10">
-    <h3>Denuncia</h3>
+    <h3>Mi testimonio</h3>
   </div>
   <div class="set-2 txt-right">
     <button type="button" mat-mini-fab color="primary" (click)="killDialog()" [disabled]="submitted">
@@ -30,7 +30,6 @@
       <mat-icon>place</mat-icon>
       <small>{{locationAvailable ? 'Cancelar ubicación' : 'Usar mi ubiacción'}}</small>
     </button>
-
     <div class="set-12 coords" *ngIf="locationAvailable">
       <p><small>Latitud: <strong>{{location['latitude']}}</strong></small></p>
       <p><small>Longitud: <strong>{{location['longitude']}}</strong></small></p>
@@ -41,7 +40,7 @@
     <mat-stepper #stepper [disableRipple]="true" [linear]="true" [@.disabled]="true">
       <mat-step>
         <div class="set-12 stepconts">
-          <form class="set-12" [formGroup]="complaintFormGroup" (submit)="onFileComplaint(complaintFormGroup)">
+          <form class="set-12" [formGroup]="testimonyFormGroup" (submit)="onFileTestimony(testimonyFormGroup)">
             <mat-form-field appearance="outline">
               <mat-label>Titulo</mat-label>
               <input type="text" matInput formControlName="title">
@@ -53,7 +52,7 @@
 
             <div class="set-12 ctrls">
               <button type="button" mat-raised-button color="warn" matStepperNext
-                [disabled]="complaintFormGroup.invalid || submitted">
+                [disabled]="testimonyFormGroup.invalid || submitted">
                 <small>Siguiente</small>
               </button>
             </div>
@@ -75,7 +74,7 @@
           </div>
 
           <div class="set-12 ctrlsmid" *ngIf="fileNames.length == 0">
-            <button type="button" (click)="file.click()" [disabled]="complaintFormGroup.invalid || submitted"
+            <button type="button" (click)="file.click()" [disabled]="testimonyFormGroup.invalid || submitted"
               class="wicon">
               <mat-icon>cloud_upload</mat-icon>
               <h4>5MB</h4>
@@ -84,11 +83,11 @@
 
           <div class="set-12 ctrls">
             <button type="button" mat-raised-button color="warn" matStepperPrevious
-              [disabled]="complaintFormGroup.invalid || submitted">
+              [disabled]="testimonyFormGroup.invalid || submitted">
               <small>Anterior</small>
             </button>
-            <button type="button" mat-raised-button color="primary" [disabled]="complaintFormGroup.invalid || submitted"
-              (click)="onFileComplaint(complaintFormGroup)">
+            <button type="button" mat-raised-button color="primary" [disabled]="testimonyFormGroup.invalid || submitted"
+              (click)="onFileTestimony(testimonyFormGroup)">
               <small>Denunciar</small>
             </button>
             <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
@@ -98,7 +97,7 @@
 
       <mat-step>
         <div class="set-12 succes">
-          <h4>¡Gracias, tu denuncia se ha publicado!</h4>
+          <h4>¡Gracias, tu testimonio se ha publicado!</h4>
           <p>Puedes verla <a href="{{postURL}}" target="_blank">aquí</a></p>
         </div>
       </mat-step>

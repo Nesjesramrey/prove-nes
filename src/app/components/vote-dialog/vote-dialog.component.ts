@@ -20,7 +20,7 @@ export class VoteDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public voteService: VoteService
   ) {
-    console.log(this.dialogData);
+    // console.log(this.dialogData);
     if (this.dialogData['card'] != undefined) { this.card = this.dialogData['card']; }
   }
 
@@ -37,7 +37,7 @@ export class VoteDialogComponent implements OnInit {
       value: vote['score']
     };
     this.voteService.createNewVoto(data).subscribe((reply: any) => {
-      console.log(reply);
+      // console.log(reply);
       this.dialogRef.close(reply);
     });
   }
