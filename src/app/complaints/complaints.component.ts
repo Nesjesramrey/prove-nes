@@ -45,7 +45,7 @@ export class ComplaintsComponent implements OnInit {
       next: (reply: any) => {
         this.user = reply;      
         this.user['activityName'] = this.user['activities'][0]['value'];
-        console.log('user: ', this.user);
+        //console.log('user: ', this.user);
         this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
         // console.log(this.userActivities); 
         if (this.userActivities.includes('moderator')) {

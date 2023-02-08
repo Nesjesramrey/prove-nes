@@ -13,7 +13,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 @Component({
   selector: 'public-complaints',
   templateUrl: './public-complaints.component.html',
-  styleUrls: ['./public-complaints.component.scss']
+  styleUrls: ['./public-complaints.component.scss'],
 })
 export class PublicComplaintsComponent implements OnInit {
   public isMobile: boolean = false;
@@ -34,28 +34,52 @@ export class PublicComplaintsComponent implements OnInit {
   ) {
     // console.log(this.authenticationService.isAuthenticated);
     this.isMobile = this.deviceDetectorService.isMobile();
-    if (this.isMobile) { this.class = 'fixmobile'; }
+    if (this.isMobile) {
+      this.class = 'fixmobile';
+    }
   }
 
   ngOnInit(): void {
     this.userService.fetchFireUser().subscribe({
-      error: (error: any) => { },
-      next: (reply: any) => { this.user = reply; },
-      complete: () => { }
+      error: (error: any) => {},
+      next: (reply: any) => {
+        this.user = reply;
+      },
+      complete: () => {},
     });
 
-   
-    let complaints: Observable<any> = this.complaintService.fetchAllComplaints();
+    let complaints: Observable<any> =
+      this.complaintService.fetchAllComplaints();
 
-    forkJoin([ complaints]).subscribe((reply: any) => {
+    forkJoin([complaints]).subscribe((reply: any) => {
       this.complaints = reply[0];
-      this.complaints.filter((x: any) => { x['type'] = 'Denuncia'; });
+      this.complaints.filter((x: any) => {
+        x['type'] = 'Denuncia';
+      });
       this.cards = [...this.complaints];
-      this.cards.filter((x: any) => { x['comments'] = []; });
-      //console.log(this.cards);
+      this.cards.filter((x: any) => {
+        x['comments'] = [];
+      });
+      let avatarImage: any = null;
+      this.cards.filter((x: any) => {
+        let data: any = { _id: x.createdBy._id };
+        this.userService.fetchUserById(data).subscribe({
+          error: (error: any) => {},
+          next: (reply: any) => {
+            avatarImage = reply.avatarImage;
+            console.log(avatarImage);
+            x['avatarImage{________________________________-'] = avatarImage;
+          },
+          complete: () => {},
+        });
+        
+      });
+      console.log(this.cards);
       this.isDataAvailable = true;
     });
   }
+
+ 
 
   postComment(event: any, card: any) {
     if (event.keyCode === 13) {
@@ -67,12 +91,13 @@ export class PublicComplaintsComponent implements OnInit {
     const bottomSheetRef = this.matBottomSheet.open(ShareSheetComponent, {
       data: {
         user: null,
-        card: card
-      }
+        card: card,
+      },
     });
 
     bottomSheetRef.afterDismissed().subscribe((reply: any) => {
-      if (reply != undefined) { }
+      if (reply != undefined) {
+      }
     });
   }
 
@@ -81,10 +106,10 @@ export class PublicComplaintsComponent implements OnInit {
       width: '420px',
       disableClose: true,
       data: {
-        post: post['_id']
+        post: post['_id'],
       },
     });
 
-    dialogRef.afterClosed().subscribe((reply: any) => { });
+    dialogRef.afterClosed().subscribe((reply: any) => {});
   }
 }

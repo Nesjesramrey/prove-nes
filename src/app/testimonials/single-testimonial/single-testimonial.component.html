@@ -7,7 +7,17 @@
     <div class="crdlst">
       <mat-card >
         <div class="set-12 crdh">
-          <button type="button" class="avatar"></button>
+          <button type="button" class="avatar">
+            <img
+            src="{{ user.avatarImage }}"
+            alt="{{ user.firstname }} {{ user.lastname }}"
+            *ngIf="user.avatarImage != null"
+          />
+          <span *ngIf="user.avatarImage == null">
+            {{ user.firstname | firstword | firstletter
+            }}{{ user.lastname | firstword | firstletter }}
+          </span>
+          </button>
           <div>
             <p>
               <small *ngIf="!testimony?.isAnonymous">
@@ -72,7 +82,17 @@
     <div class="crdlst">
       <mat-card >
         <div class="set-12 crdh">
-          <button type="button" class="avatar"></button>
+          <button type="button" class="avatar">
+            <img
+            src="{{ user.avatarImage }}"
+            alt="{{ user.firstname }} {{ user.lastname }}"
+            *ngIf="user.avatarImage != null"
+          />
+          <span *ngIf="user.avatarImage == null">
+            {{ user.firstname | firstword | firstletter
+            }}{{ user.lastname | firstword | firstletter }}
+          </span>
+          </button>
           <div>
             <p>
               <small *ngIf="!testimony?.isAnonymous">

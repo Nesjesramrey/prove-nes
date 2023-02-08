@@ -6,7 +6,17 @@
     <div class="crdlst">
       <mat-card *ngFor="let card of cards">
         <div class="set-12 crdh">
-          <button type="button" class="avatar"></button>
+          <button type="button" class="avatar">
+            <img
+            src="{{ card.avatarImage }}"
+            alt="{{ card.createdBy.firstname }} {{ card.createdBy.lastname }}"
+            *ngIf="card.avatarImage != null"
+          />
+          <span *ngIf="card.avatarImage == null">
+            {{ card.createdBy.firstname | firstword | firstletter
+            }}{{ card.createdBy.lastname | firstword | firstletter }}
+          </span>
+          </button>
           <div>
             <p>
               <small *ngIf="!card['isAnonymous']">

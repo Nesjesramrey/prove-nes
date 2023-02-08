@@ -1,7 +1,8 @@
 <div class="set-12 page loading" *ngIf="!isDataAvailable && !isMobile">
   <mat-spinner color="primary"></mat-spinner>
- 
 </div>
+
+<!--Load Mobile Skeleton-->
 <div class="card-is-loading"  *ngIf="!isDataAvailable && isMobile">
   <div class="image"></div>
   <div class="content">
@@ -16,7 +17,17 @@
   <div class="crdlst">
     <mat-card >
       <div class="set-12 crdh">
-        <button type="button" class="avatar"></button>
+        <button type="button" class="avatar">
+          <img
+          src="{{ user.avatarImage }}"
+          alt="{{ user.firstname }} {{ user.lastname }}"
+          *ngIf="user.avatarImage != null"
+        />
+        <span *ngIf="user.avatarImage == null">
+          {{ user.firstname | firstword | firstletter
+          }}{{ user.lastname | firstword | firstletter }}
+        </span>
+        </button>
         <div>
           <p>
             <small *ngIf="!complaint?.isAnonymous">
@@ -81,7 +92,17 @@
   <div class="crdlst">
     <mat-card >
       <div class="set-12 crdh">
-        <button type="button" class="avatar"></button>
+        <button type="button" class="avatar">
+          <img
+          src="{{ user.avatarImage }}"
+          alt="{{ user.firstname }} {{ user.lastname }}"
+          *ngIf="user.avatarImage != null"
+        />
+        <span *ngIf="user.avatarImage == null">
+          {{ user.firstname | firstword | firstletter
+          }}{{ user.lastname | firstword | firstletter }}
+        </span>
+        </button>
         <div>
           <p>
             <small *ngIf="!complaint?.isAnonymous">
