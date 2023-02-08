@@ -23,7 +23,10 @@
           alt="{{ complaint?.createdBy.firstname }} {{ complaint?.createdBy.lastname }}"
           *ngIf="card[0].avatarImage != null"
         />
-        <span *ngIf="card[0].avatarImage == null">
+        <span *ngIf="card[0].avatarImage == null && card[0].createdBy == null ">
+          A          </span>
+        
+        <span *ngIf="card[0].avatarImage == null card[0].createdBy != null">
           {{ complaint?.createdBy.firstname | firstword | firstletter
           }}{{ complaint?.createdBy.lastname | firstword | firstletter }}
         </span>

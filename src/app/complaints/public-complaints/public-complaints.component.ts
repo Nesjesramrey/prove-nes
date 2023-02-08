@@ -9,6 +9,7 @@ import { UserService } from 'src/app/services/user.service';
 import { VoteDialogComponent } from 'src/app/components/vote-dialog/vote-dialog.component';
 import { UtilityService } from 'src/app/services/utility.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { X } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'public-complaints',
@@ -61,7 +62,12 @@ export class PublicComplaintsComponent implements OnInit {
         x['comments'] = [];
       });
       let avatarImage: any = null;
+    
       this.cards.filter((x: any) => {
+        if(x.createdBy === null){
+          x['avatarImage'] = null;
+        }
+        else{
         let data: any = { _id: x.createdBy._id };
         this.userService.fetchUserById(data).subscribe({
           error: (error: any) => {},
@@ -72,9 +78,9 @@ export class PublicComplaintsComponent implements OnInit {
           },
           complete: () => {},
         });
-        
+      }
       });
-      console.log(this.cards);
+      //console.log(this.cards);
       this.isDataAvailable = true;
     });
   }

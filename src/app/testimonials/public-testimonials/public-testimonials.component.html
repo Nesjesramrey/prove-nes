@@ -12,10 +12,13 @@
             alt="{{ card.createdBy.firstname }} {{ card.createdBy.lastname }}"
             *ngIf="card.avatarImage != null"
           />
-          <span *ngIf="card.avatarImage == null">
+          <span *ngIf="card.avatarImage == null && card.createdBy == null ">
+            A          </span>
+          
+           <span *ngIf="card.avatarImage == null && card.createdBy != null">
             {{ card.createdBy.firstname | firstword | firstletter
             }}{{ card.createdBy.lastname | firstword | firstletter }}
-          </span>
+          </span> 
           </button>
           <div>
             <p>

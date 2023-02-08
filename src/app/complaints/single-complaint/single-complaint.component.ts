@@ -53,6 +53,10 @@ export class SingleComplaintComponent implements OnInit {
       this.card.filter((x: any) => { x['comments'] = []; });
       let avatarImage: any = null;
       this.card.filter((x: any) => {
+        if(x.createdBy === null){
+          x['avatarImage'] = null;
+        }
+        else{
         let data: any = { _id: x.createdBy._id };
         this.userService.fetchUserById(data).subscribe({
           error: (error: any) => {},
@@ -63,7 +67,7 @@ export class SingleComplaintComponent implements OnInit {
           },
           complete: () => {},
         });
-        
+        }
       });
       //console.log(this.card);
 

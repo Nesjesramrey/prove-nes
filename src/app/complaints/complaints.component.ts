@@ -114,7 +114,7 @@ export class ComplaintsComponent implements OnInit {
   }
 
   popSingleComplaint(complaint_id: string) {
-    console.log(complaint_id);
+    //console.log(complaint_id);
     window.open('/denuncias/' + complaint_id);
   }
 }
