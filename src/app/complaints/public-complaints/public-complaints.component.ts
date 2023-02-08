@@ -61,25 +61,7 @@ export class PublicComplaintsComponent implements OnInit {
       this.cards.filter((x: any) => {
         x['comments'] = [];
       });
-      let avatarImage: any = null;
     
-      this.cards.filter((x: any) => {
-        if(x.createdBy === null){
-          x['avatarImage'] = null;
-        }
-        else{
-        let data: any = { _id: x.createdBy._id };
-        this.userService.fetchUserById(data).subscribe({
-          error: (error: any) => {},
-          next: (reply: any) => {
-            avatarImage = reply.avatarImage;
-            //console.log(avatarImage);
-            x['avatarImage'] = avatarImage;
-          },
-          complete: () => {},
-        });
-      }
-      });
       console.log(this.cards);
       this.isDataAvailable = true;
     });
