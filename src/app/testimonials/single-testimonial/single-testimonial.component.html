@@ -1,0 +1,133 @@
+<div class="set-12 page loading" *ngIf="!isDataAvailable">
+    <mat-spinner color="primary"></mat-spinner>
+  </div>
+  
+  <!--Desk-->
+  <div class="set-12" *ngIf="isDataAvailable && !isMobile" [class.fixdesk]="!isMobile">
+    <div class="crdlst">
+      <mat-card >
+        <div class="set-12 crdh">
+          <button type="button" class="avatar"></button>
+          <div>
+            <p>
+              <small *ngIf="!testimony?.isAnonymous">
+                {{testimony?.createdBy.firstname}} {{testimony?.createdBy.lastname}}
+              </small>
+              <small *ngIf="testimony?.isAnonymous">Anónimo</small>
+            </p>
+            <p class="dates">
+              <small>{{testimony?.createdAt | date: 'mediumDate'}} - {{testimony?.createdAt | date: 'mediumTime'}}</small>
+            </p>
+          </div>
+        </div>
+  
+        <div class="set-12 crddsc">
+          <div class="set-12" [innerHTML]="utilityService.truncateHTML(testimony?.description)"></div>
+        </div>
+  
+        <div class="set-12 crdvp">
+          <img [src]="testimony?.images[0]" alt="" class="full" *ngIf="testimony?.images.length != 0">
+          <img src="../../assets/images/mexicolectivo-small-blue.png" alt="" *ngIf="testimony?.images.length == 0">
+        </div>
+  
+        <div class="set-12 crdft">
+          <div class="set-6 types">
+            <mat-icon>label</mat-icon>
+            <small>Denuncia</small>
+          </div>
+          <div class="set-6 ctrls">
+            <button type="button" matTooltip="Favorito" matTooltipClass="tooltip" [disabled]="user == null">
+              <mat-icon>favorite</mat-icon>
+            </button>
+            <button type="button" matTooltip="Comentar" matTooltipClass="tooltip" [disabled]="user == null">
+              <mat-icon>forum</mat-icon>
+            </button>
+            <button type="button" matTooltip="Compartir" matTooltipClass="tooltip" (click)="shareCard()">
+              <mat-icon>share</mat-icon>
+            </button>
+            <button type="button" matTooltip="Votar" matTooltipClass="tooltip" (click)="openVoteDialog(testimony)">
+              <mat-icon>star</mat-icon>
+            </button>
+          </div>
+        </div>
+  
+        <div class="set-12 crdcom">
+          <div class="set-1">
+            <button type="button" class="avatar"></button>
+          </div>
+          <div class="set-11">
+            <input type="text" placeholder="Escribe un mensaje..." (keyup)="postComment($event, testimony)">
+          </div>
+        </div>
+  
+        <div class="set-12 comlst" *ngIf="testimony?.comments.length != 0">
+          <div class="set-12" *ngFor="let comment of testimony?.comments">{{comment}}</div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+  
+  <!--Mobile-->
+  <div class="set-12" *ngIf="isDataAvailable && isMobile"  [class.fixmobile]="isMobile">
+    <div class="crdlst">
+      <mat-card >
+        <div class="set-12 crdh">
+          <button type="button" class="avatar"></button>
+          <div>
+            <p>
+              <small *ngIf="!testimony?.isAnonymous">
+                {{testimony?.createdBy.firstname}} {{testimony?.createdBy.lastname}}
+              </small>
+              <small *ngIf="testimony?.isAnonymous">Anónimo</small>
+            </p>
+            <p class="dates">
+              <small>{{testimony?.createdAt | date: 'mediumDate'}} - {{testimony?.createdAt | date: 'mediumTime'}}</small>
+            </p>
+          </div>
+        </div>
+  
+        <div class="set-12 crddsc">
+          <div class="set-12" [innerHTML]="utilityService.truncateHTML(testimony?.description)"></div>
+        </div>
+  
+        <div class="set-12 crdvp">
+          <img [src]="testimony?.images[0]" alt="" class="full" *ngIf="testimony?.images.length != 0">
+          <img src="../../assets/images/mexicolectivo-small-blue.png" alt="" *ngIf="testimony?.images.length == 0">
+        </div>
+  
+        <div class="set-12 crdft">
+          <div class="set-6 types">
+            <mat-icon>label</mat-icon>
+            <small>Denuncia</small>
+          </div>
+          <div class="set-6 ctrls">
+            <button type="button" matTooltip="Favorito" matTooltipClass="tooltip" [disabled]="user == null">
+              <mat-icon>favorite</mat-icon>
+            </button>
+            <button type="button" matTooltip="Comentar" matTooltipClass="tooltip" [disabled]="user == null">
+              <mat-icon>forum</mat-icon>
+            </button>
+            <button type="button" matTooltip="Compartir" matTooltipClass="tooltip" (click)="shareCard()">
+              <mat-icon>share</mat-icon>
+            </button>
+            <button type="button" matTooltip="Votar" matTooltipClass="tooltip" (click)="openVoteDialog(testimony)">
+              <mat-icon>star</mat-icon>
+            </button>
+          </div>
+        </div>
+  
+        <div class="set-12 crdcom">
+          <div class="set-1">
+            <button type="button" class="avatar"></button>
+          </div>
+          <div class="set-11">
+            <input type="text" placeholder="Escribe un mensaje..." (keyup)="postComment($event, testimony)">
+          </div>
+        </div>
+  
+        <div class="set-12 comlst" *ngIf="testimony?.comments.length != 0">
+          <div class="set-12" *ngFor="let comment of testimony?.comments">{{comment}}</div>
+        </div>
+      </mat-card>
+    </div>
+  </div>

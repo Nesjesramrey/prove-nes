@@ -1,0 +1,68 @@
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+    <mat-spinner></mat-spinner>
+  </div>
+  
+  <div class="set-12" *ngIf="isDataAvailable">
+    <div class="crdlst">
+      <mat-card *ngFor="let card of cards">
+        <div class="set-12 crdh">
+          <button type="button" class="avatar"></button>
+          <div>
+            <p>
+              <small *ngIf="!card['isAnonymous']">
+                {{card['createdBy']['firstname']}} {{card['createdBy']['lastname']}}
+              </small>
+              <small *ngIf="card['isAnonymous']">Anónimo</small>
+            </p>
+            <p class="dates">
+              <small>{{card['createdAt'] | date: 'mediumDate'}} - {{card['createdAt'] | date: 'mediumTime'}}</small>
+            </p>
+          </div>
+        </div>
+  
+        <div class="set-12 crddsc">
+          <div class="set-12" [innerHTML]="utilityService.truncateHTML(card['description'])"></div>
+        </div>
+  
+        <div class="set-12 crdvp">
+          <img [src]="card['images'][0]" alt="" class="full" *ngIf="card.images.length != 0">
+          <img src="../../assets/images/mexicolectivo-small-blue.png" alt="" *ngIf="card.images.length == 0">
+        </div>
+  
+        <div class="set-12 crdft">
+          <div class="set-6 types">
+            <mat-icon>label</mat-icon>
+            <small>{{card['type']}}</small>
+          </div>
+          <div class="set-6 ctrls">
+            <button type="button" matTooltip="Favorito" matTooltipClass="tooltip" [disabled]="user == null">
+              <mat-icon>favorite</mat-icon>
+            </button>
+            <button type="button" matTooltip="Comentar" matTooltipClass="tooltip" [disabled]="user == null">
+              <mat-icon>forum</mat-icon>
+            </button>
+            <button type="button" matTooltip="Compartir" matTooltipClass="tooltip" (click)="shareCard(card)">
+              <mat-icon>share</mat-icon>
+            </button>
+            <button type="button" matTooltip="Votar" matTooltipClass="tooltip" (click)="openVoteDialog(card)">
+              <mat-icon>star</mat-icon>
+            </button>
+          </div>
+        </div>
+  
+        <div class="set-12 crdcom">
+          <div class="set-1">
+            <button type="button" class="avatar"></button>
+          </div>
+          <div class="set-11">
+            <input type="text" placeholder="Escribe un mensaje..." (keyup)="postComment($event, card)">
+          </div>
+        </div>
+  
+        <div class="set-12 comlst" *ngIf="card['comments'].length != 0">
+          <div class="set-12" *ngFor="let comment of card.comments">{{comment}}</div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+

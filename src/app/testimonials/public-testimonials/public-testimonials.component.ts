@@ -2,25 +2,24 @@ import { Component, HostBinding, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { forkJoin, Observable } from 'rxjs';
-import { ShareSheetComponent } from '../components/share-sheet/share-sheet.component';
-import { AuthenticationService } from '../services/authentication.service';
-import { ComplaintService } from '../services/complaint.service';
-import { TestimonyService } from '../services/testimony.service';
-import { UserService } from '../services/user.service';
-import { VoteDialogComponent } from '../components/vote-dialog/vote-dialog.component';
-import { UtilityService } from '../services/utility.service';
+import { ShareSheetComponent } from 'src/app/components/share-sheet/share-sheet.component';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { TestimonyService } from 'src/app/services/testimony.service';
+import { UserService } from 'src/app/services/user.service';
+import { VoteDialogComponent } from 'src/app/components/vote-dialog/vote-dialog.component';
+import { UtilityService } from 'src/app/services/utility.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
-  selector: '.posts-page',
-  templateUrl: './posts.component.html',
-  styleUrls: ['./posts.component.scss']
+  selector: 'public-testimonials',
+  templateUrl: './public-testimonials.component.html',
+  styleUrls: ['./public-testimonials.component.scss']
 })
-export class PostsComponent implements OnInit {
+export class PublicTestimonialsComponent implements OnInit {
+
   public isMobile: boolean = false;
   public isDataAvailable: boolean = false;
-  public testimonials: any = null;
-  public complaints: any = null;
+  public testimonies: any = null;
   public cards: any[] = [];
   public user: any = null;
   @HostBinding('class') public class: string = '';
@@ -29,7 +28,6 @@ export class PostsComponent implements OnInit {
     public deviceDetectorService: DeviceDetectorService,
     public authenticationService: AuthenticationService,
     public testimonyService: TestimonyService,
-    public complaintService: ComplaintService,
     public userService: UserService,
     public utilityService: UtilityService,
     public matBottomSheet: MatBottomSheet,
@@ -47,21 +45,15 @@ export class PostsComponent implements OnInit {
       complete: () => { }
     });
 
-    let testimonials: Observable<any> = this.testimonyService.fetchAllTestimonies();
-    let complaints: Observable<any> = this.complaintService.fetchAllComplaints();
+   
+    let complaints: Observable<any> = this.testimonyService.fetchAllTestimonies();
 
-    forkJoin([testimonials, complaints]).subscribe((reply: any) => {
-      // this.testimonials = reply[0];
-      this.testimonials = [];
-      this.testimonials.filter((x: any) => { x['type'] = 'Testimonio'; });
-
-      this.complaints = reply[1];
-      this.complaints.filter((x: any) => { x['type'] = 'Denuncia'; });
-
-      this.cards = [...this.testimonials, ...this.complaints];
+    forkJoin([ complaints]).subscribe((reply: any) => {
+      this.testimonies = reply[0];
+      this.testimonies.filter((x: any) => { x['type'] = 'Testimonio'; });
+      this.cards = [...this.testimonies];
       this.cards.filter((x: any) => { x['comments'] = []; });
-      console.log(this.cards);
-
+      //console.log(this.cards);
       this.isDataAvailable = true;
     });
   }
@@ -97,3 +89,4 @@ export class PostsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((reply: any) => { });
   }
 }
+

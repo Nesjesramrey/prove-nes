@@ -2,24 +2,22 @@ import { Component, HostBinding, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { forkJoin, Observable } from 'rxjs';
-import { ShareSheetComponent } from '../components/share-sheet/share-sheet.component';
-import { AuthenticationService } from '../services/authentication.service';
-import { ComplaintService } from '../services/complaint.service';
-import { TestimonyService } from '../services/testimony.service';
-import { UserService } from '../services/user.service';
-import { VoteDialogComponent } from '../components/vote-dialog/vote-dialog.component';
-import { UtilityService } from '../services/utility.service';
+import { ShareSheetComponent } from 'src/app/components/share-sheet/share-sheet.component';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { ComplaintService } from 'src/app/services/complaint.service';
+import { UserService } from 'src/app/services/user.service';
+import { VoteDialogComponent } from 'src/app/components/vote-dialog/vote-dialog.component';
+import { UtilityService } from 'src/app/services/utility.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
-  selector: '.posts-page',
-  templateUrl: './posts.component.html',
-  styleUrls: ['./posts.component.scss']
+  selector: 'public-complaints',
+  templateUrl: './public-complaints.component.html',
+  styleUrls: ['./public-complaints.component.scss']
 })
-export class PostsComponent implements OnInit {
+export class PublicComplaintsComponent implements OnInit {
   public isMobile: boolean = false;
   public isDataAvailable: boolean = false;
-  public testimonials: any = null;
   public complaints: any = null;
   public cards: any[] = [];
   public user: any = null;
@@ -28,7 +26,6 @@ export class PostsComponent implements OnInit {
   constructor(
     public deviceDetectorService: DeviceDetectorService,
     public authenticationService: AuthenticationService,
-    public testimonyService: TestimonyService,
     public complaintService: ComplaintService,
     public userService: UserService,
     public utilityService: UtilityService,
@@ -47,21 +44,15 @@ export class PostsComponent implements OnInit {
       complete: () => { }
     });
 
-    let testimonials: Observable<any> = this.testimonyService.fetchAllTestimonies();
+   
     let complaints: Observable<any> = this.complaintService.fetchAllComplaints();
 
-    forkJoin([testimonials, complaints]).subscribe((reply: any) => {
-      // this.testimonials = reply[0];
-      this.testimonials = [];
-      this.testimonials.filter((x: any) => { x['type'] = 'Testimonio'; });
-
-      this.complaints = reply[1];
+    forkJoin([ complaints]).subscribe((reply: any) => {
+      this.complaints = reply[0];
       this.complaints.filter((x: any) => { x['type'] = 'Denuncia'; });
-
-      this.cards = [...this.testimonials, ...this.complaints];
+      this.cards = [...this.complaints];
       this.cards.filter((x: any) => { x['comments'] = []; });
-      console.log(this.cards);
-
+      //console.log(this.cards);
       this.isDataAvailable = true;
     });
   }
