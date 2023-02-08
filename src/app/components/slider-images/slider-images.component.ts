@@ -27,7 +27,7 @@ export class SliderImagesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void { 
-    console.log(this.images);
+    // console.log(this.images);
   }
 
   onBack() {

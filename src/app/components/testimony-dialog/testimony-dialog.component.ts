@@ -3,17 +3,17 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
-import { ComplaintService } from 'src/app/services/complaint.service';
+import { TestimonyService } from 'src/app/services/testimony.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
-  selector: '.complaint-dialog',
-  templateUrl: './complaint-dialog.component.html',
-  styleUrls: ['./complaint-dialog.component.scss']
+  selector: '.testimony-dialog',
+  templateUrl: './testimony-dialog.component.html',
+  styleUrls: ['./testimony-dialog.component.scss']
 })
-export class ComplaintDialogComponent implements OnInit {
+export class TestimonyDialogComponent implements OnInit {
   public submitted: boolean = false;
-  public complaintFormGroup!: FormGroup;
+  public testimonyFormGroup!: FormGroup;
   public isAnonymous: boolean = false;
   public user: any = null;
   public htmlContent: any = '';
@@ -60,23 +60,24 @@ export class ComplaintDialogComponent implements OnInit {
   public postURL: string = '';
   @ViewChild('stepper') private stepper!: MatStepper;
   public location: any = {
-    latitude: null, longitude: null
+    latitude: null,
+    longitude: null
   }
   public locationAvailable: boolean = false;
 
   constructor(
-    public dialogRef: MatDialogRef<ComplaintDialogComponent>,
+    public dialogRef: MatDialogRef<TestimonyDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public formBuilder: FormBuilder,
-    public complaintService: ComplaintService,
-    public utilityService: UtilityService
+    public utilityService: UtilityService,
+    public testuimonyServive: TestimonyService
   ) {
     // console.log(this.dialogData);
     this.user = this.dialogData['user'];
   }
 
   ngOnInit(): void {
-    this.complaintFormGroup = this.formBuilder.group({
+    this.testimonyFormGroup = this.formBuilder.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
       files: ['', []]
@@ -102,47 +103,42 @@ export class ComplaintDialogComponent implements OnInit {
 
     Array.from(event.target.files)
       .forEach((file: any) => { this.fileNames.push(file['name']); });
-    this.complaintFormGroup.patchValue({ files: event.target.files });
-    this.complaintFormGroup.updateValueAndValidity();
+    this.testimonyFormGroup.patchValue({ files: event.target.files });
+    this.testimonyFormGroup.updateValueAndValidity();
 
     this.files = event['target']['files'];
     let weight: any = this.validateFileSize(this.files);
 
     if (weight > 5) {
       this.utilityService.openErrorSnackBar('El peso máximo de carga es de 5MB');
-      this.complaintFormGroup.setErrors({ 'error': true });
+      this.testimonyFormGroup.setErrors({ 'error': true });
       this.submitted = false;
     }
   }
 
-  onFileComplaint(form: FormGroup) {
+  onFileTestimony(form: FormGroup) {
     this.submitted = true;
     let data = new FormData();
 
-    Array.from(this.complaintFormGroup.controls['files']['value'])
+    Array.from(this.testimonyFormGroup.controls['files']['value'])
       .forEach((file: any) => { data.append('files', file); });
-    data.append('title', this.complaintFormGroup.value.title);
-    data.append('description', this.complaintFormGroup.value.description);
-    data.append('latitude', this.location['latitude']);
-    data.append('longitude', this.location['longitude']);
+    data.append('title', this.testimonyFormGroup.value.title);
+    data.append('description', this.testimonyFormGroup.value.description);
     data.append('isAnonymous', (this.isAnonymous).toString());
 
-    this.complaintService.fileComplaint(data).subscribe({
+    this.testuimonyServive.createNewTestimony(data).subscribe({
       error: (error: any) => {
         this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
-        this.killDialog();
+        this, this.killDialog();
       },
       next: (reply: any) => {
         this.postURL = 'https://mexicolectivo.com/posts/' + reply['_id'];
         this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
       },
       complete: () => {
-        this.locationAvailable = false;
-        this.location['latitude'] = null;
-        this.location['longitude'] = null;
         this.stepNext();
         this.submitted = false;
-        this.complaintFormGroup.reset();
+        this.testimonyFormGroup.reset();
       }
     });
   }
@@ -150,18 +146,18 @@ export class ComplaintDialogComponent implements OnInit {
   popFile(index: number) {
     this.urls = this.urls.filter((x: any, i: any) => { return i != index; });
     this.fileNames = this.fileNames.filter((x: any, i: any) => { return i != index; });
-    let files: any = this.complaintFormGroup.controls['files']['value'];
+    let files: any = this.testimonyFormGroup.controls['files']['value'];
     files = Array.from(files).filter((x: any, i: any) => { return i != index; });
-    this.complaintFormGroup.patchValue({ files: files });
+    this.testimonyFormGroup.patchValue({ files: files });
     this.files = Array.from(this.files).filter((x: any, i: any) => { return i != index; });
     let weight: any = this.validateFileSize(this.files);
 
     if (weight > 5) {
       this.utilityService.openErrorSnackBar('El peso máximo de carga es de 5MB');
-      this.complaintFormGroup.setErrors({ 'error': true });
+      this.testimonyFormGroup.setErrors({ 'error': true });
       this.submitted = false;
     } else {
-      this.complaintFormGroup.updateValueAndValidity();
+      this.testimonyFormGroup.updateValueAndValidity();
     }
   }
 

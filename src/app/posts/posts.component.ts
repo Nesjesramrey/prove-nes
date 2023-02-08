@@ -24,6 +24,7 @@ export class PostsComponent implements OnInit {
   public cards: any[] = [];
   public user: any = null;
   @HostBinding('class') public class: string = '';
+  public today: any = null;
 
   constructor(
     public deviceDetectorService: DeviceDetectorService,
@@ -41,6 +42,8 @@ export class PostsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.today = new Date();
+
     this.userService.fetchFireUser().subscribe({
       error: (error: any) => { },
       next: (reply: any) => { this.user = reply; },
@@ -51,8 +54,8 @@ export class PostsComponent implements OnInit {
     let complaints: Observable<any> = this.complaintService.fetchAllComplaints();
 
     forkJoin([testimonials, complaints]).subscribe((reply: any) => {
-      // this.testimonials = reply[0];
-      this.testimonials = [];
+      this.testimonials = reply[0];
+      // this.testimonials = [];
       this.testimonials.filter((x: any) => { x['type'] = 'Testimonio'; });
 
       this.complaints = reply[1];
@@ -61,6 +64,11 @@ export class PostsComponent implements OnInit {
       this.cards = [...this.testimonials, ...this.complaints];
       this.cards.filter((x: any) => { x['comments'] = []; });
       console.log(this.cards);
+      this.cards.sort(() => Math.random() - 0.5);
+      this.cards.filter((x: any) => {
+        let date = new Date(x['createdAt']);
+      });
+      // console.log(this.cards);
 
       this.isDataAvailable = true;
     });
@@ -68,7 +76,12 @@ export class PostsComponent implements OnInit {
 
   postComment(event: any, card: any) {
     if (event.keyCode === 13) {
-      card['comments'].push(event.target.value);
+      console.log(this.user);
+      let obj: any = {
+        message: event['target']['value'],
+        createdBy: this.user
+      }
+      card['comments'].push(obj);
     }
   }
 

@@ -9,7 +9,7 @@
         <button type="button" class="avatar"></button>
         <div>
           <p>
-            <small *ngIf="!card['isAnonymous']">
+            <small *ngIf="!card['isAnonymous'] && card['createdBy'] != null">
               {{card['createdBy']['firstname']}} {{card['createdBy']['lastname']}}
             </small>
             <small *ngIf="card['isAnonymous']">Anónimo</small>
@@ -51,16 +51,25 @@
       </div>
 
       <div class="set-12 crdcom">
-        <div class="set-1">
+        <div class="set-2">
           <button type="button" class="avatar"></button>
         </div>
-        <div class="set-11">
+        <div class="set-10">
           <input type="text" placeholder="Escribe un mensaje..." (keyup)="postComment($event, card)">
         </div>
       </div>
 
       <div class="set-12 comlst" *ngIf="card['comments'].length != 0">
-        <div class="set-12" *ngFor="let comment of card.comments">{{comment}}</div>
+        <div class="set-12 snglcom" *ngFor="let comment of card.comments">
+          <div class="set-2">
+            <div class="avatar">
+              <img [src]="comment['createdBy']['avatarImage']" alt="">
+            </div>
+          </div>
+          <div class="set-10">
+            <small>{{comment['message']}}</small>
+          </div>
+        </div>
       </div>
     </mat-card>
   </div>

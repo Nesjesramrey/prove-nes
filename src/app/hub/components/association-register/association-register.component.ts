@@ -83,11 +83,11 @@ export class AssociationRegisterComponent implements OnInit {
     let states: Observable<any> = this.utilityService.fetchAllStates();
 
     this.utilityService.fetchAssociationTypology().subscribe({
-      error: (error: any) => {},
+      error: (error: any) => { },
       next: (reply: any) => {
         this.associationTypology = reply;
       },
-      complete: () => {},
+      complete: () => { },
     });
 
     forkJoin([states]).subscribe((reply: any) => {
@@ -172,7 +172,7 @@ export class AssociationRegisterComponent implements OnInit {
               this.layoutsCategoryPreference.push(obj);
             });
           },
-          complete: () => {},
+          complete: () => { },
         });
       },
       complete: () => {
@@ -270,7 +270,7 @@ export class AssociationRegisterComponent implements OnInit {
       },
       next: (reply: any) => {
         this.associationService.searchAssociation(nameAssociation).subscribe({
-          error: (error: any) => {},
+          error: (error: any) => { },
           next: (reply: any) => {
             this.myAssociation = reply;
             this.dataJoinAssociation = {
@@ -284,14 +284,14 @@ export class AssociationRegisterComponent implements OnInit {
                   switch (error['status']) {
                   }
                 },
-                next: (reply: any) => {},
-                complete: () => {},
+                next: (reply: any) => { },
+                complete: () => { },
               });
           },
 
-          complete: () => {},
+          complete: () => { },
         });
-        
+
       },
       complete: () => {
         this.killDialog();
@@ -358,14 +358,14 @@ export class AssociationRegisterComponent implements OnInit {
   }
 
   onSearch(formGroup: FormGroup) {
-    let data: any = {
-      filter: formGroup['value']['search'],
-    };
-    //console.log(data['filter']),
+    this.submitted = true;
+    let data: any = { filter: formGroup['value']['search'] };
     this.associationService.searchAssociation(data['filter']).subscribe({
-      error: (error: any) => {},
+      error: (error: any) => {
+        this.submitted = false;
+        this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+      },
       next: (reply: any) => {
-        //console.log(reply.length)
         if (reply.length == 0) {
           this.isAssociationAvailable = false;
           this.isNotAssociationAvailable = true;
@@ -375,7 +375,9 @@ export class AssociationRegisterComponent implements OnInit {
           this.isAssociationAvailable = true;
         }
       },
-      complete: () => {},
+      complete: () => {
+        this.submitted = false;
+      },
     });
   }
 
@@ -397,8 +399,8 @@ export class AssociationRegisterComponent implements OnInit {
         switch (error['status']) {
         }
       },
-      next: (reply: any) => {},
-      complete: () => {},
+      next: (reply: any) => { },
+      complete: () => { },
     });
     this.openModalAuthorization();
   }
@@ -415,8 +417,8 @@ export class AssociationRegisterComponent implements OnInit {
     event.checked
       ? this.myCategoriesAssociation.push(obj)
       : (this.myCategoriesAssociation = this.myCategoriesAssociation.filter(
-          (val: any) => val !== value
-        ));
+        (val: any) => val !== value
+      ));
     //console.log(this.myCategoriesAssociation)
   }
 
