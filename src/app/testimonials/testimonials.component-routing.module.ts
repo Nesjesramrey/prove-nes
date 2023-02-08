@@ -5,7 +5,7 @@ import { SingleTestimonialComponent } from './single-testimonial/single-testimon
 import { TestimonialsComponent } from './testimonials.component';
 
 const routes: Routes = [
-  { path: '', children: [{ path: '', component: TestimonialsComponent, canActivate: [CanActivateAdminGuard] }] },
+  { path: '', children: [{ path: '', component: TestimonialsComponent, canActivate: [] }] },
   { path: ':testimonyID', component: SingleTestimonialComponent, canActivate: [] },
 ];
 

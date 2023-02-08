@@ -78,10 +78,14 @@
     <mat-paginator #paginator [pageSizeOptions]="[20, 40, 60, 80, 100]"></mat-paginator>
   </div>
 </div>
+
+
 <!--Mobile Public-->
 <div *ngIf="isDataAvailable && isMobile && !isPrivate " >
   <public-complaints>Nes</public-complaints>
 </div>
+
+
 <!--Mobile Private-->
 <div *ngIf="isDataAvailable && isMobile && isPrivate" [class.fixmobile]="isMobile">
   <div class="set-12">

@@ -5,7 +5,6 @@ import { forkJoin, Observable } from 'rxjs';
 import { ShareSheetComponent } from 'src/app/components/share-sheet/share-sheet.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ComplaintService } from 'src/app/services/complaint.service';
-import { TestimonyService } from 'src/app/services/testimony.service';
 import { UserService } from 'src/app/services/user.service';
 import { VoteDialogComponent } from 'src/app/components/vote-dialog/vote-dialog.component';
 import { UtilityService } from 'src/app/services/utility.service';
@@ -16,7 +15,8 @@ import { DeviceDetectorService } from 'ngx-device-detector';
   templateUrl: './public-complaints.component.html',
   styleUrls: ['./public-complaints.component.scss']
 })
-export class PublicComplaintsComponent implements OnInit {public isMobile: boolean = false;
+export class PublicComplaintsComponent implements OnInit {
+  public isMobile: boolean = false;
   public isDataAvailable: boolean = false;
   public complaints: any = null;
   public cards: any[] = [];
@@ -26,7 +26,6 @@ export class PublicComplaintsComponent implements OnInit {public isMobile: boole
   constructor(
     public deviceDetectorService: DeviceDetectorService,
     public authenticationService: AuthenticationService,
-    public testimonyService: TestimonyService,
     public complaintService: ComplaintService,
     public userService: UserService,
     public utilityService: UtilityService,

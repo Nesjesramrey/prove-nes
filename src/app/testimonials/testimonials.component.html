@@ -2,8 +2,13 @@
   <mat-spinner color="primary"></mat-spinner>
 </div>
 
-<!--Desk-->
-<div *ngIf="isDataAvailable && !isMobile" [class.fixdesk]="!isMobile">
+<!--Desk Public-->
+<div *ngIf="isDataAvailable && !isMobile && !isPrivate " >
+  <public-testimonials></public-testimonials>
+</div>
+
+<!--Desk Private-->
+<div *ngIf="isDataAvailable && !isMobile && isPrivate" [class.fixdesk]="!isMobile">
   <div class="set-12">
     <div class="set-4">
       <mat-form-field appearance="outline">
@@ -72,8 +77,13 @@
   </div>
 </div>
 
-<!--Mobile-->
-<div *ngIf="isDataAvailable && isMobile" [class.fixmobile]="isMobile">
+<!--Mobile Public-->
+<div *ngIf="isDataAvailable && isMobile && !isPrivate " >
+  <public-testimonials>Nes</public-testimonials>
+</div>
+
+<!--Mobile Private-->
+<div *ngIf="isDataAvailable && isMobile &&isPrivate" [class.fixmobile]="isMobile">
   <div class="set-12">
     <div class="set-4">
       <mat-form-field appearance="outline">

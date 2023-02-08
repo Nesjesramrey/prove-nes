@@ -7,6 +7,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { WindowAlertComponent } from '../components/window-alert/window-alert.component';
 import { SingleTestimonyDialogComponent } from '../components/single-testimony-dialog/single-testimony-dialog.component';
 import { TestimonyService } from '../services/testimony.service';
+import { UserService } from '../services/user.service';
 import { UtilityService } from '../services/utility.service';
 
 @Component({
@@ -15,15 +16,19 @@ import { UtilityService } from '../services/utility.service';
   styleUrls: ['./testimonials.component.scss']
 })
 export class TestimonialsComponent implements OnInit {
+  public user: any = null;
+  public userActivities: any=[];
   public testimonies: any = null;
   public displayedColumns: string[] = ['author', 'title', 'date', 'menu'];
   public dataSource!: MatTableDataSource<any>;
   public isDataAvailable: boolean = false;
+  public isPrivate: boolean = false;
   public isMobile: boolean = false;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     public testimonyService: TestimonyService,
+    public userService: UserService,
     public utilityService: UtilityService,
     public dialog: MatDialog,
     public deviceDetectorService: DeviceDetectorService,
@@ -31,6 +36,28 @@ export class TestimonialsComponent implements OnInit {
       this.isMobile = this.deviceDetectorService.isMobile();
     }
   ngOnInit(): void {
+
+    this.userService.fetchFireUser().subscribe({
+      error: (error: any) => {
+        console.log(error)
+      },
+      next: (reply: any) => {
+        this.user = reply;      
+        this.user['activityName'] = this.user['activities'][0]['value'];
+        console.log('user: ', this.user);
+        this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
+        // console.log(this.userActivities); 
+        if (this.userActivities.includes('moderator')) {
+          setTimeout(() => {
+            this.isPrivate = true;
+          });
+        }
+ 
+      },
+      complete: () => {
+       }
+    });
+
     let testimonies: Observable<any> = this.testimonyService.fetchAllTestimonies();
     forkJoin([testimonies]).subscribe((reply: any) => {
       // console.log(reply);
