@@ -20,25 +20,15 @@
     <mat-card *ngFor="let topic of topics">
         <div class="dialog-body"  (click)="openDialog(topic._id)">
             <span class="set-12 "><strong>{{topic.title | slice:0:35}}<strong *ngIf="(topic.title).length > 35">...</strong></strong></span>
-        </div>
-        
+        </div> 
         <div class="set-12 icons" >
           <button type="button" (click)="addFavorite(topic)">
             <mat-icon *ngIf="viewing != 'favorites'">favorite</mat-icon>
             <mat-icon *ngIf="viewing == 'favorites'" color="accent">favorite</mat-icon>
           </button>
-            <!-- <button type="button" mat-icon-button color="primary" disabled>
-                <mat-icon>check_circle</mat-icon>
-            </button> -->
             <button type="button" mat-icon-button color="primary" (click)="openBottomSheet()">
                 <mat-icon>share</mat-icon>
             </button>
-            <!-- <button type="button" mat-icon-button color="primary" disabled>
-                <mat-icon>report</mat-icon>
-            </button> -->
-            <!-- <button type="button" mat-icon-button color="primary"  (click)="openDialog(topic._id)">
-                <mat-icon>visibility</mat-icon>
-            </button> -->
         </div> 
     </mat-card>
     <!-- <mat-paginator [length]="20"

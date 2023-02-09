@@ -73,6 +73,7 @@ export class TopicSingleMobileComponent implements OnInit {
           next: (reply: any) => {
             this.allFavorites = reply['data'];
             this.isFavorite = this.checkFavorites();
+            
             this.loadTopic()
           }, 
           complete: () => { 

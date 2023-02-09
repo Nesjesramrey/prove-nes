@@ -1,0 +1,106 @@
+<div class="set-12 dialog-head">
+  <input type="file" #file (change)="onFileSelected($event)" accept="image/*" capture="environment" multiple>
+  <div class="set-10">
+    <h3>Mi testimonio</h3>
+  </div>
+  <div class="set-2 txt-right">
+    <button type="button" mat-mini-fab color="primary" (click)="killDialog()" [disabled]="submitted">
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div class="set-12 dialog-body">
+  <div class="set-12 publishas">
+    <small>Publicar como:</small>
+    <button type="button" mat-button color="warn" (click)="visibility()" class="anon">
+      <div class="set-12" *ngIf="!isAnonymous">
+        <mat-icon>visibility</mat-icon>
+        <small>{{user.firstname}} {{user.lastname}}</small>
+      </div>
+      <div class="set-12" *ngIf="isAnonymous">
+        <mat-icon>visibility_off</mat-icon>
+        <small>Anónimo</small>
+      </div>
+    </button>
+  </div>
+
+  <div class="set-12 location">
+    <button type="button" mat-button color="primary" (click)="getLocation()">
+      <mat-icon>place</mat-icon>
+      <small>{{locationAvailable ? 'Cancelar ubicación' : 'Usar mi ubiacción'}}</small>
+    </button>
+    <div class="set-12 coords" *ngIf="locationAvailable">
+      <p><small>Latitud: <strong>{{location['latitude']}}</strong></small></p>
+      <p><small>Longitud: <strong>{{location['longitude']}}</strong></small></p>
+    </div>
+  </div>
+
+  <div class="set-12">
+    <mat-stepper #stepper [disableRipple]="true" [linear]="true" [@.disabled]="true">
+      <mat-step>
+        <div class="set-12 stepconts">
+          <form class="set-12" [formGroup]="testimonyFormGroup" (submit)="onFileTestimony(testimonyFormGroup)">
+            <mat-form-field appearance="outline">
+              <mat-label>Titulo</mat-label>
+              <input type="text" matInput formControlName="title">
+            </mat-form-field>
+
+            <div class="set-12 editor-form">
+              <angular-editor formControlName="description" [config]="editorConfig"></angular-editor>
+            </div>
+
+            <div class="set-12 ctrls">
+              <button type="button" mat-raised-button color="warn" matStepperNext
+                [disabled]="testimonyFormGroup.invalid || submitted">
+                <small>Siguiente</small>
+              </button>
+            </div>
+          </form>
+        </div>
+      </mat-step>
+
+      <mat-step>
+        <div class="set-12 stepconts">
+          <div class="set-12 file-hldr" *ngIf="urls.length != 0">
+            <div class="set-12 imgfile" *ngFor="let url of urls; let i = index">
+              <div class="set-12 filectrls">
+                <img [src]="url" />
+                <button type="button" (click)="popFile(i)">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="set-12 ctrlsmid" *ngIf="fileNames.length == 0">
+            <button type="button" (click)="file.click()" [disabled]="testimonyFormGroup.invalid || submitted"
+              class="wicon">
+              <mat-icon>cloud_upload</mat-icon>
+              <h4>5MB</h4>
+            </button>
+          </div>
+
+          <div class="set-12 ctrls">
+            <button type="button" mat-raised-button color="warn" matStepperPrevious
+              [disabled]="testimonyFormGroup.invalid || submitted">
+              <small>Anterior</small>
+            </button>
+            <button type="button" mat-raised-button color="primary" [disabled]="testimonyFormGroup.invalid || submitted"
+              (click)="onFileTestimony(testimonyFormGroup)">
+              <small>Denunciar</small>
+            </button>
+            <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
+          </div>
+        </div>
+      </mat-step>
+
+      <mat-step>
+        <div class="set-12 succes">
+          <h4>¡Gracias, tu testimonio se ha publicado!</h4>
+          <p>Puedes verla <a href="{{postURL}}" target="_blank">aquí</a></p>
+        </div>
+      </mat-step>
+    </mat-stepper>
+  </div>
+</div>

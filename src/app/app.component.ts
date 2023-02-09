@@ -79,7 +79,6 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     console.log('Project version', environment.version);
 
-
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {
@@ -89,11 +88,11 @@ export class AppComponent implements OnInit {
       });
 
     this.documentService.fetchCoverDocument().subscribe({
-      error: (error: any) => { },
+      error: (error: any) => {},
       next: (reply: any) => {
         this.coverDocument = reply;
       },
-      complete: () => { },
+      complete: () => {},
     });
 
     if (this.accessToken != null) {
@@ -113,7 +112,7 @@ export class AppComponent implements OnInit {
             this.openCompleteRegistration();
           }
         },
-        complete: () => { },
+        complete: () => {},
       });
     } else {
       setTimeout(() => {
@@ -122,10 +121,9 @@ export class AppComponent implements OnInit {
     }
 
     this.documentService.fetchCoverDocument().subscribe({
-      error: (error: any) => { },
+      error: (error: any) => {},
       next: (reply: any) => {
         this.document = reply;
-
       },
     });
   }
@@ -174,6 +172,16 @@ export class AppComponent implements OnInit {
         this.router.navigateByUrl('/documentos/');
         break;
 
+      case 'complaint':
+        // this.isProfile = !this.isProfile;
+        this.router.navigateByUrl('/denuncias');
+        break;
+
+      case 'testimony':
+        // this.isProfile = !this.isProfile;
+        this.router.navigateByUrl('/testimonios');
+        break;
+
       case 'associations':
         // this.isProfile = !this.isProfile;
         this.router.navigateByUrl('/asociaciones');
@@ -185,7 +193,9 @@ export class AppComponent implements OnInit {
         break;
 
       case 'entry-point':
-        window.open('https://static-assets-pando.s3.amazonaws.com/assets/punto-de-partida.pdf');
+        window.open(
+          'https://static-assets-pando.s3.amazonaws.com/assets/punto-de-partida.pdf'
+        );
         break;
     }
 

@@ -5,7 +5,6 @@ import { MatStepper } from '@angular/material/stepper';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { ComplaintService } from 'src/app/services/complaint.service';
 import { UtilityService } from 'src/app/services/utility.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: '.complaint-dialog',
@@ -60,6 +59,10 @@ export class ComplaintDialogComponent implements OnInit {
   public urls = new Array<string>();
   public postURL: string = '';
   @ViewChild('stepper') private stepper!: MatStepper;
+  public location: any = {
+    latitude: null, longitude: null
+  }
+  public locationAvailable: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<ComplaintDialogComponent>,
@@ -70,7 +73,6 @@ export class ComplaintDialogComponent implements OnInit {
   ) {
     // console.log(this.dialogData);
     this.user = this.dialogData['user'];
-    console.log(environment.production);
   }
 
   ngOnInit(): void {
@@ -121,6 +123,8 @@ export class ComplaintDialogComponent implements OnInit {
       .forEach((file: any) => { data.append('files', file); });
     data.append('title', this.complaintFormGroup.value.title);
     data.append('description', this.complaintFormGroup.value.description);
+    data.append('latitude', this.location['latitude']);
+    data.append('longitude', this.location['longitude']);
     data.append('isAnonymous', (this.isAnonymous).toString());
 
     this.complaintService.fileComplaint(data).subscribe({
@@ -133,10 +137,12 @@ export class ComplaintDialogComponent implements OnInit {
         this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
       },
       complete: () => {
+        this.locationAvailable = false;
+        this.location['latitude'] = null;
+        this.location['longitude'] = null;
         this.stepNext();
         this.submitted = false;
         this.complaintFormGroup.reset();
-        // this.killDialog();
       }
     });
   }
@@ -172,5 +178,23 @@ export class ComplaintDialogComponent implements OnInit {
 
   stepNext() {
     this.stepper.next();
+  }
+
+  getLocation() {
+    this.locationAvailable = !this.locationAvailable;
+
+    switch (this.locationAvailable) {
+      case true:
+        navigator.geolocation.getCurrentPosition((place: any) => {
+          this.location['latitude'] = place.coords.latitude;
+          this.location['longitude'] = place.coords.longitude;
+        });
+        break;
+
+      case false:
+        this.location['latitude'] = null;
+        this.location['longitude'] = null;
+        break;
+    }
   }
 }

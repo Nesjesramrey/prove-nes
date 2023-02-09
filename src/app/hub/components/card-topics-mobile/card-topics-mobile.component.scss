@@ -4,43 +4,8 @@
   float: left;
   padding: 0 20px;
 
-  .topic-card {
-    mat-card {
-      margin-bottom: 10px;
-    }
-    mat-card:last-child {
-      margin-bottom: 20px;
-    }
+ 
 
-    p {
-      margin-top: 10px;
-      margin-bottom: 10px;
-    }
-
-    .dialog-body {
-      span {
-        font-size: 10pt;
-      }
-      span:hover {
-        text-decoration: underline;
-      }
-    }
-
-    .icons {
-      display: inline-flex;
-      margin: 0px;
-      justify-content: center;
-      button {
-        margin: 0px 5px;
-      }
-
-      button {
-        mat-icon {
-          font-size: 13pt;
-        }
-      }
-    }
-  }
   .headtools {
     display: flex;
     align-items: center;
@@ -53,6 +18,41 @@
 
     button {
       margin-left: 10px;
+    }
+  }
+
+  mat-card {
+    margin-bottom: 10px;
+    border-radius: 0%;
+    box-shadow: none;
+    padding: 10px;
+  }
+  mat-card:last-child {
+    margin-bottom: 20px;
+  }
+  
+  .dialog-body {
+    padding: 0px !important;
+    span {
+      font-size: 10pt;
+    }
+    span:hover{
+      cursor: pointer;
+    }
+  }
+
+  .icons {
+    display: inline-flex;
+    margin: 0px;
+    justify-content: flex-end;
+    button {
+      margin: 0px 5px;
+    }
+
+    button {
+      mat-icon {
+        font-size: 13pt;
+      }
     }
   }
 }

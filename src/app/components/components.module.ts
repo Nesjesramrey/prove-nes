@@ -87,6 +87,7 @@ import { AddCommentsSheetComponent } from './add-comments-sheet/add-comments-she
 import { SingleComplaintDialogComponent } from './single-complaint-dialog/single-complaint-dialog.component';
 import { RecoverPasswordComponent } from './recover-password/recover-password.component';
 import { SingleTestimonyDialogComponent } from './single-testimony-dialog/single-testimony-dialog.component';
+import { TestimonyDialogComponent } from './testimony-dialog/testimony-dialog.component';
 
 @NgModule({
   imports: [
@@ -177,7 +178,8 @@ import { SingleTestimonyDialogComponent } from './single-testimony-dialog/single
     AddCommentsSheetComponent,
     SingleComplaintDialogComponent,
     RecoverPasswordComponent,
-    SingleTestimonyDialogComponent
+    SingleTestimonyDialogComponent,
+    TestimonyDialogComponent
   ],
   exports: [
     AppPageletComponent,
@@ -245,7 +247,8 @@ import { SingleTestimonyDialogComponent } from './single-testimony-dialog/single
     AddCommentsSheetComponent,
     SingleComplaintDialogComponent,
     RecoverPasswordComponent,
-    SingleTestimonyDialogComponent
+    SingleTestimonyDialogComponent,
+    TestimonyDialogComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
@@ -287,7 +290,8 @@ import { SingleTestimonyDialogComponent } from './single-testimony-dialog/single
     AddCommentsSheetComponent,
     SingleComplaintDialogComponent,
     RecoverPasswordComponent,
-    SingleTestimonyDialogComponent
+    SingleTestimonyDialogComponent,
+    TestimonyDialogComponent
   ],
   providers: [],
 })

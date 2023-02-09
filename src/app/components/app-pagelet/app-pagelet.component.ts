@@ -13,6 +13,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { UserService } from 'src/app/services/user.service';
 import { SearchDialogComponent } from '../search-dialog/search-dialog.component';
 import { ComplaintDialogComponent } from '../complaint-dialog/complaint-dialog.component';
+import { TestimonyDialogComponent } from '../testimony-dialog/testimony-dialog.component';
 
 @Component({
   selector: '.app-pagelet',
@@ -259,6 +260,21 @@ export class AppPageletComponent implements OnInit {
 
   popComplaintsDialog() {
     const dialogRef = this.dialog.open<any>(ComplaintDialogComponent, {
+      width: '100%',
+      data: {
+        user: this.user
+      },
+      disableClose: true,
+      panelClass: 'side-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  popTestimonialsDialog() {
+    const dialogRef = this.dialog.open<any>(TestimonyDialogComponent, {
       width: '100%',
       data: {
         user: this.user

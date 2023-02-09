@@ -42,6 +42,8 @@ import { CardSolutionsMobileComponent } from './components/card-solutions-mobile
 import { AssociationRegisterComponent } from './components/association-register/association-register.component';
 import { SheetFeedComponent } from '../components/sheet-feed/sheet-feed.component';
 import { ModalAuthorizationJoinComponent } from './components/modal-authorization-join/modal-authorization-join.component';
+import { ModalRegisterAssociationComponent } from './components/modal-register-association/modal-register-association.component';
+import { ModalMembersComponent } from './components/modal-members/modal-members.component';
 
 @NgModule({
   imports: [
@@ -88,7 +90,9 @@ import { ModalAuthorizationJoinComponent } from './components/modal-authorizatio
     TopicSingleMobileComponent,
     AssociationRegisterComponent,
     SheetFeedComponent,
-    ModalAuthorizationJoinComponent
+    ModalAuthorizationJoinComponent,
+    ModalRegisterAssociationComponent,
+    ModalMembersComponent
   ],
 })
 export class HubComponentModule { }

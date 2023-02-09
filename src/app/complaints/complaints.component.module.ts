@@ -8,6 +8,7 @@ import { AppMaterialModule } from '../app-material.module';
 import { ComponentsModule } from '../components/components.module';
 import { AppSharedModule } from '../app-shared.module';
 import { SingleComplaintComponent } from './single-complaint/single-complaint.component';
+import { PublicComplaintsComponent } from './public-complaints/public-complaints.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,7 @@ import { SingleComplaintComponent } from './single-complaint/single-complaint.co
   ],
   declarations: [
     ComplaintsComponent,
-    SingleComplaintComponent
+    SingleComplaintComponent, PublicComplaintsComponent
   ]
 })
 export class ComplaintsComponentModule { }

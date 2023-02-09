@@ -1,14 +1,39 @@
-<div class="set-12 solution-card">
-  <mat-card>
-        <h3>Top soluciones más votadas</h3>
-    <div  *ngFor="let solution of solutions">
-            <h5 class="set-9 ">{{solution.title}}</h5>
-            <mat-progress-bar
-              class="mt-1"
-              color="accent"
-              mode="determinate"
-              value="40"
-            ></mat-progress-bar>
-    </div>
-  </mat-card>
+<div class="set-12 topic-card">
+  <div class="set-12 headtools">
+    <small>Filtrar</small> <button type="button" [matMenuTriggerFor]="menu"><mat-icon>filter_list</mat-icon></button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="loadSuggestedTopics('suggestions')">
+        <mat-icon>assistant</mat-icon>
+        <small>Sugerencias</small>
+      </button>
+      <button mat-menu-item (click)="loadFavoriteTopics('favorites')">
+        <mat-icon>favorite</mat-icon>
+        <small>Favoritos</small>
+      </button>
+      <button mat-menu-item (click)="loadVotedTopics('voted')">
+        <mat-icon>thumb_up_alt</mat-icon>
+        <small>Relevantes</small>
+      </button>
+    </mat-menu>
+  </div>
+    
+    <mat-card *ngFor="let solution of solutions">
+        <div class="dialog-body"  (click)="openDialog(solution._id)">
+            <span class="set-12 "><strong>{{solution.title | slice:0:35}}<strong *ngIf="(solution.title).length > 35">...</strong></strong></span>
+        </div> 
+        <div class="set-12 icons" >
+          <button type="button" (click)="addFavorite(solution)">
+            <mat-icon *ngIf="viewing != 'favorites'">favorite</mat-icon>
+            <mat-icon *ngIf="viewing == 'favorites'" color="accent">favorite</mat-icon>
+          </button>
+            <button type="button" mat-icon-button color="primary" (click)="openBottomSheet()">
+                <mat-icon>share</mat-icon>
+            </button>
+        </div> 
+    </mat-card>
+    <!-- <mat-paginator [length]="20"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10]"
+    aria-label="Select page">
+</mat-paginator> -->
 </div>

@@ -896,6 +896,8 @@ mat-card {
 }
 
 #calixta-badge {
+  z-index: 101 !important;
+
   .calixta-style-tab {
     z-index: 101 !important;
   }
