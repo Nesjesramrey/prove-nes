@@ -61,8 +61,10 @@ export class SingleAssociationComponent implements OnInit {
         this.user = reply;        
       },
       complete: () => {
+        setTimeout(() =>{
+          this.isDataAvailable = true
+        },500)
         
-        this.isDataAvailable = true
        }
     });
 }
