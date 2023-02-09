@@ -2,11 +2,14 @@ import { Component, OnInit, Input } from '@angular/core';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import {MatBottomSheet, MatBottomSheetRef} from '@angular/material/bottom-sheet';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { LyDialog } from '@alyle/ui/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { AssociationService } from 'src/app/services/association.service';
 import { SheetFeedComponent } from 'src/app/components/sheet-feed/sheet-feed.component';
 import { ModalMembersComponent } from 'src/app/hub/components/modal-members/modal-members.component';
+import { SetAvatarAssociationComponent } from 'src/app/components/set-avatar-association/set-avatar-association.component';
+
 
 @Component({
   selector: 'single-association',
@@ -28,6 +31,7 @@ export class SingleAssociationComponent implements OnInit {
     public associationservices: AssociationService,
     public matBottomSheet: MatBottomSheet,
     public dialogData: MatDialog,
+    public dialog: LyDialog,
     public activatedRoute: ActivatedRoute,
   ) {
     this.isMobile = this.deviceDetectorService.isMobile();
@@ -43,10 +47,10 @@ export class SingleAssociationComponent implements OnInit {
       },
       next: (reply: any) => {
         this.association = reply;
-        //console.log(this.association)
+        console.log(this.association)
       },
       complete: () => {
-        this.isDataAvailable = true
+        
        }
     });   
 
@@ -84,5 +88,20 @@ openBottomSheet(): void {
   });
 }
 
+openCropperDialog(event: Event) {
+  const dialogRef = this.dialog.open<SetAvatarAssociationComponent, Event>(
+    SetAvatarAssociationComponent,
+    {
+      width: 300,
+      data: event,
+      disableClose: true,
+    }
+  );
+  dialogRef.afterClosed.subscribe((reply: any) => {
+    if (reply != undefined) {
+      //window.location.reload();
+    }
+  });
+}
 
 }

@@ -14,24 +14,21 @@
           <mat-icon>panorama</mat-icon>
         </div>
       </div>
-      <input #fileInput type="file" accept="image/*" hidden />
-      <!-- <button type="button" class="avatar">
-        <img
-            src="{{ association.avatarImage }}"
-            alt="{{ association.name }} "
-            *ngIf="association.avatarImage != null"
-          />
-        <span>
-          {{ association.name | firstword | firstletter }}
-        </span>
-        <div
-          class="overlay"
-          matTooltip="Cargar imágen"
-          matTooltipClass="tool tip"
-        >
-          <mat-icon color="accent">photo_camera</mat-icon>
+      <div class="set-12 avatarhldr">
+        <div class="set-12 profile">
+          <input #fileInput type="file" (change)="openCropperDialog($event)" accept="image/*" hidden />
+          <button type="button" class="avatar" (click)="fileInput.click()">
+            <img src="{{ association.avatarImage }}" alt="{{ association.name }} "
+              *ngIf="association.avatarImage != null" />
+            <span *ngIf="association.avatarImage == null">
+              {{ association.name | firstword | firstletter }}
+            </span>
+            <div class="overlay" matTooltip="Cargar imágen" matTooltipClass="tooltip">
+              <mat-icon color="accent">photo_camera</mat-icon>
+            </div>
+          </button>
         </div>
-      </button> -->
+      </div>
 
       <div class="set-12 cardbody">
         <h3 class="txt-center">{{ association.name }}</h3>

@@ -1,0 +1,27 @@
+:host {
+    .icons {
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  
+    .ctrls {
+      display: flex;
+      padding: 0 20px 20px 20px;
+      justify-content: flex-end;
+      align-items: center;
+  
+      * {
+        margin: 0;
+      }
+  
+      button {
+        margin-right: 10px;
+      }
+  
+      button:first-child {
+        margin-left: 0;
+      }
+    }
+  }
