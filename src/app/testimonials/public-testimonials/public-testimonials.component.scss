@@ -190,12 +190,17 @@
     margin: 0 !important;
     width: 100%;
     float: left;
-    .mat-card{
-    border-radius: 0px !important;
-  }
+ 
     .crdlst {
       width: 100% !important;
       margin: 0 !important;
+      .mat-card{
+        border-radius: 0px !important;
+        border: none;
+        box-shadow: none;
+        
+      }
+
     }
     .avatar{
       img {
