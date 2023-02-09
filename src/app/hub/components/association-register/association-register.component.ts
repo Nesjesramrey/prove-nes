@@ -119,6 +119,7 @@ export class AssociationRegisterComponent implements OnInit {
           associationTypologys: ['', [Validators.required]],
           associationName: ['', [Validators.required]],
           associationDescription: ['', [Validators.required]],
+          associationCoverage: ['', [Validators.required]],
         });
         this.dataComercialFormGroup = this.formBuilder.group({
           associationNameComercial: [''],
@@ -129,7 +130,9 @@ export class AssociationRegisterComponent implements OnInit {
           associationZipCode: ['', [Validators.required]],
           associationCity: ['', [Validators.required]],
           associationState: ['', [Validators.required]],
-          files: [''],
+          constitutiveAct: [''],
+          powerOfAttorney: [''],
+          officialIndentification: [''],
         });
 
         this.dataAssociationFormGroup
@@ -186,31 +189,73 @@ export class AssociationRegisterComponent implements OnInit {
     });
   }
 
-  onFileSelected(event: any) {
-    // this.validateSize(event.target);
-    Array.from(event.target.files).forEach((file: any) => {
-      this.fileNames.push(file);
-    });
-    this.dataComercialFormGroup.patchValue({ files: this.fileNames });
-    this.dataComercialFormGroup.updateValueAndValidity();
+  onFileSelected(event: any, typeofFile: any) {
+
+    this.validateSize(event.target);
+    switch(typeofFile){
+    case 'constitutiveAct':
+      this.dataComercialFormGroup.patchValue({ constitutiveAct: event.target.files[0] });
+      this.dataComercialFormGroup.updateValueAndValidity();
+      break;
+      case 'officialIndentification':
+        this.dataComercialFormGroup.patchValue({  officialIndentification: event.target.files[0] });
+        this.dataComercialFormGroup.updateValueAndValidity();
+      break;
+      case 'powerOfAttorney':
+        this.dataComercialFormGroup.patchValue({  powerOfAttorney: event.target.files[0] });
+        this.dataComercialFormGroup.updateValueAndValidity();
+      break;
+   
   }
+ 
+  }
+
+  validateSize(input: any) {
+    const fileSize = input.files[0].size / 1024 / 1024;
+    if (fileSize > 3) {
+      this.utilityService.openErrorSnackBar('Solo archivos de hasta 3 MB.');
+    } 
+  }
+  // onFileSelected(event: any) {
+  //   // this.validateSize(event.target);
+  //   Array.from(event.target.files).forEach((file: any) => {
+  //     this.fileNames.push(file);
+  //   });
+  //   this.dataComercialFormGroup.patchValue({ files: this.fileNames });
+  //   this.dataComercialFormGroup.updateValueAndValidity();
+  // }
 
   onCreateAssociation() {
     //console.log('click')
     this.submitted = true;
-    let nameAssociation =
-      this.dataAssociationFormGroup['value']['associationName'];
     let data: any = {
       formData: new FormData(),
     };
-    Array.from(this.dataComercialFormGroup.controls['files']['value']).forEach(
-      (file: any) => {
-        data['formData'].append('files', file);
-      }
+    // Array.from(this.dataComercialFormGroup.controls['files']['value']).forEach(
+    //   (file: any) => {
+    //     data['formData'].append('files', file);
+    //   }
+    // );
+    console.log( this.dataComercialFormGroup.controls['constitutiveAct']['value'])
+    data['formData'].append(
+      'constitutiveAct',
+      this.dataComercialFormGroup.controls['constitutiveAct']['value']
+    );
+    data['formData'].append(
+      'officialIndentification',
+      this.dataComercialFormGroup.controls['officialIndentification']['value']
+    );
+    data['formData'].append(
+      'powerOfAttorney',
+      this.dataComercialFormGroup.controls['powerOfAttorney']['value']
     );
     data['formData'].append(
       'name',
       this.dataAssociationFormGroup['value']['associationName']
+    );
+    data['formData'].append(
+      'avatarImage',
+      ""
     );
     data['formData'].append(
       'typology',
@@ -219,6 +264,10 @@ export class AssociationRegisterComponent implements OnInit {
       data['formData'].append(
         'description',
         this.dataAssociationFormGroup['value']['associationDescription']
+      ),
+      data['formData'].append(
+        'coverage',
+        this.dataAssociationFormGroup['value']['associationCoverage']
       ),
       data['formData'].append(
         'businessName',
@@ -260,38 +309,16 @@ export class AssociationRegisterComponent implements OnInit {
         'layoutsCategoryPreference',
         JSON.stringify(this.myCategoriesAssociation) || null
       );
-    // for (let [key, value] of data['formData']) {
-    //   console.log(`${key}: ${value}`);
-    //}
+    for (let [key, value] of data['formData']) {
+      console.log(`${key}: ${value}`);
+    }
     this.associationService.createAssociation(data['formData']).subscribe({
       error: (error) => {
         switch (error['status']) {
         }
       },
       next: (reply: any) => {
-        this.associationService.searchAssociation(nameAssociation).subscribe({
-          error: (error: any) => { },
-          next: (reply: any) => {
-            this.myAssociation = reply;
-            this.dataJoinAssociation = {
-              userID: this.user._id,
-              associationID: this.myAssociation[0]._id,
-            };
-            this.userService
-              .joinUserWithAssociation(this.dataJoinAssociation)
-              .subscribe({
-                error: (error) => {
-                  switch (error['status']) {
-                  }
-                },
-                next: (reply: any) => { },
-                complete: () => { },
-              });
-          },
-
-          complete: () => { },
-        });
-
+      
       },
       complete: () => {
         this.killDialog();
