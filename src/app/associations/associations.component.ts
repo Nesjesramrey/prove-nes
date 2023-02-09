@@ -32,8 +32,10 @@ export class AssociationsComponent implements OnInit {
       },
       next: (reply: any) => {
         this.user = reply;
+        console.log(this.user)
         this.user.associations.forEach((element: any) => {
-          this.associationservices.fetchAssociationById(element).subscribe({
+          console.log(element)
+          this.associationservices.fetchAssociationById(element._id).subscribe({
             error: (error: any) => {
             },
             next: (reply: any) => {

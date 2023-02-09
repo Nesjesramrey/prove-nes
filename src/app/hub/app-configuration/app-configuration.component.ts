@@ -32,7 +32,7 @@ export class AppConfigurationComponent implements OnInit {
   genders: Gender[] = [
     { value: 'masculino', viewValue: 'Masculino' },
     { value: 'femenino', viewValue: 'Femenino' },
-    { value: 'otro', viewValue: 'Otro' },
+    { value: 'otro', viewValue: 'No Binario' },
   ];
 
   public accessToken: any = null;

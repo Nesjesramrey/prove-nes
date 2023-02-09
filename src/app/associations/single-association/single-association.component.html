@@ -15,12 +15,12 @@
         </div>
       </div>
       <input #fileInput type="file" accept="image/*" hidden />
-      <button type="button" class="avatar">
-        <!-- <img
+      <!-- <button type="button" class="avatar">
+        <img
             src="{{ association.avatarImage }}"
             alt="{{ association.name }} "
             *ngIf="association.avatarImage != null"
-          /> -->
+          />
         <span>
           {{ association.name | firstword | firstletter }}
         </span>
@@ -31,7 +31,7 @@
         >
           <mat-icon color="accent">photo_camera</mat-icon>
         </div>
-      </button>
+      </button> -->
 
       <div class="set-12 cardbody">
         <h3 class="txt-center">{{ association.name }}</h3>
