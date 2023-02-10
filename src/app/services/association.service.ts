@@ -32,7 +32,10 @@ export class AssociationService {
 
   fetchAssociationById(data: any) {
     return this.httpClient.get(
-      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAssociationByIdEndPoint + `${data}`, {}
+      this.endpointSrvc.apiEndPoint +
+        this.endpointSrvc.fetchAssociationByIdEndPoint +
+        `${data}`,
+      {}
     );
   }
 
@@ -44,13 +47,22 @@ export class AssociationService {
     );
   }
 
-  
+  authorizationJoin(data: any) {
+    return this.httpClient.put(
+      this.endpointSrvc.apiEndPoint +
+        this.endpointSrvc.authorizationAssociationEndpoint +
+        `${data['association_id']}` +
+        '/validate_request/user/'+
+        `${data['user_id']}`,
+        {}
+    );
+  }
+
   uploadAvatarImageEndPoint(data: any) {
     return this.httpClient.put(
       this.endpointSrvc.apiEndPoint +
-      this.endpointSrvc.uploadAvatarAssociationImageEndPoint +
-      `${data['association_id']}` 
-      ,
+        this.endpointSrvc.uploadAvatarAssociationImageEndPoint +
+        `${data['association_id']}`,
       data['formData']
     );
   }
