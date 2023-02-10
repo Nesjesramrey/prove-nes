@@ -168,6 +168,8 @@ export class EndPointService {
   public createAssociationEndpoint: string = '/association';
   public fetchAssociationByIdEndPoint: string = '/association/';
   public searchAssociationEndpoint: string = '/association?name=';
+  public uploadAvatarAssociationImageEndPoint: string = '/association/';
+
 
 
   constructor() { }

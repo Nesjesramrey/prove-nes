@@ -43,4 +43,15 @@ export class AssociationService {
         name
     );
   }
+
+  
+  uploadAvatarImageEndPoint(data: any) {
+    return this.httpClient.put(
+      this.endpointSrvc.apiEndPoint +
+      this.endpointSrvc.uploadAvatarAssociationImageEndPoint +
+      `${data['association_id']}` 
+      ,
+      data['formData']
+    );
+  }
 }
