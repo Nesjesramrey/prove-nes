@@ -35,7 +35,7 @@
       <small>Autor: <strong>{{topic?.createdBy?.firstname}} {{topic?.createdBy?.lastname}}</strong></small>
     </div>
 
-    <div class="set-12 row" [innerHTML]="topic?.description"></div>
+    <div class="set-12 row desc" [innerHTML]="topic?.description"></div>
 
     <div class="set-12 txt-center row vote-tools">
       <p>Relevancia ciudadana</p>
@@ -102,7 +102,8 @@
           '/solucion/' + solution._id)">
 
           <div class="set-10">
-            <small>{{solution?.title}}</small>
+            <small>{{(solution.title.length > 35) ? (solution.title | slice: 0 : 35) + '...' :
+              (solution.title)}}</small>
           </div>
 
           <div class="set-2">

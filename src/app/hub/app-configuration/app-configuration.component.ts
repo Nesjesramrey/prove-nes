@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -28,13 +28,11 @@ export class AppConfigurationComponent implements OnInit {
   public unhappyArray: any[] = [];
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   public addOnBlur = true;
-
-  genders: Gender[] = [
+  public genders: Gender[] = [
     { value: 'masculino', viewValue: 'Masculino' },
     { value: 'femenino', viewValue: 'Femenino' },
     { value: 'otro', viewValue: 'No Binario' },
   ];
-
   public accessToken: any = null;
   public user: any = null;
   public payload: any = null;
@@ -42,6 +40,7 @@ export class AppConfigurationComponent implements OnInit {
   public isMobile: boolean = false;
   public showText: boolean = false;
   public isLinear: boolean = true;
+  @HostBinding('class') public class: string = '';
 
   constructor(
     public authenticationSrvc: AuthenticationService,
@@ -55,6 +54,7 @@ export class AppConfigurationComponent implements OnInit {
   ) {
     this.accessToken = this.authenticationSrvc.fetchAccessToken;
     this.isMobile = this.deviceDetectorService.isMobile();
+    if (!this.isMobile) { this.class = 'fixdesktop'; }
   }
 
   ngOnInit(): void {
