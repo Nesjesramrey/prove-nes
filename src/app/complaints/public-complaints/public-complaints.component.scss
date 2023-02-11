@@ -175,9 +175,14 @@
   float: left;
   .mat-card{
   border-radius: 0px !important;
+  border: none;
+  box-shadow: none;
 }
   .crdlst {
     width: 100% !important;
     margin: 0 !important;
+    mat-card:not(:last-child) {
+      margin-bottom: 10px;
+    }
   }
 }

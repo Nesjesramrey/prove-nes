@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { SelectionModel } from '@angular/cdk/collections'
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -19,7 +20,8 @@ export class TestimonialsComponent implements OnInit {
   public user: any = null;
   public userActivities: any=[];
   public testimonies: any = null;
-  public displayedColumns: string[] = ['author', 'title', 'date', 'menu'];
+  public selection = new SelectionModel<any>(true, []);
+  public displayedColumns: string[] = ['select', 'author', 'title', 'date', 'menu'];
   public dataSource!: MatTableDataSource<any>;
   public isDataAvailable: boolean = false;
   public isPrivate: boolean = false;
@@ -62,7 +64,7 @@ export class TestimonialsComponent implements OnInit {
     forkJoin([testimonies]).subscribe((reply: any) => {
       // console.log(reply);
       this.testimonies = reply[0];
-      console.log(this.testimonies);
+      //console.log(this.testimonies);
 
       this.dataSource = new MatTableDataSource(this.testimonies);
       this.dataSource.paginator = this.paginator;
@@ -116,5 +118,25 @@ export class TestimonialsComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
       }
     });
+  }
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  toggleAllRows() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+    this.selection.select(...this.dataSource.data);
+  }
+
+  checkboxLabel(row?: any): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
 }

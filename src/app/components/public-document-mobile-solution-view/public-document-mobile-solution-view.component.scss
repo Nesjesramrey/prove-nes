@@ -31,6 +31,10 @@
     border-radius: 0 !important;
   }
 
+  .desc {
+    text-align: justify;
+  }
+
   .row:not(:first-child) {
     margin-top: 20px;
   }

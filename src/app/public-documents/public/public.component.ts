@@ -153,6 +153,9 @@ export class PublicComponent implements OnInit {
         }
       });
     });
+    this.topSolutions = this.topSolutions.slice(0, 10);
+    this.sortData();
+
   }
 
   getLayoutData(layout: any) {
@@ -187,6 +190,12 @@ export class PublicComponent implements OnInit {
 
     bottomSheetRef.afterDismissed().subscribe((reply: any) => {
       if (reply != undefined) { }
+    });
+  }
+
+  sortData() {
+    return this.topSolutions.sort((a: any, b: any) => {
+      return <any>(b['stats']['score']) - <any>(a['stats']['score']);
     });
   }
 }

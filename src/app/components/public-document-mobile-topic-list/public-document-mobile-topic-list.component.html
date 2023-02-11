@@ -32,7 +32,7 @@
   <div class="set-12 topic-list">
     <div class="set-12 topic-item" *ngFor="let topic of topics" (click)="linkMe(topic._id)">
       <div class="set-10">
-        <small>{{topic?.title}}</small>
+        <small>{{(topic.title.length > 25) ? (topic.title | slice: 0 : 25) + '...' : (topic.title)}}</small>
       </div>
       <div class="set-2">
         <small>{{topic?.stats?.score || 0}}</small>

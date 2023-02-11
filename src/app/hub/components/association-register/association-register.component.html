@@ -119,6 +119,15 @@
           <textarea id="textarea-description" cdkTextareaAutosize matInput
             formControlName="associationDescription"></textarea>
         </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Cobertura</mat-label>
+          <mat-select formControlName="associationCoverage" (selectionChange)="onSelectCoverage($event)" multiple
+            #stateSelect>
+            <mat-option *ngFor="let state of states" [value]="state._id">
+              <small>{{ state.name | titlecase }}</small>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </form>
       <div class="set-12 ctrls">
         <button mat-raised-button color="warn" matStepperPrevious>
@@ -245,7 +254,7 @@
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Cobertura</mat-label>
-          <mat-select formControlName="associationState" (selectionChange)="onSelectCoverage($event)" multiple
+          <mat-select formControlName="associationState" (selectionChange)="onSelectCoverage($event)"
             #stateSelect>
             <mat-option *ngFor="let state of states" [value]="state._id">
               <small>{{ state.name | titlecase }}</small>
@@ -271,24 +280,31 @@
               ">Adjuntar <strong>Acta de Organización</strong>
             </small>
           </button>
-          <input multiple class="set-1" type="file" #file (change)="onFileSelected($event)" />
+          <input multiple class="set-1" type="file" #file (change)="onFileSelected($event,'constitutiveAct')" />
         </div>
         <div class="set-12 addfile">
           <button type="button" mat-raised-button color="primary" (click)="file.click()" class="set-8 bwico">
             <!-- <mat-icon><small>attach_file</small></mat-icon> -->
             <small>Adjuntar <strong>Identificacion Oficial </strong> </small>
           </button>
-          <input class="set-1" type="file" #file (change)="onFileSelected($event)" />
+          <input class="set-1" type="file" #file (change)="onFileSelected($event,'officialIndentification')" />
         </div>
-        <div class="set-12 addfile">
-          <button *ngIf="
-              associationType == '6399e5c7c878ad9b63dde6a2' ||
-              associationType == '6399e5c7c878ad9b63dde6a3'
-            " type="button" mat-raised-button color="primary" (click)="file.click()" class="set-8 bwico">
-            <small>Adjuntar <strong>Poder notarial </strong> </small>
+        <div *ngIf="
+            associationType == '6399e5c7c878ad9b63dde6a2' ||
+
+            associationType == '6399e5c7c878ad9b63dde6a3' ||
+            associationType == '6399e5c7c878ad9b63dde6a4'
+          " class="set-12 addfile">
+          <button type="button" mat-raised-button color="primary" (click)="file.click()" class="set-8 bwico">
+            <!-- <mat-icon><small>attach_file</small></mat-icon> -->
+            <small *ngIf="associationType == '6399e5c7c878ad9b63dde6a2' || associationType == '6399e5c7c878ad9b63dde6a3' ||
+            associationType == '6399e5c7c878ad9b63dde6a4'">Adjuntar <strong>Poder Notarial</strong>
+            </small>
           </button>
-          <input class="set-1" type="file" #file (change)="onFileSelected($event)" />
+          <input multiple class="set-1" type="file" #file (change)="onFileSelected($event,'powerOfAttorney')" />
         </div>
+       
+        
       </form>
       <div class="set-12 ctrls">
         <button mat-raised-button color="warn" matStepperPrevious>
