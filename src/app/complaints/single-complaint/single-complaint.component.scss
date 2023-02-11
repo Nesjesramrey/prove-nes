@@ -1,41 +1,34 @@
 :host {
-
   .card-is-loading {
     width: 80%;
     margin-top: 20px;
-      
-      .image,
-      h2,
-      p {
-        background: #f1e7e7;
-        background: linear-gradient(
-          110deg,
-          #ddd 8%,
-          #e8e8e8 18%,
-          #ddd 33%
-        );
-        border-radius: 5px;
-        background-size: 200% 100%;
-        animation: 1.5s shine linear infinite;
-      }
 
-      .image {
-        height: 200px;
-        margin-top: 10px;
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-      }
+    .image,
+    h2,
+    p {
+      background: #f1e7e7;
+      background: linear-gradient(110deg, #ddd 8%, #e8e8e8 18%, #ddd 33%);
+      border-radius: 5px;
+      background-size: 200% 100%;
+      animation: 1.5s shine linear infinite;
+    }
 
-      h2 {
-        margin-top: 10px;
-        height: 30px;
-      }
+    .image {
+      height: 200px;
+      margin-top: 10px;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
 
-      p {
-        margin-top: 10px;
-        height: 70px;
-      }
-    
+    h2 {
+      margin-top: 10px;
+      height: 30px;
+    }
+
+    p {
+      margin-top: 10px;
+      height: 70px;
+    }
 
     @keyframes shine {
       to {
@@ -100,7 +93,6 @@
           height: 100%;
           background: #f1f1f1;
         }
-
       }
 
       .dates {
@@ -219,20 +211,15 @@
     float: left;
     padding: 0px;
     margin-top: 0px;
-    margin-bottom: 30px;
-
-    mat-card:not(:last-child) {
-      margin-bottom: 15px;
-    }
-
-    mat-card {
-      padding: 0;
-    }
+   
 
     .crdlst {
       width: 100%;
-      margin-top: 5px;
       padding: 0px;
+      mat-card {
+        padding: 0px 0px 60px 0px;
+        box-shadow: none;
+      }
     }
 
     .crdh {
@@ -273,7 +260,6 @@
           height: 100%;
           background: #f1f1f1;
         }
-
       }
 
       .dates {

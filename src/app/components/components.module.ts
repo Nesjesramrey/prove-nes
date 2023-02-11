@@ -88,6 +88,7 @@ import { SingleComplaintDialogComponent } from './single-complaint-dialog/single
 import { RecoverPasswordComponent } from './recover-password/recover-password.component';
 import { SingleTestimonyDialogComponent } from './single-testimony-dialog/single-testimony-dialog.component';
 import { TestimonyDialogComponent } from './testimony-dialog/testimony-dialog.component';
+import { SetAvatarAssociationComponent } from './set-avatar-association/set-avatar-association.component';
 
 @NgModule({
   imports: [
@@ -179,7 +180,8 @@ import { TestimonyDialogComponent } from './testimony-dialog/testimony-dialog.co
     SingleComplaintDialogComponent,
     RecoverPasswordComponent,
     SingleTestimonyDialogComponent,
-    TestimonyDialogComponent
+    TestimonyDialogComponent,
+    SetAvatarAssociationComponent
   ],
   exports: [
     AppPageletComponent,

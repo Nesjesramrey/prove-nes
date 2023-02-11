@@ -42,11 +42,11 @@ export class PublicComplaintsComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.fetchFireUser().subscribe({
-      error: (error: any) => {},
+      error: (error: any) => { },
       next: (reply: any) => {
         this.user = reply;
       },
-      complete: () => {},
+      complete: () => { },
     });
 
     let complaints: Observable<any> =
@@ -62,30 +62,30 @@ export class PublicComplaintsComponent implements OnInit {
         x['comments'] = [];
       });
       let avatarImage: any = null;
-    
+
       this.cards.filter((x: any) => {
-        if(x.createdBy === null){
+        if (x.createdBy === null) {
           x['avatarImage'] = null;
         }
-        else{
-        let data: any = { _id: x.createdBy._id };
-        this.userService.fetchUserById(data).subscribe({
-          error: (error: any) => {},
-          next: (reply: any) => {
-            avatarImage = reply.avatarImage;
-            //console.log(avatarImage);
-            x['avatarImage'] = avatarImage;
-          },
-          complete: () => {},
-        });
-      }
+        else {
+          let data: any = { _id: x.createdBy._id };
+          this.userService.fetchUserById(data).subscribe({
+            error: (error: any) => { },
+            next: (reply: any) => {
+              avatarImage = reply.avatarImage;
+              //console.log(avatarImage);
+              x['avatarImage'] = avatarImage;
+            },
+            complete: () => { },
+          });
+        }
       });
       //console.log(this.cards);
       this.isDataAvailable = true;
     });
   }
 
- 
+
 
   postComment(event: any, card: any) {
     if (event.keyCode === 13) {
@@ -116,6 +116,6 @@ export class PublicComplaintsComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe((reply: any) => {});
+    dialogRef.afterClosed().subscribe((reply: any) => { });
   }
 }

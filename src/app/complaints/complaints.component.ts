@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -17,10 +18,11 @@ import { UtilityService } from '../services/utility.service';
 })
 export class ComplaintsComponent implements OnInit {
   public complaints: any = null;
+  public selection = new SelectionModel<any>(true, []);
   public isDataAvailable: boolean = false;
   public isPrivate: boolean = false;
   public isMobile: boolean = false;
-  public displayedColumns: string[] = ['author', 'title', 'date', 'menu'];
+  public displayedColumns: string[] = ['select', 'author', 'title', 'date', 'menu'];
   public dataSource!: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   public user: any = null;
@@ -116,5 +118,26 @@ export class ComplaintsComponent implements OnInit {
   popSingleComplaint(complaint_id: string) {
     //console.log(complaint_id);
     window.open('/denuncias/' + complaint_id);
+  }
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  toggleAllRows() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+    this.selection.select(...this.dataSource.data);
+  }
+
+  checkboxLabel(row?: any): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
 }

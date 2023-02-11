@@ -22,7 +22,7 @@
     <span mat-line>
       <div mat-line>
         <button type="button" class="linker" (click)="linkMe(item.url)">
-          {{ item.title }}
+          {{(item.title.length > 35) ? (item.title | slice: 0 : 35) + '...' : (item.title)}}
         </button>
       </div>
     </span>
