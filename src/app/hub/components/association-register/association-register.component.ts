@@ -325,6 +325,7 @@ export class AssociationRegisterComponent implements OnInit {
                 next: (reply: any) => { },
                 complete: () => { },
               });
+              this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
           },
 
           complete: () => { },
@@ -422,6 +423,10 @@ export class AssociationRegisterComponent implements OnInit {
     let national = this.states.filter((state: any) => {
       return state['_id'] == evt['value'];
     });
+  }
+
+  prove(id: any){
+    console.log(id)
   }
 
   joinAssociation(id_association: any) {

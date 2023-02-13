@@ -11,6 +11,13 @@
     transform: translate(-50%, -50%);
   }
 
+.innerhldr{
+  display: flex;
+  .innercard{
+    width: 50%;
+  }
+}
+
   mat-card {
     padding: 0 !important;
   }
@@ -48,5 +55,22 @@
 
   .unread {
     background: rgba($color: #1e7e7f, $alpha: 0.3);
+  }
+}
+
+:host(.fixmobile) {
+  margin: 0 !important;
+  width: 100%;
+  float: left;
+  .innerhldr{
+    width: 100% !important;
+    margin: 0 !important;
+    .innercard{
+      width: 100%;
+    }
+    
+    .mat-card{
+      border-radius: 0px;
+    }
   }
 }

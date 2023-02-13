@@ -6,7 +6,7 @@
 
     <div class="set-8 search-hldr" *ngIf="!isMobile">
       <form [formGroup]="searchFormGroup" (submit)="onSearch(searchFormGroup)">
-        <input type="text" placeholder="Búscar en Mexicolectivo..." class="bar-search" formControlName="search">
+        <input type="text" placeholder="Búscar en Mexicolectivo..." class="bar-search" formControlName="search" />
       </form>
     </div>
   </div>
@@ -36,7 +36,8 @@
       [matTooltip]="user.firstname + ' ' + user.lastname" matTooltipClass="tooltip">
       <img src="{{ user.avatarImage }}" alt="{{ user.firstname }}" *ngIf="user.avatarImage != null" />
       <span *ngIf="user.avatarImage == null">
-        {{ user.firstname | firstword | firstletter }}{{ user.lastname | firstword | firstletter }}
+        {{ user.firstname | firstword | firstletter
+        }}{{ user.lastname | firstword | firstletter }}
       </span>
     </button>
 
@@ -73,14 +74,14 @@
         <span>Testímonios</span>
       </button>
 
-      <!-- <button mat-menu-item (click)="popComplaintsDialog()">
+      <button mat-menu-item (click)="popComplaintsDialog()">
         <mat-icon>priority_high</mat-icon>
         <span>Denuncia</span>
       </button>
       <button mat-menu-item (click)="popTestimonialsDialog()">
         <mat-icon>record_voice_over</mat-icon>
         <span>Mi Testimonio</span>
-      </button> -->
+      </button>
       <button mat-menu-item (click)="resetPassword(user.email)">
         <mat-icon>key</mat-icon>
         <span>Cambiar contraseña</span>
@@ -89,6 +90,13 @@
   </div>
 
   <div class="set-6 navigation" *ngIf="isMobile">
+    <button type="button" class="btn-ico" *ngIf="user != null" (click)="linkMe('notifications')"
+      matTooltip="Notificaciones" matTooltipClass="tooltip">
+      <mat-icon [matBadge]="unreadNotifications" matBadgeColor="warn" *ngIf="unreadNotifications != 0">notifications
+      </mat-icon>
+      <mat-icon *ngIf="unreadNotifications == 0">notifications</mat-icon>
+    </button>
+
     <button type="button" (click)="popSearchDialog()">
       <mat-icon color="accent">search</mat-icon>
     </button>

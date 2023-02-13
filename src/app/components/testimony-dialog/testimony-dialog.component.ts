@@ -129,7 +129,7 @@ export class TestimonyDialogComponent implements OnInit {
     this.testuimonyServive.createNewTestimony(data).subscribe({
       error: (error: any) => {
         this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
-        this, this.killDialog();
+        this.killDialog();
       },
       next: (reply: any) => {
         this.postURL = 'https://mexicolectivo.com/posts/' + reply['_id'];
