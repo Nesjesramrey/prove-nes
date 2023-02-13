@@ -3,9 +3,7 @@
 </div>
 
 <div class="innerhldr" *ngIf="isDataAvailable">
-  <div class="set-3">&nbsp;</div>
-
-  <div class="set-6">
+  <div class="set-12 innercard">
     <mat-card class="set-12" *ngIf="notifications.length == 0">
       <div class="set-12 notification">
         <h3>No tienes notificaciones</h3>
@@ -240,10 +238,57 @@
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <button type="button" mat-menu-item (click)="popNewComplaintDialog(notification)">
-                  <mat-icon>launch</mat-icon>
-                  <span>Abrir</span>
+                <button type="button" mat-menu-item (click)="authorizationJoinAssociation(notification)">
+                  <mat-icon>done</mat-icon>
+                  <span>Dar premiso</span>
                 </button>
+                <button type="button" mat-menu-item (click)="authorizationJoinAssociation(notification)">
+                  <mat-icon>close</mat-icon>
+                  <span>Negar Permiso</span>
+                </button>
+                <button type="button" mat-menu-item (click)="markNotificationAsRead(notification)">
+                  <mat-icon>mark_email_read</mat-icon>
+                  <span>Marcar como leído</span>
+                </button>
+                <button type="button" mat-menu-item (click)="killNotification(notification)">
+                  <mat-icon>delete</mat-icon>
+                  <span>Eliminar</span>
+                </button>
+              </mat-menu>
+            </div>
+          </div>
+        </div>
+
+        <div class="set-12" *ngIf="notification.notificationType.name == 'new_validate_request'">
+          <div class="set-12 notification" [class.unread]="!notification.viewed">
+            <div class="set-2">
+              <div class="avatar">
+                <strong>
+                  <small *ngIf="notification.message_from.avatarImage == null">
+                    {{ notification.message_from.firstname | firstword | firstletter }}{{
+                    notification.message_from.lastname | firstword | firstletter }}
+                  </small>
+                </strong>
+                <img [src]="notification.message_from.avatarImage" alt=""
+                  *ngIf="notification.message_from.avatarImage != null">
+              </div>
+            </div>
+
+            <div class="set-8">
+              <p>
+                <small>{{notification.message}}</small>
+              </p>
+              <p>
+                <small>{{notification.createdAt | date: 'mediumDate'}} - {{notification.createdAt | date:
+                  'mediumTime'}}</small>
+              </p>
+            </div>
+
+            <div class="set-2 txt-right">
+              <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
                 <button type="button" mat-menu-item (click)="markNotificationAsRead(notification)">
                   <mat-icon>mark_email_read</mat-icon>
                   <span>Marcar como leído</span>

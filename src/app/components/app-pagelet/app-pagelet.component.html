@@ -1,12 +1,20 @@
 <mat-toolbar *ngIf="isDataAvailable" [class.fixtoolbar]="isMobile">
   <div class="set-6 logo">
     <div class="set-4" [class.set-12]="isMobile">
-      <img src="../../../assets/images/mexicolectivo-full-green.png" (click)="linkMe('home')" />
+      <img
+        src="../../../assets/images/mexicolectivo-full-green.png"
+        (click)="linkMe('home')"
+      />
     </div>
 
     <div class="set-8 search-hldr" *ngIf="!isMobile">
       <form [formGroup]="searchFormGroup" (submit)="onSearch(searchFormGroup)">
-        <input type="text" placeholder="Búscar en Mexicolectivo..." class="bar-search" formControlName="search">
+        <input
+          type="text"
+          placeholder="Búscar en Mexicolectivo..."
+          class="bar-search"
+          formControlName="search"
+        />
       </form>
     </div>
   </div>
@@ -24,35 +32,79 @@
     <span class="sep">|</span>
 
     <!-- user not available -->
-    <button type="button" (click)="linkMe('join')" *ngIf="user == null" matTooltip="Registro" matTooltipClass="tooltip">
+    <button
+      type="button"
+      (click)="linkMe('join')"
+      *ngIf="user == null"
+      matTooltip="Registro"
+      matTooltipClass="tooltip"
+    >
       <mat-icon>app_registration</mat-icon>
     </button>
-    <button type="button" (click)="linkMe('login')" *ngIf="user == null" matTooltip="Ingreso" matTooltipClass="tooltip">
+    <button
+      type="button"
+      (click)="linkMe('login')"
+      *ngIf="user == null"
+      matTooltip="Ingreso"
+      matTooltipClass="tooltip"
+    >
       <mat-icon>account_box</mat-icon>
     </button>
 
     <!-- user available -->
-    <button type="button" class="avatar" (click)="linkMe('profile')" *ngIf="user != null"
-      [matTooltip]="user.firstname + ' ' + user.lastname" matTooltipClass="tooltip">
-      <img src="{{ user.avatarImage }}" alt="{{ user.firstname }}" *ngIf="user.avatarImage != null" />
+    <button
+      type="button"
+      class="avatar"
+      (click)="linkMe('profile')"
+      *ngIf="user != null"
+      [matTooltip]="user.firstname + ' ' + user.lastname"
+      matTooltipClass="tooltip"
+    >
+      <img
+        src="{{ user.avatarImage }}"
+        alt="{{ user.firstname }}"
+        *ngIf="user.avatarImage != null"
+      />
       <span *ngIf="user.avatarImage == null">
-        {{ user.firstname | firstword | firstletter }}{{ user.lastname | firstword | firstletter }}
+        {{ user.firstname | firstword | firstletter
+        }}{{ user.lastname | firstword | firstletter }}
       </span>
     </button>
 
-    <button type="button" class="btn-ico" *ngIf="user != null" (click)="linkMe('notifications')"
-      matTooltip="Notificaciones" matTooltipClass="tooltip">
-      <mat-icon [matBadge]="unreadNotifications" matBadgeColor="warn" *ngIf="unreadNotifications != 0">notifications
+    <button
+      type="button"
+      class="btn-ico"
+      *ngIf="user != null"
+      (click)="linkMe('notifications')"
+      matTooltip="Notificaciones"
+      matTooltipClass="tooltip"
+    >
+      <mat-icon
+        [matBadge]="unreadNotifications"
+        matBadgeColor="warn"
+        *ngIf="unreadNotifications != 0"
+        >notifications
       </mat-icon>
       <mat-icon *ngIf="unreadNotifications == 0">notifications</mat-icon>
     </button>
 
-    <button type="button" class="btn-ico" *ngIf="user != null" (click)="onSignOut()" matTooltip="Salir"
-      matTooltipClass="tooltip">
+    <button
+      type="button"
+      class="btn-ico"
+      *ngIf="user != null"
+      (click)="onSignOut()"
+      matTooltip="Salir"
+      matTooltipClass="tooltip"
+    >
       <mat-icon>power_settings_new</mat-icon>
     </button>
 
-    <button type="button" class="btn-ico" [matMenuTriggerFor]="menu" *ngIf="user != null">
+    <button
+      type="button"
+      class="btn-ico"
+      [matMenuTriggerFor]="menu"
+      *ngIf="user != null"
+    >
       <mat-icon>menu</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
@@ -60,15 +112,27 @@
         <mat-icon>groups</mat-icon>
         <span>Documento Punto de Partida</span>
       </button>
-      <button mat-menu-item (click)="linkMe('userList')" *ngIf="userActivities.includes('moderator')">
+      <button
+        mat-menu-item
+        (click)="linkMe('userList')"
+        *ngIf="userActivities.includes('moderator')"
+      >
         <mat-icon>groups</mat-icon>
         <span>Usuarios</span>
       </button>
-      <button mat-menu-item (click)="linkMe('complaints')" *ngIf="userActivities.includes('moderator')">
+      <button
+        mat-menu-item
+        (click)="linkMe('complaints')"
+        *ngIf="userActivities.includes('moderator')"
+      >
         <mat-icon>warning</mat-icon>
         <span>Denuncias</span>
       </button>
-      <button mat-menu-item (click)="linkMe('testimonials')" *ngIf="userActivities.includes('moderator')">
+      <button
+        mat-menu-item
+        (click)="linkMe('testimonials')"
+        *ngIf="userActivities.includes('moderator')"
+      >
         <mat-icon>announcement</mat-icon>
         <span>Testímonios</span>
       </button>
@@ -89,6 +153,23 @@
   </div>
 
   <div class="set-6 navigation" *ngIf="isMobile">
+    <button
+      type="button"
+      class="btn-ico"
+      *ngIf="user != null"
+      (click)="linkMe('notifications')"
+      matTooltip="Notificaciones"
+      matTooltipClass="tooltip"
+    >
+      <mat-icon
+        [matBadge]="unreadNotifications"
+        matBadgeColor="warn"
+        *ngIf="unreadNotifications != 0"
+        >notifications
+      </mat-icon>
+      <mat-icon *ngIf="unreadNotifications == 0">notifications</mat-icon>
+    </button>
+
     <button type="button" (click)="popSearchDialog()">
       <mat-icon color="accent">search</mat-icon>
     </button>
