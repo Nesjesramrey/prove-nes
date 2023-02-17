@@ -8,26 +8,19 @@
       <div class="set-12 crdh">
         <button type="button" class="avatar">
           <span *ngIf="card.createdBy == null"> A </span>
-          <span
-            *ngIf="
+          <span *ngIf="
               card.createdBy != null &&
               card.createdBy.avatarImage == null &&
               card.createdBy.firstname == null
-            "
-          >
+            ">
             A
           </span>
-          <span
-            *ngIf="card.createdBy != null && card.createdBy.avatarImage == null"
-          >
+          <span *ngIf="card.createdBy != null && card.createdBy.avatarImage == null">
             {{ card.createdBy.firstname | firstword | firstletter
             }}{{ card.createdBy.lastname | firstword | firstletter }}
           </span>
-          <img
-            src="{{ card.createdBy.avatarImage }}"
-            alt="{{ card.createdBy.firstname }} {{ card.createdBy.lastname }}"
-            *ngIf="card.createdBy != null && card.createdBy.avatarImage != null"
-          />
+          <img src="{{ card.createdBy.avatarImage }}" alt="{{ card.createdBy.firstname }} {{ card.createdBy.lastname }}"
+            *ngIf="card.createdBy != null && card.createdBy.avatarImage != null" />
         </button>
         <div>
           <p>
@@ -38,33 +31,19 @@
             <small *ngIf="card['isAnonymous']">Anónimo</small>
           </p>
           <p class="dates">
-            <small
-              >{{ card["createdAt"] | date : "mediumDate" }} -
-              {{ card["createdAt"] | date : "mediumTime" }}</small
-            >
+            <small>{{ card["createdAt"] | date : "mediumDate" }} -
+              {{ card["createdAt"] | date : "mediumTime" }}</small>
           </p>
         </div>
       </div>
 
       <div class="set-12 crddsc">
-        <div
-          class="set-12"
-          [innerHTML]="utilityService.truncateHTML(card['description'])"
-        ></div>
+        <div class="set-12" [innerHTML]="utilityService.truncateHTML(card['description'])"></div>
       </div>
 
       <div class="set-12 crdvp">
-        <img
-          [src]="card['images'][0]"
-          alt=""
-          class="full"
-          *ngIf="card.images.length != 0"
-        />
-        <img
-          src="../../assets/images/mexicolectivo-small-blue.png"
-          alt=""
-          *ngIf="card.images.length == 0"
-        />
+        <img [src]="card['images'][0]" alt="" class="full" *ngIf="card.images.length != 0" />
+        <img src="../../assets/images/mexicolectivo-small-blue.png" alt="" *ngIf="card.images.length == 0" />
       </div>
 
       <div class="set-12 crdft">
@@ -73,36 +52,16 @@
           <small>{{ card["type"] }}</small>
         </div>
         <div class="set-6 ctrls">
-          <button
-            type="button"
-            matTooltip="Favorito"
-            matTooltipClass="tooltip"
-            [disabled]="user == null"
-          >
+          <button type="button" matTooltip="Favorito" matTooltipClass="tooltip" [disabled]="user == null">
             <mat-icon>favorite</mat-icon>
           </button>
-          <button
-            type="button"
-            matTooltip="Comentar"
-            matTooltipClass="tooltip"
-            [disabled]="user == null"
-          >
+          <button type="button" matTooltip="Comentar" matTooltipClass="tooltip" [disabled]="user == null">
             <mat-icon>forum</mat-icon>
           </button>
-          <button
-            type="button"
-            matTooltip="Compartir"
-            matTooltipClass="tooltip"
-            (click)="shareCard(card)"
-          >
+          <button type="button" matTooltip="Compartir" matTooltipClass="tooltip" (click)="shareCard(card)">
             <mat-icon>share</mat-icon>
           </button>
-          <button
-            type="button"
-            matTooltip="Votar"
-            matTooltipClass="tooltip"
-            (click)="openVoteDialog(card)"
-          >
+          <button type="button" matTooltip="Votar" matTooltipClass="tooltip" (click)="openVoteDialog(card)">
             <mat-icon>star</mat-icon>
           </button>
         </div>
@@ -113,11 +72,7 @@
           <button type="button" class="avatar"></button>
         </div>
         <div class="set-11">
-          <input
-            type="text"
-            placeholder="Escribe un mensaje..."
-            (keyup)="postComment($event, card)"
-          />
+          <input type="text" placeholder="Escribe un mensaje..." (keyup)="postComment($event, card)" />
         </div>
       </div>
 

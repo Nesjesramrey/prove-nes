@@ -22,6 +22,7 @@ export class SignUpComponent implements OnInit {
   public hide: boolean = true;
   public user: any = null;
   public document: any = null;
+  public isDataAvailable: boolean = false;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -39,14 +40,7 @@ export class SignUpComponent implements OnInit {
     this.signUpFormGroup = this.formBuilder.group({
       firstname: ['', [Validators.required, Validators.minLength(2)]],
       lastname: ['', [Validators.required, Validators.minLength(2)]],
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(this.utilitySrvc.emailPattern),
-          this.utilitySrvc.emailDomainValidator,
-        ],
-      ],
+      email: ['', [Validators.required, Validators.pattern(this.utilitySrvc.emailPattern), this.utilitySrvc.emailDomainValidator]],
       password: ['', [Validators.required, Validators.minLength(9)]],
       phone: ['', [Validators.minLength(10), Validators.maxLength(10)]],
       zipcode: ['', [Validators.minLength(5), Validators.maxLength(5)]],
@@ -56,9 +50,8 @@ export class SignUpComponent implements OnInit {
 
     this.documentService.fetchCoverDocument().subscribe({
       error: (error: any) => { },
-      next: (reply: any) => {
-        this.document = reply;
-      },
+      next: (reply: any) => { this.document = reply; },
+      complete: () => { this.isDataAvailable = true; }
     });
   }
 
@@ -77,7 +70,7 @@ export class SignUpComponent implements OnInit {
 
     this.angularFireAuth.createUserWithEmailAndPassword(email, password).then((reply: any) => {
       this.SetUserData(reply['user']);
-      this.SendVerificationMail();
+      // this.SendVerificationMail();
       this.user = reply['user']['multiFactor']['user'];
 
       let signUpData = new FormData();
@@ -90,35 +83,22 @@ export class SignUpComponent implements OnInit {
       this.authenticationSrvc.signup(signUpData).subscribe((reply: any) => {
         localStorage.setItem('accessToken', this.user['accessToken']);
         this.router.navigate(['/documentos-publicos/' + this.document['_id']], { state: { status: 'reload' } });
-
-        // this.angularFireAuth.signInWithEmailAndPassword(
-        //   formGroup['value']['email'], formGroup['value']['password']
-        // ).then((reply: any) => {
-        //   this.angularFireAuth.authState.subscribe((data: any) => {
-        //     this.submitted = false;
-        //     localStorage.setItem('accessToken', data['multiFactor']['user']['accessToken']);
-        //     this.router.navigate(['/documentos-publicos/' + this.document['_id']], { state: { status: 'reload' } });
-        //     this.UserService.onLogin.next(signUpData);
-        //   });
-        // });
       });
-      // this.utilitySrvc.openSuccessSnackBar('El registro fue exitoso');
-    })
-      .catch((error: any) => {
-        switch (error['code']) {
-          case 'auth/email-already-in-use':
-            this.utilitySrvc.openErrorSnackBar('El correo electrónico ya esta en uso.');
-            break;
-        }
+    }).catch((error: any) => {
+      switch (error['code']) {
+        case 'auth/email-already-in-use':
+          this.utilitySrvc.openErrorSnackBar('El correo electrónico ya esta en uso.');
+          break;
+      }
 
-        // "auth/email-already-in-use":
-        // "auth/invalid-email": 
-        // "auth/operation-not-allowed":         
-        // "auth/weak-password": 
-        // "auth/network-request-failed":  
+      // "auth/email-already-in-use":
+      // "auth/invalid-email": 
+      // "auth/operation-not-allowed":         
+      // "auth/weak-password": 
+      // "auth/network-request-failed":  
 
-        this.submitted = false;
-      });
+      this.submitted = false;
+    });
   }
 
   SendVerificationMail() {

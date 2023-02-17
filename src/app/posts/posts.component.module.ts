@@ -8,6 +8,7 @@ import { SinglePostComponent } from './single-post/single-post.component';
 import { AppMaterialModule } from '../app-material.module';
 import { ComponentsModule } from '../components/components.module';
 import { AppSharedModule } from '../app-shared.module';
+import { SinglePostDialogComponent } from './components/single-post-dialog/single-post-dialog.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,14 @@ import { AppSharedModule } from '../app-shared.module';
   ],
   declarations: [
     PostsComponent,
-    SinglePostComponent
+    SinglePostComponent,
+    SinglePostDialogComponent
+  ],
+  exports: [
+    SinglePostDialogComponent
+  ],
+  entryComponents: [
+    SinglePostDialogComponent
   ]
 })
 export class PostsComponentModule { }

@@ -122,7 +122,7 @@ export class SingleThemeComponent implements OnInit {
 
       this.sliderImages = this.topic['images'];
       this.solutions = this.topic['solutions'];
-      console.log(this.solutions)
+      // console.log(this.solutions)
       this.dataSource = new MatTableDataSource(this.solutions);
       this.user = reply[4];
       this.user['activityName'] = this.user['activities'][0]['value'];

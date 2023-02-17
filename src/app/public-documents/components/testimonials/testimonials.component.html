@@ -43,7 +43,7 @@
           <div>
             <img class="avatar" *ngIf="testimonial.createdBy.avatarImage" [src]="testimonial.createdBy.avatarImage"
               [matTooltip]="testimonial.createdBy.firstname + ' ' + testimonial.createdBy.lastname" />
-            <p [innerHTML]="testimonial.description"></p>
+            <p [innerHTML]="testimonial.name"></p>
             <p>
               <small>
                 {{ testimonial.createdAt | date: 'shortDate' }} - {{ testimonial.createdAt | date: 'shortTime' }}

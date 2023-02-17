@@ -21,6 +21,7 @@ export class SignInComponent implements OnInit {
   public hide: boolean = true;
   public isMobile: boolean = false;
   public document: any = null;
+  public isDataAvailable: boolean = false;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -47,10 +48,8 @@ export class SignInComponent implements OnInit {
 
     this.documentService.fetchCoverDocument().subscribe({
       error: (error: any) => { },
-      next: (reply: any) => {
-        this.document = reply;
-      },
-      complete: () => { }
+      next: (reply: any) => { this.document = reply; },
+      complete: () => { this.isDataAvailable = true; }
     });
   }
 
@@ -106,7 +105,7 @@ export class SignInComponent implements OnInit {
   facebookAuth() {
     this.authenticationSrvc.facebookAuth().subscribe({
       next: (credential) => {
-        console.log(credential);        
+        console.log(credential);
       },
       error: (error) => {
         switch (error['code']) {
@@ -114,7 +113,7 @@ export class SignInComponent implements OnInit {
             this.utilitySrvc.openSuccessSnackBar('Acceso denegado por usuario.');
             break;
           }
-          
+
           default: {
             this.utilitySrvc.openErrorSnackBar('Lo sentimos, no hemos podido realizar la autenticación');
             break;
@@ -123,7 +122,7 @@ export class SignInComponent implements OnInit {
       },
       complete: () => {
         console.log("Terminado");
-        
+
       },
     })
   }

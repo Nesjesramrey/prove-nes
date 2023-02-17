@@ -13,6 +13,9 @@ export class TestimonialsComponent implements OnInit {
 
   ngOnInit(): void {
     // console.log(this.data);
+    this.data.filter((x: any) => {
+      if (x['name'] == null) { x['name'] = 'Sin título'; }
+    });
     this.sortData();
   }
 

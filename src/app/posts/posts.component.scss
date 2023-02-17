@@ -5,7 +5,7 @@
   margin-top: 80px;
 
   mat-card:not(:last-child) {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
   }
 
   mat-card {
@@ -21,13 +21,23 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    padding: 15px;
-    border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
-    background: #00031d;
+    padding: 15px 15px 10px 15px;
     color: rgba($color: #ffffff, $alpha: 0.7);
 
     * {
       margin: 0;
+    }
+
+    .set-10 {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .set-2 {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
     }
 
     .avatar {
@@ -36,12 +46,44 @@
       border-radius: 100%;
       display: block;
       background: blueviolet;
-      margin-right: 20px;
+      margin-right: 10px;
       overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        position: relative;
+        z-index: 4;
+      }
+
+      span {
+        font-size: 10pt;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        background: #f1f1f1;
+      }
     }
 
     .dates {
       font-size: 9pt;
+    }
+
+    &.blueb {
+      background: #00031d;
+    }
+
+    &.greenb {
+      background: #1e7e7f;
+    }
+
+    .ctrls {
+      mat-icon {
+        color: rgba($color: #ffffff, $alpha: 0.7);
+      }
     }
   }
 
@@ -49,7 +91,15 @@
     padding: 5px 15px 15px 15px;
     background: #00031d;
     color: rgba($color: #ffffff, $alpha: 0.7);
-    font-size: 11pt;
+    font-size: 10pt;
+
+    &.blueb {
+      background: #00031d;
+    }
+
+    &.greenb {
+      background: #1e7e7f;
+    }
   }
 
   .crdvp {
@@ -117,16 +167,6 @@
     border-top: 1px solid rgba($color: #000000, $alpha: 0.1);
     background: #dff1e7;
 
-    .set-2 {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-
-      * {
-        margin: 0;
-      }
-    }
-
     .avatar {
       width: 35px;
       height: 35px;
@@ -150,34 +190,6 @@
   .comlst {
     padding: 15px;
     background: #dff1e7;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-
-    * {
-      margin: 0;
-    }
-
-    .snglcom {
-      display: flex;
-      align-items: flex-start;
-      justify-content: flex-start;
-    }
-
-    .avatar {
-      width: 35px;
-      height: 35px;
-      border-radius: 100%;
-      overflow: hidden;
-      display: block;
-      background: purple;
-      margin-right: 10px;
-
-      img {
-        width: 100%;
-        height: 100%;
-      }
-    }
   }
 
   .loading {

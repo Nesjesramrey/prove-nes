@@ -32,7 +32,7 @@ body {
   width: 100%;
   height: 100%;
   cursor: default;
-  background: #f1f1f1 !important;
+  background: #d4d4d4 !important;
   overflow-wrap: break-word;
 }
 
@@ -751,6 +751,16 @@ mat-form-field {
 .reader-dialog {
   width: 60vw;
   height: 70vh;
+}
+
+.card-dialog {
+  .mat-dialog-container {
+    padding: 0;
+  }
+}
+
+.card-backdrop {
+  background: rgba($color: #000000, $alpha: 0.7) !important;
 }
 
 .mat-card,

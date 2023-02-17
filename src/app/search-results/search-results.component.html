@@ -56,7 +56,8 @@
             <button type="button"
               (click)="linkMe('/documentos-publicos/' + item.parents.document + '/categoria/' + item.parents.layout + '/subcategoria/' + item.parents.sublayout + '/tema/' + item._id)">
               <strong>
-                {{ item.title }}
+                <!-- {{ item.title }} -->
+                {{ (item.title.length > 50) ? (item.title | slice: 0 : 50) + '..' : (item.title) }}
               </strong>
             </button>
             <p *ngIf="item.description != null" class="desc">
@@ -73,7 +74,8 @@
             <button type="button"
               (click)="linkMe('/documentos-publicos/' + item.parents.document + '/categoria/' + item.parents.layout + '/subcategoria/' + item.parents.sublayout + '/tema/' + item.parents.topic + '/solucion/' + item._id)">
               <strong>
-                {{ item.title }}
+                <!-- {{ item.title }} -->
+                {{ (item.title.length > 50) ? (item.title | slice: 0 : 50) + '..' : (item.title) }}
               </strong>
             </button>
             <p *ngIf="item.description != null" class="desc">
