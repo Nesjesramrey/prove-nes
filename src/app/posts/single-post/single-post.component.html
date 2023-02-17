@@ -1,5 +1,91 @@
-<div class="set-12">
-  <div class="crdhldr">
-    <mat-card></mat-card>
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="set-12" *ngIf="isDataAvailable">
+  <div class="crdlst">
+    <mat-card>
+      <div class="set-12">
+        <div class="set-12 crdh"
+          [ngClass]="{'blueb': post['relation'] == 'testimony', 'greenb': post['relation'] == 'complaint'}">
+          <div class="set-10">
+            <button type="button" class="avatar">
+              <span *ngIf="post['card']['createdBy'] == null">A</span>
+              <span *ngIf="post['card']['createdBy'] != null && post['card']['isAnonymous']">A</span>
+
+              <span
+                *ngIf="post['card']['createdBy'] != null && post['card']['createdBy']['avatarImage'] == null && !post['card']['isAnonymous']">
+                {{ post['card']['createdBy']['firstname'] | firstword | firstletter | titlecase }}{{
+                post['card']['createdBy']['lastname'] | firstword | firstletter | titlecase }}
+              </span>
+
+              <img src="{{ post['card']['createdBy']['avatarImage'] }}" alt=""
+                *ngIf="post['card']['createdBy']['avatarImage'] != null && !post['card']['isAnonymous']" />
+            </button>
+
+            <div>
+              <p>
+                <small *ngIf="!post['card']['isAnonymous']">
+                  {{ post['card']["createdBy"]["firstname"] | titlecase }} {{ post['card']["createdBy"]["lastname"] |
+                  titlecase }}
+                </small>
+                <small *ngIf="post['card']['isAnonymous']">Anónimo</small>
+              </p>
+              <p class="dates">
+                <small>
+                  {{ post['card']["createdAt"] | date : "mediumDate" }} - {{ post['card']["createdAt"] | date :
+                  "mediumTime" }}
+                </small>
+              </p>
+            </div>
+          </div>
+
+          <!-- <div class="set-2 ctrls">
+            <button type="button" [matMenuTriggerFor]="menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="openSinglePostDialog(post)">
+                <mat-icon>visibility</mat-icon>
+                <small>Ver más</small>
+              </button>
+            </mat-menu>
+          </div> -->
+        </div>
+
+        <div class="set-12 crddsc"
+          [ngClass]="{'blueb': post['relation'] == 'testimony', 'greenb' : post['relation'] == 'complaint'}">
+          <div class="set-12" [innerHTML]="utilityService.truncateHTML(post['card']['description'])"></div>
+        </div>
+
+        <div class="set-12 crdvp">
+          <img [src]="post['card']['images'][0]" alt="" class="full" *ngIf="post['card']['images'].length != 0" />
+          <img src="../../assets/images/mexicolectivo-small-blue.png" alt=""
+            *ngIf="post['card']['images'].length == 0" />
+        </div>
+
+        <div class="set-12 crdft">
+          <div class="set-6 types">
+            <mat-icon>label</mat-icon>
+            <small>Denuncia</small>
+          </div>
+          <div class="set-6 ctrls">
+            <button type="button" matTooltip="Favorito" matTooltipClass="tooltip" [disabled]="user == null">
+              <mat-icon>favorite</mat-icon>
+            </button>
+            <button type="button" matTooltip="Comentar" matTooltipClass="tooltip" [disabled]="user == null"
+              (click)="openSinglePostDialog(post)">
+              <mat-icon>forum</mat-icon>
+            </button>
+            <button type="button" matTooltip="Compartir" matTooltipClass="tooltip" (click)="sharePost(post)">
+              <mat-icon>share</mat-icon>
+            </button>
+            <button type="button" matTooltip="Votar" matTooltipClass="tooltip" (click)="openVoteDialog(post)">
+              <mat-icon>star</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-card>
   </div>
 </div>

@@ -258,6 +258,10 @@ export class AppPageletComponent implements OnInit {
     window.open('https://static-assets-pando.s3.amazonaws.com/assets/punto-de-partida.pdf');
   }
 
+  popWomenPDF() {
+    window.open('https://static-assets-pando.s3.amazonaws.com/assets/mujeres.pdf');
+  }
+
   popComplaintsDialog() {
     const dialogRef = this.dialog.open<any>(ComplaintDialogComponent, {
       width: '100%',

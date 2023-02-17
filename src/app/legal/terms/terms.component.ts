@@ -8,6 +8,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 })
 export class TermsComponent implements OnInit {
   public isMobile: boolean = false;
+  public isDataAvailable: boolean = false;
 
   constructor(
     public deviceDetectorService: DeviceDetectorService
@@ -15,5 +16,9 @@ export class TermsComponent implements OnInit {
     this.isMobile = this.deviceDetectorService.isMobile();
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    setTimeout(() => {
+      this.isDataAvailable = true;
+    }, 1000);
+  }
 }

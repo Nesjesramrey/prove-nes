@@ -12,7 +12,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 export class ShareSheetComponent implements OnInit {
   public user: any = null;
   public url: string = '';
-  public card: any = null;
+  public post: any = null;
 
   constructor(
     public bottomSheetRef: MatBottomSheetRef<ShareSheetComponent>,
@@ -24,9 +24,13 @@ export class ShareSheetComponent implements OnInit {
     // console.log(this.sheetData);
     this.user = this.sheetData['user'];
     this.url = this.DOM.location.origin + this.router.url;
-    if (this.sheetData['card'] != undefined) {
-      this.card = this.sheetData['card'];
-      this.url = this.DOM.location.origin + this.router.url + '/' + this.card['_id'];
+
+    if (this.sheetData['post'] != undefined) {
+      this.post = this.sheetData['post'];
+      let postID: string = '';
+      if (this.post['complaint'].length != 0) { postID = this.post['complaint'][0]['_id']; }
+      if (this.post['testimony'].length != 0) { postID = this.post['testimony'][0]['_id']; }
+      this.url = this.DOM.location.origin + this.router.url + '/' + postID;
     }
   }
 

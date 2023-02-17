@@ -19,7 +19,34 @@
       Ver público
     </button> -->
 
-    <!-- <button type="button" (click)="utilitySrvc.linkMe('/posts')">Publicaciones</button> -->
+    <!-- <button type="button" (click)="utilitySrvc.linkMe('/posts')">IC</button> -->
+    <button type="button" [matMenuTriggerFor]="docMenu">IC</button>
+    <mat-menu #docMenu="matMenu">
+      <button mat-menu-item (click)="popComplaintsDialog()">
+        <mat-icon>priority_high</mat-icon>
+        <span>Denuncia</span>
+      </button>
+      <button mat-menu-item (click)="popPDF()">
+        <mat-icon>description</mat-icon>
+        <small>Documento Punto de Partida</small>
+      </button>
+      <button mat-menu-item (click)="utilitySrvc.linkMe('/noticias')">
+        <mat-icon>event</mat-icon>
+        <small>Agenda 2030 ONU</small>
+      </button>
+      <button mat-menu-item (click)="popWomenPDF()">
+        <mat-icon>record_voice_over</mat-icon>
+        <small>Ponentes</small>
+      </button>
+      <button mat-menu-item (click)="utilitySrvc.linkMe('/posts')">
+        <mat-icon>forum</mat-icon>
+        <small>Publicaciones</small>
+      </button>
+      <button mat-menu-item (click)="popTestimonialsDialog()">
+        <mat-icon>edit_note</mat-icon>
+        <span>Mi Testimonio</span>
+      </button>
+    </mat-menu>
 
     <span class="sep">|</span>
 
@@ -57,10 +84,10 @@
       <mat-icon>menu</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="popPDF()">
+      <!-- <button mat-menu-item (click)="popPDF()">
         <mat-icon>groups</mat-icon>
         <span>Documento Punto de Partida</span>
-      </button>
+      </button> -->
       <button mat-menu-item (click)="linkMe('userList')" *ngIf="userActivities.includes('moderator')">
         <mat-icon>groups</mat-icon>
         <span>Usuarios</span>
@@ -74,14 +101,14 @@
         <span>Testímonios</span>
       </button>
 
-      <button mat-menu-item (click)="popComplaintsDialog()">
+      <!-- <button mat-menu-item (click)="popComplaintsDialog()">
         <mat-icon>priority_high</mat-icon>
         <span>Denuncia</span>
       </button>
       <button mat-menu-item (click)="popTestimonialsDialog()">
         <mat-icon>record_voice_over</mat-icon>
         <span>Mi Testimonio</span>
-      </button>
+      </button> -->
       <button mat-menu-item (click)="resetPassword(user.email)">
         <mat-icon>key</mat-icon>
         <span>Cambiar contraseña</span>

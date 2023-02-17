@@ -6,6 +6,7 @@ import { LegalComponent } from './legal.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { TermsComponent } from './terms/terms.component';
 import { ComponentsModule } from '../components/components.module';
+import { AppMaterialModule } from '../app-material.module';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { ComponentsModule } from '../components/components.module';
     FormsModule,
     ReactiveFormsModule,
     LegalComponentRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    AppMaterialModule
   ],
   declarations: [
     LegalComponent,

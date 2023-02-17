@@ -118,13 +118,18 @@ export class TestimonyDialogComponent implements OnInit {
 
   onFileTestimony(form: FormGroup) {
     this.submitted = true;
-    let data = new FormData();
+    // let data = new FormData();
+
+    let data = {
+      formData: new FormData()
+    };
 
     Array.from(this.testimonyFormGroup.controls['files']['value'])
-      .forEach((file: any) => { data.append('files', file); });
-    data.append('title', this.testimonyFormGroup.value.title);
-    data.append('description', this.testimonyFormGroup.value.description);
-    data.append('isAnonymous', (this.isAnonymous).toString());
+      .forEach((file: any) => { data['formData'].append('files', file); });
+    data['formData'].append('name', this.testimonyFormGroup.value.title);
+    data['formData'].append('type', 'testimony');
+    data['formData'].append('description', this.testimonyFormGroup.value.description);
+    data['formData'].append('isAnonymous', (this.isAnonymous).toString());
 
     this.testuimonyServive.createNewTestimony(data).subscribe({
       error: (error: any) => {

@@ -21,7 +21,7 @@ export class RecoverPasswordComponent implements OnInit {
     public utilityService: UtilityService,
     public userService: UserService
   ) {
-    console.log(this.dialogData);
+    // console.log(this.dialogData);
   }
 
   ngOnInit(): void {
@@ -32,27 +32,16 @@ export class RecoverPasswordComponent implements OnInit {
 
   recoverPassword(formGroup: FormGroup) {
     this.submitted = true;
-    let user: Observable<any> = this.userService.passwordRecovery({
-      email: formGroup['value']['email'],
-    });
-    // user.subscribe((reply: any) => {
-    //   this.utilityService.openSuccessSnackBar('Se envio la contraseña al correo electronico.');
-    // });
+    let user: Observable<any> = this.userService.passwordRecovery({ email: formGroup['value']['email'] });
     user.subscribe({
       error: (error: any) => {
         this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
         this.killDialog();
       },
-      next: (reply: any) => {
-        this.utilityService.openSuccessSnackBar('Se ha envíado un correo electrónico para recuperar tu contraseña.');
-      },
-      complete: () => {
-        this.killDialog();
-      }
+      next: (reply: any) => { this.utilityService.openSuccessSnackBar('Se ha envíado un correo electrónico para recuperar tu contraseña.'); },
+      complete: () => { this.killDialog(); }
     });
   }
 
-  killDialog() {
-    this.dialogRef.close();
-  }
+  killDialog() { this.dialogRef.close(); }
 }

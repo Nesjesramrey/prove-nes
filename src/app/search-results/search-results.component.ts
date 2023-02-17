@@ -40,7 +40,7 @@ export class SearchResultsComponent implements OnInit {
             break;
 
           case 'topic':
-            x['typeName'] = 'Problemática'
+            x['typeName'] = 'Tópico'
             break;
 
           case 'solution':

@@ -123,8 +123,12 @@ export class ComplaintDialogComponent implements OnInit {
       .forEach((file: any) => { data.append('files', file); });
     data.append('title', this.complaintFormGroup.value.title);
     data.append('description', this.complaintFormGroup.value.description);
-    data.append('latitude', this.location['latitude']);
-    data.append('longitude', this.location['longitude']);
+    switch (this.locationAvailable) {
+      case true:
+        data.append('latitude', this.location['latitude']);
+        data.append('longitude', this.location['longitude']);
+        break;
+    }
     data.append('isAnonymous', (this.isAnonymous).toString());
 
     this.complaintService.fileComplaint(data).subscribe({

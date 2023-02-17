@@ -3,71 +3,179 @@
 </div>
 
 <div class="set-12" *ngIf="isDataAvailable">
+  <!-- <div class="set-12 headctrls">
+    <mat-form-field appearance="outline">
+      <mat-label>Búscar...</mat-label>
+      <input matInput placeholder="Búscar..." />
+      <button type="button" matSuffix>
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </mat-form-field>
+    <button type="button" mat-mini-fab color="primary">
+      <mat-icon>filter_list</mat-icon>
+    </button>
+  </div> -->
+
   <div class="crdlst">
-    <mat-card *ngFor="let card of cards">
-      <div class="set-12 crdh">
-        <button type="button" class="avatar"></button>
-        <div>
-          <p>
-            <small *ngIf="!card['isAnonymous'] && card['createdBy'] != null">
-              {{card['createdBy']['firstname']}} {{card['createdBy']['lastname']}}
-            </small>
-            <small *ngIf="card['isAnonymous']">Anónimo</small>
-          </p>
-          <p class="dates">
-            <small>{{card['createdAt'] | date: 'mediumDate'}} - {{card['createdAt'] | date: 'mediumTime'}}</small>
-          </p>
-        </div>
-      </div>
+    <mat-card *ngFor="let post of posts">
+      <!-- testimony -->
+      <div class="set-12" *ngIf="post['relation'] == 'testimony'">
+        <div class="set-12 crdh blueb">
+          <div class="set-10">
+            <button type="button" class="avatar">
+              <span *ngIf="post['card']['createdBy'] == null">A</span>
+              <span *ngIf="post['card']['createdBy'] != null && post['card']['isAnonymous']">A</span>
 
-      <div class="set-12 crddsc">
-        <div class="set-12" [innerHTML]="utilityService.truncateHTML(card['description'])"></div>
-      </div>
+              <span
+                *ngIf="post['card']['createdBy'] != null && post['card']['createdBy']['avatarImage'] == null && !post['card']['isAnonymous']">
+                {{ post['card']['createdBy']['firstname'] | firstword | firstletter | titlecase }}{{
+                post['card']['createdBy']['lastname'] | firstword | firstletter | titlecase }}
+              </span>
 
-      <div class="set-12 crdvp">
-        <img [src]="card['images'][0]" alt="" class="full" *ngIf="card.images.length != 0">
-        <img src="../../assets/images/mexicolectivo-small-blue.png" alt="" *ngIf="card.images.length == 0">
-      </div>
+              <img src="{{ post['card']['createdBy']['avatarImage'] }}" alt=""
+                *ngIf="post['card']['createdBy']['avatarImage'] != null && !post['card']['isAnonymous']" />
+            </button>
 
-      <div class="set-12 crdft">
-        <div class="set-6 types">
-          <mat-icon>label</mat-icon>
-          <small>{{card['type']}}</small>
-        </div>
-        <div class="set-6 ctrls">
-          <button type="button" matTooltip="Favorito" matTooltipClass="tooltip" [disabled]="user == null">
-            <mat-icon>favorite</mat-icon>
-          </button>
-          <button type="button" matTooltip="Comentar" matTooltipClass="tooltip" [disabled]="user == null">
-            <mat-icon>forum</mat-icon>
-          </button>
-          <button type="button" matTooltip="Compartir" matTooltipClass="tooltip" (click)="shareCard(card)">
-            <mat-icon>share</mat-icon>
-          </button>
-          <button type="button" matTooltip="Votar" matTooltipClass="tooltip" (click)="openVoteDialog(card)">
-            <mat-icon>star</mat-icon>
-          </button>
-        </div>
-      </div>
-
-      <div class="set-12 crdcom">
-        <div class="set-2">
-          <button type="button" class="avatar"></button>
-        </div>
-        <div class="set-10">
-          <input type="text" placeholder="Escribe un mensaje..." (keyup)="postComment($event, card)">
-        </div>
-      </div>
-
-      <div class="set-12 comlst" *ngIf="card['comments'].length != 0">
-        <div class="set-12 snglcom" *ngFor="let comment of card.comments">
-          <div class="set-2">
-            <div class="avatar">
-              <img [src]="comment['createdBy']['avatarImage']" alt="">
+            <div>
+              <p>
+                <small *ngIf="!post['card']['isAnonymous']">
+                  {{ post['card']["createdBy"]["firstname"] | titlecase }} {{ post['card']["createdBy"]["lastname"] |
+                  titlecase }}
+                </small>
+                <small *ngIf="post['card']['isAnonymous']">Anónimo</small>
+              </p>
+              <p class="dates">
+                <small>
+                  {{ post['card']["createdAt"] | date : "mediumDate" }} - {{ post['card']["createdAt"] | date :
+                  "mediumTime" }}
+                </small>
+              </p>
             </div>
           </div>
+
+          <div class="set-2 ctrls">
+            <button type="button" [matMenuTriggerFor]="menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="openSinglePostDialog(post)">
+                <mat-icon>visibility</mat-icon>
+                <small>Ver más</small>
+              </button>
+            </mat-menu>
+          </div>
+        </div>
+
+        <div class="set-12 crddsc blueb">
+          <div class="set-12" [innerHTML]="utilityService.truncateHTML(post['card']['description'])"></div>
+        </div>
+
+        <div class="set-12 crdvp">
+          <img [src]="post['card']['images'][0]" alt="" class="full" *ngIf="post['card']['images'].length != 0" />
+          <img src="../../assets/images/mexicolectivo-small-blue.png" alt=""
+            *ngIf="post['card']['images'].length == 0" />
+        </div>
+
+        <div class="set-12 crdft">
+          <div class="set-6 types">
+            <mat-icon>label</mat-icon>
+            <small>Denuncia</small>
+          </div>
+          <div class="set-6 ctrls">
+            <button type="button" matTooltip="Favorito" matTooltipClass="tooltip" [disabled]="user == null">
+              <mat-icon>favorite</mat-icon>
+            </button>
+            <button type="button" matTooltip="Comentar" matTooltipClass="tooltip" [disabled]="user == null"
+              (click)="openSinglePostDialog(post)">
+              <mat-icon>forum</mat-icon>
+            </button>
+            <button type="button" matTooltip="Compartir" matTooltipClass="tooltip" (click)="sharePost(post)">
+              <mat-icon>share</mat-icon>
+            </button>
+            <button type="button" matTooltip="Votar" matTooltipClass="tooltip" (click)="openVoteDialog(post)">
+              <mat-icon>star</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- complaint -->
+      <div class="set-12" *ngIf="post['relation'] == 'complaint'">
+        <div class="set-12 crdh greenb">
           <div class="set-10">
-            <small>{{comment['message']}}</small>
+            <button type="button" class="avatar">
+              <span *ngIf="post['card']['createdBy'] == null">A</span>
+              <span *ngIf="post['card']['createdBy'] != null && post['card']['isAnonymous']">A</span>
+
+              <span
+                *ngIf="post['card']['createdBy'] != null && post['card']['createdBy']['avatarImage'] == null && !post['card']['isAnonymous']">
+                {{ post['card']['createdBy']['firstname'] | firstword | firstletter | titlecase }}{{
+                post['card']['createdBy']['lastname'] | firstword | firstletter | titlecase }}
+              </span>
+
+              <img src="{{ post['card']['createdBy']['avatarImage'] }}" alt=""
+                *ngIf="post['card']['createdBy']['avatarImage'] != null && !post['card']['isAnonymous']" />
+            </button>
+
+            <div>
+              <p>
+                <small *ngIf="!post['card']['isAnonymous']">
+                  {{ post['card']["createdBy"]["firstname"] | titlecase }} {{ post['card']["createdBy"]["lastname"] |
+                  titlecase }}
+                </small>
+                <small *ngIf="post['card']['isAnonymous']">Anónimo</small>
+              </p>
+              <p class="dates">
+                <small>
+                  {{ post['card']["createdAt"] | date : "mediumDate" }} - {{ post['card']["createdAt"] | date :
+                  "mediumTime" }}
+                </small>
+              </p>
+            </div>
+          </div>
+
+          <div class="set-2 ctrls">
+            <button type="button" [matMenuTriggerFor]="menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="openSinglePostDialog(post)">
+                <mat-icon>visibility</mat-icon>
+                <small>Ver más</small>
+              </button>
+            </mat-menu>
+          </div>
+        </div>
+
+        <div class="set-12 crddsc greenb">
+          <div class="set-12" [innerHTML]="utilityService.truncateHTML(post['card']['description'])"></div>
+        </div>
+
+        <div class="set-12 crdvp">
+          <img [src]="post['card']['images'][0]" alt="" class="full" *ngIf="post['card']['images'].length != 0" />
+          <img src="../../assets/images/mexicolectivo-small-blue.png" alt=""
+            *ngIf="post['card']['images'].length == 0" />
+        </div>
+
+        <div class="set-12 crdft">
+          <div class="set-6 types">
+            <mat-icon>label</mat-icon>
+            <small>Denuncia</small>
+          </div>
+          <div class="set-6 ctrls">
+            <button type="button" matTooltip="Favorito" matTooltipClass="tooltip" [disabled]="user == null">
+              <mat-icon>favorite</mat-icon>
+            </button>
+            <button type="button" matTooltip="Comentar" matTooltipClass="tooltip" [disabled]="user == null"
+              (click)="openSinglePostDialog(post)">
+              <mat-icon>forum</mat-icon>
+            </button>
+            <button type="button" matTooltip="Compartir" matTooltipClass="tooltip" (click)="sharePost(post)">
+              <mat-icon>share</mat-icon>
+            </button>
+            <button type="button" matTooltip="Votar" matTooltipClass="tooltip" (click)="openVoteDialog(post)">
+              <mat-icon>star</mat-icon>
+            </button>
           </div>
         </div>
       </div>

@@ -171,7 +171,9 @@ export class EndPointService {
   public authorizationAssociationEndpoint: string = '/association/';
   public uploadAvatarAssociationImageEndPoint: string = '/association/';
 
-
+  // posts
+  public fetchAllPostsEndPoint: string = '/post';
+  public fetchPostByRelationIdEndPoint: string = '/post/';
 
   constructor() { }
 }

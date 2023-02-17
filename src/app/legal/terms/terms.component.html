@@ -1,30 +1,39 @@
-<div class="innerhldr" [class.fixmob]="isMobile">
-  <p>Las personas propietarias de la plataforma digital somos un grupo de personas mexicanas de origen diverso, que
-    desde la ciudadanía compartimos la voluntad que nuestro país desarrollé soluciones colectivas a las problemáticas
-    diversas y pueda salir adelante por las múltiples crisis que enfrentamos como sociedad. </p>
+<div class="set-12 innerhldr" [class.fixmob]="isMobile">
+  <div class="set-12 loading" *ngIf="!isDataAvailable">
+    <mat-spinner></mat-spinner>
+  </div>
 
-  <p>La plataforma es una herramienta para que integrantes de la sociedad civil, de la academía, de los movimientos
-    sociales y de la ciudadanía en general participen para opinar, crear, construir en colectivo, compartir,
-    intercambiar ideas e incidir desde el presente rumbo a un futuro más justo, próspero e incluyente. </p>
+  <div *ngIf="isDataAvailable">
+    <p>Las personas propietarias de la plataforma digital somos un grupo de personas mexicanas de origen diverso, que
+      desde la ciudadanía compartimos la voluntad que nuestro país desarrollé soluciones colectivas a las problemáticas
+      diversas y pueda salir adelante por las múltiples crisis que enfrentamos como sociedad. </p>
 
-  <p>Se cuenta con una reflexión base como punto de partida pretendiendo fungir como un documento vivo, resultado del
-    pensamiento colectivo, que se vaya ajustando en el tiempo con comentarios, observaciones, testimonios y propuestas
-    de las personas participantes.</p>
+    <p>La plataforma es una herramienta para que integrantes de la sociedad civil, de la academía, de los movimientos
+      sociales y de la ciudadanía en general participen para opinar, crear, construir en colectivo, compartir,
+      intercambiar ideas e incidir desde el presente rumbo a un futuro más justo, próspero e incluyente. </p>
 
-  <p>Se publican estadísticas de participación en diferentes cortes.</p>
+    <p>Se cuenta con una reflexión base como punto de partida pretendiendo fungir como un documento vivo, resultado del
+      pensamiento colectivo, que se vaya ajustando en el tiempo con comentarios, observaciones, testimonios y propuestas
+      de las personas participantes.</p>
 
-  <p>La plataforma es un espacio abierto e incluyente en el cual se podrá participar sin importar edad, género,raza,
-    clase social o religión.</p>
+    <p>Se publican estadísticas de participación en diferentes cortes.</p>
 
-  <p>La participación es totalmente gratuita y la información será protegida con base en los términos del Aviso de
-    Privacidad.</p>
+    <p>La plataforma es un espacio abierto e incluyente en el cual se podrá participar sin importar edad, género,raza,
+      clase social o religión.</p>
 
-  <p>Mexicolectivo aspira a ser un espacio seguro donde coexista la pluralidad de ideas e información. Creemos y
-    promovemos la libertad de expresión siempre con respeto e inclusión en la diversidad. Cualquier comentario
-    discriminatorio, fóbico, de insultos o de promoción del discurso de odio se podrá denunciar y será eliminado de la
-    plataforma con un primer aviso a la persona usuaria por parte de la administración de la página. En caso de que el
-    comportamiento de agresión sea reiterativo, la administración procederá a la eliminación de la cuenta de la persona
-    usuaria. </p>
+    <p>La participación es totalmente gratuita y la información será protegida con base en los términos del Aviso de
+      Privacidad.</p>
+
+    <p>Mexicolectivo aspira a ser un espacio seguro donde coexista la pluralidad de ideas e información. Creemos y
+      promovemos la libertad de expresión siempre con respeto e inclusión en la diversidad. Cualquier comentario
+      discriminatorio, fóbico, de insultos o de promoción del discurso de odio se podrá denunciar y será eliminado de la
+      plataforma con un primer aviso a la persona usuaria por parte de la administración de la página. En caso de que el
+      comportamiento de agresión sea reiterativo, la administración procederá a la eliminación de la cuenta de la
+      persona
+      usuaria. </p>
+  </div>
 </div>
 
-<div class="app-footer"></div>
+<div class="set-12 foot">
+  <div class="app-footer"></div>
+</div>

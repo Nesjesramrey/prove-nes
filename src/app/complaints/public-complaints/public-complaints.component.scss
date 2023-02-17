@@ -38,6 +38,7 @@
       background: blueviolet;
       margin-right: 20px;
       overflow: hidden;
+
       img {
         width: 100%;
         height: 100%;
@@ -173,14 +174,17 @@
   margin: 0 !important;
   width: 100%;
   float: left;
-  .mat-card{
-  border-radius: 0px !important;
-  border: none;
-  box-shadow: none;
-}
+
+  .mat-card {
+    border-radius: 0px !important;
+    border: none;
+    box-shadow: none;
+  }
+
   .crdlst {
     width: 100% !important;
     margin: 0 !important;
+
     mat-card:not(:last-child) {
       margin-bottom: 10px;
     }

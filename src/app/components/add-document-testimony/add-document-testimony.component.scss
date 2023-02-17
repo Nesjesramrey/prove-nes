@@ -1,8 +1,8 @@
 :host {
   padding: 20px;
   float: left;
-  width: 70%;
-  margin: 0 15%;
+  width: 40%;
+  margin: 0 30%;
 
   ::ng-deep .mat-step-header:hover,
   ::ng-deep .mat-step-header {
@@ -40,10 +40,44 @@
   .dialog-head {
     display: flex;
     align-items: center;
+
+    .set-3 {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      * {
+        margin: 0;
+      }
+
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        * {
+          margin: 0;
+        }
+      }
+    }
   }
 
   .dialog-body {
     margin-top: 20px;
+  }
+
+  .publishas {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    * {
+      margin: 0;
+    }
+
+    button {
+      margin-left: 10px;
+    }
   }
 
   .editor-form {

@@ -14,14 +14,15 @@ export class TestimonyService {
 
   fetchSingleTestimonyById(data: any) {
     return this.httpClient.get(
-      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchSingleTestimonyByIdEndPoint+ `${data['testimonyID']}`, {}
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchSingleTestimonyByIdEndPoint + `${data['testimonyID']}`, {}
     );
   }
 
   createNewTestimony(data: any) {
     return this.httpClient.post(
       // this.endpointSrvc.apiEndPoint + this.endpointSrvc.createNewTestimonyEndPoint + `${data.id}` + `/?type=${data.type}`, data['formData']
-      this.endpointSrvc.apiEndPoint + this.endpointSrvc.createNewTestimonyEndPoint + `${data.id}`, data['formData']
+      // this.endpointSrvc.apiEndPoint + this.endpointSrvc.createNewTestimonyEndPoint + `${data.id}`, data['formData']
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.createNewTestimonyEndPoint, data['formData']
     );
   }
 
