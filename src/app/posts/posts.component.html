@@ -33,12 +33,12 @@
               </span>
 
               <img src="{{ post['card']['createdBy']['avatarImage'] }}" alt=""
-                *ngIf="post['card']['createdBy']['avatarImage'] != null && !post['card']['isAnonymous']" />
+                *ngIf="post['card']['createdBy'] != null && post['card']['createdBy']['avatarImage'] != null && !post['card']['isAnonymous']" />
             </button>
 
             <div>
               <p>
-                <small *ngIf="!post['card']['isAnonymous']">
+                <small *ngIf="post['card']['createdBy'] != null && !post['card']['isAnonymous']">
                   {{ post['card']["createdBy"]["firstname"] | titlecase }} {{ post['card']["createdBy"]["lastname"] |
                   titlecase }}
                 </small>
@@ -114,12 +114,12 @@
               </span>
 
               <img src="{{ post['card']['createdBy']['avatarImage'] }}" alt=""
-                *ngIf="post['card']['createdBy']['avatarImage'] != null && !post['card']['isAnonymous']" />
+                *ngIf="post['card']['createdBy'] != null && post['card']['createdBy']['avatarImage'] != null && !post['card']['isAnonymous']" />
             </button>
 
             <div>
               <p>
-                <small *ngIf="!post['card']['isAnonymous']">
+                <small *ngIf="post['card']['createdBy'] != null && !post['card']['isAnonymous']">
                   {{ post['card']["createdBy"]["firstname"] | titlecase }} {{ post['card']["createdBy"]["lastname"] |
                   titlecase }}
                 </small>
