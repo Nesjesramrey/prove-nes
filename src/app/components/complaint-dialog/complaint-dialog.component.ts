@@ -73,6 +73,7 @@ export class ComplaintDialogComponent implements OnInit {
   ) {
     // console.log(this.dialogData);
     this.user = this.dialogData['user'];
+    if (this.user == null) { this.isAnonymous = true; }
   }
 
   ngOnInit(): void {
