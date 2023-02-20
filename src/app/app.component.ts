@@ -14,6 +14,7 @@ import { response } from 'express';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { trigger, transition, animate, style } from '@angular/animations';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { ComplaintDialogComponent } from './components/complaint-dialog/complaint-dialog.component';
 
 const STYLES = (theme: ThemeVariables, ref: ThemeRef) => {
   const __ = ref.selectorsOf(STYLES);
@@ -88,11 +89,11 @@ export class AppComponent implements OnInit {
       });
 
     this.documentService.fetchCoverDocument().subscribe({
-      error: (error: any) => {},
+      error: (error: any) => { },
       next: (reply: any) => {
         this.coverDocument = reply;
       },
-      complete: () => {},
+      complete: () => { },
     });
 
     if (this.accessToken != null) {
@@ -112,7 +113,7 @@ export class AppComponent implements OnInit {
             this.openCompleteRegistration();
           }
         },
-        complete: () => {},
+        complete: () => { },
       });
     } else {
       setTimeout(() => {
@@ -121,7 +122,7 @@ export class AppComponent implements OnInit {
     }
 
     this.documentService.fetchCoverDocument().subscribe({
-      error: (error: any) => {},
+      error: (error: any) => { },
       next: (reply: any) => {
         this.document = reply;
       },
@@ -228,5 +229,20 @@ export class AppComponent implements OnInit {
   displayProfileMenu() {
     this.isProfile = !this.isProfile;
     this.openProfileMenu.emit({ open: this.isProfile });
+  }
+
+  popComplaintsDialog() {
+    const dialogRef = this.dialog.open<any>(ComplaintDialogComponent, {
+      width: '100%',
+      data: {
+        user: this.user
+      },
+      disableClose: true,
+      panelClass: 'full-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
   }
 }
