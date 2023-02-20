@@ -330,6 +330,10 @@ export class AssociationRegisterComponent implements OnInit {
 
           complete: () => { },
         });
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
       },
       complete: () => {
         this.killDialog();

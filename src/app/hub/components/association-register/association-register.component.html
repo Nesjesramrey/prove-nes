@@ -25,11 +25,15 @@
       </div>
 
       <div class="set-12 search-hldr" *ngIf="isMobile">
+<<<<<<< Updated upstream
         <form
           class="set-12"
           [formGroup]="searchFormGroup"
           (submit)="onSearch(searchFormGroup)"
         >
+=======
+        <form class="set-12" [formGroup]="searchFormGroup" (submit)="onSearch(searchFormGroup)">
+>>>>>>> Stashed changes
           <div class="set-12">
             <mat-form-field appearance="outline">
               <mat-label>Buscar tu asociación</mat-label>
@@ -38,15 +42,21 @@
                 <mat-icon>cancel</mat-icon>
               </button>
               <mat-hint>
+<<<<<<< Updated upstream
                 <small
                   >** Presiona <strong>ENTER</strong> o
                   <strong>BUSCAR</strong> después de escribir tu busqueda</small
                 >
+=======
+                <small>** Presiona <strong>ENTER</strong> o <strong>BUSCAR</strong> después de escribir tu
+                  busqueda</small>
+>>>>>>> Stashed changes
               </mat-hint>
             </mat-form-field>
           </div>
 
           <div class="set-12 searchButton">
+<<<<<<< Updated upstream
             <button
               type="button"
               mat-raised-button
@@ -54,26 +64,38 @@
               (click)="onSearch(searchFormGroup)"
               [disabled]="submitted"
             >
+=======
+            <button type="button" mat-raised-button color="warn" (click)="onSearch(searchFormGroup)"
+              [disabled]="submitted">
+>>>>>>> Stashed changes
               <small>Buscar</small>
             </button>
             <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
           </div>
 
+<<<<<<< Updated upstream
           <div
             class="set-12 innerhldr"
             *ngIf="isDataAvailable"
             [class.fixmob]="isMobile"
           >
+=======
+          <div class="set-12 innerhldr" *ngIf="isDataAvailable" [class.fixmob]="isMobile">
+>>>>>>> Stashed changes
             <div class="set-12" *ngIf="isNotAssociationAvailable">
               <div class="set-12 listhldr">
                 <p>
                   <strong>No hay resultados que mostrar.</strong>
                 </p>
                 <p>
+<<<<<<< Updated upstream
                   <small
                     >Para registrarte deberas acreditar la representación de tu
                     organización</small
                   >
+=======
+                  <small>Para registrarte deberas acreditar la representación de tu organización</small>
+>>>>>>> Stashed changes
                 </p>
               </div>
             </div>
@@ -97,6 +119,7 @@
                     ></small>
                   </p>
                   <div class="set-12 joinButton">
+<<<<<<< Updated upstream
                     <button
                       *ngIf="association.createdBy === user._id"
                       class="typeMember"
@@ -113,6 +136,13 @@
                       color="primary"
                       (click)="joinAssociation(association._id)"
                     >
+=======
+                    <button *ngIf="association.createdBy === user._id" class="typeMember" type="button"
+                      mat-raised-button color="accent">
+                      <small>Administrador</small>
+                    </button>
+                    <button *ngIf="association.createdBy != user._id" type="button" mat-raised-button color="primary">
+>>>>>>> Stashed changes
                       <small>Unirme</small>
                     </button>
                   </div>
@@ -212,12 +242,7 @@
           <h3>¡Participa!</h3>
         </div>
         <div class="set-2 txt-right">
-          <button
-            type="button"
-            mat-mini-fab
-            color="primary"
-            (click)="killDialog()"
-          >
+          <button type="button" mat-mini-fab color="primary" (click)="killDialog()">
             <mat-icon>cancel</mat-icon>
           </button>
         </div>
@@ -225,6 +250,10 @@
       <div class="set-12 category">
         <p class="txt-center" *ngIf="!viewSubLayouts">
           Selecciona las categorías de tu interés.
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
         </p>
         <p class="txt-center"><mat-icon>touch_app</mat-icon></p>
       </div>
@@ -232,6 +261,7 @@
       <div class="dialog-1" *ngIf="!viewSubLayouts">
         <div class="left-point"></div>
         <div class="categories">
+<<<<<<< Updated upstream
           <mat-checkbox
             class="set-12"
             *ngFor="let layout of layouts"
@@ -239,6 +269,10 @@
             (change)="updateSelection(layout, $event)"
             [labelPosition]="labelPosition"
           >
+=======
+          <mat-checkbox class="set-12" *ngFor="let layout of layouts" [value]="layout"
+            (change)="updateSelection(layout, $event)" [labelPosition]="labelPosition">
+>>>>>>> Stashed changes
             <span class="checkbox-label">{{ layout.category.name }}</span>
           </mat-checkbox>
         </div>
@@ -286,16 +320,18 @@
         </div>
       </div>
       <form [formGroup]="dataComercialFormGroup">
+<<<<<<< Updated upstream
         <mat-form-field
           *ngIf="
+=======
+
+        <mat-form-field *ngIf="
+>>>>>>> Stashed changes
             associationType == '6399e5c7c878ad9b63dde6a2' ||
             associationType == '6399e5c7c878ad9b63dde6a3' ||
             associationType == '6399e5c7c878ad9b63dde6a4'
-          "
-          appearance="outline"
-        >
-          <mat-label
-            *ngIf="
+          " appearance="outline">
+          <mat-label *ngIf="
               associationType == '6399e5c7c878ad9b63dde6a2' ||
               associationType == '6399e5c7c878ad9b63dde6a3'
             "
@@ -346,8 +382,7 @@
           </mat-select>
         </mat-form-field>
 
-        <div
-          *ngIf="
+        <div *ngIf="
             associationType == '6399e5c7c878ad9b63dde6a2' ||
             associationType == '6399e5c7c878ad9b63dde6a3' ||
             associationType == '6399e5c7c878ad9b63dde6a4'
@@ -363,8 +398,13 @@
           >
             <!-- <mat-icon><small>attach_file</small></mat-icon> -->
 
+<<<<<<< Updated upstream
             <small *ngIf="associationType == '6399e5c7c878ad9b63dde6a2'"
               >Adjuntar <strong>Acta Constitutiva</strong>
+=======
+            <small *ngIf="associationType == '6399e5c7c878ad9b63dde6a2'">Adjuntar <strong>Acta Constitutiva</strong>
+
+>>>>>>> Stashed changes
             </small>
             <small
               *ngIf="

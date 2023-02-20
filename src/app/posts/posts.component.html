@@ -17,6 +17,7 @@
   </div> -->
 
   <div class="crdlst">
+<<<<<<< Updated upstream
     <mat-card *ngFor="let post of posts">
       <!-- testimony -->
       <div class="set-12" *ngIf="post['relation'] == 'testimony'">
@@ -25,6 +26,23 @@
             <button type="button" class="avatar">
               <span *ngIf="post['card']['createdBy'] == null">A</span>
               <span *ngIf="post['card']['createdBy'] != null && post['card']['isAnonymous']">A</span>
+=======
+    <mat-card *ngFor="let card of cards">
+      <div class="set-12 crdh">
+        <button type="button" class="avatar"></button>
+        <div>
+          <p>
+            <small *ngIf="!card['isAnonymous'] && card['createdBy'] != null">
+              {{card['createdBy']['firstname']}} {{card['createdBy']['lastname']}}
+            </small>
+            <small *ngIf="card['isAnonymous']">Anónimo</small>
+          </p>
+          <p class="dates">
+            <small>{{card['createdAt'] | date: 'mediumDate'}} - {{card['createdAt'] | date: 'mediumTime'}}</small>
+          </p>
+        </div>
+      </div>
+>>>>>>> Stashed changes
 
               <span
                 *ngIf="post['card']['createdBy'] != null && post['card']['createdBy']['avatarImage'] == null && !post['card']['isAnonymous']">
@@ -70,6 +88,7 @@
           <div class="set-12" [innerHTML]="utilityService.truncateHTML(post['card']['description'])"></div>
         </div>
 
+<<<<<<< Updated upstream
         <div class="set-12 crdvp">
           <img [src]="post['card']['images'][0]" alt="" class="full" *ngIf="post['card']['images'].length != 0" />
           <img src="../../assets/images/mexicolectivo-small-blue.png" alt=""
@@ -176,6 +195,26 @@
             <button type="button" matTooltip="Votar" matTooltipClass="tooltip" (click)="openVoteDialog(post)">
               <mat-icon>star</mat-icon>
             </button>
+=======
+      <div class="set-12 crdcom">
+        <div class="set-2">
+          <button type="button" class="avatar"></button>
+        </div>
+        <div class="set-10">
+          <input type="text" placeholder="Escribe un mensaje..." (keyup)="postComment($event, card)">
+        </div>
+      </div>
+
+      <div class="set-12 comlst" *ngIf="card['comments'].length != 0">
+        <div class="set-12 snglcom" *ngFor="let comment of card.comments">
+          <div class="set-2">
+            <div class="avatar">
+              <img [src]="comment['createdBy']['avatarImage']" alt="">
+            </div>
+          </div>
+          <div class="set-10">
+            <small>{{comment['message']}}</small>
+>>>>>>> Stashed changes
           </div>
         </div>
       </div>

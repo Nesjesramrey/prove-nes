@@ -13,11 +13,18 @@
 <div class="set-12 dialog-body">
   <div class="set-12 publishas">
     <small>Publicar como:</small>
+<<<<<<< Updated upstream
     <button type="button" mat-button color="warn" (click)="visibility()" class="anon" [disabled]="user == null">
       <div class="set-12" *ngIf="!isAnonymous">
         <mat-icon>visibility</mat-icon>
         <small *ngIf="user != null">{{user.firstname}} {{user.lastname}}</small>
         <small *ngIf="user == null">Anónimo</small>
+=======
+    <button type="button" mat-button color="warn" (click)="visibility()" class="anon">
+      <div class="set-12" *ngIf="!isAnonymous">
+        <mat-icon>visibility</mat-icon>
+        <small>{{user.firstname}} {{user.lastname}}</small>
+>>>>>>> Stashed changes
       </div>
       <div class="set-12" *ngIf="isAnonymous">
         <mat-icon>visibility_off</mat-icon>

@@ -23,7 +23,11 @@ export class PostsComponent implements OnInit {
   public isDataAvailable: boolean = false;
   public user: any = null;
   @HostBinding('class') public class: string = '';
+<<<<<<< Updated upstream
   public posts: any = null;
+=======
+  public today: any = null;
+>>>>>>> Stashed changes
 
   constructor(
     public deviceDetectorService: DeviceDetectorService,
@@ -42,12 +46,15 @@ export class PostsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.today = new Date();
+
     this.userService.fetchFireUser().subscribe({
       error: (error: any) => { },
       next: (reply: any) => { this.user = reply; },
       complete: () => { }
     });
 
+<<<<<<< Updated upstream
     this.postsService.fetchAllPosts({ limit: 100, page: 1 }).subscribe({
       error: (error: any) => { },
       next: (reply: any) => {
@@ -67,6 +74,29 @@ export class PostsComponent implements OnInit {
         this.isDataAvailable = true;
         // console.log(this.posts);
       }
+=======
+    let testimonials: Observable<any> = this.testimonyService.fetchAllTestimonies();
+    let complaints: Observable<any> = this.complaintService.fetchAllComplaints();
+
+    forkJoin([testimonials, complaints]).subscribe((reply: any) => {
+      this.testimonials = reply[0];
+      // this.testimonials = [];
+      this.testimonials.filter((x: any) => { x['type'] = 'Testimonio'; });
+
+      this.complaints = reply[1];
+      this.complaints.filter((x: any) => { x['type'] = 'Denuncia'; });
+
+      this.cards = [...this.testimonials, ...this.complaints];
+      this.cards.filter((x: any) => { x['comments'] = []; });
+      console.log(this.cards);
+      this.cards.sort(() => Math.random() - 0.5);
+      this.cards.filter((x: any) => {
+        let date = new Date(x['createdAt']);
+      });
+      // console.log(this.cards);
+
+      this.isDataAvailable = true;
+>>>>>>> Stashed changes
     });
   }
 

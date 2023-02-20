@@ -118,6 +118,7 @@ export class TestimonyDialogComponent implements OnInit {
 
   onFileTestimony(form: FormGroup) {
     this.submitted = true;
+<<<<<<< Updated upstream
     // let data = new FormData();
 
     let data = {
@@ -130,11 +131,24 @@ export class TestimonyDialogComponent implements OnInit {
     data['formData'].append('type', 'testimony');
     data['formData'].append('description', this.testimonyFormGroup.value.description);
     data['formData'].append('isAnonymous', (this.isAnonymous).toString());
+=======
+    let data = new FormData();
+
+    Array.from(this.testimonyFormGroup.controls['files']['value'])
+      .forEach((file: any) => { data.append('files', file); });
+    data.append('title', this.testimonyFormGroup.value.title);
+    data.append('description', this.testimonyFormGroup.value.description);
+    data.append('isAnonymous', (this.isAnonymous).toString());
+>>>>>>> Stashed changes
 
     this.testuimonyServive.createNewTestimony(data).subscribe({
       error: (error: any) => {
         this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+<<<<<<< Updated upstream
         this.killDialog();
+=======
+        this, this.killDialog();
+>>>>>>> Stashed changes
       },
       next: (reply: any) => {
         this.postURL = 'https://mexicolectivo.com/posts/' + reply['_id'];
