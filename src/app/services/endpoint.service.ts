@@ -135,6 +135,7 @@ export class EndPointService {
 
   // favorites
   public addFavoritesEndPoint: string = '/favorites/';
+  public deleteFavoritesEndPoint: string = '/favorites/';
   public updateFavoritesEndPoint: string = '/favorites/';
   public fetchFavoritesFromlayoutEndPoint: string = '/favorites/layout/';
   public fetchFavoritesFromTopicEndPoint: string = '/favorites/topic/';
@@ -174,6 +175,7 @@ export class EndPointService {
   // posts
   public fetchAllPostsEndPoint: string = '/post';
   public fetchPostByRelationIdEndPoint: string = '/post/';
+  public addPostCommentEndPoint: string = '/post/';
 
   constructor() { }
 }

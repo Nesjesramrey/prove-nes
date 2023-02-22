@@ -6,7 +6,7 @@
   <div class="set-12 top-tools">
     <div class="set-6">
       <mat-form-field appearance="outline">
-        <mat-label>Búscar usuario...</mat-label>
+        <mat-label>Buscar usuario...</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Andrea" autocomplete="off"
           [disabled]="conversations.length == 0">
         <mat-icon matSuffix>groups</mat-icon>
@@ -37,7 +37,7 @@
 
         <div class="set-1">
           <button type="submit" class="roundblue roundbluemini" [disabled]="searchByDateFormGroup.invalid"
-            matTooltip="Búscar" matTooltipClass="tooltip">
+            matTooltip="Buscar" matTooltipClass="tooltip">
             <mat-icon>search</mat-icon>
           </button>
         </div>

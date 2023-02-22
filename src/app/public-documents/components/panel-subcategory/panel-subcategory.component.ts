@@ -1,4 +1,3 @@
-import { S } from '@angular/cdk/keycodes';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -49,24 +48,22 @@ export class PanelSubcategoryComponent implements OnInit {
   loadSubcategories() {
     let maxX = 250;
     let maxY = 700;
-
     this.categories = this.data.map((item) => {
       item.shortTitle = this.shortTitle(item.title, 4);
       item.size = item._id === this.selectedID ? 38 : 20;
       item.opacity = item._id === this.selectedID ? 1 : 0.8;
-      if (item.title.length > 12) {
+      if (item.title.length > 10) {
         maxX = 250;
       } else {
         maxX = 450;
       }
-
       item.pos = {
         x: Math.floor(Math.random() * (maxX + 1) - 190),
         y: Math.floor(Math.random() * (maxY + 1) + 0),
       };
-
       return item;
     });
+    this.categories = this.categories.slice(0, 10);
   }
 
   shortTitle(title: string, size: number) {

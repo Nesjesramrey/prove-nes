@@ -5,8 +5,8 @@
 <div class="set-12" *ngIf="isDataAvailable">
   <!-- <div class="set-12 headctrls">
     <mat-form-field appearance="outline">
-      <mat-label>Búscar...</mat-label>
-      <input matInput placeholder="Búscar..." />
+      <mat-label>Buscar...</mat-label>
+      <input matInput placeholder="Buscar..." />
       <button type="button" matSuffix>
         <mat-icon>cancel</mat-icon>
       </button>
@@ -79,20 +79,33 @@
         <div class="set-12 crdft">
           <div class="set-6 types">
             <mat-icon>label</mat-icon>
-            <small>Denuncia</small>
+            <small>Testimonio</small>
           </div>
           <div class="set-6 ctrls">
-            <button type="button" matTooltip="Favorito" matTooltipClass="tooltip" [disabled]="user == null">
-              <mat-icon>favorite</mat-icon>
-            </button>
-            <button type="button" matTooltip="Comentar" matTooltipClass="tooltip" [disabled]="user == null"
-              (click)="openSinglePostDialog(post)">
+            <button type="button" matTooltip="Comentar" matTooltipClass="tooltip" (click)="openSinglePostDialog(post)">
               <mat-icon>forum</mat-icon>
             </button>
             <button type="button" matTooltip="Compartir" matTooltipClass="tooltip" (click)="sharePost(post)">
               <mat-icon>share</mat-icon>
             </button>
-            <button type="button" matTooltip="Votar" matTooltipClass="tooltip" (click)="openVoteDialog(post)">
+
+            <button type="button" matTooltip="Favorito" matTooltipClass="tooltip" (click)="handleFavorite(post)"
+              *ngIf="user != null">
+              <mat-icon [color]="post['card']['favorites'] != undefined && 
+              post['card']['favorites']['createdBy'] == user['_id'] ? 'warn' : 'primary'">favorite</mat-icon>
+            </button>
+            <button type="button" matTooltip="Favorito" matTooltipClass="tooltip" (click)="handleFavorite(post)"
+              *ngIf="user == null">
+              <mat-icon>favorite</mat-icon>
+            </button>
+
+            <button type="button" matTooltip="Votar" matTooltipClass="tooltip" (click)="openVoteDialog(post)"
+              *ngIf="user != null">
+              <mat-icon [color]="post['card']['vote'] != undefined && 
+              post['card']['vote']['createdBy'] == user['_id'] ? 'warn' : 'primary'">star</mat-icon>
+            </button>
+            <button type="button" matTooltip="Votar" matTooltipClass="tooltip" (click)="openVoteDialog(post)"
+              *ngIf="user == null">
               <mat-icon>star</mat-icon>
             </button>
           </div>
@@ -163,17 +176,30 @@
             <small>Denuncia</small>
           </div>
           <div class="set-6 ctrls">
-            <button type="button" matTooltip="Favorito" matTooltipClass="tooltip" [disabled]="user == null">
-              <mat-icon>favorite</mat-icon>
-            </button>
-            <button type="button" matTooltip="Comentar" matTooltipClass="tooltip" [disabled]="user == null"
-              (click)="openSinglePostDialog(post)">
+            <button type="button" matTooltip="Comentar" matTooltipClass="tooltip" (click)="openSinglePostDialog(post)">
               <mat-icon>forum</mat-icon>
             </button>
             <button type="button" matTooltip="Compartir" matTooltipClass="tooltip" (click)="sharePost(post)">
               <mat-icon>share</mat-icon>
             </button>
-            <button type="button" matTooltip="Votar" matTooltipClass="tooltip" (click)="openVoteDialog(post)">
+
+            <button type="button" matTooltip="Favorito" matTooltipClass="tooltip" (click)="handleFavorite(post)"
+              *ngIf="user != null">
+              <mat-icon [color]="post['card']['favorites'] != undefined && 
+              post['card']['favorites']['createdBy'] == user['_id'] ? 'warn' : 'primary'">favorite</mat-icon>
+            </button>
+            <button type="button" matTooltip="Favorito" matTooltipClass="tooltip" (click)="handleFavorite(post)"
+              *ngIf="user == null">
+              <mat-icon>favorite</mat-icon>
+            </button>
+
+            <button type="button" matTooltip="Votar" matTooltipClass="tooltip" (click)="openVoteDialog(post)"
+              *ngIf="user != null">
+              <mat-icon [color]="post['card']['vote'] != undefined && 
+              post['card']['vote']['createdBy'] == user['_id'] ? 'warn' : 'primary'">star</mat-icon>
+            </button>
+            <button type="button" matTooltip="Votar" matTooltipClass="tooltip" (click)="openVoteDialog(post)"
+              *ngIf="user == null">
               <mat-icon>star</mat-icon>
             </button>
           </div>

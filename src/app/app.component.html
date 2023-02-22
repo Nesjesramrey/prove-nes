@@ -35,6 +35,12 @@
       <button type="button" (click)="utilityService.linkMe('/hub/signup-mobile'); open = !open">
         <mat-icon>app_registration</mat-icon> Registro
       </button>
+      <button type="button" (click)="popComplaintsDialog(); open = !open">
+        <mat-icon>priority_high</mat-icon> Denuncia
+      </button>
+      <button class="mt-4" type="button" (click)="utilityService.linkMe('/posts'); open = !open">
+        <mat-icon>edit_note</mat-icon> <span>Publicaciones</span>
+      </button>
     </div>
   </div>
 
@@ -74,12 +80,15 @@
         <button type="button" (click)="linkMe('profile')">
           <mat-icon>person</mat-icon> <span>Mi perfil</span>
         </button>
-        <button type="button" (click)="linkMe('associations')">
+        <button class="mt-4" type="button" (click)="utilityService.linkMe('/posts'); open = !open">
+          <mat-icon>edit_note</mat-icon> <span>Publicaciones</span>
+        </button>
+        <!-- <button type="button" (click)="linkMe('associations')">
           <mat-icon>groups</mat-icon> <span>Mis asociaciones</span>
         </button>
-        <!-- <button type="button" (click)="linkMe('documents')">
+        <button type="button" (click)="linkMe('documents')">
           <mat-icon>description</mat-icon> <span>Mis Documentos</span>
-        </button> -->
+        </button>
         <button type="button" (click)="linkMe('complaint')">
           <mat-icon>warning</mat-icon> <span>Denuncias</span>
         </button>
@@ -88,7 +97,7 @@
         </button>
         <button type="button" (click)="linkMe('configuration')">
           <mat-icon>settings</mat-icon> <span>Configuración</span>
-        </button>
+        </button> -->
         <button class="mt-4" type="button" (click)="onSignOut()">
           <mat-icon>power_settings_new</mat-icon> <span>Salir</span>
         </button>

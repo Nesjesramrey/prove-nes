@@ -1,6 +1,6 @@
 <form class="set-12" [formGroup]="searchFormGroup" (submit)="onSearch(searchFormGroup)">
   <mat-form-field appearance="outline">
-    <mat-label>Búscar en Mexicolectivo...</mat-label>
+    <mat-label>Buscar en Mexicolectivo...</mat-label>
     <input type="text" matInput cdkFocusInitial formControlName="search">
     <button type="button" matSuffix>
       <mat-icon>search</mat-icon>
@@ -13,7 +13,7 @@
     </button>
     <button type="submit" mat-raised-button color="primary" [disabled]="searchFormGroup.invalid">
       <!-- <mat-icon>search</mat-icon> -->
-      <small>Búscar</small>
+      <small>Buscar</small>
     </button>
   </div>
 </form>

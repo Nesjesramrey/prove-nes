@@ -134,49 +134,6 @@ export class SubcategoryComponent implements OnInit {
         this.isDataAvailable = true;
       });
     });
-
-    // *** load document
-    // this.documentService.fetchSingleDocumentById({ _id: this.documentID }).subscribe({
-    //   error: (error: any) => { },
-    //   next: (reply: any) => {
-    //     this.document = reply;
-    //     this.coverage = this.document['coverage'];
-    //     if (this.coverageSelected == null) {
-    //       let coverageSelected = this.coverage.filter((x: any) => { return x['name'] == 'Nacional'; });
-    //       this.coverageSelected = coverageSelected[0]['_id'] || this.coverage[0]['_id'];
-    //     };
-
-    //     let category = this.document['layouts'].filter((x: any) => { return x['_id'] == this.categoryID });
-    //     this.category = category[0];
-
-    //     let subcategory = this.category['subLayouts'].filter((x: any) => { return x['_id'] == this.subcategoryID });
-    //     this.subcategory = subcategory[0];
-    //     this.stats = this.subcategory['stats'];
-
-    //     this.topicsDataSource = this.subcategory['topics'];
-    //     this.subcategory['topics'].filter((x: any) => {
-    //       x['coverage'].filter((y: any) => {
-    //         if (y['_id'] == this.coverageSelected) { this.panelTopicsData.push(x); }
-    //       });
-    //     });
-
-    //     const dataSolution: any = [];
-    //     this.subcategory.topics.map((item: any) => [...item.solutions]).forEach((_: any, index: number) => {
-    //       dataSolution.push(...this.subcategory.topics.map((item: any) => [...item.solutions])[index]);
-    //     });
-    //     dataSolution.filter((x: any) => {
-    //       x['coverage'].filter((y: any) => {
-    //         if (y['_id'] == this.coverageSelected) { this.solutionsDataSource.push(x); }
-    //       });
-    //     });
-
-    //     this.TopicDataSource = new CustomMatDataSource(this.panelTopicsData);
-    //     this.SolutionDataSource = new CustomMatDataSource(this.solutionsDataSource);
-    //   },
-    //   complete: () => {
-    //     this.isDataAvailable = true;
-    //   }
-    // });
   }
 
   redirectSolution(id: string) {

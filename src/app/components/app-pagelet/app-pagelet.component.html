@@ -6,7 +6,7 @@
 
     <div class="set-8 search-hldr" *ngIf="!isMobile">
       <form [formGroup]="searchFormGroup" (submit)="onSearch(searchFormGroup)">
-        <input type="text" placeholder="Búscar en Mexicolectivo..." class="bar-search" formControlName="search" />
+        <input type="text" placeholder="Buscar en Mexicolectivo..." class="bar-search" formControlName="search" />
       </form>
     </div>
   </div>
@@ -117,12 +117,12 @@
   </div>
 
   <div class="set-6 navigation" *ngIf="isMobile">
-    <button type="button" class="btn-ico" *ngIf="user != null" (click)="linkMe('notifications')"
+    <!-- <button type="button" class="btn-ico" *ngIf="user != null" (click)="linkMe('notifications')"
       matTooltip="Notificaciones" matTooltipClass="tooltip">
       <mat-icon [matBadge]="unreadNotifications" matBadgeColor="warn" *ngIf="unreadNotifications != 0">notifications
       </mat-icon>
       <mat-icon *ngIf="unreadNotifications == 0">notifications</mat-icon>
-    </button>
+    </button> -->
 
     <button type="button" (click)="popSearchDialog()">
       <mat-icon color="accent">search</mat-icon>
