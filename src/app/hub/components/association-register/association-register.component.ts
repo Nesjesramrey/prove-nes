@@ -192,36 +192,36 @@ export class AssociationRegisterComponent implements OnInit {
   onFileSelected(event: any, typeofFile: any) {
 
     this.validateSize(event.target);
-    switch(typeofFile){
-    case 'constitutiveAct':
-      this.dataComercialFormGroup.patchValue({ constitutiveAct: event.target.files[0] });
-      this.dataComercialFormGroup.updateValueAndValidity();
-      break;
+    switch (typeofFile) {
+      case 'constitutiveAct':
+        this.dataComercialFormGroup.patchValue({ constitutiveAct: event.target.files[0] });
+        this.dataComercialFormGroup.updateValueAndValidity();
+        break;
       case 'officialIndentification':
-        this.dataComercialFormGroup.patchValue({  officialIndentification: event.target.files[0] });
+        this.dataComercialFormGroup.patchValue({ officialIndentification: event.target.files[0] });
         this.dataComercialFormGroup.updateValueAndValidity();
-      break;
+        break;
       case 'powerOfAttorney':
-        this.dataComercialFormGroup.patchValue({  powerOfAttorney: event.target.files[0] });
+        this.dataComercialFormGroup.patchValue({ powerOfAttorney: event.target.files[0] });
         this.dataComercialFormGroup.updateValueAndValidity();
-      break;
-   
-  }
- 
+        break;
+
+    }
+
   }
 
   validateSize(input: any) {
     const fileSize = input.files[0].size / 1024 / 1024;
     if (fileSize > 3) {
       this.utilityService.openErrorSnackBar('Solo archivos de hasta 3 MB.');
-    } 
+    }
   }
-  
+
 
   onCreateAssociation() {
     this.submitted = true;
     let nameAssociation =
-    this.dataAssociationFormGroup['value']['associationName'];
+      this.dataAssociationFormGroup['value']['associationName'];
     let data: any = {
       formData: new FormData(),
     };
@@ -325,15 +325,11 @@ export class AssociationRegisterComponent implements OnInit {
                 next: (reply: any) => { },
                 complete: () => { },
               });
-              this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
+            this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
           },
 
           complete: () => { },
         });
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
       },
       complete: () => {
         this.killDialog();
@@ -429,7 +425,7 @@ export class AssociationRegisterComponent implements OnInit {
     });
   }
 
-  prove(id: any){
+  prove(id: any) {
     console.log(id)
   }
 

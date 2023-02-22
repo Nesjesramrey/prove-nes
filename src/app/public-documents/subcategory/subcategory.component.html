@@ -77,14 +77,14 @@
               </mat-form-field>
             </div>
             <div class="set-9">
-              <button type="button" mat-mini-fab color="primary" matTooltip="Agregar tópico" matTooltipClass="tooltip"
-                (click)="popAddDocumentTheme()" *ngIf="isCollaborator">
+              <button type="button" mat-mini-fab color="primary" matTooltip="Agregar problemática"
+                matTooltipClass="tooltip" (click)="popAddDocumentTheme()" *ngIf="isCollaborator">
                 <mat-icon>add_circle</mat-icon>
               </button>
             </div>
           </div>
 
-          <div class="set-6 col">
+          <!-- <div class="set-6 col">
             <div class="set-4">
               <strong>
                 <small>Soluciones</small>
@@ -95,7 +95,7 @@
             <div class="set-8 table-head">
               <mat-form-field appearance="outline">
                 <mat-label>
-                  <small>Búscar en soluciones...</small>
+                  <small>Buscar en soluciones...</small>
                 </mat-label>
                 <input matInput type="text" (keyup)="applyFilterSolution($event)"
                   [disabled]="solutionsDataSource.length == 0">
@@ -104,12 +104,12 @@
                 </button>
               </mat-form-field>
             </div>
-          </div>
+          </div> -->
 
           <div class="set-6 col">
             <div class="set-4 title">
               <strong>
-                <small>Tópicos</small>
+                <small>Problemáticas</small>
               </strong>
               <mat-icon>warning</mat-icon>
             </div>
@@ -117,7 +117,7 @@
             <div class="set-8 table-head">
               <mat-form-field appearance="outline">
                 <mat-label>
-                  <small>Búscar temas...</small>
+                  <small>Buscar problemáticas...</small>
                 </mat-label>
                 <input matInput type="text" (keyup)="applyFilterTopic($event)" [disabled]="panelTopicsData.length == 0">
                 <button matSuffix mat-icon-button [disabled]="panelTopicsData.length == 0">
@@ -129,7 +129,7 @@
         </div>
 
         <div class="set-12 tables">
-          <div class="set-6">
+          <!-- <div class="set-6">
             <table *ngIf="solutionsDataSource.length > 0; else notsolutions" mat-table matSort
               [dataSource]="SolutionDataSource">
               <ng-container matColumnDef="title">
@@ -167,7 +167,7 @@
                 </strong>
               </p>
             </ng-template>
-          </div>
+          </div> -->
 
           <div class="set-6">
             <table *ngIf="panelTopicsData.length > 0; else nottopic" mat-table matSort [dataSource]="TopicDataSource"
@@ -205,13 +205,13 @@
               <div class="notData">
                 <p>
                   <strong>
-                    <small>No se encontraron tópicos.</small>
+                    <small>No se encontraron problemáticas.</small>
                   </strong>
                   <br />
-                  <small>Sé el primero en agregar un tópico.</small>
+                  <small>Sé el primero en agregar una problemática.</small>
                 </p>
                 <button type="button" mat-raised-button color="warn" (click)="popAddDocumentTheme()">
-                  <small>Agregar tópico</small>
+                  <small>Agregar problemática</small>
                 </button>
               </div>
             </ng-template>

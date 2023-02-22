@@ -12,6 +12,8 @@ import { UtilityService } from '../services/utility.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { SinglePostDialogComponent } from './components/single-post-dialog/single-post-dialog.component';
 import { PostsService } from '../services/posts.service';
+import { VoteService } from '../services/vote.service';
+import { FavoritesService } from '../services/favorites.service';
 
 @Component({
   selector: '.posts-page',
@@ -23,11 +25,8 @@ export class PostsComponent implements OnInit {
   public isDataAvailable: boolean = false;
   public user: any = null;
   @HostBinding('class') public class: string = '';
-<<<<<<< Updated upstream
-  public posts: any = null;
-=======
   public today: any = null;
->>>>>>> Stashed changes
+  public posts: any = null;
 
   constructor(
     public deviceDetectorService: DeviceDetectorService,
@@ -38,7 +37,9 @@ export class PostsComponent implements OnInit {
     public utilityService: UtilityService,
     public matBottomSheet: MatBottomSheet,
     public dialog: MatDialog,
-    public postsService: PostsService
+    public postsService: PostsService,
+    public voteService: VoteService,
+    public favoritesService: FavoritesService
   ) {
     // console.log(this.authenticationService.isAuthenticated);
     this.isMobile = this.deviceDetectorService.isMobile();
@@ -54,7 +55,6 @@ export class PostsComponent implements OnInit {
       complete: () => { }
     });
 
-<<<<<<< Updated upstream
     this.postsService.fetchAllPosts({ limit: 100, page: 1 }).subscribe({
       error: (error: any) => { },
       next: (reply: any) => {
@@ -74,29 +74,6 @@ export class PostsComponent implements OnInit {
         this.isDataAvailable = true;
         // console.log(this.posts);
       }
-=======
-    let testimonials: Observable<any> = this.testimonyService.fetchAllTestimonies();
-    let complaints: Observable<any> = this.complaintService.fetchAllComplaints();
-
-    forkJoin([testimonials, complaints]).subscribe((reply: any) => {
-      this.testimonials = reply[0];
-      // this.testimonials = [];
-      this.testimonials.filter((x: any) => { x['type'] = 'Testimonio'; });
-
-      this.complaints = reply[1];
-      this.complaints.filter((x: any) => { x['type'] = 'Denuncia'; });
-
-      this.cards = [...this.testimonials, ...this.complaints];
-      this.cards.filter((x: any) => { x['comments'] = []; });
-      console.log(this.cards);
-      this.cards.sort(() => Math.random() - 0.5);
-      this.cards.filter((x: any) => {
-        let date = new Date(x['createdAt']);
-      });
-      // console.log(this.cards);
-
-      this.isDataAvailable = true;
->>>>>>> Stashed changes
     });
   }
 
@@ -125,29 +102,85 @@ export class PostsComponent implements OnInit {
   }
 
   openVoteDialog(post: any) {
+    if (post['card']['vote'] != undefined) {
+      this.utilityService.openSuccessSnackBar('Ya votaste');
+      return;
+    }
     const dialogRef = this.dialog.open<any>(VoteDialogComponent, {
       width: '420px',
       disableClose: true,
-      data: {
-        post: post['_id']
-      },
+      data: { post: post }
     });
 
-    dialogRef.afterClosed().subscribe((reply: any) => { });
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { post['card']['vote'] = reply['data']; }
+    });
   }
 
   openSinglePostDialog(post: any) {
+    if (this.user == null) {
+      if (this.isMobile) {
+        this.utilityService.linkMe('/hub/signin-mobile');
+      } else {
+        this.utilityService.linkMe('/hub/ingresar');
+      }
+      return;
+    }
+
+    let panelWidth: string = '';
+    let panelClass: string = '';
+
+    switch (this.isMobile) {
+      case true:
+        panelWidth = '100%';
+        panelClass = 'full-dialog';
+        break;
+      case false:
+        panelWidth = '45%';
+        panelClass = '';
+        break;
+    }
+
     const dialogRef = this.dialog.open<any>(SinglePostDialogComponent, {
-      width: '45%',
+      width: panelWidth,
       data: {
-        // post: post['_id']
         post: post,
         user: this.user
       },
       backdropClass: 'card-backdrop',
-      // panelClass: 'card-dialog'
+      panelClass: panelClass
     });
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { post = reply; }
+    });
+  }
 
-    dialogRef.afterClosed().subscribe((reply: any) => { });
+  handleFavorite(post: any) {
+    if (this.user == null) {
+      if (this.isMobile) {
+        this.utilityService.linkMe('/hub/signin-mobile');
+      } else {
+        this.utilityService.linkMe('/hub/ingresar');
+      }
+      return;
+    }
+
+    let data: any = {};
+
+    if (post['card']['favorites'] == undefined) {
+      data = { complaint: post['card']['_id'] }
+      this.favoritesService.addFavorites(data).subscribe({
+        error: (error: any) => { this.utilityService.openErrorSnackBar(this.utilityService['errorOops']); },
+        next: (reply: any) => { post['card']['favorites'] = reply['data']; },
+        complete: () => { }
+      });
+    } else {
+      data = { layout: post['card']['favorites']['_id'] }
+      this.favoritesService.deleteFavorites(data).subscribe({
+        error: (error: any) => { this.utilityService.openErrorSnackBar(this.utilityService['errorOops']); },
+        next: (reply: any) => { post['card']['favorites'] = undefined; },
+        complete: () => { }
+      });
+    }
   }
 }

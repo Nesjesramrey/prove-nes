@@ -52,15 +52,19 @@
     <div class="set-12 comnt" *ngFor="let comment of postComments">
       <div class="set-1">
         <div class="avatar">
-          <img [src]="comment['avatarImage']" alt="">
+          <img [src]="comment['createdBy']['avatarImage']" alt="" *ngIf="comment['createdBy']['avatarImage'] != null">
+          <span *ngIf="comment['createdBy']['avatarImage'] == null">
+            {{comment['createdBy']['firstname'] | firstword | firstletter}}{{comment['createdBy']['lastname'] |
+            firstword | firstletter}}
+          </span>
         </div>
       </div>
       <div class="set-11 txt">
         <div class="set-12">
-          <small>{{comment['userName']}}</small>
+          <small>{{comment['createdBy']['firstname']}} {{comment['createdBy']['lastname']}}</small>
         </div>
         <div class="set-12">
-          <span>{{comment['text']}}</span>
+          <span>{{comment['message']}}</span>
         </div>
       </div>
     </div>
@@ -74,14 +78,16 @@
     </form>
   </div>
   <div class="set-3">
-    <button type="button" mat-icon-button [disabled]="user == null">
-      <mat-icon>favorite</mat-icon>
-    </button>
     <button type="button" mat-icon-button (click)="sharePost(post)">
       <mat-icon>share</mat-icon>
     </button>
+    <button type="button" mat-icon-button [disabled]="user == null" (click)="handleFavorite(post)">
+      <!-- <mat-icon>favorite</mat-icon> -->
+      <mat-icon [color]="post['card']['favorites'] != undefined ? 'warn' : 'primary'">favorite</mat-icon>
+    </button>
     <button type="button" mat-icon-button (click)="openVoteDialog(post)">
-      <mat-icon>star</mat-icon>
+      <!-- <mat-icon>star</mat-icon> -->
+      <mat-icon [color]="post['card']['vote'] != undefined ? 'warn' : 'primary'">star</mat-icon>
     </button>
   </div>
 </mat-dialog-actions>

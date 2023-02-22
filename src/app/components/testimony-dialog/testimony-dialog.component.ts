@@ -74,6 +74,7 @@ export class TestimonyDialogComponent implements OnInit {
   ) {
     // console.log(this.dialogData);
     this.user = this.dialogData['user'];
+    if (this.user == null) { this.isAnonymous = true; }
   }
 
   ngOnInit(): void {
@@ -118,37 +119,28 @@ export class TestimonyDialogComponent implements OnInit {
 
   onFileTestimony(form: FormGroup) {
     this.submitted = true;
-<<<<<<< Updated upstream
-    // let data = new FormData();
 
-    let data = {
+    let data: any = {
       formData: new FormData()
-    };
+    }
 
     Array.from(this.testimonyFormGroup.controls['files']['value'])
       .forEach((file: any) => { data['formData'].append('files', file); });
     data['formData'].append('name', this.testimonyFormGroup.value.title);
-    data['formData'].append('type', 'testimony');
     data['formData'].append('description', this.testimonyFormGroup.value.description);
+    switch (this.locationAvailable) {
+      case true:
+        data['formData'].append('latitude', this.location['latitude']);
+        data['formData'].append('longitude', this.location['longitude']);
+        break;
+    }
     data['formData'].append('isAnonymous', (this.isAnonymous).toString());
-=======
-    let data = new FormData();
-
-    Array.from(this.testimonyFormGroup.controls['files']['value'])
-      .forEach((file: any) => { data.append('files', file); });
-    data.append('title', this.testimonyFormGroup.value.title);
-    data.append('description', this.testimonyFormGroup.value.description);
-    data.append('isAnonymous', (this.isAnonymous).toString());
->>>>>>> Stashed changes
 
     this.testuimonyServive.createNewTestimony(data).subscribe({
       error: (error: any) => {
         this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
-<<<<<<< Updated upstream
         this.killDialog();
-=======
         this, this.killDialog();
->>>>>>> Stashed changes
       },
       next: (reply: any) => {
         this.postURL = 'https://mexicolectivo.com/posts/' + reply['_id'];

@@ -23,4 +23,10 @@ export class PostsService {
       this.endPointService.apiEndPoint + this.endPointService.fetchPostByRelationIdEndPoint + data['relationId']
     );
   }
+
+  addPostComment(data: any) {
+    return this.httpClient.post(
+      this.endPointService.apiEndPoint + this.endPointService.addPostCommentEndPoint + data['postID'] + '/comment', data
+    );
+  }
 }

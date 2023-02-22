@@ -20,6 +20,12 @@ export class FavoritesService {
     );
   }
 
+  deleteFavorites(data: any) {
+    return this.httpClient.delete(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.deleteFavoritesEndPoint + data['layout'], {}
+    );
+  }
+
   updateFavorites(data: any) {
     return this.httpClient.put(
       this.endpointSrvc.apiEndPoint + this.endpointSrvc.updateFavoritesEndPoint, data
