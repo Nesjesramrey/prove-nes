@@ -22,8 +22,15 @@
       </button>
     </mat-form-field>
 
+
+    <div class="set-12">
+      <p>
+        <small>¿No tienes cuenta? <a href="javascript:void(0)"
+            (click)="utilityService.linkMe('/hub/signup-mobile')">Registro</a></small>
+      </p>
+      <p><small><a href="javascript:void(0)" (click)="recoverPassword()">¿Olvidaste tu contraseña?</a></small></p>
+    </div>
     <div class=" set-12 ctrls">
-      <button type="button" class="recover" (click)="recoverPassword()">Recuperar contraseña</button>
       <button type="submit" mat-raised-button color="primary" [disabled]="signInFormGroup.invalid || submitted">
         <small>Ingresar</small>
       </button>

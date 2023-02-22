@@ -190,9 +190,11 @@ export class ComplaintDialogComponent implements OnInit {
 
     switch (this.locationAvailable) {
       case true:
-        navigator.geolocation.getCurrentPosition((place: any) => {
-          this.location['latitude'] = place.coords.latitude;
-          this.location['longitude'] = place.coords.longitude;
+        setTimeout(() => {
+          navigator.geolocation.getCurrentPosition((place: any) => {
+            this.location['latitude'] = place.coords.latitude;
+            this.location['longitude'] = place.coords.longitude;
+          });
         });
         break;
 

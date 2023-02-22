@@ -38,8 +38,14 @@
       <button type="button" (click)="popComplaintsDialog(); open = !open">
         <mat-icon>priority_high</mat-icon> Denuncia
       </button>
+      <button type="button" (click)="popTestimonialsDialog(); open = !open">
+        <mat-icon>edit_note</mat-icon> Mi testimonio
+      </button>
       <button class="mt-4" type="button" (click)="utilityService.linkMe('/posts'); open = !open">
-        <mat-icon>edit_note</mat-icon> <span>Publicaciones</span>
+        <mat-icon>dashboard</mat-icon> <span>Muro Ciudadano</span>
+      </button>
+      <button class="mt-4" type="button" (click)="popPDF(); open = !open">
+        <mat-icon>description</mat-icon> <span>Documento Punto de Partida</span>
       </button>
     </div>
   </div>
@@ -80,8 +86,17 @@
         <button type="button" (click)="linkMe('profile')">
           <mat-icon>person</mat-icon> <span>Mi perfil</span>
         </button>
+        <button type="button" (click)="popComplaintsDialog(); open = !open">
+          <mat-icon>priority_high</mat-icon> Denuncia
+        </button>
+        <button type="button" (click)="popTestimonialsDialog(); open = !open">
+          <mat-icon>edit_note</mat-icon> Mi testimonio
+        </button>
         <button class="mt-4" type="button" (click)="utilityService.linkMe('/posts'); open = !open">
-          <mat-icon>edit_note</mat-icon> <span>Publicaciones</span>
+          <mat-icon>dashboard</mat-icon> <span>Muro Ciudadano</span>
+        </button>
+        <button class="mt-4" type="button" (click)="popPDF(); open = !open">
+          <mat-icon>description</mat-icon> <span>Documento Punto de Partida</span>
         </button>
         <!-- <button type="button" (click)="linkMe('associations')">
           <mat-icon>groups</mat-icon> <span>Mis asociaciones</span>
