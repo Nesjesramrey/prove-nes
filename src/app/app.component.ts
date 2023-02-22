@@ -15,6 +15,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { trigger, transition, animate, style } from '@angular/animations';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ComplaintDialogComponent } from './components/complaint-dialog/complaint-dialog.component';
+import { TestimonyDialogComponent } from './components/testimony-dialog/testimony-dialog.component';
 
 const STYLES = (theme: ThemeVariables, ref: ThemeRef) => {
   const __ = ref.selectorsOf(STYLES);
@@ -244,5 +245,24 @@ export class AppComponent implements OnInit {
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) { }
     });
+  }
+
+  popTestimonialsDialog() {
+    const dialogRef = this.dialog.open<any>(TestimonyDialogComponent, {
+      width: '100%',
+      data: {
+        user: this.user
+      },
+      disableClose: true,
+      panelClass: 'full-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  popPDF() {
+    window.open('https://static-assets-pando.s3.amazonaws.com/assets/punto-de-partida.pdf');
   }
 }
