@@ -46,9 +46,6 @@
 
   .ctrls {
     width: inherit;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
     margin: 0;
     padding: 20px;
     border-top: 1px solid rgba($color: #000000, $alpha: 0.1);
@@ -57,12 +54,14 @@
     background: #e5e5e5;
     z-index: 13;
 
-    button {
-      zoom: 0.7;
+    form {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-start;
     }
 
-    button:disabled {
-      opacity: 0.6;
+    * {
+      margin: 0;
     }
 
     input {
@@ -70,6 +69,14 @@
       padding: 10px 20px;
       border: 1px solid rgba($color: #000000, $alpha: 0.1);
       border-radius: 50px;
+    }
+
+    input:disabled {
+      cursor: not-allowed;
+    }
+
+    .btns {
+      text-align: right;
     }
   }
 
@@ -169,6 +176,15 @@
 
     .comnt:not(:first-child) {
       margin-top: 10px;
+    }
+  }
+
+  .loading {
+    mat-spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
   }
 }
