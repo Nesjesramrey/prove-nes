@@ -54,7 +54,7 @@ export class VoteDialogComponent implements OnInit {
 
       case 'testimony':
         data = {
-          testimpny: this.testimonyID,
+          testimony: this.testimonyID,
           value: vote['score']
         }
         break;

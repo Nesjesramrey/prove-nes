@@ -748,6 +748,20 @@ mat-form-field {
   }
 }
 
+.posts-dialog {
+  width: 40% !important;
+  max-width: 40% !important;
+  top: 0;
+  right: 0;
+
+  .mat-dialog-container {
+    padding: 0;
+    background: #e5e5e5;
+    border-radius: 0;
+    height: 100vh;
+  }
+}
+
 .reader-dialog {
   width: 60vw;
   height: 70vh;

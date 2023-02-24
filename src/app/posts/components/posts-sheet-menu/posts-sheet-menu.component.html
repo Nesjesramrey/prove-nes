@@ -1,0 +1,26 @@
+<div class="set-12 sheet-head">
+  <img src="../../../assets/images/mexicolectivo-small-blue.png" alt="">
+  <div class="set-12" *ngIf="user != null">
+    <p><small>{{user?.firstname}} {{user?.lastname}}</small></p>
+    <p><small>{{user?.email}}</small></p>
+  </div>
+
+  <div class="set-12" *ngIf="user == null">
+    <p><small>Hola ciudadano</small></p>
+  </div>
+</div>
+
+<div class="set-12 sheet-body">
+  <button type="button" mat-raised-button color="warn" (click)="popComplaintsDialog()">
+    <mat-icon>priority_high</mat-icon>
+    <small>Denuncia</small>
+  </button>
+  <button type="button" mat-raised-button color="warn" (click)="popTestimonialsDialog()">
+    <mat-icon>edit_note</mat-icon>
+    <small>Testimonio</small>
+  </button>
+  <!-- <button type="button" mat-raised-button color="warn" (click)="popSearchPosts()">
+    <mat-icon>search</mat-icon>
+    <small>Buscar</small>
+  </button> -->
+</div>

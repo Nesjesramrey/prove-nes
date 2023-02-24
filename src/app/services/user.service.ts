@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { EndPointService } from './endpoint.service';
 import { AuthenticationService } from './authentication.service';
-import { Subject } from 'rxjs';
+import { catchError, of, Subject, throwError } from 'rxjs';
 
 @Injectable()
 export class UserService {
@@ -23,12 +23,9 @@ export class UserService {
   // }
 
   fetchFireUser() {
-    // let headers = new Headers();
-    // this.createAuthorizationHeader(headers);
     return this.httpClient.get(
-      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchFireUserEndPoint,
-      {}
-    );
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchFireUserEndPoint, {}
+    ).pipe(catchError(error => of(error)));
   }
 
   fetchAllUsers() {
@@ -90,9 +87,9 @@ export class UserService {
   updateProfile(data: any) {
     return this.httpClient.put(this.endpointSrvc.apiEndPoint + this.endpointSrvc.addAssociationEndPoint + `${data['user_id']}`, data);
   }
-  
-  joinUserWithAssociation(data: any){
-    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.joinUserWithAssociationEndPoint + `${data['userID']}/association/`+`${data['associationID']}`, {})
+
+  joinUserWithAssociation(data: any) {
+    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.joinUserWithAssociationEndPoint + `${data['userID']}/association/` + `${data['associationID']}`, {})
   }
 
 
