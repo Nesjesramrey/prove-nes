@@ -1,4 +1,8 @@
-<!-- <div class="set-12 dialoghead" mat-dialog-title>
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="set-12 dialoghead" *ngIf="isDataAvailable">
   <div class="set-10">
     <p class="title" *ngIf="post?.relation == 'complaint'">{{post['card']['title'] || 'Sin título'}}</p>
     <p class="title" *ngIf="post?.relation == 'testimony'">{{post['card']['name'] || 'Sin título'}}</p>
@@ -11,86 +15,7 @@
   </div>
 </div>
 
-<mat-dialog-content class="mat-typography">
-  <div class="set-12 dlgcont">
-    <button type="button" class="avatar" *ngIf="post['card']['createdBy'] != null">
-      <img [src]="post['card']['createdBy']['avatarImage']" alt=""
-        *ngIf="post['card']['createdBy']['avatarImage'] != null && !post['card']['isAnonymous']">
-
-      <small *ngIf="post['card']['createdBy']['avatarImage'] == null && !post['card']['isAnonymous']">
-        {{post['card']['createdBy']['firstname'] | firstword | firstletter |
-        titlecase}}{{post['card']['createdBy']['lastname'] | firstword | firstletter | titlecase}}
-      </small>
-
-      <small *ngIf="post['card']['isAnonymous']">A</small>
-    </button>
-
-    <button type="button" class="avatar" *ngIf="post['card']['createdBy'] == null">
-      <small>A</small>
-    </button>
-
-    <div>
-      <p *ngIf="post['card']['createdBy'] != null && !post['card']['isAnonymous']">
-        {{post['card']['createdBy']['firstname'] | titlecase}} {{post['card']['createdBy']['lastname'] | titlecase}}
-      </p>
-
-      <p *ngIf="post['card']['isAnonymous']">Anónimo</p>
-
-      <p *ngIf="post['card']['createdBy'] == null && !post['card']['isAnonymous']">Anónimo</p>
-
-      <p>{{post['card']['createdAt'] | date: 'mediumDate'}} - {{post['card']['createdAt'] | date: 'mediumTime'}}</p>
-    </div>
-  </div>
-
-  <div class="set-12" [innerHTML]="post['card']['description']"></div>
-
-  <div class="set-12 gallery" *ngIf="post['card']['images'].length != 0">
-    <slider-images [images]="post['card']['images']"></slider-images>
-  </div>
-
-  <div class="set-12 comnts" *ngIf="postComments.length != 0">
-    <div class="set-12 comnt" *ngFor="let comment of postComments">
-      <div class="set-1">
-        <div class="avatar">
-          <img [src]="comment['createdBy']['avatarImage']" alt="" *ngIf="comment['createdBy']['avatarImage'] != null">
-          <span *ngIf="comment['createdBy']['avatarImage'] == null">
-            {{comment['createdBy']['firstname'] | firstword | firstletter}}{{comment['createdBy']['lastname'] |
-            firstword | firstletter}}
-          </span>
-        </div>
-      </div>
-      <div class="set-11 txt">
-        <div class="set-12">
-          <small>{{comment['createdBy']['firstname']}} {{comment['createdBy']['lastname']}}</small>
-        </div>
-        <div class="set-12">
-          <span>{{comment['message']}}</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</mat-dialog-content>
-
-<mat-dialog-actions align="end" class="ctrls">
-  <form [formGroup]="commentForm" (submit)="onComment(commentForm)" class="set-12">
-    <input type="text" placeholder="Comentar..." formControlName="comment">
-  </form>
-</mat-dialog-actions> -->
-
-<div class="set-12 dialoghead">
-  <div class="set-10">
-    <p class="title" *ngIf="post?.relation == 'complaint'">{{post['card']['title'] || 'Sin título'}}</p>
-    <p class="title" *ngIf="post?.relation == 'testimony'">{{post['card']['name'] || 'Sin título'}}</p>
-  </div>
-
-  <div class="set-2">
-    <button type="button" mat-mini-fab color="primary" (click)="killDialog()">
-      <mat-icon>cancel</mat-icon>
-    </button>
-  </div>
-</div>
-
-<div class="set-12 dialogbody">
+<div class="set-12 dialogbody" *ngIf="isDataAvailable">
   <div class="set-12 dlgcont">
     <button type="button" class="avatar" *ngIf="post['card']['createdBy'] != null">
       <img [src]="post['card']['createdBy']['avatarImage']" alt=""
@@ -150,8 +75,14 @@
   </div>
 </div>
 
-<div class="set-12 ctrls">
+<div class="set-12 ctrls" *ngIf="isDataAvailable">
   <form [formGroup]="commentForm" (submit)="onComment(commentForm)" class="set-12">
-    <input type="text" placeholder="Comentar..." formControlName="comment">
+    <div class="set-9"><input type="text" placeholder="Comentar..." formControlName="comment"></div>
+    <div class="set-3 btns">
+      <button type="submit" mat-raised-button color="warn"
+        [disabled]="commentForm.invalid || submitted || user['status'] == 500">
+        <small>Comentar</small>
+      </button>
+    </div>
   </form>
 </div>

@@ -22,6 +22,7 @@ export class SinglePostDialogComponent implements OnInit {
   public postComments: any = [];
   public isMobile: boolean = false;
   @HostBinding('class') public class: string = '';
+  public submitted: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<SinglePostDialogComponent>,
@@ -55,6 +56,10 @@ export class SinglePostDialogComponent implements OnInit {
     this.commentForm = this.formBuilder.group({
       comment: ['', [Validators.required]]
     });
+
+    setTimeout(() => {
+      this.isDataAvailable = true;
+    }, 300);
   }
 
   openVoteDialog(post: any) {
