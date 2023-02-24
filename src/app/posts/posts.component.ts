@@ -1,11 +1,7 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
-import { forkJoin, Observable } from 'rxjs';
 import { ShareSheetComponent } from '../components/share-sheet/share-sheet.component';
-import { AuthenticationService } from '../services/authentication.service';
-import { ComplaintService } from '../services/complaint.service';
-import { TestimonyService } from '../services/testimony.service';
 import { UserService } from '../services/user.service';
 import { VoteDialogComponent } from '../components/vote-dialog/vote-dialog.component';
 import { UtilityService } from '../services/utility.service';
@@ -14,6 +10,7 @@ import { SinglePostDialogComponent } from './components/single-post-dialog/singl
 import { PostsService } from '../services/posts.service';
 import { VoteService } from '../services/vote.service';
 import { FavoritesService } from '../services/favorites.service';
+import { forkJoin, Observable } from 'rxjs';
 
 @Component({
   selector: '.posts-page',
@@ -25,14 +22,10 @@ export class PostsComponent implements OnInit {
   public isDataAvailable: boolean = false;
   public user: any = null;
   @HostBinding('class') public class: string = '';
-  public today: any = null;
   public posts: any = null;
 
   constructor(
     public deviceDetectorService: DeviceDetectorService,
-    public authenticationService: AuthenticationService,
-    public testimonyService: TestimonyService,
-    public complaintService: ComplaintService,
     public userService: UserService,
     public utilityService: UtilityService,
     public matBottomSheet: MatBottomSheet,
@@ -41,24 +34,20 @@ export class PostsComponent implements OnInit {
     public voteService: VoteService,
     public favoritesService: FavoritesService
   ) {
-    // console.log(this.authenticationService.isAuthenticated);
     this.isMobile = this.deviceDetectorService.isMobile();
     if (this.isMobile) { this.class = 'fixmobile'; }
   }
 
   ngOnInit(): void {
-    this.today = new Date();
-
-    this.userService.fetchFireUser().subscribe({
-      error: (error: any) => { },
-      next: (reply: any) => { this.user = reply; },
-      complete: () => { }
-    });
-
-    this.postsService.fetchAllPosts({ limit: 100, page: 1 }).subscribe({
+    let user: Observable<any> = this.userService.fetchFireUser();
+    let posts: Observable<any> = this.postsService.fetchAllPosts({ limit: 10, page: 1 });
+    forkJoin([user, posts]).subscribe({
       error: (error: any) => { },
       next: (reply: any) => {
-        this.posts = reply[0]['data'];
+        this.user = reply[0];
+        // console.log(this.user['status']);
+
+        this.posts = reply[1][0]['data'];
         this.posts.filter((x: any) => {
           switch (x['relation']) {
             case 'complaint':
@@ -69,23 +58,17 @@ export class PostsComponent implements OnInit {
               break;
           }
         });
+
+        if (this.user['status'] == undefined) {
+          this.updatePostsFavorites();
+          this.updatePostsVotes();
+        }
       },
       complete: () => {
         this.isDataAvailable = true;
         // console.log(this.posts);
       }
     });
-  }
-
-  postComment(event: any, card: any) {
-    if (event.keyCode === 13) {
-      console.log(this.user);
-      let obj: any = {
-        message: event['target']['value'],
-        createdBy: this.user
-      }
-      card['comments'].push(obj);
-    }
   }
 
   sharePost(post: any) {
@@ -102,7 +85,7 @@ export class PostsComponent implements OnInit {
   }
 
   openVoteDialog(post: any) {
-    if (post['card']['vote'] != undefined) {
+    if (post['voted']) {
       this.utilityService.openSuccessSnackBar('Ya votaste');
       return;
     }
@@ -113,7 +96,10 @@ export class PostsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) { post['card']['vote'] = reply['data']; }
+      if (reply != undefined) {
+        post['card']['vote'].push(reply['data']);
+        this.updatePostsVotes();
+      }
     });
   }
 
@@ -126,23 +112,19 @@ export class PostsComponent implements OnInit {
       }
       return;
     }
-
-    let panelWidth: string = '';
+    
     let panelClass: string = '';
 
     switch (this.isMobile) {
       case true:
-        panelWidth = '100%';
         panelClass = 'full-dialog';
         break;
       case false:
-        panelWidth = '45%';
-        panelClass = '';
+        panelClass = 'posts-dialog';
         break;
     }
 
     const dialogRef = this.dialog.open<any>(SinglePostDialogComponent, {
-      width: panelWidth,
       data: {
         post: post,
         user: this.user
@@ -155,7 +137,7 @@ export class PostsComponent implements OnInit {
     });
   }
 
-  handleFavorite(post: any) {
+  handleComplaintFavorite(post: any) {
     if (this.user == null) {
       if (this.isMobile) {
         this.utilityService.linkMe('/hub/signin-mobile');
@@ -167,20 +149,81 @@ export class PostsComponent implements OnInit {
 
     let data: any = {};
 
-    if (post['card']['favorites'] == undefined) {
-      data = { complaint: post['card']['_id'] }
-      this.favoritesService.addFavorites(data).subscribe({
-        error: (error: any) => { this.utilityService.openErrorSnackBar(this.utilityService['errorOops']); },
-        next: (reply: any) => { post['card']['favorites'] = reply['data']; },
-        complete: () => { }
-      });
-    } else {
-      data = { layout: post['card']['favorites']['_id'] }
-      this.favoritesService.deleteFavorites(data).subscribe({
-        error: (error: any) => { this.utilityService.openErrorSnackBar(this.utilityService['errorOops']); },
-        next: (reply: any) => { post['card']['favorites'] = undefined; },
-        complete: () => { }
-      });
+    switch (post['isFavorite']) {
+      case true:
+        let favorite: any = post['card']['favorites'].filter((x: any) => { return x['createdBy'] == this.user['_id']; });
+        data = { layout: favorite[0]['_id'] }
+        this.favoritesService.deleteFavorites(data).subscribe({
+          error: (error: any) => { this.utilityService.openErrorSnackBar(this.utilityService['errorOops']); },
+          next: (reply: any) => { delete post['isFavorite']; },
+          complete: () => { }
+        });
+        break;
+
+      case undefined:
+        data = { complaint: post['card']['_id'] }
+        this.favoritesService.addFavorites(data).subscribe({
+          error: (error: any) => { this.utilityService.openErrorSnackBar(this.utilityService['errorOops']); },
+          next: (reply: any) => {
+            post['card']['favorites'].push(reply['data']);
+            this.updatePostsFavorites();
+          },
+          complete: () => { }
+        });
+        break;
     }
+  }
+
+  handleTestimonyFavorite(post: any) {
+    if (this.user == null) {
+      if (this.isMobile) {
+        this.utilityService.linkMe('/hub/signin-mobile');
+      } else {
+        this.utilityService.linkMe('/hub/ingresar');
+      }
+      return;
+    }
+
+    let data: any = {};
+
+    switch (post['isFavorite']) {
+      case true:
+        let favorite: any = post['card']['favorites'].filter((x: any) => { return x['createdBy'] == this.user['_id']; });
+        data = { layout: favorite[0]['_id'] }
+        this.favoritesService.deleteFavorites(data).subscribe({
+          error: (error: any) => { this.utilityService.openErrorSnackBar(this.utilityService['errorOops']); },
+          next: (reply: any) => { delete post['isFavorite']; },
+          complete: () => { }
+        });
+        break;
+
+      case undefined:
+        data = { testimony: post['card']['_id'] }
+        this.favoritesService.addFavorites(data).subscribe({
+          error: (error: any) => { this.utilityService.openErrorSnackBar(this.utilityService['errorOops']); },
+          next: (reply: any) => {
+            post['card']['favorites'].push(reply['data']);
+            this.updatePostsFavorites();
+          },
+          complete: () => { }
+        });
+        break;
+    }
+  }
+
+  updatePostsFavorites() {
+    this.posts.filter((x: any) => {
+      x['card']['favorites'].filter((f: any) => {
+        if (f['createdBy'] == this.user['_id']) { x['isFavorite'] = true; }
+      });
+    });
+  }
+
+  updatePostsVotes() {
+    this.posts.filter((x: any) => {
+      x['card']['vote'].filter((f: any) => {
+        if (f['createdBy'] == this.user['_id']) { x['voted'] = true; }
+      });
+    });
   }
 }

@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 import { EndPointService } from './endpoint.service';
+import { catchError, of, throwError } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class PostsService {
   fetchAllPosts(data: any) {
     return this.httpClient.get(
       this.endPointService.apiEndPoint + this.endPointService.fetchAllPostsEndPoint + `?limitPerPage=${data['limit']}&page=${data['page']}`
-    );
+    ).pipe(catchError(error => of(error)));
   }
 
   fetchPostByRelationId(data: any) {

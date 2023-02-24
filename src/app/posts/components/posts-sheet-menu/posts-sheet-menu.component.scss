@@ -1,0 +1,46 @@
+:host {
+  .sheet-head {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
+    margin-bottom: 20px;
+
+    * {
+      margin: 0;
+    }
+
+    img {
+      width: 20%;
+      margin-right: 20px;
+    }
+
+    .set-12 {
+      line-height: initial;
+    }
+  }
+
+  .sheet-body {
+    button {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 0;
+
+      * {
+        margin: 0;
+      }
+
+      mat-icon {
+        font-size: 10pt;
+        margin-right: 10px;
+      }
+    }
+
+    button:not(:first-child) {
+      margin-top: 5px;
+    }
+  }
+}
