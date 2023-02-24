@@ -46,7 +46,7 @@ export class SinglePostDialogComponent implements OnInit {
         this.post['card'] = this.post['testimony'][0]
         break;
     }
-    console.log(this.post);
+    // console.log(this.post);
     this.isMobile = this.deviceDetectorService.isMobile();
     if (this.isMobile) { this.class = 'fixmobile'; }
   }

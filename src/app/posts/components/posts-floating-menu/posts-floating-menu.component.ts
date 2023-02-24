@@ -14,7 +14,13 @@ export class PostsFloatingMenuComponent implements OnInit {
     public matBottomSheet: MatBottomSheet
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    switch (this.user['status']) {
+      case 500:
+        this.user = null;
+        break;
+    }
+  }
 
   displayMenu() {
     // this.open = !this.open;
