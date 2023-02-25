@@ -255,7 +255,7 @@ export class AppPageletComponent implements OnInit {
   }
 
   popPDF() {
-    window.open('https://static-assets-pando.s3.amazonaws.com/assets/punto-de-partida.pdf');
+    window.open('https://static-assets-pando.s3.amazonaws.com/assets/punto+de+partida.pdf');
   }
 
   popWomenPDF() {
