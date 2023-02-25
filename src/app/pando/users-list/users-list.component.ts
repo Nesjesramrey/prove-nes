@@ -57,49 +57,13 @@ export class UsersListComponent implements OnInit {
             // localStorage.removeItem('accessToken');
             break;
         }
-        setTimeout(() => {
-          this.isDataAvailable = true;
-        });
       },
       next: (reply: any) => {
         this.user = reply;
         this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
-        // console.log(this.user);
-        setTimeout(() => {
-          this.isDataAvailable = true;
-        });
       },
-      complete: () => { }
+      complete: () => { this.isDataAvailable = true; }
     });
-    // token exists
-    // if (this.token != null) {
-    //   this.payload = JSON.parse(atob(this.token.split('.')[1]));
-
-    //   let user: Observable<any> = this.userSrvc.fetchUserById({ _id: this.payload['sub'] });
-    //   let users: Observable<any> = this.userSrvc.fetchAllUsers();
-
-    //   forkJoin([user, users]).subscribe((reply: any) => {
-    //     // console.log(reply);
-    //     this.user = reply[0]['user'];
-    //     this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
-    //     this.users = reply[1]['users'];
-
-    //     if (this.userActivities.includes('moderator')) {
-    //       setTimeout(() => {
-    //         this.dataSource = new MatTableDataSource(this.users);
-    //         this.setDataSourceAttributes();
-    //         this.isDataAvailable = true;
-    //       }, 700);
-    //     } else {
-    //       this.router.navigateByUrl('/404');
-    //     }
-    //   });
-    // }
-    //  token null
-    // else {
-    //   this.router.navigateByUrl('/404');
-    // }
-    this.isDataAvailable = true;
   }
 
   isAllSelected() {
@@ -147,25 +111,6 @@ export class UsersListComponent implements OnInit {
         user[0]['activities'] = reply['user']['activities'];
       }
     });
-
-
-    // const dialogRef = this.dialog.open(AddPermissionsComponent, {
-    //   width: 420,
-    //   data: {
-    //     userID: userID,
-    //     user: user
-    //   },
-    //   disableClose: true
-    // });
-
-    // dialogRef.afterClosed.subscribe((reply: any) => {
-    //   if (reply != undefined) {
-    //     let user: any = this.users.filter((x: any) => {
-    //       return x['_id'] == reply['user']['_id'];
-    //     });
-    //     user[0]['activities'] = reply['user']['activities'];
-    //   }
-    // });
   }
 
   applyFilter(event: Event) {
