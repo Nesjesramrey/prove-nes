@@ -30,9 +30,8 @@ export class UserService {
 
   fetchAllUsers() {
     return this.httpClient.get(
-      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAllUsersEndPoint,
-      {}
-    );
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAllUsersEndPoint, {}
+    ).pipe(catchError(error => of(error)));;
   }
 
   fetchUserById(data: any) {
@@ -49,9 +48,7 @@ export class UserService {
 
   fetchUserByFirebaseUID(data: any) {
     return this.httpClient.post(
-      this.endpointSrvc.apiEndPoint +
-      this.endpointSrvc.fetchUserByFirebaseUIDEndPoint,
-      data
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchUserByFirebaseUIDEndPoint, data
     );
   }
 
@@ -63,33 +60,32 @@ export class UserService {
 
   addUserPermissions(data: any) {
     return this.httpClient.put(
-      this.endpointSrvc.apiEndPoint +
-      this.endpointSrvc.addUserPermissionsEndPoint +
-      `${data['userID']}`,
-      data
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.addUserPermissionsEndPoint + `${data['userID']}`, data
     );
   }
 
   uploadAvatarImageEndPoint(data: any) {
     return this.httpClient.put(
-      this.endpointSrvc.apiEndPoint +
-      this.endpointSrvc.uploadAvatarImageEndPoint +
-      `${data['user_id']}` +
-      '/profile_picture',
-      data['formData']
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.uploadAvatarImageEndPoint + `${data['user_id']}` + '/profile_picture', data['formData']
     );
   }
 
   saveLayoutsCategoryPreference(data: any) {
-    return this.httpClient.put(this.endpointSrvc.apiEndPoint + this.endpointSrvc.saveLayoutsCategoryPreferenceEndPoint + `${data['user_id']}` + '/layout_category_preference', data);
+    return this.httpClient.put(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.saveLayoutsCategoryPreferenceEndPoint + `${data['user_id']}` + '/layout_category_preference', data
+    );
   }
 
   updateProfile(data: any) {
-    return this.httpClient.put(this.endpointSrvc.apiEndPoint + this.endpointSrvc.addAssociationEndPoint + `${data['user_id']}`, data);
+    return this.httpClient.put(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.addAssociationEndPoint + `${data['user_id']}`, data
+    );
   }
 
   joinUserWithAssociation(data: any) {
-    return this.httpClient.post(this.endpointSrvc.apiEndPoint + this.endpointSrvc.joinUserWithAssociationEndPoint + `${data['userID']}/association/` + `${data['associationID']}`, {})
+    return this.httpClient.post(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.joinUserWithAssociationEndPoint + `${data['userID']}/association/` + `${data['associationID']}`, {}
+    )
   }
 
 
