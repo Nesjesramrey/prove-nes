@@ -98,6 +98,7 @@ export class CategoryComponent implements OnInit {
           });
         });
       });
+      this.layouts = this.layouts.filter((x: any) => { return x['isActive'] == true; });
 
       this.topSolutions.filter((x: any) => { this.topSolutionsIds.push(x['_id']); });
       let solutions = this.allDocumentSolutions.filter((e: any) => {
