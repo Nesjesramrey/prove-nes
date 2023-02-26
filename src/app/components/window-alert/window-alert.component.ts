@@ -78,7 +78,7 @@ export class WindowAlertComponent implements OnInit {
     this.submitted = true;
 
     let data: any = {
-      layoutID: this.layout['_id'],
+      layoutID: this.layout['id'],
       isActive: false
     };
 

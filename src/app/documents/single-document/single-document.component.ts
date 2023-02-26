@@ -113,6 +113,7 @@ export class SingleDocumentComponent implements OnInit {
             });
             break;
         }
+        // this.layouts = this.layouts.filter((x: any) => { return x['isActive'] == true; });
         this.dataSource = new MatTableDataSource(this.layouts);
         // console.log('layouts: ', this.layouts);
 
@@ -376,7 +377,7 @@ export class SingleDocumentComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
-        this.layouts = this.layouts.filter((x: any) => { return x['_id'] != reply['_id']; });
+        this.layouts = this.layouts.filter((x: any) => { return x['id'] != reply['_id']; });
         this.dataSource = new MatTableDataSource(this.layouts);
       }
     });

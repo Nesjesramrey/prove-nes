@@ -88,6 +88,8 @@ export class PublicComponent implements OnInit {
         });
       });
 
+      this.layouts = this.layouts.filter((x: any) => { return x['isActive'] == true; });
+
       this.allDocumentSolutions.filter((x) => { this.topSolutionsIds.push(x['_id']); });
       let solutions = this.allDocumentSolutions.filter((e: any) => {
         return this.topSolutionsIds.includes(e['_id']);

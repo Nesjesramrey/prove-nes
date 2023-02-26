@@ -9,6 +9,7 @@ import { forkJoin, Observable } from 'rxjs';
 import { AddPermissionsComponent } from 'src/app/components/add-permissions/add-permissions.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
+import { UserDetailsDialogComponent } from '../user-details-dialog/user-details-dialog.component';
 
 @Component({
   selector: '.users-list-page',
@@ -46,6 +47,9 @@ export class UsersListComponent implements OnInit {
       this.users = reply;
       this.dataSource = new MatTableDataSource(this.users);
       this.setDataSourceAttributes();
+      this.users.filter((x: any) => {
+        console.log(x['associationInterests']);
+      });
     });
 
 
@@ -120,5 +124,16 @@ export class UsersListComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  popUserData(user: any) {
+    const dialog = this.dialog.open(UserDetailsDialogComponent, {
+      data: { user: user },
+      panelClass: 'posts-dialog'
+    });
+
+    dialog.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
   }
 }
