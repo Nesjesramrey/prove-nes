@@ -4,7 +4,7 @@
 
 <div class="set-12" *ngIf="isDataAvailable">
   <div class="set-12">
-    <div class="set-6">
+    <div class="set-4">
       <mat-form-field appearance="outline">
         <mat-label>Buscar usuario...</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Andrea" autocomplete="off">
@@ -59,6 +59,10 @@
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #moreMenu="matMenu">
+            <button mat-menu-item (click)="popUserData(users)">
+              <mat-icon>person</mat-icon>
+              <span>Ver usuario</span>
+            </button>
             <button mat-menu-item (click)="onAddUserPermissions(users._id)">
               <mat-icon>add</mat-icon>
               <span>Agregar permisos</span>

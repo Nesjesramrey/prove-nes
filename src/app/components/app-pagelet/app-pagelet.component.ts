@@ -83,9 +83,7 @@ export class AppPageletComponent implements OnInit {
             this.unreadNotifications = reply['count'];
           });
 
-        if (
-          ['administrator', 'editor'].includes(this.user.activities?.[0]?.value)
-        ) {
+        if (['administrator', 'editor'].includes(this.user.activities?.[0]?.value)) {
           this.permission = true;
         } else {
           this.permission = false;

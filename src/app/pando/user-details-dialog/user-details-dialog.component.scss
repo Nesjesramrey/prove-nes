@@ -1,0 +1,18 @@
+:host {
+  padding: 20px;
+
+  .dlghd {
+    display: flex;
+    align-items: center;
+
+    .set-2 {
+      text-align: right;
+
+      button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+}

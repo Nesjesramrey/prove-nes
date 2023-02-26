@@ -13,6 +13,7 @@ import { LyFieldModule } from '@alyle/ui/field';
 import { PandoComponent } from './pando.component';
 import { UsersListComponent } from './users-list/users-list.component';
 import { SupportConversationsComponent } from './support-conversations/support-conversations.component';
+import { UserDetailsDialogComponent } from './user-details-dialog/user-details-dialog.component';
 
 @NgModule({
   imports: [
@@ -30,7 +31,14 @@ import { SupportConversationsComponent } from './support-conversations/support-c
   declarations: [
     PandoComponent,
     UsersListComponent,
-    SupportConversationsComponent
+    SupportConversationsComponent,
+    UserDetailsDialogComponent
+  ],
+  exports: [
+    UserDetailsDialogComponent
+  ],
+  entryComponents: [
+    UserDetailsDialogComponent
   ]
 })
 export class PandoComponentModule { }
