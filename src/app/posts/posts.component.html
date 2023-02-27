@@ -204,5 +204,13 @@
     </mat-card>
   </div>
 
+  <div class="set-12 ldmr">
+    <button type="button" mat-raised-button color="warn" (click)="loadMorePosts()" [disabled]="submitted">
+      <mat-icon>add_circle</mat-icon>
+      <small>Cargar más</small>
+    </button>
+  </div>
+
   <div class="posts-floating-menu" [user]="user" *ngIf="user != null"></div>
+  <div class="app-footer"></div>
 </div>
