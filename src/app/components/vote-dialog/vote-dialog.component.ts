@@ -25,14 +25,16 @@ export class VoteDialogComponent implements OnInit {
     public utilityService: UtilityService
   ) {
     // console.log(this.dialogData);
-    if (this.dialogData['post'] != undefined) { this.post = this.dialogData['post']; }
-    switch (this.post['relation']) {
-      case 'complaint':
-        this.complaintID = this.post['card']['_id'];
-        break;
-      case 'testimony':
-        this.testimonyID = this.post['card']['_id'];
-        break;
+    if (this.dialogData['post'] != undefined) {
+      this.post = this.dialogData['post'];
+      switch (this.post['relation']) {
+        case 'complaint':
+          this.complaintID = this.post['card']['_id'];
+          break;
+        case 'testimony':
+          this.testimonyID = this.post['card']['_id'];
+          break;
+      }
     }
   }
 

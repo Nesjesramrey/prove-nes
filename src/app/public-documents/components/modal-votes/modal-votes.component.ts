@@ -13,6 +13,7 @@ export class ModalVotesComponent implements OnInit {
   public topicID: string | null;
   public solutionID: string | null;
   public result: any;
+
   constructor(
     public voteService: VoteService,
     public dialogRef: MatDialogRef<ModalVotesComponent>,
