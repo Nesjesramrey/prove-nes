@@ -11,6 +11,7 @@ import { PostsService } from '../services/posts.service';
 import { VoteService } from '../services/vote.service';
 import { FavoritesService } from '../services/favorites.service';
 import { forkJoin, Observable } from 'rxjs';
+import { UseToolsDialogComponent } from './components/use-tools-dialog/use-tools-dialog.component';
 
 @Component({
   selector: '.posts-page',
@@ -60,6 +61,11 @@ export class PostsComponent implements OnInit {
       complete: () => {
         this.isDataAvailable = true;
         // console.log(this.posts);
+        if (this.user['status'] != undefined) {
+          setTimeout(() => {
+            this.popUseToolsDialog();
+          }, 1000);
+        }
       }
     });
   }
@@ -246,6 +252,18 @@ export class PostsComponent implements OnInit {
         this.setPostsCards();
       },
       complete: () => { this.submitted = false; }
+    });
+  }
+
+  popUseToolsDialog() {
+    const dialogRef = this.dialog.open<any>(UseToolsDialogComponent, {
+      width: '420px',
+      disableClose: true,
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
     });
   }
 }
