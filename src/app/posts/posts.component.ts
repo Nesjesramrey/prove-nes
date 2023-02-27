@@ -60,12 +60,12 @@ export class PostsComponent implements OnInit {
       },
       complete: () => {
         this.isDataAvailable = true;
-        // console.log(this.posts);
         if (this.user['status'] != undefined) {
           setTimeout(() => {
             this.popUseToolsDialog();
           }, 1000);
         }
+        // console.log(this.posts);
       }
     });
   }

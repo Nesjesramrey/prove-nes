@@ -157,10 +157,56 @@
     font-style: italic;
     margin: 0 0 20px 0;
     text-align: center;
+
+    .imgfile {
+      .filectrls {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin-bottom: 10px;
+
+        * {
+          margin: 0;
+        }
+
+        img {
+          width: 40px;
+          height: 40px;
+          float: left;
+          margin-right: 10px;
+        }
+
+        button {
+          margin-right: 20px;
+        }
+      }
+    }
+
+    .imgfile:not(:first-child) {
+      margin-top: 20px;
+    }
+
+    .set-6:nth-child(odd) {
+      padding-right: 10px;
+    }
+
+    .set-6:nth-child(even) {
+      padding-left: 10px;
+    }
   }
 
   .anonhldr {
-    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    * {
+      margin: 0;
+    }
+
+    button {
+      margin-left: 10px;
+    }
   }
 
   .anon {
@@ -182,6 +228,81 @@
   .empty-list {
     button {
       margin-top: 20px;
+    }
+  }
+
+  .ctrlsmid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .wicon {
+    // width: 100%;
+    // padding: 20px !important;
+    width: 100px;
+    height: 100px;
+    display: block;
+    align-items: center;
+    justify-content: center;
+    background: #00031d;
+    color: #ffffff;
+    border-radius: 100%;
+
+    mat-icon {
+      color: #ffffff;
+      font-size: 30pt;
+      // margin-bottom: 10px;
+    }
+  }
+
+  .location {
+    margin: 10px 0 20px 0;
+    text-align: center;
+
+    button {
+      mat-icon {
+        font-size: 11pt;
+        margin-right: 5px;
+      }
+    }
+
+    .coords {
+      text-align: center;
+      margin: 20px 0;
+    }
+  }
+
+  .smtctrls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 10px;
+
+    * {
+      margin: 0;
+    }
+
+    button {
+      margin-left: 10px;
+    }
+
+    button:first-child {
+      margin-left: 0;
+    }
+
+    mat-spinner {
+      margin-left: 20px;
+    }
+  }
+
+  .succes {
+    margin-top: 40px;
+    text-align: center;
+
+    h4 {
+      margin-bottom: 5px;
     }
   }
 }
