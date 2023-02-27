@@ -23,6 +23,8 @@ export class PostsComponent implements OnInit {
   public user: any = null;
   @HostBinding('class') public class: string = '';
   public posts: any = null;
+  public postsPage: number = 1;
+  public submitted: boolean = false;
 
   constructor(
     public deviceDetectorService: DeviceDetectorService,
@@ -40,7 +42,7 @@ export class PostsComponent implements OnInit {
 
   ngOnInit(): void {
     let user: Observable<any> = this.userService.fetchFireUser();
-    let posts: Observable<any> = this.postsService.fetchAllPosts({ limit: 10, page: 1 });
+    let posts: Observable<any> = this.postsService.fetchAllPosts({ limit: 10, page: this.postsPage });
     forkJoin([user, posts]).subscribe({
       error: (error: any) => { },
       next: (reply: any) => {
@@ -48,16 +50,7 @@ export class PostsComponent implements OnInit {
         // console.log(this.user['status']);
 
         this.posts = reply[1][0]['data'];
-        this.posts.filter((x: any) => {
-          switch (x['relation']) {
-            case 'complaint':
-              x['card'] = x['complaint'][0];
-              break;
-            case 'testimony':
-              x['card'] = x['testimony'][0];
-              break;
-          }
-        });
+        this.setPostsCards();
 
         if (this.user['status'] == undefined) {
           this.updatePostsFavorites();
@@ -66,7 +59,7 @@ export class PostsComponent implements OnInit {
       },
       complete: () => {
         this.isDataAvailable = true;
-        // console.log(this.posts);
+        console.log(this.posts);
       }
     });
   }
@@ -112,7 +105,7 @@ export class PostsComponent implements OnInit {
       }
       return;
     }
-    
+
     let panelClass: string = '';
 
     switch (this.isMobile) {
@@ -224,6 +217,35 @@ export class PostsComponent implements OnInit {
       x['card']['vote'].filter((f: any) => {
         if (f['createdBy'] == this.user['_id']) { x['voted'] = true; }
       });
+    });
+  }
+
+  setPostsCards() {
+    this.posts.filter((x: any) => {
+      switch (x['relation']) {
+        case 'complaint':
+          x['card'] = x['complaint'][0];
+          break;
+        case 'testimony':
+          x['card'] = x['testimony'][0];
+          break;
+      }
+    });
+  }
+
+  loadMorePosts() {
+    this.submitted = true;
+    this.postsPage = this.postsPage + 1;
+    this.postsService.fetchAllPosts({ limit: 10, page: this.postsPage }).subscribe({
+      error: (error: any) => {
+        this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+        this.submitted = false;
+      },
+      next: (reply: any) => {
+        reply[0]['data'].filter((x: any) => { this.posts.push(x); });
+        this.setPostsCards();
+      },
+      complete: () => { this.submitted = false; }
     });
   }
 }
