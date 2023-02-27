@@ -71,11 +71,8 @@
         <small>Nuevo testimonio</small>
       </ng-template>
 
-      <div class="set-12">
-        <p><small>Platicanos sobre tu experiencia.</small></p>
-      </div>
-
       <div class="set-12 txt-center anonhldr">
+        <small>Publicar como:</small>
         <button type="button" mat-button color="warn" (click)="visibility()" class="anon">
           <div class="set-12" *ngIf="!isAnonymous">
             <mat-icon>visibility</mat-icon>
@@ -89,10 +86,26 @@
         </button>
       </div>
 
-      <form class="set-12" [formGroup]="addTestimonyFormGroup" (submit)="createTestimony()">
+      <div class="set-12 location">
+        <button type="button" mat-button color="primary" (click)="getLocation()">
+          <mat-icon>place</mat-icon>
+          <small>{{locationAvailable ? 'Cancelar ubicación' : 'Usar mi ubicación'}}</small>
+        </button>
+
+        <div class="set-12 coords" *ngIf="locationAvailable">
+          <p><small>Latitud: <strong>{{location['latitude']}}</strong></small></p>
+          <p><small>Longitud: <strong>{{location['longitude']}}</strong></small></p>
+        </div>
+
+        <div class="set-12" *ngIf="isMobile">
+          <small>** Para usar tu ubicación debes activarla en tus preferencias</small>
+        </div>
+      </div>
+
+      <form class="set-12" [formGroup]="addTestimonyFormGroup">
         <mat-form-field appearance="outline">
           <mat-label>Título</mat-label>
-          <input type="text" matInput formControlName="name">
+          <input type="text" matInput formControlName="title">
         </mat-form-field>
 
         <div class="set-12 editor-form">
@@ -106,15 +119,61 @@
         </div>
 
         <div class="set-12 ctrls">
-          <button type="button" mat-mini-fab color="primary" class="minifab" (click)="file.click()">
+          <!-- <button type="button" mat-mini-fab color="primary" class="minifab" (click)="file.click()">
             <mat-icon>add_a_photo</mat-icon>
           </button>
           <button type="submit" mat-raised-button color="warn" [disabled]="addTestimonyFormGroup.invalid || submitted">
             <small>Agregar testimonio</small>
           </button>
-          <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
+          <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner> -->
+          <button type="button" mat-raised-button color="warn" matStepperNext
+            [disabled]="addTestimonyFormGroup.invalid || submitted">
+            <small>Siguiente</small>
+          </button>
         </div>
       </form>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>
+        <small>Carga tus imágenes</small>
+      </ng-template>
+
+      <div class="set-12 file-hldr" *ngIf="urls.length != 0">
+        <div class="set-12 imgfile" *ngFor="let url of urls; let i = index">
+          <div class="set-12 filectrls">
+            <img [src]="url" />
+            <button type="button" (click)="popFile(i)">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="set-12 ctrlsmid" *ngIf="fileNames.length == 0">
+        <button type="button" (click)="file.click()" class="wicon">
+          <mat-icon>cloud_upload</mat-icon>
+          <h4>5MB</h4>
+        </button>
+      </div>
+
+      <div class="set-12 smtctrls">
+        <button type="button" mat-raised-button color="warn" matStepperPrevious [disabled]="submitted">
+          <small>Anterior</small>
+        </button>
+        <button type="button" mat-raised-button color="primary" (click)="onFileTestimony(addTestimonyFormGroup)"
+          [disabled]="submitted">
+          <small>Guardar</small>
+        </button>
+        <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
+      </div>
+    </mat-step>
+
+    <mat-step>
+      <div class="set-12 succes">
+        <h4>¡Gracias, tu testimonio se ha publicado!</h4>
+        <!-- <p>Puedes verla <a href="{{postURL}}" target="_blank">aquí</a></p> -->
+      </div>
     </mat-step>
   </mat-stepper>
 </div>
