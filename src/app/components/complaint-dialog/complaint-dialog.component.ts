@@ -1,7 +1,9 @@
+import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
+import { Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { ComplaintService } from 'src/app/services/complaint.service';
@@ -65,6 +67,7 @@ export class ComplaintDialogComponent implements OnInit {
   }
   public locationAvailable: boolean = false;
   public isMobile: boolean = false;
+  public url: string = '';
 
   constructor(
     public dialogRef: MatDialogRef<ComplaintDialogComponent>,
@@ -72,12 +75,15 @@ export class ComplaintDialogComponent implements OnInit {
     public formBuilder: FormBuilder,
     public complaintService: ComplaintService,
     public utilityService: UtilityService,
-    public deviceDetectorService: DeviceDetectorService
+    public deviceDetectorService: DeviceDetectorService,
+    @Inject(DOCUMENT) public DOM: Document,
+    public router: Router
   ) {
     // console.log(this.dialogData);
     this.user = this.dialogData['user'];
     if (this.user == null) { this.isAnonymous = true; }
     this.isMobile = this.deviceDetectorService.isMobile();
+    this.url = this.DOM.location.origin + this.router.url;
   }
 
   ngOnInit(): void {
@@ -142,7 +148,7 @@ export class ComplaintDialogComponent implements OnInit {
         this.killDialog();
       },
       next: (reply: any) => {
-        this.postURL = 'https://mexicolectivo.com/posts/' + reply['_id'];
+        this.postURL = this.url + '/' + reply['_id'];
         this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
       },
       complete: () => {

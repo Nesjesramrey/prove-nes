@@ -30,7 +30,7 @@
   <div class="set-12 location">
     <button type="button" mat-button color="primary" (click)="getLocation()">
       <mat-icon>place</mat-icon>
-      <small>{{locationAvailable ? 'Cancelar ubicación' : 'Usar mi ubiacción'}}</small>
+      <small>{{locationAvailable ? 'Cancelar ubicación' : 'Usar mi ubicación'}}</small>
     </button>
 
     <div class="set-12 coords" *ngIf="locationAvailable">
@@ -39,7 +39,7 @@
     </div>
 
     <div class="set-12" *ngIf="isMobile">
-      <small>** Para usar tu ubicación, debes activarla en tus preferencias</small>
+      <small>** Para usar tu ubicación debes activarla en tus preferencias</small>
     </div>
   </div>
 

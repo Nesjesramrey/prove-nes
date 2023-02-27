@@ -12,6 +12,7 @@ import { SinglePostDialogComponent } from './components/single-post-dialog/singl
 import { PostsFloatingMenuComponent } from './components/posts-floating-menu/posts-floating-menu.component';
 import { PostsSheetMenuComponent } from './components/posts-sheet-menu/posts-sheet-menu.component';
 import { SearchPostsDialogComponent } from './components/search-posts-dialog/search-posts-dialog.component';
+import { UseToolsDialogComponent } from './components/use-tools-dialog/use-tools-dialog.component';
 
 @NgModule({
   imports: [
@@ -29,18 +30,21 @@ import { SearchPostsDialogComponent } from './components/search-posts-dialog/sea
     SinglePostDialogComponent,
     PostsFloatingMenuComponent,
     PostsSheetMenuComponent,
-    SearchPostsDialogComponent
+    SearchPostsDialogComponent,
+    UseToolsDialogComponent
   ],
   exports: [
     SinglePostDialogComponent,
     PostsFloatingMenuComponent,
     PostsSheetMenuComponent,
-    SearchPostsDialogComponent
+    SearchPostsDialogComponent,
+    UseToolsDialogComponent
   ],
   entryComponents: [
     SinglePostDialogComponent,
     PostsSheetMenuComponent,
-    SearchPostsDialogComponent
+    SearchPostsDialogComponent,
+    UseToolsDialogComponent
   ]
 })
 export class PostsComponentModule { }
