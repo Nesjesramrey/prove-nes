@@ -59,7 +59,7 @@ export class PostsComponent implements OnInit {
       },
       complete: () => {
         this.isDataAvailable = true;
-        console.log(this.posts);
+        // console.log(this.posts);
       }
     });
   }
