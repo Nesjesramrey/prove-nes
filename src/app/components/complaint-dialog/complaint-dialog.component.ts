@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { ComplaintService } from 'src/app/services/complaint.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
@@ -63,17 +64,20 @@ export class ComplaintDialogComponent implements OnInit {
     latitude: null, longitude: null
   }
   public locationAvailable: boolean = false;
+  public isMobile: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<ComplaintDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public formBuilder: FormBuilder,
     public complaintService: ComplaintService,
-    public utilityService: UtilityService
+    public utilityService: UtilityService,
+    public deviceDetectorService: DeviceDetectorService
   ) {
     // console.log(this.dialogData);
     this.user = this.dialogData['user'];
     if (this.user == null) { this.isAnonymous = true; }
+    this.isMobile = this.deviceDetectorService.isMobile();
   }
 
   ngOnInit(): void {

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { TestimonyService } from 'src/app/services/testimony.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
@@ -64,17 +65,20 @@ export class TestimonyDialogComponent implements OnInit {
     longitude: null
   }
   public locationAvailable: boolean = false;
+  public isMobile: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<TestimonyDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public formBuilder: FormBuilder,
     public utilityService: UtilityService,
-    public testuimonyServive: TestimonyService
+    public testuimonyServive: TestimonyService,
+    public deviceDetectorService: DeviceDetectorService
   ) {
     // console.log(this.dialogData);
     this.user = this.dialogData['user'];
     if (this.user == null) { this.isAnonymous = true; }
+    this.isMobile = this.deviceDetectorService.isMobile();
   }
 
   ngOnInit(): void {
