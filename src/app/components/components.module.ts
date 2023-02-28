@@ -89,6 +89,7 @@ import { RecoverPasswordComponent } from './recover-password/recover-password.co
 import { SingleTestimonyDialogComponent } from './single-testimony-dialog/single-testimony-dialog.component';
 import { TestimonyDialogComponent } from './testimony-dialog/testimony-dialog.component';
 import { SetAvatarAssociationComponent } from './set-avatar-association/set-avatar-association.component';
+import { CategorizePostComponent } from './categorize-post/categorize-post.component';
 
 @NgModule({
   imports: [
@@ -181,7 +182,8 @@ import { SetAvatarAssociationComponent } from './set-avatar-association/set-avat
     RecoverPasswordComponent,
     SingleTestimonyDialogComponent,
     TestimonyDialogComponent,
-    SetAvatarAssociationComponent
+    SetAvatarAssociationComponent,
+    CategorizePostComponent
   ],
   exports: [
     AppPageletComponent,
@@ -250,7 +252,8 @@ import { SetAvatarAssociationComponent } from './set-avatar-association/set-avat
     SingleComplaintDialogComponent,
     RecoverPasswordComponent,
     SingleTestimonyDialogComponent,
-    TestimonyDialogComponent
+    TestimonyDialogComponent,
+    CategorizePostComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
@@ -293,7 +296,8 @@ import { SetAvatarAssociationComponent } from './set-avatar-association/set-avat
     SingleComplaintDialogComponent,
     RecoverPasswordComponent,
     SingleTestimonyDialogComponent,
-    TestimonyDialogComponent
+    TestimonyDialogComponent,
+    CategorizePostComponent
   ],
   providers: [],
 })

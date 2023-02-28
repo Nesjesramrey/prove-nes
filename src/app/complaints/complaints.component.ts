@@ -10,6 +10,8 @@ import { WindowAlertComponent } from '../components/window-alert/window-alert.co
 import { ComplaintService } from '../services/complaint.service';
 import { UserService } from '../services/user.service';
 import { UtilityService } from '../services/utility.service';
+import { DocumentService } from '../services/document.service';
+import { CategorizePostComponent } from '../components/categorize-post/categorize-post.component';
 
 @Component({
   selector: '.complaints-page',
@@ -22,11 +24,16 @@ export class ComplaintsComponent implements OnInit {
   public isDataAvailable: boolean = false;
   public isPrivate: boolean = false;
   public isMobile: boolean = false;
-  public displayedColumns: string[] = ['select', 'author', 'title', 'date', 'menu'];
+  public displayedColumns: string[] = ['select', 'author', 'title', 'coverage', 'date', 'menu'];
   public dataSource!: MatTableDataSource<any>;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  public paginator!: MatPaginator;
+  @ViewChild('paginator') set matPaginator(mp: MatPaginator) {
+    this.paginator = mp;
+    this.setDataSourceAttributes();
+  }
   public user: any = null;
   public userActivities: any = [];
+  public document: any = null;
 
   constructor(
     public complaintService: ComplaintService,
@@ -34,18 +41,18 @@ export class ComplaintsComponent implements OnInit {
     public utilityService: UtilityService,
     public dialog: MatDialog,
     public deviceDetectorService: DeviceDetectorService,
-  ) { 
+    public documentsService: DocumentService
+  ) {
     this.isMobile = this.deviceDetectorService.isMobile();
   }
 
   ngOnInit(): void {
-
     this.userService.fetchFireUser().subscribe({
       error: (error: any) => {
         console.log(error)
       },
       next: (reply: any) => {
-        this.user = reply;      
+        this.user = reply;
         this.user['activityName'] = this.user['activities'][0]['value'];
         //console.log('user: ', this.user);
         this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
@@ -55,20 +62,30 @@ export class ComplaintsComponent implements OnInit {
             this.isPrivate = true;
           });
         }
- 
+
       },
       complete: () => {
-       }
+      }
     });
 
     let complaints: Observable<any> = this.complaintService.fetchAllComplaints();
-    forkJoin([complaints]).subscribe((reply: any) => {
-      // console.log(reply);
-      this.complaints = reply[0];
-      // console.log(this.complaints);
-      this.dataSource = new MatTableDataSource(this.complaints);
-      this.dataSource.paginator = this.paginator;
-      this.isDataAvailable = true
+    let document: Observable<any> = this.documentsService.fetchCoverDocument();
+    forkJoin([complaints, document]).subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        // console.log(reply);
+        this.complaints = reply[0];
+        // console.log(this.complaints);
+        this.complaints.filter((c: any) => { });
+        this.dataSource = new MatTableDataSource(this.complaints);
+
+        this.document = reply[1];
+        // console.log(this.document);
+      },
+      complete: () => {
+        this.isDataAvailable = true;
+        this.setDataSourceAttributes();
+      }
     });
   }
 
@@ -139,5 +156,26 @@ export class ComplaintsComponent implements OnInit {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+  }
+
+  setDataSourceAttributes(): void {
+    if (this.isDataAvailable) {
+      this.dataSource.paginator = this.paginator;
+    }
+  }
+
+  popCategorizeComplaintDialog(complaint: any) {
+    const dialogRef = this.dialog.open<any>(CategorizePostComponent, {
+      data: {
+        complaint: complaint,
+        document: this.document
+      },
+      disableClose: true,
+      panelClass: 'side-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
   }
 }

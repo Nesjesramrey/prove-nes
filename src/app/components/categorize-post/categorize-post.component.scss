@@ -1,0 +1,66 @@
+:host {
+  padding: 20px;
+
+  .dlghd {
+    display: flex;
+    align-items: center;
+
+    * {
+      margin: 0;
+    }
+
+    .set-2 {
+      display: inline-flex;
+      justify-content: flex-end;
+
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        zoom: 0.7;
+      }
+    }
+  }
+
+  .dlgbd {
+    margin-top: 20px;
+    padding-bottom: 40px;
+
+    .author {
+      margin-bottom: 20px;
+
+      .name {
+        font-size: 11pt;
+      }
+
+      .date {
+        font-size: 9pt;
+        font-style: italic;
+        color: rgba($color: #000000, $alpha: 0.5);
+      }
+    }
+  }
+
+  .cmpltdsc {
+    margin: 20px 0;
+    text-align: justify;
+  }
+
+  .ctrls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    * {
+      margin: 0;
+    }
+
+    mat-spinner {
+      margin-left: 20px;
+    }
+  }
+
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 0;
+  }
+}

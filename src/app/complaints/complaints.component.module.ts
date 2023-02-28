@@ -22,7 +22,10 @@ import { PublicComplaintsComponent } from './public-complaints/public-complaints
   ],
   declarations: [
     ComplaintsComponent,
-    SingleComplaintComponent, PublicComplaintsComponent
-  ]
+    SingleComplaintComponent,
+    PublicComplaintsComponent,
+  ],
+  exports: [],
+  entryComponents: []
 })
 export class ComplaintsComponentModule { }
