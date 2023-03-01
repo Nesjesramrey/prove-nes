@@ -16,16 +16,16 @@
   </div>
 
   <div class="set-12 userlist">
-    <table mat-table [dataSource]="dataSource">
+    <table mat-table [dataSource]="dataSource" id="users-table">
       <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>
           <mat-checkbox (change)="$event ? toggleAllRows() : null" [checked]="selection.hasValue() && isAllSelected()"
-            [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()" disabled>
+            [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
           </mat-checkbox>
         </th>
         <td mat-cell *matCellDef="let row">
           <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
-            [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)" disabled>
+            [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
           </mat-checkbox>
         </td>
       </ng-container>
@@ -44,6 +44,13 @@
         </td>
       </ng-container>
 
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef>Teléfono</th>
+        <td mat-cell *matCellDef="let users">
+          <small>{{users.phone || 'NA'}}</small>
+        </td>
+      </ng-container>
+
       <ng-container matColumnDef="activities">
         <th mat-header-cell *matHeaderCellDef>Actividades</th>
         <td mat-cell *matCellDef="let users">
@@ -53,7 +60,17 @@
       </ng-container>
 
       <ng-container matColumnDef="menu">
-        <th mat-header-cell *matHeaderCellDef>&nbsp;</th>
+        <th mat-header-cell *matHeaderCellDef>
+          <button type="button" [matMenuTriggerFor]="topMenu" [disabled]="selection['selected'].length == 0">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #topMenu="matMenu">
+            <button mat-menu-item (click)="exportExcel()">
+              <mat-icon>file_download</mat-icon>
+              <span>Exportar Excel</span>
+            </button>
+          </mat-menu>
+        </th>
         <td mat-cell *matCellDef="let users">
           <button type="button" [matMenuTriggerFor]="moreMenu">
             <mat-icon>more_vert</mat-icon>
@@ -63,10 +80,10 @@
               <mat-icon>person</mat-icon>
               <span>Ver usuario</span>
             </button>
-            <button mat-menu-item (click)="onAddUserPermissions(users._id)">
+            <!-- <button mat-menu-item (click)="onAddUserPermissions(users._id)">
               <mat-icon>add</mat-icon>
               <span>Agregar permisos</span>
-            </button>
+            </button> -->
           </mat-menu>
         </td>
       </ng-container>

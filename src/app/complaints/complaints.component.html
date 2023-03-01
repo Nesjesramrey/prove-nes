@@ -9,7 +9,6 @@
 </div>
 
 <!--Desk Private-->
-
 <div *ngIf="isDataAvailable && !isMobile && isPrivate " [class.fixdesk]="!isMobile">
   <div class="set-12">
     <div class="set-4">
@@ -26,7 +25,6 @@
 
   <div class="set-12">
     <table mat-table [dataSource]="dataSource">
-
       <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>
           <mat-checkbox (change)="$event ? toggleAllRows() : null" [checked]="selection.hasValue() && isAllSelected()"
@@ -39,26 +37,43 @@
           </mat-checkbox>
         </td>
       </ng-container>
-    
-
 
       <ng-container matColumnDef="author">
         <th mat-header-cell *matHeaderCellDef>Autor</th>
         <td mat-cell *matCellDef="let element">
-          <span *ngIf="element?.createdBy?.firstname != null">{{ element?.createdBy?.firstname }}</span>
-          <span *ngIf="element?.createdBy?.firstname == null">Anónimo</span>
+          <small *ngIf="element?.createdBy?.firstname != null">
+            {{ element?.createdBy?.firstname }} {{ element?.createdBy?.lastname }}
+          </small>
+          <small *ngIf="element?.createdBy?.firstname == null">Anónimo</small>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="title">
         <th mat-header-cell *matHeaderCellDef>Título</th>
-        <td mat-cell *matCellDef="let element">{{ element.title || "NA" }}</td>
+        <td mat-cell *matCellDef="let element">
+          <small>{{(element.title.length > 40) ? (element.title | slice: 0 : 40) + '...' : (element.title)}}</small>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="coverage">
+        <th mat-header-cell *matHeaderCellDef>Cobertura</th>
+        <td mat-cell *matCellDef="let element">
+          <button type="button" *ngIf="element['coverage'].length == 0" (click)="popCategorizeComplaintDialog(element)">
+            <small>Categorizar</small>
+          </button>
+          <mat-form-field appearance="outline" *ngIf="element['coverage'].length != 0">
+            <mat-label>Cobertura</mat-label>
+            <mat-select>
+              <mat-option *ngFor="let coverage of element['coverage']"></mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef>Alta</th>
         <td mat-cell *matCellDef="let element">
-          {{ element.createdAt | date : "mediumDate" }}
+          <small>{{ element.createdAt | date : "mediumDate" }}</small>
         </td>
       </ng-container>
 
@@ -97,9 +112,9 @@
 
 
 <!--Mobile Public-->
-<div *ngIf="isDataAvailable && isMobile && !isPrivate ">
+<div *ngIf="isDataAvailable && isMobile && !isPrivate">
   <public-complaints>Nes</public-complaints>
->>>>>>> Stashed changes
+  >>>>>>> Stashed changes
 </div>
 
 
