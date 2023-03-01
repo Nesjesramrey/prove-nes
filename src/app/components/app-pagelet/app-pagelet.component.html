@@ -88,7 +88,8 @@
         <mat-icon>groups</mat-icon>
         <span>Documento Punto de Partida</span>
       </button> -->
-      <button mat-menu-item (click)="linkMe('userList')" *ngIf="userActivities.includes('moderator')">
+      <button mat-menu-item (click)="linkMe('userList')"
+        *ngIf="userActivities.includes('moderator') || userActivities.includes('editor')">
         <mat-icon>groups</mat-icon>
         <span>Usuarios</span>
       </button>
