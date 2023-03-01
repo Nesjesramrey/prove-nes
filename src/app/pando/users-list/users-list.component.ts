@@ -1,4 +1,3 @@
-import { LyDialog } from '@alyle/ui/dialog';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,6 +9,7 @@ import { AddPermissionsComponent } from 'src/app/components/add-permissions/add-
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
 import { UserDetailsDialogComponent } from '../user-details-dialog/user-details-dialog.component';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: '.users-list-page',
@@ -17,7 +17,7 @@ import { UserDetailsDialogComponent } from '../user-details-dialog/user-details-
   styleUrls: ['./users-list.component.scss']
 })
 export class UsersListComponent implements OnInit {
-  public displayedColumns: string[] = ['select', 'name', 'email', 'activities', 'menu'];
+  public displayedColumns: string[] = ['select', 'name', 'email', 'phone', 'activities', 'menu'];
   public dataSource = new MatTableDataSource<any>();
   public selection = new SelectionModel<any>(true, []);
   public paginator!: MatPaginator;
@@ -27,8 +27,6 @@ export class UsersListComponent implements OnInit {
   }
   public users: any = [];
   public isDataAvailable: boolean = false;
-  public accessToken: any = null;
-  public payload: any = null;
   public user: any = null;
   public userActivities: any = [];
 
@@ -37,36 +35,24 @@ export class UsersListComponent implements OnInit {
     public userSrvc: UserService,
     public dialog: MatDialog,
     public router: Router
-  ) {
-    this.accessToken = this.authenticationSrvc.fetchAccessToken;
-  }
+  ) { }
 
   ngOnInit(): void {
-    this.userSrvc.fetchAllUsers().subscribe((reply: any) => {
-      // console.log(reply);
-      this.users = reply;
-      this.dataSource = new MatTableDataSource(this.users);
-      this.setDataSourceAttributes();
-      this.users.filter((x: any) => {
-        console.log(x['associationInterests']);
-      });
-    });
-
-
-    this.userSrvc.fetchFireUser().subscribe({
-      error: (error) => {
-        switch (error['status']) {
-          case 401:
-            // this.utilityService.openErrorSnackBar('Tu token de acceso ha caducado, intenta ingresar otra vez.');
-            // localStorage.removeItem('accessToken');
-            break;
-        }
-      },
+    let user: Observable<any> = this.userSrvc.fetchFireUser();
+    let users: Observable<any> = this.userSrvc.fetchAllUsers();
+    forkJoin([user, users]).subscribe({
+      error: (error: any) => { },
       next: (reply: any) => {
-        this.user = reply;
+        this.user = reply[0];
         this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
+
+        this.users = reply[1];
+        this.dataSource = new MatTableDataSource(this.users);
       },
-      complete: () => { this.isDataAvailable = true; }
+      complete: () => {
+        this.isDataAvailable = true;
+        this.setDataSourceAttributes();
+      }
     });
   }
 
@@ -135,5 +121,22 @@ export class UsersListComponent implements OnInit {
     dialog.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) { }
     });
+  }
+
+  exportExcel() {
+    let table: any[] = [];
+    this.selection['selected'].filter((x: any) => {
+      let obj: any = {
+        name: x['firstname'] + ' ' + x['lastname'],
+        email: x['email'],
+        phone: x['phone']
+      }
+      table.push(obj);
+    });
+
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(table)
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    XLSX.writeFile(wb, 'user-list.xlsx');
   }
 }
