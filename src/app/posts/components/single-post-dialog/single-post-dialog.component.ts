@@ -1,7 +1,9 @@
+import { DOCUMENT } from '@angular/common';
 import { Component, HostBinding, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { ShareSheetComponent } from 'src/app/components/share-sheet/share-sheet.component';
 import { VoteDialogComponent } from 'src/app/components/vote-dialog/vote-dialog.component';
@@ -23,6 +25,7 @@ export class SinglePostDialogComponent implements OnInit {
   public isMobile: boolean = false;
   @HostBinding('class') public class: string = '';
   public submitted: boolean = false;
+  public url: string = '';
 
   constructor(
     public dialogRef: MatDialogRef<SinglePostDialogComponent>,
@@ -33,7 +36,9 @@ export class SinglePostDialogComponent implements OnInit {
     public favoritesService: FavoritesService,
     public utilityService: UtilityService,
     public postsService: PostsService,
-    public deviceDetectorService: DeviceDetectorService
+    public deviceDetectorService: DeviceDetectorService,
+    @Inject(DOCUMENT) public DOM: Document,
+    public router: Router
   ) {
     // console.log(this.dialogData);
     this.post = this.dialogData['post'];
@@ -50,6 +55,7 @@ export class SinglePostDialogComponent implements OnInit {
     // console.log(this.post);
     this.isMobile = this.deviceDetectorService.isMobile();
     if (this.isMobile) { this.class = 'fixmobile'; }
+    this.url = this.DOM.location.origin + this.router.url;
   }
 
   ngOnInit(): void {
@@ -108,19 +114,46 @@ export class SinglePostDialogComponent implements OnInit {
   }
 
   onComment(form: FormGroup) {
+    this.submitted = true;
+    let owner: any = '';
+    let ownerEmail: any = '';
+    let postTitle: any = '';
+
+    if (this.post['card']['createdBy'] != undefined) {
+      owner = this.post['card']['createdBy']['firstname'] + ' ' + this.post['card']['createdBy']['lastname'];
+      ownerEmail = this.post['card']['createdBy']['email'];
+    } else {
+      owner = 'Anónimo';
+      ownerEmail = null;
+    }
+
+    switch (this.post['relation']) {
+      case 'complaint':
+        postTitle = this.post['card']['title']
+        break;
+      case 'testimony':
+        postTitle = this.post['card']['name']
+        break;
+    }
+
     let data: any = {
       postID: this.post['card']['_id'],
-      message: form['value']['comment']
+      message: form['value']['comment'],
+      owner: owner,
+      ownerEmail: ownerEmail,
+      postTitle: postTitle,
+      redirectURL: this.url + '/' + this.post['card']['_id']
     };
+
     this.postsService.addPostComment(data).subscribe({
       error: (error: any) => {
         this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+        this.submitted = false;
       },
-      next: (reply: any) => {
-        this.postComments.unshift(reply);
-      },
+      next: (reply: any) => { this.postComments.unshift(reply); },
       complete: () => {
         this.commentForm.reset();
+        this.submitted = false;
       }
     });
   }
