@@ -47,6 +47,10 @@ const routes: Routes = [
       import('./posts/posts.component.module').then(module => module.PostsComponentModule)
   },
   {
+    path: 'universidades', loadChildren: () =>
+      import('./college-marathon/college-marathon.component.module').then(module => module.CollegeMarathonComponentModule)
+  },
+  {
     path: 'noticias', loadChildren: () =>
       import('./news/news.component.module').then(module => module.NewsComponentModule)
   },

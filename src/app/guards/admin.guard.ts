@@ -24,7 +24,7 @@ export class CanActivateAdminGuard implements CanActivate {
         error: (error: any) => { },
         next: (reply: any) => {
           let userActivity: string = reply['activities'][0]['value'];
-          if (userActivity === 'moderator') {
+          if (userActivity === 'moderator' || userActivity == 'editor') {
             resolve(true);
           } else {
             resolve(false);
