@@ -88,5 +88,9 @@ export class UserService {
     )
   }
 
-
+  searchUserByEmail(data: any) {
+    return this.httpClient.get(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.searchUserByEmailEndPoint + `?email=${data['email']}`, {}
+    );
+  }
 }

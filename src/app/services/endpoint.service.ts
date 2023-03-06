@@ -24,6 +24,7 @@ export class EndPointService {
   public addAssociationEndPoint: string = '/user/';
   public fetchUserCountEndPoint: string = '/user/count';
   public joinUserWithAssociationEndPoint: string = '/user/'
+  public searchUserByEmailEndPoint: string = '/user';
 
   // documents
   public createNewDocumentEndPoint: string = '/document';
@@ -176,6 +177,7 @@ export class EndPointService {
   public fetchAllPostsEndPoint: string = '/post';
   public fetchPostByRelationIdEndPoint: string = '/post/';
   public addPostCommentEndPoint: string = '/post/';
+  public categorizePostEndPoint: string = '/assignment';
 
   constructor() { }
 }

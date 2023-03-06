@@ -23,7 +23,7 @@ export class TestimonialsComponent implements OnInit {
   public userActivities: any = [];
   public testimonies: any = null;
   public selection = new SelectionModel<any>(true, []);
-  public displayedColumns: string[] = ['select', 'author', 'title', 'coverage', 'date', 'menu'];
+  public displayedColumns: string[] = ['select', 'author', 'title', 'relation', 'date', 'menu'];
   public dataSource!: MatTableDataSource<any>;
   public isDataAvailable: boolean = false;
   public isPrivate: boolean = false;
@@ -75,7 +75,7 @@ export class TestimonialsComponent implements OnInit {
       next: (reply: any) => {
         // console.log(reply);
         this.testimonies = reply[0];
-        //console.log(this.testimonies);
+        console.log(this.testimonies);
         this.testimonies.filter((t: any) => { });
 
         this.dataSource = new MatTableDataSource(this.testimonies);
@@ -165,11 +165,12 @@ export class TestimonialsComponent implements OnInit {
     }
   }
 
-  popCategorizePostsDialog(complaint: any) {
+  popCategorizePostsDialog(post: any) {
     const dialogRef = this.dialog.open<any>(CategorizePostComponent, {
       data: {
-        complaint: complaint,
-        document: this.document
+        post: post,
+        document: this.document,
+        type: 'testimony'
       },
       disableClose: true,
       panelClass: 'side-dialog'

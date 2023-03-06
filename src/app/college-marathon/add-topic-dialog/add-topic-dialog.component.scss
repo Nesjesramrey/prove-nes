@@ -1,0 +1,51 @@
+:host {
+  padding: 20px;
+  float: left;
+
+  .dlghd {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    button {
+      zoom: 0.7;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .edtrfrm {
+    margin: 20px 0;
+    // background: #ffffff;
+    border-radius: 5px;
+
+    .ctrls {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-top: 20px;
+
+      * {
+        margin: 0;
+      }
+
+      mat-spinner {
+        margin-left: 20px;
+      }
+    }
+  }
+
+  ::ng-deep .angular-editor-wrapper {
+    background: #ffffff !important;
+  }
+
+  ::ng-deep .angular-editor-textarea {
+    margin-top: 0 !important;
+    box-shadow: 0 3px 4px -5px rgba($color: #000000, $alpha: 0.3);
+  }
+
+  ::ng-deep .angular-editor-toolbar {
+    padding: 1rem !important;
+  }
+}

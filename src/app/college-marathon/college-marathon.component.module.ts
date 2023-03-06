@@ -7,6 +7,9 @@ import { AppSharedModule } from '../app-shared.module';
 import { CollegeMarathonComponentRoutingModule } from './college-marathon.component-routing.module';
 import { CollegeMarathonComponent } from './college-marathon.component';
 import { CreateTeamComponent } from './create-team/create-team.component';
+import { AddTopicDialogComponent } from './add-topic-dialog/add-topic-dialog.component';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { AddSolutionDialogComponent } from './add-solution-dialog/add-solution-dialog.component';
 
 @NgModule({
   imports: [
@@ -16,13 +19,22 @@ import { CreateTeamComponent } from './create-team/create-team.component';
     CollegeMarathonComponentRoutingModule,
     AppMaterialModule,
     ComponentsModule,
-    AppSharedModule
+    AppSharedModule,
+    AngularEditorModule
   ],
   declarations: [
     CollegeMarathonComponent,
-    CreateTeamComponent
+    CreateTeamComponent,
+    AddTopicDialogComponent,
+    AddSolutionDialogComponent
   ],
-  exports: [],
-  entryComponents: []
+  exports: [
+    AddTopicDialogComponent,
+    AddSolutionDialogComponent
+  ],
+  entryComponents: [
+    AddTopicDialogComponent,
+    AddSolutionDialogComponent
+  ]
 })
 export class CollegeMarathonComponentModule { }

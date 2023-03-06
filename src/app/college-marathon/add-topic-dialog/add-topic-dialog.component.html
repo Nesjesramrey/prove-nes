@@ -1,0 +1,22 @@
+<div class="set-12 dlghd">
+  <div class="set-11">
+    <strong>Agrega tu Problemática</strong>
+  </div>
+  <div class="set-1 txt-right">
+    <button type="button" mat-mini-fab color="primary" (click)="killDialog()" [disabled]="submitted">
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </div>
+</div>
+
+<form class="set-12 edtrfrm" [formGroup]="topicFG" (submit)="saveDescription(topicFG)">
+  <div class="set-12">
+    <angular-editor formControlName="description" [config]="editorConfig"></angular-editor>
+  </div>
+  <div class="set-12 ctrls">
+    <button type="submit" mat-raised-button color="warn" [disabled]="topicFG.invalid || submitted">
+      <small>Guardar</small>
+    </button>
+    <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
+  </div>
+</form>

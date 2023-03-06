@@ -1,16 +1,199 @@
-<div class="set-12">
-  <div class="set-4">
-    <h3>Registra tu equipo</h3>
-    <form>
-      <mat-form-field appearance="outline">
-        <mat-label>Nombre del equipo</mat-label>
-        <input matInput>
-      </mat-form-field>
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+  <mat-spinner></mat-spinner>
+</div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Nombre del responsable del equipo</mat-label>
-        <input matInput>
-      </mat-form-field>
-    </form>
+<div class="set-12" *ngIf="isDataAvailable">
+  <div class="set-7">
+    <h1>Lorem Ipsum</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec maximus ex et purus volutpat, vitae varius ligula
+      ornare. Nulla consectetur ultrices laoreet.</p>
+  </div>
+
+  <div class="set-5">
+    <h3>Registra tu equipo</h3>
+
+    <div class="set-12 usr-auth" *ngIf="!userAvailable">
+      <p>¿Necesitas una cuenta para registrar a tu equipo?</p>
+      <p class="access">
+        <button type="button" mat-raised-button color="primary">
+          <small>Ingresar</small>
+        </button>
+        <button type="button" mat-raised-button color="primary">
+          <small>Registro</small>
+        </button>
+      </p>
+    </div>
+
+    <div class="set-12 teamreg">
+      <mat-stepper #stepper [disableRipple]="true" [linear]="true" [@.disabled]="true" [selectedIndex]="selectedIndex">
+        <mat-step>
+          <form [formGroup]="registerTeamFG">
+            <mat-form-field appearance="outline">
+              <mat-label>Nombre del equipo</mat-label>
+              <input matInput formControlName="name">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Líder de equipo</mat-label>
+              <input matInput formControlName="owner">
+            </mat-form-field>
+          </form>
+
+          <div class="set-12 ctrls">
+            <button type="button" mat-raised-button color="warn"
+              [disabled]="registerTeamFG.invalid || !userAvailable || submitted" matStepperNext>
+              <small>Siguiente</small>
+            </button>
+          </div>
+        </mat-step>
+
+        <mat-step>
+          <div class="set-12 usrlfx">
+            <form [formGroup]="searchUserFG" class="set-12">
+              <div class="set-10">
+                <mat-form-field appearance="outline">
+                  <mat-label>Invita a tus compañeros de equipo</mat-label>
+                  <input matInput placeholder="Ejemplo: nombre@dominio.com" formControlName="email">
+                </mat-form-field>
+              </div>
+
+              <div class="set-2 txt-right">
+                <button type="button" mat-mini-fab color="primary" (click)="onSearchUser(searchUserFG)"
+                  [disabled]="searchUserFG.invalid || submitted">
+                  <mat-icon>person_search</mat-icon>
+                </button>
+              </div>
+
+              <div formArrayName="collaborators" class="set-12 collabs" *ngIf="teamUsers.length != 0">
+                <div *ngFor="let item of teamUsersForm.controls; let i = index;" class="set-12 collabfield">
+                  <div [formGroupName]="i">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Correo electrónico</mat-label>
+                      <input type="text" matInput formControlName="userEmail">
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="set-12 ctrls">
+            <button type="button" mat-raised-button color="warn" matStepperPrevious>
+              <small>Anterior</small>
+            </button>
+            <button type="button" mat-raised-button color="warn" matStepperNext>
+              <small>Siguiente</small>
+            </button>
+          </div>
+        </mat-step>
+
+        <mat-step>
+          <input type="file" #file (change)="onFileSelected($event)">
+          <button type="button" class="upldbtn" (click)="file.click()">
+            <mat-icon>file_upload</mat-icon>
+            <p><strong>Identificación oficial</strong></p>
+            <p><small>Peso máximo <strong>5MB</strong></small></p>
+            <p><small>Tipo de archivo <strong>.pdf</strong></small></p>
+          </button>
+
+          <div class="set-12 ctrls">
+            <button type="button" mat-raised-button color="warn" matStepperPrevious>
+              <small>Anterior</small>
+            </button>
+            <button type="button" mat-raised-button color="warn" matStepperNext>
+              <small>Siguiente</small>
+            </button>
+          </div>
+        </mat-step>
+
+        <mat-step>
+          <mat-form-field appearance="outline">
+            <mat-label>Cobertura</mat-label>
+            <mat-select>
+              <mat-option *ngFor="let state of coverage" [value]="state._id">
+                <small>{{state.name}}</small>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Selecciona tu tema</mat-label>
+            <mat-select (selectionChange)="onLayoutSelected($event)">
+              <mat-option *ngFor="let layout of layouts" [value]="layout._id">
+                <small>{{layout.category.name}}</small>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Selecciona tu sub tema</mat-label>
+            <mat-select (selectionChange)="onSubLayoutSelected($event)">
+              <mat-option *ngFor="let layout of sublayouts" [value]="layout._id">
+                <small>{{layout.category.name}}</small>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Problemática</mat-label>
+            <mat-select>
+              <mat-option *ngFor="let topic of topics" [value]="topic._id">
+                <small>{{topic.title}}</small>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div class="set-12 ctrls">
+            <button type="button" mat-raised-button color="warn" matStepperPrevious>
+              <small>Anterior</small>
+            </button>
+            <button type="button" mat-raised-button color="warn" matStepperNext>
+              <small>Siguiente</small>
+            </button>
+          </div>
+        </mat-step>
+
+        <mat-step>
+          <mat-form-field appearance="outline">
+            <mat-label>Título</mat-label>
+            <input matInput>
+          </mat-form-field>
+
+          <div class="set-12 ctrltpc">
+            <div class="set-6">
+              <button type="button" mat-raised-button color="primary" (click)="popAddTopicDialog()">
+                <small>Agrega tu problemática</small>
+              </button>
+            </div>
+
+            <div class="set-6">
+              <button type="button" mat-raised-button color="primary" (click)="popAddSolutionDialog()">
+                <small>Agrega tu solución</small>
+              </button>
+            </div>
+
+            <div class="set-12">
+              <button type="button" mat-raised-button color="primary">
+                <small>Carga tu Documento</small>
+              </button>
+            </div>
+          </div>
+
+          <div class="set-12 ctrls">
+            <button type="button" mat-raised-button color="warn" matStepperPrevious>
+              <small>Anterior</small>
+            </button>
+            <button type="button" mat-raised-button color="warn" matStepperNext>
+              <small>Siguiente</small>
+            </button>
+          </div>
+          <!-- <button type="submit" mat-raised-button color="primary"
+                [disabled]="registerTeamFG.invalid || !userAvailable">
+                <small>Guardar equipo</small>
+              </button>
+              <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner> -->
+        </mat-step>
+      </mat-stepper>
+    </div>
   </div>
 </div>

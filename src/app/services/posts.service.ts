@@ -30,4 +30,10 @@ export class PostsService {
       this.endPointService.apiEndPoint + this.endPointService.addPostCommentEndPoint + data['postID'] + '/comment', data
     );
   }
+
+  categorizePost(data: any) {
+    return this.httpClient.post(
+      this.endPointService.apiEndPoint + this.endPointService.categorizePostEndPoint, data
+    );
+  }
 }

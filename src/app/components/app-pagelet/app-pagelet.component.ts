@@ -151,6 +151,14 @@ export class AppPageletComponent implements OnInit {
       case 'testimonials':
         this.router.navigateByUrl('/testimonios');
         break;
+
+      case 'cover-document':
+        if (this.user != null) {
+          this.router.navigateByUrl('/documentos-publicos/' + this.coverDocument['_id']);
+        } else {
+          this.router.navigateByUrl('/hub/ingresar');
+        }
+        break
     }
   }
 

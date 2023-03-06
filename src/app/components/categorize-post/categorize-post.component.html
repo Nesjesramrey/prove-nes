@@ -12,23 +12,23 @@
 
 <div class="set-12 dlgbd">
   <div class="set-12 author">
-    <p class="name" *ngIf="complaint['createdBy'] != null">
-      {{complaint['createdBy']['firstname']}} {{complaint['createdBy']['lastname']}}
+    <p class="name" *ngIf="post['createdBy'] != null || post['createdBy'] != undefined">
+      {{post['createdBy']['firstname']}} {{post['createdBy']['lastname']}}
     </p>
-    <p class="name" *ngIf="complaint['createdBy'] == null">Anónimo</p>
+    <p class="name" *ngIf="post['createdBy'] == null">Anónimo</p>
     <p class="date">
-      {{complaint['createdAt'] | date: 'mediumDate'}} - {{complaint['createdAt'] | date: 'mediumTime'}}
+      {{post['createdAt'] | date: 'mediumDate'}} - {{post['createdAt'] | date: 'mediumTime'}}
     </p>
   </div>
 
   <div class="set-12">
-    <strong>{{complaint['title']}}</strong>
+    <strong>{{post['title']}}</strong>
   </div>
 
-  <div class="set-12 cmpltdsc" [innerHTML]="complaint['description']"></div>
+  <div class="set-12 cmpltdsc" [innerHTML]="post['description']"></div>
 
   <div class="set-12">
-    <form [formGroup]="formGroup">
+    <form [formGroup]="formGroup" (submit)="categorizePost(formGroup)">
       <mat-form-field appearance="outline">
         <mat-label>Tema</mat-label>
         <mat-select formControlName="layout" (selectionChange)="onSelectLayout($event)">

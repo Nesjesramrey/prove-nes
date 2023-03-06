@@ -64,7 +64,7 @@ export class SingleTestimonialComponent implements OnInit {
         });
         
       });
-      console.log(this.card);
+      // console.log(this.card);
 
       setTimeout(() => {
         this.isDataAvailable = true;
