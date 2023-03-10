@@ -10,6 +10,9 @@ import { CreateTeamComponent } from './create-team/create-team.component';
 import { AddTopicDialogComponent } from './add-topic-dialog/add-topic-dialog.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { AddSolutionDialogComponent } from './add-solution-dialog/add-solution-dialog.component';
+import { TeamListComponent } from './team-list/team-list.component';
+import { SingleTeamComponent } from './single-team/single-team.component';
+import { SelectCollegeDialogComponent } from './select-college-dialog/select-college-dialog.component';
 
 @NgModule({
   imports: [
@@ -26,15 +29,22 @@ import { AddSolutionDialogComponent } from './add-solution-dialog/add-solution-d
     CollegeMarathonComponent,
     CreateTeamComponent,
     AddTopicDialogComponent,
-    AddSolutionDialogComponent
+    AddSolutionDialogComponent,
+    TeamListComponent,
+    SingleTeamComponent,
+    SelectCollegeDialogComponent
   ],
   exports: [
     AddTopicDialogComponent,
-    AddSolutionDialogComponent
+    AddSolutionDialogComponent,
+    TeamListComponent,
+    SingleTeamComponent,
+    SelectCollegeDialogComponent
   ],
   entryComponents: [
     AddTopicDialogComponent,
-    AddSolutionDialogComponent
+    AddSolutionDialogComponent,
+    SelectCollegeDialogComponent
   ]
 })
 export class CollegeMarathonComponentModule { }

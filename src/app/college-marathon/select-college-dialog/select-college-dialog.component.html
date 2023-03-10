@@ -1,0 +1,7 @@
+<div class="set-12">
+  <mat-selection-list [multiple]="false">
+    <mat-list-option *ngFor="let college of universities" [value]="college._id">
+      <small>{{college['universidad_nombre']}}</small>
+    </mat-list-option>
+  </mat-selection-list>
+</div>

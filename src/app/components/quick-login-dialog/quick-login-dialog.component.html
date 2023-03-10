@@ -1,0 +1,36 @@
+<div class="set-12 dlghd">
+  <div class="set-10">
+    <strong>Ingresar</strong>
+  </div>
+  <div class="set-2">
+    <button type="button" mat-mini-fab color="primary" (click)="killDialog()" [disabled]="submitted">
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div class="set-12">
+  <form [formGroup]="loginFG" (submit)="onLogin(loginFG)">
+    <mat-form-field appearance="outline">
+      <mat-label>Correo electrónico</mat-label>
+      <input type="text" matInput formControlName="email">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Contraseña</mat-label>
+      <input matInput type="password" formControlName="password" [type]="hide ? 'password' : 'text'" />
+      <button type="button" matSuffix (click)="hide = !hide">
+        <mat-icon color="primary">
+          {{ hide ? "visibility_off" : "visibility" }}
+        </mat-icon>
+      </button>
+    </mat-form-field>
+
+    <div class="set-12 ctrls">
+      <button type="submit" mat-raised-button color="primary" [disabled]="loginFG.invalid || submitted">
+        <small>Ingresar</small>
+      </button>
+      <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
+    </div>
+  </form>
+</div>

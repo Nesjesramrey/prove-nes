@@ -65,6 +65,16 @@ export class PostsComponent implements OnInit {
             this.popUseToolsDialog();
           }, 1000);
         }
+        this.posts.filter((x: any) => {
+          if (x['card']['images'] != null) {
+            if (x['card']['images'][0] != undefined) {
+              var fileExt = x['card']['images'][0].split('.').pop();
+              if (fileExt == 'mp4' || fileExt == '3gpp') {
+                x['card']['hasVideo'] = true;
+              }
+            }
+          }
+        });
         // console.log(this.posts);
       }
     });
