@@ -11,7 +11,7 @@ const routes: Routes = [
       { path: '', component: CollegeMarathonComponent },
       { path: 'registro', component: CreateTeamComponent },
       { path: 'equipos', component: TeamListComponent },
-      { path: ':teamID', component: SingleTeamComponent },
+      { path: 'equipos/:teamID', component: SingleTeamComponent },
     ]
   }
 ];

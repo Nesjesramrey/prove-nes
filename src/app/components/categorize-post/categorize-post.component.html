@@ -39,7 +39,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>Sub Tema</mat-label>
+        <mat-label>Subtema</mat-label>
         <mat-select formControlName="sublayout" (selectionChange)="onSelectSubLayout($event)">
           <mat-option *ngFor="let layout of sublayouts" [value]="layout['_id']">
             <small>{{layout['category']['name']}}</small>

@@ -77,7 +77,7 @@
               </mat-form-field>
             </div>
             <div class="set-9">
-              <button type="button" mat-mini-fab color="primary" matTooltip="Agregar problemática"
+              <button type="button" mat-mini-fab color="primary" matTooltip="Agregar problema"
                 matTooltipClass="tooltip" (click)="popAddDocumentTheme()" *ngIf="isCollaborator">
                 <mat-icon>add_circle</mat-icon>
               </button>
@@ -109,7 +109,7 @@
           <div class="set-6 col">
             <div class="set-4 title">
               <strong>
-                <small>Problemáticas</small>
+                <small>Problemas</small>
               </strong>
               <mat-icon>warning</mat-icon>
             </div>
@@ -117,7 +117,7 @@
             <div class="set-8 table-head">
               <mat-form-field appearance="outline">
                 <mat-label>
-                  <small>Buscar problemáticas...</small>
+                  <small>Buscar problemas...</small>
                 </mat-label>
                 <input matInput type="text" (keyup)="applyFilterTopic($event)" [disabled]="panelTopicsData.length == 0">
                 <button matSuffix mat-icon-button [disabled]="panelTopicsData.length == 0">
@@ -205,13 +205,13 @@
               <div class="notData">
                 <p>
                   <strong>
-                    <small>No se encontraron problemáticas.</small>
+                    <small>No se encontraron problemas.</small>
                   </strong>
                   <br />
-                  <small>Sé el primero en agregar una problemática.</small>
+                  <small>Sé el primero en agregar un problema.</small>
                 </p>
                 <button type="button" mat-raised-button color="warn" (click)="popAddDocumentTheme()">
-                  <small>Agregar problemática</small>
+                  <small>Agregar problema</small>
                 </button>
               </div>
             </ng-template>

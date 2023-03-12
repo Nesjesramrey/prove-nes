@@ -128,7 +128,7 @@ export class AddDocumentLayoutComponent implements OnInit {
     let category: any = this.categories.filter((x: any) => { return x['name'] == event['option']['value'] });
 
     if (this.selectedCategories.includes(event.option.value)) {
-      this.utilityservice.openErrorSnackBar('Ya se agrego la categoría.');
+      this.utilityservice.openErrorSnackBar('Ya se agrego el tema.');
       this.categoryInput.nativeElement.value = '';
       this.categoryCtrl.setValue(null);
       return;

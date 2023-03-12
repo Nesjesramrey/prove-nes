@@ -29,4 +29,16 @@ export class TeamService {
       this.endpointSrvc.apiEndPoint + this.endpointSrvc.assignTeamCollaboratorsEndPoint + data['teamID'], data
     );
   }
+
+  setTeamCategories(data: any) {
+    return this.httpClient.put(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.setTeamCategoriesEndPoint + data['teamID'], data
+    );
+  }
+
+  fetchTeamById(data: any) {
+    return this.httpClient.get(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchTeamByIdEndPoint + data['teamID'], {}
+    );
+  }
 }

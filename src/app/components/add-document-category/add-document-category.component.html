@@ -5,7 +5,7 @@
 <div class="set-12" *ngIf="isDataAvailable">
   <div class="set-12 dialog-head">
     <div class="set-9">
-      <h3>Agregar Categoría</h3>
+      <h3>Agregar Tema</h3>
     </div>
     <div class="set-3 txt-right">
       <button type="button" mat-icon-button color="primary" (click)="killDialog()" [disabled]="isSubmitted">
@@ -25,7 +25,7 @@
         <div class="set-12 step-content">
           <div class="set-12">
             <mat-form-field appearance="outline">
-              <mat-label>Buscar categoría</mat-label>
+              <mat-label>Buscar tema</mat-label>
               <mat-chip-list #chipList>
                 <mat-chip *ngFor="let category of selectedCategories" (removed)="removeCategory(category)">
                   {{category}}
@@ -38,7 +38,7 @@
                   [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                   (matChipInputTokenEnd)="addCategory($event)" (keyup.enter)="onEnter($event)">
 
-                <button mat-button matSuffix mat-icon-button color="warn" matTooltip="Agregar categoría"
+                <button mat-button matSuffix mat-icon-button color="warn" matTooltip="Agregar tema"
                   [disabled]="!addCategoryValidated" (click)="onCreateCategory()">
                   <mat-icon>add_circle</mat-icon>
                 </button>
@@ -50,13 +50,13 @@
                 </mat-option>
               </mat-autocomplete>
 
-              <mat-hint *ngIf="addCategoryValidated">** ¡Esa categoría no existe!</mat-hint>
+              <mat-hint *ngIf="addCategoryValidated">** ¡Ese tema no existe!</mat-hint>
             </mat-form-field>
           </div>
 
           <div class="set-12 ctrls">
             <!-- <button type="button" mat-raised-button color="accent" (click)="popAddRootCategoryDialog()">
-              <small>Nueva Categoría</small>
+              <small>Nuevo Tema</small>
             </button> -->
             <button type="button" mat-raised-button color="primary" matStepperNext
               [disabled]="stepTwoFormGroup.invalid">
@@ -65,8 +65,8 @@
           </div>
 
           <div class="set-12 helpers">
-            <p><small>** Busca o selecciona una categoría.</small></p>
-            <p><small>** Si tu categoría no existe, presiona <strong>ENTER</strong> y a continuación el botón de agregar
+            <p><small>** Busca o selecciona un tema.</small></p>
+            <p><small>** Si tu tema no existe, presiona <strong>ENTER</strong> y a continuación el botón de agregar
                 a
                 la derecha.</small></p>
           </div>

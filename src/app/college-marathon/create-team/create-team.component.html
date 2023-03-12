@@ -121,12 +121,13 @@
           </div>
 
           <div class="set-12 ctrls">
-            <button type="button" mat-raised-button color="warn" matStepperPrevious>
+            <button type="button" mat-raised-button color="warn" matStepperPrevious [disabled]="submitted">
               <small>Anterior</small>
             </button>
-            <button type="button" mat-raised-button color="warn" (click)="saveCollaborators()">
+            <button type="button" mat-raised-button color="warn" (click)="saveCollaborators()" [disabled]="submitted">
               <small>Siguiente</small>
             </button>
+            <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
           </div>
         </mat-step>
 
@@ -135,19 +136,20 @@
             <input type="file" #file (change)="onFileSelected($event)">
             <button type="button" class="upldbtn" (click)="file.click()">
               <mat-icon>file_upload</mat-icon>
-              <p><strong>Identificación oficial</strong></p>
+              <p><strong>Identificación de tu Universidad</strong></p>
               <p><small>Peso máximo <strong>5MB</strong></small></p>
               <p><small>Tipo de archivo <strong>.pdf</strong></small></p>
             </button>
           </form>
 
           <div class="set-12 ctrls">
-            <button type="button" mat-raised-button color="warn" matStepperPrevious>
+            <button type="button" mat-raised-button color="warn" matStepperPrevious [disabled]="submitted">
               <small>Anterior</small>
             </button>
-            <button type="button" mat-raised-button color="warn" (click)="saveLeaderID()">
+            <button type="button" mat-raised-button color="warn" (click)="saveLeaderID()" [disabled]="submitted">
               <small>Siguiente</small>
             </button>
+            <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
           </div>
         </mat-step>
 
@@ -172,7 +174,7 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline">
-              <mat-label>Selecciona tu sub tema</mat-label>
+              <mat-label>Selecciona tu subtema</mat-label>
               <mat-select (selectionChange)="onSubLayoutSelected($event)" formControlName="sublayout">
                 <mat-option *ngFor="let layout of sublayouts" [value]="layout._id">
                   <small>{{layout.category.name}}</small>
@@ -182,19 +184,20 @@
           </form>
 
           <div class="set-12 ctrls">
-            <button type="button" mat-raised-button color="warn" matStepperPrevious>
+            <button type="button" mat-raised-button color="warn" matStepperPrevious [disabled]="submitted">
               <small>Anterior</small>
             </button>
-            <button type="button" mat-raised-button color="warn" (click)="saveTeamTopicSetup()">
+            <button type="button" mat-raised-button color="warn" (click)="saveTeamTopicSetup()" [disabled]="submitted">
               <small>Siguiente</small>
             </button>
+            <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
           </div>
         </mat-step>
 
         <mat-step>
           <form class="set-12" [formGroup]="topicFG">
             <mat-form-field appearance="outline">
-              <mat-label>Problemática</mat-label>
+              <mat-label>Rroblema</mat-label>
               <mat-select formControlName="topic">
                 <mat-option *ngFor="let topic of topics" [value]="topic._id">
                   <small>{{topic.title}}</small>
@@ -211,7 +214,7 @@
           <div class="set-12 ctrltpc">
             <div class="set-6">
               <button type="button" mat-raised-button color="primary" (click)="popAddTopicDialog()">
-                <small>Agrega tu problemática</small>
+                <small>Agrega tu problema</small>
               </button>
             </div>
 

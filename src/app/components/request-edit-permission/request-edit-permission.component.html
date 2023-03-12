@@ -15,7 +15,7 @@
       <div class="set-12">
         <div class="set-6">
           <mat-form-field appearance="outline">
-            <mat-label>Categorías disponibles</mat-label>
+            <mat-label>Temas disponibles</mat-label>
             <mat-select multiple formControlName="layouts">
               <mat-option *ngFor="let layout of availableLayouts" [value]="layout.id">
                 <small>{{ layout.name }}</small>

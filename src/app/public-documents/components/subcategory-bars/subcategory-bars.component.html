@@ -4,7 +4,7 @@
 
 <div class="set-12 bars" *ngIf="layouts.length != 0">
   <div class="set-12 inner-bar" *ngFor="let layout of layouts">
-    <!-- <button type="button" class="linker" matTooltip="Abrir categoría" matTooltipClass="tooltip"
+    <!-- <button type="button" class="linker" matTooltip="Abrir tema" matTooltipClass="tooltip"
       matTooltipPosition="left" *ngIf="layoutSelected == layout._id && layoutSelected != ''"
       (click)="linkMe('/documentos-publicos/' + document_id + '/categoria/' + layout._id)">
       <mat-icon>shortcut</mat-icon>
@@ -30,5 +30,5 @@
 </div>
 
 <div class="set-12 empty-bars" *ngIf="layouts.length == 0">
-  No hay categorías disponibles
+  No hay temas disponibles
 </div>

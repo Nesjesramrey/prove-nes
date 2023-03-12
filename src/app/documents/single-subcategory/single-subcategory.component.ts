@@ -190,7 +190,8 @@ export class SingleSubcategoryComponent implements OnInit {
         documentID: this.documentID,
         document: this.document,
         categoryID: this.subcategoryID,
-        coverage: coverage[0]
+        coverage: coverage[0],
+        user: this.user
       },
       disableClose: true,
       panelClass: 'full-dialog'
@@ -358,8 +359,8 @@ export class SingleSubcategoryComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
-        // this.layouts = this.layouts.filter((x: any) => { return x['_id'] != reply['_id']; });
-        // this.dataSource = new MatTableDataSource(this.layouts);
+        this.topics = this.topics.filter((x: any) => { return x['_id'] != reply['_id']; });
+        this.dataSource = new MatTableDataSource(this.topics);
       }
     });
   }

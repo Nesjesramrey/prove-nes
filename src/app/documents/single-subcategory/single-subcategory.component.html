@@ -53,7 +53,7 @@
               <mat-menu #menu="matMenu">
                 <button mat-menu-item (click)="popEditCategoryDialog()">
                   <mat-icon>settings</mat-icon>
-                  <span>Editar categoría</span>
+                  <span>Editar tema</span>
                 </button>
 
                 <button type="button" mat-menu-item (click)="popDocumentComments()">
@@ -257,9 +257,8 @@
                     <mat-icon>exit_to_app</mat-icon>
                     <small>Mover</small>
                   </button>
-                  <button type="button" mat-menu-item (click)="killTopic(element)" *ngIf="
-                      actionControlActivityList.includes(user.activityName)
-                    ">
+                  <button type="button" mat-menu-item (click)="killTopic(element)"
+                    *ngIf="actionControlActivityList.includes(user.activityName)">
                     <mat-icon>delete</mat-icon>
                     <small>Eliminar</small>
                   </button>

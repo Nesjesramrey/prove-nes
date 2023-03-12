@@ -25,6 +25,7 @@ export class EndPointService {
   public fetchUserCountEndPoint: string = '/user/count';
   public joinUserWithAssociationEndPoint: string = '/user/'
   public searchUserByEmailEndPoint: string = '/user';
+  public uploadUserIDDocumentEndPoint: string = '/user/';
 
   // documents
   public createNewDocumentEndPoint: string = '/document';
@@ -66,6 +67,7 @@ export class EndPointService {
   public updateTopicDataEndPoint: string = '/topic/';
   public fetchFavoriteTopicsByUserEndPoint: string = '/topic/user/';
   public fetchVotedTopicsByUserEndPoint: string = '/topic/user/';
+  public killTopicEndPoint: string = '/topic/';
 
   // permission
   public createNewPermissionEndPoint: string = '/permission/';
@@ -78,6 +80,7 @@ export class EndPointService {
   public getTopSolutionByLayoutEndPoint: string = '/solution/layout/';
   public updateSolutionDataEndPoint: string = '/solution/';
   public uploadSolutionFilesEndPoint: string = '/solution/';
+  public killSolutionEndPoint: string = '/solution/';
 
   // utility
   public fetchAllStatesEndPoint: string = '/state';
@@ -184,6 +187,8 @@ export class EndPointService {
   public createTeamEndPoint: string = '/team';
   public leaderStatusEndPoint: string = '/team/validate_user_lead/';
   public assignTeamCollaboratorsEndPoint: string = '/team/assign_collaborators/';
+  public setTeamCategoriesEndPoint: string = '/team/assign_layout/';
+  public fetchTeamByIdEndPoint: string = '/team/';
 
   constructor() { }
 }

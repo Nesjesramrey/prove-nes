@@ -44,7 +44,7 @@ export class CreateTeamComponent implements OnInit {
   public topics: any = null;
   public coverage: any = null;
   @ViewChild('stepper') public stepper!: MatStepper;
-  public selectedIndex: number = 1;
+  public selectedIndex: number = 4;
   public association: any = null;
   public imgDoc_exts: any = ['pdf'];
   public isMobile: boolean = false;
@@ -154,10 +154,10 @@ export class CreateTeamComponent implements OnInit {
               // console.log(reply);
               this.team = reply['association'];
               // console.log('team: ', this.team);
+              this.setupFG.patchValue({ coverage: this.team['coverage'][0]['_id'] });
+              this.setupFG.updateValueAndValidity();
             },
-            complete: () => {
-
-            }
+            complete: () => { }
           });
         }
 
@@ -394,7 +394,9 @@ export class CreateTeamComponent implements OnInit {
       },
       next: (reply: any) => {
         this.team = reply;
-        console.log('team: ', this.team);
+        // console.log('team: ', this.team);
+        this.setupFG.patchValue({ coverage: this.team['coverage'][0]['_id'] });
+        this.setupFG.updateValueAndValidity();
       },
       complete: () => {
         this.stepNext();
@@ -404,40 +406,80 @@ export class CreateTeamComponent implements OnInit {
   }
 
   saveCollaborators() {
+    this.submitted = true;
+
     let data: any = {
       teamID: this.team['_id'],
       collaborators: this.teamUsers['value']
     };
-    console.log(data);
-    return;
 
     this.teamService.assignTeamCollaborators(data).subscribe({
-      error: (error: any) => { console.log(error); },
+      error: (error: any) => {
+        this.submitted = false;
+        this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+      },
       next: (reply: any) => {
-        console.log(reply);
+        // console.log(reply);
       },
       complete: () => {
-        // this.stepNext();
+        this.submitted = false;
+        this.stepNext();
       }
     });
   }
 
   saveLeaderID() {
+    if (this.userIDFG.controls['file']['value'] == '') {
+      this.stepNext();
+      return;
+    }
+
+    this.submitted = true;
+
     let data: any = {
-      file: this.userIDFG.controls['file']['value']
+      user_id: this.user['_id'],
+      formData: new FormData()
     };
-    // console.log(data);
-    this.stepNext();
+    data['formData'].append('file', this.userIDFG.controls['file']['value']);
+
+    this.userService.uploadUserIDDocument(data).subscribe({
+      error: (error: any) => {
+        this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+        this.submitted = false;
+      },
+      next: (reply: any) => {
+        console.log(reply);
+        this.user['idImage'] = reply['data']['idImage'];
+        console.log(this.user);
+      },
+      complete: () => {
+        this.submitted = false;
+        this.stepNext();
+      }
+    });
   }
 
   saveTeamTopicSetup() {
+    this.submitted = true;
+
     let data: any = {
-      coverage: this.setupFG['value']['coverage'],
+      teamID: this.team['_id'],
       layout: this.setupFG['value']['layout'],
       sublayout: this.setupFG['value']['sublayout']
     };
-    // console.log(data);
-    this.stepNext();
+    this.teamService.setTeamCategories(data).subscribe({
+      error: (error: any) => {
+        this.submitted = false;
+        this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+      },
+      next: (reply: any) => {
+        console.log(reply);
+      },
+      complete: () => {
+        this.submitted = false;
+        this.stepNext();
+      }
+    });
   }
 
   quickLogin() {

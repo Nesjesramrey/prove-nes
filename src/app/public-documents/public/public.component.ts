@@ -64,6 +64,7 @@ export class PublicComponent implements OnInit {
       this.user['role'] = this.user['activities'][0]['value'];
 
       this.document = reply[1];
+      // console.log('document: ', this.document);
       this.coverage = this.document['coverage'];
       this.layouts = this.document['layouts'];
       this.collaborators = this.document['collaborators'];

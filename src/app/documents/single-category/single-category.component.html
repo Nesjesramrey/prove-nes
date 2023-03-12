@@ -64,7 +64,7 @@
               <mat-menu #menu="matMenu">
                 <button mat-menu-item (click)="popEditCategoryDialog()">
                   <mat-icon>settings</mat-icon>
-                  <span>Editar categoría</span>
+                  <span>Editar tema</span>
                 </button>
 
                 <button
@@ -157,7 +157,7 @@
             mat-mini-fab
             color="accent"
             class="mini"
-            matTooltip="Agregar Sub Categoría"
+            matTooltip="Agregar Subtema"
             (click)="popAddDocumentCategory()"
             *ngIf="actionControlActivityList.includes(user.activityName)"
           >
@@ -201,11 +201,11 @@
       <div class="set-12 category-list">
         <mat-card class="set-12">
           <div class="set-12 table-head">
-            <p class="title">Sub Categorías</p>
-            <!-- <input type="text" (keyup)="applyFilter($event)" placeholder="Buscar en sub categorías..."
+            <p class="title">Subtema</p>
+            <!-- <input type="text" (keyup)="applyFilter($event)" placeholder="Buscar en subtemas..."
               [disabled]="subcategories.length == 0"> -->
             <mat-form-field appearance="outline">
-              <mat-label>Buscar en sub categorías...</mat-label>
+              <mat-label>Buscar en subtemas...</mat-label>
               <input
                 matInput
                 type="text"
@@ -220,7 +220,7 @@
 
           <div class="set-12 empty-layouts" *ngIf="subcategories.length == 0">
             <p>
-              <small>Sin sub categorías disponibles.</small>
+              <small>Sin subtemas disponibles.</small>
             </p>
             <button
               type="button"
@@ -229,7 +229,7 @@
               (click)="popAddDocumentCategory()"
               *ngIf="actionControlActivityList.includes(user.activityName)"
             >
-              <small>Agregar Sub Categoría</small>
+              <small>Agregar Subtema</small>
             </button>
           </div>
 

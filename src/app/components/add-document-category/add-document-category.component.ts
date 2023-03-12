@@ -194,14 +194,14 @@ export class AddDocumentCategoryComponent implements OnInit {
     });
 
     if (this.addedLayouts.includes(category[0]['_id'])) {
-      this.utilityService.openErrorSnackBar('La categoría ya esta en uso');
+      this.utilityService.openErrorSnackBar('El tema ya esta en uso');
       this.categoryInput.nativeElement.value = '';
       this.categoryCtrl.setValue(null);
       return;
     }
 
     if (this.selectedCategories.length == 1) {
-      this.utilityService.openErrorSnackBar('Solo se puede agregar 1 categoría.');
+      this.utilityService.openErrorSnackBar('Solo se puede agregar 1 tema.');
       this.categoryInput.nativeElement.value = '';
       this.categoryCtrl.setValue(null);
       return;

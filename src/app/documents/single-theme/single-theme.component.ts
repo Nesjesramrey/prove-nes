@@ -18,6 +18,7 @@ import { ImageViewerComponent } from 'src/app/components/image-viewer/image-view
 import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
 import { ViewDocumentCommentsComponent } from 'src/app/components/view-document-comments/view-document-comments.component';
 import { EditTopicDataComponent } from 'src/app/components/edit-topic-data/edit-topic-data.component';
+import { WindowAlertComponent } from 'src/app/components/window-alert/window-alert.component';
 
 @Component({
   selector: 'app-single-theme',
@@ -119,10 +120,11 @@ export class SingleThemeComponent implements OnInit {
       this.topicCoverage = this.document['coverage'].filter((x: any) => {
         return x['_id'] == this.topic['coverage'][0]
       });
+      // console.log(this.topic);
 
       this.sliderImages = this.topic['images'];
       this.solutions = this.topic['solutions'];
-      // console.log(this.solutions)
+      // console.log(this.solutions);
       this.dataSource = new MatTableDataSource(this.solutions);
       this.user = reply[4];
       this.user['activityName'] = this.user['activities'][0]['value'];
@@ -323,6 +325,24 @@ export class SingleThemeComponent implements OnInit {
       if (reply != undefined) {
         this.topic['title'] = reply['title'];
         this.topic['description'] = reply['description'];
+      }
+    });
+  }
+
+  killSolution(element: any) {
+    const dialogRef = this.dialog.open<WindowAlertComponent>(WindowAlertComponent, {
+      width: '420px',
+      data: {
+        solution: element,
+        windowType: 'kill-solution',
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        this.solutions = this.solutions.filter((x: any) => { return x['_id'] != reply['_id']; });
+        this.dataSource = new MatTableDataSource(this.solutions);
       }
     });
   }

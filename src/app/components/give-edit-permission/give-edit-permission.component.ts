@@ -132,7 +132,7 @@ export class GiveEditPermissionComponent implements OnInit {
 
     if (this.selectedLayots.length != 0) {
       if (this.selectedLayots.includes(category[0]['_id'])) {
-        this.utilityService.openErrorSnackBar('Ya se agrego la categoría.');
+        this.utilityService.openErrorSnackBar('Ya se agrego el tema.');
         this.categoryInput.nativeElement.value = '';
         this.categoryCtrl.setValue(null);
         return;

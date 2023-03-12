@@ -3,6 +3,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ComplaintService } from 'src/app/services/complaint.service';
 import { DocumentService } from 'src/app/services/document.service';
 import { LayoutService } from 'src/app/services/layout.service';
+import { SolutionService } from 'src/app/services/solution.service';
+import { TopicService } from 'src/app/services/topic.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
@@ -18,6 +20,8 @@ export class WindowAlertComponent implements OnInit {
   public collaborator: any = null;
   public submitted: boolean = false;
   public complaint: any = null;
+  public topic: any = null;
+  public solution: any = null;
 
   constructor(
     public dialogRef: MatDialogRef<WindowAlertComponent>,
@@ -25,7 +29,9 @@ export class WindowAlertComponent implements OnInit {
     public documentService: DocumentService,
     public utilityService: UtilityService,
     public layoutService: LayoutService,
-    public complaintService: ComplaintService
+    public complaintService: ComplaintService,
+    public topicService: TopicService,
+    public solutionService: SolutionService
   ) {
     // console.log(this.dialogData);
     this.windowType = this.dialogData['windowType'];
@@ -41,6 +47,12 @@ export class WindowAlertComponent implements OnInit {
         break;
       case 'complaint':
         this.complaint = this.dialogData['complaint'];
+        break;
+      case 'kill-topic':
+        this.topic = this.dialogData['topic'];
+        break;
+      case 'kill-solution':
+        this.solution = this.dialogData['solution'];
         break;
     }
   }
@@ -112,6 +124,42 @@ export class WindowAlertComponent implements OnInit {
       next: (reply: any) => {
         this.dialogRef.close(reply);
         this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
+      },
+      complete: () => { }
+    });
+  }
+
+  killTopic() {
+    let data: any = {
+      topic_id: this.topic['_id'],
+      isActive: false
+    }
+
+    this.topicService.killTopic(data).subscribe({
+      error: (error: any) => {
+        this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+      },
+      next: (reply: any) => {
+        this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
+        this.dialogRef.close(reply);
+      },
+      complete: () => { }
+    });
+  }
+
+  killSolution() {
+    let data: any = {
+      solution_id: this.solution['_id'],
+      isActive: false
+    }
+
+    this.solutionService.killSolution(data).subscribe({
+      error: (error: any) => {
+        this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+      },
+      next: (reply: any) => {
+        this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
+        this.dialogRef.close(reply);
       },
       complete: () => { }
     });

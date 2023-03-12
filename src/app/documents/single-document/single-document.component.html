@@ -127,7 +127,7 @@
             (click)="popAddDocumentCollaborator()">
             <mat-icon>person_add</mat-icon>
           </button> -->
-          <button type="button" mat-mini-fab color="warn" class="mini" matTooltip="Agregar Categoría"
+          <button type="button" mat-mini-fab color="warn" class="mini" matTooltip="Agregar Tema"
             (click)="popAddDocumentCategory()" *ngIf="actionControlActivityList.includes(user.activityName)">
             <mat-icon>create_new_folder</mat-icon>
           </button>
@@ -169,11 +169,11 @@
       <div class="set-12 category-list">
         <mat-card class="set-12">
           <div class="set-12 table-head">
-            <p class="title">Categorías</p>
-            <!-- <input type="text" (keyup)="applyFilter($event)" placeholder="Buscar en categorías..."
+            <p class="title">Temas</p>
+            <!-- <input type="text" (keyup)="applyFilter($event)" placeholder="Buscar en temas..."
               [disabled]="layouts.length == 0"> -->
             <mat-form-field appearance="outline">
-              <mat-label>Buscar en categorías...</mat-label>
+              <mat-label>Buscar en temas...</mat-label>
               <input matInput type="text" (keyup)="applyFilter($event)" [disabled]="layouts.length == 0" />
               <button matSuffix mat-icon-button>
                 <mat-icon>search</mat-icon>
@@ -183,16 +183,16 @@
 
           <div class="set-12 empty-layouts" *ngIf="layouts.length == 0">
             <p>
-              <small>Sin categorías disponibles.</small>
+              <small>Sin temas disponibles.</small>
             </p>
             <button type="button" mat-raised-button color="primary" (click)="popAddDocumentCategory()">
-              <small>Agregar Categoría</small>
+              <small>Agregar Tema</small>
             </button>
           </div>
 
           <table mat-table [dataSource]="dataSource" class="categories-table" *ngIf="layouts.length != 0">
             <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef>Categoría</th>
+              <th mat-header-cell *matHeaderCellDef>Temas</th>
               <td mat-cell *matCellDef="let element">
                 <button type="button" class="catbtn" [disabled]="!element.access" (click)="
                     LinkMe(
