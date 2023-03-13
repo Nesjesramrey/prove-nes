@@ -57,7 +57,7 @@ export class UserDocumentsComponent implements OnInit {
         }
 
         if (this.userActivities.includes('administrator')) {
-          let documents: Observable<any> = this.documentSrvc.fetchMyDocuments({ createdBy: this.user['_id']  });
+          let documents: Observable<any> = this.documentSrvc.fetchMyDocuments({ createdBy: this.user['_id'] });
           forkJoin([documents]).subscribe((reply: any) => {
             this.documents = reply[0];
             setTimeout(() => {

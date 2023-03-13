@@ -180,7 +180,8 @@
                   <mat-icon>lock</mat-icon>
                   <small>Abrir privado</small>
                 </button>
-                <button type="button" mat-menu-item *ngIf="actionControlActivityList.includes(user.activityName)">
+
+                <!-- <button type="button" mat-menu-item *ngIf="actionControlActivityList.includes(user.activityName)">
                   <mat-icon>settings</mat-icon>
                   <small>Editar</small>
                 </button>
@@ -191,8 +192,9 @@
                 <button type="button" mat-menu-item *ngIf="actionControlActivityList.includes(user.activityName)">
                   <mat-icon>exit_to_app</mat-icon>
                   <small>Mover</small>
-                </button>
-                <button type="button" mat-menu-item>
+                </button> -->
+
+                <button type="button" mat-menu-item (click)="killSolution(element)">
                   <mat-icon>delete</mat-icon>
                   <small>Eliminar</small>
                 </button>

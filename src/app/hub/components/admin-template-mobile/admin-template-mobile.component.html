@@ -109,7 +109,7 @@
               </div>
   
               <div class="set-12 available-layout" *ngIf="document.layouts.length != 0">
-                <h4 class="category-title">Categorías</h4>
+                <h4 class="category-title">Temas</h4>
                 <div class="set-12" *ngFor="let layout of document.layouts">
                   <ul>
                     <li>
@@ -120,7 +120,7 @@
                               '/categoria/' +
                               layout._id
                           )
-                        " matTooltip="Abrir categoría" matTooltipClass="tooltip" matTooltipPosition="right">
+                        " matTooltip="Abrir tema" matTooltipClass="tooltip" matTooltipPosition="right">
                         <span style="font-size: 14px">{{
                           layout.category.name
                           }}</span>

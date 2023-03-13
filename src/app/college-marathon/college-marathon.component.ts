@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UtilityService } from '../services/utility.service';
 
 @Component({
   selector: '.college-marathon',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CollegeMarathonComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public utilityService: UtilityService
+  ) { }
 
   ngOnInit(): void { }
 }

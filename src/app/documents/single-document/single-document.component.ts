@@ -256,8 +256,7 @@ export class SingleDocumentComponent implements OnInit {
   }
 
   popEditDocumentDialog() {
-    const dialogRef = this.dialog.open<EditDocumentDataComponent>(EditDocumentDataComponent, {
-      // width: '640px',
+    const dialogRef = this.dialog.open<any>(EditDocumentDataComponent, {
       data: {
         document: this.document
       },

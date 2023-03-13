@@ -24,7 +24,7 @@ export class ComplaintsComponent implements OnInit {
   public isDataAvailable: boolean = false;
   public isPrivate: boolean = false;
   public isMobile: boolean = false;
-  public displayedColumns: string[] = ['select', 'author', 'title', 'coverage', 'date', 'menu'];
+  public displayedColumns: string[] = ['select', 'author', 'title', 'relation', 'date', 'menu'];
   public dataSource!: MatTableDataSource<any>;
   public paginator!: MatPaginator;
   @ViewChild('paginator') set matPaginator(mp: MatPaginator) {
@@ -164,18 +164,21 @@ export class ComplaintsComponent implements OnInit {
     }
   }
 
-  popCategorizeComplaintDialog(complaint: any) {
+  popCategorizeComplaintDialog(post: any) {
     const dialogRef = this.dialog.open<any>(CategorizePostComponent, {
       data: {
-        complaint: complaint,
-        document: this.document
+        post: post,
+        document: this.document,
+        type: 'complaint'
       },
       disableClose: true,
       panelClass: 'side-dialog'
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) { }
+      if (reply != undefined) { 
+        console.log(reply);
+      }
     });
   }
 }

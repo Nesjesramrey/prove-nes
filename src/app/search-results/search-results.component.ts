@@ -32,15 +32,15 @@ export class SearchResultsComponent implements OnInit {
       this.searchResults.filter((x: any) => {
         switch (x['type']) {
           case 'layout':
-            x['typeName'] = 'Categoría'
+            x['typeName'] = 'Tema'
             break;
 
           case 'sublayout':
-            x['typeName'] = 'Sub categoría'
+            x['typeName'] = 'Subtema'
             break;
 
           case 'topic':
-            x['typeName'] = 'Problemática'
+            x['typeName'] = 'Problema'
             break;
 
           case 'solution':

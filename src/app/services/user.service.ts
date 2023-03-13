@@ -88,5 +88,15 @@ export class UserService {
     )
   }
 
+  searchUserByEmail(data: any) {
+    return this.httpClient.get(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.searchUserByEmailEndPoint + `?email=${data['email']}`, {}
+    );
+  }
 
+  uploadUserIDDocument(data: any) {
+    return this.httpClient.put(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.uploadUserIDDocumentEndPoint + `${data['user_id']}` + '/id_picture', data['formData']
+    );
+  }
 }

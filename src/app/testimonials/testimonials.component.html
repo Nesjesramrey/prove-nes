@@ -53,18 +53,17 @@
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="coverage">
-        <th mat-header-cell *matHeaderCellDef>Cobertura</th>
+      <ng-container matColumnDef="relation">
+        <th mat-header-cell *matHeaderCellDef>Relación</th>
         <td mat-cell *matCellDef="let element">
-          <button type="button" *ngIf="element['coverage'].length == 0" (click)="popCategorizePostsDialog(element)">
-            <small>Categorizar</small>
+          <button type="button" *ngIf="element['relation'] == null" (click)="popCategorizePostsDialog(element)">
+            <strong><small>Categorizar</small></strong>
           </button>
-          <mat-form-field appearance="outline" *ngIf="element['coverage'].length != 0">
-            <mat-label>Cobertura</mat-label>
-            <mat-select>
-              <mat-option *ngFor="let coverage of element['coverage']"></mat-option>
-            </mat-select>
-          </mat-form-field>
+
+          <span *ngIf="element['relation'] != null">
+            <small *ngIf="element['relation'] == 'topic'" class="prob">Problema</small>
+            <small *ngIf="element['relation'] == 'solution'" class="sol">Solución</small>
+          </span>
         </td>
       </ng-container>
 

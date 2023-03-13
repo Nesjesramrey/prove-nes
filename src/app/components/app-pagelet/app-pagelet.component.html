@@ -12,19 +12,11 @@
   </div>
 
   <div class="set-6 navigation" *ngIf="!isMobile">
-    <!-- <button *ngIf="permission == true && isPublic > 0" type="button" (click)="redirectEdition()">
-      Ir a edición
-    </button>
-    <button *ngIf="permission == true && isPublic == -1" type="button" (click)="redirectEdition()">
-      Ver público
-    </button> -->
-
-    <!-- <button type="button" (click)="utilitySrvc.linkMe('/posts')">IC</button> -->
-    <button type="button" [matMenuTriggerFor]="docMenu">IC</button>
+    <!-- <button type="button" [matMenuTriggerFor]="docMenu">IC</button>
     <mat-menu #docMenu="matMenu">
       <button mat-menu-item (click)="popComplaintsDialog()">
         <mat-icon>priority_high</mat-icon>
-        <span>Denuncia</span>
+        <span>Denunciar</span>
       </button>
       <button mat-menu-item (click)="popPDF()">
         <mat-icon>description</mat-icon>
@@ -44,8 +36,64 @@
       </button>
       <button mat-menu-item (click)="popTestimonialsDialog()">
         <mat-icon>edit_note</mat-icon>
-        <span>Mi Testimonio</span>
+        <span>Dar Testimonio</span>
       </button>
+    </mat-menu> -->
+
+    <button type="button" class="btn-ico" [matMenuTriggerFor]="menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item *ngIf="user != null" (click)="linkMe('profile')">
+        <mat-icon>person</mat-icon>
+        <span>Mi perfíl</span>
+      </button>
+      <button mat-menu-item (click)="popComplaintsDialog()">
+        <mat-icon>priority_high</mat-icon>
+        <span>Denunciar</span>
+      </button>
+      <button mat-menu-item (click)="popTestimonialsDialog()">
+        <mat-icon>edit_note</mat-icon>
+        <span>Dar Testimonio</span>
+      </button>
+      <button mat-menu-item (click)="linkMe('cover-document')">
+        <mat-icon>groups</mat-icon>
+        <span>Mexicolectivo</span>
+      </button>
+      <button mat-menu-item (click)="utilitySrvc.linkMe('/noticias')">
+        <mat-icon>feed</mat-icon>
+        <span>Noticias</span>
+      </button>
+      <button mat-menu-item (click)="popPDF()">
+        <mat-icon>description</mat-icon>
+        <span>Documento Punto de Partida</span>
+      </button>
+      <button mat-menu-item (click)="popWomenPDF()">
+        <mat-icon>description</mat-icon>
+        <span>Ponentes</span>
+      </button>
+      <button mat-menu-item (click)="utilitySrvc.linkMe('/posts')">
+        <mat-icon>forum</mat-icon>
+        <span>Muro Colectivo</span>
+      </button>
+
+      <button mat-menu-item (click)="linkMe('userList')"
+        *ngIf="userActivities.includes('moderator') || userActivities.includes('editor')">
+        <mat-icon>groups</mat-icon>
+        <span>Usuarios</span>
+      </button>
+      <button mat-menu-item (click)="linkMe('complaints')" *ngIf="userActivities.includes('moderator')">
+        <mat-icon>warning</mat-icon>
+        <span>Denuncias</span>
+      </button>
+      <button mat-menu-item (click)="linkMe('testimonials')" *ngIf="userActivities.includes('moderator')">
+        <mat-icon>announcement</mat-icon>
+        <span>Testímonios</span>
+      </button>
+      <!-- <button mat-menu-item (click)="resetPassword(user.email)">
+        <mat-icon>key</mat-icon>
+        <span>Cambiar contraseña</span>
+      </button> -->
     </mat-menu>
 
     <span class="sep">|</span>
@@ -63,8 +111,7 @@
       [matTooltip]="user.firstname + ' ' + user.lastname" matTooltipClass="tooltip">
       <img src="{{ user.avatarImage }}" alt="{{ user.firstname }}" *ngIf="user.avatarImage != null" />
       <span *ngIf="user.avatarImage == null">
-        {{ user.firstname | firstword | firstletter
-        }}{{ user.lastname | firstword | firstletter }}
+        {{ user.firstname | firstword | firstletter }}{{ user.lastname | firstword | firstletter }}
       </span>
     </button>
 
@@ -79,42 +126,6 @@
       matTooltipClass="tooltip">
       <mat-icon>power_settings_new</mat-icon>
     </button>
-
-    <button type="button" class="btn-ico" [matMenuTriggerFor]="menu" *ngIf="user != null">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <!-- <button mat-menu-item (click)="popPDF()">
-        <mat-icon>groups</mat-icon>
-        <span>Documento Punto de Partida</span>
-      </button> -->
-      <button mat-menu-item (click)="linkMe('userList')"
-        *ngIf="userActivities.includes('moderator') || userActivities.includes('editor')">
-        <mat-icon>groups</mat-icon>
-        <span>Usuarios</span>
-      </button>
-      <button mat-menu-item (click)="linkMe('complaints')" *ngIf="userActivities.includes('moderator')">
-        <mat-icon>warning</mat-icon>
-        <span>Denuncias</span>
-      </button>
-      <button mat-menu-item (click)="linkMe('testimonials')" *ngIf="userActivities.includes('moderator')">
-        <mat-icon>announcement</mat-icon>
-        <span>Testímonios</span>
-      </button>
-
-      <!-- <button mat-menu-item (click)="popComplaintsDialog()">
-        <mat-icon>priority_high</mat-icon>
-        <span>Denuncia</span>
-      </button>
-      <button mat-menu-item (click)="popTestimonialsDialog()">
-        <mat-icon>record_voice_over</mat-icon>
-        <span>Mi Testimonio</span>
-      </button> -->
-      <button mat-menu-item (click)="resetPassword(user.email)">
-        <mat-icon>key</mat-icon>
-        <span>Cambiar contraseña</span>
-      </button>
-    </mat-menu>
   </div>
 
   <div class="set-6 navigation" *ngIf="isMobile">

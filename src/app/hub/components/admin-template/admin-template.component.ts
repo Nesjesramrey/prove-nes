@@ -104,7 +104,7 @@ export class AdminTemplateComponent implements OnInit {
   }
 
   addCategoryDialog(document: any) {
-    const dialogRef = this.dialog.open(AddCategoryDialogComponent, {
+    const dialogRef = this.dialog.open<AddCategoryDialogComponent>(AddCategoryDialogComponent, {
       width: '420px',
       data: {
         document: document

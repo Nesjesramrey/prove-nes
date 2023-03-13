@@ -24,6 +24,8 @@ export class EndPointService {
   public addAssociationEndPoint: string = '/user/';
   public fetchUserCountEndPoint: string = '/user/count';
   public joinUserWithAssociationEndPoint: string = '/user/'
+  public searchUserByEmailEndPoint: string = '/user';
+  public uploadUserIDDocumentEndPoint: string = '/user/';
 
   // documents
   public createNewDocumentEndPoint: string = '/document';
@@ -65,6 +67,7 @@ export class EndPointService {
   public updateTopicDataEndPoint: string = '/topic/';
   public fetchFavoriteTopicsByUserEndPoint: string = '/topic/user/';
   public fetchVotedTopicsByUserEndPoint: string = '/topic/user/';
+  public killTopicEndPoint: string = '/topic/';
 
   // permission
   public createNewPermissionEndPoint: string = '/permission/';
@@ -77,6 +80,7 @@ export class EndPointService {
   public getTopSolutionByLayoutEndPoint: string = '/solution/layout/';
   public updateSolutionDataEndPoint: string = '/solution/';
   public uploadSolutionFilesEndPoint: string = '/solution/';
+  public killSolutionEndPoint: string = '/solution/';
 
   // utility
   public fetchAllStatesEndPoint: string = '/state';
@@ -86,6 +90,7 @@ export class EndPointService {
   public fetchAssociationTypologyEndPoint: string = '/association_typology';
   public fetchAllStatesMexEndPoint: string = '/utility/fetch-all-states-mex';
   public inviteUserToMexicolectivoEndPoint: string = '/package/invite/email';
+  public searchCollegeEndPoint: string = '/university/search';
 
   // uploads
   public uploadUserAvatarEndPoint: string = '/upload/upload-avatar-file';
@@ -176,6 +181,14 @@ export class EndPointService {
   public fetchAllPostsEndPoint: string = '/post';
   public fetchPostByRelationIdEndPoint: string = '/post/';
   public addPostCommentEndPoint: string = '/post/';
+  public categorizePostEndPoint: string = '/assignment';
+
+  // teams
+  public createTeamEndPoint: string = '/team';
+  public leaderStatusEndPoint: string = '/team/validate_user_lead/';
+  public assignTeamCollaboratorsEndPoint: string = '/team/assign_collaborators/';
+  public setTeamCategoriesEndPoint: string = '/team/assign_layout/';
+  public fetchTeamByIdEndPoint: string = '/team/';
 
   constructor() { }
 }

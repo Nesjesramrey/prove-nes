@@ -1,6 +1,6 @@
 <div class="main-box">
   <div *ngIf="categoryLength > 10">
-    <button mat-button [matMenuTriggerFor]="menu" class="show-more-button">Ver más categorías</button>
+    <button mat-button [matMenuTriggerFor]="menu" class="show-more-button">Ver más temas</button>
     <mat-menu #menu="matMenu" xPosition="before">
       <button mat-menu-item *ngFor="let item of categories" (click)="redirect(item.id)">
         {{ item.title }}
@@ -9,7 +9,7 @@
   </div>
   <div class="main shadow">
     <div class="set-12 txt-center message" *ngIf="data.length === 0">
-      <p>No cuenta con categorías</p>
+      <p>No cuenta con problemas</p>
     </div>
     <ng-container *ngIf="data.length !== 0">
       <div [ngClass]="'set-' + item.set" [style.margin]="item.margin" *ngFor="let item of slices">

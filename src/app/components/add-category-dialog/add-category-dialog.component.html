@@ -14,10 +14,10 @@
   </mat-form-field>
 
   <div class="set-12 ctrls">
-    <button type="button" mat-raised-button color="warn" (click)="killDialog()">
+    <button type="button" mat-raised-button color="warn" (click)="killDialog()" [disabled]="submitted">
       <small>Cerrar</small>
     </button>
-    <button type="button" mat-raised-button color="primary" ="submitted" (click)="onAddCoverage()">
+    <button type="button" mat-raised-button color="primary" (click)="onAddCoverage()" [disabled]="submitted">
       <small>Guardar</small>
     </button>
     <mat-spinner diameter="20" *ngIf="submitted"></mat-spinner>

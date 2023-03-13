@@ -12,6 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ShareSheetComponent } from 'src/app/components/share-sheet/share-sheet.component';
 import { AddCommentsSheetComponent } from 'src/app/components/add-comments-sheet/add-comments-sheet.component';
+import { AddDocumentTestimonyComponent } from 'src/app/components/add-document-testimony/add-document-testimony.component';
 
 @Component({
   selector: 'app-category-page',
@@ -251,6 +252,24 @@ export class CategoryComponent implements OnInit {
 
     bottomSheetRef.afterDismissed().subscribe((reply: any) => {
       if (reply != undefined) { }
+    });
+  }
+
+  popAddDocumentTestimony() {
+    const dialogRef = this.dialog.open<any>(AddDocumentTestimonyComponent, {
+      data: {
+        topicID: this.categoryID,
+        type: 'layout',
+        user: this.user
+      },
+      disableClose: true,
+      panelClass: 'full-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        console.log(reply);
+      }
     });
   }
 }

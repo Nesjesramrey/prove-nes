@@ -90,6 +90,7 @@ import { SingleTestimonyDialogComponent } from './single-testimony-dialog/single
 import { TestimonyDialogComponent } from './testimony-dialog/testimony-dialog.component';
 import { SetAvatarAssociationComponent } from './set-avatar-association/set-avatar-association.component';
 import { CategorizePostComponent } from './categorize-post/categorize-post.component';
+import { QuickLoginDialogComponent } from './quick-login-dialog/quick-login-dialog.component';
 
 @NgModule({
   imports: [
@@ -183,7 +184,8 @@ import { CategorizePostComponent } from './categorize-post/categorize-post.compo
     SingleTestimonyDialogComponent,
     TestimonyDialogComponent,
     SetAvatarAssociationComponent,
-    CategorizePostComponent
+    CategorizePostComponent,
+    QuickLoginDialogComponent
   ],
   exports: [
     AppPageletComponent,
@@ -253,7 +255,8 @@ import { CategorizePostComponent } from './categorize-post/categorize-post.compo
     RecoverPasswordComponent,
     SingleTestimonyDialogComponent,
     TestimonyDialogComponent,
-    CategorizePostComponent
+    CategorizePostComponent,
+    QuickLoginDialogComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
@@ -297,7 +300,8 @@ import { CategorizePostComponent } from './categorize-post/categorize-post.compo
     RecoverPasswordComponent,
     SingleTestimonyDialogComponent,
     TestimonyDialogComponent,
-    CategorizePostComponent
+    CategorizePostComponent,
+    QuickLoginDialogComponent
   ],
   providers: [],
 })

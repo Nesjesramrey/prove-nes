@@ -113,6 +113,7 @@ export class AddDocumentTestimonyComponent implements OnInit {
       .forEach((file: any) => { data['formData'].append('files', file); });
     data['formData'].append('type', type);
     data['formData'].append('relationId', topicID);
+    data['formData'].append('name', this.addTestimonyFormGroup.value.name);
     data['formData'].append('description', this.addTestimonyFormGroup.value.description);
     data['formData'].append('isAnonymous', (this.isAnonymous).toString());
 

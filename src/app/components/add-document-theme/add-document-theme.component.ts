@@ -177,7 +177,7 @@ export class AddDocumentThemeComponent implements OnInit {
         this.submitted = false;
       },
       next: (reply: any) => {
-        console.log(reply);
+        // console.log(reply);
         this.canAddSolution = true;
         this.submitted = false;
         this.fileNames = []

@@ -52,4 +52,10 @@ export class TopicService {
       this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchVotedTopicsByUserEndPoint + data['userID'] + '/voted'
     );
   }
+
+  killTopic(data: any) {
+    return this.httpClient.put(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.killTopicEndPoint + `${data['topic_id']}`, data
+    );
+  }
 }

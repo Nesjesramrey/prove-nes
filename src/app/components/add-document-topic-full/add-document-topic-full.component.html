@@ -5,7 +5,7 @@
 <div class="set-12" *ngIf="isDataAvailable">
   <div class="set-12 dialog-head">
     <div class="set-10">
-      <span>Agregar problemática</span>
+      <span>Agregar problema</span>
       <input type="file" #file (change)="onFileSelected($event)" accept="image/*" capture="environment" multiple>
     </div>
 
@@ -19,7 +19,7 @@
   <div class="set-12 dialog-body">
     <form [formGroup]="addTopicFormGroup" (submit)="onCreateTopic(addTopicFormGroup)">
       <mat-form-field appearance="outline">
-        <mat-label>Categoría</mat-label>
+        <mat-label>Tema</mat-label>
         <mat-select (selectionChange)="onLayoutSelected($event)" formControlName="layout">
           <mat-option *ngFor="let layout of availableLayouts" [value]="layout">
             <small>{{layout?.name}}</small>
@@ -28,7 +28,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>Sub categoría</mat-label>
+        <mat-label>Subtema</mat-label>
         <mat-select (selectionChange)="onSubLayoutSelected($event)" formControlName="sublayout">
           <mat-option *ngFor="let layout of sublayouts" [value]="layout">
             <small>{{layout?.name}}</small>
