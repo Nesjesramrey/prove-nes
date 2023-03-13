@@ -102,7 +102,7 @@
         </div>
       </div>
 
-      <div class="set-12 item-card">
+      <!-- <div class="set-12 item-card">
         <div class="set-6">
           <mat-card class="set-12 info-lists">
             <div class="set-12">
@@ -137,7 +137,7 @@
             </div>
           </mat-card>
         </div>
-      </div>
+      </div> -->
 
       <div class="set-12 category-list">
         <mat-card class="set-12">
@@ -208,6 +208,7 @@
                 <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                   <mat-icon>more_vert</mat-icon>
                 </button>
+
                 <mat-menu #menu="matMenu">
                   <button type="button" mat-menu-item (click)="
                       linkMe(
@@ -239,24 +240,20 @@
                     <mat-icon>lock</mat-icon>
                     <small>Abrir privado</small>
                   </button>
-                  <button type="button" mat-menu-item *ngIf="
-                      actionControlActivityList.includes(user.activityName)
-                    ">
+
+                  <!-- <button type="button" mat-menu-item *ngIf="actionControlActivityList.includes(user.activityName)">
                     <mat-icon>settings</mat-icon>
                     <small>Editar</small>
                   </button>
-                  <button type="button" mat-menu-item *ngIf="
-                      actionControlActivityList.includes(user.activityName)
-                    ">
+                  <button type="button" mat-menu-item *ngIf="actionControlActivityList.includes(user.activityName)">
                     <mat-icon>drag_handle</mat-icon>
                     <small>Duplicar</small>
                   </button>
-                  <button type="button" mat-menu-item *ngIf="
-                      actionControlActivityList.includes(user.activityName)
-                    ">
+                  <button type="button" mat-menu-item *ngIf="actionControlActivityList.includes(user.activityName)">
                     <mat-icon>exit_to_app</mat-icon>
                     <small>Mover</small>
-                  </button>
+                  </button> -->
+
                   <button type="button" mat-menu-item (click)="killTopic(element)"
                     *ngIf="actionControlActivityList.includes(user.activityName)">
                     <mat-icon>delete</mat-icon>

@@ -36,6 +36,7 @@ export class AddCategoryDialogComponent implements OnInit {
         this.killDialog();
       },
       next: (reply: any) => {
+        console.log(reply);
         this.coverage = reply;
 
         let coverage = this.coverage.filter((e: any) => {

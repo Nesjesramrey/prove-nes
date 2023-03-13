@@ -67,7 +67,8 @@
         </div>
 
         <div class="set-12 crddsc blueb">
-          <div class="set-12" [innerHTML]="utilityService.truncateHTML(post['card']['description'])"></div>
+          <!-- <div class="set-12" [innerHTML]="utilityService.truncateHTML(post['card']['description'])"></div> -->
+          <div class="set-12">{{post['card']['name'] || 'Sin título'}}</div>
         </div>
 
         <div class="set-12 crdvp">
@@ -159,7 +160,8 @@
         </div>
 
         <div class="set-12 crddsc greenb">
-          <div class="set-12" [innerHTML]="utilityService.truncateHTML(post['card']['description'])"></div>
+          <!-- <div class="set-12" [innerHTML]="utilityService.truncateHTML(post['card']['description'])"></div> -->
+          <div class="set-12">{{post['card']['title'] || 'Sin título'}}</div>
         </div>
 
         <div class="set-12 crdvp">
