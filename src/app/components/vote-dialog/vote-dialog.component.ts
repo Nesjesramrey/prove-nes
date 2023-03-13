@@ -46,27 +46,28 @@ export class VoteDialogComponent implements OnInit {
     vote['selected'] = true;
     let data: any = {};
 
-    switch (this.post['relation']) {
-      case 'complaint':
-        data = {
-          complaint: this.complaintID,
-          value: vote['score']
-        }
-        break;
+    if (this.post != undefined) {
+      switch (this.post['relation']) {
+        case 'complaint':
+          data = {
+            complaint: this.complaintID,
+            value: vote['score']
+          }
+          break;
 
-      case 'testimony':
-        data = {
-          testimony: this.testimonyID,
-          value: vote['score']
-        }
-        break;
-
-      default:
-        data = {
-          topic: this.dialogData['topic'] || null,
-          solution: this.dialogData['solution'] || null,
-          value: vote['score']
-        }
+        case 'testimony':
+          data = {
+            testimony: this.testimonyID,
+            value: vote['score']
+          }
+          break;
+      }
+    } else {
+      data = {
+        topic: this.dialogData['topic'] || null,
+        solution: this.dialogData['solution'] || null,
+        value: vote['score']
+      }
     }
 
     this.voteService.createNewVoto(data).subscribe({

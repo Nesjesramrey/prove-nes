@@ -6,14 +6,14 @@ import { forkJoin, map, Observable, startWith } from 'rxjs';
 import { DocumentService } from 'src/app/services/document.service';
 import { UserService } from 'src/app/services/user.service';
 import { UtilityService } from 'src/app/services/utility.service';
-import { AddSolutionDialogComponent } from '../add-solution-dialog/add-solution-dialog.component';
-import { AddTopicDialogComponent } from '../add-topic-dialog/add-topic-dialog.component';
 import { QuickLoginDialogComponent } from 'src/app/components/quick-login-dialog/quick-login-dialog.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { Router } from '@angular/router';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { TeamService } from 'src/app/services/team.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { TopicService } from 'src/app/services/topic.service';
+import { SolutionService } from 'src/app/services/solution.service';
 
 @Component({
   selector: '.create-team',
@@ -30,6 +30,7 @@ export class CreateTeamComponent implements OnInit {
   public userIDFG!: FormGroup;
   public setupFG!: FormGroup;
   public topicFG!: FormGroup;
+  public solutionFG!: FormGroup;
   public teamUsers!: FormArray;
   public autocompleteControl = new FormControl('');
   public options: any[] = [];
@@ -43,7 +44,7 @@ export class CreateTeamComponent implements OnInit {
   public topics: any = null;
   public coverage: any = null;
   @ViewChild('stepper') public stepper!: MatStepper;
-  public selectedIndex: number = 4;
+  public selectedIndex: number = 6;
   public association: any = null;
   public imgDoc_exts: any = ['pdf'];
   public isMobile: boolean = false;
@@ -91,6 +92,8 @@ export class CreateTeamComponent implements OnInit {
       ]
     ]
   };
+  public isNewTopic: boolean = true;
+  public topicSelected: any = null;
 
   constructor(
     public userService: UserService,
@@ -100,7 +103,9 @@ export class CreateTeamComponent implements OnInit {
     public dialog: MatDialog,
     public deviceDetectorService: DeviceDetectorService,
     public router: Router,
-    public teamService: TeamService
+    public teamService: TeamService,
+    public topicService: TopicService,
+    public solutionService: SolutionService
   ) {
     this.isMobile = this.deviceDetectorService.isMobile();
   }
@@ -166,6 +171,11 @@ export class CreateTeamComponent implements OnInit {
 
         this.topicFG = this.formBuilder.group({
           topic: ['', []],
+          title: ['', [Validators.required]],
+          description: ['', [Validators.required]]
+        });
+
+        this.solutionFG = this.formBuilder.group({
           title: ['', [Validators.required]],
           description: ['', [Validators.required]]
         });
@@ -349,10 +359,23 @@ export class CreateTeamComponent implements OnInit {
   }
 
   onTopicSelected(event: any) {
+    let topic: any = this.topics.filter((x: any) => { return x['_id'] == event['value']; });
+
+    // existing topic
     if (event['value'] != undefined) {
       this.topicFG.controls['title'].disable();
-    } else {
+      this.topicFG.patchValue({ topic: event['value'] });
+      this.topicFG.patchValue({ description: topic[0]['description'] });
+      this.isNewTopic = false;
+      this.topicSelected = topic[0];
+    }
+    // new topic
+    else {
       this.topicFG.controls['title'].enable();
+      this.topicFG.patchValue({ topic: '' });
+      this.topicFG.patchValue({ description: '' });
+      this.isNewTopic = true;
+      this.topicSelected = null;
     }
   }
 
@@ -370,30 +393,6 @@ export class CreateTeamComponent implements OnInit {
     this.registerTeamFG.patchValue({ coverage: [state[0]['_id']] });
     this.registerTeamFG.patchValue({ university: event['option']['value']['_id'] });
     this.registerTeamFG.updateValueAndValidity();
-  }
-
-  popAddTopicDialog() {
-    const dialogRef = this.dialog.open<any>(AddTopicDialogComponent, {
-      data: {},
-      disableClose: true,
-      panelClass: 'posts-dialog'
-    });
-
-    dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) { }
-    });
-  }
-
-  popAddSolutionDialog() {
-    const dialogRef = this.dialog.open<any>(AddSolutionDialogComponent, {
-      data: {},
-      disableClose: true,
-      panelClass: 'posts-dialog'
-    });
-
-    dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) { }
-    });
   }
 
   onFileSelected(event: any) {
@@ -532,6 +531,102 @@ export class CreateTeamComponent implements OnInit {
       },
       next: (reply: any) => {
         console.log(reply);
+      },
+      complete: () => {
+        this.submitted = false;
+        this.stepNext();
+      }
+    });
+  }
+
+  saveTeamTopic() {
+    this.submitted = true;
+    let data: any = {};
+
+    switch (this.isNewTopic) {
+      // new topic
+      case true:
+        data = {
+          layout_id: this.team['sublayout']['_id'],
+          formData: new FormData()
+        }
+
+        data['formData'].append('title', this.topicFG.controls['title']['value']);
+        data['formData'].append('description', this.topicFG.controls['description']['value']);
+        data['formData'].append('coverage', JSON.stringify([this.team['coverage'][0]['_id']]));
+
+        this.topicService.createNewTopic(data).subscribe({
+          error: (error: any) => {
+            this.submitted = false;
+            this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+          },
+          next: (reply: any) => {
+            this.team['topic'] = reply['topics'][0];
+
+            this.teamService.assignTeamTopic({
+              teamID: this.team['_id'],
+              topic: reply['topics'][0]['_id']
+            }).subscribe({
+              error: (error: any) => {
+                this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+              },
+              next: (reply: any) => {
+                this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
+              },
+              complete: () => {
+                this.submitted = false;
+                this.stepNext();
+              }
+            });
+          },
+          complete: () => { }
+        });
+        break;
+
+      // existing topic
+      case false:
+        data = {
+          teamID: this.team['_id'],
+          topic: this.topicFG.controls['topic']['value']
+        };
+
+        this.teamService.assignTeamTopic(data).subscribe({
+          error: (error: any) => {
+            this.submitted = false;
+            this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+          },
+          next: (reply: any) => {
+            this.team['topic'] = this.topicSelected;
+            this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
+          },
+          complete: () => {
+            this.submitted = false;
+            this.stepNext();
+          }
+        });
+        break;
+    }
+  }
+
+  saveTeamSolution() {
+    this.submitted = true;
+    let data: any = {
+      topic: this.team['topic']['_id'],
+      formData: new FormData()
+    };
+
+    data['formData'].append('title', this.solutionFG.controls['title']['value']);
+    data['formData'].append('description', this.solutionFG.controls['description']['value']);
+    data['formData'].append('coverage', JSON.stringify([this.team['topic']['coverage'][0]['_id']]));
+
+    this.solutionService.createNewSolution(data).subscribe({
+      error: (error: any) => {
+        this.submitted = false;
+        this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+      },
+      next: (reply: any) => {
+        this.team['topic']['solutions'] = reply['solutions'];
+        this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
       },
       complete: () => {
         this.submitted = false;
