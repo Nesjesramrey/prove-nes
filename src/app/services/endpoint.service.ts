@@ -189,6 +189,7 @@ export class EndPointService {
   public assignTeamCollaboratorsEndPoint: string = '/team/assign_collaborators/';
   public setTeamCategoriesEndPoint: string = '/team/assign_layout/';
   public fetchTeamByIdEndPoint: string = '/team/';
+  public assignTeamTopicEndPoint: string = '/team/assign_topic/';
 
   constructor() { }
 }

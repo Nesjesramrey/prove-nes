@@ -10,8 +10,6 @@
   </div>
 
   <div class="set-5">
-    <h3>Registra tu equipo</h3>
-
     <div class="set-12 usr-auth" *ngIf="!userAvailable">
       <p>¿Necesitas una cuenta para registrar a tu equipo?</p>
       <p class="access">
@@ -27,6 +25,7 @@
     <div class="set-12 teamreg">
       <mat-stepper #stepper [disableRipple]="true" [linear]="true" [@.disabled]="true" [selectedIndex]="selectedIndex">
         <mat-step>
+          <h3>Busca tu universidad</h3>
           <form class="sixcombo" [formGroup]="searchCollegeFG">
             <div class="set-6">
               <mat-form-field appearance="outline">
@@ -91,11 +90,12 @@
         </mat-step>
 
         <mat-step>
+          <h3>Invita a tus compañeros de equipo</h3>
           <div class="set-12 usrlfx">
             <form [formGroup]="searchUserFG" class="set-12">
               <div class="set-10">
                 <mat-form-field appearance="outline">
-                  <mat-label>Invita a tus compañeros de equipo</mat-label>
+                  <mat-label>Buscar usuario</mat-label>
                   <input matInput placeholder="Ejemplo: nombre@dominio.com" formControlName="searchemail">
                 </mat-form-field>
               </div>
@@ -132,6 +132,7 @@
         </mat-step>
 
         <mat-step>
+          <h3>Carga tu identificación escolar</h3>
           <form class="set-12" [formGroup]="userIDFG">
             <input type="file" #file (change)="onFileSelected($event)">
             <button type="button" class="upldbtn" (click)="file.click()">
@@ -154,6 +155,7 @@
         </mat-step>
 
         <mat-step>
+          <h3>Selecciona tus temas</h3>
           <form class="set-12" [formGroup]="setupFG">
             <mat-form-field appearance="outline">
               <mat-label>Cobertura</mat-label>
@@ -195,6 +197,7 @@
         </mat-step>
 
         <mat-step>
+          <h3>Selecciona o crea un problema</h3>
           <form class="set-12" [formGroup]="topicFG">
             <mat-form-field appearance="outline">
               <mat-label>Problema</mat-label>
@@ -213,33 +216,55 @@
               <input matInput formControlName="title" (input)="onProblemTitle($event)">
             </mat-form-field>
 
-            <div class="set-12 editor-form">
+            <div class="set-12 editor-form" *ngIf="isNewTopic">
               <angular-editor formControlName="description" [config]="editorConfig"></angular-editor>
             </div>
+
+            <div class="set-12 topicdesc" *ngIf="!isNewTopic">
+              <h3>Descripción</h3>
+              <div class="set-12" [innerHTML]="topicSelected['description']"></div>
+            </div>
           </form>
-
-          <!-- <div class="set-12 ctrltpc">
-            <div class="set-6">
-              <button type="button" mat-raised-button color="primary" (click)="popAddTopicDialog()">
-                <small>Agrega tu problema</small>
-              </button>
-            </div>
-
-            <div class="set-6">
-              <button type="button" mat-raised-button color="primary" (click)="popAddSolutionDialog()">
-                <small>Agrega tu solución</small>
-              </button>
-            </div>
-          </div> -->
 
           <div class="set-12 ctrlsedt">
             <button type="button" mat-raised-button color="warn" matStepperPrevious>
               <small>Anterior</small>
             </button>
-            <button type="button" mat-raised-button color="warn" matStepperNext>
+            <button type="button" mat-raised-button color="warn" (click)="saveTeamTopic()">
               <small>Siguiente</small>
             </button>
+            <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
           </div>
+        </mat-step>
+
+        <mat-step>
+          <h3>Agrega tu solución</h3>
+          <form class="set-12 solfrm" [formGroup]="solutionFG">
+            <mat-form-field appearance="outline">
+              <mat-label>Título</mat-label>
+              <input type="text" matInput formControlName="title">
+            </mat-form-field>
+
+            <div class="set-12 editor-form">
+              <angular-editor formControlName="description" [config]="editorConfig"></angular-editor>
+            </div>
+          </form>
+
+          <div class="set-12 ctrlsedt">
+            <button type="button" mat-raised-button color="warn" matStepperPrevious>
+              <small>Anterior</small>
+            </button>
+            <button type="button" mat-raised-button color="warn" (click)="saveTeamSolution()"
+              [disabled]="solutionFG.invalid || submitted">
+              <small>Finalizar</small>
+            </button>
+            <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
+          </div>
+        </mat-step>
+
+        <mat-step>
+          <h3>¡Gracias, tu registro ha finalizado!</h3>
+          <p>Puedes ver a tu equipo <a href="javascript:void(0)">aqui</a></p>
         </mat-step>
       </mat-stepper>
     </div>

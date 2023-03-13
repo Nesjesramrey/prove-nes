@@ -41,4 +41,10 @@ export class TeamService {
       this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchTeamByIdEndPoint + data['teamID'], {}
     );
   }
+
+  assignTeamTopic(data: any) {
+    return this.httpClient.put(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.assignTeamTopicEndPoint + data['teamID'], data
+    );
+  }
 }
