@@ -13,6 +13,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { Router } from '@angular/router';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { TeamService } from 'src/app/services/team.service';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 @Component({
   selector: '.create-team',
@@ -30,11 +31,9 @@ export class CreateTeamComponent implements OnInit {
   public setupFG!: FormGroup;
   public topicFG!: FormGroup;
   public teamUsers!: FormArray;
-
   public autocompleteControl = new FormControl('');
   public options: any[] = [];
   public filteredOptions!: Observable<any[]>;
-
   public submitted: boolean = false;
   public isSearching: boolean = false;
   public userTypes: any = [];
@@ -54,6 +53,44 @@ export class CreateTeamComponent implements OnInit {
   @ViewChild('autocompleteInput') public autocompleteInput!: ElementRef;
   @ViewChild(MatAutocompleteTrigger) autocompleteTrigger!: MatAutocompleteTrigger;
   public team: any = null;
+  public htmlContent: any = '';
+  public editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: '15rem',
+    minHeight: '5rem',
+    placeholder: 'Descripción...',
+    translate: 'no',
+    defaultParagraphSeparator: 'p',
+    defaultFontName: 'Arial',
+    toolbarHiddenButtons: [
+      [
+        'strikeThrough',
+        'subscript',
+        'superscript',
+        'justifyLeft',
+        'justifyCenter',
+        'justifyRight',
+        'justifyFull',
+        'indent',
+        'outdent',
+        'insertUnorderedList',
+        'insertOrderedList',
+        'heading',
+      ],
+      [
+        'textColor',
+        'backgroundColor',
+        'customClasses',
+        'unlink',
+        'insertImage',
+        'insertVideo',
+        'insertHorizontalRule',
+        'removeFormat',
+        'toggleEditorMode'
+      ]
+    ]
+  };
 
   constructor(
     public userService: UserService,
@@ -129,7 +166,8 @@ export class CreateTeamComponent implements OnInit {
 
         this.topicFG = this.formBuilder.group({
           topic: ['', []],
-          title: ['', [Validators.required]]
+          title: ['', [Validators.required]],
+          description: ['', [Validators.required]]
         });
 
         if (this.user['status']) {
@@ -153,11 +191,15 @@ export class CreateTeamComponent implements OnInit {
             next: (reply: any) => {
               // console.log(reply);
               this.team = reply['association'];
-              // console.log('team: ', this.team);
-              this.setupFG.patchValue({ coverage: this.team['coverage'][0]['_id'] });
-              this.setupFG.updateValueAndValidity();
+              console.log('team: ', this.team);
             },
-            complete: () => { }
+            complete: () => {
+              if (this.team != null) {
+                this.setupFG.patchValue({ coverage: this.team['coverage'][0]['_id'] });
+                this.topics = this.team['sublayout']['topics'];
+                this.setupFG.updateValueAndValidity();
+              }
+            }
           });
         }
 
@@ -304,6 +346,22 @@ export class CreateTeamComponent implements OnInit {
   onSubLayoutSelected(event: any) {
     let layout: any = this.sublayouts.filter((x: any) => { return x['_id'] == event['value']; });
     this.topics = layout[0]['topics'];
+  }
+
+  onTopicSelected(event: any) {
+    if (event['value'] != undefined) {
+      this.topicFG.controls['title'].disable();
+    } else {
+      this.topicFG.controls['title'].enable();
+    }
+  }
+
+  onProblemTitle(event: any) {
+    if (event['target']['value'] != '') {
+      this.topicFG.controls['topic'].disable();
+    } else {
+      this.topicFG.controls['topic'].enable();
+    }
   }
 
   onSelectUniversity(event: any) {

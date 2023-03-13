@@ -41,6 +41,12 @@
     margin-top: 30px;
   }
 
+  .editor-form {
+    margin-bottom: 20px;
+    background: #ffffff;
+    border-radius: 5px;
+  }
+
   .usrlfx {
     display: flex;
     align-items: center;
@@ -54,11 +60,11 @@
     }
   }
 
-  .ctrls {
+  .ctrls,
+  .ctrlsedt {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    margin-top: 20px;
 
     * {
       margin: 0;
@@ -75,6 +81,10 @@
     mat-spinner {
       margin-left: 20px;
     }
+  }
+
+  .ctrls {
+    margin-top: 20px;
   }
 
   .collabs {

@@ -197,8 +197,11 @@
         <mat-step>
           <form class="set-12" [formGroup]="topicFG">
             <mat-form-field appearance="outline">
-              <mat-label>Rroblema</mat-label>
-              <mat-select formControlName="topic">
+              <mat-label>Problema</mat-label>
+              <mat-select formControlName="topic" (selectionChange)="onTopicSelected($event)">
+                <mat-option>
+                  <small>Nuevo problema</small>
+                </mat-option>
                 <mat-option *ngFor="let topic of topics" [value]="topic._id">
                   <small>{{topic.title}}</small>
                 </mat-option>
@@ -207,11 +210,15 @@
 
             <mat-form-field appearance="outline">
               <mat-label>Título</mat-label>
-              <input matInput formControlName="title">
+              <input matInput formControlName="title" (input)="onProblemTitle($event)">
             </mat-form-field>
+
+            <div class="set-12 editor-form">
+              <angular-editor formControlName="description" [config]="editorConfig"></angular-editor>
+            </div>
           </form>
 
-          <div class="set-12 ctrltpc">
+          <!-- <div class="set-12 ctrltpc">
             <div class="set-6">
               <button type="button" mat-raised-button color="primary" (click)="popAddTopicDialog()">
                 <small>Agrega tu problema</small>
@@ -223,15 +230,9 @@
                 <small>Agrega tu solución</small>
               </button>
             </div>
+          </div> -->
 
-            <!-- <div class="set-12">
-              <button type="button" mat-raised-button color="primary">
-                <small>Carga tu Documento</small>
-              </button>
-            </div> -->
-          </div>
-
-          <div class="set-12 ctrls">
+          <div class="set-12 ctrlsedt">
             <button type="button" mat-raised-button color="warn" matStepperPrevious>
               <small>Anterior</small>
             </button>
@@ -239,11 +240,6 @@
               <small>Siguiente</small>
             </button>
           </div>
-          <!-- <button type="submit" mat-raised-button color="primary"
-                [disabled]="registerTeamFG.invalid || !userAvailable">
-                <small>Guardar equipo</small>
-              </button>
-              <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner> -->
         </mat-step>
       </mat-stepper>
     </div>
