@@ -3,9 +3,37 @@
   height: 100vh;
   background: #00031d;
   padding-top: 80px;
+  display: flex;
+  flex-direction: column;
+
+  .pgbdy {
+    flex: 1 0 auto;
+    background: #00031d;
+    padding-bottom: 40px;
+
+    h1 {
+      margin: 30px auto;
+    }
+
+    h1,
+    h3 {
+      color: #ffffff;
+      text-align: center;
+    }
+
+    h3 {
+      margin-bottom: 30px;
+    }
+  }
+
+  .foot {
+    flex-shrink: 0;
+  }
 
   .innrpg {
     width: 70%;
+    float: left;
+    margin: 0 15%;
 
     .flx {
       display: flex;
@@ -21,17 +49,66 @@
   }
 
   .ctrls {
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    margin: 40px auto;
 
-    button {
-      margin-left: 20px;
+    .btnhldr {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    button:first-child {
-      margin-left: 0;
+    .btnhldr:not(:first-child) {
+      margin-top: 70px;
+    }
+
+    button:not(.speech-bubble) {
+      margin: 0 20px;
+    }
+
+    .set-6 {
+      padding: 0 20px;
+    }
+  }
+
+  .icbtn {
+    mat-icon {
+      font-size: 70pt;
+      color: #54f093;
+    }
+  }
+
+  .speech-bubble {
+    width: 100%;
+    position: relative;
+    background: #09f19e;
+    border-radius: .4em;
+    padding: 20px;
+    text-align: center;
+    font-size: 20pt;
+    font-weight: bold;
+  }
+
+  .speech-bubble:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 34px solid transparent;
+    border-top-color: #09f19e;
+    border-bottom: 0;
+    border-left: 0;
+    margin-left: -17px;
+    margin-bottom: -34px;
+  }
+
+  .loading {
+    mat-spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
   }
 }

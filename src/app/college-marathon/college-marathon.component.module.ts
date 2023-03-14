@@ -13,6 +13,7 @@ import { AddSolutionDialogComponent } from './add-solution-dialog/add-solution-d
 import { TeamListComponent } from './team-list/team-list.component';
 import { SingleTeamComponent } from './single-team/single-team.component';
 import { SelectCollegeDialogComponent } from './select-college-dialog/select-college-dialog.component';
+import { MarathonInfoDialogComponent } from './marathon-info-dialog/marathon-info-dialog.component';
 
 @NgModule({
   imports: [
@@ -32,19 +33,22 @@ import { SelectCollegeDialogComponent } from './select-college-dialog/select-col
     AddSolutionDialogComponent,
     TeamListComponent,
     SingleTeamComponent,
-    SelectCollegeDialogComponent
+    SelectCollegeDialogComponent,
+    MarathonInfoDialogComponent
   ],
   exports: [
     AddTopicDialogComponent,
     AddSolutionDialogComponent,
     TeamListComponent,
     SingleTeamComponent,
-    SelectCollegeDialogComponent
+    SelectCollegeDialogComponent,
+    MarathonInfoDialogComponent
   ],
   entryComponents: [
     AddTopicDialogComponent,
     AddSolutionDialogComponent,
-    SelectCollegeDialogComponent
+    SelectCollegeDialogComponent,
+    MarathonInfoDialogComponent
   ]
 })
 export class CollegeMarathonComponentModule { }

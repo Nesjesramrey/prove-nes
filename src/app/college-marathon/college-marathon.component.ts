@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { forkJoin, Observable } from 'rxjs';
 import { UserService } from '../services/user.service';
 import { UtilityService } from '../services/utility.service';
+import { MarathonInfoDialogComponent } from './marathon-info-dialog/marathon-info-dialog.component';
 
 @Component({
   selector: '.college-marathon',
@@ -18,7 +20,8 @@ export class CollegeMarathonComponent implements OnInit {
   constructor(
     public utilityService: UtilityService,
     public deviceDetectorService: DeviceDetectorService,
-    public userService: UserService
+    public userService: UserService,
+    public dialog: MatDialog
   ) {
     this.isMobile = this.deviceDetectorService.isMobile();
   }
@@ -35,6 +38,18 @@ export class CollegeMarathonComponent implements OnInit {
         }
       },
       complete: () => { this.isDataAvailable = true; }
+    });
+  }
+
+  popMarathonInfoDialog() {
+    const dialogRef = this.dialog.open<MarathonInfoDialogComponent>(
+      MarathonInfoDialogComponent, {
+      width: '640px',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
     });
   }
 }

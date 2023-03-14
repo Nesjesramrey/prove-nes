@@ -1,12 +1,41 @@
-<div class="set-12" *ngIf="isDataAvailable">
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+  <mat-spinner color="accent"></mat-spinner>
+</div>
+
+
+<div class="set-12 pgbdy" *ngIf="isDataAvailable">
+  <h1>¡En colectivo somos más fuertes!</h1>
+  <h3>Lanzamiento 24 de marzo 2023</h3>
   <div class="innrpg">
     <img src="../../assets/images/txt-marathon.png" alt="" class="coverimg">
 
     <div class="set-12 ctrls">
-      <button type="button" mat-raised-button color="accent" (click)="utilityService.linkMe('/maraton/registro')">
+      <div class="set-12 btnhldr">
+        <div class="set-6">
+          <button type="button" class="speech-bubble" (click)="utilityService.linkMe('/maraton/registro')">Crear
+            Equipo</button>
+        </div>
+
+        <div class="set-6">
+          <button class="speech-bubble">¡Participa!</button>
+        </div>
+      </div>
+
+      <div class="set-12 btnhldr">
+        <button type="button" mat-raised-button color="accent" (click)="popMarathonInfoDialog()">
+          <strong>Premios</strong>
+        </button>
+        <button type="button" mat-raised-button color="accent">
+          <strong>Calendario</strong>
+        </button>
+        <button type="button" mat-raised-button color="accent">
+          <strong>Convocatoria</strong>
+        </button>
+      </div>
+
+      <!-- <button type="button" mat-raised-button color="accent" (click)="utilityService.linkMe('/maraton/registro')">
         <strong>Crear equipo</strong>
       </button>
-
       <button type="button" mat-raised-button color="accent" (click)="utilityService.linkMe('/hub/ingresar')"
         *ngIf="!isMobile && userAvailable">
         <strong>Acceder</strong>
@@ -14,7 +43,11 @@
       <button type="button" mat-raised-button color="accent" (click)="utilityService.linkMe('/hub/signin-mobile')"
         *ngIf="isMobile && userAvailable">
         <strong>Acceder</strong>
-      </button>
+      </button> -->
     </div>
   </div>
+</div>
+
+<div class="set-12 foot" *ngIf="isDataAvailable">
+  <div class="app-footer"></div>
 </div>
