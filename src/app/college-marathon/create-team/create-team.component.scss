@@ -185,3 +185,24 @@
     padding: 0 1em;
   }
 }
+
+:host(.fixmobile) {
+  padding: 20px;
+
+  .frmbdy {
+    .set-7 {
+      display: none;
+    }
+
+    .set-5 {
+      width: 100%;
+    }
+  }
+
+  .sixcombo {
+    .set-6 {
+      width: 100%;
+      padding: 0;
+    }
+  }
+}
