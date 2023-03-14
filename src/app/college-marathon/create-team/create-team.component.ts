@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostBinding, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
@@ -96,6 +96,7 @@ export class CreateTeamComponent implements OnInit {
   public isNewTopic: boolean = true;
   public topicSelected: any = null;
   public url: string = '';
+  @HostBinding('class') public class: string = '';
 
   constructor(
     public userService: UserService,
@@ -112,6 +113,7 @@ export class CreateTeamComponent implements OnInit {
   ) {
     this.isMobile = this.deviceDetectorService.isMobile();
     this.url = this.DOM.location.origin;
+    if (this.isMobile) { this.class = 'fixmobile'; }
   }
 
   ngOnInit(): void {

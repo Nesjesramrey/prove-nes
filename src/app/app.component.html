@@ -42,10 +42,13 @@
         <mat-icon>edit_note</mat-icon> Mi testimonio
       </button>
       <button class="mt-4" type="button" (click)="utilityService.linkMe('/posts'); open = !open">
-        <mat-icon>dashboard</mat-icon> <span>Muro Ciudadano</span>
+        <mat-icon>dashboard</mat-icon> <span>Muro Colectivo</span>
       </button>
       <button class="mt-4" type="button" (click)="popPDF(); open = !open">
         <mat-icon>description</mat-icon> <span>Documento Punto de Partida</span>
+      </button>
+      <button class="mt-4" type="button" (click)="utilityService.linkMe('/maraton'); open = !open">
+        <mat-icon>school</mat-icon> <span>Maratón Universitario</span>
       </button>
     </div>
   </div>
@@ -93,11 +96,15 @@
           <mat-icon>edit_note</mat-icon> Mi testimonio
         </button>
         <button class="mt-4" type="button" (click)="utilityService.linkMe('/posts'); open = !open">
-          <mat-icon>dashboard</mat-icon> <span>Muro Ciudadano</span>
+          <mat-icon>dashboard</mat-icon> <span>Muro Colectivo</span>
         </button>
         <button class="mt-4" type="button" (click)="popPDF(); open = !open">
           <mat-icon>description</mat-icon> <span>Documento Punto de Partida</span>
         </button>
+        <button class="mt-4" type="button" (click)="utilityService.linkMe('/maraton'); open = !open">
+          <mat-icon>school</mat-icon> <span>Maratón Universitario</span>
+        </button>
+
         <!-- <button type="button" (click)="linkMe('associations')">
           <mat-icon>groups</mat-icon> <span>Mis asociaciones</span>
         </button>

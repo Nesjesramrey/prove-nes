@@ -1,11 +1,18 @@
-<div class="set-12">
+<div class="set-12" *ngIf="isDataAvailable">
   <div class="innrpg">
     <img src="../../assets/images/txt-marathon.png" alt="" class="coverimg">
+
     <div class="set-12 ctrls">
-      <button type="button" mat-raised-button color="accent">
+      <button type="button" mat-raised-button color="accent" (click)="utilityService.linkMe('/maraton/registro')">
         <strong>Crear equipo</strong>
       </button>
-      <button type="button" mat-raised-button color="accent" (click)="utilityService.linkMe('/universidades/registro')">
+
+      <button type="button" mat-raised-button color="accent" (click)="utilityService.linkMe('/hub/ingresar')"
+        *ngIf="!isMobile && userAvailable">
+        <strong>Acceder</strong>
+      </button>
+      <button type="button" mat-raised-button color="accent" (click)="utilityService.linkMe('/hub/signin-mobile')"
+        *ngIf="isMobile && userAvailable">
         <strong>Acceder</strong>
       </button>
     </div>

@@ -27,7 +27,7 @@ const routes: Routes = [
       {
         path: 'signup-mobile',
         component: SignUpMobileComponent,
-        canActivate: [],
+        canActivate: [CanActivateAuthenticatedGuard],
       },
       {
         path: 'registro',
@@ -37,7 +37,7 @@ const routes: Routes = [
       {
         path: 'signin-mobile',
         component: SignInMobileComponent,
-        canActivate: [],
+        canActivate: [CanActivateAuthenticatedGuard],
       },
       {
         path: 'ingresar',
