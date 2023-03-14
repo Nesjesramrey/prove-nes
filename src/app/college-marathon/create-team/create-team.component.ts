@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
@@ -14,6 +14,7 @@ import { TeamService } from 'src/app/services/team.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { TopicService } from 'src/app/services/topic.service';
 import { SolutionService } from 'src/app/services/solution.service';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: '.create-team',
@@ -44,9 +45,9 @@ export class CreateTeamComponent implements OnInit {
   public topics: any = null;
   public coverage: any = null;
   @ViewChild('stepper') public stepper!: MatStepper;
-  public selectedIndex: number = 6;
+  public selectedIndex: number = 0;
   public association: any = null;
-  public imgDoc_exts: any = ['pdf'];
+  public imgDoc_exts: any = ['jpg', 'jpeg', 'png', 'pdf', 'JPG', 'JPEG', 'PNG', 'PDF'];
   public isMobile: boolean = false;
   public universities: any = null;
   public states: any = null;
@@ -94,6 +95,7 @@ export class CreateTeamComponent implements OnInit {
   };
   public isNewTopic: boolean = true;
   public topicSelected: any = null;
+  public url: string = '';
 
   constructor(
     public userService: UserService,
@@ -105,9 +107,11 @@ export class CreateTeamComponent implements OnInit {
     public router: Router,
     public teamService: TeamService,
     public topicService: TopicService,
-    public solutionService: SolutionService
+    public solutionService: SolutionService,
+    @Inject(DOCUMENT) public DOM: Document
   ) {
     this.isMobile = this.deviceDetectorService.isMobile();
+    this.url = this.DOM.location.origin;
   }
 
   ngOnInit(): void {
@@ -147,7 +151,7 @@ export class CreateTeamComponent implements OnInit {
         this.registerTeamFG = this.formBuilder.group({
           coverage: ['', [Validators.required]],
           university: ['', [Validators.required]],
-          name: ['Team One', [Validators.required]],
+          name: ['', [Validators.required]],
           leader: ['', [Validators.required]]
         });
         this.registerTeamFG.disable();
@@ -190,10 +194,10 @@ export class CreateTeamComponent implements OnInit {
 
         if (!this.userAvailable) { this.searchCollegeFG.disable(); }
         this.teamUsers = this.searchUserFG.get('collaborators') as FormArray;
-        this.teamUsers.push(this.createUserField({ email: 'housero@outlook.es' }));
-        this.teamUsers.push(this.createUserField({ email: 'nenkyyy@outlook.es' }));
-        this.teamUsers.push(this.createUserField({ email: 'nenkyyy@live.com' }));
-        this.teamUsers.push(this.createUserField({ email: 'nenkyyy@icloud.com' }));
+        // this.teamUsers.push(this.createUserField({ email: 'housero@outlook.es' }));
+        // this.teamUsers.push(this.createUserField({ email: 'nenkyyy@outlook.es' }));
+        // this.teamUsers.push(this.createUserField({ email: 'nenkyyy@live.com' }));
+        // this.teamUsers.push(this.createUserField({ email: 'nenkyyy@icloud.com' }));
 
         if (this.userAvailable) {
           this.teamService.leaderStatus({ userID: this.user['_id'] }).subscribe({
@@ -201,13 +205,14 @@ export class CreateTeamComponent implements OnInit {
             next: (reply: any) => {
               // console.log(reply);
               this.team = reply['association'];
-              console.log('team: ', this.team);
+              // console.log('team: ', this.team);
             },
             complete: () => {
               if (this.team != null) {
                 this.setupFG.patchValue({ coverage: this.team['coverage'][0]['_id'] });
                 this.topics = this.team['sublayout']['topics'];
                 this.setupFG.updateValueAndValidity();
+                // this.url = this.url + '/universidades/equipos/' + this.team['_id'];
               }
             }
           });
@@ -463,8 +468,12 @@ export class CreateTeamComponent implements OnInit {
   }
 
   saveCollaborators() {
-    this.submitted = true;
+    if (this.teamUsers['value'].length == 0) {
+      this.stepNext();
+      return;
+    }
 
+    this.submitted = true;
     let data: any = {
       teamID: this.team['_id'],
       collaborators: this.teamUsers['value']
@@ -476,7 +485,7 @@ export class CreateTeamComponent implements OnInit {
         this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
       },
       next: (reply: any) => {
-        // console.log(reply);
+        console.log(reply);
       },
       complete: () => {
         this.submitted = false;
@@ -492,7 +501,6 @@ export class CreateTeamComponent implements OnInit {
     }
 
     this.submitted = true;
-
     let data: any = {
       user_id: this.user['_id'],
       formData: new FormData()
@@ -627,6 +635,7 @@ export class CreateTeamComponent implements OnInit {
       next: (reply: any) => {
         this.team['topic']['solutions'] = reply['solutions'];
         this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
+        // this.url = this.url + '/universidades/equipos/' + this.team['_id'];
       },
       complete: () => {
         this.submitted = false;
@@ -656,5 +665,9 @@ export class CreateTeamComponent implements OnInit {
         this.router.navigateByUrl('/hub/registro?college=true');
         break;
     }
+  }
+
+  linkTeam() {
+    this.router.navigateByUrl('/maraton/equipos/' + this.team['_id']);
   }
 }
