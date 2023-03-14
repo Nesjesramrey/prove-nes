@@ -11,9 +11,16 @@
     padding-right: 40px;
   }
 
-  // ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
-  //   margin: 0;
-  // }
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
+
+  mat-hint {
+    color: #1e7e7f;
+    font-style: italic;
+    font-weight: bold;
+  }
 
   ::ng-deep .mat-horizontal-stepper-header-container {
     display: none !important;
@@ -162,5 +169,19 @@
       left: 50%;
       transform: translate(-50%, -50%);
     }
+  }
+
+  p.hint {
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+
+  p.hint-sm {
+    font-size: 80%;
+    font-style: italic;
+    margin-top: 10px;
+    color: #1e7e7f;
+    font-weight: bold;
+    padding: 0 1em;
   }
 }
