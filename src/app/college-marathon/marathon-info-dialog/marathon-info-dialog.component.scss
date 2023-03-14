@@ -1,0 +1,16 @@
+:host {
+  h1 {
+    margin-bottom: 20px;
+  }
+
+  p:not(:first-child) {
+    margin-top: 20px;
+  }
+
+  .ctrls {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+}
