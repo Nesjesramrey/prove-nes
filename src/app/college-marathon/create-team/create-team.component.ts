@@ -97,6 +97,9 @@ export class CreateTeamComponent implements OnInit {
   public topicSelected: any = null;
   public url: string = '';
   @HostBinding('class') public class: string = '';
+  public teamAvailable: boolean = false;
+  public selectedLayout: string = '';
+  public selectedSubLayout: string = '';
 
   constructor(
     public userService: UserService,
@@ -210,17 +213,16 @@ export class CreateTeamComponent implements OnInit {
               // console.log('team: ', this.team);
             },
             complete: () => {
-              if (this.team != null) {
-                this.setupFG.patchValue({ coverage: this.team['coverage'][0]['_id'] });
-                this.topics = this.team['sublayout']['topics'];
-                this.setupFG.updateValueAndValidity();
-                // this.url = this.url + '/universidades/equipos/' + this.team['_id'];
-              }
+              // if (this.team != null) {
+              //   this.setupFG.patchValue({ coverage: this.team['coverage'][0]['_id'] });
+              //   this.topics = this.team['sublayout']['topics'];
+              //   this.setupFG.updateValueAndValidity();
+              // }
+              if (this.team != null) { this.teamAvailable = true; };
+              this.isDataAvailable = true;
             }
           });
         }
-
-        this.isDataAvailable = true;
       }
     });
   }
@@ -319,7 +321,7 @@ export class CreateTeamComponent implements OnInit {
         this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
       },
       next: (reply: any) => {
-        console.log(reply);
+        // console.log(reply);
         this.submitted = false;
         let user: any;
 
@@ -358,11 +360,13 @@ export class CreateTeamComponent implements OnInit {
     let layout: any = this.layouts.filter((x: any) => { return x['_id'] == event['value']; });
     this.sublayouts = layout[0]['subLayouts'];
     this.setupFG.controls['sublayout'].enable();
+    this.selectedLayout = event['value'];
   }
 
   onSubLayoutSelected(event: any) {
     let layout: any = this.sublayouts.filter((x: any) => { return x['_id'] == event['value']; });
     this.topics = layout[0]['topics'];
+    this.selectedSubLayout = event['value'];
   }
 
   onTopicSelected(event: any) {
@@ -375,6 +379,7 @@ export class CreateTeamComponent implements OnInit {
       this.topicFG.patchValue({ description: topic[0]['description'] });
       this.isNewTopic = false;
       this.topicSelected = topic[0];
+      this.team['topic'] = this.topicSelected;
     }
     // new topic
     else {
@@ -383,7 +388,9 @@ export class CreateTeamComponent implements OnInit {
       this.topicFG.patchValue({ description: '' });
       this.isNewTopic = true;
       this.topicSelected = null;
+      this.team['topic'] = this.topicSelected;
     }
+    // console.log(this.topicSelected);
   }
 
   onProblemTitle(event: any) {
@@ -487,7 +494,7 @@ export class CreateTeamComponent implements OnInit {
         this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
       },
       next: (reply: any) => {
-        console.log(reply);
+        // console.log(reply);
       },
       complete: () => {
         this.submitted = false;
@@ -515,9 +522,9 @@ export class CreateTeamComponent implements OnInit {
         this.submitted = false;
       },
       next: (reply: any) => {
-        console.log(reply);
+        // console.log(reply);
         this.user['idImage'] = reply['data']['idImage'];
-        console.log(this.user);
+        // console.log(this.user);
       },
       complete: () => {
         this.submitted = false;
@@ -540,7 +547,9 @@ export class CreateTeamComponent implements OnInit {
         this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
       },
       next: (reply: any) => {
-        console.log(reply);
+        this.team['sublayoyt'] = this.selectedLayout;
+        this.team['sublayout'] = this.selectedSubLayout;
+        // console.log(this.team);
       },
       complete: () => {
         this.submitted = false;
@@ -557,7 +566,7 @@ export class CreateTeamComponent implements OnInit {
       // new topic
       case true:
         data = {
-          layout_id: this.team['sublayout']['_id'],
+          layout_id: this.team['sublayout'],
           formData: new FormData()
         }
 
@@ -627,7 +636,7 @@ export class CreateTeamComponent implements OnInit {
 
     data['formData'].append('title', this.solutionFG.controls['title']['value']);
     data['formData'].append('description', this.solutionFG.controls['description']['value']);
-    data['formData'].append('coverage', JSON.stringify([this.team['topic']['coverage'][0]['_id']]));
+    data['formData'].append('coverage', JSON.stringify([this.team['topic']['coverage']]));
 
     this.solutionService.createNewSolution(data).subscribe({
       error: (error: any) => {
@@ -637,7 +646,6 @@ export class CreateTeamComponent implements OnInit {
       next: (reply: any) => {
         this.team['topic']['solutions'] = reply['solutions'];
         this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
-        // this.url = this.url + '/universidades/equipos/' + this.team['_id'];
       },
       complete: () => {
         this.submitted = false;

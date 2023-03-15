@@ -2,9 +2,16 @@
   width: 100vw;
   height: 100vh;
   // padding: 120px 40px 40px 40px;
+  display: flex;
+  flex-direction: column;
 
   .frmbdy {
     padding: 120px 40px 40px 40px;
+    flex: 1 0 auto;
+  }
+
+  .foot {
+    flex-shrink: 0;
   }
 
   .set-7 {
@@ -187,9 +194,9 @@
 }
 
 :host(.fixmobile) {
-  padding: 20px;
-
   .frmbdy {
+    padding: 20px;
+
     .set-7 {
       display: none;
     }
