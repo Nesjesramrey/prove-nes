@@ -9,7 +9,8 @@
       ornare. Nulla consectetur ultrices laoreet.</p>
   </div>
 
-  <div class="set-5">
+  <!-- no team available -->
+  <div class="set-5" *ngIf="!teamAvailable">
     <div class="set-12 usr-auth" *ngIf="!userAvailable">
       <p>¿Necesitas una cuenta para registrar a tu equipo?</p>
       <p class="access">
@@ -44,7 +45,7 @@
             <div class="set-6">
               <mat-form-field appearance="outline">
                 <mat-label>Nombre de tu universidad</mat-label>
-                <input type="text" matInput formControlName="university">
+                <input type="text" matInput formControlName="university" (keyup.enter)="searchCollege(searchCollegeFG)">
                 <mat-hint align="start">
                   <small>** Escribe el nombre de tu universidad</small>
                 </mat-hint>
@@ -114,7 +115,8 @@
               <div class="set-10">
                 <mat-form-field appearance="outline">
                   <mat-label>Buscar usuario</mat-label>
-                  <input matInput placeholder="Ejemplo: nombre@dominio.com" formControlName="searchemail">
+                  <input matInput placeholder="Ejemplo: nombre@dominio.com" formControlName="searchemail"
+                    (keyup.enter)="onSearchUser(searchUserFG)">
                 </mat-form-field>
               </div>
 
@@ -165,7 +167,8 @@
             <button type="button" mat-raised-button color="warn" matStepperPrevious [disabled]="submitted">
               <small>Anterior</small>
             </button>
-            <button type="button" mat-raised-button color="warn" (click)="saveLeaderID()" [disabled]="submitted">
+            <button type="button" mat-raised-button color="warn" (click)="saveLeaderID()"
+              [disabled]="userIDFG.invalid || submitted">
               <small>Siguiente</small>
             </button>
             <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
@@ -317,8 +320,13 @@
       </mat-stepper>
     </div>
   </div>
+
+  <!-- team available -->
+  <div class="set-5" *ngIf="teamAvailable">
+    Visita tu team <a href="javascript:void(0)" (click)="linkTeam()">aqui</a>
+  </div>
 </div>
 
-<div class="set-12" *ngIf="isDataAvailable">
+<div class="set-12 foot" *ngIf="isDataAvailable">
   <div class="app-footer"></div>
 </div>
