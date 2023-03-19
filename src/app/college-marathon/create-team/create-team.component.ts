@@ -223,7 +223,7 @@ export class CreateTeamComponent implements OnInit {
             }
           });
         }
-        // this.isDataAvailable = true;
+        this.isDataAvailable = true;
       }
     });
   }
