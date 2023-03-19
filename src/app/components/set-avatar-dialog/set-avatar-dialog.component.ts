@@ -78,6 +78,7 @@ export class SetAvatarDialogComponent implements OnInit, WithStyles, AfterViewIn
     public deviceDetectorService: DeviceDetectorService
   ) {
     this.isMobile = this.deviceDetectorService.isMobile();
+    console.log(this.event);
   }
 
   ngOnInit(): void {

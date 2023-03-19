@@ -6,13 +6,68 @@
   <div class="set-12 teambanner">
     <div class="set-12 bannerhldr">
       <div class="set-12 imghldr">
-        <img src="../../../assets/images/Rectangle-511.png" alt="">
+        <input #coverFile type="file" accept="image/*" hidden (change)="coverFileSelected($event)" />
+        <!-- <input #avatarFile type="file" accept="image/*" hidden (change)="openCropperDialog($event)" /> -->
+        <img src="../../../assets/images/Rectangle-511.png" alt="" *ngIf="team['coverImage'] == null">
+        <img [src]="team['coverImage']" alt="" *ngIf="team['coverImage'] != null">
       </div>
-      <div class="avatar"></div>
+
+      <div class="chngbnr">
+        <button type="button" mat-raised-button color="accent" (click)="coverFile.click()" [disabled]="isUploading"
+          *ngIf="isLeader">
+          <mat-icon>camera_alt</mat-icon>
+          <small>Cargar imágen</small>
+        </button>
+        <mat-spinner diameter="30" color="accent" *ngIf="isUploading"></mat-spinner>
+      </div>
+
+      <button type="button" class="avatar">
+        <img src="{{ user.avatarImage }}" alt="{{ user.firstname }} {{ user.lastname }}"
+          *ngIf="user.avatarImage != null" />
+        <span *ngIf="user.avatarImage == null">
+          {{ user.firstname | firstword | firstletter }}{{ user.lastname | firstword | firstletter }}
+        </span>
+        <div class="overlay" matTooltip="Cargar imágen" matTooltipClass="tooltip">
+          <mat-icon color="accent">photo_camera</mat-icon>
+        </div>
+      </button>
+    </div>
+
+    <div class="set-12 bnrinfo">
+      <div class="set-6">
+        <p class="location">
+          <small><strong>Tema:</strong> {{team['layout']['category']['name']}} /
+            {{team['sublayout']['category']['name']}}</small>
+        </p>
+        <p class="author">
+          <small><strong>Líder:</strong> {{team['createdBy']['firstname']}} {{team['createdBy']['lastname']}}</small>
+        </p>
+        <p class="author">
+          <small><strong>Equipo:</strong> {{team['name']}}</small>
+        </p>
+        <p class="author">
+          <small><strong>Cobertura: </strong> {{team['coverage'][0]['name']}}</small>
+        </p>
+      </div>
+
+      <div class="set-6 toolrgt">
+        <button type="button" mat-mini-fab color="primary">
+          <mat-icon>star</mat-icon>
+        </button>
+        <button type="button" mat-mini-fab color="primary">
+          <mat-icon>favorite</mat-icon>
+        </button>
+        <button type="button" mat-mini-fab color="primary">
+          <mat-icon>forum</mat-icon>
+        </button>
+        <button type="button" mat-mini-fab color="primary">
+          <mat-icon>share</mat-icon>
+        </button>
+      </div>
     </div>
 
     <div class="set-12 teamtools">
-      <div class="set-4">hello</div>
+      <div class="set-4">&nbsp;</div>
 
       <div class="set-8">
         <mat-tab-group [disableRipple]="true" [@.disabled]="true">
@@ -21,13 +76,45 @@
               <mat-icon>warning</mat-icon>
               <span>Problema</span>
             </ng-template>
+
+            <div class="set-12 tabconts">
+              <div class="set-12 heads">
+                <div class="set-9">
+                  <h3>{{topic['title']}}</h3>
+                </div>
+
+                <div class="set-3" *ngIf="isLeader">
+                  <button type="button" mat-mini-fab color="primary">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                </div>
+              </div>
+
+              <div class="set-12 desc" [innerHTML]="topic['description']"></div>
+            </div>
           </mat-tab>
-  
+
           <mat-tab>
             <ng-template mat-tab-label>
               <mat-icon>insights</mat-icon>
-              <span>Solución</span>
+              <span>Soluciónes</span>
             </ng-template>
+
+            <div class="set-12 tabconts">
+              <div class="set-12 heads">
+                <div class="set-9">
+                  <h3>{{topic['solutions'][0]['title']}}</h3>
+                </div>
+
+                <div class="set-3" *ngIf="isLeader">
+                  <button type="button" mat-mini-fab color="primary">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                </div>
+              </div>
+
+              <div class="set-12 desc" [innerHTML]="topic['solutions'][0]['description']"></div>
+            </div>
           </mat-tab>
 
           <mat-tab>
@@ -36,38 +123,115 @@
               <span>Proyecto</span>
             </ng-template>
           </mat-tab>
-  
+
           <mat-tab>
             <ng-template mat-tab-label>
               <mat-icon>edit_note</mat-icon>
               <span>Testimonios</span>
             </ng-template>
           </mat-tab>
-  
+
           <mat-tab>
             <ng-template mat-tab-label>
               <mat-icon>groups</mat-icon>
               <span>Equipo</span>
             </ng-template>
-  
-            <div class="set-12 collabs">
-              <div class="set-6" *ngFor="let collaborator of team['collaborators']">
-                <div class="set-12 usrcrd">
-                  <div class="usrimg">
-                    <img [src]="collaborator['user']['avatarImage']" [alt]="collaborator['user']['firstname']"
-                      *ngIf="collaborator['user']['avatarImage'] != null">
-                    <span *ngIf="collaborator['user']['avatarImage'] == null">NA</span>
+
+            <div class="set-12 tabconts">
+              <div class="set-12 emptycollabs" *ngIf="team['collaborators'].length == 0">
+                <h3>No tienes colaboradores</h3>
+
+                <form [formGroup]="searchUserFG" class="set-12">
+                  <div class="set-12 collab">
+                    <div class="set-11">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Buscar usuario</mat-label>
+                        <input matInput placeholder="Ejemplo: nombre@dominio.com" formControlName="searchemail"
+                          (keyup.enter)="onSearchUser()">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="set-1 txt-right">
+                      <button type="button" mat-mini-fab color="warn" (click)="onSearchUser()"
+                        [disabled]="searchUserFG.invalid" matTooltip="Buscar" matTooltipClass="tooltip">
+                        <mat-icon>person_search</mat-icon>
+                      </button>
+                    </div>
                   </div>
-                  <div>
-                    <p *ngIf="collaborator['user']['firstname'] != null">
-                      {{collaborator['user']['firstname']}} {{collaborator['user']['lastname']}}
-                    </p>
-                    <p *ngIf="collaborator['user']['firstname'] == null">
-                      Registro por completar
-                    </p>
-                    <p>
-                      <small>{{collaborator['user']['email']}}</small>
-                    </p>
+
+                  <div formArrayName="collaborators" class="set-12" *ngIf="teamUsers.length != 0">
+                    <div *ngFor="let item of teamUsersForm.controls; let i = index;" class="set-12 collabfield">
+                      <div [formGroupName]="i" class="set-12 collab">
+                        <div class="set-11">
+                          <mat-form-field appearance="outline">
+                            <mat-label>Correo electrónico</mat-label>
+                            <input type="text" matInput formControlName="email">
+                          </mat-form-field>
+                        </div>
+
+                        <div class="set-1 txt-right">
+                          <button type="button" mat-mini-fab color="primary" matTooltip="Eliminar"
+                            matTooltipClass="tooltip" (click)="removeUserField(i)">
+                            <mat-icon>cancel</mat-icon>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="set-12 ctrls" *ngIf="isLeader">
+                    <button type="button" mat-raised-button color="primary"
+                      [disabled]="teamUsers.length == 0 || submitted" (click)="addCollaborators()">
+                      <mat-icon>add_circle</mat-icon>
+                      <small>Agregar colaborador</small>
+                    </button>
+                    <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
+                  </div>
+                </form>
+              </div>
+
+              <div class="set-12 collabsavailable" *ngIf="team['collaborators'].length != 0">
+                <div class="set-12 heads">
+                  <button type="button" mat-raised-button color="primary" (click)="popAddTeamCollaborator()"
+                    *ngIf="isLeader">
+                    <mat-icon>add_circle</mat-icon>
+                    <small>Agregar colaborador</small>
+                  </button>
+                </div>
+
+                <div class="set-12">
+                  <div class="set-6" *ngFor="let collaborator of team['collaborators']">
+                    <div class="set-12 usrcrd">
+                      <div class="usrimg">
+                        <img [src]="collaborator['user']['avatarImage']" [alt]="collaborator['user']['firstname']"
+                          *ngIf="collaborator['user']['avatarImage'] != null">
+                        <span *ngIf="collaborator['user']['avatarImage'] == null">NA</span>
+                      </div>
+
+                      <div>
+                        <p *ngIf="collaborator['user']['firstname'] != null">
+                          {{collaborator['user']['firstname']}} {{collaborator['user']['lastname']}}
+                        </p>
+                        <p *ngIf="collaborator['user']['firstname'] == null">
+                          Registro por completar
+                        </p>
+                        <p>
+                          <small>{{collaborator['user']['email']}}</small>
+                        </p>
+                      </div>
+
+                      <div class="crdmenu" *ngIf="isLeader">
+                        <button type="button" [matMenuTriggerFor]="menu">
+                          <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                          <button type="button" mat-menu-item (click)="killTeamUser(collaborator)">
+                            <mat-icon>cancel</mat-icon>
+                            <small>Eliminar</small>
+                          </button>
+                        </mat-menu>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -77,4 +241,8 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="set-12 foot" *ngIf="isDataAvailable">
+  <div class="app-footer"></div>
 </div>

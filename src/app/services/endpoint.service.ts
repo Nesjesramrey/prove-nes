@@ -190,6 +190,9 @@ export class EndPointService {
   public setTeamCategoriesEndPoint: string = '/team/assign_layout/';
   public fetchTeamByIdEndPoint: string = '/team/';
   public assignTeamTopicEndPoint: string = '/team/assign_topic/';
+  public uploadCoverImageEndPoint: string = '/team/';
+  public uploadTeamAvatarEndPoint: string = '/team/';
+  public killTeamCollaboratorEndPoint: string = '/team/remove_collaborators/';
 
   constructor() { }
 }
