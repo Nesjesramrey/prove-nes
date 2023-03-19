@@ -130,7 +130,7 @@ export class CreateTeamComponent implements OnInit {
       next: (reply: any) => {
         // console.log(reply);
         this.user = reply[0];
-        console.log('user: ', this.user);
+        // console.log('user: ', this.user);
 
         this.document = reply[1];
         // console.log('document: ', this.document);
@@ -223,7 +223,7 @@ export class CreateTeamComponent implements OnInit {
             }
           });
         }
-        this.isDataAvailable = true;
+        // this.isDataAvailable = true;
       }
     });
   }

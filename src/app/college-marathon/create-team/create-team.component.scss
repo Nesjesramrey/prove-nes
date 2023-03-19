@@ -191,6 +191,14 @@
     font-weight: bold;
     padding: 0 1em;
   }
+
+  .myteams {
+    margin-top: 30px;
+
+    h3 {
+      margin-bottom: 20px;
+    }
+  }
 }
 
 :host(.fixmobile) {

@@ -7,6 +7,16 @@
     <h1>Lorem Ipsum</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec maximus ex et purus volutpat, vitae varius ligula
       ornare. Nulla consectetur ultrices laoreet.</p>
+
+    <div class="set-12 myteams">
+      <h3>Mis Equipos</h3>
+      <div class="set-12" *ngFor="let team of user['teams']">
+        <button type="button" mat-raised-button color="primary"
+          (click)="utilityService.linkMe('/maraton/equipos/' + team['_id'])">
+          {{team['name']}}
+        </button>
+      </div>
+    </div>
   </div>
 
   <!-- no team available -->

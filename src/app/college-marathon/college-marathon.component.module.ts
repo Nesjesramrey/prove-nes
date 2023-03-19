@@ -14,6 +14,8 @@ import { TeamListComponent } from './team-list/team-list.component';
 import { SingleTeamComponent } from './single-team/single-team.component';
 import { SelectCollegeDialogComponent } from './select-college-dialog/select-college-dialog.component';
 import { MarathonInfoDialogComponent } from './marathon-info-dialog/marathon-info-dialog.component';
+import { LyDialogModule } from '@alyle/ui/dialog';
+import { AddTeamCollaboratorComponent } from './add-team-collaborator/add-team-collaborator.component';
 
 @NgModule({
   imports: [
@@ -24,7 +26,8 @@ import { MarathonInfoDialogComponent } from './marathon-info-dialog/marathon-inf
     AppMaterialModule,
     ComponentsModule,
     AppSharedModule,
-    AngularEditorModule
+    AngularEditorModule,
+    LyDialogModule
   ],
   declarations: [
     CollegeMarathonComponent,
@@ -34,7 +37,8 @@ import { MarathonInfoDialogComponent } from './marathon-info-dialog/marathon-inf
     TeamListComponent,
     SingleTeamComponent,
     SelectCollegeDialogComponent,
-    MarathonInfoDialogComponent
+    MarathonInfoDialogComponent,
+    AddTeamCollaboratorComponent
   ],
   exports: [
     AddTopicDialogComponent,
@@ -42,13 +46,15 @@ import { MarathonInfoDialogComponent } from './marathon-info-dialog/marathon-inf
     TeamListComponent,
     SingleTeamComponent,
     SelectCollegeDialogComponent,
-    MarathonInfoDialogComponent
+    MarathonInfoDialogComponent,
+    AddTeamCollaboratorComponent
   ],
   entryComponents: [
     AddTopicDialogComponent,
     AddSolutionDialogComponent,
     SelectCollegeDialogComponent,
-    MarathonInfoDialogComponent
+    MarathonInfoDialogComponent,
+    AddTeamCollaboratorComponent
   ]
 })
 export class CollegeMarathonComponentModule { }

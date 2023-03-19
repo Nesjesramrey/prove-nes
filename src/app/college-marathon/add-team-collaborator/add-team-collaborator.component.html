@@ -1,0 +1,60 @@
+<div class="set-12 dlghd">
+  <div class="set-10">
+    <h3>Agregar colaborador</h3>
+  </div>
+  <div class="set-2">
+    <button type="button" mat-mini-fab color="primary" (click)="killDialog()" [disabled]="submitted">
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div class="set-12 dlgbdy">
+  <form [formGroup]="searchUserFG" class="set-12">
+    <div class="set-12 collab">
+      <div class="set-10">
+        <mat-form-field appearance="outline">
+          <mat-label>Buscar usuario</mat-label>
+          <input matInput placeholder="Ejemplo: nombre@dominio.com" formControlName="searchemail"
+            (keyup.enter)="onSearchUser()">
+        </mat-form-field>
+      </div>
+
+      <div class="set-2 txt-right">
+        <button type="button" mat-mini-fab color="warn" (click)="onSearchUser()" [disabled]="searchUserFG.invalid"
+          matTooltip="Buscar" matTooltipClass="tooltip">
+          <mat-icon>person_search</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div formArrayName="collaborators" class="set-12" *ngIf="teamUsers.length != 0">
+      <div *ngFor="let item of teamUsersForm.controls; let i = index;" class="set-12 collabfield">
+        <div [formGroupName]="i" class="set-12 collab">
+          <div class="set-10">
+            <mat-form-field appearance="outline">
+              <mat-label>Correo electrónico</mat-label>
+              <input type="text" matInput formControlName="email">
+            </mat-form-field>
+          </div>
+
+          <div class="set-2 txt-right">
+            <button type="button" mat-mini-fab color="primary" matTooltip="Eliminar" matTooltipClass="tooltip"
+              (click)="removeUserField(i)">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="set-12 ctrls">
+      <button type="button" mat-raised-button color="primary" [disabled]="teamUsers.length == 0 || submitted"
+        (click)="addCollaborators()">
+        <mat-icon>add_circle</mat-icon>
+        <small>Agregar colaborador</small>
+      </button>
+      <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
+    </div>
+  </form>
+</div>
