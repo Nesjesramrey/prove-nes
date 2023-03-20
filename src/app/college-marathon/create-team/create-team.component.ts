@@ -189,7 +189,7 @@ export class CreateTeamComponent implements OnInit {
           description: ['', [Validators.required]]
         });
 
-        if (this.user['status']) {
+        if (this.user['status'] == 500) {
           this.userAvailable = false;
         } else {
           this.userAvailable = true;
@@ -222,8 +222,9 @@ export class CreateTeamComponent implements OnInit {
               this.isDataAvailable = true;
             }
           });
+        } else {
+          this.isDataAvailable = true;
         }
-        this.isDataAvailable = true;
       }
     });
   }

@@ -1,6 +1,6 @@
 <div class="set-12 dlghd">
   <div class="set-11">
-    <strong>Agrega tu Solución</strong>
+    <strong>Edita tu Solución</strong>
   </div>
   <div class="set-1 txt-right">
     <button type="button" mat-mini-fab color="primary" (click)="killDialog()" [disabled]="submitted">
@@ -9,7 +9,12 @@
   </div>
 </div>
 
-<form class="set-12 edtrfrm" [formGroup]="solutionFG" (submit)="saveDescription(solutionFG)">
+<form class="set-12 edtrfrm" [formGroup]="solutionFG" (submit)="editSolution(solutionFG)">
+  <mat-form-field appearance="outline">
+    <mat-label>Título</mat-label>
+    <input matInput formControlName="title">
+  </mat-form-field>
+
   <div class="set-12">
     <angular-editor formControlName="description" [config]="editorConfig"></angular-editor>
   </div>

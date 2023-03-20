@@ -5,10 +5,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { SetAvatarDialogComponent } from 'src/app/components/set-avatar-dialog/set-avatar-dialog.component';
+import { TestimonyDialogComponent } from 'src/app/components/testimony-dialog/testimony-dialog.component';
 import { TeamService } from 'src/app/services/team.service';
 import { UserService } from 'src/app/services/user.service';
 import { UtilityService } from 'src/app/services/utility.service';
+import { AddSolutionDialogComponent } from '../add-solution-dialog/add-solution-dialog.component';
 import { AddTeamCollaboratorComponent } from '../add-team-collaborator/add-team-collaborator.component';
+import { AddTopicDialogComponent } from '../add-topic-dialog/add-topic-dialog.component';
 
 @Component({
   selector: '.single-team',
@@ -28,6 +31,8 @@ export class SingleTeamComponent implements OnInit {
   public collaborators: any[] = [];
   public isUploading: boolean = false;
   public isLeader: boolean = false;
+  // public pdf: string = 'https://static-assets-pando.s3.amazonaws.com/images/2267f4b1-c8be-49e2-8fb1-d1c1eb73c3c0.pdf';
+  public pdf: string = 'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf';
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -69,7 +74,7 @@ export class SingleTeamComponent implements OnInit {
 
         let teamLeader: any = this.user['teams'].filter((x: any) => { return x['createdBy']['_id'] == this.user['_id']; });
         if (teamLeader.length != 0) { this.isLeader = true; }
-        console.log(this.isLeader);
+        // console.log(this.isLeader);
 
         this.isDataAvailable = true;
       }
@@ -229,6 +234,57 @@ export class SingleTeamComponent implements OnInit {
       complete: () => {
         this.utilityService.openSuccessSnackBar(this.utilityService['editedSuccess']);
       }
+    });
+  }
+
+  popEditTopicDialog() {
+    const dialogRef = this.dialog.open<any>(AddTopicDialogComponent, {
+      data: {
+        user: this.user,
+        topic: this.team['topic']
+      },
+      disableClose: true,
+      panelClass: 'posts-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        this.team['topic']['title'] = reply['title'];
+        this.team['topic']['description'] = reply['description'];
+      }
+    });
+  }
+
+  popEditSolutionDialog() {
+    const dialogRef = this.dialog.open<any>(AddSolutionDialogComponent, {
+      data: {
+        user: this.user,
+        topic: this.team['topic']
+      },
+      disableClose: true,
+      panelClass: 'posts-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        this.team['topic']['solutions'][0] = reply;
+      }
+    });
+  }
+
+  popTestimonialsDialog() {
+    const dialogRef = this.dialog.open<any>(TestimonyDialogComponent, {
+      width: '100%',
+      data: {
+        user: this.user,
+        topic: this.team['topic']
+      },
+      disableClose: true,
+      panelClass: 'side-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
     });
   }
 }
