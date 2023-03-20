@@ -21,7 +21,7 @@
         <mat-spinner diameter="30" color="accent" *ngIf="isUploading"></mat-spinner>
       </div>
 
-      <button type="button" class="avatar">
+      <button type="button" class="avatar" *ngIf="isLeader">
         <img src="{{ user.avatarImage }}" alt="{{ user.firstname }} {{ user.lastname }}"
           *ngIf="user.avatarImage != null" />
         <span *ngIf="user.avatarImage == null">
@@ -31,6 +31,14 @@
           <mat-icon color="accent">photo_camera</mat-icon>
         </div>
       </button>
+
+      <div class="avatar" *ngIf="!isLeader">
+        <img src="{{ user.avatarImage }}" alt="{{ user.firstname }} {{ user.lastname }}"
+          *ngIf="user.avatarImage != null" />
+        <span *ngIf="user.avatarImage == null">
+          {{ user.firstname | firstword | firstletter }}{{ user.lastname | firstword | firstletter }}
+        </span>
+      </div>
     </div>
 
     <div class="set-12 bnrinfo">
@@ -83,9 +91,12 @@
                   <h3>{{topic['title']}}</h3>
                 </div>
 
-                <div class="set-3" *ngIf="isLeader">
-                  <button type="button" mat-mini-fab color="primary">
+                <div class="set-3">
+                  <span *ngIf="!isLeader">&nbsp;</span>
+                  <button type="button" mat-raised-button color="primary" (click)="popEditTopicDialog()"
+                    *ngIf="isLeader">
                     <mat-icon>edit</mat-icon>
+                    <small>Editar Problema</small>
                   </button>
                 </div>
               </div>
@@ -106,9 +117,12 @@
                   <h3>{{topic['solutions'][0]['title']}}</h3>
                 </div>
 
-                <div class="set-3" *ngIf="isLeader">
-                  <button type="button" mat-mini-fab color="primary">
+                <div class="set-3">
+                  <span *ngIf="!isLeader">&nbsp;</span>
+                  <button type="button" mat-raised-button color="primary" (click)="popEditSolutionDialog()"
+                    *ngIf="isLeader">
                     <mat-icon>edit</mat-icon>
+                    <small>Editar Solución</small>
                   </button>
                 </div>
               </div>
@@ -122,6 +136,10 @@
               <mat-icon>view_in_ar</mat-icon>
               <span>Proyecto</span>
             </ng-template>
+
+            <div class="set-12">
+              <pdf-viewer [src]="pdf" [render-text]="true" [original-size]="true"></pdf-viewer>
+            </div>
           </mat-tab>
 
           <mat-tab>
@@ -129,6 +147,51 @@
               <mat-icon>edit_note</mat-icon>
               <span>Testimonios</span>
             </ng-template>
+
+            <div class="set-12 tabconts">
+              <div class="set-12" *ngIf="team['topic']['testimonials'].length == 0">
+                <h3>No hay testimonios que mostrar</h3>
+
+                <div class="set-12 emptytestimonies">
+                  <p>Sé el primero en agregar tu testimonio.</p>
+                  <button type="button" mat-raised-button color="primary" (click)="popTestimonialsDialog()">
+                    <mat-icon>edit_note</mat-icon>
+                    <small>Agregar Testimonio</small>
+                  </button>
+                </div>
+              </div>
+
+              <div class="set-12 availabletestimonies" *ngIf="team['topic']['testimonials'].length != 0">
+                <div class="set-12 heads">
+                  <button type="button" mat-raised-button color="primary" (click)="popTestimonialsDialog()">
+                    <mat-icon>edit_note</mat-icon>
+                    <small>Agregar testimonio</small>
+                  </button>
+                </div>
+
+                <div class="set-12">
+                  <div class="set-6" *ngFor="let testimony of team['topic']['testimonials']">
+                    <div class="set-12 usrcrd">
+                      <div class="usrimg">
+                        <img [src]="testimony['createdBy']['avatarImage']" [alt]="testimony['createdBy']['firstname']"
+                          *ngIf="testimony['createdBy']['avatarImage'] != null">
+                        <span *ngIf="testimony['createdBy']['avatarImage'] == null">NA</span>
+                      </div>
+
+                      <div>
+                        <p>{{testimony['name']}}</p>
+                        <p *ngIf="testimony['createdBy']['firstname'] != null">
+                          <small>{{testimony['createdBy']['firstname']}} {{testimony['createdBy']['lastname']}}</small>
+                        </p>
+                        <p *ngIf="testimony['createdBy']['firstname'] == null">
+                          <small>Registro por completar</small>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </mat-tab>
 
           <mat-tab>

@@ -69,6 +69,7 @@ export class TestimonyDialogComponent implements OnInit {
   public locationAvailable: boolean = false;
   public isMobile: boolean = false;
   public url: string = '';
+  public topic: any = null;
 
   constructor(
     public dialogRef: MatDialogRef<TestimonyDialogComponent>,
@@ -85,6 +86,7 @@ export class TestimonyDialogComponent implements OnInit {
     if (this.user == null) { this.isAnonymous = true; }
     this.isMobile = this.deviceDetectorService.isMobile();
     this.url = this.DOM.location.origin + this.router.url;
+    this.topic = this.dialogData['topic'];
   }
 
   ngOnInit(): void {
@@ -138,12 +140,19 @@ export class TestimonyDialogComponent implements OnInit {
       .forEach((file: any) => { data['formData'].append('files', file); });
     data['formData'].append('name', this.testimonyFormGroup.value.title);
     data['formData'].append('description', this.testimonyFormGroup.value.description);
+
     switch (this.locationAvailable) {
       case true:
         data['formData'].append('latitude', this.location['latitude']);
         data['formData'].append('longitude', this.location['longitude']);
         break;
     }
+
+    if (this.topic != undefined) {
+      data['formData'].append('type', 'topic');
+      data['formData'].append('relationId', this.topic['_id']);
+    }
+
     data['formData'].append('isAnonymous', (this.isAnonymous).toString());
 
     this.testuimonyServive.createNewTestimony(data).subscribe({
@@ -155,11 +164,16 @@ export class TestimonyDialogComponent implements OnInit {
       next: (reply: any) => {
         this.postURL = this.url + '/' + reply['_id'];
         this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
+        if (this.topic != undefined) { this.topic['testimonials'].push(reply['testimony']); }
       },
       complete: () => {
-        this.stepNext();
-        this.submitted = false;
-        this.testimonyFormGroup.reset();
+        if (this.topic != undefined) {
+          this.dialogRef.close(this.topic);
+        } else {
+          this.stepNext();
+          this.submitted = false;
+          this.testimonyFormGroup.reset();
+        }
       }
     });
   }
