@@ -126,7 +126,7 @@
                   <button type="button" mat-mini-fab color="primary" (click)="openModalVote('topic')">
                     <mat-icon>star</mat-icon>
                   </button>
-                  <button type="button" mat-mini-fab color="primary">
+                  <button type="button" mat-mini-fab color="primary" (click)="popAddCommentsDialog('topic')">
                     <mat-icon>forum</mat-icon>
                   </button>
                   <button type="button" mat-mini-fab color="primary" (click)="popEditTopicDialog()" *ngIf="isLeader">
@@ -136,6 +136,24 @@
               </div>
 
               <div class="set-12 desc" [innerHTML]="topic['description']"></div>
+
+              <div class="set-12 objcom" *ngIf="topic['comments'].length == 0">
+                <h3>No hay comentarios</h3>
+                <p>Sé el primero en comentar</p>
+                <button type="button" mat-raised-button color="primary" (click)="popAddCommentsDialog('topic')">
+                  <mat-icon>forum</mat-icon>
+                  <small>Comentar</small>
+                </button>
+              </div>
+
+              <div class="set-12 objcom">
+                <div class="set-12" *ngFor="let comment of topic['comments']">
+                  <div class="set-12">
+                    <strong><small>{{comment['createdBy']['firstname']}} {{comment['createdBy']['lastname']}}</small></strong>
+                  </div>
+                  <div class="set-12">{{comment['message']}}</div>
+                </div>
+              </div>
             </div>
           </mat-tab>
 
@@ -155,7 +173,7 @@
                   <button type="button" mat-mini-fab color="primary" (click)="openModalVote('solution')">
                     <mat-icon>star</mat-icon>
                   </button>
-                  <button type="button" mat-mini-fab color="primary">
+                  <button type="button" mat-mini-fab color="primary" (click)="popAddCommentsDialog('solution')">
                     <mat-icon>forum</mat-icon>
                   </button>
                   <button type="button" mat-mini-fab color="primary" (click)="popEditSolutionDialog()" *ngIf="isLeader">
@@ -165,6 +183,24 @@
               </div>
 
               <div class="set-12 desc" [innerHTML]="solution['description']"></div>
+
+              <div class="set-12 objcom" *ngIf="solution['comments'].length == 0">
+                <h3>No hay comentarios</h3>
+                <p>Sé el primero en comentar</p>
+                <button type="button" mat-raised-button color="primary" (click)="popAddCommentsDialog('solution')">
+                  <mat-icon>forum</mat-icon>
+                  <small>Comentar</small>
+                </button>
+              </div>
+
+              <div class="set-12 objcom">
+                <div class="set-12" *ngFor="let comment of solution['comments']">
+                  <div class="set-12">
+                    <strong><small>{{comment['createdBy']['firstname']}} {{comment['createdBy']['lastname']}}</small></strong>
+                  </div>
+                  <div class="set-12">{{comment['message']}}</div>
+                </div>
+              </div>
             </div>
           </mat-tab>
 

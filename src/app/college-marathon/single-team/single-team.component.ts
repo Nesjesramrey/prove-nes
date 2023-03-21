@@ -4,9 +4,11 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
+import { AddCommentsComponent } from 'src/app/components/add-comments/add-comments.component';
 import { SetAvatarDialogComponent } from 'src/app/components/set-avatar-dialog/set-avatar-dialog.component';
 import { TestimonyDialogComponent } from 'src/app/components/testimony-dialog/testimony-dialog.component';
 import { ModalVotesComponent } from 'src/app/public-documents/components/modal-votes/modal-votes.component';
+import { DocumentService } from 'src/app/services/document.service';
 import { TeamService } from 'src/app/services/team.service';
 import { UserService } from 'src/app/services/user.service';
 import { UtilityService } from 'src/app/services/utility.service';
@@ -35,6 +37,7 @@ export class SingleTeamComponent implements OnInit {
   public isLeader: boolean = false;
   // public pdf: string = 'https://static-assets-pando.s3.amazonaws.com/images/2267f4b1-c8be-49e2-8fb1-d1c1eb73c3c0.pdf';
   public pdf: string = 'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf';
+  public document: any = null;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -43,7 +46,8 @@ export class SingleTeamComponent implements OnInit {
     public utilityService: UtilityService,
     public formBuilder: FormBuilder,
     public lyDialog: LyDialog,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public documentService: DocumentService
   ) {
     this.teamID = this.activatedRoute['snapshot']['params']['teamID'];
     // console.log(this.teamID);
@@ -52,7 +56,8 @@ export class SingleTeamComponent implements OnInit {
   ngOnInit(): void {
     let team: Observable<any> = this.teamService.fetchTeamById({ teamID: this.teamID });
     let user: Observable<any> = this.userService.fetchFireUser();
-    forkJoin([team, user]).subscribe({
+    let document: Observable<any> = this.documentService.fetchCoverDocument();
+    forkJoin([team, user, document]).subscribe({
       error: (error: any) => { },
       next: (reply: any) => {
         // console.log(reply);
@@ -78,6 +83,9 @@ export class SingleTeamComponent implements OnInit {
 
         this.user = reply[1];
         // console.log('user: ', this.user);
+
+        this.document = reply[2];
+        // console.log('document: ', this.document);
       },
       complete: () => {
         this.searchUserFG = this.formBuilder.group({
@@ -322,5 +330,38 @@ export class SingleTeamComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => { });
+  }
+
+  popAddCommentsDialog(type: string) {
+    let coverage: any = this.topic['coverage'];
+    let data: any = {};
+    switch (type) {
+      case 'topic':
+        data = {
+          location: type,
+          document: this.document,
+          topic: this.topic,
+          coverage: coverage[0]
+        }
+        break;
+      case 'solution':
+        data = {
+          location: type,
+          document: this.document,
+          solution: this.solution,
+          coverage: coverage[0]
+        }
+        break;
+    }
+
+    const dialogRef = this.dialog.open<AddCommentsComponent>(AddCommentsComponent, {
+      width: '640px',
+      data: data,
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
   }
 }
