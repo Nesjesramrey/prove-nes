@@ -176,6 +176,7 @@ export class CreateTeamComponent implements OnInit {
           layout: ['', [Validators.required]],
           sublayout: ['', [Validators.required]],
         });
+        this.setupFG.controls['coverage'].disable();
         this.setupFG.controls['sublayout'].disable();
 
         this.topicFG = this.formBuilder.group({
@@ -575,6 +576,7 @@ export class CreateTeamComponent implements OnInit {
         data['formData'].append('title', this.topicFG.controls['title']['value']);
         data['formData'].append('description', this.topicFG.controls['description']['value']);
         data['formData'].append('coverage', JSON.stringify([this.team['coverage'][0]['_id']]));
+        data['formData'].append('team', this.team['_id']);
 
         this.topicService.createNewTopic(data).subscribe({
           error: (error: any) => {
@@ -639,6 +641,7 @@ export class CreateTeamComponent implements OnInit {
     data['formData'].append('title', this.solutionFG.controls['title']['value']);
     data['formData'].append('description', this.solutionFG.controls['description']['value']);
     data['formData'].append('coverage', JSON.stringify([this.team['topic']['coverage']]));
+    data['formData'].append('team', this.team['_id']);
 
     this.solutionService.createNewSolution(data).subscribe({
       error: (error: any) => {

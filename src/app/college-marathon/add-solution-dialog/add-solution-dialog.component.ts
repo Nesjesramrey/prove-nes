@@ -64,7 +64,7 @@ export class AddSolutionDialogComponent implements OnInit {
     // console.log(this.dialogData);
     this.user = this.dialogData['user'];
     // console.log('user: ', this.user);
-    this.solution = this.dialogData['topic']['solutions'][0];
+    this.solution = this.dialogData['solution'];
     // console.log('solution: ', this.solution);
   }
 

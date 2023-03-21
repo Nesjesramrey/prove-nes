@@ -69,7 +69,8 @@ export class TestimonyDialogComponent implements OnInit {
   public locationAvailable: boolean = false;
   public isMobile: boolean = false;
   public url: string = '';
-  public topic: any = null;
+  public solution: any = null;
+  public team: any = null;
 
   constructor(
     public dialogRef: MatDialogRef<TestimonyDialogComponent>,
@@ -86,7 +87,8 @@ export class TestimonyDialogComponent implements OnInit {
     if (this.user == null) { this.isAnonymous = true; }
     this.isMobile = this.deviceDetectorService.isMobile();
     this.url = this.DOM.location.origin + this.router.url;
-    this.topic = this.dialogData['topic'];
+    this.solution = this.dialogData['solution'];
+    this.team = this.dialogData['team'];
   }
 
   ngOnInit(): void {
@@ -148,9 +150,13 @@ export class TestimonyDialogComponent implements OnInit {
         break;
     }
 
-    if (this.topic != undefined) {
-      data['formData'].append('type', 'topic');
-      data['formData'].append('relationId', this.topic['_id']);
+    if (this.solution != undefined) {
+      data['formData'].append('type', 'solution');
+      data['formData'].append('relationId', this.solution['_id']);
+    }
+
+    if (this.team != undefined) {
+      data['formData'].append('team', this.team['_id']);
     }
 
     data['formData'].append('isAnonymous', (this.isAnonymous).toString());
@@ -164,11 +170,11 @@ export class TestimonyDialogComponent implements OnInit {
       next: (reply: any) => {
         this.postURL = this.url + '/' + reply['_id'];
         this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
-        if (this.topic != undefined) { this.topic['testimonials'].push(reply['testimony']); }
+        if (this.solution != undefined) { this.solution['testimonials'].push(reply['testimony']); }
       },
       complete: () => {
-        if (this.topic != undefined) {
-          this.dialogRef.close(this.topic);
+        if (this.solution != undefined) {
+          this.dialogRef.close(this.solution);
         } else {
           this.stepNext();
           this.submitted = false;

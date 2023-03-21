@@ -1,35 +1,42 @@
-<div class="modal-container">
-  <div class="modal-head">
-    <h3 class="title">Selecciona una calificación:</h3>
-    <div class="cancel">
-      <button type="button" mat-icon-button color="primary" (click)="killDialog()">
-        <mat-icon>cancel</mat-icon>
-      </button>
-    </div>
+<div class="set-12 modal-head">
+  <div class="set-10">
+    <h3>Selecciona una calificación</h3>
   </div>
-  <div class="modal-body">
-    <table class="table-container">
-      <thead class="table-head">
-        <th>Malo</th>
-        <th>Regular</th>
-        <th>Bueno</th>
-      </thead>
-      <tbody class="table-body">
-        <tr>
-          <td>
-            <mat-radio-button value="1" (click)="valueQualification((value = 1))"></mat-radio-button>
-          </td>
-          <td>
-            <mat-radio-button value="2" (click)="valueQualification((value = 2))"></mat-radio-button>
-          </td>
-          <td>
-            <mat-radio-button value="3" (click)="valueQualification((value = 3))"></mat-radio-button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+
+  <div class="set-2">
+    <button type="button" mat-mini-fab color="primary" (click)="killDialog()" [disabled]="submitted">
+      <mat-icon>cancel</mat-icon>
+    </button>
   </div>
-  <div class="modal-footer">
-    <button class="button" mat-raised-button color="primary" (click)="vote()">Enviar</button>
-  </div>
+</div>
+
+<div class="set-12 modal-body">
+  <table class="table-container">
+    <thead class="table-head">
+      <th>Malo</th>
+      <th>Regular</th>
+      <th>Bueno</th>
+    </thead>
+
+    <tbody class="table-body">
+      <tr>
+        <td>
+          <mat-radio-button value="1" (click)="valueQualification((value = 1))"></mat-radio-button>
+        </td>
+        <td>
+          <mat-radio-button value="2" (click)="valueQualification((value = 2))"></mat-radio-button>
+        </td>
+        <td>
+          <mat-radio-button value="3" (click)="valueQualification((value = 3))"></mat-radio-button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="set-12 modal-footer">
+  <button class="button" mat-raised-button color="primary" (click)="vote()" [disabled]="submitted">
+    <small>Votar</small>
+  </button>
+  <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
 </div>
