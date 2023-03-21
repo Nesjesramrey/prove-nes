@@ -12,7 +12,7 @@ export class MarathonInfoDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<MarathonInfoDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
   ) {
-    console.log(this.dialogData);
+    // console.log(this.dialogData);
   }
 
   ngOnInit(): void { }

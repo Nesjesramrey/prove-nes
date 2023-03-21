@@ -41,7 +41,7 @@
       </div>
     </div>
 
-    <div class="set-12 bnrinfo">
+    <!-- <div class="set-12 bnrinfo">
       <div class="set-6">
         <p class="location">
           <small><strong>Tema:</strong> {{team['layout']['category']['name']}} /
@@ -72,10 +72,41 @@
           <mat-icon>share</mat-icon>
         </button>
       </div>
-    </div>
+    </div> -->
 
     <div class="set-12 teamtools">
-      <div class="set-4">&nbsp;</div>
+      <div class="set-4 bnrinfo">
+        <mat-card>
+          <div class="set-12 row">
+            <h3>{{team['name']}}</h3>
+            <p class="location">
+              <small><strong>Tema:</strong> {{team['layout']['category']['name']}} /
+                {{team['sublayout']['category']['name']}}</small>
+            </p>
+            <p class="author">
+              <small><strong>Líder:</strong> {{team['createdBy']['firstname']}}
+                {{team['createdBy']['lastname']}}</small>
+            </p>
+            <p class="author">
+              <small><strong>Cobertura: </strong> {{team['coverage'][0]['name']}}</small>
+            </p>
+          </div>
+
+          <div class="set-12 row txt-center">
+            <button type="button" mat-raised-button color="warn" class="vote">Votar por
+              <strong>{{team['name']}}</strong></button>
+          </div>
+
+          <div class="set-12 row txt-center">
+            <button type="button" mat-mini-fab color="primary" class="mini">
+              <mat-icon>favorite</mat-icon>
+            </button>
+            <button type="button" mat-mini-fab color="primary" class="mini">
+              <mat-icon>share</mat-icon>
+            </button>
+          </div>
+        </mat-card>
+      </div>
 
       <div class="set-8">
         <mat-tab-group [disableRipple]="true" [@.disabled]="true">
@@ -86,17 +117,20 @@
             </ng-template>
 
             <div class="set-12 tabconts">
-              <div class="set-12 heads">
-                <div class="set-9">
+              <div class="set-12">
+                <div class="set-12">
                   <h3>{{topic['title']}}</h3>
                 </div>
 
-                <div class="set-3">
-                  <span *ngIf="!isLeader">&nbsp;</span>
-                  <button type="button" mat-raised-button color="primary" (click)="popEditTopicDialog()"
-                    *ngIf="isLeader">
+                <div class="set-12 btns">
+                  <button type="button" mat-mini-fab color="primary" (click)="openModalVote('topic')">
+                    <mat-icon>star</mat-icon>
+                  </button>
+                  <button type="button" mat-mini-fab color="primary">
+                    <mat-icon>forum</mat-icon>
+                  </button>
+                  <button type="button" mat-mini-fab color="primary" (click)="popEditTopicDialog()" *ngIf="isLeader">
                     <mat-icon>edit</mat-icon>
-                    <small>Editar Problema</small>
                   </button>
                 </div>
               </div>
@@ -108,33 +142,36 @@
           <mat-tab>
             <ng-template mat-tab-label>
               <mat-icon>insights</mat-icon>
-              <span>Soluciónes</span>
+              <span>Solucion</span>
             </ng-template>
 
             <div class="set-12 tabconts">
-              <div class="set-12 heads">
-                <div class="set-9">
-                  <h3>{{topic['solutions'][0]['title']}}</h3>
+              <div class="set-12">
+                <div class="set-12">
+                  <h3>{{solution['title']}}</h3>
                 </div>
 
-                <div class="set-3">
-                  <span *ngIf="!isLeader">&nbsp;</span>
-                  <button type="button" mat-raised-button color="primary" (click)="popEditSolutionDialog()"
-                    *ngIf="isLeader">
+                <div class="set-12 btns">
+                  <button type="button" mat-mini-fab color="primary" (click)="openModalVote('solution')">
+                    <mat-icon>star</mat-icon>
+                  </button>
+                  <button type="button" mat-mini-fab color="primary">
+                    <mat-icon>forum</mat-icon>
+                  </button>
+                  <button type="button" mat-mini-fab color="primary" (click)="popEditSolutionDialog()" *ngIf="isLeader">
                     <mat-icon>edit</mat-icon>
-                    <small>Editar Solución</small>
                   </button>
                 </div>
               </div>
 
-              <div class="set-12 desc" [innerHTML]="topic['solutions'][0]['description']"></div>
+              <div class="set-12 desc" [innerHTML]="solution['description']"></div>
             </div>
           </mat-tab>
 
           <mat-tab>
             <ng-template mat-tab-label>
               <mat-icon>view_in_ar</mat-icon>
-              <span>Proyecto</span>
+              <span>Propuesta</span>
             </ng-template>
 
             <div class="set-12">
@@ -149,7 +186,7 @@
             </ng-template>
 
             <div class="set-12 tabconts">
-              <div class="set-12" *ngIf="team['topic']['testimonials'].length == 0">
+              <div class="set-12" *ngIf="solution['testimonials'].length == 0">
                 <h3>No hay testimonios que mostrar</h3>
 
                 <div class="set-12 emptytestimonies">
@@ -161,7 +198,7 @@
                 </div>
               </div>
 
-              <div class="set-12 availabletestimonies" *ngIf="team['topic']['testimonials'].length != 0">
+              <div class="set-12 availabletestimonies" *ngIf="solution['testimonials'].length != 0">
                 <div class="set-12 heads">
                   <button type="button" mat-raised-button color="primary" (click)="popTestimonialsDialog()">
                     <mat-icon>edit_note</mat-icon>
@@ -170,7 +207,7 @@
                 </div>
 
                 <div class="set-12">
-                  <div class="set-6" *ngFor="let testimony of team['topic']['testimonials']">
+                  <div class="set-6" *ngFor="let testimony of solution['testimonials']">
                     <div class="set-12 usrcrd">
                       <div class="usrimg">
                         <img [src]="testimony['createdBy']['avatarImage']" [alt]="testimony['createdBy']['firstname']"

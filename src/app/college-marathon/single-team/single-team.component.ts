@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { SetAvatarDialogComponent } from 'src/app/components/set-avatar-dialog/set-avatar-dialog.component';
 import { TestimonyDialogComponent } from 'src/app/components/testimony-dialog/testimony-dialog.component';
+import { ModalVotesComponent } from 'src/app/public-documents/components/modal-votes/modal-votes.component';
 import { TeamService } from 'src/app/services/team.service';
 import { UserService } from 'src/app/services/user.service';
 import { UtilityService } from 'src/app/services/utility.service';
@@ -28,6 +29,7 @@ export class SingleTeamComponent implements OnInit {
   public submitted: boolean = false;
   public topic: any = null;
   public solutions: any = null;
+  public solution: any = null;
   public collaborators: any[] = [];
   public isUploading: boolean = false;
   public isLeader: boolean = false;
@@ -56,12 +58,24 @@ export class SingleTeamComponent implements OnInit {
         // console.log(reply);
         this.team = reply[0];
         // console.log('team: ', this.team);
+
         this.collaborators = this.team['collaborators'];
         // console.log('collaborators: ', this.collaborators);
+
         this.topic = this.team['topic'];
         // console.log('topic: ', this.topic);
+
+        let solutions: any = [];
+        this.topic['solutions'].filter((x: any) => {
+          if (x['team'] != null) { solutions.push(x); }
+        });
+        this.solution = solutions.filter((x: any) => { return x['team'] == this.team['_id']; });
+        this.solution = this.solution[0];
+        // console.log(this.solution);
+
         this.solutions = this.team['topic']['solutions'];
         // console.log(this.solutions);
+
         this.user = reply[1];
         // console.log('user: ', this.user);
       },
@@ -259,7 +273,7 @@ export class SingleTeamComponent implements OnInit {
     const dialogRef = this.dialog.open<any>(AddSolutionDialogComponent, {
       data: {
         user: this.user,
-        topic: this.team['topic']
+        solution: this.solution
       },
       disableClose: true,
       panelClass: 'posts-dialog'
@@ -267,7 +281,7 @@ export class SingleTeamComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
-        this.team['topic']['solutions'][0] = reply;
+        this.team['solution'] = reply;
       }
     });
   }
@@ -277,7 +291,8 @@ export class SingleTeamComponent implements OnInit {
       width: '100%',
       data: {
         user: this.user,
-        topic: this.team['topic']
+        solution: this.solution,
+        team: this.team
       },
       disableClose: true,
       panelClass: 'side-dialog'
@@ -286,5 +301,26 @@ export class SingleTeamComponent implements OnInit {
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) { }
     });
+  }
+
+  openModalVote(type: any) {
+    let data: any = {};
+
+    switch (type) {
+      case 'topic':
+        data = { topic: this.topic['_id'] }
+        break;
+
+      case 'solution':
+        data = { solution: this.solution['_id'] }
+        break;
+    }
+    const dialogRef = this.dialog.open<any>(ModalVotesComponent, {
+      width: '500px',
+      disableClose: true,
+      data: data,
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => { });
   }
 }
