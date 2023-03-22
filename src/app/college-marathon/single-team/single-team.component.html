@@ -93,8 +93,13 @@
           </div>
 
           <div class="set-12 row txt-center">
-            <button type="button" mat-raised-button color="warn" class="vote">Votar por
-              <strong>{{team['name']}}</strong></button>
+            <div class="set-12">
+              <h3>Puntuación de Equipo</h3>
+              <div class="scorehldr">{{teamScore}}</div>
+            </div>
+            <button type="button" mat-raised-button color="accent" class="vote">
+              Votar por <strong>{{team['name']}}</strong>
+            </button>
           </div>
 
           <div class="set-12 row txt-center">
@@ -149,7 +154,8 @@
               <div class="set-12 objcom">
                 <div class="set-12" *ngFor="let comment of topic['comments']">
                   <div class="set-12">
-                    <strong><small>{{comment['createdBy']['firstname']}} {{comment['createdBy']['lastname']}}</small></strong>
+                    <strong><small>{{comment['createdBy']['firstname']}}
+                        {{comment['createdBy']['lastname']}}</small></strong>
                   </div>
                   <div class="set-12">{{comment['message']}}</div>
                 </div>
@@ -196,7 +202,8 @@
               <div class="set-12 objcom">
                 <div class="set-12" *ngFor="let comment of solution['comments']">
                   <div class="set-12">
-                    <strong><small>{{comment['createdBy']['firstname']}} {{comment['createdBy']['lastname']}}</small></strong>
+                    <strong><small>{{comment['createdBy']['firstname']}}
+                        {{comment['createdBy']['lastname']}}</small></strong>
                   </div>
                   <div class="set-12">{{comment['message']}}</div>
                 </div>
@@ -210,8 +217,21 @@
               <span>Propuesta</span>
             </ng-template>
 
-            <div class="set-12">
-              <pdf-viewer [src]="pdf" [render-text]="true" [original-size]="true"></pdf-viewer>
+            <div class="set-12 emptyprop" *ngIf="team['problematicProposal'] == null">
+              <h3>Carga tu propuesta</h3>
+              <p>Carga tu propuesta para poder participar</p>
+              <div class="set-12 ctrls">
+                <input type="file" #file (change)="onFileSelected($event)">
+                <button type="button" mat-raised-button color="primary" (click)="file.click()" [disabled]="submitted">
+                  <mat-icon>cloud_upload</mat-icon>
+                  <small>Cargar archivo</small>
+                </button>
+                <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
+              </div>
+            </div>
+
+            <div class="set-12" *ngIf="team['problematicProposal'] != null">
+              <pdf-viewer [src]="team['problematicProposal']" [render-text]="true" [original-size]="true"></pdf-viewer>
             </div>
           </mat-tab>
 
@@ -226,6 +246,7 @@
                 <h3>No hay testimonios que mostrar</h3>
 
                 <div class="set-12 emptytestimonies">
+                  <p>Recuerda que para tomar en cuenta su propuesta tienen que agregar testimonios.</p>
                   <p>Sé el primero en agregar tu testimonio.</p>
                   <button type="button" mat-raised-button color="primary" (click)="popTestimonialsDialog()">
                     <mat-icon>edit_note</mat-icon>

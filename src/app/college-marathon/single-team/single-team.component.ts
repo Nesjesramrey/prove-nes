@@ -35,9 +35,9 @@ export class SingleTeamComponent implements OnInit {
   public collaborators: any[] = [];
   public isUploading: boolean = false;
   public isLeader: boolean = false;
-  // public pdf: string = 'https://static-assets-pando.s3.amazonaws.com/images/2267f4b1-c8be-49e2-8fb1-d1c1eb73c3c0.pdf';
-  public pdf: string = 'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf';
   public document: any = null;
+  public uploadProposalFG!: FormGroup;
+  public teamScore: number = 0;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -63,12 +63,13 @@ export class SingleTeamComponent implements OnInit {
         // console.log(reply);
         this.team = reply[0];
         // console.log('team: ', this.team);
+        this.setTeamScore();
 
         this.collaborators = this.team['collaborators'];
         // console.log('collaborators: ', this.collaborators);
 
         this.topic = this.team['topic'];
-        // console.log('topic: ', this.topic);
+        console.log('topic: ', this.topic);
 
         let solutions: any = [];
         this.topic['solutions'].filter((x: any) => {
@@ -98,6 +99,10 @@ export class SingleTeamComponent implements OnInit {
         if (teamLeader.length != 0) { this.isLeader = true; }
         // console.log(this.isLeader);
 
+        this.uploadProposalFG = this.formBuilder.group({
+          file: ['', Validators.required]
+        });
+
         this.isDataAvailable = true;
       }
     });
@@ -119,6 +124,14 @@ export class SingleTeamComponent implements OnInit {
 
   removeUserField(index: any) {
     this.teamUsers.removeAt(index);
+  }
+
+  setTeamScore() {
+    let points: any = [];
+    for (var key of Object.keys(this.team['metadata']['score'])) {
+      points.push(this.team['metadata']['score'][key]['point']);
+    }
+    this.teamScore = points.reduce((a: any, b: any) => a + b, 0);
   }
 
   onSearchUser() {
@@ -362,6 +375,47 @@ export class SingleTeamComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) { }
+    });
+  }
+
+  onFileSelected(event: any) {
+    let ext: any;
+
+    if (event.target.files.length == 0) {
+      return;
+    } else {
+      ext = event.target.files[0].name.substr(event.target.files[0].name.lastIndexOf('.') + 1);
+    }
+
+    if (ext != 'pdf') {
+      this.utilityService.openErrorSnackBar('Solo archivos .pdf son permitidos.');
+      return;
+    }
+
+    this.uploadProposalFG.patchValue({ files: event['target']['files'][0] });
+    this.uploadProposalFG.updateValueAndValidity();
+
+    let data: any = {
+      teamID: this.team['_id'],
+      formData: new FormData()
+    }
+    data.formData.append('file', event['target']['files'][0]);
+    this.submitted = true;
+
+    this.teamService.upoloadProposal(data).subscribe({
+      error: (error: any) => {
+        this.submitted = false;
+        this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+      },
+      next: (reply: any) => {
+        this.team['problematicProposal'] = reply['problematicProposal'];
+        this.team['metadata'] = reply['metadata'];
+      },
+      complete: () => {
+        this.submitted = false;
+        this.uploadProposalFG.reset();
+        this.setTeamScore();
+      }
     });
   }
 }

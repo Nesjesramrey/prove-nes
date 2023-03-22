@@ -11,27 +11,11 @@
 </div>
 
 <div class="set-12 modal-body">
-  <table class="table-container">
-    <thead class="table-head">
-      <th>Malo</th>
-      <th>Regular</th>
-      <th>Bueno</th>
-    </thead>
-
-    <tbody class="table-body">
-      <tr>
-        <td>
-          <mat-radio-button value="1" (click)="valueQualification((value = 1))"></mat-radio-button>
-        </td>
-        <td>
-          <mat-radio-button value="2" (click)="valueQualification((value = 2))"></mat-radio-button>
-        </td>
-        <td>
-          <mat-radio-button value="3" (click)="valueQualification((value = 3))"></mat-radio-button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="set-12 btn-hldr" *ngFor="let type of voteTypes; let i = index">
+    <button type="button" [class.selected]="type.selected" (click)="valueQualification(type['score'], i)">
+      <small>{{type.title}}</small>
+    </button>
+  </div>
 </div>
 
 <div class="set-12 modal-footer">
