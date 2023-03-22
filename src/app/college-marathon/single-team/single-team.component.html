@@ -96,15 +96,17 @@
                 </div>
 
                 <div class="set-12 btns">
-                  <button type="button" mat-mini-fab color="primary" (click)="openModalVote('topic')">
-                    <mat-icon>star</mat-icon>
-                  </button>
-                  <!-- <button type="button" mat-mini-fab color="primary" (click)="popAddCommentsDialog('topic')">
-                    <mat-icon>forum</mat-icon>
-                  </button> -->
-                  <button type="button" mat-mini-fab color="primary" (click)="popEditTopicDialog()" *ngIf="isLeader">
-                    <mat-icon>edit</mat-icon>
-                  </button>
+                  <div class="set-6">
+                    <button type="button" mat-mini-fab color="primary" (click)="openModalVote('topic')">
+                      <mat-icon>star</mat-icon>
+                    </button>
+                    <button type="button" mat-mini-fab color="primary" (click)="popEditTopicDialog()" *ngIf="isLeader">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                  </div>
+                  <div class="set-6 txt-right">
+                    <small>Relevancia Ciudadana: <strong>{{topic['stats']['score']}} / 100</strong></small>
+                  </div>
                 </div>
               </div>
 
@@ -120,17 +122,26 @@
               </div>
 
               <div class="set-12 objcom" *ngIf="topic['comments'].length != 0">
-                <button type="button" mat-raised-button color="primary" (click)="popAddCommentsDialog('topic')">
+                <button type="button" mat-raised-button color="accent" (click)="popAddCommentsDialog('topic')">
                   <mat-icon>forum</mat-icon>
                   <small>Comentar</small>
                 </button>
 
-                <div class="set-12 comment" *ngFor="let comment of topic['comments']">
-                  <div class="set-12">
-                    <strong><small>{{comment['createdBy']['firstname']}}
-                        {{comment['createdBy']['lastname']}}</small></strong>
+                <div class="set-12 comlst">
+                  <div class="set-12 comment" *ngFor="let comment of topic['comments']">
+                    <div class="avatar">
+                      {{comment['createdBy']['firstname'] | firstword | firstletter}}{{comment['createdBy']['lastname']
+                      | firstword | firstletter}}
+                    </div>
+                    <div class="msg">
+                      <div class="set-12 date">
+                        <small>{{comment['createdAt'] | date: 'mediumDate'}} - {{comment['createdAt'] | date:
+                          'mediumTime'}}</small>
+                      </div>
+                      <div class="set-12">{{comment['message']}}</div>
+                    </div>
                   </div>
-                  <div class="set-12">{{comment['message']}}</div>
+                  <div class="tri">&nbsp;</div>
                 </div>
               </div>
             </div>
@@ -149,15 +160,18 @@
                 </div>
 
                 <div class="set-12 btns">
-                  <button type="button" mat-mini-fab color="primary" (click)="openModalVote('solution')">
-                    <mat-icon>star</mat-icon>
-                  </button>
-                  <button type="button" mat-mini-fab color="primary" (click)="popAddCommentsDialog('solution')">
-                    <mat-icon>forum</mat-icon>
-                  </button>
-                  <button type="button" mat-mini-fab color="primary" (click)="popEditSolutionDialog()" *ngIf="isLeader">
-                    <mat-icon>edit</mat-icon>
-                  </button>
+                  <div class="set-6">
+                    <button type="button" mat-mini-fab color="primary" (click)="openModalVote('solution')">
+                      <mat-icon>star</mat-icon>
+                    </button>
+                    <button type="button" mat-mini-fab color="primary" (click)="popEditSolutionDialog()"
+                      *ngIf="isLeader">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                  </div>
+                  <div class="set-6 txt-right">
+                    <small>Relevancia Ciudadana: <strong>{{solution['stats']['score']}} / 100</strong></small>
+                  </div>
                 </div>
               </div>
 
@@ -172,13 +186,27 @@
                 </button>
               </div>
 
-              <div class="set-12 objcom">
-                <div class="set-12" *ngFor="let comment of solution['comments']">
-                  <div class="set-12">
-                    <strong><small>{{comment['createdBy']['firstname']}}
-                        {{comment['createdBy']['lastname']}}</small></strong>
+              <div class="set-12 objcom" *ngIf="solution['comments'].length != 0">
+                <button type="button" mat-raised-button color="accent" (click)="popAddCommentsDialog('solution')">
+                  <mat-icon>forum</mat-icon>
+                  <small>Comentar</small>
+                </button>
+
+                <div class="set-12 comlst">
+                  <div class="set-12 comment" *ngFor="let comment of solution['comments']">
+                    <div class="avatar">
+                      {{comment['createdBy']['firstname'] | firstword | firstletter}}{{comment['createdBy']['lastname']
+                      | firstword | firstletter}}
+                    </div>
+                    <div class="msg">
+                      <div class="set-12 date">
+                        <small>{{comment['createdAt'] | date: 'mediumDate'}} - {{comment['createdAt'] | date:
+                          'mediumTime'}}</small>
+                      </div>
+                      <div class="set-12">{{comment['message']}}</div>
+                    </div>
                   </div>
-                  <div class="set-12">{{comment['message']}}</div>
+                  <div class="tri">&nbsp;</div>
                 </div>
               </div>
             </div>
@@ -203,8 +231,19 @@
               </div>
             </div>
 
-            <div class="set-12" *ngIf="team['problematicProposal'] != null">
-              <pdf-viewer [src]="team['problematicProposal']" [render-text]="true" [original-size]="true"></pdf-viewer>
+            <div class="set-12 tabconts availableprop" *ngIf="team['problematicProposal'] != null">
+              <div class="set-12 ctrls">
+                <input type="file" #file (change)="onFileSelected($event)">
+                <button type="button" mat-raised-button color="primary" (click)="file.click()" [disabled]="submitted">
+                  <mat-icon>cloud_upload</mat-icon>
+                  <small>Cargar archivo</small>
+                </button>
+                <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
+              </div>
+              <div class="set-12">
+                <pdf-viewer [src]="team['problematicProposal']" [render-text]="true"
+                  [original-size]="true"></pdf-viewer>
+              </div>
             </div>
           </mat-tab>
 
@@ -246,7 +285,8 @@
                       </div>
 
                       <div>
-                        <p>{{testimony['name']}}</p>
+                        <p>{{(testimony.name.length > 30) ? (testimony.name | slice: 0 : 30) + '..' :
+                          (testimony.name)}}</p>
                         <p *ngIf="testimony['createdBy']['firstname'] != null">
                           <small>{{testimony['createdBy']['firstname']}} {{testimony['createdBy']['lastname']}}</small>
                         </p>
