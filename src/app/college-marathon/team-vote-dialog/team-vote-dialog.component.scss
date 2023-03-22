@@ -1,0 +1,46 @@
+:host {
+  .dlghd {
+    margin-bottom: 30px;
+    font-size: 14pt;
+    text-align: center;
+  }
+
+  .dlgbdy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    button {
+      width: 140px;
+      height: 140px;
+      border-radius: 100%;
+      overflow: hidden;
+      background: #00031d;
+
+      mat-icon {
+        color: #54f093;
+        font-size: 50pt;
+      }
+    }
+
+    button:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+  }
+
+  .dlgft {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 20px;
+
+    * {
+      margin: 0;
+    }
+
+    mat-spinner {
+      margin-left: 20px;
+    }
+  }
+}

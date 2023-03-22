@@ -72,4 +72,10 @@ export class TeamService {
       this.endpointSrvc.apiEndPoint + this.endpointSrvc.upoloadProposalEndPoint + data['teamID'] + '/problematic_proposal', data['formData']
     );
   }
+
+  fetchAllTeams() {
+    return this.httpClient.get(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAllTeamsEndPoint, {}
+    );
+  }
 }

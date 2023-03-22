@@ -1,0 +1,16 @@
+<div class="set-12 dlghd">
+  Vota por <strong>{{team['name']}}</strong>
+</div>
+
+<div class="set-12 dlgbdy">
+  <button type="button" [disabled]="submitted" (click)="voteTeam()">
+    <mat-icon>thumb_up_alt</mat-icon>
+  </button>
+</div>
+
+<div class="set-12 dlgft">
+  <button type="button" mat-raised-button color="warn" (click)="killDialog()" [disabled]="submitted">
+    <small>Cancelar</small>
+  </button>
+  <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
+</div>
