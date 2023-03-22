@@ -114,7 +114,6 @@ export class AddDocumentThemeComponent implements OnInit {
       error: (error: any) => { },
       next: (reply: any) => {
         this.acl = reply;
-        this.availableLayouts = this.acl['layouts'].filter((x: any) => { return x['states'].length != 0; });
         this.user['activityName'] = this.user['activities'][0]['value'];
         switch (this.user['activityName']) {
           case 'administrator':
@@ -126,6 +125,7 @@ export class AddDocumentThemeComponent implements OnInit {
             break;
 
           case 'citizen':
+            this.availableLayouts = this.acl['layouts'].filter((x: any) => { return x['states'].length != 0; });
             let currentLayout: any = null;
             this.availableLayouts.filter((x: any) => {
               if (x['id'] == this.categoryID) {
@@ -138,9 +138,7 @@ export class AddDocumentThemeComponent implements OnInit {
             break;
         };
       },
-      complete: () => {
-        this.isDataAvailable = true;
-      }
+      complete: () => { this.isDataAvailable = true; }
     });
   }
 
@@ -161,7 +159,7 @@ export class AddDocumentThemeComponent implements OnInit {
   onCreateTopic(form: FormGroup) {
     this.submitted = true;
     let data: any = {
-      layout_id: this.dialogData['categoryID'],
+      layout_id: this.dialogData['subcategoryID'],
       formData: new FormData()
     };
 

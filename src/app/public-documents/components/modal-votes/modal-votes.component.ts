@@ -15,6 +15,11 @@ export class ModalVotesComponent implements OnInit {
   public solutionID: string | null;
   public result: any;
   public submitted: boolean = false;
+  public voteTypes: any[] = [
+    { title: 'No relevante', score: 1, selected: false },
+    { title: 'Relevante', score: 2, selected: false },
+    { title: 'Muy relevante', score: 3, selected: false }
+  ];
 
   constructor(
     public voteService: VoteService,
@@ -30,8 +35,11 @@ export class ModalVotesComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  valueQualification(value: any) {
+  valueQualification(value: any, index: number) {
     this.qualification = value;
+    this.voteTypes.filter((x: any) => { x['selected'] = false; });
+    let vote = this.voteTypes[index];
+    vote['selected'] = true;
   }
 
   killDialog() {
@@ -47,31 +55,20 @@ export class ModalVotesComponent implements OnInit {
       value: this.qualification,
     };
 
-    // this.voteService.createNewVoto(data).subscribe((reply: any) => {
-    //   if (reply.message == 'create success') {
-    //     this.result = '#D9D9D9';
-    //   }
-
-    //   if (reply.message == 'removed success') {
-    //     this.result = 'primary';
-    //   }
-    // });
-
-    // this.dialogRef.close(this.result);
-
     this.voteService.createNewVoto(data).subscribe({
       error: (error: any) => {
         this.submitted = false;
         this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+        this.dialogRef.close({ error: true });
       },
       next: (reply: any) => {
-        if (reply.message == 'create success') { this.result = '#D9D9D9'; }
-        if (reply.message == 'removed success') { this.result = 'primary'; }
+        // if (reply.message == 'create success') { this.result = '#D9D9D9'; }
+        // if (reply.message == 'removed success') { this.result = 'primary'; }
         this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
       },
       complete: () => {
         this.submitted = false;
-        this.dialogRef.close(this.result);
+        this.dialogRef.close({ error: false });
       }
     });
   }

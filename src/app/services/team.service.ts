@@ -66,4 +66,10 @@ export class TeamService {
       this.endpointSrvc.apiEndPoint + this.endpointSrvc.killTeamCollaboratorEndPoint + data['teamID'], data
     );
   }
+
+  upoloadProposal(data: any) {
+    return this.httpClient.put(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.upoloadProposalEndPoint + data['teamID'] + '/problematic_proposal', data['formData']
+    );
+  }
 }
