@@ -1,1 +1,63 @@
-<p>team-list works!</p>
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="set-12" *ngIf="isDataAvailable">
+  <div class="crdlst">
+    <mat-card *ngFor="let team of teams">
+      <div class="set-12 crdh blueb">
+        <div class="set-10">
+          <button type="button" class="avatar">
+            <span *ngIf="team['createdBy'] == null">A</span>
+            <span *ngIf="team['createdBy'] != null && team['isAnonymous']">A</span>
+
+            <span *ngIf="team['createdBy'] != null && team['createdBy']['avatarImage'] == null && !team['isAnonymous']">
+              {{ team['createdBy']['firstname'] | firstword | firstletter | titlecase }}{{
+              team['createdBy']['lastname'] | firstword | firstletter | titlecase }}
+            </span>
+
+            <img src="{{ team['createdBy']['avatarImage'] }}" alt=""
+              *ngIf="team['createdBy'] != null && team['createdBy']['avatarImage'] != null && !team['isAnonymous']" />
+          </button>
+
+          <div>
+            <p>
+              <small *ngIf="team['createdBy'] != null && !team['isAnonymous']">
+                {{ team["createdBy"]["firstname"] | titlecase }} {{ team["createdBy"]["lastname"] |
+                titlecase }}
+              </small>
+              <small *ngIf="team['isAnonymous']">Anónimo</small>
+            </p>
+            <p class="dates">
+              <small>
+                {{ team["createdAt"] | date : "mediumDate" }} - {{ team["createdAt"] | date :
+                "mediumTime" }}
+              </small>
+            </p>
+          </div>
+        </div>
+
+        <div class="set-2 ctrls">
+          <button type="button" [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+              <mat-icon>visibility</mat-icon>
+              <small>Ver más</small>
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+
+      <div class="set-12 crddsc blueb">
+        <div class="set-12">{{team['name']}}</div>
+      </div>
+
+      <div class="set-12 crdvp">
+        <img [src]="team['coverImage']" alt="" class="full" *ngIf="team['coverImage'] != null" />
+        <img src="../../assets/images/mexicolectivo-small-blue.png" alt="" *ngIf="team['coverImage'] == null" />
+      </div>
+    </mat-card>
+  </div>
+</div>

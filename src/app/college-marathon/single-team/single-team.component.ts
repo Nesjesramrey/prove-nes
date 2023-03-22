@@ -15,6 +15,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 import { AddSolutionDialogComponent } from '../add-solution-dialog/add-solution-dialog.component';
 import { AddTeamCollaboratorComponent } from '../add-team-collaborator/add-team-collaborator.component';
 import { AddTopicDialogComponent } from '../add-topic-dialog/add-topic-dialog.component';
+import { TeamVoteDialogComponent } from '../team-vote-dialog/team-vote-dialog.component';
 
 @Component({
   selector: '.single-team',
@@ -69,7 +70,7 @@ export class SingleTeamComponent implements OnInit {
         // console.log('collaborators: ', this.collaborators);
 
         this.topic = this.team['topic'];
-        console.log('topic: ', this.topic);
+        // console.log('topic: ', this.topic);
 
         let solutions: any = [];
         this.topic['solutions'].filter((x: any) => {
@@ -414,6 +415,21 @@ export class SingleTeamComponent implements OnInit {
       complete: () => {
         this.submitted = false;
         this.uploadProposalFG.reset();
+        this.setTeamScore();
+      }
+    });
+  }
+
+  popTeamVoteDialog() {
+    const dialogRef = this.dialog.open<any>(TeamVoteDialogComponent, {
+      width: '420px',
+      data: { team: this.team },
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { 
+        this.team['vote'] = reply['data']; 
         this.setTeamScore();
       }
     });

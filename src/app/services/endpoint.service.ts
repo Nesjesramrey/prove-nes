@@ -194,6 +194,7 @@ export class EndPointService {
   public uploadTeamAvatarEndPoint: string = '/team/';
   public killTeamCollaboratorEndPoint: string = '/team/remove_collaborators/';
   public upoloadProposalEndPoint: string = '/team/';
+  public fetchAllTeamsEndPoint: string = '/team';
 
   constructor() { }
 }

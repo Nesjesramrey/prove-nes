@@ -18,6 +18,7 @@ import { SingleTeamComponent } from './single-team/single-team.component';
 import { SelectCollegeDialogComponent } from './select-college-dialog/select-college-dialog.component';
 import { MarathonInfoDialogComponent } from './marathon-info-dialog/marathon-info-dialog.component';
 import { AddTeamCollaboratorComponent } from './add-team-collaborator/add-team-collaborator.component';
+import { TeamVoteDialogComponent } from './team-vote-dialog/team-vote-dialog.component';
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import { AddTeamCollaboratorComponent } from './add-team-collaborator/add-team-c
     SingleTeamComponent,
     SelectCollegeDialogComponent,
     MarathonInfoDialogComponent,
-    AddTeamCollaboratorComponent
+    AddTeamCollaboratorComponent,
+    TeamVoteDialogComponent
   ],
   exports: [
     AddTopicDialogComponent,
@@ -50,14 +52,16 @@ import { AddTeamCollaboratorComponent } from './add-team-collaborator/add-team-c
     SingleTeamComponent,
     SelectCollegeDialogComponent,
     MarathonInfoDialogComponent,
-    AddTeamCollaboratorComponent
+    AddTeamCollaboratorComponent,
+    TeamVoteDialogComponent
   ],
   entryComponents: [
     AddTopicDialogComponent,
     AddSolutionDialogComponent,
     SelectCollegeDialogComponent,
     MarathonInfoDialogComponent,
-    AddTeamCollaboratorComponent
+    AddTeamCollaboratorComponent,
+    TeamVoteDialogComponent
   ]
 })
 export class CollegeMarathonComponentModule { }
