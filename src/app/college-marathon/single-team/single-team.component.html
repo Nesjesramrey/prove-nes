@@ -46,7 +46,7 @@
         <mat-card>
           <div class="set-12 row">
             <h3>{{team['name']}}</h3>
-            <p class="location">
+            <p class="location" *ngIf="team['layout'] != null && team['sublayout'] != null">
               <small><strong>Tema:</strong> {{team['layout']['category']['name']}} /
                 {{team['sublayout']['category']['name']}}</small>
             </p>
@@ -91,28 +91,78 @@
 
             <div class="set-12 tabconts">
               <div class="set-12">
-                <div class="set-12">
-                  <h3>{{topic['title']}}</h3>
+                <h3 *ngIf="topic != null">{{topic['title']}}</h3>
+                <h3 *ngIf="topic == null">Selecciona o crea un problema</h3>
+              </div>
+
+              <div class="set-12 crttpc" *ngIf="topic == null">
+                <form class="set-12" [formGroup]="topicFG">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Problema</mat-label>
+                    <mat-select formControlName="topic" (selectionChange)="onTopicSelected($event)">
+                      <mat-option>
+                        <small>Nuevo problema</small>
+                      </mat-option>
+                      <mat-option *ngFor="let topic of topics" [value]="topic._id">
+                        <small>{{topic.title}}</small>
+                      </mat-option>
+                    </mat-select>
+                    <mat-hint align="start">
+                      <small>** Selecciona un problema pre-establecido</small>
+                    </mat-hint>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Título</mat-label>
+                    <input matInput formControlName="title" (input)="onProblemTitle($event)">
+                    <mat-hint align="start">
+                      <small>** Escribe un título para tu problema</small>
+                    </mat-hint>
+                  </mat-form-field>
+
+                  <div class="set-12 editor-form" *ngIf="isNewTopic">
+                    <angular-editor formControlName="description" [config]="editorConfig"></angular-editor>
+                    <p class="hint-sm">
+                      <small>** Escribe una descripción a tu problema</small>
+                    </p>
+                  </div>
+
+                  <div class="set-12 topicdesc" *ngIf="!isNewTopic">
+                    <h3>Descripción</h3>
+                    <div class="set-12" [innerHTML]="topicSelected['description']"></div>
+                  </div>
+
+                  <div class="set-12 ctrls">
+                    <button type="button" mat-raised-button color="warn" (click)="saveTeamTopic()"
+                      [disabled]="topicFG.invalid || submitted || team['layout'] == null" class="wicon">
+                      <mat-icon>save</mat-icon>
+                      <small>Guardar</small>
+                    </button>
+                    <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
+                  </div>
+                </form>
+              </div>
+
+              <div class="set-12 btns" *ngIf="topic != null">
+                <div class="set-6">
+                  <button type="button" mat-mini-fab color="primary" (click)="openModalVote('topic')" class="mini">
+                    <mat-icon>star</mat-icon>
+                  </button>
+                  <button type="button" mat-mini-fab color="primary" (click)="popEditTopicDialog()" *ngIf="isLeader"
+                    class="mini">
+                    <mat-icon>edit</mat-icon>
+                  </button>
                 </div>
 
-                <div class="set-12 btns">
-                  <div class="set-6">
-                    <button type="button" mat-mini-fab color="primary" (click)="openModalVote('topic')">
-                      <mat-icon>star</mat-icon>
-                    </button>
-                    <button type="button" mat-mini-fab color="primary" (click)="popEditTopicDialog()" *ngIf="isLeader">
-                      <mat-icon>edit</mat-icon>
-                    </button>
-                  </div>
-                  <div class="set-6 txt-right">
-                    <small>Relevancia Ciudadana: <strong>{{topic['stats']['score']}} / 100</strong></small>
-                  </div>
+                <div class="set-6 txt-right">
+                  <small *ngIf="topic != null">Relevancia Ciudadana: <strong>{{topic['stats']['score']}} /
+                      100</strong></small>
                 </div>
               </div>
 
-              <div class="set-12 desc" [innerHTML]="topic['description']"></div>
+              <div class="set-12 desc" [innerHTML]="topic['description']" *ngIf="topic != null"></div>
 
-              <div class="set-12 objcom" *ngIf="topic['comments'].length == 0">
+              <div class="set-12 objcom" *ngIf="topic != null && topic['comments'].length == 0">
                 <h3>No hay comentarios</h3>
                 <p>Sé el primero en comentar</p>
                 <button type="button" mat-raised-button color="primary" (click)="popAddCommentsDialog('topic')">
@@ -121,7 +171,7 @@
                 </button>
               </div>
 
-              <div class="set-12 objcom" *ngIf="topic['comments'].length != 0">
+              <div class="set-12 objcom" *ngIf="topic != null && topic['comments'].length != 0">
                 <button type="button" mat-raised-button color="accent" (click)="popAddCommentsDialog('topic')">
                   <mat-icon>forum</mat-icon>
                   <small>Comentar</small>
@@ -140,8 +190,8 @@
                       </div>
                       <div class="set-12">{{comment['message']}}</div>
                     </div>
+                    <div class="tri">&nbsp;</div>
                   </div>
-                  <div class="tri">&nbsp;</div>
                 </div>
               </div>
             </div>
@@ -155,29 +205,58 @@
 
             <div class="set-12 tabconts">
               <div class="set-12">
-                <div class="set-12">
-                  <h3>{{solution['title']}}</h3>
+                <h3 *ngIf="solution != null">{{solution['title']}}</h3>
+                <h3 *ngIf="solution == null">Crea una solución</h3>
+              </div>
+
+              <div class="set-12 crttpc" *ngIf="solution == null">
+                <form class="set-12 solfrm" [formGroup]="solutionFG">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Título</mat-label>
+                    <input type="text" matInput formControlName="title">
+                    <mat-hint align="start">
+                      <small>** Escribe un título para tu solución</small>
+                    </mat-hint>
+                  </mat-form-field>
+
+                  <div class="set-12 editor-form">
+                    <angular-editor formControlName="description" [config]="editorConfig"></angular-editor>
+                    <p class="hint-sm">
+                      <small>** Escribe una descripción a tu solución</small>
+                    </p>
+                  </div>
+
+                  <div class="set-12 ctrls">
+                    <button type="button" mat-raised-button color="primary" class="wicon"
+                      [disabled]="solutionFG.invalid || topic == null || submitted" (click)="saveTeamSolution()">
+                      <mat-icon>add_circle</mat-icon>
+                      <small>Agregar solución</small>
+                    </button>
+                    <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
+                  </div>
+                </form>
+              </div>
+
+              <div class="set-12 btns" *ngIf="solution != null">
+                <div class="set-6">
+                  <button type="button" mat-mini-fab color="primary" (click)="openModalVote('solution')" class="mini">
+                    <mat-icon>star</mat-icon>
+                  </button>
+                  <button type="button" mat-mini-fab color="primary" (click)="popEditSolutionDialog()" *ngIf="isLeader"
+                    class="mini">
+                    <mat-icon>edit</mat-icon>
+                  </button>
                 </div>
 
-                <div class="set-12 btns">
-                  <div class="set-6">
-                    <button type="button" mat-mini-fab color="primary" (click)="openModalVote('solution')">
-                      <mat-icon>star</mat-icon>
-                    </button>
-                    <button type="button" mat-mini-fab color="primary" (click)="popEditSolutionDialog()"
-                      *ngIf="isLeader">
-                      <mat-icon>edit</mat-icon>
-                    </button>
-                  </div>
-                  <div class="set-6 txt-right">
-                    <small>Relevancia Ciudadana: <strong>{{solution['stats']['score']}} / 100</strong></small>
-                  </div>
+                <div class="set-6 txt-right">
+                  <small>Relevancia Ciudadana: <strong>{{solution['stats']['score']}} /
+                      100</strong></small>
                 </div>
               </div>
 
-              <div class="set-12 desc" [innerHTML]="solution['description']"></div>
+              <div class="set-12 desc" [innerHTML]="solution['description']" *ngIf="solution != null"></div>
 
-              <div class="set-12 objcom" *ngIf="solution['comments'].length == 0">
+              <div class="set-12 objcom" *ngIf="solution != null && solution['comments'].length == 0">
                 <h3>No hay comentarios</h3>
                 <p>Sé el primero en comentar</p>
                 <button type="button" mat-raised-button color="primary" (click)="popAddCommentsDialog('solution')">
@@ -186,7 +265,7 @@
                 </button>
               </div>
 
-              <div class="set-12 objcom" *ngIf="solution['comments'].length != 0">
+              <div class="set-12 objcom" *ngIf="solution != null && solution['comments'].length != 0">
                 <button type="button" mat-raised-button color="accent" (click)="popAddCommentsDialog('solution')">
                   <mat-icon>forum</mat-icon>
                   <small>Comentar</small>
@@ -205,8 +284,8 @@
                       </div>
                       <div class="set-12">{{comment['message']}}</div>
                     </div>
+                    <div class="tri">&nbsp;</div>
                   </div>
-                  <div class="tri">&nbsp;</div>
                 </div>
               </div>
             </div>
@@ -223,7 +302,8 @@
               <p>Carga tu propuesta para poder participar</p>
               <div class="set-12 ctrls">
                 <input type="file" #file (change)="onFileSelected($event)">
-                <button type="button" mat-raised-button color="primary" (click)="file.click()" [disabled]="submitted">
+                <button type="button" mat-raised-button color="primary" (click)="file.click()"
+                  [disabled]="submitted || topic == null || solution == null">
                   <mat-icon>cloud_upload</mat-icon>
                   <small>Cargar archivo</small>
                 </button>
@@ -254,7 +334,7 @@
             </ng-template>
 
             <div class="set-12 tabconts">
-              <div class="set-12" *ngIf="solution['testimonials'].length == 0">
+              <div class="set-12" *ngIf="solution!= null && solution['testimonials'].length == 0">
                 <h3>No hay testimonios que mostrar</h3>
 
                 <div class="set-12 emptytestimonies">
@@ -267,7 +347,7 @@
                 </div>
               </div>
 
-              <div class="set-12 availabletestimonies" *ngIf="solution['testimonials'].length != 0">
+              <div class="set-12 availabletestimonies" *ngIf="solution!= null && solution['testimonials'].length != 0">
                 <div class="set-12 heads">
                   <button type="button" mat-raised-button color="primary" (click)="popTestimonialsDialog()">
                     <mat-icon>edit_note</mat-icon>
@@ -277,7 +357,7 @@
 
                 <div class="set-12">
                   <div class="set-6" *ngFor="let testimony of solution['testimonials']">
-                    <div class="set-12 usrcrd">
+                    <div class="set-12 usrcrd" (click)="openTestimony(testimony)">
                       <div class="usrimg">
                         <img [src]="testimony['createdBy']['avatarImage']" [alt]="testimony['createdBy']['firstname']"
                           *ngIf="testimony['createdBy']['avatarImage'] != null">
@@ -287,10 +367,10 @@
                       <div>
                         <p>{{(testimony.name.length > 30) ? (testimony.name | slice: 0 : 30) + '..' :
                           (testimony.name)}}</p>
-                        <p *ngIf="testimony['createdBy']['firstname'] != null">
+                        <p *ngIf="testimony['createdBy']['firstname'] != null" class="author">
                           <small>{{testimony['createdBy']['firstname']}} {{testimony['createdBy']['lastname']}}</small>
                         </p>
-                        <p *ngIf="testimony['createdBy']['firstname'] == null">
+                        <p *ngIf="testimony['createdBy']['firstname'] == null" class="author">
                           <small>Registro por completar</small>
                         </p>
                       </div>

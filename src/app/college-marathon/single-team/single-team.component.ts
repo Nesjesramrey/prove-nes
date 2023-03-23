@@ -15,7 +15,11 @@ import { UtilityService } from 'src/app/services/utility.service';
 import { AddSolutionDialogComponent } from '../add-solution-dialog/add-solution-dialog.component';
 import { AddTeamCollaboratorComponent } from '../add-team-collaborator/add-team-collaborator.component';
 import { AddTopicDialogComponent } from '../add-topic-dialog/add-topic-dialog.component';
+import { LayoutSetupDialogComponent } from '../layout-setup-dialog/layout-setup-dialog.component';
 import { TeamVoteDialogComponent } from '../team-vote-dialog/team-vote-dialog.component';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { TopicService } from 'src/app/services/topic.service';
+import { SolutionService } from 'src/app/services/solution.service';
 
 @Component({
   selector: '.single-team',
@@ -39,6 +43,49 @@ export class SingleTeamComponent implements OnInit {
   public document: any = null;
   public uploadProposalFG!: FormGroup;
   public teamScore: number = 0;
+  public topicFG!: FormGroup;
+  public solutionFG!: FormGroup;
+  public topics: any = null;
+  public isNewTopic: boolean = true;
+  public topicSelected: any = null;
+  public htmlContent: any = '';
+  public editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: '15rem',
+    minHeight: '5rem',
+    placeholder: 'Descripción...',
+    translate: 'no',
+    defaultParagraphSeparator: 'p',
+    defaultFontName: 'Arial',
+    toolbarHiddenButtons: [
+      [
+        'strikeThrough',
+        'subscript',
+        'superscript',
+        'justifyLeft',
+        'justifyCenter',
+        'justifyRight',
+        'justifyFull',
+        'indent',
+        'outdent',
+        'insertUnorderedList',
+        'insertOrderedList',
+        'heading',
+      ],
+      [
+        'textColor',
+        'backgroundColor',
+        'customClasses',
+        'unlink',
+        'insertImage',
+        'insertVideo',
+        'insertHorizontalRule',
+        'removeFormat',
+        'toggleEditorMode'
+      ]
+    ]
+  };
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -48,7 +95,9 @@ export class SingleTeamComponent implements OnInit {
     public formBuilder: FormBuilder,
     public lyDialog: LyDialog,
     public dialog: MatDialog,
-    public documentService: DocumentService
+    public documentService: DocumentService,
+    public topicService: TopicService,
+    public solutionService: SolutionService
   ) {
     this.teamID = this.activatedRoute['snapshot']['params']['teamID'];
     // console.log(this.teamID);
@@ -69,25 +118,28 @@ export class SingleTeamComponent implements OnInit {
         this.collaborators = this.team['collaborators'];
         // console.log('collaborators: ', this.collaborators);
 
+        if (this.team['layout'] == null) { this.popLayoutSetup(); }
+
         this.topic = this.team['topic'];
-        // console.log('topic: ', this.topic);
+        if (this.topic != null) {
+          let solutions: any = [];
+          this.topic['solutions'].filter((x: any) => {
+            if (x['team'] != null) { solutions.push(x); }
+          });
+          this.solution = solutions.filter((x: any) => { return x['team'] == this.team['_id']; });
+          this.solution = this.solution[0];
+          // console.log(this.solution);
 
-        let solutions: any = [];
-        this.topic['solutions'].filter((x: any) => {
-          if (x['team'] != null) { solutions.push(x); }
-        });
-        this.solution = solutions.filter((x: any) => { return x['team'] == this.team['_id']; });
-        this.solution = this.solution[0];
-        // console.log(this.solution);
-
-        this.solutions = this.team['topic']['solutions'];
-        // console.log(this.solutions);
+          this.solutions = this.team['topic']['solutions'];
+          // console.log(this.solutions);
+        }
 
         this.user = reply[1];
         // console.log('user: ', this.user);
 
         this.document = reply[2];
         // console.log('document: ', this.document);
+        if (this.team['layout'] != null) { this.setProblemTopics(); }
       },
       complete: () => {
         this.searchUserFG = this.formBuilder.group({
@@ -103,6 +155,19 @@ export class SingleTeamComponent implements OnInit {
         this.uploadProposalFG = this.formBuilder.group({
           file: ['', Validators.required]
         });
+
+        this.topicFG = this.formBuilder.group({
+          topic: ['', []],
+          title: ['', [Validators.required]],
+          description: ['', [Validators.required]]
+        });
+        if (this.team['layout'] == null) { this.topicFG.disable(); }
+
+        this.solutionFG = this.formBuilder.group({
+          title: ['', [Validators.required]],
+          description: ['', [Validators.required]]
+        });
+        if (this.topic == null) { this.solutionFG.disable(); }
 
         this.isDataAvailable = true;
       }
@@ -428,10 +493,185 @@ export class SingleTeamComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) { 
-        this.team['vote'] = reply['data']; 
+      if (reply != undefined) {
+        this.team['vote'] = reply['data'];
         this.setTeamScore();
       }
     });
+  }
+
+  setProblemTopics() {
+    let layout: any = this.document['layouts'].filter((x: any) => { return x['_id'] == this.team['layout']['_id']; });
+    let sublayout: any = layout[0]['subLayouts'].filter((x: any) => { return x['_id'] == this.team['sublayout']['_id']; });
+    this.topics = sublayout[0]['topics'];
+    this.topics = this.topics.filter((x: any) => { return x['coverage'].includes(this.team['coverage'][0]['_id']) && x['team'] == null; });
+  }
+
+  popLayoutSetup() {
+    const dialogRef = this.dialog.open<any>(LayoutSetupDialogComponent, {
+      width: '640px',
+      data: { team: this.team },
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        this.teamService.fetchTeamById({ teamID: this.team['_id'] }).subscribe({
+          error: (error: any) => { },
+          next: (reply: any) => { this.team = reply; },
+          complete: () => {
+            this.topicFG.enable();
+            this.setProblemTopics();
+          }
+        });
+      }
+    });
+  }
+
+  onTopicSelected(event: any) {
+    let topic: any = this.topics.filter((x: any) => { return x['_id'] == event['value']; });
+
+    // existing topic
+    if (event['value'] != undefined) {
+      this.topicFG.controls['title'].disable();
+      this.topicFG.patchValue({ topic: event['value'] });
+      this.topicFG.patchValue({ description: topic[0]['description'] });
+      this.isNewTopic = false;
+      this.topicSelected = topic[0];
+      this.team['topic'] = this.topicSelected;
+    }
+    // new topic
+    else {
+      this.topicFG.controls['title'].enable();
+      this.topicFG.patchValue({ topic: '' });
+      this.topicFG.patchValue({ description: '' });
+      this.isNewTopic = true;
+      this.topicSelected = null;
+      this.team['topic'] = this.topicSelected;
+    }
+    // console.log(this.topicSelected);
+  }
+
+  onProblemTitle(event: any) {
+    if (event['target']['value'] != '') {
+      this.topicFG.controls['topic'].disable();
+    } else {
+      this.topicFG.controls['topic'].enable();
+    }
+  }
+
+  saveTeamTopic() {
+    this.submitted = true;
+    let data: any = {};
+
+    switch (this.isNewTopic) {
+      // new topic
+      case true:
+        data = {
+          layout_id: this.team['sublayout']['_id'],
+          formData: new FormData()
+        }
+
+        data['formData'].append('title', this.topicFG.controls['title']['value']);
+        data['formData'].append('description', this.topicFG.controls['description']['value']);
+        data['formData'].append('coverage', JSON.stringify([this.team['coverage'][0]['_id']]));
+        data['formData'].append('team', this.team['_id']);
+
+        this.topicService.createNewTopic(data).subscribe({
+          error: (error: any) => {
+            this.submitted = false;
+            this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+          },
+          next: (reply: any) => {
+            this.team['topic'] = reply['topics'][0];
+
+            this.teamService.assignTeamTopic({
+              teamID: this.team['_id'],
+              topic: reply['topics'][0]['_id']
+            }).subscribe({
+              error: (error: any) => {
+                this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+              },
+              next: (reply: any) => {
+                this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
+              },
+              complete: () => {
+                this.submitted = false;
+                this.teamService.fetchTeamById({ teamID: this.teamID }).subscribe({
+                  error: (error: any) => { },
+                  next: (reply: any) => {
+                    this.team = reply;
+                    this.topic = this.team['topic'];
+                  },
+                  complete: () => { }
+                });
+              }
+            });
+          },
+          complete: () => { }
+        });
+        break;
+
+      // existing topic
+      case false:
+        data = {
+          teamID: this.team['_id'],
+          topic: this.topicFG.controls['topic']['value']
+        };
+
+        this.teamService.assignTeamTopic(data).subscribe({
+          error: (error: any) => {
+            this.submitted = false;
+            this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+          },
+          next: (reply: any) => {
+            this.team['topic'] = this.topicSelected;
+            this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
+          },
+          complete: () => {
+            this.submitted = false;
+            this.teamService.fetchTeamById({ teamID: this.teamID }).subscribe({
+              error: (error: any) => { },
+              next: (reply: any) => {
+                this.team = reply;
+                this.topic = this.team['topic'];
+              },
+              complete: () => { }
+            });
+          }
+        });
+        break;
+    }
+  }
+
+  saveTeamSolution() {
+    this.submitted = true;
+    let data: any = {
+      topic: this.team['topic']['_id'],
+      formData: new FormData()
+    };
+
+    data['formData'].append('title', this.solutionFG.controls['title']['value']);
+    data['formData'].append('description', this.solutionFG.controls['description']['value']);
+    data['formData'].append('coverage', JSON.stringify([this.team['topic']['coverage'][0]['_id']]));
+    data['formData'].append('team', this.team['_id']);
+
+    this.solutionService.createNewSolution(data).subscribe({
+      error: (error: any) => {
+        this.submitted = false;
+        this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+      },
+      next: (reply: any) => {
+        this.team['topic']['solutions'] = reply['solutions'];
+        this.solution = this.topic['solutions'].filter((x: any) => { return x['team'] != null && x['team'] == this.teamID; });
+        this.solution = this.solution[0];
+        this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
+      },
+      complete: () => { this.submitted = false; }
+    });
+  }
+
+  openTestimony(obj: any) {
+    this.utilityService.linkMe('/posts/' + obj['_id']);
   }
 }
