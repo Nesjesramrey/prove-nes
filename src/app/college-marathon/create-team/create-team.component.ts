@@ -550,7 +550,7 @@ export class CreateTeamComponent implements OnInit {
         this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
       },
       next: (reply: any) => {
-        this.team['sublayoyt'] = this.selectedLayout;
+        this.team['layout'] = this.selectedLayout;
         this.team['sublayout'] = this.selectedSubLayout;
         // console.log(this.team);
       },

@@ -48,7 +48,7 @@
       display: flex;
       align-items: center;
 
-      button {
+      button.mini {
         zoom: 0.7;
         margin-right: 10px;
 
@@ -396,6 +396,7 @@
       align-items: center;
       justify-content: flex-start;
       position: relative;
+      cursor: pointer;
 
       * {
         margin: 0;
@@ -432,6 +433,10 @@
         mat-icon {
           color: #ffffff;
         }
+      }
+
+      .author {
+        color: rgba($color: #ffffff, $alpha: 0.6);
       }
     }
 
@@ -487,6 +492,8 @@
       display: flex;
       align-items: center;
       justify-content: flex-start;
+      position: relative;
+      margin-bottom: 50px;
 
       * {
         margin: 0;
@@ -565,6 +572,51 @@
         margin-right: 10px;
         font-size: 14pt;
       }
+    }
+  }
+
+  .crttpc {
+    margin-top: 20px;
+
+    .ctrls {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      * {
+        margin: 0;
+      }
+
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        mat-icon {
+          margin-right: 10px;
+          font-size: 14pt;
+        }
+      }
+
+      mat-spinner {
+        margin-left: 20px;
+      }
+    }
+  }
+
+  .wicon {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    * {
+      margin: 0;
+    }
+
+    mat-icon {
+      margin-right: 10px;
+      font-size: 14pt;
     }
   }
 }
