@@ -4,59 +4,49 @@
 
 <div class="set-12" *ngIf="isDataAvailable">
   <div class="crdlst">
+    <div class="filters">
+      <form [formGroup]="searchTeamsFG" (submit)="serachTeams(searchTeamsFG)">
+        <mat-form-field appearance="outline">
+          <mat-label>Buscar</mat-label>
+          <input type="text" matInput formControlName="filter">
+        </mat-form-field>
+        <button type="submit">
+          <mat-icon>search</mat-icon>
+        </button>
+      </form>
+    </div>
+
     <mat-card *ngFor="let team of teams">
-      <div class="set-12 crdh blueb">
-        <div class="set-10">
-          <button type="button" class="avatar">
-            <span *ngIf="team['createdBy'] == null">A</span>
-            <span *ngIf="team['createdBy'] != null && team['isAnonymous']">A</span>
+      <div class="set-12 teambtn" (click)="utilityService.linkMe('/maraton/equipos/' + team['_id'])">
+        <div class="set-12 crdh blueb">
+          <div class="set-10">
+            <p><small>{{team['name']}}</small></p>
 
-            <span *ngIf="team['createdBy'] != null && team['createdBy']['avatarImage'] == null && !team['isAnonymous']">
-              {{ team['createdBy']['firstname'] | firstword | firstletter | titlecase }}{{
-              team['createdBy']['lastname'] | firstword | firstletter | titlecase }}
-            </span>
-
-            <img src="{{ team['createdBy']['avatarImage'] }}" alt=""
-              *ngIf="team['createdBy'] != null && team['createdBy']['avatarImage'] != null && !team['isAnonymous']" />
-          </button>
-
-          <div>
-            <p>
-              <small *ngIf="team['createdBy'] != null && !team['isAnonymous']">
-                {{ team["createdBy"]["firstname"] | titlecase }} {{ team["createdBy"]["lastname"] |
-                titlecase }}
-              </small>
-              <small *ngIf="team['isAnonymous']">Anónimo</small>
-            </p>
-            <p class="dates">
-              <small>
-                {{ team["createdAt"] | date : "mediumDate" }} - {{ team["createdAt"] | date :
-                "mediumTime" }}
-              </small>
-            </p>
+            <p class="uname"><small>{{team['layout']['category']['name']}} /
+                {{team['sublayout']['category']['name']}}</small></p>
           </div>
         </div>
 
-        <div class="set-2 ctrls">
-          <button type="button" [matMenuTriggerFor]="menu">
-            <mat-icon>more_vert</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item>
-              <mat-icon>visibility</mat-icon>
-              <small>Ver más</small>
-            </button>
-          </mat-menu>
+        <div class="set-12 crddsc blueb">
+          <h4>{{team['topic']['title']}}</h4>
         </div>
-      </div>
 
-      <div class="set-12 crddsc blueb">
-        <div class="set-12">{{team['name']}}</div>
       </div>
-
       <div class="set-12 crdvp">
         <img [src]="team['coverImage']" alt="" class="full" *ngIf="team['coverImage'] != null" />
         <img src="../../assets/images/mexicolectivo-small-blue.png" alt="" *ngIf="team['coverImage'] == null" />
+      </div>
+
+      <div class="set-12 crdft">
+        <!-- <p><small>Votos: 9</small></p> -->
+        <p>
+          <small>{{team['university']['universidad_nombre']}}
+            <span class="votes">
+              <p>100</p>
+              <p>votos</p>
+            </span>
+          </small>
+        </p>
       </div>
     </mat-card>
   </div>

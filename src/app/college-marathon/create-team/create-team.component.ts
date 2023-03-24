@@ -100,6 +100,7 @@ export class CreateTeamComponent implements OnInit {
   public teamAvailable: boolean = false;
   public selectedLayout: string = '';
   public selectedSubLayout: string = '';
+  public national: any = null;
 
   constructor(
     public userService: UserService,
@@ -144,6 +145,7 @@ export class CreateTeamComponent implements OnInit {
         // console.log('association: ', this.association);
 
         this.states = reply[3];
+        this.national = this.states.filter((x: any) => { return x['code'] == 'NAL' });
         this.states = this.states.filter((x: any) => { return x['code'] != 'NAL' });
         // console.log(this.states);
       },
@@ -407,7 +409,7 @@ export class CreateTeamComponent implements OnInit {
   onSelectUniversity(event: any) {
     this.registerTeamFG.controls['name'].enable();
     let state = this.states.filter((x: any) => { return x['name'] == this.stateName });
-    this.registerTeamFG.patchValue({ coverage: [state[0]['_id']] });
+    this.registerTeamFG.patchValue({ coverage: [state[0]['_id'], this.national[0]['_id']] });
     this.registerTeamFG.patchValue({ university: event['option']['value']['_id'] });
     this.registerTeamFG.updateValueAndValidity();
   }
@@ -531,7 +533,8 @@ export class CreateTeamComponent implements OnInit {
       },
       complete: () => {
         this.submitted = false;
-        this.stepNext();
+        // this.stepNext();
+        this.utilityService.linkMe('/maraton/equipos/' + this.team['_id']);
       }
     });
   }

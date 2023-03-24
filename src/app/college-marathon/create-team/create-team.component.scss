@@ -82,6 +82,20 @@
     * {
       margin: 0;
     }
+
+    .searchctrl {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper {
+        margin-bottom: 0 !important;
+      }
+
+      button {
+        zoom: 0.7;
+      }
+    }
   }
 
   .ctrls,
@@ -116,6 +130,16 @@
 
     .collabfield {
       margin-top: 20px !important;
+    }
+
+    .innerfield {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      button {
+        zoom: 0.7;
+      }
     }
   }
 

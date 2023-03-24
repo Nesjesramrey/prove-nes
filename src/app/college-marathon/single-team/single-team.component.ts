@@ -20,6 +20,8 @@ import { TeamVoteDialogComponent } from '../team-vote-dialog/team-vote-dialog.co
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { TopicService } from 'src/app/services/topic.service';
 import { SolutionService } from 'src/app/services/solution.service';
+import { VoteService } from 'src/app/services/vote.service';
+import { CommentService } from 'src/app/services/comment.service';
 
 @Component({
   selector: '.single-team',
@@ -86,6 +88,7 @@ export class SingleTeamComponent implements OnInit {
       ]
     ]
   };
+  public isCollaborator: boolean = false;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -97,7 +100,9 @@ export class SingleTeamComponent implements OnInit {
     public dialog: MatDialog,
     public documentService: DocumentService,
     public topicService: TopicService,
-    public solutionService: SolutionService
+    public solutionService: SolutionService,
+    public voteService: VoteService,
+    public commentService: CommentService
   ) {
     this.teamID = this.activatedRoute['snapshot']['params']['teamID'];
     // console.log(this.teamID);
@@ -139,7 +144,7 @@ export class SingleTeamComponent implements OnInit {
 
         this.document = reply[2];
         // console.log('document: ', this.document);
-        if (this.team['layout'] != null) { this.setProblemTopics(); }
+        // if (this.team['layout'] != null) { this.setProblemTopics(); }
       },
       complete: () => {
         this.searchUserFG = this.formBuilder.group({
@@ -152,16 +157,29 @@ export class SingleTeamComponent implements OnInit {
         if (teamLeader.length != 0) { this.isLeader = true; }
         // console.log(this.isLeader);
 
+        if (this.team['collaborators'].length != 0) {
+          if (!this.isLeader) {
+            this.team['collaborators'].filter((x: any) => {
+              if (x['user']['_id'] == this.user['_id']) { this.isCollaborator = true; }
+            });
+          }
+        }
+
         this.uploadProposalFG = this.formBuilder.group({
           file: ['', Validators.required]
         });
 
         this.topicFG = this.formBuilder.group({
+          coverage: ['', [Validators.required]],
           topic: ['', []],
           title: ['', [Validators.required]],
           description: ['', [Validators.required]]
         });
         if (this.team['layout'] == null) { this.topicFG.disable(); }
+        if (this.team['layout'] != null) {
+          this.topicFG.controls['topic'].disable();
+          this.topicFG.controls['title'].disable();
+        }
 
         this.solutionFG = this.formBuilder.group({
           title: ['', [Validators.required]],
@@ -411,6 +429,15 @@ export class SingleTeamComponent implements OnInit {
     dialogRef.afterClosed().subscribe((reply: any) => { });
   }
 
+  removeTeamVote() {
+    let data: any = { _id: this.team['vote']['_id'] }
+    this.voteService.deleteVote(data).subscribe({
+      error: (error: any) => { this.utilityService.openErrorSnackBar(this.utilityService['errorOops']); },
+      next: (reply: any) => { this.team['metavotes'] = reply['metavotes']; },
+      complete: () => { this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']); }
+    });
+  }
+
   popAddCommentsDialog(type: string) {
     let coverage: any = this.topic['coverage'];
     let data: any = {};
@@ -440,7 +467,21 @@ export class SingleTeamComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) { }
+      if (reply != undefined) {
+        this.commentService.fetchSingleCommentById({ _id: reply['_id'] }).subscribe({
+          error: (error: any) => { },
+          next: (reply: any) => {
+            switch (type) {
+              case 'topic':
+                this.topic['comments'].unshift(reply);
+                break;
+              case 'solution':
+                this.solution['comments'].unshift(reply);
+                break;
+            }
+          }
+        });
+      }
     });
   }
 
@@ -495,16 +536,27 @@ export class SingleTeamComponent implements OnInit {
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
         this.team['vote'] = reply['data'];
+        this.team['metadata'] = reply['data']['metadata'];
+        this.team['metavotes'] = reply['data']['metavotes'];
         this.setTeamScore();
       }
     });
+  }
+
+  onSelectTopicCoverage(event: any) {
+    this.topicFG.controls['topic'].enable();
+    this.topicFG.controls['title'].enable();
+    this.topicFG.patchValue({ topic: '' });
+    this.topicFG.patchValue({ description: '' });
+    this.isNewTopic = true;
+    this.setProblemTopics();
   }
 
   setProblemTopics() {
     let layout: any = this.document['layouts'].filter((x: any) => { return x['_id'] == this.team['layout']['_id']; });
     let sublayout: any = layout[0]['subLayouts'].filter((x: any) => { return x['_id'] == this.team['sublayout']['_id']; });
     this.topics = sublayout[0]['topics'];
-    this.topics = this.topics.filter((x: any) => { return x['coverage'].includes(this.team['coverage'][0]['_id']) && x['team'] == null; });
+    this.topics = this.topics.filter((x: any) => { return x['coverage'].includes(this.topicFG.controls['coverage']['value']) && x['team'] == null; });
   }
 
   popLayoutSetup() {
@@ -521,7 +573,7 @@ export class SingleTeamComponent implements OnInit {
           next: (reply: any) => { this.team = reply; },
           complete: () => {
             this.topicFG.enable();
-            this.setProblemTopics();
+            // this.setProblemTopics();
           }
         });
       }
@@ -605,6 +657,7 @@ export class SingleTeamComponent implements OnInit {
                   },
                   complete: () => { }
                 });
+                this.solutionFG.enable();
               }
             });
           },

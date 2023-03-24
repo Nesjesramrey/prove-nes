@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { forkJoin, Observable } from 'rxjs';
 import { TeamService } from 'src/app/services/team.service';
 import { UserService } from 'src/app/services/user.service';
+import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
   selector: '.team-list',
@@ -12,10 +14,13 @@ export class TeamListComponent implements OnInit {
   public isDataAvailable: boolean = false;
   public user: any = null;
   public teams: any = null;
+  public searchTeamsFG!: FormGroup;
 
   constructor(
     public userService: UserService,
-    public teamService: TeamService
+    public teamService: TeamService,
+    public utilityService: UtilityService,
+    public formBuilder: FormBuilder
   ) { }
 
   ngOnInit(): void {
@@ -31,7 +36,23 @@ export class TeamListComponent implements OnInit {
         this.teams = reply[1];
         // console.log('teams: ', this.teams);
       },
-      complete: () => { this.isDataAvailable = true; }
+      complete: () => {
+        this.searchTeamsFG = this.formBuilder.group({
+          filter: ['', [Validators.required]]
+        });
+        this.isDataAvailable = true;
+      }
+    });
+  }
+
+  serachTeams(form: FormGroup) {
+    let data: any = { filter: form['value']['filter'] };
+    this.teamService.searchTeamsModule(data).subscribe({
+      error: () => { },
+      next: (reply: any) => {
+        console.log(reply);
+      },
+      complete: () => { }
     });
   }
 }
