@@ -537,6 +537,7 @@ export class SingleTeamComponent implements OnInit {
       if (reply != undefined) {
         this.team['vote'] = reply['data'];
         this.team['metadata'] = reply['data']['metadata'];
+        this.team['metavotes'] = reply['data']['metavotes'];
         this.setTeamScore();
       }
     });
