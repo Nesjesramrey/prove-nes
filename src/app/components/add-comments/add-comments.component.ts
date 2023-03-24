@@ -170,11 +170,10 @@ export class AddCommentsComponent implements OnInit {
             this.killDialog();
           },
           next: (reply: any) => {
+            this.dialogRef.close(reply);
             this.utilityService.openSuccessSnackBar(this.utilityService.saveSuccess);
           },
-          complete: () => {
-            this.killDialog();
-          }
+          complete: () => { }
         });
         break;
 
@@ -185,11 +184,10 @@ export class AddCommentsComponent implements OnInit {
             this.killDialog();
           },
           next: (reply: any) => {
+            this.dialogRef.close(reply);
             this.utilityService.openSuccessSnackBar(this.utilityService.saveSuccess);
           },
-          complete: () => {
-            this.killDialog();
-          }
+          complete: () => { }
         })
         break;
     }

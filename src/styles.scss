@@ -945,3 +945,18 @@ mat-card {
 .txtred {
   color: #ff0000;
 }
+
+.wicon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  * {
+    margin: 0;
+  }
+
+  mat-icon {
+    margin-right: 10px !important;
+    font-size: 14pt !important;
+  }
+}

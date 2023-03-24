@@ -8,8 +8,8 @@
       <div class="set-12 imghldr">
         <input #coverFile type="file" accept="image/*" hidden (change)="coverFileSelected($event)" />
         <!-- <input #avatarFile type="file" accept="image/*" hidden (change)="openCropperDialog($event)" /> -->
-        <img src="../../../assets/images/Rectangle-511.png" alt="" *ngIf="team['coverImage'] == null">
-        <img [src]="team['coverImage']" alt="" *ngIf="team['coverImage'] != null">
+        <img src="../../../assets/images/txt-marathon.png" alt="" *ngIf="team['coverImage'] == null" class="def">
+        <img [src]="team['coverImage']" alt="" *ngIf="team['coverImage'] != null" class="full">
       </div>
 
       <div class="chngbnr">
@@ -60,24 +60,33 @@
           </div>
 
           <div class="set-12 row txt-center">
-            <div class="set-12">
-              <h3>Puntuación de Equipo</h3>
+            <div class="set-6">
+              <h3>Puntuación</h3>
               <div class="scorehldr">{{teamScore}}</div>
             </div>
+            <div class="set-6">
+              <h3>Votos</h3>
+              <div class="scorehldr">{{team['metavotes']['team']}}</div>
+            </div>
+
             <button type="button" mat-raised-button color="accent" class="vote" (click)="popTeamVoteDialog()"
-              *ngIf="team['vote'] == null">
+              *ngIf="team['vote'] == null" [disabled]="team['problematicProposal'] == null">
               Votar por <strong>{{team['name']}}</strong>
+            </button>
+            <button type="button" mat-raised-button color="accent" class="vote" *ngIf="team['vote'] != null"
+              (click)="removeTeamVote()">
+              Quitar voto
             </button>
           </div>
 
-          <div class="set-12 row txt-center">
+          <!-- <div class="set-12 row txt-center">
             <button type="button" mat-mini-fab color="primary" class="mini">
               <mat-icon>favorite</mat-icon>
             </button>
             <button type="button" mat-mini-fab color="primary" class="mini">
               <mat-icon>share</mat-icon>
             </button>
-          </div>
+          </div> -->
         </mat-card>
       </div>
 
@@ -97,6 +106,18 @@
 
               <div class="set-12 crttpc" *ngIf="topic == null">
                 <form class="set-12" [formGroup]="topicFG">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Cobertura</mat-label>
+                    <mat-select formControlName="coverage" (selectionChange)="onSelectTopicCoverage($event)">
+                      <mat-option *ngFor="let state of team.coverage" [value]="state._id">
+                        <small>{{state.name}}</small>
+                      </mat-option>
+                    </mat-select>
+                    <mat-hint align="start">
+                      <small>** Cobertura</small>
+                    </mat-hint>
+                  </mat-form-field>
+
                   <mat-form-field appearance="outline">
                     <mat-label>Problema</mat-label>
                     <mat-select formControlName="topic" (selectionChange)="onTopicSelected($event)">
@@ -200,7 +221,7 @@
           <mat-tab>
             <ng-template mat-tab-label>
               <mat-icon>insights</mat-icon>
-              <span>Solucion</span>
+              <span>Solución</span>
             </ng-template>
 
             <div class="set-12 tabconts">
@@ -312,7 +333,7 @@
             </div>
 
             <div class="set-12 tabconts availableprop" *ngIf="team['problematicProposal'] != null">
-              <div class="set-12 ctrls">
+              <div class="set-12 ctrls" *ngIf="isCollaborator || isLeader">
                 <input type="file" #file (change)="onFileSelected($event)">
                 <button type="button" mat-raised-button color="primary" (click)="file.click()" [disabled]="submitted">
                   <mat-icon>cloud_upload</mat-icon>
@@ -327,14 +348,14 @@
             </div>
           </mat-tab>
 
-          <mat-tab>
+          <mat-tab [disabled]="solution == null">
             <ng-template mat-tab-label>
               <mat-icon>edit_note</mat-icon>
               <span>Testimonios</span>
             </ng-template>
 
             <div class="set-12 tabconts">
-              <div class="set-12" *ngIf="solution!= null && solution['testimonials'].length == 0">
+              <div class="set-12">
                 <h3>No hay testimonios que mostrar</h3>
 
                 <div class="set-12 emptytestimonies">

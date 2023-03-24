@@ -195,6 +195,7 @@ export class EndPointService {
   public killTeamCollaboratorEndPoint: string = '/team/remove_collaborators/';
   public upoloadProposalEndPoint: string = '/team/';
   public fetchAllTeamsEndPoint: string = '/team';
+  public searchTeamsModuleEndPoint: string = '/team/search';
 
   constructor() { }
 }

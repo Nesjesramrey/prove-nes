@@ -78,4 +78,10 @@ export class TeamService {
       this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAllTeamsEndPoint, {}
     );
   }
+
+  searchTeamsModule(data: any) {
+    return this.httpClient.get(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.searchTeamsModuleEndPoint + `?filter=${data['filter']}`, {}
+    );
+  }
 }

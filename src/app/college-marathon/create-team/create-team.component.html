@@ -66,7 +66,8 @@
 
             <div class="set-12 ctrls">
               <button type="button" mat-raised-button color="primary" (click)="searchCollege(searchCollegeFG)"
-                [disabled]="searchCollegeFG.invalid || !userAvailable || isSearching">
+                [disabled]="searchCollegeFG.invalid || !userAvailable || isSearching" class="wicon">
+                <mat-icon>search</mat-icon>
                 <small>Buscar universidad</small>
               </button>
               <mat-spinner diameter="30" *ngIf="isSearching"></mat-spinner>
@@ -110,8 +111,9 @@
 
           <div class="set-12 ctrls">
             <button type="button" mat-raised-button color="warn"
-              [disabled]="!registerTeamFG.valid || !userAvailable || submitted" (click)="createTeam()">
-              <small>Siguiente</small>
+              [disabled]="!registerTeamFG.valid || !userAvailable || submitted" (click)="createTeam()" class="wicon">
+              <mat-icon>save</mat-icon>
+              <small>Guardar</small>
             </button>
             <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
           </div>
@@ -124,28 +126,38 @@
           </p>
           <div class="set-12 usrlfx">
             <form [formGroup]="searchUserFG" class="set-12">
-              <div class="set-10">
-                <mat-form-field appearance="outline">
-                  <mat-label>Buscar usuario</mat-label>
-                  <input matInput placeholder="Ejemplo: nombre@dominio.com" formControlName="searchemail"
-                    (keyup.enter)="onSearchUser(searchUserFG)">
-                </mat-form-field>
-              </div>
+              <div class="set-12 searchctrl">
+                <div class="set-11">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Buscar usuario</mat-label>
+                    <input matInput placeholder="Ejemplo: nombre@dominio.com" formControlName="searchemail"
+                      (keyup.enter)="onSearchUser(searchUserFG)">
+                  </mat-form-field>
+                </div>
 
-              <div class="set-2 txt-right">
-                <button type="button" mat-mini-fab color="primary" (click)="onSearchUser(searchUserFG)"
-                  [disabled]="searchUserFG.invalid">
-                  <mat-icon>person_search</mat-icon>
-                </button>
+                <div class="set-1 txt-right">
+                  <button type="button" mat-mini-fab color="primary" (click)="onSearchUser(searchUserFG)"
+                    [disabled]="searchUserFG.invalid">
+                    <mat-icon>person_search</mat-icon>
+                  </button>
+                </div>
               </div>
 
               <div formArrayName="collaborators" class="set-12 collabs" *ngIf="teamUsers.length != 0">
                 <div *ngFor="let item of teamUsersForm.controls; let i = index;" class="set-12 collabfield">
-                  <div [formGroupName]="i">
-                    <mat-form-field appearance="outline">
-                      <mat-label>Correo electrónico</mat-label>
-                      <input type="text" matInput formControlName="email">
-                    </mat-form-field>
+                  <div [formGroupName]="i" class="set-12 innerfield">
+                    <div class="set-11">
+                      <mat-form-field appearance="outline">
+                        <mat-label>Correo electrónico</mat-label>
+                        <input type="text" matInput formControlName="email">
+                      </mat-form-field>
+                    </div>
+
+                    <div class="set-1 txt-right">
+                      <button type="button" mat-mini-fab color="primary" (click)="removeUserField(i)">
+                        <mat-icon>cancel</mat-icon>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -153,11 +165,13 @@
           </div>
 
           <div class="set-12 ctrls">
-            <button type="button" mat-raised-button color="warn" matStepperPrevious [disabled]="submitted">
+            <!-- <button type="button" mat-raised-button color="warn" matStepperPrevious [disabled]="submitted">
               <small>Anterior</small>
-            </button>
-            <button type="button" mat-raised-button color="warn" (click)="saveCollaborators()" [disabled]="submitted">
-              <small>Siguiente</small>
+            </button> -->
+            <button type="button" mat-raised-button color="warn" (click)="saveCollaborators()"
+              [disabled]="teamUsers.length == 0 || submitted" class="wicon">
+              <mat-icon>save</mat-icon>
+              <small>Guardar</small>
             </button>
             <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
           </div>
@@ -176,18 +190,19 @@
           </form>
 
           <div class="set-12 ctrls">
-            <button type="button" mat-raised-button color="warn" matStepperPrevious [disabled]="submitted">
+            <!-- <button type="button" mat-raised-button color="warn" matStepperPrevious [disabled]="submitted">
               <small>Anterior</small>
-            </button>
+            </button> -->
             <button type="button" mat-raised-button color="warn" (click)="saveLeaderID()"
-              [disabled]="userIDFG.invalid || submitted">
-              <small>Siguiente</small>
+              [disabled]="userIDFG.invalid || submitted" class="wicon">
+              <mat-icon>cloud_upload</mat-icon>
+              <small>Guardar</small>
             </button>
             <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
           </div>
         </mat-step>
 
-        <mat-step>
+        <!-- <mat-step>
           <h3>¿En qué temática quieren participar?</h3>
           <p class="hint">
             <small>Las propuestas y temas del maratón deben reflejar una problemática de tu comunidad, localidad o
@@ -328,7 +343,7 @@
         <mat-step>
           <h3>¡Gracias, tu registro ha finalizado!</h3>
           <p>Puedes ver a tu equipo <a href="javascript:void(0)" (click)="linkTeam()">aqui</a></p>
-        </mat-step>
+        </mat-step> -->
       </mat-stepper>
     </div>
   </div>

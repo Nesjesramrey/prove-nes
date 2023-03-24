@@ -51,11 +51,11 @@ export class LayoutSetupDialogComponent implements OnInit {
     });
 
     this.setupFG = this.formBuilder.group({
-      coverage: [this.coverage[0]['_id'], [Validators.required]],
+      // coverage: [this.coverage[0]['_id'], [Validators.required]],
       layout: ['', [Validators.required]],
       sublayout: ['', [Validators.required]],
     });
-    this.setupFG.controls['coverage'].disable();
+    // this.setupFG.controls['coverage'].disable();
     this.setupFG.controls['sublayout'].disable();
   }
 
