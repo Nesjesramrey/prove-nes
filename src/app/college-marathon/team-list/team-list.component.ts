@@ -34,6 +34,7 @@ export class TeamListComponent implements OnInit {
         // console.log('user: ', this.user);
 
         this.teams = reply[1];
+        this.teams.filter((x: any) => { x['teamScore'] = this.setTeamScore(x); });
         // console.log('teams: ', this.teams);
       },
       complete: () => {
@@ -51,8 +52,20 @@ export class TeamListComponent implements OnInit {
       error: () => { },
       next: (reply: any) => {
         console.log(reply);
+        this.teams = null;
+        this.teams = reply['data'];
+        this.teams.filter((x: any) => { x['teamScore'] = this.setTeamScore(x); });
       },
       complete: () => { }
     });
+  }
+
+  setTeamScore(data: any) {
+    let points: any = [];
+    for (var key of Object.keys(data['metadata']['score'])) {
+      points.push(data['metadata']['score'][key]['point']);
+    }
+    let teamScore = points.reduce((a: any, b: any) => a + b, 0);
+    return teamScore;
   }
 }

@@ -101,10 +101,12 @@
             <div class="set-12 tabconts">
               <div class="set-12">
                 <h3 *ngIf="topic != null">{{topic['title']}}</h3>
-                <h3 *ngIf="topic == null">Selecciona o crea un problema</h3>
+                <h3 *ngIf="topic == null && isCollaborator || topic == null && isLeader">
+                  Selecciona o crea un problema
+                </h3>
               </div>
 
-              <div class="set-12 crttpc" *ngIf="topic == null">
+              <div class="set-12 crttpc" *ngIf="topic == null && isCollaborator || topic == null && isLeader">
                 <form class="set-12" [formGroup]="topicFG">
                   <mat-form-field appearance="outline">
                     <mat-label>Cobertura</mat-label>
@@ -227,10 +229,12 @@
             <div class="set-12 tabconts">
               <div class="set-12">
                 <h3 *ngIf="solution != null">{{solution['title']}}</h3>
-                <h3 *ngIf="solution == null">Crea una solución</h3>
+                <h3 *ngIf="solution == null && isCollaborator || solution == null && isLeader">
+                  Crea una solución
+                </h3>
               </div>
 
-              <div class="set-12 crttpc" *ngIf="solution == null">
+              <div class="set-12 crttpc" *ngIf="solution == null && isCollaborator || solution == null && isLeader">
                 <form class="set-12 solfrm" [formGroup]="solutionFG">
                   <mat-form-field appearance="outline">
                     <mat-label>Título</mat-label>
@@ -318,7 +322,8 @@
               <span>Propuesta</span>
             </ng-template>
 
-            <div class="set-12 emptyprop" *ngIf="team['problematicProposal'] == null">
+            <div class="set-12 emptyprop"
+              *ngIf="team['problematicProposal'] == null && isCollaborator || team['problematicProposal'] == null && isLeader">
               <h3>Carga tu propuesta</h3>
               <p>Carga tu propuesta para poder participar</p>
               <div class="set-12 ctrls">

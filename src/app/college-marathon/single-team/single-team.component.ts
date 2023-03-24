@@ -153,22 +153,6 @@ export class SingleTeamComponent implements OnInit {
         });
         this.teamUsers = this.searchUserFG.get('collaborators') as FormArray;
 
-        let teamLeader: any = this.user['teams'].filter((x: any) => { return x['createdBy']['_id'] == this.user['_id']; });
-        if (teamLeader.length != 0) { this.isLeader = true; }
-        // console.log(this.isLeader);
-
-        if (this.team['collaborators'].length != 0) {
-          if (!this.isLeader) {
-            this.team['collaborators'].filter((x: any) => {
-              if (x['user']['_id'] == this.user['_id']) { this.isCollaborator = true; }
-            });
-          }
-        }
-
-        this.uploadProposalFG = this.formBuilder.group({
-          file: ['', Validators.required]
-        });
-
         this.topicFG = this.formBuilder.group({
           coverage: ['', [Validators.required]],
           topic: ['', []],
@@ -186,6 +170,22 @@ export class SingleTeamComponent implements OnInit {
           description: ['', [Validators.required]]
         });
         if (this.topic == null) { this.solutionFG.disable(); }
+
+        let teamLeader: any = this.user['teams'].filter((x: any) => { return x['createdBy']['_id'] == this.user['_id']; });
+        if (teamLeader.length != 0) { this.isLeader = true; }
+        // console.log(this.isLeader);
+
+        if (this.team['collaborators'].length != 0) {
+          if (!this.isLeader) {
+            this.team['collaborators'].filter((x: any) => {
+              if (x['user']['_id'] == this.user['_id']) { this.isCollaborator = true; }
+            });
+          }
+        }
+
+        this.uploadProposalFG = this.formBuilder.group({
+          file: ['', Validators.required]
+        });
 
         this.isDataAvailable = true;
       }
