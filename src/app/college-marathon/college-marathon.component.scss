@@ -8,8 +8,13 @@
 
   .pgbdy {
     flex: 1 0 auto;
-    background: #00031d;
-    padding-bottom: 40px;
+    // background: #00031d;
+    // padding-bottom: 40px;
+    background: url('../../assets/images/illustration-marathon.png'), #00031d;
+    background-size: 100%;
+    background-position: center 200px;
+    background-repeat: no-repeat;
+    // padding-bottom: 150px;
 
     h1 {
       margin: 30px auto;
@@ -49,7 +54,7 @@
   }
 
   .ctrls {
-    margin: 40px auto;
+    margin: 90px auto 40px auto;
 
     .btnhldr {
       display: flex;
@@ -58,7 +63,7 @@
     }
 
     .btnhldr:not(:first-child) {
-      margin-top: 70px;
+      margin-top: 200px;
     }
 
     button:not(.speech-bubble) {
