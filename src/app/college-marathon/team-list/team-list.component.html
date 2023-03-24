@@ -4,17 +4,14 @@
 
 <div class="set-12" *ngIf="isDataAvailable">
   <div class="crdlst">
-    <div class="filters">
-      <form [formGroup]="searchTeamsFG" (submit)="serachTeams(searchTeamsFG)">
+    <!-- <div class="filters">
+      <form [formGroup]="searchTeamsFG">
         <mat-form-field appearance="outline">
           <mat-label>Buscar</mat-label>
-          <input type="text" matInput formControlName="filter">
+          <input type="text" matInput formControlName="filter" (keyup.enter)="serachTeams(searchTeamsFG)">
         </mat-form-field>
-        <button type="submit">
-          <mat-icon>search</mat-icon>
-        </button>
       </form>
-    </div>
+    </div> -->
 
     <mat-card *ngFor="let team of teams">
       <div class="set-12 teambtn" (click)="utilityService.linkMe('/maraton/equipos/' + team['_id'])">
@@ -22,13 +19,18 @@
           <div class="set-10">
             <p><small>{{team['name']}}</small></p>
 
-            <p class="uname"><small>{{team['layout']['category']['name']}} /
-                {{team['sublayout']['category']['name']}}</small></p>
+            <p class="uname" *ngIf="team['layout'] != null">
+              <small>{{team['layout']['category']['name']}} / {{team['sublayout']['category']['name']}}</small>
+            </p>
+            <p class="uname" *ngIf="team['layout'] == null">
+              <small>Temáticas por configurar</small>
+            </p>
           </div>
         </div>
 
         <div class="set-12 crddsc blueb">
-          <h4>{{team['topic']['title']}}</h4>
+          <h4 *ngIf="team['topic'] != null">{{team['topic']['title']}}</h4>
+          <h4 *ngIf="team['topic'] == null">Sin título</h4>
         </div>
 
       </div>
@@ -42,8 +44,8 @@
         <p>
           <small>{{team['university']['universidad_nombre']}}
             <span class="votes">
-              <p>100</p>
-              <p>votos</p>
+              <p>{{team['teamScore']}}</p>
+              <p>puntos</p>
             </span>
           </small>
         </p>
