@@ -220,4 +220,14 @@
   .teambtn {
     cursor: pointer !important;
   }
+
+  .emptyteams {
+    mat-card {
+      padding: 20px;
+    }
+
+    h3 {
+      margin-bottom: 20px;
+    }
+  }
 }
