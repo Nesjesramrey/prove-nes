@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { forkJoin, Observable } from 'rxjs';
@@ -16,6 +16,7 @@ export class CollegeMarathonComponent implements OnInit {
   public user: any = null;
   public userAvailable: boolean = false;
   public isDataAvailable: boolean = false;
+  @HostBinding('class') public class: string = '';
 
   constructor(
     public utilityService: UtilityService,
@@ -24,6 +25,7 @@ export class CollegeMarathonComponent implements OnInit {
     public dialog: MatDialog
   ) {
     this.isMobile = this.deviceDetectorService.isMobile();
+    if (this.isMobile) { this.class = 'fixmobile'; }
   }
 
   ngOnInit(): void {
@@ -51,5 +53,9 @@ export class CollegeMarathonComponent implements OnInit {
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) { }
     });
+  }
+
+  popAnnouncement() {
+    window.open('https://static-assets-pando.s3.amazonaws.com/assets/convocatoria-maraton.docx');
   }
 }

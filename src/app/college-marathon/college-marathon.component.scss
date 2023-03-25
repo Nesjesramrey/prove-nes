@@ -116,4 +116,51 @@
       transform: translate(-50%, -50%);
     }
   }
+
+  .disclaimer {
+    color: #ffffff;
+    margin-top: 30px;
+
+    h3 {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+:host(.fixmobile) {
+  padding-top: 0;
+
+  .pgbdy {
+    background-position: center 220px;
+  }
+
+  .innrpg {
+    width: 90%;
+    margin: 0 5%;
+  }
+
+  .ctrls {
+    margin: 120px auto 40px auto;
+
+    .btnhldr {
+      display: block;
+      margin: 0;
+
+      button {
+        width: 100%;
+        margin: 0;
+        margin-bottom: 20px;
+      }
+
+      .set-6 {
+        width: 100%;
+        padding: 0;
+        margin-bottom: 40px;
+      }
+    }
+  }
+
+  .disclaimer {
+    margin-top: 0;
+  }
 }

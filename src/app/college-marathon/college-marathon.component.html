@@ -27,7 +27,7 @@
         <button type="button" mat-raised-button color="accent">
           <strong>Calendario</strong>
         </button>
-        <button type="button" mat-raised-button color="accent">
+        <button type="button" mat-raised-button color="accent" (click)="popAnnouncement()">
           <strong>Convocatoria</strong>
         </button>
       </div>
@@ -43,6 +43,12 @@
         *ngIf="isMobile && userAvailable">
         <strong>Acceder</strong>
       </button> -->
+
+      <div class="set-12 disclaimer">
+        <h3>Aviso</h3>
+        <p>Disculpa las molestias, pero por ahora no contamos con versóin completa para tu movil, estamos trabajando en
+          ella, gracias!</p>
+      </div>
     </div>
   </div>
 </div>
