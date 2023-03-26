@@ -13,7 +13,7 @@
       </form>
     </div> -->
 
-    <div *ngIf="teams.length != 0" class="emptyteams">
+    <div *ngIf="teams.length == 0" class="emptyteams">
       <mat-card>
         <h3>Aún no hay equipos registrados</h3>
         <button type="button" mat-raised-button color="primary" class="wicon" (click)="utilityService.linkMe('/maraton/registro')">
@@ -23,7 +23,7 @@
       </mat-card>
     </div>
 
-    <div *ngIf="teams.length == 0">
+    <div *ngIf="teams.length != 0">
       <mat-card *ngFor="let team of teams">
         <div class="set-12 teambtn" (click)="utilityService.linkMe('/maraton/equipos/' + team['_id'])">
           <div class="set-12 crdh blueb">
