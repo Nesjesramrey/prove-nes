@@ -231,3 +231,17 @@
     }
   }
 }
+
+:host(.fixmobile) {
+  margin-top: 0;
+
+  .crdlst {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    mat-card {
+      border-radius: 0;
+    }
+  }
+}

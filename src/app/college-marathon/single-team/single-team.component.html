@@ -14,9 +14,13 @@
 
       <div class="chngbnr">
         <button type="button" mat-raised-button color="accent" (click)="coverFile.click()" [disabled]="isUploading"
-          *ngIf="isLeader">
+          *ngIf="isLeader && !isMobile">
           <mat-icon>camera_alt</mat-icon>
           <small>Cargar imágen</small>
+        </button>
+        <button type="button" mat-mini-fab color="accent" (click)="coverFile.click()" [disabled]="isUploading"
+          *ngIf="isLeader && isMobile">
+          <mat-icon>camera_alt</mat-icon>
         </button>
         <mat-spinner diameter="30" color="accent" *ngIf="isUploading"></mat-spinner>
       </div>

@@ -1,5 +1,5 @@
 import { LyDialog } from '@alyle/ui/dialog';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
@@ -22,6 +22,7 @@ import { TopicService } from 'src/app/services/topic.service';
 import { SolutionService } from 'src/app/services/solution.service';
 import { VoteService } from 'src/app/services/vote.service';
 import { CommentService } from 'src/app/services/comment.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: '.single-team',
@@ -89,6 +90,8 @@ export class SingleTeamComponent implements OnInit {
     ]
   };
   public isCollaborator: boolean = false;
+  public isMobile: boolean = false;
+  @HostBinding('class') public class: string = '';
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -102,10 +105,13 @@ export class SingleTeamComponent implements OnInit {
     public topicService: TopicService,
     public solutionService: SolutionService,
     public voteService: VoteService,
-    public commentService: CommentService
+    public commentService: CommentService,
+    public deviceDetectorService: DeviceDetectorService
   ) {
     this.teamID = this.activatedRoute['snapshot']['params']['teamID'];
     // console.log(this.teamID);
+    this.isMobile = this.deviceDetectorService.isMobile();
+    if (this.isMobile) { this.class = 'fixmobile'; }
   }
 
   ngOnInit(): void {
@@ -122,8 +128,6 @@ export class SingleTeamComponent implements OnInit {
 
         this.collaborators = this.team['collaborators'];
         // console.log('collaborators: ', this.collaborators);
-
-        if (this.team['layout'] == null) { this.popLayoutSetup(); }
 
         this.topic = this.team['topic'];
         if (this.topic != null) {
@@ -171,15 +175,22 @@ export class SingleTeamComponent implements OnInit {
         });
         if (this.topic == null) { this.solutionFG.disable(); }
 
-        let teamLeader: any = this.user['teams'].filter((x: any) => { return x['createdBy']['_id'] == this.user['_id']; });
+        let teamLeader: any = this.user['teams'].filter((x: any) => { return x['createdBy']['_id'] == this.user['_id'] && x['_id'] == this.teamID; });
+        console.log(teamLeader);
         if (teamLeader.length != 0) { this.isLeader = true; }
-        // console.log(this.isLeader);
+        console.log(this.isLeader);
 
         if (this.team['collaborators'].length != 0) {
           if (!this.isLeader) {
             this.team['collaborators'].filter((x: any) => {
               if (x['user']['_id'] == this.user['_id']) { this.isCollaborator = true; }
             });
+          }
+        }
+
+        if (this.team['layout'] == null) {
+          if (this.isLeader) {
+            this.popLayoutSetup();
           }
         }
 
