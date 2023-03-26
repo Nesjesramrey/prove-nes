@@ -140,7 +140,6 @@
         .overlay:hover {
           opacity: 1;
         }
-
       }
 
       .chngbnr {
@@ -206,7 +205,9 @@
       }
     }
 
-    .collabsavailable {
+    .set-6 {
+      padding: 0;
+
       .set-6:nth-child(odd) {
         padding-right: 10px;
       }
@@ -635,6 +636,62 @@
     mat-icon {
       margin-right: 10px;
       font-size: 14pt;
+    }
+  }
+}
+
+:host(.fixmobile) {
+  .tabconts {
+    padding: 20px;
+  }
+
+  .teambanner {
+    .bannerhldr {
+      .imghldr {
+        height: 300px;
+      }
+
+      .avatar {
+        width: 130px;
+        height: 130px;
+        bottom: -75px;
+      }
+
+      .chngbnr {
+        mat-icon {
+          margin: 0;
+          font-size: 17pt;
+        }
+      }
+    }
+
+    .teamtools {
+      padding: 0;
+
+      .set-4,
+      .set-8 {
+        width: 100%;
+        padding: 0;
+      }
+
+      .set-4 {
+        margin-top: 90px;
+      }
+
+      .set-8 {
+        margin: 0;
+      }
+    }
+  }
+
+  .emptyprop {
+    padding: 20px;
+  }
+
+  .collabsavailable {
+    .set-6 {
+      padding: 0;
+      width: 100%;
     }
   }
 }

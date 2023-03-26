@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { forkJoin, Observable } from 'rxjs';
 import { TeamService } from 'src/app/services/team.service';
 import { UserService } from 'src/app/services/user.service';
@@ -15,13 +16,19 @@ export class TeamListComponent implements OnInit {
   public user: any = null;
   public teams: any = null;
   public searchTeamsFG!: FormGroup;
+  public isMobile: boolean = false;
+  @HostBinding('class') public class: string = '';
 
   constructor(
     public userService: UserService,
     public teamService: TeamService,
     public utilityService: UtilityService,
-    public formBuilder: FormBuilder
-  ) { }
+    public formBuilder: FormBuilder,
+    public deviceDetectorService: DeviceDetectorService
+  ) {
+    this.isMobile = this.deviceDetectorService.isMobile();
+    if (this.isMobile) { this.class = 'fixmobile'; }
+  }
 
   ngOnInit(): void {
     let user: Observable<any> = this.userService.fetchFireUser();
