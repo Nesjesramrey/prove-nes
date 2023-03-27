@@ -3,23 +3,7 @@
 </div>
 
 <div class="set-12 frmbdy" *ngIf="isDataAvailable">
-  <div class="set-7">
-    <!-- <h1>Lorem Ipsum</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec maximus ex et purus volutpat, vitae varius ligula
-      ornare. Nulla consectetur ultrices laoreet.</p> -->
-
-    <div class="set-12 myteams" *ngIf="userAvailable">
-      <div class="set-12" *ngIf="user['teams'].length != 0">
-        <h3>Mis Equipos</h3>
-        <div class="set-12" *ngFor="let team of user['teams']">
-          <button type="button" mat-raised-button color="primary"
-            (click)="utilityService.linkMe('/maraton/equipos/' + team['_id'])">
-            {{team['name']}}
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div class="set-7"></div>
 
   <!-- no team available -->
   <div class="set-5" *ngIf="!teamAvailable">
@@ -38,6 +22,19 @@
     <div class="set-12 teamreg">
       <mat-stepper #stepper [disableRipple]="true" [linear]="true" [@.disabled]="true" [selectedIndex]="selectedIndex">
         <mat-step>
+          <div class="set-12 myteams" *ngIf="userAvailable">
+            <div class="set-12" *ngIf="user['teams'].length != 0">
+              <h3>Mis Equipos</h3>
+              <div class="set-12" *ngFor="let team of user['teams']">
+                <button type="button" mat-raised-button color="primary"
+                  (click)="utilityService.linkMe('/maraton/equipos/' + team['_id'])">
+                  {{team['name']}}
+                  <mat-icon *ngIf="team['isLeader']">admin_panel_settings</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+
           <h3>Busca tu universidad</h3>
           <form class="sixcombo" [formGroup]="searchCollegeFG">
             <div class="set-6">
@@ -350,7 +347,18 @@
 
   <!-- team available -->
   <div class="set-5" *ngIf="teamAvailable">
-    Visita tu team <a href="javascript:void(0)" (click)="linkTeam()">aqui</a>
+    <div class="set-12 myteams" *ngIf="userAvailable">
+      <div class="set-12" *ngIf="user['teams'].length != 0">
+        <h3>Mis Equipos</h3>
+        <div class="set-12" *ngFor="let team of user['teams']">
+          <button type="button" mat-raised-button color="primary"
+            (click)="utilityService.linkMe('/maraton/equipos/' + team['_id'])">
+            {{team['name']}}
+            <mat-icon *ngIf="team['isLeader']">admin_panel_settings</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
