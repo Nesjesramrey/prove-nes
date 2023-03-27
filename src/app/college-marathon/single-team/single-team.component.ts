@@ -175,10 +175,12 @@ export class SingleTeamComponent implements OnInit {
         });
         if (this.topic == null) { this.solutionFG.disable(); }
 
-        let teamLeader: any = this.user['teams'].filter((x: any) => { return x['createdBy']['_id'] == this.user['_id'] && x['_id'] == this.teamID; });
-        console.log(teamLeader);
-        if (teamLeader.length != 0) { this.isLeader = true; }
-        console.log(this.isLeader);
+        if (this.user['status'] != 500) {
+          let teamLeader: any = this.user['teams'].filter((x: any) => { return x['createdBy']['_id'] == this.user['_id'] && x['_id'] == this.teamID; });
+          // console.log(teamLeader);
+          if (teamLeader.length != 0) { this.isLeader = true; }
+          // console.log(this.isLeader);
+        }
 
         if (this.team['collaborators'].length != 0) {
           if (!this.isLeader) {
