@@ -43,19 +43,28 @@ export class CollegeMarathonComponent implements OnInit {
     });
   }
 
-  popMarathonInfoDialog() {
+  popMarathonInfoDialog(type: string) {
+    let panelClass: string = '';
+    switch (type) {
+      case 'awards':
+        panelClass = '';
+        break;
+      case 'announcement':
+        panelClass = 'full-dialog'
+        break;
+    }
     const dialogRef = this.dialog.open<MarathonInfoDialogComponent>(
       MarathonInfoDialogComponent, {
       width: '640px',
-      data: {}
+      data: {
+        type: type,
+        isMobile: this.isMobile
+      },
+      panelClass: panelClass
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) { }
     });
-  }
-
-  popAnnouncement() {
-    window.open('https://static-assets-pando.s3.amazonaws.com/assets/convocatoria-maraton.docx');
   }
 }

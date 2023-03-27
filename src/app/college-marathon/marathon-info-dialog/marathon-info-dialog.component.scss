@@ -13,4 +13,50 @@
     align-items: center;
     justify-content: flex-end;
   }
+
+  .row {
+    margin-top: 20px;
+    padding: 0 20px;
+    padding-top: 20px;
+    // border-top: 1px solid rgba($color: #000000, $alpha: 0.1);
+
+    h3 {
+      margin-bottom: 20px;
+    }
+
+    p {
+      margin-bottom: 20px;
+      text-align: justify;
+    }
+
+    ul {
+      li {
+        margin-bottom: 10px;
+        text-align: justify;
+      }
+    }
+
+    ul.lvl2,
+    ul.lvl3 {
+      padding-left: 20px;
+      list-style-type: circle;
+      margin-top: 20px;
+    }
+  }
+
+  .row:last-child {
+    margin-bottom: 40px;
+  }
+
+  ul {
+    list-style-position: inside;
+    list-style-type: decimal;
+  }
+}
+
+:host(.fixDesktop) {
+  .hldr {
+    width: 50%;
+    margin: 0 25%;
+  }
 }
