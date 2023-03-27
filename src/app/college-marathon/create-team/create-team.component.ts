@@ -132,6 +132,13 @@ export class CreateTeamComponent implements OnInit {
         // console.log(reply);
         this.user = reply[0];
         // console.log('user: ', this.user);
+        if (this.user['status'] != 500) {
+          if (this.user['teams'].length != 0) {
+            this.user['teams'].filter((x: any) => {
+              if (x['createdBy']['_id'] == this.user['_id']) { x['isLeader'] = true; }
+            });
+          }
+        }
 
         this.document = reply[1];
         // console.log('document: ', this.document);

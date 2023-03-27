@@ -77,8 +77,8 @@
               *ngIf="team['vote'] == null" [disabled]="team['problematicProposal'] == null">
               Votar por <strong>{{team['name']}}</strong>
             </button>
-            <button type="button" mat-raised-button color="accent" class="vote" *ngIf="team['vote'] != null || team['vote'] != undefined"
-              (click)="removeTeamVote()">
+            <button type="button" mat-raised-button color="accent" class="vote"
+              *ngIf="team['vote'] != null || team['vote'] != undefined" (click)="removeTeamVote()">
               Quitar voto
             </button>
           </div>
@@ -364,7 +364,7 @@
             </ng-template>
 
             <div class="set-12 tabconts">
-              <div class="set-12">
+              <div class="set-12" *ngIf="solution != null && solution['testimonials'].length == 0">
                 <h3>No hay testimonios que mostrar</h3>
 
                 <div class="set-12 emptytestimonies">
@@ -461,7 +461,7 @@
 
                   <div class="set-12 ctrls" *ngIf="isLeader">
                     <button type="button" mat-raised-button color="primary"
-                      [disabled]="teamUsers.length == 0 || submitted" (click)="addCollaborators()">
+                      [disabled]="teamUsers.length == 0 || submitted" (click)="addCollaborators()" class="wicon">
                       <mat-icon>add_circle</mat-icon>
                       <small>Agregar colaborador</small>
                     </button>
@@ -473,7 +473,7 @@
               <div class="set-12 collabsavailable" *ngIf="team['collaborators'].length != 0">
                 <div class="set-12 heads">
                   <button type="button" mat-raised-button color="primary" (click)="popAddTeamCollaborator()"
-                    *ngIf="isLeader">
+                    *ngIf="isLeader" class="wicon">
                     <mat-icon>add_circle</mat-icon>
                     <small>Agregar colaborador</small>
                   </button>
