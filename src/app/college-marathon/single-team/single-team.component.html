@@ -77,7 +77,7 @@
               *ngIf="team['vote'] == null" [disabled]="team['problematicProposal'] == null">
               Votar por <strong>{{team['name']}}</strong>
             </button>
-            <button type="button" mat-raised-button color="accent" class="vote" *ngIf="team['vote'] != null"
+            <button type="button" mat-raised-button color="accent" class="vote" *ngIf="team['vote'] != null || team['vote'] != undefined"
               (click)="removeTeamVote()">
               Quitar voto
             </button>
