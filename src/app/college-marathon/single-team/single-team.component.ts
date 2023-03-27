@@ -229,6 +229,7 @@ export class SingleTeamComponent implements OnInit {
       points.push(this.team['metadata']['score'][key]['point']);
     }
     this.teamScore = points.reduce((a: any, b: any) => a + b, 0);
+    this.teamScore = parseInt(this.teamScore.toString(), 10);
   }
 
   onSearchUser() {
@@ -446,7 +447,10 @@ export class SingleTeamComponent implements OnInit {
     let data: any = { _id: this.team['vote']['_id'] }
     this.voteService.deleteVote(data).subscribe({
       error: (error: any) => { this.utilityService.openErrorSnackBar(this.utilityService['errorOops']); },
-      next: (reply: any) => { this.team['metavotes'] = reply['metavotes']; },
+      next: (reply: any) => {
+        this.team['metavotes'] = reply['metavotes'];
+        this.team['vote'] = reply['vote'];
+      },
       complete: () => { this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']); }
     });
   }
@@ -548,7 +552,7 @@ export class SingleTeamComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) {
-        this.team['vote'] = reply['data'];
+        this.team['vote'] = reply['data']['vote'];
         this.team['metadata'] = reply['data']['metadata'];
         this.team['metavotes'] = reply['data']['metavotes'];
         this.setTeamScore();

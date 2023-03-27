@@ -22,8 +22,16 @@
 
 <div class="set-12 hldr" *ngIf="windowType == 'announcement'">
   <div class="set-12 row">
-    <h1>Convocatoria</h1>
-    <p>MARATÓN UNIVERSITARIO X MÉXICO: RUMBO A UN PROYECTO DE PAÍS DESDE LAS JUVENTUDES</p>
+    <div class="set-10">
+      <h1>Convocatoria</h1>
+      <p>MARATÓN UNIVERSITARIO X MÉXICO: RUMBO A UN PROYECTO DE PAÍS DESDE LAS JUVENTUDES</p>
+    </div>
+
+    <div class="set-2 txt-right">
+      <button type="buton" mat-mini-fab color="primary" (click)="killDialog()">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </div>
   </div>
 
   <div class="set-12 row">

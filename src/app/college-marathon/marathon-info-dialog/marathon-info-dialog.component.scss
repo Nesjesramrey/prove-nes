@@ -44,6 +44,14 @@
     }
   }
 
+  .row:first-child {
+    button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
   .row:last-child {
     margin-bottom: 40px;
   }
