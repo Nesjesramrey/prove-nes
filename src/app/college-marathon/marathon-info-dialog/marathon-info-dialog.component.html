@@ -1,4 +1,4 @@
-<div class="set-12">
+<div class="set-12" *ngIf="windowType == 'awards'">
   <h1>¡Premios!</h1>
 
   <div class="set-12">
@@ -16,6 +16,298 @@
   <div class="set-12 ctrls">
     <button type="button" mat-raised-button color="warn" (click)="killDialog()">
       <small>OK</small>
+    </button>
+  </div>
+</div>
+
+<div class="set-12 hldr" *ngIf="windowType == 'announcement'">
+  <div class="set-12 row">
+    <h1>Convocatoria</h1>
+    <p>MARATÓN UNIVERSITARIO X MÉXICO: RUMBO A UN PROYECTO DE PAÍS DESDE LAS JUVENTUDES</p>
+  </div>
+
+  <div class="set-12 row">
+    <p>El Maratón Universitario x México es un ejercicio de participación ciudadana,
+      apartidista y sin fines de lucro, por el cual, las juventudes universitarias se
+      organizarán en equipos para elaborar y activar propuestas de país, con base en los
+      ejes temáticos de la plataforma de mexicolectivo.com</p>
+  </div>
+
+  <div class="set-12 row">
+    <h3>OBJETIVOS</h3>
+    <p>Inspirar a las juventudes para construir un mejor país a través de:</p>
+    <ul>
+      <li>La participación universitaria y el impulso de acciones que contribuyan a mejorar
+        las condiciones de vida en México.</li>
+      <li>La generación de comunidad entre juventudes universitarias, organizaciones de
+        la sociedad civil y colectivos rumbo a la creación de una red de apoyo incluyente.</li>
+      <li>La escucha activa y la co-creación digital de propuestas para una visión de país
+        desde un enfoque de juventudes universitarias.</li>
+    </ul>
+  </div>
+
+  <div class="set-12 row">
+    <h3>BASES</h3>
+    <p>PRIMERA. GENERALIDADES</p>
+    <ul>
+      <li>Se llevarán a cabo varias presentaciones de forma presencial de esta
+        convocatoria, junto con un taller abierto y participativo en materia de acción
+        colectiva e incidencia pública al menos en universidades de la Ciudad de
+        México, Guadalajara, Puebla, Monterrey, Querétaro, Saltillo y Estado de
+        México. Se informará con anticipación sobre las fechas de presentación en
+        las redes sociales de Mexicolectivo. Las presentaciones serán transmitidas en
+        vivo en las redes sociales de Mexicolectivo y de las organizaciones
+        convocantes que lo deseen.</li>
+      <li>La participación está abierta a jóvenes estudiantes de universidades públicas
+        y privadas de todo el país.</li>
+      <li>Las juventudes participantes deberán conformarse en equipos de mínimo
+        tres personas a máximo 10 personas.</li>
+      <li>Las propuestas realizadas deberán subirse a la plataforma digital de
+        Mexicolectivo <a href="https://mexicolectivo.com/maraton" target="_blank">aquí</a> dentro del rango de fechas
+        establecidas en esta convocatoria.</li>
+      <li>Las bases y resoluciones del Maratón Universitario x México son inapelables.</li>
+    </ul>
+  </div>
+
+  <div class="set-12 row">
+    <h3>SEGUNDA. FASES DEL CONCURSO</h3>
+    <table border="1">
+      <tr>
+        <td>Fechas</td>
+        <td>Acción</td>
+      </tr>
+
+      <tr>
+        <td>24 marzo</td>
+        <td>Lanzamiento del Maratón y de la convocatoria</td>
+      </tr>
+
+      <tr>
+        <td>A partir del 27 marzo</td>
+        <td>Presentaciones presenciales públicas</td>
+      </tr>
+
+      <tr>
+        <td>Marzo/Abril</td>
+        <td>Registro individual <br> Registro de equipos</td>
+      </tr>
+
+      <tr>
+        <td>Abril- Mayo</td>
+        <td>
+          Registro de propuestas en la plataforma
+          <br>
+          Asesoría en zoom y máster class en el canal de <a href="https://www.youtube.com/@mexicolectivo"
+            target="_blank">youtube</a>
+          <br>
+          Campaña de votación y difusión para invitar a más juventudes a participar
+        </td>
+      </tr>
+
+      <tr>
+        <td>Abril-Mayo</td>
+        <td>Realización y documentación de una acción colectiva <br> Publicación de la acción colectiva</td>
+      </tr>
+
+      <tr>
+        <td>15 de Junio</td>
+        <td>Cierre de la plataforma y de las participaciones</td>
+      </tr>
+
+      <tr>
+        <td>Del 15 - al 29 de Junio</td>
+        <td>Evaluación de las propuestas</td>
+      </tr>
+
+      <tr>
+        <td>30 de Junio</td>
+        <td>
+          Publicación de resultados en las redes sociales de las organizaciones convocantes y vía correo electrónico
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="set-12 row">
+    <h3>TERCERA. INSCRIPCIONES</h3>
+    <ul>
+      <li>Las juventudes participantes deberán conformarse en equipos de mínimo tres personas a máximo 10 personas.</li>
+      <li>La inscripción de los equipos será a través de la plataforma de Mexicolectivo en el siguiente <a
+          href="https://mexicolectivo.com/maraton" target="_blank">link</a></li>
+      <li>Cada equipo participante deberá designar a una persona representante,
+        cuyo correo electrónico será tomado como referencia para futuras
+        notificaciones.</li>
+      <li>Cada integrante del equipo deberá adjuntar la foto de su credencial de
+        estudiante en el formulario de inscripción.</li>
+      <li>Las inscripciones quedarán abiertas a partir de la publicación de la presente
+        convocatoria y hasta un día antes del cierre de recepción de propuestas en la
+        plataforma.</li>
+      <li>Sólo el Comité Organizador del Maratón Universitario x México tendrá la
+        facultad de resolver aquellos aspectos no previstos en la presente
+        convocatoria y en el desarrollo de todas las etapas del evento.</li>
+    </ul>
+  </div>
+
+  <div class="set-12 row">
+    <h3>CUARTA. DINÁMICA DEL MARATÓN</h3>
+    <ul>
+      <li>La participación está abierta para universidades públicas y privadas de todo
+        el país.</li>
+      <li>
+        Los equipos deberán desarrollar su propuesta con base en un tema y
+        respectivos subtemas de la plataforma de mexicolectivo.com, siendo éstos:
+        <ul class="lvl2">
+          <li>
+            Medio ambiente y sostenibilidad
+            <ul class="lvl3">
+              <li>Biodiversidad y ecosistemas</li>
+              <li>Energías limpias</li>
+              <li>Sustentabilidad y regeneración ambiental</li>
+            </ul>
+          </li>
+          <li>
+            Diversidad e inclusión
+            <ul class="lvl3">
+              <li>Igualdad de género</li>
+              <li>Infancias, adolescencias, juventudes y personas adultas mayores</li>
+              <li>Pueblos indígenas y personas afromexicanas</li>
+              <li>Personas con discapacidad</li>
+              <li>Personas de la diversidad sexual y de género</li>
+              <li>Lucha contra la discriminación y las desigualdades</li>
+            </ul>
+          </li>
+          <li>
+            Paz y Estado de Derecho
+            <ul class="lvl3">
+              <li>Seguridad ciudadana</li>
+              <li>Gobernabilidad y democracia</li>
+              <li>Justicia</li>
+            </ul>
+          </li>
+          <li>
+            Prosperidad
+            <ul class="lvl3">
+              <li>Economía</li>
+              <li>Condiciones y espacios de trabajo</li>
+              <li>Productividad y competitividad</li>
+              <li>Vivienda</li>
+            </ul>
+          </li>
+          <li>
+            Calidad de vida
+            <ul class="lvl3">
+              <li>Salud y protección social</li>
+              <li>Lucha contra la pobreza</li>
+              <li>Educación y ciencias</li>
+              <li>Cultura y deporte</li>
+            </ul>
+          </li>
+          <li>
+            México global
+            <ul class="lvl3">
+              <li>Política exterior y diplomacia</li>
+              <li>Migración</li>
+              <li>Turismo</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Una vez culminada la propuesta, deberá subirse a la plataforma dentro del
+        espacio del tema y subtema seleccionados.</li>
+    </ul>
+  </div>
+
+  <div class="set-12 row">
+    <h3>QUINTA. CRITERIOS A EVALUAR</h3>
+    <p>La evaluación y selección de las propuestas se llevarán a cabo bajo el
+      cumplimiento de los siguientes criterios:</p>
+    <p>Total: 100 pts.</p>
+    <table border="1">
+      <tr>
+        <td>Criterio</td>
+        <td>Ponderación</td>
+      </tr>
+
+      <tr>
+        <td>Confirmación y registro de equipo.</td>
+        <td>10 pts</td>
+      </tr>
+
+      <tr>
+        <td>Registro de la problemática y propuesta.</td>
+        <td>40 pts</td>
+      </tr>
+
+      <tr>
+        <td>Contenido y justificación de la propuesta.</td>
+        <td>25 pts</td>
+      </tr>
+
+      <tr>
+        <td>Campaña de difusión de la propuesta para involucrar a más juventudes.</td>
+        <td>25 pts</td>
+      </tr>
+
+      <tr>
+        <td>Realización de una acción colectiva.</td>
+        <td><strong>Criterio indispensable</strong> para que el equipo sea evaluado y pueda participar en el Senado de
+          la República.</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="set-12 row">
+    <h3>SEXTA. SELECCIÓN DE PROPUESTAS</h3>
+    <p>Posterior al cierre de recepción de propuestas en la plataforma digital, el Comité
+      Organizador del Maratón Universitario x México llevará a cabo la selección de los
+      mejores equipos:</p>
+
+    <ul>
+      <li>Se elegirán a las 20 mejores propuestas que hayan sido entregadas en
+        tiempo y forma y que hayan cumplido de manera destacada con los criterios
+        anteriormente establecidos.</li>
+      <li>De los equipos seleccionados:
+        <ul class="lvl2">
+          <li>Se hará la invitación para que los equipos ganadores vengan a la
+            Ciudad de México el fin de semana del 8 y 9 de septiembre para un
+            ejercicio de fortalecimiento de sus propuestas, vinculación estratégica
+            con organizaciones y medios de comunicación.</li>
+          <li>Las 20 propuestas se presentarán formalmente en el Senado de la
+            República en presencia de personalidades públicas y activistas.</li>
+          <li>Se apoyará económicamente a <strong>dos personas de cada equipo</strong> con
+            viáticos para el transporte y estancia en la Ciudad de México. Sin
+            embargo, no se limitará la posibilidad de que el resto del equipo asista
+            a los talleres del fin de semana y para la presentación de las
+            propuestas en el Senado.</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="set-12 row">
+    <h3>SÉPTIMA. PUBLICACIÓN DE GANADORES</h3>
+    <p>La lista de los equipos ganadores del Maratón Universitario x México será
+      publicada en las redes sociales de Méxicolectivo y de las organizaciones
+      convocantes el 30 de junio de 2023. También se notificará a cada persona líder de
+      equipo por medio del correo electrónico registrado en la plataforma.</p>
+  </div>
+
+  <div class="set-12 row">
+    <h3>ANEXO I. DE LA ACEPTACIÓN DE LAS BASES</h3>
+    <p>La inscripción al Maratón Universitario x México significa el conocimiento y
+      aceptación de las bases, los casos no previstos en la presente convocatoria serán
+      resueltos en definitiva por el Comité Organizador del presente concurso.</p>
+  </div>
+
+  <div class="set-12 row">
+    <h3>CONTACTO</h3>
+    <p>Cualquier duda sobre la presente convocatoria podrá ser planteada a través del
+      siguiente correo electrónico: maratonuniversitarioxmexico@gmail.com</p>
+  </div>
+
+  <div class="set-12 row">
+    <button type="button" mat-raised-button color="warn" (click)="killDialog()">
+      <small>Salir</small>
     </button>
   </div>
 </div>
