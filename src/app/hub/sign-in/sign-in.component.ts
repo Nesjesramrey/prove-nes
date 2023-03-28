@@ -68,10 +68,6 @@ export class SignInComponent implements OnInit {
 
   onSignIn(form: FormGroup) {
     this.submitted = true;
-
-    // this.angularFireAuth.signInWithCustomToken('');
-
-
     this.angularFireAuth.signInWithEmailAndPassword(
       form['value']['email'], form['value']['password']).then((reply: any) => {
         this.angularFireAuth.authState.subscribe((data: any) => {

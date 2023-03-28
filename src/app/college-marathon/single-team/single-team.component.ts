@@ -23,6 +23,7 @@ import { SolutionService } from 'src/app/services/solution.service';
 import { VoteService } from 'src/app/services/vote.service';
 import { CommentService } from 'src/app/services/comment.service';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: '.single-team',
@@ -107,7 +108,8 @@ export class SingleTeamComponent implements OnInit {
     public solutionService: SolutionService,
     public voteService: VoteService,
     public commentService: CommentService,
-    public deviceDetectorService: DeviceDetectorService
+    public deviceDetectorService: DeviceDetectorService,
+    public angularFireAuth: AngularFireAuth
   ) {
     this.teamID = this.activatedRoute['snapshot']['params']['teamID'];
     // console.log(this.teamID);
@@ -117,12 +119,30 @@ export class SingleTeamComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(param => {
-      console.log(param);
+      if (param['mexicolectivo'] != undefined) {
+        localStorage.setItem('accessToken', param['mexicolectivo']);
+        this.angularFireAuth.signInWithCustomToken(param['mexicolectivo']).then((reply: any) => {
+          this.angularFireAuth.authState.subscribe((data: any) => {
+            this.submitted = false;
+          });
+        })
+          .catch((error: any) => {
+            this.submitted = false;
+            switch (error['code']) {
+              case 'auth/wrong-password':
+                this.utilityService.openErrorSnackBar('Tu contraseña es incorrecta.');
+                break;
+              case 'auth/user-not-found':
+                this.utilityService.openErrorSnackBar('No se encontro el usuario.');
+                break;
+            }
+          });
+      }
     });
 
-    this.activatedRoute.params.subscribe(param => {
-      console.log(param);
-    });
+    // this.activatedRoute.params.subscribe(param => {
+    //   console.log(param);
+    // });
 
     let team: Observable<any> = this.teamService.fetchTeamById({ teamID: this.teamID });
     let user: Observable<any> = this.userService.fetchFireUser();
