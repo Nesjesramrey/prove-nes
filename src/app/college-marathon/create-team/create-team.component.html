@@ -25,7 +25,7 @@
           <div class="set-12 myteams" *ngIf="userAvailable">
             <div class="set-12" *ngIf="user['teams'].length != 0">
               <h3>Mis Equipos</h3>
-              <div class="set-12" *ngFor="let team of user['teams']">
+              <div class="set-12 linkhldr" *ngFor="let team of user['teams']">
                 <button type="button" mat-raised-button color="primary"
                   (click)="utilityService.linkMe('/maraton/equipos/' + team['_id'])">
                   {{team['name']}}
@@ -350,8 +350,8 @@
     <div class="set-12 myteams" *ngIf="userAvailable">
       <div class="set-12" *ngIf="user['teams'].length != 0">
         <h3>Mis Equipos</h3>
-        <div class="set-12" *ngFor="let team of user['teams']">
-          <button type="button" mat-raised-button color="primary"
+        <div class="set-12 linkhldr" *ngFor="let team of user['teams']">
+          <button type="button" mat-stroked-button color="primary"
             (click)="utilityService.linkMe('/maraton/equipos/' + team['_id'])">
             {{team['name']}}
             <mat-icon *ngIf="team['isLeader']">admin_panel_settings</mat-icon>

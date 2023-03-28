@@ -92,6 +92,7 @@ export class SingleTeamComponent implements OnInit {
   public isCollaborator: boolean = false;
   public isMobile: boolean = false;
   @HostBinding('class') public class: string = '';
+  public teams: any = null;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -115,10 +116,19 @@ export class SingleTeamComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.activatedRoute.queryParams.subscribe(param => {
+      console.log(param);
+    });
+
+    this.activatedRoute.params.subscribe(param => {
+      console.log(param);
+    });
+
     let team: Observable<any> = this.teamService.fetchTeamById({ teamID: this.teamID });
     let user: Observable<any> = this.userService.fetchFireUser();
     let document: Observable<any> = this.documentService.fetchCoverDocument();
-    forkJoin([team, user, document]).subscribe({
+    let teams: Observable<any> = this.teamService.fetchAllTeams();
+    forkJoin([team, user, document, teams]).subscribe({
       error: (error: any) => { },
       next: (reply: any) => {
         // console.log(reply);
@@ -149,6 +159,10 @@ export class SingleTeamComponent implements OnInit {
         this.document = reply[2];
         // console.log('document: ', this.document);
         // if (this.team['layout'] != null) { this.setProblemTopics(); }
+
+        this.teams = reply[3];
+        this.teams = this.teams.filter((x: any) => { return x['_id'] != this.teamID; });
+        // console.log('teams: ', this.teams);
       },
       complete: () => {
         this.searchUserFG = this.formBuilder.group({
@@ -743,5 +757,10 @@ export class SingleTeamComponent implements OnInit {
 
   openTestimony(obj: any) {
     this.utilityService.linkMe('/posts/' + obj['_id']);
+  }
+
+  loadTeam(teamID: string) {
+    this.utilityService.router.navigateByUrl('/', { skipLocationChange: true })
+      .then(() => this.utilityService.router.navigate([teamID]));
   }
 }

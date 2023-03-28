@@ -83,14 +83,16 @@
             </button>
           </div>
 
-          <!-- <div class="set-12 row txt-center">
-            <button type="button" mat-mini-fab color="primary" class="mini">
-              <mat-icon>favorite</mat-icon>
+          <div class="set-12 row">
+            <button mat-raised-button color="warn" [matMenuTriggerFor]="menu">
+              <small>Otros Equipos</small>
             </button>
-            <button type="button" mat-mini-fab color="primary" class="mini">
-              <mat-icon>share</mat-icon>
-            </button>
-          </div> -->
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item *ngFor="let team of teams" (click)="loadTeam('/maraton/equipos/' + team['_id'])">
+                <small>{{team['name']}}</small>
+              </button>
+            </mat-menu>
+          </div>
         </mat-card>
       </div>
 

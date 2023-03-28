@@ -18,6 +18,7 @@ export class TeamListComponent implements OnInit {
   public searchTeamsFG!: FormGroup;
   public isMobile: boolean = false;
   @HostBinding('class') public class: string = '';
+  public states: any = null;
 
   constructor(
     public userService: UserService,
@@ -33,7 +34,8 @@ export class TeamListComponent implements OnInit {
   ngOnInit(): void {
     let user: Observable<any> = this.userService.fetchFireUser();
     let teams: Observable<any> = this.teamService.fetchAllTeams();
-    forkJoin([user, teams]).subscribe({
+    let states: Observable<any> = this.utilityService.fetchAllStates();
+    forkJoin([user, teams, states]).subscribe({
       error: (error: any) => { },
       next: (reply: any) => {
         // console.log(reply);
@@ -43,22 +45,29 @@ export class TeamListComponent implements OnInit {
         this.teams = reply[1];
         this.teams.filter((x: any) => { x['teamScore'] = this.setTeamScore(x); });
         // console.log('teams: ', this.teams);
+
+        this.states = reply[2];
+        // console.log('states: ', this.states);
       },
       complete: () => {
         this.searchTeamsFG = this.formBuilder.group({
-          filter: ['', [Validators.required]]
+          filter: ['', [Validators.required]],
+          coverage: ['', []]
         });
         this.isDataAvailable = true;
       }
     });
   }
 
-  serachTeams(form: FormGroup) {
-    let data: any = { filter: form['value']['filter'] };
+  searchTeams(form: FormGroup) {
+    let data: any = {
+      filter: form['value']['filter'],
+      coverage: form['value']['coverage']
+    };
+
     this.teamService.searchTeamsModule(data).subscribe({
-      error: () => { },
+      error: (error: any) => { this.utilityService.openErrorSnackBar(this.utilityService['errorOops']); },
       next: (reply: any) => {
-        console.log(reply);
         this.teams = null;
         this.teams = reply['data'];
         this.teams.filter((x: any) => { x['teamScore'] = this.setTeamScore(x); });
@@ -69,9 +78,7 @@ export class TeamListComponent implements OnInit {
 
   setTeamScore(data: any) {
     let points: any = [];
-    for (var key of Object.keys(data['metadata']['score'])) {
-      points.push(data['metadata']['score'][key]['point']);
-    }
+    for (var key of Object.keys(data['metadata']['score'])) { points.push(data['metadata']['score'][key]['point']); }
     let teamScore = points.reduce((a: any, b: any) => a + b, 0);
     return teamScore;
   }
