@@ -81,7 +81,7 @@ export class TeamService {
 
   searchTeamsModule(data: any) {
     return this.httpClient.get(
-      this.endpointSrvc.apiEndPoint + this.endpointSrvc.searchTeamsModuleEndPoint + `?filter=${data['filter']}`, {}
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.searchTeamsModuleEndPoint + `?filter=${data['filter']}&coverage=${data['coverage']}`, {}
     );
   }
 }

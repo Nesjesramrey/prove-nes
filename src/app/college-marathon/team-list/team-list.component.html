@@ -4,19 +4,36 @@
 
 <div class="set-12" *ngIf="isDataAvailable">
   <div class="crdlst">
-    <!-- <div class="filters">
+    <div class="filters">
       <form [formGroup]="searchTeamsFG">
-        <mat-form-field appearance="outline">
-          <mat-label>Buscar</mat-label>
-          <input type="text" matInput formControlName="filter" (keyup.enter)="serachTeams(searchTeamsFG)">
-        </mat-form-field>
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>Buscar</mat-label>
+            <input type="text" matInput formControlName="filter" (keyup.enter)="searchTeams(searchTeamsFG)">
+            <button type="submit" matSuffix>
+              <mat-icon>search</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>Cobertura</mat-label>
+            <mat-select (selectionChange)="searchTeams(searchTeamsFG)" formControlName="coverage">
+              <mat-option *ngFor="let state of states" [value]="state._id">
+                <small>{{state.name}}</small>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </form>
-    </div> -->
+    </div>
 
     <div *ngIf="teams.length == 0" class="emptyteams">
       <mat-card>
         <h3>Aún no hay equipos registrados</h3>
-        <button type="button" mat-raised-button color="primary" class="wicon" (click)="utilityService.linkMe('/maraton/registro')">
+        <button type="button" mat-raised-button color="primary" class="wicon"
+          (click)="utilityService.linkMe('/maraton/registro')">
           <mat-icon>add_circle</mat-icon>
           <small>Registra tu equipo</small>
         </button>

@@ -131,7 +131,6 @@ export class CreateTeamComponent implements OnInit {
       next: (reply: any) => {
         // console.log(reply);
         this.user = reply[0];
-        // console.log('user: ', this.user);
         if (this.user['status'] != 500) {
           if (this.user['teams'].length != 0) {
             this.user['teams'].filter((x: any) => {
@@ -139,6 +138,7 @@ export class CreateTeamComponent implements OnInit {
             });
           }
         }
+        // console.log('user: ', this.user['teams']);
 
         this.document = reply[1];
         // console.log('document: ', this.document);
