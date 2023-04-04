@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CompleteRegistrationComponent } from './components/complete-registration/complete-registration.component';
 import { environment } from 'src/environments/environment';
 import { SocketService } from './services/socket.service';
-import { filter, Observable } from 'rxjs';
+import { filter, forkJoin, map, mergeMap, Observable, of, tap } from 'rxjs';
 import { DocumentService } from './services/document.service';
 import { response } from 'express';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -16,6 +16,7 @@ import { trigger, transition, animate, style } from '@angular/animations';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ComplaintDialogComponent } from './components/complaint-dialog/complaint-dialog.component';
 import { TestimonyDialogComponent } from './components/testimony-dialog/testimony-dialog.component';
+import { IStreamDataFile, UploaderService } from './services/uploader.service';
 
 const STYLES = (theme: ThemeVariables, ref: ThemeRef) => {
   const __ = ref.selectorsOf(STYLES);
@@ -67,7 +68,8 @@ export class AppComponent implements OnInit {
     public socketService: SocketService,
     public documentService: DocumentService,
     public deviceDetectorService: DeviceDetectorService,
-    public angularFireAuth: AngularFireAuth
+    public angularFireAuth: AngularFireAuth,
+    public uploaderService: UploaderService,
   ) {
     this.accessToken = this.authenticationSrvc.fetchAccessToken;
     this.router.events.subscribe((val) => {
@@ -78,8 +80,30 @@ export class AppComponent implements OnInit {
     this.isMobile = this.deviceDetectorService.isMobile();
   }
 
+  private files: FileList | null = null; 
+  selectFiles(event: any): void {
+    this.files = event.target.files;     
+  }
+  
+  output:  Array<IStreamDataFile> = [];
+  uploadFile(): void {    
+    this.uploaderService.stageFiles = this.files;
+    this.uploaderService.dispatch();
+  }
+
   ngOnInit(): void {
     console.log('Project version', environment.version);
+
+    this.uploaderService.globalQueueSubject.subscribe({
+      next: (streamProgress) => {        
+        this.output = streamProgress;        
+      },
+      error: (value) => {},
+      complete: () => {
+        let locationsOutput = this.output.map(item => item.location); 
+        console.log(locationsOutput);        
+      },
+    });
 
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
