@@ -3,20 +3,32 @@
 </div>
 
 <div class="set-12" *ngIf="isDataAvailable">
-  <!-- <div class="set-12 headctrls">
-    <mat-form-field appearance="outline">
-      <mat-label>Buscar...</mat-label>
-      <input matInput placeholder="Buscar..." />
-      <button type="button" matSuffix>
-        <mat-icon>cancel</mat-icon>
-      </button>
-    </mat-form-field>
-    <button type="button" mat-mini-fab color="primary">
-      <mat-icon>filter_list</mat-icon>
-    </button>
-  </div> -->
-
   <div class="crdlst">
+    <div class="filters">
+      <form [formGroup]="searchTeamsFG">
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>Buscar</mat-label>
+            <input type="text" matInput formControlName="filter">
+            <button type="submit" matSuffix>
+              <mat-icon>search</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>Cobertura</mat-label>
+            <mat-select formControlName="coverage">
+              <mat-option *ngFor="let state of states" [value]="state._id">
+                <small>{{state.name}}</small>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </form>
+    </div>
+
     <mat-card *ngFor="let post of posts">
       <!-- testimony -->
       <div class="set-12" *ngIf="post['relation'] == 'testimony'">
