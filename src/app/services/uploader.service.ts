@@ -19,7 +19,6 @@ export interface S3PutObjectRequest extends S3.PutObjectRequest {
 export class UploaderService {
   private bucketS3: S3;
   private queueFiles: FileList | null | Array<File> = null;
-  private queueObservables: Array<Observable<IStreamDataFile>> = []; 
   private queueSubject: Subject<Array<IStreamDataFile>> = new Subject<Array<IStreamDataFile>>();
   public readonly globalQueueSubject: Observable<Array<IStreamDataFile>> = this.queueSubject.asObservable();
 
@@ -32,7 +31,7 @@ export class UploaderService {
   }
 
   /**
-   * Prepare files
+   * @description Prepare files
    */
   public set stageFiles(fileList: FileList | null | Array<File>) {
     this.queueFiles = fileList; 
@@ -42,16 +41,17 @@ export class UploaderService {
    * @description Star upload files
    */
   public dispatch(): void {
+    let queueObservables: Array<Observable<IStreamDataFile>> = [];
     if(this.queueFiles != null) {      
       for (let index = 0; index < this.queueFiles.length; index++) {  
         const file = this.queueFiles[index];
         const putObjectRequest: S3PutObjectRequest = this.getPutObjectRequest(file);
         const $observable: Observable<IStreamDataFile> = this.getObservablePutObjectRequest(putObjectRequest); 
-        this.queueObservables.push($observable);
+        queueObservables.push($observable);
       }
     }
 
-    combineLatest(this.queueObservables).subscribe({
+    combineLatest(queueObservables).subscribe({
       next: (streamProgress) => {        
         this.queueSubject.next(streamProgress);
       },
