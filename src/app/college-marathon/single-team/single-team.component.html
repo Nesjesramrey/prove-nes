@@ -43,6 +43,17 @@
           {{ user.firstname | firstword | firstletter }}{{ user.lastname | firstword | firstletter }}
         </span>
       </div>
+
+      <div class="otherteams">
+        <button type="button" mat-raised-button color="primary" class="wicon" (click)="utilityService.linkMe('/maraton/equipos')" *ngIf="!isMobile">
+          <mat-icon>groups</mat-icon>
+          <small>Ver otros equipos</small>
+        </button>
+
+        <button type="button" mat-mini-fab color="primary" (click)="utilityService.linkMe('/maraton/equipos')" *ngIf="isMobile">
+          <mat-icon>groups</mat-icon>
+        </button>
+      </div>
     </div>
 
     <div class="set-12 teamtools">
@@ -420,7 +431,7 @@
             </ng-template>
 
             <div class="set-12 tabconts">
-              <div class="set-12 emptycollabs" *ngIf="team['collaborators'].length == 0">
+              <div class="set-12 emptycollabs" *ngIf="team['collaborators'].length == 0 && isLeader">
                 <h3>No tienes colaboradores</h3>
 
                 <form [formGroup]="searchUserFG" class="set-12">

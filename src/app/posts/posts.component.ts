@@ -12,6 +12,7 @@ import { VoteService } from '../services/vote.service';
 import { FavoritesService } from '../services/favorites.service';
 import { forkJoin, Observable } from 'rxjs';
 import { UseToolsDialogComponent } from './components/use-tools-dialog/use-tools-dialog.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: '.posts-page',
@@ -26,6 +27,8 @@ export class PostsComponent implements OnInit {
   public posts: any = null;
   public postsPage: number = 1;
   public submitted: boolean = false;
+  public searchTeamsFG!: FormGroup;
+  public states: any = null;
 
   constructor(
     public deviceDetectorService: DeviceDetectorService,
@@ -35,7 +38,8 @@ export class PostsComponent implements OnInit {
     public dialog: MatDialog,
     public postsService: PostsService,
     public voteService: VoteService,
-    public favoritesService: FavoritesService
+    public favoritesService: FavoritesService,
+    public formBuilder: FormBuilder
   ) {
     this.isMobile = this.deviceDetectorService.isMobile();
     if (this.isMobile) { this.class = 'fixmobile'; }
@@ -44,7 +48,8 @@ export class PostsComponent implements OnInit {
   ngOnInit(): void {
     let user: Observable<any> = this.userService.fetchFireUser();
     let posts: Observable<any> = this.postsService.fetchAllPosts({ limit: 10, page: this.postsPage });
-    forkJoin([user, posts]).subscribe({
+    let states: Observable<any> = this.utilityService.fetchAllStates();
+    forkJoin([user, posts, states]).subscribe({
       error: (error: any) => { },
       next: (reply: any) => {
         this.user = reply[0];
@@ -57,8 +62,15 @@ export class PostsComponent implements OnInit {
           this.updatePostsFavorites();
           this.updatePostsVotes();
         }
+
+        this.states = reply[2];
+        // console.log('states: ', this.states);
       },
       complete: () => {
+        this.searchTeamsFG = this.formBuilder.group({
+          filter: ['', [Validators.required]],
+          coverage: ['', []]
+        });
         this.isDataAvailable = true;
         if (this.user['status'] != undefined) {
           setTimeout(() => {
