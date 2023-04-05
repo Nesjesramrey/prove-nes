@@ -16,9 +16,8 @@ export interface S3PutObjectRequest extends S3.PutObjectRequest {
 }
 
 @Injectable({ providedIn: 'root' })
-export class UploaderService {
+export class BucketS3Service {
   private bucketS3: S3;
-  private queueFiles: FileList | null | Array<File> = null;
   private queueSubject: Subject<Array<IStreamDataFile>> = new Subject<Array<IStreamDataFile>>();
   public readonly globalQueueSubject: Observable<Array<IStreamDataFile>> = this.queueSubject.asObservable();
 
@@ -31,37 +30,17 @@ export class UploaderService {
   }
 
   /**
-   * @description Prepare files
+   * @description 
    */
-  public set stageFiles(fileList: FileList | null | Array<File>) {
-    this.queueFiles = fileList; 
-  }
-
-  /**
-   * @description Star upload files
-   */
-  public dispatch(): void {
+  public stage(fileList: FileList | Array<File>): Array<Observable<IStreamDataFile>> {
     let queueObservables: Array<Observable<IStreamDataFile>> = [];
-    if(this.queueFiles != null) {      
-      for (let index = 0; index < this.queueFiles.length; index++) {  
-        const file = this.queueFiles[index];
-        const putObjectRequest: S3PutObjectRequest = this.getPutObjectRequest(file);
-        const $observable: Observable<IStreamDataFile> = this.getObservablePutObjectRequest(putObjectRequest); 
-        queueObservables.push($observable);
-      }
+    for (let index = 0; index < fileList.length; index++) {  
+      const file = fileList[index];
+      const putObjectRequest: S3PutObjectRequest = this.getPutObjectRequest(file);
+      const $observable: Observable<IStreamDataFile> = this.createObservablePutObjectRequest(putObjectRequest); 
+      queueObservables.push($observable);
     }
-
-    combineLatest(queueObservables).subscribe({
-      next: (streamProgress) => {        
-        this.queueSubject.next(streamProgress);
-      },
-      error: (error) => {
-        this.queueSubject.error(error);
-      },
-      complete: () => {
-        this.queueSubject.complete();
-      },
-    }); 
+    return queueObservables;
   }
 
   /**
@@ -87,7 +66,7 @@ export class UploaderService {
    * @param putObjectRequest 
    * @returns 
    */
-  private getObservablePutObjectRequest(putObjectRequest: S3PutObjectRequest): Observable<IStreamDataFile> {
+  private createObservablePutObjectRequest(putObjectRequest: S3PutObjectRequest): Observable<IStreamDataFile> {
     const $observable = new Observable<IStreamDataFile>((observer) => {         
       this.bucketS3.upload(putObjectRequest)
         .on('httpUploadProgress', function(metadata: S3.ManagedUpload.Progress) {

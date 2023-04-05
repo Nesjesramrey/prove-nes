@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CompleteRegistrationComponent } from './components/complete-registration/complete-registration.component';
 import { environment } from 'src/environments/environment';
 import { SocketService } from './services/socket.service';
-import { filter, forkJoin, map, mergeMap, Observable, of, tap } from 'rxjs';
+import { combineLatest, filter, forkJoin, map, mergeMap, Observable, of, tap } from 'rxjs';
 import { DocumentService } from './services/document.service';
 import { response } from 'express';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -16,7 +16,7 @@ import { trigger, transition, animate, style } from '@angular/animations';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ComplaintDialogComponent } from './components/complaint-dialog/complaint-dialog.component';
 import { TestimonyDialogComponent } from './components/testimony-dialog/testimony-dialog.component';
-import { IStreamDataFile, UploaderService } from './services/uploader.service';
+import { IStreamDataFile, BucketS3Service } from './services/bucket.s3.service';
 
 const STYLES = (theme: ThemeVariables, ref: ThemeRef) => {
   const __ = ref.selectorsOf(STYLES);
@@ -69,7 +69,7 @@ export class AppComponent implements OnInit {
     public documentService: DocumentService,
     public deviceDetectorService: DeviceDetectorService,
     public angularFireAuth: AngularFireAuth,
-    public uploaderService: UploaderService,
+    public uploaderService: BucketS3Service
   ) {
     this.accessToken = this.authenticationSrvc.fetchAccessToken;
     this.router.events.subscribe((val) => {
@@ -80,28 +80,51 @@ export class AppComponent implements OnInit {
     this.isMobile = this.deviceDetectorService.isMobile();
   }
 
+  // AWS uploader files
   private files: FileList | null = null; 
+  output:  Array<IStreamDataFile> = [];
+  locations: Array<string> = [];
+
   selectFiles(event: any): void {
     this.files = event.target.files;     
-  }
-  
-  output:  Array<IStreamDataFile> = [];
-  uploadFile(): void {    
-    this.uploaderService.stageFiles = this.files;
-    this.uploaderService.dispatch();
+  } 
+
+  uploadFile(): void { 
+    if(this.files != null) {
+      let filesStage$: Array<Observable<IStreamDataFile>> = this.uploaderService.stage(this.files);
+      combineLatest(filesStage$).subscribe({
+        next: (streamProgress) => {        
+          this.output = streamProgress;          
+        },
+        error: (error) => {
+          
+        },
+        complete: () => {        
+          this.locations = this.output.map(item => item.location!);          
+        },
+      })
+    } 
   }
 
   ngOnInit(): void {
     console.log('Project version', environment.version);
 
+    // Track stream upload files 
     this.uploaderService.globalQueueSubject.subscribe({
-      next: (streamProgress) => {        
-        this.output = streamProgress;        
+      next: (stream: Array<IStreamDataFile>) => {     
+        this.output = stream;
+        // if(stream instanceof Array<IStreamDataFile>) {
+        //   this.output = (stream as Array<IStreamDataFile>);    
+        // } 
+
+        // if(stream instanceof Array<string>) {
+        //   console.log(stream);          
+        //   this.locations = stream as Array<string>; 
+        // }
       },
       error: (value) => {},
       complete: () => {
-        let locationsOutput = this.output.map(item => item.location); 
-        console.log(locationsOutput);        
+        // let locationsOutput = _streamProgress.map<string>(item => item.location!)
       },
     });
 
