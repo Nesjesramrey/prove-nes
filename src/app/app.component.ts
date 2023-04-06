@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CompleteRegistrationComponent } from './components/complete-registration/complete-registration.component';
 import { environment } from 'src/environments/environment';
 import { SocketService } from './services/socket.service';
-import { combineLatest, filter, forkJoin, map, mergeMap, Observable, of, tap } from 'rxjs';
+import { combineLatest, delay, filter, forkJoin, map, mergeMap, Observable, of, tap } from 'rxjs';
 import { DocumentService } from './services/document.service';
 import { response } from 'express';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -17,6 +17,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ComplaintDialogComponent } from './components/complaint-dialog/complaint-dialog.component';
 import { TestimonyDialogComponent } from './components/testimony-dialog/testimony-dialog.component';
 import { IStreamDataFile, BucketS3Service } from './services/bucket.s3.service';
+import { QueueService } from './services/queue.service';
 
 const STYLES = (theme: ThemeVariables, ref: ThemeRef) => {
   const __ = ref.selectorsOf(STYLES);
@@ -69,7 +70,8 @@ export class AppComponent implements OnInit {
     public documentService: DocumentService,
     public deviceDetectorService: DeviceDetectorService,
     public angularFireAuth: AngularFireAuth,
-    public uploaderService: BucketS3Service
+    public uploaderService: BucketS3Service,
+    public queueService: QueueService<any>
   ) {
     this.accessToken = this.authenticationSrvc.fetchAccessToken;
     this.router.events.subscribe((val) => {
@@ -92,6 +94,7 @@ export class AppComponent implements OnInit {
   uploadFile(): void { 
     if(this.files != null) {
       let filesStage$: Array<Observable<IStreamDataFile>> = this.uploaderService.stage(this.files);
+      // let filesStage2$: Array<Observable<IStreamDataFile>> = this.uploaderService.stage(this.files);
       combineLatest(filesStage$).subscribe({
         next: (streamProgress) => {        
           this.output = streamProgress;          
@@ -103,28 +106,24 @@ export class AppComponent implements OnInit {
           this.locations = this.output.map(item => item.location!);          
         },
       })
-    } 
+      // this.queueService.enqueue(combineLatest(filesStage$));
+      // this.queueService.enqueue(combineLatest(filesStage2$));
+    } else {
+    }
   }
 
   ngOnInit(): void {
     console.log('Project version', environment.version);
 
     // Track stream upload files 
-    this.uploaderService.globalQueueSubject.subscribe({
-      next: (stream: Array<IStreamDataFile>) => {     
-        this.output = stream;
-        // if(stream instanceof Array<IStreamDataFile>) {
-        //   this.output = (stream as Array<IStreamDataFile>);    
-        // } 
-
-        // if(stream instanceof Array<string>) {
-        //   console.log(stream);          
-        //   this.locations = stream as Array<string>; 
-        // }
+    this.queueService.asObservable().subscribe({
+      next: (stream) => {     
+        // this.output = stream;
+        console.log(stream);
+        
       },
       error: (value) => {},
       complete: () => {
-        // let locationsOutput = _streamProgress.map<string>(item => item.location!)
       },
     });
 

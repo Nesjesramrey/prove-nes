@@ -17,9 +17,7 @@ export interface S3PutObjectRequest extends S3.PutObjectRequest {
 
 @Injectable({ providedIn: 'root' })
 export class BucketS3Service {
-  private bucketS3: S3;
-  private queueSubject: Subject<Array<IStreamDataFile>> = new Subject<Array<IStreamDataFile>>();
-  public readonly globalQueueSubject: Observable<Array<IStreamDataFile>> = this.queueSubject.asObservable();
+  private bucketS3: S3;  
 
   constructor() {
     this.bucketS3 = new S3({
