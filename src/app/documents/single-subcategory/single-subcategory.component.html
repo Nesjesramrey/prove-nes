@@ -248,11 +248,19 @@
                   <button type="button" mat-menu-item *ngIf="actionControlActivityList.includes(user.activityName)">
                     <mat-icon>drag_handle</mat-icon>
                     <small>Duplicar</small>
-                  </button>
-                  <button type="button" mat-menu-item *ngIf="actionControlActivityList.includes(user.activityName)">
+                  </button> -->
+
+                  <button type="button" mat-menu-item *ngIf="actionControlActivityList.includes(user.activityName)"
+                    (click)="moveTopic(element)">
                     <mat-icon>exit_to_app</mat-icon>
                     <small>Mover</small>
-                  </button> -->
+                  </button>
+
+                  <button type="button" mat-menu-item *ngIf="actionControlActivityList.includes(user.activityName)"
+                    (click)="copyTopic(element)">
+                    <mat-icon>content_copy</mat-icon>
+                    <small>Copiar</small>
+                  </button>
 
                   <button type="button" mat-menu-item (click)="killTopic(element)"
                     *ngIf="actionControlActivityList.includes(user.activityName)">

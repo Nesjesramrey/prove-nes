@@ -9,8 +9,8 @@
         <div>
           <mat-form-field appearance="outline">
             <mat-label>Buscar</mat-label>
-            <input type="text" matInput formControlName="filter">
-            <button type="submit" matSuffix>
+            <input type="text" matInput formControlName="filter" (keyup.enter)="filterPosts(searchTeamsFG)">
+            <button type="submit" matSuffix (click)="filterPosts(searchTeamsFG)">
               <mat-icon>search</mat-icon>
             </button>
           </mat-form-field>
@@ -19,7 +19,8 @@
         <div>
           <mat-form-field appearance="outline">
             <mat-label>Cobertura</mat-label>
-            <mat-select formControlName="coverage">
+            <mat-select formControlName="coverage" (selectionChange)="filterPosts(searchTeamsFG)">
+              <mat-option value="none"><small>Sin Cobertura</small></mat-option>
               <mat-option *ngFor="let state of states" [value]="state._id">
                 <small>{{state.name}}</small>
               </mat-option>

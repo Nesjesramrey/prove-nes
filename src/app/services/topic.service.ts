@@ -58,4 +58,16 @@ export class TopicService {
       this.endpointSrvc.apiEndPoint + this.endpointSrvc.killTopicEndPoint + `${data['topic_id']}`, data
     );
   }
+
+  moveTopic(data: any) {
+    return this.httpClient.put(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.moveTopicEndPoint, data
+    );
+  }
+
+  copyTopic(data: any) {
+    return this.httpClient.put(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.copyTopicEndPoint, data
+    );
+  }
 }

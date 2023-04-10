@@ -288,4 +288,24 @@ export class PostsComponent implements OnInit {
       if (reply != undefined) { }
     });
   }
+
+  filterPosts(form: FormGroup) {
+    let data: any = {
+      filter: form['value']['filter'],
+      coverage: form['value']['coverage'],
+    };
+
+    this.postsService.filterPosts(data).subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        if (reply.length == 0) {
+          this.utilityService.openErrorSnackBar('No hay resultados para tu busqueda.');
+          return;
+        }
+        this.posts = reply;
+        this.setPostsCards();
+      },
+      complete: () => { }
+    });
+  }
 }
