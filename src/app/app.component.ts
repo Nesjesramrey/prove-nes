@@ -108,7 +108,6 @@ export class AppComponent implements OnInit {
       })
       // this.queueService.enqueue(combineLatest(filesStage$));
       // this.queueService.enqueue(combineLatest(filesStage2$));
-    } else {
     }
   }
 
@@ -124,6 +123,7 @@ export class AppComponent implements OnInit {
       },
       error: (value) => {},
       complete: () => {
+        
       },
     });
 

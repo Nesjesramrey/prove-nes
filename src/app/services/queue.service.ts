@@ -40,9 +40,7 @@ export class QueueService<T> {
 
   public asObservable(): Observable<T> {
     return this.queue.asObservable().pipe(
-      tap(queue => console.log("::", queue)),
       switchMap(queue => {
-
         return queue.pipe(
           concatMap(item => item)
         );
