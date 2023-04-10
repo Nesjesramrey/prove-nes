@@ -256,6 +256,12 @@
                     <small>Mover</small>
                   </button>
 
+                  <button type="button" mat-menu-item *ngIf="actionControlActivityList.includes(user.activityName)"
+                    (click)="copyTopic(element)">
+                    <mat-icon>content_copy</mat-icon>
+                    <small>Copiar</small>
+                  </button>
+
                   <button type="button" mat-menu-item (click)="killTopic(element)"
                     *ngIf="actionControlActivityList.includes(user.activityName)">
                     <mat-icon>delete</mat-icon>

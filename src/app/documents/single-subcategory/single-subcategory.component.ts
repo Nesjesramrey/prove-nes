@@ -374,7 +374,8 @@ export class SingleSubcategoryComponent implements OnInit {
         document: this.document,
         layout: this.subcategory,
         user: this.user,
-        topic: topic
+        topic: topic,
+        action: 'move'
       },
       disableClose: true,
     });
@@ -383,6 +384,25 @@ export class SingleSubcategoryComponent implements OnInit {
       if (reply != undefined) {
         this.topics = this.topics.filter((x: any) => { return x['_id'] != reply['_id'] });
       }
+    });
+  }
+
+  copyTopic(topic: any) {
+    const dialogRef = this.dialog.open<MoveCopyTopicComponent>(MoveCopyTopicComponent, {
+      width: '640px',
+      data: {
+        location: 'sublayout',
+        document: this.document,
+        layout: this.subcategory,
+        user: this.user,
+        topic: topic,
+        action: 'copy'
+      },
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
     });
   }
 }

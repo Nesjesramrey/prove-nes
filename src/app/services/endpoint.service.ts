@@ -69,6 +69,7 @@ export class EndPointService {
   public fetchVotedTopicsByUserEndPoint: string = '/topic/user/';
   public killTopicEndPoint: string = '/topic/';
   public moveTopicEndPoint: string = '/topic/move';
+  public copyTopicEndPoint: string = '/topic/copy';
 
   // permission
   public createNewPermissionEndPoint: string = '/permission/';
