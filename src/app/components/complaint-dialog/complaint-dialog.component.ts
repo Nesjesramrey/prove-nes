@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { ComplaintService } from 'src/app/services/complaint.service';
+import { UploadService } from 'src/app/services/upload.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
@@ -77,7 +78,8 @@ export class ComplaintDialogComponent implements OnInit {
     public utilityService: UtilityService,
     public deviceDetectorService: DeviceDetectorService,
     @Inject(DOCUMENT) public DOM: Document,
-    public router: Router
+    public router: Router,
+    public uploadService: UploadService
   ) {
     // console.log(this.dialogData);
     this.user = this.dialogData['user'];
@@ -117,49 +119,60 @@ export class ComplaintDialogComponent implements OnInit {
     this.complaintFormGroup.updateValueAndValidity();
 
     this.files = event['target']['files'];
-    let weight: any = this.validateFileSize(this.files);
+    // let weight: any = this.validateFileSize(this.files);
 
-    if (weight > 5) {
-      this.utilityService.openErrorSnackBar('El peso máximo de carga es de 5MB');
-      this.complaintFormGroup.setErrors({ 'error': true });
-      this.submitted = false;
-    }
+    // if (weight > 5) {
+    //   this.utilityService.openErrorSnackBar('El peso máximo de carga es de 5MB');
+    //   this.complaintFormGroup.setErrors({ 'error': true });
+    //   this.submitted = false;
+    // }
   }
 
   onFileComplaint(form: FormGroup) {
     this.submitted = true;
-    let data = new FormData();
+    // let data = new FormData();
 
-    Array.from(this.complaintFormGroup.controls['files']['value'])
-      .forEach((file: any) => { data.append('files', file); });
-    data.append('title', this.complaintFormGroup.value.title);
-    data.append('description', this.complaintFormGroup.value.description);
-    switch (this.locationAvailable) {
-      case true:
-        data.append('latitude', this.location['latitude']);
-        data.append('longitude', this.location['longitude']);
-        break;
+    // Array.from(this.complaintFormGroup.controls['files']['value'])
+    //   .forEach((file: any) => { data.append('files', file); });
+    // data.append('title', this.complaintFormGroup.value.title);
+    // data.append('description', this.complaintFormGroup.value.description);
+    // switch (this.locationAvailable) {
+    //   case true:
+    //     data.append('latitude', this.location['latitude']);
+    //     data.append('longitude', this.location['longitude']);
+    //     break;
+    // }
+    // data.append('isAnonymous', (this.isAnonymous).toString());
+
+    // this.complaintService.fileComplaint(data).subscribe({
+    //   error: (error: any) => {
+    //     this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+    //     this.killDialog();
+    //   },
+    //   next: (reply: any) => {
+    //     this.postURL = this.url + '/' + reply['_id'];
+    //     this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
+    //   },
+    //   complete: () => {
+    //     this.locationAvailable = false;
+    //     this.location['latitude'] = null;
+    //     this.location['longitude'] = null;
+    //     this.stepNext();
+    //     this.submitted = false;
+    //     this.complaintFormGroup.reset();
+    //   }
+    // });
+
+    let data: any = {
+      files: this.complaintFormGroup.controls['files']['value'],
+      title: this.complaintFormGroup.value.title,
+      description: this.complaintFormGroup.value.description,
+      isAnonymous: this.isAnonymous,
+      type: 'complaint'
     }
-    data.append('isAnonymous', (this.isAnonymous).toString());
 
-    this.complaintService.fileComplaint(data).subscribe({
-      error: (error: any) => {
-        this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
-        this.killDialog();
-      },
-      next: (reply: any) => {
-        this.postURL = this.url + '/' + reply['_id'];
-        this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
-      },
-      complete: () => {
-        this.locationAvailable = false;
-        this.location['latitude'] = null;
-        this.location['longitude'] = null;
-        this.stepNext();
-        this.submitted = false;
-        this.complaintFormGroup.reset();
-      }
-    });
+    this.uploadService.injectPayload(data);
+    this.killDialog();
   }
 
   popFile(index: number) {

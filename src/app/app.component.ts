@@ -18,6 +18,9 @@ import { ComplaintDialogComponent } from './components/complaint-dialog/complain
 import { TestimonyDialogComponent } from './components/testimony-dialog/testimony-dialog.component';
 import { IStreamDataFile, BucketS3Service } from './services/bucket.s3.service';
 import { QueueService } from './services/queue.service';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { UploadHandlerSheetComponent } from './components/upload-handler-sheet/upload-handler-sheet.component';
+import { UploadService } from './services/upload.service';
 
 const STYLES = (theme: ThemeVariables, ref: ThemeRef) => {
   const __ = ref.selectorsOf(STYLES);
@@ -71,39 +74,39 @@ export class AppComponent implements OnInit {
     public deviceDetectorService: DeviceDetectorService,
     public angularFireAuth: AngularFireAuth,
     public uploaderService: BucketS3Service,
-    public queueService: QueueService<any>
+    public queueService: QueueService<any>,
+    public matBottomSheet: MatBottomSheet,
+    public uploadService: UploadService
   ) {
     this.accessToken = this.authenticationSrvc.fetchAccessToken;
-    this.router.events.subscribe((val) => {
-      if (val instanceof ResolveStart) {
-        this.path = val.url;
-      }
+    this.router.events.subscribe((val: any) => {
+      if (val instanceof ResolveStart) { this.path = val.url; }
     });
     this.isMobile = this.deviceDetectorService.isMobile();
   }
 
   // AWS uploader files
-  private files: FileList | null = null; 
-  output:  Array<IStreamDataFile> = [];
+  private files: FileList | null = null;
+  output: Array<IStreamDataFile> = [];
   locations: Array<string> = [];
 
   selectFiles(event: any): void {
-    this.files = event.target.files;     
-  } 
+    this.files = event.target.files;
+  }
 
-  uploadFile(): void { 
-    if(this.files != null) {
+  uploadFile(): void {
+    if (this.files != null) {
       let filesStage$: Array<Observable<IStreamDataFile>> = this.uploaderService.stage(this.files);
       // let filesStage2$: Array<Observable<IStreamDataFile>> = this.uploaderService.stage(this.files);
       combineLatest(filesStage$).subscribe({
-        next: (streamProgress) => {        
-          this.output = streamProgress;          
+        next: (streamProgress) => {
+          this.output = streamProgress;
         },
         error: (error) => {
-          
+
         },
-        complete: () => {        
-          this.locations = this.output.map(item => item.location!);          
+        complete: () => {
+          this.locations = this.output.map(item => item.location!);
         },
       })
       // this.queueService.enqueue(combineLatest(filesStage$));
@@ -114,34 +117,30 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     console.log('Project version', environment.version);
 
+    this.uploadService.getPayload().subscribe((payload: any) => { this.popUploadHandler(payload); });
+
     // Track stream upload files 
     this.queueService.asObservable().subscribe({
-      next: (stream) => {     
+      next: (stream) => {
         // this.output = stream;
         console.log(stream);
-        
       },
-      error: (value) => {},
-      complete: () => {
-        
-      },
+      error: (error: any) => { },
+      complete: () => { },
     });
 
-    this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {
         gtag('event', 'page_view', {
           page_path: event.urlAfterRedirects,
         });
       });
 
-    this.documentService.fetchCoverDocument().subscribe({
-      error: (error: any) => { },
-      next: (reply: any) => {
-        this.coverDocument = reply;
-      },
-      complete: () => { },
-    });
+    // this.documentService.fetchCoverDocument().subscribe({
+    //   error: (error: any) => { },
+    //   next: (reply: any) => { this.coverDocument = reply; },
+    //   complete: () => { },
+    // });
 
     if (this.accessToken != null) {
       this.userService.fetchFireUser().subscribe({
@@ -170,9 +169,7 @@ export class AppComponent implements OnInit {
 
     this.documentService.fetchCoverDocument().subscribe({
       error: (error: any) => { },
-      next: (reply: any) => {
-        this.document = reply;
-      },
+      next: (reply: any) => { this.document = reply; },
     });
   }
 
@@ -310,5 +307,15 @@ export class AppComponent implements OnInit {
 
   popPDF() {
     window.open('https://static-assets-pando.s3.amazonaws.com/assets/punto+de+partida.pdf');
+  }
+
+  popUploadHandler(payload: any) {
+    const bottomSheetRef = this.matBottomSheet.open(UploadHandlerSheetComponent, {
+      data: { payload: payload }
+    });
+
+    bottomSheetRef.afterDismissed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
   }
 }
