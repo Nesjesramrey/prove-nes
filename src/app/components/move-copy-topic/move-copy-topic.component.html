@@ -1,0 +1,47 @@
+<div class="set-12 loading" *ngIf="!isDataAvailable">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="set-12" *ngIf="isDataAvailable">
+  <div class="set-12 dlghd">
+    <div class="set-10">
+      <h3>Mover {{topic['title']}}</h3>
+    </div>
+    <div class="set-2">
+      <button type="button" mat-mini-fab color="primary" (click)="killDialog()" [disabled]="submitted">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="set-12 dlgbdy">
+    <form class="set-12" [formGroup]="formGroup" (submit)="onMoveTopic(formGroup)">
+      <mat-form-field appearance="outline">
+        <mat-label>Tema</mat-label>
+        <mat-select (selectionChange)="onLayoutSelected($event)">
+          <mat-option *ngFor="let layout of layouts" [value]="layout._id">
+            <small>{{layout['category']['name']}}</small>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Subtema</mat-label>
+        <mat-select formControlName="toSublayout">
+          <mat-option *ngFor="let layout of sublayouts" [value]="layout._id">
+            <small>{{layout['category']['name']}}</small>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="set-12 ctrls">
+        <button type="submit" mat-raised-button color="warn" class="wicon"
+          [disabled]="sublayouts == null || submitted || formGroup.invalid">
+          <mat-icon>exit_to_app</mat-icon>
+          <small>Mover</small>
+        </button>
+        <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
+      </div>
+    </form>
+  </div>
+</div>

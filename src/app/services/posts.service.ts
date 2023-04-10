@@ -36,4 +36,10 @@ export class PostsService {
       this.endPointService.apiEndPoint + this.endPointService.categorizePostEndPoint, data
     );
   }
+
+  filterPosts(data: any) {
+    return this.httpClient.get(
+      this.endPointService.apiEndPoint + this.endPointService.filterPostsEndPoint + `?filter=${data['filter']}&coverage=${data['coverage']}`, {}
+    );
+  }
 }

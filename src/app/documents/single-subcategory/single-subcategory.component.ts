@@ -23,6 +23,7 @@ import { isArray } from 'util';
 import { AddDocumentCollaboratorComponent } from 'src/app/components/add-document-collaborator/add-document-collaborator.component';
 import { ViewDocumentCommentsComponent } from 'src/app/components/view-document-comments/view-document-comments.component';
 import { DescriptionViewerComponent } from 'src/app/components/description-viewer/description-viewer.component';
+import { MoveCopyTopicComponent } from 'src/app/components/move-copy-topic/move-copy-topic.component';
 
 @Component({
   selector: '.app-single-subcategory',
@@ -361,6 +362,26 @@ export class SingleSubcategoryComponent implements OnInit {
       if (reply != undefined) {
         this.topics = this.topics.filter((x: any) => { return x['_id'] != reply['_id']; });
         this.dataSource = new MatTableDataSource(this.topics);
+      }
+    });
+  }
+
+  moveTopic(topic: any) {
+    const dialogRef = this.dialog.open<MoveCopyTopicComponent>(MoveCopyTopicComponent, {
+      width: '640px',
+      data: {
+        location: 'sublayout',
+        document: this.document,
+        layout: this.subcategory,
+        user: this.user,
+        topic: topic
+      },
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        this.topics = this.topics.filter((x: any) => { return x['_id'] != reply['_id'] });
       }
     });
   }

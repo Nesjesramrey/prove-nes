@@ -68,6 +68,7 @@ export class EndPointService {
   public fetchFavoriteTopicsByUserEndPoint: string = '/topic/user/';
   public fetchVotedTopicsByUserEndPoint: string = '/topic/user/';
   public killTopicEndPoint: string = '/topic/';
+  public moveTopicEndPoint: string = '/topic/move';
 
   // permission
   public createNewPermissionEndPoint: string = '/permission/';
@@ -182,6 +183,7 @@ export class EndPointService {
   public fetchPostByRelationIdEndPoint: string = '/post/';
   public addPostCommentEndPoint: string = '/post/';
   public categorizePostEndPoint: string = '/assignment';
+  public filterPostsEndPoint: string = '/post/search';
 
   // teams
   public createTeamEndPoint: string = '/team';
