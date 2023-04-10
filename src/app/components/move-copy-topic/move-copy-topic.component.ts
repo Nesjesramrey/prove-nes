@@ -18,6 +18,7 @@ export class MoveCopyTopicComponent implements OnInit {
   public formGroup!: FormGroup;
   public submitted: boolean = false;
   public isDataAvailable: boolean = false;
+  public action: string = '';
 
   constructor(
     public dialogRef: MatDialogRef<MoveCopyTopicComponent>,
@@ -26,7 +27,8 @@ export class MoveCopyTopicComponent implements OnInit {
     public utilityService: UtilityService,
     public topicService: TopicService
   ) {
-    console.log(this.dialogData);
+    // console.log(this.dialogData);
+    this.action = this.dialogData['action'];
     this.topic = this.dialogData['topic'];
     this.layout = this.dialogData['layout'];
     this.document = this.dialogData['document'];
@@ -46,7 +48,6 @@ export class MoveCopyTopicComponent implements OnInit {
   onLayoutSelected(event: any) {
     let layout: any = this.layouts.filter((x: any) => { return x['_id'] == event['value']; });
     this.sublayouts = layout[0]['subLayouts'];
-    // this.formGroup.controls['toSublayout'].enable();
   }
 
   onMoveTopic(form: FormGroup) {
@@ -65,6 +66,25 @@ export class MoveCopyTopicComponent implements OnInit {
       error: (error: any) => { this.utilityService.openErrorSnackBar(this.utilityService['errorOops']); },
       next: (reply: any) => { this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']); },
       complete: () => { this.dialogRef.close(this.topic); }
+    });
+  }
+
+  onCopyTopic(form: FormGroup) {
+    let data: any = {
+      topic: this.topic['_id'],
+      fromSublayout: this.layout['_id'],
+      toSublayout: this.formGroup['value']['toSublayout']
+    };
+
+    if (data['fromSublayout'] == data['toSublayout']) {
+      this.utilityService.openErrorSnackBar('No se puede copiar al mismo tema.');
+      return;
+    }
+
+    this.topicService.copyTopic(data).subscribe({
+      error: (error: any) => { this.utilityService.openErrorSnackBar(this.utilityService['errorOops']); },
+      next: (reply: any) => { console.log(reply); this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']); },
+      complete: () => { this.killDialog() }
     });
   }
 }
