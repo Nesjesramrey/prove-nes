@@ -1,9 +1,9 @@
 export const environment = {
   production: true,
-  version: "2023.04.10.1",
+  version: "2023.04.11.1",
   // dev
-  apiEndPoint: 'http://pando-backend-dev-env-1.us-east-1.elasticbeanstalk.com/api/v1',
-  apiSocket: 'http://pando-backend-dev-env-1.us-east-1.elasticbeanstalk.com'
+  apiEndPoint: 'https://dev-webservices.mexicolectivo.com/api/v1',
+  apiSocket: 'https://dev-webservices.mexicolectivo.com'
 
   // prod
   // apiEndPoint: 'https://webservice.mexicolectivo.com/api/v1',
