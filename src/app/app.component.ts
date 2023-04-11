@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CompleteRegistrationComponent } from './components/complete-registration/complete-registration.component';
 import { environment } from 'src/environments/environment';
 import { SocketService } from './services/socket.service';
-import { combineLatest, delay, filter, forkJoin, map, mergeMap, Observable, of, tap } from 'rxjs';
+import { combineLatest, delay, filter, forkJoin, map, mergeMap, Observable, of, Subject, tap } from 'rxjs';
 import { DocumentService } from './services/document.service';
 import { response } from 'express';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -61,6 +61,8 @@ export class AppComponent implements OnInit {
   public isProfile: boolean = false;
   public document: any = null;
   public openProfileMenu = new EventEmitter<any>();
+  public displayUploader: Subject<boolean> = new Subject();
+  public payload: any = null;
 
   constructor(
     readonly sRenderer: StyleRenderer,
@@ -117,7 +119,11 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     console.log('Project version', environment.version);
 
-    this.uploadService.getPayload().subscribe((payload: any) => { this.popUploadHandler(payload); });
+    this.uploadService.getPayload().subscribe((payload: any) => {
+      // this.popUploadHandler(payload); 
+      this.payload = payload;
+      this.notifyUploader();
+    });
 
     // Track stream upload files 
     this.queueService.asObservable().subscribe({
@@ -317,5 +323,9 @@ export class AppComponent implements OnInit {
     bottomSheetRef.afterDismissed().subscribe((reply: any) => {
       if (reply != undefined) { }
     });
+  }
+
+  notifyUploader() {
+    this.displayUploader.next(this.payload);
   }
 }

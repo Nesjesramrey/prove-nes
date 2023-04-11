@@ -1,5 +1,5 @@
 <div class="set-12 mainhldr">
-  <ng-container>
+  <!-- <ng-container>
     <div style="margin-top: 8em; margin-bottom: 8em; padding-top: 8em;">
       <label for="file"> Subida </label>
       <input type="file" name="file" id="file" (change)="selectFiles($event)" style="border: 1px solud black; width: 50px;" multiple>
@@ -16,7 +16,7 @@
         <p> {{ location }} </p>
       </div>
     </div>
-  </ng-container>
+  </ng-container> -->
 
 
   <div class="app-pagelet" [user]="user" [path]="path" [coverDocument]="coverDocument" [open]="open"
@@ -26,6 +26,7 @@
   <router-outlet></router-outlet>
   <!-- <div class="message-box" [user]="user" *ngIf="isDataAvailable"></div> -->
   <!-- <div class="app-footer" *ngIf="isDataAvailable"></div> -->
+  <div class="upload-handler" [displayUploader]="displayUploader"></div>
 </div>
 
 <!--Mobile-->

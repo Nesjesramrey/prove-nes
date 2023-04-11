@@ -93,6 +93,7 @@ import { CategorizePostComponent } from './categorize-post/categorize-post.compo
 import { QuickLoginDialogComponent } from './quick-login-dialog/quick-login-dialog.component';
 import { MoveCopyTopicComponent } from './move-copy-topic/move-copy-topic.component';
 import { UploadHandlerSheetComponent } from './upload-handler-sheet/upload-handler-sheet.component';
+import { UploadHandlerComponent } from './upload-handler/upload-handler.component';
 
 @NgModule({
   imports: [
@@ -189,7 +190,8 @@ import { UploadHandlerSheetComponent } from './upload-handler-sheet/upload-handl
     CategorizePostComponent,
     QuickLoginDialogComponent,
     MoveCopyTopicComponent,
-    UploadHandlerSheetComponent
+    UploadHandlerSheetComponent,
+    UploadHandlerComponent
   ],
   exports: [
     AppPageletComponent,
@@ -262,7 +264,8 @@ import { UploadHandlerSheetComponent } from './upload-handler-sheet/upload-handl
     CategorizePostComponent,
     QuickLoginDialogComponent,
     MoveCopyTopicComponent,
-    UploadHandlerSheetComponent
+    UploadHandlerSheetComponent,
+    UploadHandlerComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,

@@ -130,49 +130,53 @@ export class ComplaintDialogComponent implements OnInit {
 
   onFileComplaint(form: FormGroup) {
     this.submitted = true;
-    // let data = new FormData();
 
-    // Array.from(this.complaintFormGroup.controls['files']['value'])
-    //   .forEach((file: any) => { data.append('files', file); });
-    // data.append('title', this.complaintFormGroup.value.title);
-    // data.append('description', this.complaintFormGroup.value.description);
-    // switch (this.locationAvailable) {
-    //   case true:
-    //     data.append('latitude', this.location['latitude']);
-    //     data.append('longitude', this.location['longitude']);
-    //     break;
-    // }
-    // data.append('isAnonymous', (this.isAnonymous).toString());
+    if (this.fileNames.length == 0) {
+      let data = new FormData();
 
-    // this.complaintService.fileComplaint(data).subscribe({
-    //   error: (error: any) => {
-    //     this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
-    //     this.killDialog();
-    //   },
-    //   next: (reply: any) => {
-    //     this.postURL = this.url + '/' + reply['_id'];
-    //     this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
-    //   },
-    //   complete: () => {
-    //     this.locationAvailable = false;
-    //     this.location['latitude'] = null;
-    //     this.location['longitude'] = null;
-    //     this.stepNext();
-    //     this.submitted = false;
-    //     this.complaintFormGroup.reset();
-    //   }
-    // });
+      Array.from(this.complaintFormGroup.controls['files']['value'])
+        .forEach((file: any) => { data.append('files', file); });
+      data.append('title', this.complaintFormGroup.value.title);
+      data.append('description', this.complaintFormGroup.value.description);
+      switch (this.locationAvailable) {
+        case true:
+          data.append('latitude', this.location['latitude']);
+          data.append('longitude', this.location['longitude']);
+          break;
+      }
+      data.append('images', JSON.stringify([]));
+      data.append('isAnonymous', (this.isAnonymous).toString());
 
-    let data: any = {
-      files: this.complaintFormGroup.controls['files']['value'],
-      title: this.complaintFormGroup.value.title,
-      description: this.complaintFormGroup.value.description,
-      isAnonymous: this.isAnonymous,
-      type: 'complaint'
+      this.complaintService.fileComplaint(data).subscribe({
+        error: (error: any) => {
+          this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+          this.killDialog();
+        },
+        next: (reply: any) => {
+          this.postURL = this.DOM.location.origin + '/posts/' + reply['_id'];
+          this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
+        },
+        complete: () => {
+          this.locationAvailable = false;
+          this.location['latitude'] = null;
+          this.location['longitude'] = null;
+          this.stepNext();
+          this.submitted = false;
+          this.complaintFormGroup.reset();
+        }
+      });
+    } else {
+      let data: any = {
+        files: this.complaintFormGroup.controls['files']['value'],
+        title: this.complaintFormGroup.value.title,
+        description: this.complaintFormGroup.value.description,
+        isAnonymous: this.isAnonymous,
+        type: 'complaint'
+      }
+
+      this.uploadService.injectPayload(data);
+      this.killDialog();
     }
-
-    this.uploadService.injectPayload(data);
-    this.killDialog();
   }
 
   popFile(index: number) {
