@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { TestimonyService } from 'src/app/services/testimony.service';
+import { UploadService } from 'src/app/services/upload.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
@@ -71,6 +72,7 @@ export class TestimonyDialogComponent implements OnInit {
   public url: string = '';
   public solution: any = null;
   public team: any = null;
+  public class: string = '';
 
   constructor(
     public dialogRef: MatDialogRef<TestimonyDialogComponent>,
@@ -80,12 +82,14 @@ export class TestimonyDialogComponent implements OnInit {
     public testuimonyServive: TestimonyService,
     public deviceDetectorService: DeviceDetectorService,
     @Inject(DOCUMENT) public DOM: Document,
-    public router: Router
+    public router: Router,
+    public uploadService: UploadService
   ) {
     // console.log(this.dialogData);
     this.user = this.dialogData['user'];
     if (this.user == null) { this.isAnonymous = true; }
     this.isMobile = this.deviceDetectorService.isMobile();
+    if (this.isMobile) { this.class = 'fixmobile'; }
     this.url = this.DOM.location.origin + this.router.url;
     this.solution = this.dialogData['solution'];
     this.team = this.dialogData['team'];
@@ -122,66 +126,84 @@ export class TestimonyDialogComponent implements OnInit {
     this.testimonyFormGroup.updateValueAndValidity();
 
     this.files = event['target']['files'];
-    let weight: any = this.validateFileSize(this.files);
+    // let weight: any = this.validateFileSize(this.files);
 
-    if (weight > 5) {
-      this.utilityService.openErrorSnackBar('El peso máximo de carga es de 5MB');
-      this.testimonyFormGroup.setErrors({ 'error': true });
-      this.submitted = false;
-    }
+    // if (weight > 5) {
+    //   this.utilityService.openErrorSnackBar('El peso máximo de carga es de 5MB');
+    //   this.testimonyFormGroup.setErrors({ 'error': true });
+    //   this.submitted = false;
+    // }
   }
 
   onFileTestimony(form: FormGroup) {
     this.submitted = true;
 
-    let data: any = {
-      formData: new FormData()
-    }
-
-    Array.from(this.testimonyFormGroup.controls['files']['value'])
-      .forEach((file: any) => { data['formData'].append('files', file); });
-    data['formData'].append('name', this.testimonyFormGroup.value.title);
-    data['formData'].append('description', this.testimonyFormGroup.value.description);
-
-    switch (this.locationAvailable) {
-      case true:
-        data['formData'].append('latitude', this.location['latitude']);
-        data['formData'].append('longitude', this.location['longitude']);
-        break;
-    }
-
-    if (this.solution != undefined) {
-      data['formData'].append('type', 'solution');
-      data['formData'].append('relationId', this.solution['_id']);
-    }
-
-    if (this.team != undefined) {
-      data['formData'].append('team', this.team['_id']);
-    }
-
-    data['formData'].append('isAnonymous', (this.isAnonymous).toString());
-
-    this.testuimonyServive.createNewTestimony(data).subscribe({
-      error: (error: any) => {
-        this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
-        this.killDialog();
-        this, this.killDialog();
-      },
-      next: (reply: any) => {
-        this.postURL = this.url + '/' + reply['_id'];
-        this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
-        if (this.solution != undefined) { this.solution['testimonials'].push(reply['testimony']); }
-      },
-      complete: () => {
-        if (this.solution != undefined) {
-          this.dialogRef.close(this.solution);
-        } else {
-          this.stepNext();
-          this.submitted = false;
-          this.testimonyFormGroup.reset();
-        }
+    if (this.fileNames.length == 0) {
+      let data: any = {
+        formData: new FormData()
       }
-    });
+
+      Array.from(this.testimonyFormGroup.controls['files']['value'])
+        .forEach((file: any) => { data['formData'].append('files', file); });
+      data['formData'].append('name', this.testimonyFormGroup.value.title);
+      data['formData'].append('description', this.testimonyFormGroup.value.description);
+
+      switch (this.locationAvailable) {
+        case true:
+          data['formData'].append('latitude', this.location['latitude']);
+          data['formData'].append('longitude', this.location['longitude']);
+          break;
+      }
+
+      if (this.solution != undefined) {
+        data['formData'].append('type', 'solution');
+        data['formData'].append('relationId', this.solution['_id']);
+      }
+
+      if (this.team != undefined) {
+        data['formData'].append('team', this.team['_id']);
+      }
+
+      data['formData'].append('isAnonymous', (this.isAnonymous).toString());
+      data['formData'].append('images', JSON.stringify([]));
+
+      this.testuimonyServive.createNewTestimony(data).subscribe({
+        error: (error: any) => {
+          this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+          this.killDialog();
+        },
+        next: (reply: any) => {
+          this.postURL = this.url + '/' + reply['_id'];
+          this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
+          if (this.solution != undefined) { this.solution['testimonials'].push(reply['testimony']); }
+        },
+        complete: () => {
+          if (this.solution != undefined) {
+            this.dialogRef.close(this.solution);
+          } else {
+            this.stepNext();
+            this.submitted = false;
+            this.testimonyFormGroup.reset();
+          }
+        }
+      });
+    } else {
+      let data: any = {
+        files: this.testimonyFormGroup.controls['files']['value'],
+        name: this.testimonyFormGroup.value.title,
+        description: this.testimonyFormGroup.value.description,
+        isAnonymous: this.isAnonymous,
+        type: 'testimony'
+      }
+      if (this.solution != undefined) {
+        data['relationType'] = 'solution';
+        data['relationId'] = this.solution['_id']
+      }
+      if (this.team != undefined) { data['team'] = this.team['_id']; }
+
+      this.uploadService.injectPayload(data);
+      this.killDialog();
+    }
   }
 
   popFile(index: number) {

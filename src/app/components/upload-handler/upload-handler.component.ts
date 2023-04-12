@@ -1,9 +1,11 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, HostBinding, Inject, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { Observable, Subject, combineLatest } from 'rxjs';
 import { BucketS3Service, IStreamDataFile } from 'src/app/services/bucket.s3.service';
 import { ComplaintService } from 'src/app/services/complaint.service';
+import { TestimonyService } from 'src/app/services/testimony.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
@@ -23,15 +25,21 @@ export class UploadHandlerComponent implements OnInit {
   public url: string = '';
   public postURL: string = '';
   public isUploading: boolean = false;
+  public isMobile: boolean = false;
+  @HostBinding('class') public class: string = '';
 
   constructor(
     public complaintService: ComplaintService,
     public uploaderService: BucketS3Service,
     @Inject(DOCUMENT) public DOM: Document,
     public router: Router,
-    public utilityService: UtilityService
+    public utilityService: UtilityService,
+    public testuimonyServive: TestimonyService,
+    public deviceDetectorService: DeviceDetectorService
   ) {
     this.url = this.DOM.location.origin + this.router.url;
+    this.isMobile = this.deviceDetectorService.isMobile();
+    if (this.isMobile) { this.class = 'fixmobile'; }
   }
 
   ngOnInit(): void {
@@ -72,18 +80,40 @@ export class UploadHandlerComponent implements OnInit {
         complete: () => {
           this.locations = this.output.map(item => item.location!);
 
-          let data = new FormData();
-          data.append('title', this.payload['title']);
-          data.append('description', this.payload['description']);
-          data.append('isAnonymous', this.payload['isAnonymous'].toString());
-          data.append('images', JSON.stringify(this.locations));
-
           switch (this.payload['type']) {
             case 'complaint':
-              this.complaintService.fileComplaint(data).subscribe({
-                error: (error: any) => { },
+              let complaintData = new FormData();
+              complaintData.append('title', this.payload['title']);
+              complaintData.append('description', this.payload['description']);
+              complaintData.append('isAnonymous', this.payload['isAnonymous'].toString());
+              complaintData.append('images', JSON.stringify(this.locations));
+              this.complaintService.fileComplaint(complaintData).subscribe({
+                error: (error: any) => { this.utilityService.openErrorSnackBar(this.utilityService['errorOops']); },
                 next: (reply: any) => {
                   this.postURL = this.url + 'posts/' + reply['_id'];
+                  this.isUploading = false;
+                  this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
+                  if (this.mini = false) { this.minimize(); }
+                  this.output = [];
+                }
+              });
+              break;
+
+            case 'testimony':
+              let testimonyData: any = { formData: new FormData() }
+              testimonyData['formData'].append('name', this.payload['name']);
+              testimonyData['formData'].append('description', this.payload['description']);
+              testimonyData['formData'].append('isAnonymous', this.payload['isAnonymous'].toString());
+              testimonyData['formData'].append('images', JSON.stringify(this.locations));
+              if (this.payload['relationId'] != undefined) {
+                testimonyData['formData'].append('type', this.payload['relationType']);
+                testimonyData['formData'].append('relationId', this.payload['relationId']);
+              }
+              if (this.payload['team'] != undefined) { testimonyData['formData'].append('team', this.payload['team']); }
+              this.testuimonyServive.createNewTestimony(testimonyData).subscribe({
+                error: (error: any) => { this.utilityService.openErrorSnackBar(this.utilityService['errorOops']); },
+                next: (reply: any) => {
+                  this.postURL = this.url + 'posts/' + reply['testimony']['_id'];
                   this.isUploading = false;
                   this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
                   if (this.mini = false) { this.minimize(); }
