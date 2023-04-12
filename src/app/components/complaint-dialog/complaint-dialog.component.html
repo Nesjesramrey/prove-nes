@@ -27,7 +27,7 @@
     </button>
   </div>
 
-  <div class="set-12 location">
+  <!-- <div class="set-12 location">
     <button type="button" mat-button color="primary" (click)="getLocation()">
       <mat-icon>place</mat-icon>
       <small>{{locationAvailable ? 'Cancelar ubicación' : 'Usar mi ubicación'}}</small>
@@ -41,7 +41,7 @@
     <div class="set-12" *ngIf="isMobile">
       <small>** Para usar tu ubicación debes activarla en tus preferencias</small>
     </div>
-  </div>
+  </div> -->
 
   <div class="set-12">
     <mat-stepper #stepper [disableRipple]="true" [linear]="true" [@.disabled]="true">
@@ -82,9 +82,9 @@
 
           <div class="set-12 ctrlsmid" *ngIf="fileNames.length == 0">
             <button type="button" (click)="file.click()" [disabled]="complaintFormGroup.invalid || submitted"
-              class="wicon">
+              class="upld">
               <mat-icon>cloud_upload</mat-icon>
-              <h4>5MB</h4>
+              <!-- <h4>5MB</h4> -->
             </button>
           </div>
 

@@ -92,6 +92,8 @@ import { SetAvatarAssociationComponent } from './set-avatar-association/set-avat
 import { CategorizePostComponent } from './categorize-post/categorize-post.component';
 import { QuickLoginDialogComponent } from './quick-login-dialog/quick-login-dialog.component';
 import { MoveCopyTopicComponent } from './move-copy-topic/move-copy-topic.component';
+import { UploadHandlerSheetComponent } from './upload-handler-sheet/upload-handler-sheet.component';
+import { UploadHandlerComponent } from './upload-handler/upload-handler.component';
 
 @NgModule({
   imports: [
@@ -187,7 +189,9 @@ import { MoveCopyTopicComponent } from './move-copy-topic/move-copy-topic.compon
     SetAvatarAssociationComponent,
     CategorizePostComponent,
     QuickLoginDialogComponent,
-    MoveCopyTopicComponent
+    MoveCopyTopicComponent,
+    UploadHandlerSheetComponent,
+    UploadHandlerComponent
   ],
   exports: [
     AppPageletComponent,
@@ -259,7 +263,9 @@ import { MoveCopyTopicComponent } from './move-copy-topic/move-copy-topic.compon
     TestimonyDialogComponent,
     CategorizePostComponent,
     QuickLoginDialogComponent,
-    MoveCopyTopicComponent
+    MoveCopyTopicComponent,
+    UploadHandlerSheetComponent,
+    UploadHandlerComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
@@ -305,7 +311,8 @@ import { MoveCopyTopicComponent } from './move-copy-topic/move-copy-topic.compon
     TestimonyDialogComponent,
     CategorizePostComponent,
     QuickLoginDialogComponent,
-    MoveCopyTopicComponent
+    MoveCopyTopicComponent,
+    UploadHandlerSheetComponent
   ],
   providers: [],
 })

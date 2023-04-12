@@ -1,0 +1,64 @@
+:host {
+  position: fixed;
+  bottom: -100vh;
+  padding: 20px;
+  z-index: 300;
+  background: #ffffff;
+  width: 100%;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  height: 90vh;
+  transition: all .2s linear;
+  box-shadow: 0px -3px 7px -3px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px -3px 7px -3px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px -3px 7px -3px rgba(0, 0, 0, 0.5);
+
+  .sheet-head {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    font-size: 11pt;
+
+    button {
+      zoom: 0.7;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .2s linear;
+    }
+  }
+
+  .item {
+    margin-bottom: 10px;
+  }
+
+  .sheet-info {
+    .ctrls {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+  }
+}
+
+:host(.viewMore) {
+  bottom: 0;
+}
+
+:host(.mini) {
+  bottom: -80vh;
+
+  .sheet-head {
+    button {
+      rotate: 180deg;
+    }
+  }
+}
+
+:host(.close) {
+  bottom: -100vh;
+}

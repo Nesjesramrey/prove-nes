@@ -1,0 +1,24 @@
+<div class="set-12 sheet-head">
+  <div class="set-10">
+    <p>Espera mientras publicamos tu Denuncia</p>
+  </div>
+  <div class="set-2 txt-right">
+    <button type="button">
+      <mat-icon>expand_circle_down</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div class="set-12 sheet-info">
+  <div class="set-12 item" *ngFor="let a of output">
+    <div class="set-12">
+      <!-- <p> {{ a | json }} </p> -->
+      <p>{{a['name']}}</p>
+      <mat-progress-bar mode="determinate" value="{{a.progress}}"> </mat-progress-bar>
+    </div>
+  </div>
+
+  <!-- <div *ngFor="let location of locations" style="margin-top: 3em">
+    <p> {{ location }} </p>
+  </div> -->
+</div>

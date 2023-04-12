@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CompleteRegistrationComponent } from './components/complete-registration/complete-registration.component';
 import { environment } from 'src/environments/environment';
 import { SocketService } from './services/socket.service';
-import { filter, Observable } from 'rxjs';
+import { combineLatest, delay, filter, forkJoin, map, mergeMap, Observable, of, Subject, tap } from 'rxjs';
 import { DocumentService } from './services/document.service';
 import { response } from 'express';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -16,6 +16,11 @@ import { trigger, transition, animate, style } from '@angular/animations';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ComplaintDialogComponent } from './components/complaint-dialog/complaint-dialog.component';
 import { TestimonyDialogComponent } from './components/testimony-dialog/testimony-dialog.component';
+import { IStreamDataFile, BucketS3Service } from './services/bucket.s3.service';
+import { QueueService } from './services/queue.service';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { UploadHandlerSheetComponent } from './components/upload-handler-sheet/upload-handler-sheet.component';
+import { UploadService } from './services/upload.service';
 
 const STYLES = (theme: ThemeVariables, ref: ThemeRef) => {
   const __ = ref.selectorsOf(STYLES);
@@ -56,6 +61,8 @@ export class AppComponent implements OnInit {
   public isProfile: boolean = false;
   public document: any = null;
   public openProfileMenu = new EventEmitter<any>();
+  public displayUploader: Subject<boolean> = new Subject();
+  public payload: any = null;
 
   constructor(
     readonly sRenderer: StyleRenderer,
@@ -67,35 +74,79 @@ export class AppComponent implements OnInit {
     public socketService: SocketService,
     public documentService: DocumentService,
     public deviceDetectorService: DeviceDetectorService,
-    public angularFireAuth: AngularFireAuth
+    public angularFireAuth: AngularFireAuth,
+    public uploaderService: BucketS3Service,
+    public queueService: QueueService<any>,
+    public matBottomSheet: MatBottomSheet,
+    public uploadService: UploadService
   ) {
     this.accessToken = this.authenticationSrvc.fetchAccessToken;
-    this.router.events.subscribe((val) => {
-      if (val instanceof ResolveStart) {
-        this.path = val.url;
-      }
+    this.router.events.subscribe((val: any) => {
+      if (val instanceof ResolveStart) { this.path = val.url; }
     });
     this.isMobile = this.deviceDetectorService.isMobile();
+  }
+
+  // AWS uploader files
+  private files: FileList | null = null;
+  output: Array<IStreamDataFile> = [];
+  locations: Array<string> = [];
+
+  selectFiles(event: any): void {
+    this.files = event.target.files;
+  }
+
+  uploadFile(): void {
+    if (this.files != null) {
+      let filesStage$: Array<Observable<IStreamDataFile>> = this.uploaderService.stage(this.files);
+      // let filesStage2$: Array<Observable<IStreamDataFile>> = this.uploaderService.stage(this.files);
+      combineLatest(filesStage$).subscribe({
+        next: (streamProgress) => {
+          this.output = streamProgress;
+        },
+        error: (error) => {
+
+        },
+        complete: () => {
+          this.locations = this.output.map(item => item.location!);
+        },
+      })
+      // this.queueService.enqueue(combineLatest(filesStage$));
+      // this.queueService.enqueue(combineLatest(filesStage2$));
+    }
   }
 
   ngOnInit(): void {
     console.log('Project version', environment.version);
 
-    this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
+    this.uploadService.getPayload().subscribe((payload: any) => {
+      // this.popUploadHandler(payload); 
+      this.payload = payload;
+      this.notifyUploader();
+    });
+
+    // Track stream upload files 
+    this.queueService.asObservable().subscribe({
+      next: (stream) => {
+        // this.output = stream;
+        console.log(stream);
+      },
+      error: (error: any) => { },
+      complete: () => { },
+    });
+
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {
         gtag('event', 'page_view', {
           page_path: event.urlAfterRedirects,
         });
       });
 
-    this.documentService.fetchCoverDocument().subscribe({
-      error: (error: any) => { },
-      next: (reply: any) => {
-        this.coverDocument = reply;
-      },
-      complete: () => { },
-    });
+    // this.documentService.fetchCoverDocument().subscribe({
+    //   error: (error: any) => { },
+    //   next: (reply: any) => { this.coverDocument = reply; },
+    //   complete: () => { },
+    // });
 
     if (this.accessToken != null) {
       this.userService.fetchFireUser().subscribe({
@@ -124,9 +175,7 @@ export class AppComponent implements OnInit {
 
     this.documentService.fetchCoverDocument().subscribe({
       error: (error: any) => { },
-      next: (reply: any) => {
-        this.document = reply;
-      },
+      next: (reply: any) => { this.document = reply; },
     });
   }
 
@@ -264,5 +313,19 @@ export class AppComponent implements OnInit {
 
   popPDF() {
     window.open('https://static-assets-pando.s3.amazonaws.com/assets/punto+de+partida.pdf');
+  }
+
+  popUploadHandler(payload: any) {
+    const bottomSheetRef = this.matBottomSheet.open(UploadHandlerSheetComponent, {
+      data: { payload: payload }
+    });
+
+    bottomSheetRef.afterDismissed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  notifyUploader() {
+    this.displayUploader.next(this.payload);
   }
 }

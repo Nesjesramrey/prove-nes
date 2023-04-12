@@ -1,0 +1,37 @@
+<div class="set-12 sheet-head" [ngClass]="{'mini': mini === true}">
+  <div class="set-10">
+    <p><small>Espera mientras publicamos tu Denuncia</small></p>
+  </div>
+  <div class="set-2 txt-right">
+    <button type="button" mat-mini-fab color="primary" (click)="minimize()">
+      <mat-icon>expand_circle_down</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div class="set-12 sheet-info" *ngIf="isUploading">
+  <div class="set-12 item" *ngFor="let a of output">
+    <div class="set-12">
+      <!-- <p> {{ a | json }} </p> -->
+      <p>{{a['name']}}</p>
+      <mat-progress-bar mode="determinate" value="{{a.progress}}"> </mat-progress-bar>
+    </div>
+  </div>
+
+  <!-- <div *ngFor="let location of locations" style="margin-top: 3em">
+    <p> {{ location }} </p>
+  </div> -->
+</div>
+
+<div class="set-12 sheet-info" *ngIf="!isUploading">
+  <div class="set-12">
+    <small>Gracias por la espera, puedes ver tu denuncia <a [href]="postURL" target="_blank">aquí</a></small>
+  </div>
+
+  <div class="set-12 ctrls">
+    <button type="button" mat-raised-button color="primary" class="wicon" (click)="closeUploader()">
+      <mat-icon>cancel</mat-icon>
+      <span>Salir</span>
+    </button>
+  </div>
+</div>
