@@ -308,4 +308,23 @@
       border-radius: 0 !important;
     }
   }
+
+  .filters {
+    padding: 20px 20px 0 20px;
+
+    form {
+      flex-direction: column;
+    }
+
+    .field {
+      width: 100%;
+      padding: 0;
+      flex-shrink: 0;
+      flex-grow: 1;
+    }
+
+    .field:not(:last-child) {
+      margin-bottom: 15px;
+    }
+  }
 }

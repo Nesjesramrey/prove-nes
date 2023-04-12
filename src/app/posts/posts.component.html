@@ -6,7 +6,7 @@
   <div class="crdlst">
     <div class="filters">
       <form [formGroup]="searchTeamsFG">
-        <div>
+        <div class="field">
           <mat-form-field appearance="outline">
             <mat-label>Buscar</mat-label>
             <input type="text" matInput formControlName="filter" (keyup.enter)="filterPosts(searchTeamsFG)">
@@ -16,7 +16,7 @@
           </mat-form-field>
         </div>
 
-        <div>
+        <div class="field">
           <mat-form-field appearance="outline">
             <mat-label>Cobertura</mat-label>
             <mat-select formControlName="coverage" (selectionChange)="filterPosts(searchTeamsFG)">

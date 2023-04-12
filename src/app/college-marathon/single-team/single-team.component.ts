@@ -440,6 +440,13 @@ export class SingleTeamComponent implements OnInit {
   }
 
   popTestimonialsDialog() {
+    let panelClass: string = '';
+    if (this.isMobile) {
+      panelClass = 'full-dialog';
+    } else {
+      panelClass = 'side-dialog';
+    }
+
     const dialogRef = this.dialog.open<any>(TestimonyDialogComponent, {
       width: '100%',
       data: {
@@ -448,7 +455,7 @@ export class SingleTeamComponent implements OnInit {
         team: this.team
       },
       disableClose: true,
-      panelClass: 'side-dialog'
+      panelClass: panelClass
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {

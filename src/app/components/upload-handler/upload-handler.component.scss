@@ -4,7 +4,7 @@
   padding: 20px;
   z-index: 300;
   background: #ffffff;
-  width: 100%;
+  width: 420px;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   height: 90vh;
@@ -12,6 +12,7 @@
   box-shadow: 0px -3px 7px -3px rgba(0, 0, 0, 0.5);
   -webkit-box-shadow: 0px -3px 7px -3px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0px -3px 7px -3px rgba(0, 0, 0, 0.5);
+  right: 0;
 
   .sheet-head {
     display: flex;
@@ -61,4 +62,8 @@
 
 :host(.close) {
   bottom: -100vh;
+}
+
+:host(.fixmobile) {
+  width: 100%;
 }
