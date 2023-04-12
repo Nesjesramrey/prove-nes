@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  version: "2023.04.11.1",
+  version: "2023.04.12.1",
   // apiEndPoint: 'http://192.168.1.56:4040/api/v1',
   apiEndPoint: 'http://192.168.1.65:4040/api/v1',
   apiSocket: 'http://192.168.1.65:4040',

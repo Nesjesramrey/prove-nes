@@ -48,7 +48,7 @@ export class BucketS3Service {
    * @returns 
    */
   private getPutObjectRequest(file: File): S3PutObjectRequest {
-    const key = 'temporal/' + v4() + '.' + file.name.split('.').pop();   
+    const key = 'images/' + v4() + '.' + file.name.split('.').pop();   
     const input: S3PutObjectRequest = {
       name: file.name,
       Bucket: 'static-assets-pando',
