@@ -24,6 +24,7 @@ export class BucketS3Service {
       accessKeyId: "AKIATHKLAGBD6BFJD6OR",
       secretAccessKey: "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",
       region: 'us-east-1',
+      useAccelerateEndpoint: true
     });
   }
 
