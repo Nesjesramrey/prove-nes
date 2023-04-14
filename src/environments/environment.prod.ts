@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  version: "2023.04.12.2",
+  version: "2023.04.14.1",
   // dev
   apiEndPoint: 'https://dev-webservices.mexicolectivo.com/api/v1',
   apiSocket: 'https://dev-webservices.mexicolectivo.com',
