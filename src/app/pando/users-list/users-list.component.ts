@@ -17,7 +17,7 @@ import * as XLSX from 'xlsx';
   styleUrls: ['./users-list.component.scss']
 })
 export class UsersListComponent implements OnInit {
-  public displayedColumns: string[] = ['select', 'name', 'email', 'phone', 'activities', 'menu'];
+  public displayedColumns: string[] = ['select', 'avatarImage', 'name', 'email', 'phone', 'activities', 'createtAt', 'menu'];
   public dataSource = new MatTableDataSource<any>();
   public selection = new SelectionModel<any>(true, []);
   public paginator!: MatPaginator;
@@ -29,6 +29,9 @@ export class UsersListComponent implements OnInit {
   public isDataAvailable: boolean = false;
   public user: any = null;
   public userActivities: any = [];
+  public limitPerPage: number = 40;
+  public page: number = 1;
+  public pageIndex: number = 0;
 
   constructor(
     public authenticationSrvc: AuthenticationService,
@@ -39,7 +42,7 @@ export class UsersListComponent implements OnInit {
 
   ngOnInit(): void {
     let user: Observable<any> = this.userSrvc.fetchFireUser();
-    let users: Observable<any> = this.userSrvc.fetchAllUsers();
+    let users: Observable<any> = this.userSrvc.fetchAllUsers({ limitPerPage: this.limitPerPage, page: this.page });
     forkJoin([user, users]).subscribe({
       error: (error: any) => { },
       next: (reply: any) => {
@@ -48,10 +51,11 @@ export class UsersListComponent implements OnInit {
 
         this.users = reply[1];
         this.dataSource = new MatTableDataSource(this.users);
+        // console.log('users: ', this.users);
       },
       complete: () => {
         this.isDataAvailable = true;
-        this.setDataSourceAttributes();
+        // this.setDataSourceAttributes();
       }
     });
   }
@@ -114,7 +118,7 @@ export class UsersListComponent implements OnInit {
 
   popUserData(user: any) {
     const dialog = this.dialog.open(UserDetailsDialogComponent, {
-      data: { user: user },
+      data: { user: user['_id'] },
       panelClass: 'posts-dialog'
     });
 
@@ -138,5 +142,24 @@ export class UsersListComponent implements OnInit {
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
     XLSX.writeFile(wb, 'user-list.xlsx');
+  }
+
+  handlePageEvent(event: any) {
+    if (event.pageIndex > this.pageIndex) {
+      this.loadNextUserBatch();
+    } else { }
+  }
+
+  loadNextUserBatch() {
+    this.page = this.page + 1;
+    this.userSrvc.fetchAllUsers({ limitPerPage: this.limitPerPage, page: this.page }).subscribe({
+      error: () => { },
+      next: (reply: any) => {
+        reply.filter((x: any) => { this.dataSource.data.push(x); });
+      },
+      complete: () => {
+        // this.dataSource = new MatTableDataSource(this.users);
+      }
+    });
   }
 }

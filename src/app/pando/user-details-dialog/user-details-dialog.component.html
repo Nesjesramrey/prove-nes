@@ -1,10 +1,64 @@
-<div class="set-12 dlghd">
-  <div class="set-10">
-    <strong>{{user['firstname']}} {{user['lastname']}}</strong>
+<div class="set-12" *ngIf="isDataAvailable">
+  <div class="set-12 dlghd">
+    <div class="set-10">
+      <strong>{{user['firstname']}} {{user['lastname']}}</strong>
+      <p>
+        <small>{{user['createdAt'] | date: 'mediumDate'}} - {{user['createdAt'] | date: 'mediumTime'}}</small>
+      </p>
+      <p><small>Usuario tipo: <strong>{{user['activityName']}}</strong></small></p>
+    </div>
+    <div class="set-2">
+      <button type="button" mat-mini-fab color="primary" (click)="killDialog()">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </div>
   </div>
-  <div class="set-2">
-    <button type="button" mat-mini-fab color="primary" (click)="killDialog()">
-      <mat-icon>cancel</mat-icon>
-    </button>
+
+  <div class="set-12 dlgbdy">
+    <div class="set-12">
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let layout of user['availableLayouts']">
+          <mat-expansion-panel-header>
+            <mat-panel-title>{{layout['name']}}</mat-panel-title>
+
+            <mat-panel-description></mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <div class="set-12 field">
+            <h4>Coberturas</h4>
+            <div class="set-12" *ngFor="let state of layout['states']">
+              {{state['name']}}
+            </div>
+          </div>
+
+          <div class="set-12 field">
+            <div class="set-12 subLayouts" *ngFor="let sublayout of layout['subLayouts']">
+              <div class="set-12 sublayout">
+                <h4>Subtema</h4>
+                <p>{{sublayout['name']}}</p>
+              </div>
+
+              <div class="set-12 coverage" *ngIf="sublayout['states'].length != 0">
+                <h4>Cobertura</h4>
+                <div class="set-12" *ngFor="let sublayoutState of sublayout['states']">{{sublayoutState['name']}}</div>
+              </div>
+              <div class="set-12 coverage" *ngIf="sublayout['states'].length == 0">
+                <h4>Cobertura</h4>
+                <div class="set-12">Sin coberturas</div>
+              </div>
+
+              <div class="set-12 topics" *ngIf="sublayout['topics'].length != 0">
+                <h4>Problemas</h4>
+                <div class="set-12" *ngFor="let topic of sublayout['topics']">{{topic['name']}}</div>
+              </div>
+              <div class="set-12 topics" *ngIf="sublayout['topics'].length == 0">
+                <h4>Problemas</h4>
+                <div class="set-12">Sin problemas</div>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
   </div>
 </div>

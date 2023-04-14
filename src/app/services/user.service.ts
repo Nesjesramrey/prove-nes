@@ -28,9 +28,9 @@ export class UserService {
     ).pipe(catchError(error => of(error)));
   }
 
-  fetchAllUsers() {
+  fetchAllUsers(data: any) {
     return this.httpClient.get(
-      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAllUsersEndPoint, {}
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAllUsersEndPoint + `?limitPerPage=${data['limitPerPage']}&page=${data['page']}`, {}
     ).pipe(catchError(error => of(error)));;
   }
 
