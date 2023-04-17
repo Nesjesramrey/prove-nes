@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="obj == null">
   <div class="actions left">
     <button mat-mini-fab color="warn" aria-label="Back" (click)="onBack()">
       <mat-icon>chevron_left</mat-icon>
@@ -7,6 +7,27 @@
   <div class="content" #contentScroll>
     <img *ngFor="let image of images; let i = index" class="item" [class.active]="activeIndex == i" alt="img-list"
       [src]="image" />
+  </div>
+  <div class="actions right" [ngClass]="showNext ? 'show' : 'hide'">
+    <button mat-mini-fab color="warn" aria-label="Next" (click)="onNext()">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div class="container" *ngIf="obj != null">
+  <div class="actions left">
+    <button mat-mini-fab color="warn" aria-label="Back" (click)="onBack()">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+  </div>
+  <div class="content" #contentScroll>
+    <div class="set-12" *ngFor="let image of multipleObj; let i = index">
+      <img class="item" [class.active]="activeIndex == i" alt="img-list" [src]="image['url']"
+        *ngIf="!image['isVideo']" />
+      <video controls class="item" [class.active]="activeIndex == i" [src]="image['url']"
+        *ngIf="image['isVideo']"></video>
+    </div>
   </div>
   <div class="actions right" [ngClass]="showNext ? 'show' : 'hide'">
     <button mat-mini-fab color="warn" aria-label="Next" (click)="onNext()">

@@ -45,15 +45,15 @@ export class PublicTestimonialsComponent implements OnInit {
       complete: () => { }
     });
 
-   
+
     let complaints: Observable<any> = this.testimonyService.fetchAllTestimonies();
 
-    forkJoin([ complaints]).subscribe((reply: any) => {
+    forkJoin([complaints]).subscribe((reply: any) => {
       this.testimonies = reply[0];
       this.testimonies.filter((x: any) => { x['type'] = 'Testimonio'; });
       this.cards = [...this.testimonies];
       this.cards.filter((x: any) => { x['comments'] = []; });
-      console.log(this.cards);
+      // console.log(this.cards);
       this.isDataAvailable = true;
     });
   }

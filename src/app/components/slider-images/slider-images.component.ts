@@ -19,6 +19,9 @@ export class SliderImagesComponent implements OnInit {
   @Input() solution: any = null;
   @Input() complaint: any = null;
   @ViewChild('contentScroll') public contentScroll!: ElementRef<HTMLDivElement>;
+  public videExtensions: any[] = ['mp4', 'mov', '3gpp'];
+  @Input() obj: any = null;
+  public multipleObj: any = [];
 
   constructor(
     public documentService: DocumentService,
@@ -26,8 +29,18 @@ export class SliderImagesComponent implements OnInit {
     public layoutService: LayoutService
   ) { }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     // console.log(this.images);
+    if (this.obj != null) {
+      this.images.filter((x: any) => {
+        var fileExt = x.split('.').pop();
+        let isVideo: boolean = false;
+        if (this.videExtensions.includes(fileExt)) { isVideo = true; }
+        let imgObj: any = { url: x, isVideo: isVideo }
+        this.multipleObj.push(imgObj);
+      });
+      // console.log(this.multipleObj);
+    }
   }
 
   onBack() {

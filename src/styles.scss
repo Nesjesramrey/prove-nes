@@ -923,8 +923,9 @@ mat-card {
   border-top-right-radius: 20px !important;
 }
 
-.desktop-sheet {
-  width: 420px;
+.desktop-sheet,
+.small-sheet {
+  max-width: 420px;
 }
 
 #calixta-badge {

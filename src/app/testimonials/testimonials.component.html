@@ -191,6 +191,8 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
-    <mat-paginator #paginator [pageSizeOptions]="[20, 40, 60, 80, 100]"></mat-paginator>
+
+    <mat-paginator #paginator [length]="testimonies.length" [pageSizeOptions]="[20, 40, 60, 80, 100]"
+      showFirstLastButtons></mat-paginator>
   </div>
 </div>

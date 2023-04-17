@@ -1,9 +1,10 @@
 export const environment = {
   production: false,
-  version: "2023.04.14.1",
-  // apiEndPoint: 'http://192.168.1.56:4040/api/v1',
-  apiEndPoint: 'http://192.168.1.65:4040/api/v1',
-  apiSocket: 'http://192.168.1.65:4040',
+  version: "2023.04.17.1",
+  // apiEndPoint: 'http://192.168.1.69:4040/api/v1',
+  // apiSocket: 'http://192.168.1.69:4040',
+  apiEndPoint: 'http://localhost:4040/api/v1',
+  apiSocket: 'http://localhost:4040',
 
   // aws
   AWS_ACCESS_KEY_ID: "AKIATHKLAGBD6BFJD6OR",

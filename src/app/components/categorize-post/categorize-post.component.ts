@@ -31,7 +31,7 @@ export class CategorizePostComponent implements OnInit {
   ) {
     // console.log(this.dialogData);
     this.post = this.dialogData['post'];
-    console.log('post: ', this.post);
+    // console.log('post: ', this.post);
     this.document = this.dialogData['document'];
     // console.log('document: ', this.document);
     this.layouts = this.document['layouts'];
@@ -81,9 +81,7 @@ export class CategorizePostComponent implements OnInit {
     this.relateTo = 'solution';
   }
 
-  killDialog() {
-    this.dialogRef.close(this.post);
-  }
+  killDialog() { this.dialogRef.close(); }
 
   categorizePost(formGroup: FormGroup) {
     let data: any = {}
@@ -125,12 +123,13 @@ export class CategorizePostComponent implements OnInit {
         this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
       },
       next: (reply: any) => {
-        console.log(reply);
-        this.post['relation'] = reply['object']['relation']
-        this.post['relationId'] = reply['object']['relationId'];
+        // console.log(reply);
+        this.post['relation'] = reply['relation']
+        this.post['relationId'] = reply['object']['_id'];
       },
       complete: () => {
         this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
+        this.dialogRef.close(this.post);
       }
     });
   }

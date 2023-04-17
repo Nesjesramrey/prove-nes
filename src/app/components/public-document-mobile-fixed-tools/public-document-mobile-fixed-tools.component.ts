@@ -62,7 +62,8 @@ export class PublicDocumentMobileFixedToolsComponent implements OnInit {
         subcategoryID: this.subcategoryID,
         topicID: this.topicID,
         solutionID: this.solutionID
-      }
+      },
+      panelClass: 'small-sheet'
     });
 
     bottomSheetRef.afterDismissed().subscribe((reply: any) => {

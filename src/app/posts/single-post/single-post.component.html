@@ -56,6 +56,7 @@
           <img [src]="post['card']['images'][0]" alt="" class="full" *ngIf="post['card']['images'].length != 0" />
           <img src="../../assets/images/mexicolectivo-small-blue.png" alt=""
             *ngIf="post['card']['images'].length == 0" />
+          <video controls [src]="post['card']['images'][0]" *ngIf="post['card']['hasVideo']" class="full"></video>
         </div>
 
         <div class="set-12 crdft">

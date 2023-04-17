@@ -72,16 +72,16 @@ export class PostsComponent implements OnInit {
           coverage: ['', []]
         });
         this.isDataAvailable = true;
-        if (this.user['status'] != undefined) {
-          setTimeout(() => {
-            this.popUseToolsDialog();
-          }, 1000);
-        }
+        // if (this.user['status'] != undefined) {
+        //   setTimeout(() => {
+        //     this.popUseToolsDialog();
+        //   }, 1000);
+        // }
         this.posts.filter((x: any) => {
           if (x['card']['images'] != null) {
             if (x['card']['images'][0] != undefined) {
               var fileExt = x['card']['images'][0].split('.').pop();
-              if (fileExt == 'mp4' || fileExt == '3gpp') {
+              if (fileExt == 'mp4' || fileExt == '3gpp' || fileExt == 'mov') {
                 x['card']['hasVideo'] = true;
               }
             }
