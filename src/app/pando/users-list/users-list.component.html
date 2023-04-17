@@ -112,8 +112,7 @@
     </table>
 
     <mat-paginator #matPaginator [length]="users.length" [pageSizeOptions]="[20, 40, 60, 80, 100]" showFirstLastButtons
-      [pageIndex]="pageIndex" (page)="handlePageEvent($event)">
-    </mat-paginator>
+      [pageIndex]="pageIndex" (page)="handlePageEvent($event)"></mat-paginator>
 
     <!-- <div class="set-12 pagination">
       <small>Usuarios: {{users.length}}</small>

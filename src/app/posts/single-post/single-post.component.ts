@@ -59,6 +59,15 @@ export class SinglePostComponent implements OnInit {
             break;
         }
 
+        if (this.post['card']['images'] != null) {
+          if (this.post['card']['images'][0] != undefined) {
+            var fileExt = this.post['card']['images'][0].split('.').pop();
+            if (fileExt == 'mp4' || fileExt == '3gpp' || fileExt == 'mov') {
+              this.post['card']['hasVideo'] = true;
+            }
+          }
+        }
+
         if (this.user['status'] == undefined) {
           this.post['card']['favorites'].filter((f: any) => {
             if (f['createdBy'] == this.user['_id']) { this.post['isFavorite'] = true; }
@@ -133,7 +142,8 @@ export class SinglePostComponent implements OnInit {
     const dialogRef = this.dialog.open<any>(SinglePostDialogComponent, {
       data: {
         post: post,
-        user: this.user
+        user: this.user,
+        obj: 'single-post'
       },
       backdropClass: 'card-backdrop',
       panelClass: panelClass

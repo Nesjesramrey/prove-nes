@@ -49,7 +49,7 @@ export class ComplaintsComponent implements OnInit {
   ngOnInit(): void {
     this.userService.fetchFireUser().subscribe({
       error: (error: any) => {
-        console.log(error)
+        // console.log(error);
       },
       next: (reply: any) => {
         this.user = reply;
@@ -64,8 +64,7 @@ export class ComplaintsComponent implements OnInit {
         }
 
       },
-      complete: () => {
-      }
+      complete: () => { }
     });
 
     let complaints: Observable<any> = this.complaintService.fetchAllComplaints();
@@ -176,9 +175,7 @@ export class ComplaintsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) { 
-        console.log(reply);
-      }
+      if (reply != undefined) { }
     });
   }
 }

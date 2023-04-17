@@ -49,7 +49,7 @@ export class TestimonialsComponent implements OnInit {
   ngOnInit(): void {
     this.userService.fetchFireUser().subscribe({
       error: (error: any) => {
-        console.log(error)
+        // console.log(error);
       },
       next: (reply: any) => {
         this.user = reply;
@@ -62,10 +62,8 @@ export class TestimonialsComponent implements OnInit {
             this.isPrivate = true;
           });
         }
-
       },
-      complete: () => {
-      }
+      complete: () => { }
     });
 
     let testimonies: Observable<any> = this.testimonyService.fetchAllTestimonies();
@@ -75,9 +73,8 @@ export class TestimonialsComponent implements OnInit {
       next: (reply: any) => {
         // console.log(reply);
         this.testimonies = reply[0];
-        console.log(this.testimonies);
+        // console.log(this.testimonies);
         this.testimonies.filter((t: any) => { });
-
         this.dataSource = new MatTableDataSource(this.testimonies);
 
         this.document = reply[1];
@@ -85,7 +82,7 @@ export class TestimonialsComponent implements OnInit {
       },
       complete: () => {
         this.isDataAvailable = true;
-        this.setDataSourceAttributes();
+        // this.setDataSourceAttributes();
       }
     });
   }

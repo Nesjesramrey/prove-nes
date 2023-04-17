@@ -26,6 +26,7 @@ export class SinglePostDialogComponent implements OnInit {
   @HostBinding('class') public class: string = '';
   public submitted: boolean = false;
   public url: string = '';
+  public obj: any = null;
 
   constructor(
     public dialogRef: MatDialogRef<SinglePostDialogComponent>,
@@ -52,10 +53,19 @@ export class SinglePostDialogComponent implements OnInit {
         this.post['card'] = this.post['testimony'][0]
         break;
     }
+    if (this.post['card']['images'] != null) {
+      if (this.post['card']['images'][0] != undefined) {
+        var fileExt = this.post['card']['images'][0].split('.').pop();
+        if (fileExt == 'mp4' || fileExt == '3gpp' || fileExt == 'mov') {
+          this.post['card']['hasVideo'] = true;
+        }
+      }
+    }
     // console.log(this.post);
     this.isMobile = this.deviceDetectorService.isMobile();
     if (this.isMobile) { this.class = 'fixmobile'; }
     this.url = this.DOM.location.origin + this.router.url;
+    this.obj = this.dialogData['obj'];
   }
 
   ngOnInit(): void {

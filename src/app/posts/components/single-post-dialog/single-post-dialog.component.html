@@ -49,7 +49,7 @@
   <div class="set-12 dlgdesc" [innerHTML]="post['card']['description']"></div>
 
   <div class="set-12 gallery" *ngIf="post['card']['images'].length != 0">
-    <slider-images [images]="post['card']['images']"></slider-images>
+    <slider-images [images]="post['card']['images']" [obj]="obj"></slider-images>
   </div>
 
   <div class="set-12 comnts" *ngIf="postComments.length != 0">

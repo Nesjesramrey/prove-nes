@@ -88,6 +88,7 @@
           <img [src]="post['card']['images'][0]" alt="" class="full" *ngIf="post['card']['images'].length != 0" />
           <img src="../../assets/images/mexicolectivo-small-blue.png" alt=""
             *ngIf="post['card']['images'].length == 0" />
+          <video controls [src]="post['card']['images'][0]" *ngIf="post['card']['hasVideo']" class="full"></video>
         </div>
 
         <div class="set-12 crdft">
@@ -107,8 +108,8 @@
               (click)="handleTestimonyFavorite(post)" *ngIf="user['status'] == undefined">
               <mat-icon [color]="post['isFavorite'] ? 'warn' : 'primary'">favorite</mat-icon>
             </button>
-            <button type="button" matTooltip="Favorito" matTooltipClass="tooltip" *ngIf="user['status'] != undefined"
-              disabled>
+            <button type="button" matTooltip="Favorito" matTooltipClass="tooltip" (click)="popUseToolsDialog()"
+              *ngIf="user['status'] != undefined">
               <mat-icon>favorite</mat-icon>
             </button>
 
@@ -116,8 +117,8 @@
               *ngIf="user['status'] == undefined">
               <mat-icon [color]="post['voted'] ? 'warn' : 'primary'">star</mat-icon>
             </button>
-            <button type="button" matTooltip="Votar" matTooltipClass="tooltip" *ngIf="user['status'] != undefined"
-              disabled>
+            <button type="button" matTooltip="Votar" matTooltipClass="tooltip" (click)="popUseToolsDialog()"
+              *ngIf="user['status'] != undefined">
               <mat-icon>star</mat-icon>
             </button>
           </div>
@@ -202,8 +203,8 @@
               (click)="handleComplaintFavorite(post)" *ngIf="user['status'] == undefined">
               <mat-icon [color]="post['isFavorite'] ? 'warn' : 'primary'">favorite</mat-icon>
             </button>
-            <button type="button" matTooltip="Favorito" matTooltipClass="tooltip" *ngIf="user['status'] != undefined"
-              disabled>
+            <button type="button" matTooltip="Favorito" matTooltipClass="tooltip" (click)="popUseToolsDialog()"
+              *ngIf="user['status'] != undefined">
               <mat-icon>favorite</mat-icon>
             </button>
 
@@ -211,8 +212,8 @@
               *ngIf="user['status'] == undefined">
               <mat-icon [color]="post['voted'] ? 'warn' : 'primary'">star</mat-icon>
             </button>
-            <button type="button" matTooltip="Votar" matTooltipClass="tooltip" *ngIf="user['status'] != undefined"
-              disabled>
+            <button type="button" matTooltip="Votar" matTooltipClass="tooltip" (click)="popUseToolsDialog()"
+              *ngIf="user['status'] != undefined">
               <mat-icon>star</mat-icon>
             </button>
           </div>
