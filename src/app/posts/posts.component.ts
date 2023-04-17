@@ -148,7 +148,8 @@ export class PostsComponent implements OnInit {
     const dialogRef = this.dialog.open<any>(SinglePostDialogComponent, {
       data: {
         post: post,
-        user: this.user
+        user: this.user,
+        obj: 'single-post'
       },
       backdropClass: 'card-backdrop',
       panelClass: panelClass
