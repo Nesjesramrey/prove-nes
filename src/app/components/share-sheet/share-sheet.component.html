@@ -19,8 +19,8 @@
   <a class="twitter-share-button icon twitter-net"
     href="https://twitter.com/intent/tweet?text=Mexicolectivo&url={{url}}&hashtags=mexicolectivo" target="_blank"></a>
 
-  <button type="button" class="icon whatsapp-net"></button>
-  <button type="button" class="icon email-net">
+  <button type="button" class="icon whatsapp-net" (click)="popInviteWhatsappDialog()"></button>
+  <button type="button" class="icon email-net" (click)="popInviteEmailDialog()" *ngIf="user['status'] != 500">
     <mat-icon>email</mat-icon>
   </button>
 

@@ -153,6 +153,12 @@ export class UtilityService {
     );
   }
 
+  shareLinkByEmail(data: any) {
+    return this.httpClient.post(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.shareLinkByEmailEndPoint, data
+    );
+  }
+
   truncateHTML(text: string): string {
     let charlimit = 140;
     if (!text || text.length <= charlimit) { return text; }

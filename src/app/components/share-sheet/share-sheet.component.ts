@@ -1,8 +1,11 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
+import { ShareWhatsappComponent } from '../share-whatsapp/share-whatsapp.component';
+import { ShareEmailComponent } from '../share-email/share-email.component';
 
 @Component({
   selector: '.share-sheet',
@@ -19,7 +22,8 @@ export class ShareSheetComponent implements OnInit {
     @Inject(MAT_BOTTOM_SHEET_DATA) public sheetData: any,
     @Inject(DOCUMENT) public DOM: Document,
     public router: Router,
-    public utilityService: UtilityService
+    public utilityService: UtilityService,
+    public dialog: MatDialog
   ) {
     // console.log(this.sheetData);
     this.user = this.sheetData['user'];
@@ -36,11 +40,35 @@ export class ShareSheetComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  copyToClipboard() {
-    this.utilityService.openSuccessSnackBar('Se ha copiado al clipboard');
+  copyToClipboard() { this.utilityService.openSuccessSnackBar('Se ha copiado al clipboard'); }
+
+  killSheet() { this.bottomSheetRef.dismiss(); }
+
+  popInviteWhatsappDialog() {
+    this.killSheet();
+
+    const dialogRef = this.dialog.open<any>(ShareWhatsappComponent, {
+      width: '420px',
+      disableClose: true,
+      data: { url: this.url }
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
   }
 
-  killSheet() {
-    this.bottomSheetRef.dismiss();
+  popInviteEmailDialog() {
+    this.killSheet();
+
+    const dialogRef = this.dialog.open<any>(ShareEmailComponent, {
+      width: '420px',
+      disableClose: true,
+      data: { url: this.url }
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
   }
 }

@@ -1,0 +1,26 @@
+<div class="set-12">
+  <div class="set-12 dlghd">
+    <div class="set-10">Compartir</div>
+    <div class="set-2">
+      <button type="button" mat-mini-fab color="primary" (click)="killDialog()">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="set-12 dlgbdy">
+    <form class="set-12" [formGroup]="formGroup" (submit)="onPhoneInvite(formGroup)">
+      <mat-form-field appearance="outline">
+        <mat-label>Teléfono</mat-label>
+        <input type="text" matInput formControlName="phone">
+      </mat-form-field>
+
+      <div class="set-12 ctrls">
+        <button type="submit" mat-raised-button color="primary" [disabled]="formGroup.invalid || submitted">
+          <small>Compartir</small>
+        </button>
+        <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
+      </div>
+    </form>
+  </div>
+</div>

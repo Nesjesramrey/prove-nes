@@ -1,0 +1,35 @@
+:host {
+  .dlghd {
+    display: flex;
+    align-items: center;
+
+    .set-2 {
+      text-align: right;
+
+      button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        zoom: 0.7;
+      }
+    }
+  }
+
+  .dlgbdy {
+    margin-top: 30px;
+
+    .ctrls {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      * {
+        margin: 0;
+      }
+
+      mat-spinner {
+        margin-left: 20px;
+      }
+    }
+  }
+}
