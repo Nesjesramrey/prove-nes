@@ -93,6 +93,7 @@ export class EndPointService {
   public fetchAllStatesMexEndPoint: string = '/utility/fetch-all-states-mex';
   public inviteUserToMexicolectivoEndPoint: string = '/package/invite/email';
   public searchCollegeEndPoint: string = '/university/search';
+  public shareLinkByEmailEndPoint: string = '/package/share/email';
 
   // uploads
   public uploadUserAvatarEndPoint: string = '/upload/upload-avatar-file';

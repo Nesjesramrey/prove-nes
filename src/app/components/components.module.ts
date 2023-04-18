@@ -94,6 +94,8 @@ import { QuickLoginDialogComponent } from './quick-login-dialog/quick-login-dial
 import { MoveCopyTopicComponent } from './move-copy-topic/move-copy-topic.component';
 import { UploadHandlerSheetComponent } from './upload-handler-sheet/upload-handler-sheet.component';
 import { UploadHandlerComponent } from './upload-handler/upload-handler.component';
+import { ShareWhatsappComponent } from './share-whatsapp/share-whatsapp.component';
+import { ShareEmailComponent } from './share-email/share-email.component';
 
 @NgModule({
   imports: [
@@ -191,7 +193,9 @@ import { UploadHandlerComponent } from './upload-handler/upload-handler.componen
     QuickLoginDialogComponent,
     MoveCopyTopicComponent,
     UploadHandlerSheetComponent,
-    UploadHandlerComponent
+    UploadHandlerComponent,
+    ShareWhatsappComponent,
+    ShareEmailComponent
   ],
   exports: [
     AppPageletComponent,
@@ -265,7 +269,9 @@ import { UploadHandlerComponent } from './upload-handler/upload-handler.componen
     QuickLoginDialogComponent,
     MoveCopyTopicComponent,
     UploadHandlerSheetComponent,
-    UploadHandlerComponent
+    UploadHandlerComponent,
+    ShareWhatsappComponent,
+    ShareEmailComponent
   ],
   entryComponents: [
     EmailValidationDialogComponent,
@@ -312,7 +318,9 @@ import { UploadHandlerComponent } from './upload-handler/upload-handler.componen
     CategorizePostComponent,
     QuickLoginDialogComponent,
     MoveCopyTopicComponent,
-    UploadHandlerSheetComponent
+    UploadHandlerSheetComponent,
+    ShareWhatsappComponent,
+    ShareEmailComponent
   ],
   providers: [],
 })

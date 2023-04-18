@@ -102,12 +102,13 @@ export class PostsComponent implements OnInit {
           filter: ['', [Validators.required]],
           coverage: ['', []]
         });
-        this.isDataAvailable = true;
+
         // if (this.user['status'] != undefined) {
         //   setTimeout(() => {
         //     this.popUseToolsDialog();
         //   }, 1000);
         // }
+
         this.posts.filter((x: any) => {
           if (x['card']['images'] != null) {
             if (x['card']['images'][0] != undefined) {
@@ -118,6 +119,8 @@ export class PostsComponent implements OnInit {
             }
           }
         });
+
+        this.isDataAvailable = true;
         // console.log(this.posts);
       }
     });
@@ -157,12 +160,8 @@ export class PostsComponent implements OnInit {
   }
 
   openSinglePostDialog(post: any) {
-    if (this.user == null) {
-      if (this.isMobile) {
-        this.utilityService.linkMe('/hub/signin-mobile');
-      } else {
-        this.utilityService.linkMe('/hub/ingresar');
-      }
+    if (this.user['status'] == 500) {
+      this.popUseToolsDialog();
       return;
     }
 
@@ -186,6 +185,7 @@ export class PostsComponent implements OnInit {
       backdropClass: 'card-backdrop',
       panelClass: panelClass
     });
+
     dialogRef.afterClosed().subscribe((reply: any) => {
       if (reply != undefined) { post = reply; }
     });
@@ -343,7 +343,11 @@ export class PostsComponent implements OnInit {
   }
 
   linkParent(post: any) {
-    // console.log(post);
+    if (this.user['status'] == 500) {
+      this.popUseToolsDialog();
+      return;
+    }
+
     let topic: any = null;
     let layout: any = null;
     let sublayout: any = null;
