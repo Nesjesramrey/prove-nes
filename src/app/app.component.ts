@@ -142,11 +142,14 @@ export class AppComponent implements OnInit {
         });
       });
 
-    // this.documentService.fetchCoverDocument().subscribe({
-    //   error: (error: any) => { },
-    //   next: (reply: any) => { this.coverDocument = reply; },
-    //   complete: () => { },
-    // });
+    this.documentService.fetchCoverDocument().subscribe({
+      error: (error: any) => { },
+      next: (reply: any) => {
+        this.coverDocument = reply;
+        this.document = reply;
+      },
+      complete: () => { },
+    });
 
     if (this.accessToken != null) {
       this.userService.fetchFireUser().subscribe({
@@ -172,11 +175,6 @@ export class AppComponent implements OnInit {
         this.isDataAvailable = true;
       });
     }
-
-    this.documentService.fetchCoverDocument().subscribe({
-      error: (error: any) => { },
-      next: (reply: any) => { this.document = reply; },
-    });
   }
 
   openCompleteRegistration() {
