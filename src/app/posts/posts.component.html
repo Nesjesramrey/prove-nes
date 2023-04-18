@@ -85,10 +85,12 @@
         </div>
 
         <div class="set-12 crdvp">
-          <img [src]="post['card']['images'][0]" alt="" class="full" *ngIf="post['card']['images'].length != 0" />
+          <img [src]="post['card']['images'][0]" alt="" class="full"
+            *ngIf="post['card']['images'].length != 0 && post['card']['hasVideo'] == undefined" />
           <img src="../../assets/images/mexicolectivo-small-blue.png" alt=""
-            *ngIf="post['card']['images'].length == 0" />
-          <video controls [src]="post['card']['images'][0]" *ngIf="post['card']['hasVideo']" class="full"></video>
+            *ngIf="post['card']['images'].length == 0 && post['card']['hasVideo'] == undefined" />
+          <video controls [src]="post['card']['images'][0]"
+            *ngIf="post['card']['images'].length != 0 && post['card']['hasVideo']" class="full"></video>
         </div>
 
         <div class="set-12 crdft">
@@ -120,6 +122,11 @@
             <button type="button" matTooltip="Votar" matTooltipClass="tooltip" (click)="popUseToolsDialog()"
               *ngIf="user['status'] != undefined">
               <mat-icon>star</mat-icon>
+            </button>
+
+            <button type="button" matTooltip="Abrir" matTooltipClass="tooltip" (click)="linkParent(post)"
+              [disabled]="post['card']['relation'] == null">
+              <mat-icon>launch</mat-icon>
             </button>
           </div>
         </div>
@@ -183,7 +190,8 @@
             *ngIf="post['card']['images'].length != 0 && post['card']['hasVideo'] == undefined" />
           <img src="../../assets/images/mexicolectivo-small-blue.png" alt=""
             *ngIf="post['card']['images'].length == 0 && post['card']['hasVideo'] == undefined" />
-          <video controls [src]="post['card']['images'][0]" *ngIf="post['card']['hasVideo']" class="full"></video>
+          <video controls [src]="post['card']['images'][0]"
+            *ngIf="post['card']['images'].length != 0 && post['card']['hasVideo']" class="full"></video>
         </div>
 
         <div class="set-12 crdft">
@@ -191,6 +199,7 @@
             <mat-icon>label</mat-icon>
             <small>Denuncia</small>
           </div>
+
           <div class="set-6 ctrls">
             <button type="button" matTooltip="Comentar" matTooltipClass="tooltip" (click)="openSinglePostDialog(post)">
               <mat-icon>forum</mat-icon>
@@ -215,6 +224,11 @@
             <button type="button" matTooltip="Votar" matTooltipClass="tooltip" (click)="popUseToolsDialog()"
               *ngIf="user['status'] != undefined">
               <mat-icon>star</mat-icon>
+            </button>
+
+            <button type="button" matTooltip="Abrir" matTooltipClass="tooltip" (click)="linkParent(post)"
+              [disabled]="post['card']['relation'] == null">
+              <mat-icon>launch</mat-icon>
             </button>
           </div>
         </div>

@@ -4,6 +4,7 @@ import { ComplaintService } from 'src/app/services/complaint.service';
 import { DocumentService } from 'src/app/services/document.service';
 import { LayoutService } from 'src/app/services/layout.service';
 import { SolutionService } from 'src/app/services/solution.service';
+import { TestimonyService } from 'src/app/services/testimony.service';
 import { TopicService } from 'src/app/services/topic.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
@@ -22,6 +23,7 @@ export class WindowAlertComponent implements OnInit {
   public complaint: any = null;
   public topic: any = null;
   public solution: any = null;
+  public testimony: any = null;
 
   constructor(
     public dialogRef: MatDialogRef<WindowAlertComponent>,
@@ -31,7 +33,8 @@ export class WindowAlertComponent implements OnInit {
     public layoutService: LayoutService,
     public complaintService: ComplaintService,
     public topicService: TopicService,
-    public solutionService: SolutionService
+    public solutionService: SolutionService,
+    public testimonyService: TestimonyService
   ) {
     // console.log(this.dialogData);
     this.windowType = this.dialogData['windowType'];
@@ -53,6 +56,9 @@ export class WindowAlertComponent implements OnInit {
         break;
       case 'kill-solution':
         this.solution = this.dialogData['solution'];
+        break;
+      case 'kill-testimony':
+        this.testimony = this.dialogData['testimony'];
         break;
     }
   }
@@ -165,7 +171,26 @@ export class WindowAlertComponent implements OnInit {
     });
   }
 
-  killDialog() {
-    this.dialogRef.close();
+  killTestimony() {
+    this.submitted = true;
+
+    let data: any = {
+      testimony_id: this.testimony['_id'],
+      isActive: false
+    };
+
+    this.testimonyService.killTestimony(data).subscribe({
+      error: (error: any) => {
+        this.submitted = false;
+        this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+      },
+      next: (reply: any) => {
+        this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
+        this.dialogRef.close(reply);
+      },
+      complete: () => { this.submitted = false; }
+    });
   }
+
+  killDialog() { this.dialogRef.close(); }
 }

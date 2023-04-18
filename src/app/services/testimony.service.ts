@@ -31,4 +31,10 @@ export class TestimonyService {
       this.endpointSrvc.apiEndPoint + this.endpointSrvc.fetchAllTestimoniesEndPoint, {}
     );
   }
+
+  killTestimony(data: any) {
+    return this.httpClient.delete(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.killTestimonyEndPoint + data['testimony_id'], {}
+    );
+  }
 }

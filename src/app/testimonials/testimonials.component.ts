@@ -120,7 +120,7 @@ export class TestimonialsComponent implements OnInit {
       WindowAlertComponent, {
       width: '420px',
       data: {
-        windowType: 'testimony',
+        windowType: 'kill-testimony',
         testimony: testtimony[0]
       },
       disableClose: true,
@@ -174,7 +174,11 @@ export class TestimonialsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) { }
+      if (reply != undefined) { 
+        this.dataSource['data'] = this.dataSource['data'].filter((x: any) => {
+          return x['_id'] != reply['data']['_id'];
+        });
+      }
     });
   }
 }

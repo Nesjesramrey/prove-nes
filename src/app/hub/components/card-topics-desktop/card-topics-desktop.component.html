@@ -20,7 +20,10 @@
   <div class="set-4" *ngFor="let topic of topics">
     <mat-card class="set-12">
       <div class="set-12 titlehldr">
-        <button type="button" (click)="linkMe(topic)">{{topic?.title}}</button>
+        <button type="button" (click)="linkMe(topic)">
+          <!-- {{topic?.title}} -->
+          {{(topic?.title.length > 30) ? (topic?.title | slice: 0 : 30) + '...' : (topic?.title) | titlecase}}
+        </button>
       </div>
 
       <div class="set-12 ctrls">

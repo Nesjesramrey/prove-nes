@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, HostBinding, Inject, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { ShareSheetComponent } from '../components/share-sheet/share-sheet.component';
@@ -13,6 +13,8 @@ import { FavoritesService } from '../services/favorites.service';
 import { forkJoin, Observable } from 'rxjs';
 import { UseToolsDialogComponent } from './components/use-tools-dialog/use-tools-dialog.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DocumentService } from '../services/document.service';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: '.posts-page',
@@ -29,6 +31,11 @@ export class PostsComponent implements OnInit {
   public submitted: boolean = false;
   public searchTeamsFG!: FormGroup;
   public states: any = null;
+  public document: any = null;
+  public layouts: any = [];
+  public sublayouts: any = [];
+  public topics: any = [];
+  public solutions: any = [];
 
   constructor(
     public deviceDetectorService: DeviceDetectorService,
@@ -39,7 +46,9 @@ export class PostsComponent implements OnInit {
     public postsService: PostsService,
     public voteService: VoteService,
     public favoritesService: FavoritesService,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public documentService: DocumentService,
+    @Inject(DOCUMENT) public DOM: Document,
   ) {
     this.isMobile = this.deviceDetectorService.isMobile();
     if (this.isMobile) { this.class = 'fixmobile'; }
@@ -49,9 +58,11 @@ export class PostsComponent implements OnInit {
     let user: Observable<any> = this.userService.fetchFireUser();
     let posts: Observable<any> = this.postsService.fetchAllPosts({ limit: 10, page: this.postsPage });
     let states: Observable<any> = this.utilityService.fetchAllStates();
-    forkJoin([user, posts, states]).subscribe({
+    let document: Observable<any> = this.documentService.fetchCoverDocument();
+    forkJoin([user, posts, states, document]).subscribe({
       error: (error: any) => { },
       next: (reply: any) => {
+        // console.log(reply);
         this.user = reply[0];
         // console.log(this.user['status']);
 
@@ -65,6 +76,26 @@ export class PostsComponent implements OnInit {
 
         this.states = reply[2];
         // console.log('states: ', this.states);
+
+        this.document = reply[3];
+        // console.log('document: ', this.document);
+        this.document['layouts'].filter((x: any) => {
+          this.layouts.push(x);
+
+          x['subLayouts'].filter((y: any) => {
+            this.sublayouts.push(y);
+
+            y['topics'].filter((t: any) => {
+              this.topics.push(t);
+
+              t['solutions'].filter((s: any) => {
+                this.solutions.push(s);
+              });
+            });
+          });
+        });
+        // console.log(this.topics);
+        // console.log(this.solutions);
       },
       complete: () => {
         this.searchTeamsFG = this.formBuilder.group({
@@ -97,7 +128,8 @@ export class PostsComponent implements OnInit {
       data: {
         user: this.user,
         post: post
-      }
+      },
+      panelClass: 'small-sheet'
     });
 
     bottomSheetRef.afterDismissed().subscribe((reply: any) => {
@@ -308,5 +340,73 @@ export class PostsComponent implements OnInit {
       },
       complete: () => { }
     });
+  }
+
+  linkParent(post: any) {
+    // console.log(post);
+    let topic: any = null;
+    let layout: any = null;
+    let sublayout: any = null;
+    let location: string = '';
+
+    switch (post['card']['relation']) {
+      case null:
+        // console.log('null');
+        break;
+
+      case 'topic':
+        // console.log('topic');
+        topic = this.topics.filter((x: any) => { return x['_id'] == post['card']['relationId']; });
+        // console.log(topic);
+
+        this.sublayouts.filter((x: any) => {
+          x['topics'].filter((y: any) => {
+            if (y['_id'] == topic[0]['_id']) { sublayout = x; }
+          });
+        });
+        // console.log(sublayout);
+
+        this.layouts.filter((x: any) => {
+          x['subLayouts'].filter((y: any) => {
+            if (y['_id'] == sublayout['_id']) { layout = x; }
+          });
+        });
+        // console.log(layout);
+
+        location =
+          `/documentos-publicos/${this.document['_id']}/categoria/${layout['_id']}/subcategoria/${sublayout['_id']}/tema/${topic[0]['_id']}`;
+        this.utilityService.linkMe(location);
+        break;
+
+      case 'solution':
+        let solution: any = this.solutions.filter((x: any) => { return x['_id'] == post['card']['relationId']; });
+        // console.log(solution);
+
+        this.topics.filter((x: any) => {
+          x['solutions'].filter((y: any) => {
+            if (y['_id'] == solution[0]['_id']) { topic = x; }
+          });
+        });
+        // console.log(topic);
+
+        this.sublayouts.filter((x: any) => {
+          x['topics'].filter((y: any) => {
+            if (y['_id'] == topic['_id']) { sublayout = x; }
+          });
+        });
+        // console.log(sublayout);
+
+        this.layouts.filter((x: any) => {
+          x['subLayouts'].filter((y: any) => {
+            if (y['_id'] == sublayout['_id']) { layout = x; }
+          });
+        });
+        // console.log(layout);
+
+        location =
+          `/documentos-publicos/${this.document['_id']}/categoria/${layout['_id']}/subcategoria/${sublayout['_id']}/tema/${topic['_id']}/solucion/${solution[0]['_id']}`;
+        this.utilityService.linkMe(location);
+        break;
+    }
   }
 }
