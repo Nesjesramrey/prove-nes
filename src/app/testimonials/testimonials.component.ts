@@ -23,7 +23,7 @@ export class TestimonialsComponent implements OnInit {
   public userActivities: any = [];
   public testimonies: any = null;
   public selection = new SelectionModel<any>(true, []);
-  public displayedColumns: string[] = ['select', 'author', 'title', 'relation', 'date', 'menu'];
+  public displayedColumns: string[] = ['select', 'author', 'title', 'relation', 'coverage', 'date', 'menu'];
   public dataSource!: MatTableDataSource<any>;
   public isDataAvailable: boolean = false;
   public isPrivate: boolean = false;
