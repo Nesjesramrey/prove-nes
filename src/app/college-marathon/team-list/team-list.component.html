@@ -3,82 +3,86 @@
 </div>
 
 <div class="set-12" *ngIf="isDataAvailable">
-  <div class="crdlst">
-    <div class="filters">
-      <form [formGroup]="searchTeamsFG">
-        <div class="field">
-          <mat-form-field appearance="outline">
-            <mat-label>Buscar</mat-label>
-            <input type="text" matInput formControlName="filter" (keyup.enter)="searchTeams(searchTeamsFG)">
-            <button type="submit" matSuffix>
-              <mat-icon>search</mat-icon>
-            </button>
-          </mat-form-field>
-        </div>
+  <div class="set-12">
+    <div class="side-menu">
+      <div class="filters">
+        <form [formGroup]="searchTeamsFG">
+          <div class="field">
+            <mat-form-field appearance="outline">
+              <mat-label>Buscar</mat-label>
+              <input type="text" matInput formControlName="filter" (keyup.enter)="searchTeams(searchTeamsFG)">
+              <button type="submit" matSuffix>
+                <mat-icon>search</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
 
-        <div class="field">
-          <mat-form-field appearance="outline">
-            <mat-label>Cobertura</mat-label>
-            <mat-select (selectionChange)="searchTeams(searchTeamsFG)" formControlName="coverage">
-              <mat-option *ngFor="let state of states" [value]="state._id">
-                <small>{{state.name}}</small>
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </form>
+          <div class="field">
+            <mat-form-field appearance="outline">
+              <mat-label>Cobertura</mat-label>
+              <mat-select (selectionChange)="searchTeams(searchTeamsFG)" formControlName="coverage">
+                <mat-option *ngFor="let state of states" [value]="state._id">
+                  <small>{{state.name}}</small>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </form>
+      </div>
     </div>
 
-    <div *ngIf="teams.length == 0" class="emptyteams">
-      <mat-card>
-        <h3>Aún no hay equipos registrados</h3>
-        <button type="button" mat-raised-button color="primary" class="wicon"
-          (click)="utilityService.linkMe('/maraton/registro')">
-          <mat-icon>add_circle</mat-icon>
-          <small>Registra tu equipo</small>
-        </button>
-      </mat-card>
-    </div>
+    <div class="crdlst">
+      <div *ngIf="teams.length == 0" class="emptyteams">
+        <mat-card>
+          <h3>Aún no hay equipos registrados</h3>
+          <button type="button" mat-raised-button color="primary" class="wicon"
+            (click)="utilityService.linkMe('/maraton/registro')">
+            <mat-icon>add_circle</mat-icon>
+            <small>Registra tu equipo</small>
+          </button>
+        </mat-card>
+      </div>
 
-    <div *ngIf="teams.length != 0">
-      <mat-card *ngFor="let team of teams">
-        <div class="set-12 teambtn" (click)="utilityService.linkMe('/maraton/equipos/' + team['_id'])">
-          <div class="set-12 crdh blueb">
-            <div class="set-10">
-              <p><small>{{team['name']}}</small></p>
+      <div *ngIf="teams.length != 0">
+        <mat-card *ngFor="let team of teams">
+          <div class="set-12 teambtn" (click)="utilityService.linkMe('/maraton/equipos/' + team['_id'])">
+            <div class="set-12 crdh blueb">
+              <div class="set-10">
+                <p><small>{{team['name']}}</small></p>
 
-              <p class="uname" *ngIf="team['layout'] != null">
-                <small>{{team['layout']['category']['name']}} / {{team['sublayout']['category']['name']}}</small>
-              </p>
-              <p class="uname" *ngIf="team['layout'] == null">
-                <small>Temáticas por configurar</small>
-              </p>
+                <p class="uname" *ngIf="team['layout'] != null">
+                  <small>{{team['layout']['category']['name']}} / {{team['sublayout']['category']['name']}}</small>
+                </p>
+                <p class="uname" *ngIf="team['layout'] == null">
+                  <small>Temáticas por configurar</small>
+                </p>
+              </div>
             </div>
+
+            <div class="set-12 crddsc blueb">
+              <h4 *ngIf="team['topic'] != null">{{team['topic']['title']}}</h4>
+              <h4 *ngIf="team['topic'] == null">Sin título</h4>
+            </div>
+
+          </div>
+          <div class="set-12 crdvp">
+            <img [src]="team['coverImage']" alt="" class="full" *ngIf="team['coverImage'] != null" />
+            <img src="../../assets/images/mexicolectivo-small-blue.png" alt="" *ngIf="team['coverImage'] == null" />
           </div>
 
-          <div class="set-12 crddsc blueb">
-            <h4 *ngIf="team['topic'] != null">{{team['topic']['title']}}</h4>
-            <h4 *ngIf="team['topic'] == null">Sin título</h4>
+          <div class="set-12 crdft">
+            <!-- <p><small>Votos: 9</small></p> -->
+            <p>
+              <small>{{team['university']['universidad_nombre']}}
+                <span class="votes">
+                  <p>{{team['teamScore']}}</p>
+                  <p>puntos</p>
+                </span>
+              </small>
+            </p>
           </div>
-
-        </div>
-        <div class="set-12 crdvp">
-          <img [src]="team['coverImage']" alt="" class="full" *ngIf="team['coverImage'] != null" />
-          <img src="../../assets/images/mexicolectivo-small-blue.png" alt="" *ngIf="team['coverImage'] == null" />
-        </div>
-
-        <div class="set-12 crdft">
-          <!-- <p><small>Votos: 9</small></p> -->
-          <p>
-            <small>{{team['university']['universidad_nombre']}}
-              <span class="votes">
-                <p>{{team['teamScore']}}</p>
-                <p>puntos</p>
-              </span>
-            </small>
-          </p>
-        </div>
-      </mat-card>
+        </mat-card>
+      </div>
     </div>
   </div>
 </div>

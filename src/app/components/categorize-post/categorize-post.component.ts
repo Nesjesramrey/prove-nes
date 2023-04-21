@@ -15,12 +15,16 @@ export class CategorizePostComponent implements OnInit {
   public layouts: any = null;
   public sublayouts: any = null;
   public topics: any = null;
+  public selectedTopic: any = null;
+  public filteredTopics: any = null;
   public solutions: any = null;
+  public selectedSolution: any = null;
   public formGroup!: FormGroup;
   public submitted: boolean = false;
   public relationID: string = '';
   public relateTo: string = '';
   public postType: string = '';
+  public coverage: any = null;
 
   constructor(
     public dialogRef: MatDialogRef<CategorizePostComponent>,
@@ -37,12 +41,14 @@ export class CategorizePostComponent implements OnInit {
     this.layouts = this.document['layouts'];
     // console.log('layouts: ', this.layouts);
     this.postType = this.dialogData['type'];
+    this.coverage = this.dialogData['document']['coverage'];
   }
 
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
       layout: ['', [Validators.required]],
       sublayout: ['', []],
+      coverage: [null, []],
       topic: ['', []],
       solution: ['', []]
     });
@@ -62,9 +68,19 @@ export class CategorizePostComponent implements OnInit {
   onSelectSubLayout(event: any) {
     let layout: any = this.sublayouts.filter((x: any) => { return x['_id'] == event['value']; });
     this.topics = layout[0]['topics'];
+    this.filteredTopics = layout[0]['topics'];
     this.formGroup['controls']['topic'].enable();
     this.relationID = layout[0]['_id'];
     this.relateTo = 'layout';
+  }
+
+  onSelectCoverage(event: any) {
+    this.solutions = null;
+    this.formGroup.patchValue({ solution: '' });
+    this.filteredTopics = this.topics.filter((x: any) => { return x['coverage'].includes(event['value']) });
+    if (this.filteredTopics.length == 0) {
+      this.utilityService.openErrorSnackBar('Noa hay problemas para tu cobertura.');
+    }
   }
 
   onSelectTopic(event: any) {
@@ -73,12 +89,14 @@ export class CategorizePostComponent implements OnInit {
     this.formGroup['controls']['solution'].enable();
     this.relationID = topic[0]['_id'];
     this.relateTo = 'topic';
+    this.selectedTopic = topic[0];
   }
 
   onSelectSolution(event: any) {
     let solution: any = this.solutions.filter((x: any) => { return x['_id'] == event['value']; });
     this.relationID = solution[0]['_id'];
     this.relateTo = 'solution';
+    this.selectedSolution = solution[0];
   }
 
   killDialog() { this.dialogRef.close(); }

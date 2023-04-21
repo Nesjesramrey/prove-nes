@@ -38,14 +38,9 @@ export class SingleComplaintComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.fetchFireUser().subscribe({
-      error: (error: any) => { },
-      next: (reply: any) => { this.user = reply; },
-      complete: () => { }
-    });
-    
     let complaint: Observable<any> = this.complaintService.fetchComplaintById({ complaintID: this.complaintID });
-    forkJoin([complaint]).subscribe((reply: any) => {
+    let user: Observable<any> = this.userService.fetchFireUser();
+    forkJoin([complaint, user]).subscribe((reply: any) => {
       // console.log(reply);
       this.complaint = reply[0];
       //console.log(this.complaint);
@@ -53,27 +48,28 @@ export class SingleComplaintComponent implements OnInit {
       this.card.filter((x: any) => { x['comments'] = []; });
       let avatarImage: any = null;
       this.card.filter((x: any) => {
-        if(x.createdBy === null){
+        if (x.createdBy === null) {
           x['avatarImage'] = null;
         }
-        else{
-        let data: any = { _id: x.createdBy._id };
-        this.userService.fetchUserById(data).subscribe({
-          error: (error: any) => {},
-          next: (reply: any) => {
-            avatarImage = reply.avatarImage;
-            //console.log(avatarImage);
-            x['avatarImage'] = avatarImage;
-          },
-          complete: () => {},
-        });
+        else {
+          let data: any = { _id: x.createdBy._id };
+          this.userService.fetchUserById(data).subscribe({
+            error: (error: any) => { },
+            next: (reply: any) => {
+              avatarImage = reply.avatarImage;
+              //console.log(avatarImage);
+              x['avatarImage'] = avatarImage;
+            },
+            complete: () => { },
+          });
         }
       });
       //console.log(this.card);
 
-      setTimeout(() => {
-       this.isDataAvailable = true;
-      },2000);
+      this.user = reply[1];
+      // console.log(this.user);
+
+      this.isDataAvailable = true;
     });
   }
 
@@ -81,7 +77,7 @@ export class SingleComplaintComponent implements OnInit {
     const bottomSheetRef = this.matBottomSheet.open(ShareSheetComponent, {
       data: {
         user: null,
-        
+
       }
     });
 
@@ -102,7 +98,6 @@ export class SingleComplaintComponent implements OnInit {
     dialogRef.afterClosed().subscribe((reply: any) => { });
   }
 
-  
   postComment(event: any, card: any) {
     if (event.keyCode === 13) {
       card['comments'].push(event.target.value);
