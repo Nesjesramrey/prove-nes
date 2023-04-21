@@ -53,6 +53,7 @@ export class CategorizePostComponent implements OnInit {
       solution: ['', []]
     });
     this.formGroup['controls']['sublayout'].disable();
+    this.formGroup['controls']['coverage'].disable();
     this.formGroup['controls']['topic'].disable();
     this.formGroup['controls']['solution'].disable();
   }
@@ -69,6 +70,7 @@ export class CategorizePostComponent implements OnInit {
     let layout: any = this.sublayouts.filter((x: any) => { return x['_id'] == event['value']; });
     this.topics = layout[0]['topics'];
     this.filteredTopics = layout[0]['topics'];
+    this.formGroup['controls']['coverage'].enable();
     this.formGroup['controls']['topic'].enable();
     this.relationID = layout[0]['_id'];
     this.relateTo = 'layout';

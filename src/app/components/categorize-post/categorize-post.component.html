@@ -1,6 +1,6 @@
 <div class="set-12 dlghd">
   <div class="set-10">
-    <strong>Categorizar 
+    <strong>Categorizar
       <span *ngIf="postType == 'complaint'">Denuncia</span>
       <span *ngIf="postType == 'testimony'">Testimonio</span>
     </strong>
@@ -32,6 +32,9 @@
 
   <div class="set-12 combos">
     <div class="set-8">
+      <div class="set-12" *ngIf="post.images.length != 0">
+        <slider-images [images]="post.images" [obj]="'single-post'"></slider-images>
+      </div>
       &nbsp;
       <!-- <div class="set-12 obj" *ngIf="selectedTopic == null">
         <h3>Selecciona tu problema</h3>
