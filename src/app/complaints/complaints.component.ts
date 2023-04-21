@@ -24,7 +24,7 @@ export class ComplaintsComponent implements OnInit {
   public isDataAvailable: boolean = false;
   public isPrivate: boolean = false;
   public isMobile: boolean = false;
-  public displayedColumns: string[] = ['select', 'author', 'title', 'relation', 'date', 'menu'];
+  public displayedColumns: string[] = ['select', 'author', 'title', 'relation', 'coverage', 'date', 'menu'];
   public dataSource!: MatTableDataSource<any>;
   public paginator!: MatPaginator;
   @ViewChild('paginator') set matPaginator(mp: MatPaginator) {

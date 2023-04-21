@@ -61,8 +61,43 @@
           </button>
 
           <span *ngIf="element['relation'] != null">
-            <small *ngIf="element['relation'] == 'topic'" class="prob">Problema</small>
-            <small *ngIf="element['relation'] == 'solution'" class="sol">Solución</small>
+            <small *ngIf="element['relation'] == 'topic'">
+              <span *ngIf="element['topic'] != null">
+                Problema: <span class="prob">{{element['topic']['title']}}</span>
+              </span>
+              <span *ngIf="element['topic'] == null">
+                Problema: <span class="prob">Sin título</span>
+              </span>
+            </small>
+            <small *ngIf="element['relation'] == 'solution'">
+              <span *ngIf="element['solution'] != null">
+                Solución: <span class="sol">{{element['solution']['title']}}</span>
+              </span>
+              <span *ngIf="element['solution'] == null">
+                Solución: <span class="sol">Sin título</span>
+              </span>
+            </small>
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="coverage">
+        <th mat-header-cell *matHeaderCellDef>Cobertura</th>
+        <td mat-cell *matCellDef="let element">
+          <span *ngIf="element['relation'] != null">
+            <small *ngIf="element['relation'] == 'topic'">
+              <span *ngIf="element['topic'] != undefined">
+                {{element['topic']['coverage'][0]['name']}}
+              </span>
+            </small>
+            <small *ngIf="element['relation'] == 'solution'">
+              <span *ngIf="element['solution'] != undefined">
+                {{element['solution']['coverage'][0]['name']}}
+              </span>
+            </small>
+          </span>
+          <span *ngIf="element['relation'] == null">
+            <small>Sin cobertura</small>
           </span>
         </td>
       </ng-container>
