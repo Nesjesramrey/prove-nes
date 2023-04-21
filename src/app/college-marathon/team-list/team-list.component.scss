@@ -14,6 +14,29 @@
     padding: 0;
   }
 
+  .side-menu {
+    width: 30%;
+    padding: 40px 20px;
+    float: left;
+    position: fixed;
+
+    .btnhldr {
+      margin-top: 5px;
+
+      button {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        mat-icon {
+          font-size: 11pt;
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+
   .crdlst {
     width: 40%;
     margin: 0 30%;
@@ -268,6 +291,13 @@
 
 :host(.fixmobile) {
   margin-top: 0;
+
+  .side-menu {
+    padding: 0;
+    width: 100%;
+    position: relative;
+    float: none;
+  }
 
   .crdlst {
     width: 100%;

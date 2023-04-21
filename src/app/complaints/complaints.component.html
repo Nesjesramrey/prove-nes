@@ -4,9 +4,9 @@
 </div>
 
 <!--Desk Public-->
-<div *ngIf="isDataAvailable && !isMobile && !isPrivate ">
+<!-- <div *ngIf="isDataAvailable && !isMobile && !isPrivate ">
   <public-complaints></public-complaints>
-</div>
+</div> -->
 
 <!--Desk Private-->
 <div *ngIf="isDataAvailable && !isMobile && isPrivate " [class.fixdesk]="!isMobile">
@@ -23,7 +23,7 @@
     <div class="set-8">&nbsp;</div>
   </div>
 
-  <div class="set-12">
+  <div class="set-12 lst">
     <table mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>
@@ -51,7 +51,10 @@
       <ng-container matColumnDef="title">
         <th mat-header-cell *matHeaderCellDef>Título</th>
         <td mat-cell *matCellDef="let element">
-          <small>{{(element.title.length > 40) ? (element.title | slice: 0 : 40) + '...' : (element.title)}}</small>
+          <small *ngIf="element.title != null">
+            {{(element?.title.length > 40) ? (element?.title | slice: 0 : 40) + '...' : (element?.title)}}
+          </small>
+          <small *ngIf="element.title == null">Sin titulo</small>
         </td>
       </ng-container>
 
@@ -63,8 +66,22 @@
           </button>
 
           <span *ngIf="element['relation'] != null">
-            <small *ngIf="element['relation'] == 'topic'" class="prob">Problema</small>
-            <small *ngIf="element['relation'] == 'solution'" class="sol">Solución</small>
+            <small *ngIf="element['relation'] == 'topic'">
+              <span *ngIf="element['topic'] != null">
+                Problema: <span class="prob">{{element['topic']['title']}}</span>
+              </span>
+              <span *ngIf="element['topic'] == null">
+                Problema: <span class="prob">Sin título</span>
+              </span>
+            </small>
+            <small *ngIf="element['relation'] == 'solution'">
+              <span *ngIf="element['solution'] != null">
+                Solución: <span class="sol">{{element['solution']['title']}}</span>
+              </span>
+              <span *ngIf="element['solution'] == null">
+                Solución: <span class="sol">Sin título</span>
+              </span>
+            </small>
           </span>
         </td>
       </ng-container>
@@ -111,10 +128,9 @@
 
 
 <!--Mobile Public-->
-<div *ngIf="isDataAvailable && isMobile && !isPrivate">
+<!-- <div *ngIf="isDataAvailable && isMobile && !isPrivate">
   <public-complaints>Nes</public-complaints>
-  >>>>>>> Stashed changes
-</div>
+</div> -->
 
 
 <!--Mobile Private-->

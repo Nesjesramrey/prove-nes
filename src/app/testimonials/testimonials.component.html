@@ -3,9 +3,9 @@
 </div>
 
 <!--Desk Public-->
-<div *ngIf="isDataAvailable && !isMobile && !isPrivate ">
+<!-- <div *ngIf="isDataAvailable && !isMobile && !isPrivate ">
   <public-testimonials></public-testimonials>
-</div>
+</div> -->
 
 <!--Desk Private-->
 <div *ngIf="isDataAvailable && !isMobile && isPrivate" [class.fixdesk]="!isMobile">
@@ -108,9 +108,9 @@
 </div>
 
 <!--Mobile Public-->
-<div *ngIf="isDataAvailable && isMobile && !isPrivate ">
+<!-- <div *ngIf="isDataAvailable && isMobile && !isPrivate ">
   <public-testimonials></public-testimonials>
-</div>
+</div> -->
 
 <!--Mobile Private-->
 <div *ngIf="isDataAvailable && isMobile &&isPrivate" [class.fixmobile]="isMobile">

@@ -10,6 +10,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
 import { UserDetailsDialogComponent } from '../user-details-dialog/user-details-dialog.component';
 import * as XLSX from 'xlsx';
+import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
   selector: '.users-list-page',
@@ -32,12 +33,14 @@ export class UsersListComponent implements OnInit {
   public limitPerPage: number = 40;
   public page: number = 1;
   public pageIndex: number = 0;
+  public isSearching: boolean = false;
 
   constructor(
     public authenticationSrvc: AuthenticationService,
     public userSrvc: UserService,
     public dialog: MatDialog,
-    public router: Router
+    public router: Router,
+    public utilityService: UtilityService
   ) { }
 
   ngOnInit(): void {
@@ -160,6 +163,22 @@ export class UsersListComponent implements OnInit {
       complete: () => {
         // this.dataSource = new MatTableDataSource(this.users);
       }
+    });
+  }
+
+  searchUserList(event: any) {
+    this.isSearching = true;
+
+    this.userSrvc.searchInUserList({ filter: event['target']['value'] }).subscribe({
+      error: (error: any) => {
+        this.isSearching = false;
+        this.utilityService.openErrorSnackBar(this.utilityService['errorOops'])
+      },
+      next: (reply: any) => {
+        this.users = reply;
+        this.dataSource = new MatTableDataSource(this.users);
+      },
+      complete: () => { this.isSearching = false; }
     });
   }
 }

@@ -99,4 +99,10 @@ export class UserService {
       this.endpointSrvc.apiEndPoint + this.endpointSrvc.uploadUserIDDocumentEndPoint + `${data['user_id']}` + '/id_picture', data['formData']
     );
   }
+
+  searchInUserList(data: any) {
+    return this.httpClient.get(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.searchInUserListEndPoint + `?filter=${data['filter']}`, {}
+    );
+  }
 }

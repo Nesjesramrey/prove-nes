@@ -15,6 +15,8 @@ import { UseToolsDialogComponent } from './components/use-tools-dialog/use-tools
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DocumentService } from '../services/document.service';
 import { DOCUMENT } from '@angular/common';
+import { ComplaintDialogComponent } from '../components/complaint-dialog/complaint-dialog.component';
+import { TestimonyDialogComponent } from '../components/testimony-dialog/testimony-dialog.component';
 
 @Component({
   selector: '.posts-page',
@@ -412,5 +414,35 @@ export class PostsComponent implements OnInit {
         this.utilityService.linkMe(location);
         break;
     }
+  }
+
+  popComplaintsDialog() {
+    const dialogRef = this.dialog.open<any>(ComplaintDialogComponent, {
+      width: '100%',
+      data: {
+        user: this.user
+      },
+      disableClose: true,
+      panelClass: 'side-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
+  }
+
+  popTestimonialsDialog() {
+    const dialogRef = this.dialog.open<any>(TestimonyDialogComponent, {
+      width: '100%',
+      data: {
+        user: this.user
+      },
+      disableClose: true,
+      panelClass: 'side-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
+    });
   }
 }

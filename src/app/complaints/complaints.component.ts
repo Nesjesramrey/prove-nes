@@ -47,29 +47,11 @@ export class ComplaintsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.fetchFireUser().subscribe({
-      error: (error: any) => {
-        // console.log(error);
-      },
-      next: (reply: any) => {
-        this.user = reply;
-        this.user['activityName'] = this.user['activities'][0]['value'];
-        //console.log('user: ', this.user);
-        this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
-        // console.log(this.userActivities); 
-        if (this.userActivities.includes('moderator')) {
-          setTimeout(() => {
-            this.isPrivate = true;
-          });
-        }
-
-      },
-      complete: () => { }
-    });
-
     let complaints: Observable<any> = this.complaintService.fetchAllComplaints();
     let document: Observable<any> = this.documentsService.fetchCoverDocument();
-    forkJoin([complaints, document]).subscribe({
+    let user: Observable<any> = this.userService.fetchFireUser();
+
+    forkJoin([complaints, document, user]).subscribe({
       error: (error: any) => { },
       next: (reply: any) => {
         // console.log(reply);
@@ -80,6 +62,12 @@ export class ComplaintsComponent implements OnInit {
 
         this.document = reply[1];
         // console.log(this.document);
+
+        this.user = reply[2];
+        this.user['activityName'] = this.user['activities'][0]['value'];
+        //console.log('user: ', this.user);
+        this.user['activities'].filter((x: any) => { this.userActivities.push(x['value']); });
+        if (this.userActivities.includes('moderator')) { this.isPrivate = true; }
       },
       complete: () => {
         this.isDataAvailable = true;
@@ -171,7 +159,7 @@ export class ComplaintsComponent implements OnInit {
         type: 'complaint'
       },
       disableClose: true,
-      panelClass: 'side-dialog'
+      panelClass: 'full-dialog'
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {

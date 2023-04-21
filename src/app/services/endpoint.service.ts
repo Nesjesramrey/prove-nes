@@ -26,6 +26,7 @@ export class EndPointService {
   public joinUserWithAssociationEndPoint: string = '/user/'
   public searchUserByEmailEndPoint: string = '/user';
   public uploadUserIDDocumentEndPoint: string = '/user/';
+  public searchInUserListEndPoint: string = '/user/search';
 
   // documents
   public createNewDocumentEndPoint: string = '/document';

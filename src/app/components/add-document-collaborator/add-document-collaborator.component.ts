@@ -219,7 +219,7 @@ export class AddDocumentCollaboratorComponent implements OnInit {
         this.utilitiService.openErrorSnackBar(this.utilitiService.errorOops);
       },
       next: (reply: any) => {
-        console.log(reply);
+        // console.log(reply);
         this.utilitiService.openSuccessSnackBar(this.utilitiService.userAddedSuccesss);
         this.dialogRef.close(reply)
       },

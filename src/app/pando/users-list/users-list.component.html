@@ -3,15 +3,19 @@
 </div>
 
 <div class="set-12" *ngIf="isDataAvailable">
-  <div class="set-12">
+  <div class="set-12 tools">
     <div class="set-4">
       <mat-form-field appearance="outline">
         <mat-label>Buscar usuario...</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Andrea" autocomplete="off">
+        <input matInput (keyup.enter)="searchUserList($event)" placeholder="Ej. Andrea" autocomplete="off">
         <button matSuffix mat-icon-button>
           <mat-icon>groups</mat-icon>
         </button>
       </mat-form-field>
+    </div>
+
+    <div class="set-1">
+      <mat-spinner diameter="30" *ngIf="isSearching"></mat-spinner>
     </div>
   </div>
 

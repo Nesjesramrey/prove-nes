@@ -1,6 +1,9 @@
 <div class="set-12 dlghd">
   <div class="set-10">
-    <strong>Categorizar Denuncia</strong>
+    <strong>Categorizar 
+      <span *ngIf="postType == 'complaint'">Denuncia</span>
+      <span *ngIf="postType == 'testimony'">Testimonio</span>
+    </strong>
   </div>
 
   <div class="set-2">
@@ -27,50 +30,84 @@
 
   <div class="set-12 cmpltdsc" [innerHTML]="post['description']"></div>
 
-  <div class="set-12">
-    <form [formGroup]="formGroup" (submit)="categorizePost(formGroup)">
-      <mat-form-field appearance="outline">
-        <mat-label>Tema</mat-label>
-        <mat-select formControlName="layout" (selectionChange)="onSelectLayout($event)">
-          <mat-option *ngFor="let layout of layouts" [value]="layout['_id']">
-            <small>{{layout['category']['name']}}</small>
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Subtema</mat-label>
-        <mat-select formControlName="sublayout" (selectionChange)="onSelectSubLayout($event)">
-          <mat-option *ngFor="let layout of sublayouts" [value]="layout['_id']">
-            <small>{{layout['category']['name']}}</small>
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Problema</mat-label>
-        <mat-select formControlName="topic" (selectionChange)="onSelectTopic($event)">
-          <mat-option *ngFor="let topic of topics" [value]="topic['_id']">
-            <small>{{topic['title']}}</small>
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Solución</mat-label>
-        <mat-select formControlName="solution" (selectionChange)="onSelectSolution($event)">
-          <mat-option *ngFor="let solution of solutions" [value]="solution['_id']">
-            <small>{{solution['title']}}</small>
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <div class="set-12 ctrls">
-        <button type="submit" mat-raised-button color="primary" [disabled]="formGroup.invalid || submitted">
-          <small>Guardar</small>
-        </button>
-        <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
+  <div class="set-12 combos">
+    <div class="set-8">
+      &nbsp;
+      <!-- <div class="set-12 obj" *ngIf="selectedTopic == null">
+        <h3>Selecciona tu problema</h3>
+      </div> -->
+      <div class="set-12 obj" *ngIf="selectedTopic != null">
+        <div class="set-12 title">
+          <h3>{{selectedTopic['title']}}</h3>
+        </div>
+        <div class="set-12" [innerHTML]="selectedTopic['description']"></div>
       </div>
-    </form>
+
+      <!-- <div class="set-12 obj" *ngIf="selectedSolution == null">
+        <h3>Selecciona tu solución</h3>
+      </div> -->
+      <div class="set-12 obj" *ngIf="selectedSolution != null">
+        <div class="set-12 title">
+          <h3>{{selectedSolution['title']}}</h3>
+        </div>
+        <div class="set-12" [innerHTML]="selectedSolution['description']"></div>
+      </div>
+    </div>
+
+    <div class="set-4">
+      <form [formGroup]="formGroup" (submit)="categorizePost(formGroup)">
+        <mat-form-field appearance="outline">
+          <mat-label>Tema</mat-label>
+          <mat-select formControlName="layout" (selectionChange)="onSelectLayout($event)">
+            <mat-option *ngFor="let layout of layouts" [value]="layout['_id']">
+              <small>{{layout['category']['name']}}</small>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Subtema</mat-label>
+          <mat-select formControlName="sublayout" (selectionChange)="onSelectSubLayout($event)">
+            <mat-option *ngFor="let layout of sublayouts" [value]="layout['_id']">
+              <small>{{layout['category']['name']}}</small>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Cobertura</mat-label>
+          <mat-select (selectionChange)="onSelectCoverage($event)" formControlName="coverage">
+            <mat-option *ngFor="let state of coverage" [value]="state['_id']">
+              <small>{{state['name']}}</small>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Problema</mat-label>
+          <mat-select formControlName="topic" (selectionChange)="onSelectTopic($event)">
+            <mat-option *ngFor="let topic of filteredTopics" [value]="topic['_id']">
+              <small>{{topic['title']}}</small>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Solución</mat-label>
+          <mat-select formControlName="solution" (selectionChange)="onSelectSolution($event)">
+            <mat-option *ngFor="let solution of solutions" [value]="solution['_id']">
+              <small>{{solution['title']}}</small>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="set-12 ctrls">
+          <button type="submit" mat-raised-button color="primary" [disabled]="formGroup.invalid || submitted">
+            <small>Guardar</small>
+          </button>
+          <mat-spinner diameter="30" *ngIf="submitted"></mat-spinner>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
