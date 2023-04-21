@@ -292,6 +292,13 @@
 :host(.fixmobile) {
   margin-top: 0;
 
+  .side-menu {
+    padding: 0;
+    width: 100%;
+    position: relative;
+    float: none;
+  }
+
   .crdlst {
     width: 100%;
     margin: 0;

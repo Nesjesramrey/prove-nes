@@ -324,6 +324,17 @@
   width: 100%;
   padding: 0 !important;
 
+  .side-menu {
+    padding: 0;
+    width: 100%;
+    position: relative;
+
+    .btnhldr {
+      margin: 10px;
+      padding: 0 20px;
+    }
+  }
+
   .crdlst {
     width: 100% !important;
     margin: 0 !important;
