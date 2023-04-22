@@ -202,6 +202,7 @@ export class EndPointService {
   public upoloadProposalEndPoint: string = '/team/';
   public fetchAllTeamsEndPoint: string = '/team';
   public searchTeamsModuleEndPoint: string = '/team/search';
+  public killTeamEndPoint: string = '/team/';
 
   constructor() { }
 }

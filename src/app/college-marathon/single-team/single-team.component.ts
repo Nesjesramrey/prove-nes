@@ -790,4 +790,16 @@ export class SingleTeamComponent implements OnInit {
     this.utilityService.router.navigateByUrl('/', { skipLocationChange: true })
       .then(() => this.utilityService.router.navigate([teamID]));
   }
+
+  killTeam() {
+    let data: any = {
+      teamID: this.team['_id']
+    };
+    this.teamService.killTeam(data).subscribe({
+      error: (error: any) => { this.utilityService.openErrorSnackBar(this.utilityService['errorOops']); },
+      next: (reply: any) => {
+        this.utilityService.linkMe('/maraton');
+      }
+    });
+  }
 }

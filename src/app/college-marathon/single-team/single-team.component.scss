@@ -159,6 +159,19 @@
         mat-spinner {
           margin-left: 20px;
         }
+
+        .mini {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          zoom: 0.7;
+          margin-right: 20px;
+
+          mat-icon {
+            margin: 0;
+            font-size: 20pt;
+          }
+        }
       }
 
       .otherteams {
@@ -672,7 +685,7 @@
           font-size: 17pt;
         }
       }
-      
+
       .otherteams {
         left: 190px;
       }

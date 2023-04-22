@@ -13,6 +13,9 @@
       </div>
 
       <div class="chngbnr">
+        <button type="button" mat-mini-fab color="accent" class="mini" (click)="killTeam()" *ngIf="isLeader">
+          <mat-icon>cancel</mat-icon>
+        </button>
         <button type="button" mat-raised-button color="accent" (click)="coverFile.click()" [disabled]="isUploading"
           *ngIf="isLeader && !isMobile">
           <mat-icon>camera_alt</mat-icon>
@@ -45,12 +48,14 @@
       </div>
 
       <div class="otherteams">
-        <button type="button" mat-raised-button color="primary" class="wicon" (click)="utilityService.linkMe('/maraton/equipos')" *ngIf="!isMobile">
+        <button type="button" mat-raised-button color="primary" class="wicon"
+          (click)="utilityService.linkMe('/maraton/equipos')" *ngIf="!isMobile">
           <mat-icon>groups</mat-icon>
           <small>Ver otros equipos</small>
         </button>
 
-        <button type="button" mat-mini-fab color="primary" (click)="utilityService.linkMe('/maraton/equipos')" *ngIf="isMobile">
+        <button type="button" mat-mini-fab color="primary" (click)="utilityService.linkMe('/maraton/equipos')"
+          *ngIf="isMobile">
           <mat-icon>groups</mat-icon>
         </button>
       </div>
