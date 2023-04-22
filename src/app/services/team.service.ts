@@ -84,4 +84,10 @@ export class TeamService {
       this.endpointSrvc.apiEndPoint + this.endpointSrvc.searchTeamsModuleEndPoint + `?filter=${data['filter']}&coverage=${data['coverage']}`, {}
     );
   }
+
+  killTeam(data: any) {
+    return this.httpClient.delete(
+      this.endpointSrvc.apiEndPoint + this.endpointSrvc.killTeamEndPoint + data['teamID'], data
+    );
+  }
 }
