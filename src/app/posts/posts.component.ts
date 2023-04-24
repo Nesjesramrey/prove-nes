@@ -38,6 +38,7 @@ export class PostsComponent implements OnInit {
   public sublayouts: any = [];
   public topics: any = [];
   public solutions: any = [];
+  public extensionsAllowed: any = ['mp4', '3gpp', 'mov', 'MP4', 'MOV'];
 
   constructor(
     public deviceDetectorService: DeviceDetectorService,
@@ -115,7 +116,10 @@ export class PostsComponent implements OnInit {
           if (x['card']['images'] != null) {
             if (x['card']['images'][0] != undefined) {
               var fileExt = x['card']['images'][0].split('.').pop();
-              if (fileExt == 'mp4' || fileExt == '3gpp' || fileExt == 'mov') {
+              // if (fileExt == 'mp4' || fileExt == '3gpp' || fileExt == 'mov') {
+              //   x['card']['hasVideo'] = true;
+              // }
+              if (this.extensionsAllowed.includes(fileExt)) {
                 x['card']['hasVideo'] = true;
               }
             }

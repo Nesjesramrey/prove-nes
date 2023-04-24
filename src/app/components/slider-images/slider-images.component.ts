@@ -19,7 +19,7 @@ export class SliderImagesComponent implements OnInit {
   @Input() solution: any = null;
   @Input() complaint: any = null;
   @ViewChild('contentScroll') public contentScroll!: ElementRef<HTMLDivElement>;
-  public videExtensions: any[] = ['mp4', 'mov', '3gpp'];
+  public videExtensions: any[] = ['mp4', 'mov', '3gpp', 'MP4', 'MOV'];
   @Input() obj: any = null;
   public multipleObj: any = [];
 
