@@ -24,6 +24,7 @@ export class SinglePostComponent implements OnInit {
   public post: any = null;
   public isMobile: boolean = false;
   @HostBinding('class') public class: string = '';
+  public extensionsAllowed: any = ['mp4', '3gpp', 'mov', 'MP4', 'MOV'];
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -62,7 +63,10 @@ export class SinglePostComponent implements OnInit {
         if (this.post['card']['images'] != null) {
           if (this.post['card']['images'][0] != undefined) {
             var fileExt = this.post['card']['images'][0].split('.').pop();
-            if (fileExt == 'mp4' || fileExt == '3gpp' || fileExt == 'mov') {
+            // if (fileExt == 'mp4' || fileExt == '3gpp' || fileExt == 'mov') {
+            //   this.post['card']['hasVideo'] = true;
+            // }
+            if (this.extensionsAllowed.includes(fileExt)) {
               this.post['card']['hasVideo'] = true;
             }
           }
