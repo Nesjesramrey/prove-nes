@@ -15,6 +15,7 @@ import { SubcategoryComponent } from './subcategory/subcategory.component';
 import { SolutionComponent } from './solution/solution.component';
 import { ComponentsModule as PublicComponentsModule } from './components/components.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AppSharedModule } from '../app-shared.module';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ComponentsModule,
     AppMaterialModule,
     PublicComponentsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AppSharedModule
   ],
 })
 export class PublicDocumentsModule { }

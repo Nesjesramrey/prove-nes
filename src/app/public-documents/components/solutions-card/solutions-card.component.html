@@ -1,6 +1,6 @@
 <div class="set-12 doc-description">
   <div class="set-12 solutions-box">
-    <div class="set-12">
+    <div class="set-12 hdtls">
       <div class="set-6">
         <div class="set-6">
           <mat-form-field appearance="outline">
@@ -13,9 +13,18 @@
           </mat-form-field>
         </div>
       </div>
+
+      <div class="set-6 btns">
+        <small>
+          <a href="javascript:void(0)" (click)="popCitizensWall('testimony')">Testimonios</a>
+        </small>
+        <small>
+          <a href="javascript:void(0)" (click)="popCitizensWall('complaint')">Denuncias</a>
+        </small>
+      </div>
     </div>
 
-    <div class="set-12 table-head">
+    <!-- <div class="set-12 table-head">
       <div class="set-6 head-add">
         <button type="button" mat-mini-fab color="primary" matTooltip="Agregar solución" matTooltipClass="tooltip"
           (click)="openModalSolution(null)">
@@ -85,6 +94,6 @@
           </button>
         </div>
       </div>
-    </ng-template>
+    </ng-template> -->
   </div>
 </div>

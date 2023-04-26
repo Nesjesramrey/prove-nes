@@ -27,6 +27,7 @@ export class SinglePostDialogComponent implements OnInit {
   public submitted: boolean = false;
   public url: string = '';
   public obj: any = null;
+  public routerData: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<SinglePostDialogComponent>,
@@ -45,6 +46,7 @@ export class SinglePostDialogComponent implements OnInit {
     this.post = this.dialogData['post'];
     this.postComments = this.post['postComments'];
     this.user = this.dialogData['user'];
+
     switch (this.post['relation']) {
       case 'complaint':
         this.post['card'] = this.post['complaint'][0]
@@ -53,14 +55,20 @@ export class SinglePostDialogComponent implements OnInit {
         this.post['card'] = this.post['testimony'][0]
         break;
     }
-    if (this.post['card']['images'] != null) {
-      if (this.post['card']['images'][0] != undefined) {
-        var fileExt = this.post['card']['images'][0].split('.').pop();
-        if (fileExt == 'mp4' || fileExt == '3gpp' || fileExt == 'mov') {
-          this.post['card']['hasVideo'] = true;
+
+    if (this.post['card'] != undefined) {
+      if (this.post['card']['images'] != null) {
+        if (this.post['card']['images'][0] != undefined) {
+          var fileExt = this.post['card']['images'][0].split('.').pop();
+          if (fileExt == 'mp4' || fileExt == '3gpp' || fileExt == 'mov') {
+            this.post['card']['hasVideo'] = true;
+          }
         }
       }
+    } else {
+      this.routerData = true;
     }
+
     // console.log(this.post);
     this.isMobile = this.deviceDetectorService.isMobile();
     if (this.isMobile) { this.class = 'fixmobile'; }

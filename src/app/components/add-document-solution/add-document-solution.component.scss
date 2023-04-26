@@ -1,8 +1,8 @@
 :host {
   padding: 20px;
   float: left;
-  width: 70%;
-  margin: 0 15%;
+  width: 100%;
+  // margin: 0 15%;
 
   ::ng-deep .angular-editor-toolbar {
     background: transparent !important;
@@ -47,6 +47,7 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        zoom: 0.7;
       }
     }
   }

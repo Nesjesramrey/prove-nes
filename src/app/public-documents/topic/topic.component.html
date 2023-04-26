@@ -37,7 +37,7 @@
   </div>
 
   <div class="set-12">
-    <div class="set-9 col-lft">
+    <div class="set-8 col-lft">
       <mat-card>
         <div class="set-12 card-desc">
           <div class="imghldr">
@@ -82,7 +82,8 @@
               (click)="openModalSolution(null)">
               <mat-icon>feedback</mat-icon>
             </button> -->
-            <button type="button" mat-mini-fab color="warn" matTooltip="Compartir" matTooltipClass="tooltip" (click)="openBottomSheet()">
+            <button type="button" mat-mini-fab color="warn" matTooltip="Compartir" matTooltipClass="tooltip"
+              (click)="openBottomSheet()">
               <mat-icon>share</mat-icon>
             </button>
 
@@ -97,12 +98,94 @@
           <solutions-card [data]="SolutionDataSource" [document]="document" [coverage]="coverage" [topic]="topic"
             [coverageSelected]="coverageSelected" (sendSolutionData)="openModalSolution($event)"></solutions-card>
         </div>
+
+        <div class="set-12 cmtlst" *ngIf="topic['comments'].length > 0">
+          <div class="set-12 com" *ngFor="let com of topic['comments']">
+            <div class="set-1">
+              <div class="avatar">
+                <img [src]="com['createdBy']['avatarImage']" [alt]="" *ngIf="com['createdBy']['avatarImage'] != null">
+                <span *ngIf="com['createdBy']['avatarImage'] == null">
+                  {{com['createdBy']['firstname'] | firstword | firstletter}}{{com['createdBy']['lastname'] | firstword
+                  | firstletter}}
+                </span>
+              </div>
+            </div>
+
+            <div class="set-11">
+              <div class="set-12 mess" [innerHTML]="utilityService.truncateMessages(com['message'])"
+                *ngIf="com['truncate']"></div>
+              <div class="set-12 mess" [innerHTML]="com['message']" *ngIf="!com['truncate']"></div>
+
+              <div class="set-12 dates txt-right" *ngIf="com['message'].length > 170">
+                <small>
+                  <a href="javascript:void(0)" (click)="toggleCommentMessage(com)">
+                    {{com['truncate'] ? 'Leer más' : 'Leer menos'}}
+                  </a>
+                </small>
+              </div>
+
+              <div class="set-12 dates">
+                <small>{{com['createdBy']['firstname']}} {{com['createdBy']['lastname']}}</small> -
+                <small>{{com['createdAt'] | date: 'mediumDate'}} - {{com['createdAt'] | date: 'mediumTime'}}</small>
+              </div>
+
+              <!-- <div class="set-12 dates">
+                <small>
+                  <a href="javascript:void(0)">Responder</a>
+                </small>
+              </div> -->
+            </div>
+          </div>
+        </div>
+
+        <div class="set-12 cmtlst nocom" *ngIf="topic['comments'].length == 0">
+          <h4>No hay comentarios</h4>
+          <p>
+            <small>Sé el primero en comentar</small>
+          </p>
+          <button type="button" mat-raised-button color="warn" class="wicon" (click)="popAddCommentsDialog()">
+            <mat-icon>add_circle</mat-icon>
+            <small>Agregar comentario</small>
+          </button>
+        </div>
       </mat-card>
     </div>
 
-    <div class="set-3 col-rgt">
-      <public-documents-testimonials [data]="topic.testimonials" (sendTestimonyData)="openModalTestimony($event)">
-      </public-documents-testimonials>
+    <div class="set-4 col-rgt">
+      <!-- <public-documents-testimonials [data]="topic.testimonials" (sendTestimonyData)="openModalTestimony($event)">
+      </public-documents-testimonials> -->
+
+      <div class="set-12 table-head">
+        <div class="set-12 head-add">
+          <button type="button" mat-mini-fab color="primary" matTooltip="Agregar solución" matTooltipClass="tooltip"
+            (click)="openModalSolution(null)">
+            <mat-icon>add_circle</mat-icon>
+          </button>
+          <div class="set-12 head-titles">
+            <span>Soluciones</span>
+            <div class="line"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="set-12 sltshldr" *ngIf="solutionsData.length > 0">
+        <div class="set-12 slt" *ngFor="let solution of solutionsData">
+          <button type="button" (click)="linkSolution(solution._id)">
+            {{solution['title']}}
+          </button>
+        </div>
+      </div>
+
+      <div class="set-12 sltshldr nocom" *ngIf="solutionsData.length == 0">
+        <h4>No hay soluciones</h4>
+        <p>
+          <small>Sé el primero en agregar una solución</small>
+        </p>
+        <button type="button" mat-raised-button color="warn" class="wicon" (click)="openModalSolution(null)">
+          <mat-icon>add_circle</mat-icon>
+          <small>Agregar solución</small>
+        </button>
+      </div>
     </div>
   </div>
 </div>

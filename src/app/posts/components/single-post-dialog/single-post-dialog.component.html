@@ -3,9 +3,12 @@
 </div>
 
 <div class="set-12 dialoghead" *ngIf="isDataAvailable">
-  <div class="set-10">
+  <div class="set-10" *ngIf="!routerData">
     <p class="title" *ngIf="post?.relation == 'complaint'">{{post['card']['title'] || 'Sin título'}}</p>
     <p class="title" *ngIf="post?.relation == 'testimony'">{{post['card']['name'] || 'Sin título'}}</p>
+  </div>
+  <div class="set-12" *ngIf="routerData">
+    {{post['title'] || 'Sin título'}}
   </div>
 
   <div class="set-2">
@@ -16,7 +19,7 @@
 </div>
 
 <div class="set-12 dialogbody" *ngIf="isDataAvailable">
-  <div class="set-12 dlgcont">
+  <div class="set-12 dlgcont" *ngIf="!routerData">
     <button type="button" class="avatar" *ngIf="post['card']['createdBy'] != null">
       <img [src]="post['card']['createdBy']['avatarImage']" alt=""
         *ngIf="post['card']['createdBy']['avatarImage'] != null && !post['card']['isAnonymous']">
@@ -46,29 +49,74 @@
     </div>
   </div>
 
-  <div class="set-12 dlgdesc" [innerHTML]="post['card']['description']"></div>
+  <div class="set-12 dlgcont" *ngIf="routerData">
+    <button type="button" class="avatar" *ngIf="post['createdBy'] != null">
+      <img [src]="post['createdBy']['avatarImage']" alt=""
+        *ngIf="post['createdBy']['avatarImage'] != null && !post['isAnonymous']">
 
-  <div class="set-12 gallery" *ngIf="post['card']['images'].length != 0">
-    <slider-images [images]="post['card']['images']" [obj]="obj"></slider-images>
+      <small *ngIf="post['createdBy']['avatarImage'] == null && !post['isAnonymous']">
+        {{post['createdBy']['firstname'] | firstword | firstletter |
+        titlecase}}{{post['createdBy']['lastname'] | firstword | firstletter | titlecase}}
+      </small>
+
+      <small *ngIf="post['isAnonymous']">A</small>
+    </button>
+
+    <button type="button" class="avatar" *ngIf="post['createdBy'] == null">
+      <small>A</small>
+    </button>
+
+    <div>
+      <p *ngIf="post['createdBy'] != null && !post['isAnonymous']">
+        {{post['createdBy']['firstname'] | titlecase}} {{post['createdBy']['lastname'] | titlecase}}
+      </p>
+
+      <p *ngIf="post['isAnonymous']">Anónimo</p>
+
+      <p *ngIf="post['createdBy'] == null && !post['isAnonymous']">Anónimo</p>
+
+      <p>{{post['createdAt'] | date: 'mediumDate'}} - {{post['createdAt'] | date: 'mediumTime'}}</p>
+    </div>
   </div>
 
-  <div class="set-12 comnts" *ngIf="postComments.length != 0">
-    <div class="set-12 comnt" *ngFor="let comment of postComments">
-      <div class="set-1">
-        <div class="avatar">
-          <img [src]="comment['createdBy']['avatarImage']" alt="" *ngIf="comment['createdBy']['avatarImage'] != null">
-          <span *ngIf="comment['createdBy']['avatarImage'] == null">
-            {{comment['createdBy']['firstname'] | firstword | firstletter}}{{comment['createdBy']['lastname'] |
-            firstword | firstletter}}
-          </span>
+
+  <div class="set-12 dlgdesc" [innerHTML]="post['card']['description']" *ngIf="!routerData"></div>
+  <div class="set-12 dlgdesc" [innerHTML]="post['description']" *ngIf="routerData"></div>
+
+
+
+
+  <div class="set-12" *ngIf="!routerData">
+    <div class="set-12 gallery" *ngIf="post['card']['images'].length != 0">
+      <slider-images [images]="post['card']['images']" [obj]="obj"></slider-images>
+    </div>
+  </div>
+
+  <div class="set-12" *ngIf="routerData">
+    <div class="set-12 gallery" *ngIf="post['images'].length != 0">
+      <slider-images [images]="post['images']" [obj]="obj"></slider-images>
+    </div>
+  </div>
+
+  <div class="set-12" *ngIf="!routerData">
+    <div class="set-12 comnts" *ngIf="postComments.length != 0">
+      <div class="set-12 comnt" *ngFor="let comment of postComments">
+        <div class="set-1">
+          <div class="avatar">
+            <img [src]="comment['createdBy']['avatarImage']" alt="" *ngIf="comment['createdBy']['avatarImage'] != null">
+            <span *ngIf="comment['createdBy']['avatarImage'] == null">
+              {{comment['createdBy']['firstname'] | firstword | firstletter}}{{comment['createdBy']['lastname'] |
+              firstword | firstletter}}
+            </span>
+          </div>
         </div>
-      </div>
-      <div class="set-11 txt">
-        <div class="set-12">
-          <small>{{comment['createdBy']['firstname']}} {{comment['createdBy']['lastname']}}</small>
-        </div>
-        <div class="set-12">
-          <span>{{comment['message']}}</span>
+        <div class="set-11 txt">
+          <div class="set-12">
+            <small>{{comment['createdBy']['firstname']}} {{comment['createdBy']['lastname']}}</small>
+          </div>
+          <div class="set-12">
+            <span>{{comment['message']}}</span>
+          </div>
         </div>
       </div>
     </div>

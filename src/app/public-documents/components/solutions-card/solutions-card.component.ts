@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
@@ -32,7 +32,8 @@ export class SolutionsCardComponent implements OnInit {
   constructor(
     private utilityService: UtilityService,
     public activatedRoute: ActivatedRoute,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public router: Router
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
@@ -103,6 +104,13 @@ export class SolutionsCardComponent implements OnInit {
         this.solutions.unshift(solution);
         this.dataSource = new MatTableDataSource(this.solutions);
       }
+    });
+  }
+
+  popCitizensWall(type: string) {
+    this.router.navigateByUrl('/posts', {
+      state:
+        { topic: this.topicID, load: type }
     });
   }
 }

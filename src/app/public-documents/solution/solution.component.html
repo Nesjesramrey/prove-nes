@@ -39,7 +39,7 @@
   </div>
 
   <div class="set-12">
-    <div class="set-9 col-rgt-3">
+    <div class="set-8 col-rgt-3">
       <mat-card>
         <div class="set-12 card-desc">
           <div class="set-12 imghldr">
@@ -95,25 +95,96 @@
           </div>
         </div>
 
-        <div class="set-12 mt-2">
-          <!-- <div class="set-12 mt-2">
-            <div class="set-6 col-rgt-2" style="padding:40px">
-              <spider-chart [withBorder]="false"></spider-chart>
-            </div>
+        <div class="set-12 coms">
+          <div class="set-12 btns">
+            <small>
+              <a href="javascript:void(0)" (click)="popCitizensWall('testimony')">Testimonios</a>
+            </small>
+            <small>
+              <a href="javascript:void(0)" (click)="popCitizensWall('complaint')">Denuncias</a>
+            </small>
+          </div>
 
-            <div class="set-6 col-rgt-2">
-              <circle-chart></circle-chart>
-            </div>
+          <div class="set-12 cmtlst" *ngIf="solution['comments'].length > 0">
+            <div class="set-12 com" *ngFor="let com of solution['comments']">
+              <div class="set-1">
+                <div class="avatar">
+                  <img [src]="com['createdBy']['avatarImage']" [alt]="" *ngIf="com['createdBy']['avatarImage'] != null">
+                  <span *ngIf="com['createdBy']['avatarImage'] == null">
+                    {{com['createdBy']['firstname'] | firstword | firstletter}}{{com['createdBy']['lastname'] | firstword | firstletter}}
+                  </span>
+                </div>
+              </div>
 
-            <div class="set-6"></div>
-          </div> -->
+              <div class="set-11">
+                <div class="set-12 mess" [innerHTML]="utilityService.truncateMessages(com['message'])"
+                  *ngIf="com['truncate']"></div>
+                <div class="set-12 mess" [innerHTML]="com['message']" *ngIf="!com['truncate']"></div>
+
+                <div class="set-12 dates txt-right" *ngIf="com['message'].length > 170">
+                  <small>
+                    <a href="javascript:void(0)" (click)="toggleCommentMessage(com)">
+                      {{com['truncate'] ? 'Leer más' : 'Leer menos'}}
+                    </a>
+                  </small>
+                </div>
+
+                <div class="set-12 dates">
+                  <small>{{com['createdBy']['firstname']}} {{com['createdBy']['lastname']}}</small> - 
+                  <small>{{com['createdAt'] | date: 'mediumDate'}} - {{com['createdAt'] | date: 'mediumTime'}}</small>
+                </div>
+
+                <!-- <div class="set-12 dates">
+                  <small>
+                    <a href="javascript:void(0)">Responder</a>
+                  </small>
+                </div> -->
+              </div>
+            </div>
+          </div>
+
+          <div class="set-12 cmtlst nocom" *ngIf="solution['comments'].length == 0">
+            <h4>No hay comentarios</h4>
+            <p>
+              <small>Sé el primero en comentar</small>
+            </p>
+            <button type="button" mat-raised-button color="warn" class="wicon" (click)="popAddCommentsDialog()">
+              <mat-icon>add_circle</mat-icon>
+              <small>Agregar comentario</small>
+            </button>
+          </div>
         </div>
       </mat-card>
     </div>
 
-    <div class="set-3">
-      <public-documents-testimonials [data]="solution.testimonials" (sendTestimonyData)="openModalTestimony($event)">
-      </public-documents-testimonials>
+    <div class="set-4">
+      <!-- <public-documents-testimonials [data]="solution.testimonials" (sendTestimonyData)="openModalTestimony($event)">
+      </public-documents-testimonials> -->
+      <div class="set-12 table-head">
+        <div class="set-12 head-add">
+          <button type="button" mat-mini-fab color="primary" matTooltip="Agregar solución" matTooltipClass="tooltip"
+            (click)="openModalSolution(null)">
+            <mat-icon>add_circle</mat-icon>
+          </button>
+          <div class="set-12 head-titles">
+            <span>Otras Soluciones</span>
+            <div class="line"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="set-12 sltshldr" *ngIf="otherSolutions.length == 0">
+        <h4>No hay mas soluciones</h4>
+      </div>
+
+      <div class="set-12 sltshldr" *ngIf="otherSolutions.length > 0">
+        <div class="set-12 slt" *ngFor="let solution of otherSolutions">
+          <button type="button"
+            (click)="loadOtheSolution('/documentos-publicos/' + documentID + '/categoria/' + categoryID + '/subcategoria/' + subcategoryID + '/tema/' + topicID + '/solucion/' + solution['_id'])">
+            {{solution['title']}}
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
