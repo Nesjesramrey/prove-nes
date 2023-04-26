@@ -211,7 +211,8 @@
                   <br />
                   <small>Sé el primero en agregar un problema.</small>
                 </p>
-                <button type="button" mat-raised-button color="warn" (click)="popAddDocumentTheme()">
+                <button type="button" mat-raised-button color="warn" (click)="popAddDocumentTheme()"
+                  *ngIf="isCollaborator">
                   <small>Agregar problema</small>
                 </button>
               </div>

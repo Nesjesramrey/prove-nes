@@ -1,6 +1,6 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { AddDocumentTestimonyComponent } from 'src/app/components/add-document-testimony/add-document-testimony.component';
 import { DocumentService } from 'src/app/services/document.service';
@@ -18,6 +18,7 @@ import { AddCommentsComponent } from 'src/app/components/add-comments/add-commen
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ShareSheetComponent } from 'src/app/components/share-sheet/share-sheet.component';
+import { AddDocumentSolutionComponent } from 'src/app/components/add-document-solution/add-document-solution.component';
 
 @Component({
   selector: '.solution-page',
@@ -49,6 +50,7 @@ export class SolutionComponent implements OnInit {
   public titles: any = [];
   public isMobile: boolean = false;
   @HostBinding('class') public class: string = '';
+  public otherSolutions: any = null;
 
   constructor(
     public dialog: MatDialog,
@@ -62,7 +64,8 @@ export class SolutionComponent implements OnInit {
     public UserService: UserService,
     public favoritesService: FavoritesService,
     public deviceDetectorService: DeviceDetectorService,
-    public matBottomSheet: MatBottomSheet
+    public matBottomSheet: MatBottomSheet,
+    public router: Router,
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
@@ -106,9 +109,21 @@ export class SolutionComponent implements OnInit {
         this.solution['shortTitle'] = this.getshortTitle(this.solution['title']);
         this.stats = this.solution['stats'];
         if (this.stats == null) { this.stats = { score: 0 } }
+        if (this.solution['comments'].length > 0) {
+          this.solution['comments'].filter((x: any) => {
+            if (x['message'].length > 85) {
+              x['truncate'] = true;
+            } else {
+              x['truncate'] = false;
+            }
+          });
+        }
+        // console.log(this.solution);
+        this.otherSolutions = this.topic['solutions'].filter((x: any) => { return x['_id'] != this.solutionID; });
       },
       complete: () => {
         this.isDataAvailable = true;
+        // console.log(this.topic);
       }
     });
 
@@ -285,7 +300,7 @@ export class SolutionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) { }
+      if (reply != undefined) { this.solution['comments'].unshift(reply); }
     });
   }
 
@@ -361,6 +376,49 @@ export class SolutionComponent implements OnInit {
 
     bottomSheetRef.afterDismissed().subscribe((reply: any) => {
       if (reply != undefined) { }
+    });
+  }
+
+  toggleCommentMessage(comment: any) {
+    let com: any = this.solution['comments'].filter((x: any) => { return x['_id'] == comment['_id']; });
+    com[0]['truncate'] = !com[0]['truncate'];
+  }
+
+  loadOtheSolution(solutionID: string) {
+    this.utilityService.router.navigateByUrl('/', { skipLocationChange: true })
+      .then(() => this.utilityService.router.navigate([solutionID]));
+  }
+
+  openModalSolution(event: any) {
+    let coverage = this.document['coverage'].filter((x: any) => { return x['_id'] == this.topic['coverage'][0]['_id'] });
+    if (coverage.length == 0) {
+      this.utilityService.openErrorSnackBar('Selecciona una cobertura.');
+      return;
+    }
+
+    const dialogRef = this.dialog.open<AddDocumentSolutionComponent>(AddDocumentSolutionComponent, {
+      data: {
+        themeID: this.topicID,
+        coverage: coverage[0]
+      },
+      disableClose: true,
+      panelClass: 'side-dialog'
+    }
+    );
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) {
+        const solution = reply.solutions[0];
+        this.topic['solutions'].unshift(solution);
+        this.otherSolutions = this.topic['solutions'].filter((x: any) => { return x['_id'] != this.solutionID; });
+      }
+    });
+  }
+
+  popCitizensWall(type: string) {
+    this.router.navigateByUrl('/posts', {
+      state:
+        { solution: this.solutionID, load: type }
     });
   }
 }

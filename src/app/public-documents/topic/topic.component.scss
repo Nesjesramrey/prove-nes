@@ -463,6 +463,148 @@
     font-size: 16pt;
     font-weight: bold;
   }
+
+  .cmtlst {
+    padding: 20px;
+
+    .com {
+      padding: 10px 0;
+      border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
+    }
+
+    .com:last-child {
+      padding-bottom: 0 !important;
+      border-bottom: none;
+    }
+
+    .avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 100%;
+      overflow: hidden;
+      background: #000000;
+      margin: 0;
+      color: #f1f1f1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11pt;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .mess {
+      font-size: 11pt;
+    }
+
+    .dates {
+      font-style: italic;
+      color: rgba($color: #000000, $alpha: 0.4);
+      font-size: 10pt;
+      margin-top: 5px;
+    }
+
+    .mess {
+      text-align: justify;
+    }
+
+    &.nocom {
+      text-align: center;
+
+      h4 {
+        margin-bottom: 5px;
+      }
+
+      p {
+        margin-bottom: 10px;
+      }
+
+      button {
+        margin: auto !important;
+      }
+    }
+  }
+
+  .table-head {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+
+    // .set-6:nth-child(odd) {
+    //   padding-right: 10px;
+    // }
+
+    .head-add {
+      button {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        z-index: 11;
+      }
+    }
+
+    .set-6:nth-child(even) {
+      padding-left: 20px;
+    }
+
+    * {
+      margin: 0;
+    }
+
+    p.title {
+      margin-right: 70px;
+      font-size: 16px;
+    }
+
+    ::ng-deep .mat-form-field-wrapper {
+      padding-bottom: 0 !important;
+    }
+
+    .set-2 {
+      button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+
+  .sltshldr {
+    .slt {
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
+
+      button {
+        text-align: left;
+        transition: all .2s linear;
+      }
+
+      button:hover {
+        color: #1e7e7f;
+      }
+    }
+
+    &.nocom {
+      text-align: center;
+
+      h4 {
+        margin-bottom: 5px;
+      }
+
+      p {
+        margin-bottom: 10px;
+      }
+
+      button {
+        margin: auto !important;
+      }
+    }
+  }
 }
 
 :host(.fixmobile) {

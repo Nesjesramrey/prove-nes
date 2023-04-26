@@ -81,7 +81,7 @@ export class CategorizePostComponent implements OnInit {
     this.formGroup.patchValue({ solution: '' });
     this.filteredTopics = this.topics.filter((x: any) => { return x['coverage'].includes(event['value']) });
     if (this.filteredTopics.length == 0) {
-      this.utilityService.openErrorSnackBar('Noa hay problemas para tu cobertura.');
+      this.utilityService.openErrorSnackBar('No hay problemas para tu cobertura.');
     }
   }
 

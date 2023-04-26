@@ -1,7 +1,7 @@
 :host {
 
   .solutions-box {
-    padding: 20px;
+    padding: 20px 20px 0 20px;
 
     .title {
       font-size: 14px;
@@ -94,6 +94,30 @@
 
     .searchDisabled {
       opacity: 0 !important;
+    }
+
+    .hdtls {
+      display: flex;
+      align-items: center;
+
+      ::ng-deep .mat-form-field-wrapper {
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      .btns {
+        display: inline-flex;
+        justify-content: flex-end;
+        font-size: 11pt;
+
+        * {
+          margin: 0;
+        }
+
+        a {
+          margin-left: 10px !important;
+        }
+      }
     }
   }
 

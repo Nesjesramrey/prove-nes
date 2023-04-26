@@ -167,4 +167,13 @@ export class UtilityService {
     let shortened = without_html.substring(0, charlimit) + "...";
     return shortened;
   }
+
+  truncateMessages(text: string): string {
+    let charlimit = 170;
+    if (!text || text.length <= charlimit) { return text; }
+    let adding_spaces = text.replace(/<br \/>/g, "&nbsp;");
+    let without_html = text.replace(/<(?:.|\n)*?>/gm, '');
+    let shortened = without_html.substring(0, charlimit) + "..";
+    return shortened;
+  }
 }

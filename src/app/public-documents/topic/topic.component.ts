@@ -107,6 +107,16 @@ export class TopicComponent implements OnInit {
         let topic = this.subcategory['topics'].filter((x: any) => { return x['_id'] == this.topicID; });
         this.topic = topic[0];
         this.stats = this.topic['stats'];
+        if (this.topic['comments'].length > 0) {
+          this.topic['comments'].filter((x: any) => {
+            if (x['message'].length > 85) {
+              x['truncate'] = true;
+            } else {
+              x['truncate'] = false;
+            }
+          });
+        }
+        // console.log(this.topic);
 
         this.solutionsData = this.topic['solutions'];
         this.solutionsData.filter((x: any) => {
@@ -140,6 +150,7 @@ export class TopicComponent implements OnInit {
 
         this.allFavorites = reply[2]['data'];
         this.isFavorites = this.checkFavorites();
+        // console.log(this.solutionsData);
       },
       complete: () => {
         this.fetchVotes();
@@ -290,7 +301,7 @@ export class TopicComponent implements OnInit {
         coverage: coverage[0]
       },
       disableClose: true,
-      panelClass: 'full-dialog'
+      panelClass: 'side-dialog'
     }
     );
 
@@ -377,7 +388,7 @@ export class TopicComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) { }
+      if (reply != undefined) { this.topic['comments'].unshift(reply); }
     });
   }
 
@@ -435,5 +446,15 @@ export class TopicComponent implements OnInit {
     bottomSheetRef.afterDismissed().subscribe((reply: any) => {
       if (reply != undefined) { }
     });
+  }
+
+  toggleCommentMessage(comment: any) {
+    let com: any = this.topic['comments'].filter((x: any) => { return x['_id'] == comment['_id']; });
+    com[0]['truncate'] = !com[0]['truncate'];
+  }
+
+  linkSolution(id: string) {
+    const path = `documentos-publicos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/tema/${this.topicID}/solucion/${id}`;
+    this.utilityService.linkMe(path);
   }
 }

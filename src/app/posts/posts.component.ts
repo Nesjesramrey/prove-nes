@@ -14,9 +14,11 @@ import { forkJoin, Observable } from 'rxjs';
 import { UseToolsDialogComponent } from './components/use-tools-dialog/use-tools-dialog.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DocumentService } from '../services/document.service';
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, Location } from '@angular/common';
 import { ComplaintDialogComponent } from '../components/complaint-dialog/complaint-dialog.component';
 import { TestimonyDialogComponent } from '../components/testimony-dialog/testimony-dialog.component';
+import { TestimonyService } from '../services/testimony.service';
+import { ComplaintService } from '../services/complaint.service';
 
 @Component({
   selector: '.posts-page',
@@ -39,6 +41,8 @@ export class PostsComponent implements OnInit {
   public topics: any = [];
   public solutions: any = [];
   public extensionsAllowed: any = ['mp4', '3gpp', 'mov', 'MP4', 'MOV'];
+  public isSearching: boolean = false;
+  public routerData: boolean = false;
 
   constructor(
     public deviceDetectorService: DeviceDetectorService,
@@ -52,6 +56,9 @@ export class PostsComponent implements OnInit {
     public formBuilder: FormBuilder,
     public documentService: DocumentService,
     @Inject(DOCUMENT) public DOM: Document,
+    public testimonyService: TestimonyService,
+    public complainTService: ComplaintService,
+    public location: Location
   ) {
     this.isMobile = this.deviceDetectorService.isMobile();
     if (this.isMobile) { this.class = 'fixmobile'; }
@@ -59,76 +66,117 @@ export class PostsComponent implements OnInit {
 
   ngOnInit(): void {
     let user: Observable<any> = this.userService.fetchFireUser();
-    let posts: Observable<any> = this.postsService.fetchAllPosts({ limit: 10, page: this.postsPage });
+    // let posts: Observable<any> = this.postsService.fetchAllPosts({ limit: 10, page: this.postsPage });
+    let posts: Observable<any>;
     let states: Observable<any> = this.utilityService.fetchAllStates();
     let document: Observable<any> = this.documentService.fetchCoverDocument();
-    forkJoin([user, posts, states, document]).subscribe({
-      error: (error: any) => { },
-      next: (reply: any) => {
-        // console.log(reply);
-        this.user = reply[0];
-        // console.log(this.user['status']);
 
-        this.posts = reply[1][0]['data'];
-        this.setPostsCards();
-
-        if (this.user['status'] == undefined) {
-          this.updatePostsFavorites();
-          this.updatePostsVotes();
+    // console.log(history.state);
+    if (history.state.topic != undefined) {
+      if (history.state.load != undefined) {
+        this.routerData = true;
+        switch (history.state.load) {
+          case 'testimony':
+            posts = this.postsService.fetchAllTopicPosts({ limit: 10, page: 1, relationType: history.state.load, relation: 'topic', relationId: history.state.topic });
+            break;
+          case 'complaint':
+            posts = this.postsService.fetchAllTopicPosts({ limit: 10, page: 1, relationType: history.state.load, relation: 'topic', relationId: history.state.topic });
+            break;
         }
+      }
+    } else if (history.state.solution != undefined) {
+      if (history.state.load != undefined) {
+        this.routerData = true;
+        switch (history.state.load) {
+          case 'testimony':
+            posts = this.postsService.fetchAllTopicPosts({ limit: 10, page: 1, relationType: history.state.load, relation: 'solution', relationId: history.state.solution });
+            break;
+          case 'complaint':
+            posts = this.postsService.fetchAllTopicPosts({ limit: 10, page: 1, relationType: history.state.load, relation: 'solution', relationId: history.state.solution });
+            break;
+        }
+      }
+    }
+    else {
+      this.routerData = false;
+      posts = this.postsService.fetchAllPosts({ limit: 10, page: this.postsPage });
+    }
 
-        this.states = reply[2];
-        // console.log('states: ', this.states);
+    setTimeout(() => {
+      forkJoin([user, posts, states, document]).subscribe({
+        error: (error: any) => { },
+        next: (reply: any) => {
+          // console.log(reply);
+          this.user = reply[0];
+          // console.log(this.user['status']);
 
-        this.document = reply[3];
-        // console.log('document: ', this.document);
-        this.document['layouts'].filter((x: any) => {
-          this.layouts.push(x);
+          // if (history.state.topic != undefined) {
+          //   if (history.state.load != undefined) {
+          //     switch (history.state.load) {
+          //       case 'testimony':
+          //         this.posts = reply[1][0]['data'];
+          //         break;
+          //       case 'complaint':
+          //         this.posts = reply[1][0]['data'];
+          //         break;
+          //     }
+          //   }
+          // } else {
+          //   this.posts = reply[1][0]['data'];
+          // }
 
-          x['subLayouts'].filter((y: any) => {
-            this.sublayouts.push(y);
+          this.posts = reply[1][0]['data'];
+          this.setPostsCards();
 
-            y['topics'].filter((t: any) => {
-              this.topics.push(t);
+          if (this.user['status'] == undefined) {
+            this.updatePostsFavorites();
+            this.updatePostsVotes();
+          }
 
-              t['solutions'].filter((s: any) => {
-                this.solutions.push(s);
+          this.states = reply[2];
+          // console.log('states: ', this.states);
+
+          this.document = reply[3];
+          // console.log('document: ', this.document);
+          this.document['layouts'].filter((x: any) => {
+            this.layouts.push(x);
+
+            x['subLayouts'].filter((y: any) => {
+              this.sublayouts.push(y);
+
+              y['topics'].filter((t: any) => {
+                this.topics.push(t);
+
+                t['solutions'].filter((s: any) => {
+                  this.solutions.push(s);
+                });
               });
             });
           });
-        });
-        // console.log(this.topics);
-        // console.log(this.solutions);
-      },
-      complete: () => {
-        this.searchTeamsFG = this.formBuilder.group({
-          filter: ['', [Validators.required]],
-          coverage: ['', []]
-        });
+          // console.log(this.topics);
+          // console.log(this.solutions);
+        },
+        complete: () => {
+          this.searchTeamsFG = this.formBuilder.group({
+            filter: ['', [Validators.required]],
+            coverage: ['', []]
+          });
 
-        // if (this.user['status'] != undefined) {
-        //   setTimeout(() => {
-        //     this.popUseToolsDialog();
-        //   }, 1000);
-        // }
-
-        this.posts.filter((x: any) => {
-          if (x['card']['images'] != null) {
-            if (x['card']['images'][0] != undefined) {
-              var fileExt = x['card']['images'][0].split('.').pop();
-              // if (fileExt == 'mp4' || fileExt == '3gpp' || fileExt == 'mov') {
-              //   x['card']['hasVideo'] = true;
-              // }
-              if (this.extensionsAllowed.includes(fileExt)) {
-                x['card']['hasVideo'] = true;
+          this.posts.filter((x: any) => {
+            if (x['card'] != undefined) {
+              if (x['card']['images'] != null) {
+                if (x['card']['images'][0] != undefined) {
+                  var fileExt = x['card']['images'][0].split('.').pop();
+                  if (this.extensionsAllowed.includes(fileExt)) { x['card']['hasVideo'] = true; }
+                }
               }
             }
-          }
-        });
+          });
 
-        this.isDataAvailable = true;
-        // console.log(this.posts);
-      }
+          this.isDataAvailable = true;
+          // console.log(this.posts);
+        }
+      });
     });
   }
 
@@ -273,17 +321,21 @@ export class PostsComponent implements OnInit {
 
   updatePostsFavorites() {
     this.posts.filter((x: any) => {
-      x['card']['favorites'].filter((f: any) => {
-        if (f['createdBy'] == this.user['_id']) { x['isFavorite'] = true; }
-      });
+      if (x['card'] != undefined) {
+        x['card']['favorites'].filter((f: any) => {
+          if (f['createdBy'] == this.user['_id']) { x['isFavorite'] = true; }
+        });
+      }
     });
   }
 
   updatePostsVotes() {
     this.posts.filter((x: any) => {
-      x['card']['vote'].filter((f: any) => {
-        if (f['createdBy'] == this.user['_id']) { x['voted'] = true; }
-      });
+      if (x['card'] != undefined) {
+        x['card']['vote'].filter((f: any) => {
+          if (f['createdBy'] == this.user['_id']) { x['voted'] = true; }
+        });
+      }
     });
   }
 
@@ -295,6 +347,9 @@ export class PostsComponent implements OnInit {
           break;
         case 'testimony':
           x['card'] = x['testimony'][0];
+          break;
+        case 'topic':
+          // console.log(x);
           break;
       }
     });
@@ -329,22 +384,28 @@ export class PostsComponent implements OnInit {
   }
 
   filterPosts(form: FormGroup) {
+    this.isSearching = true;
+
     let data: any = {
       filter: form['value']['filter'],
       coverage: form['value']['coverage'],
     };
 
     this.postsService.filterPosts(data).subscribe({
-      error: (error: any) => { },
+      error: (error: any) => {
+        this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+        this.isSearching = false;
+      },
       next: (reply: any) => {
-        if (reply.length == 0) {
+        console.log(reply);
+        if (reply[0]['data'].length == 0) {
           this.utilityService.openErrorSnackBar('No hay resultados para tu busqueda.');
           return;
         }
-        this.posts = reply;
+        this.posts = reply[0]['data'];
         this.setPostsCards();
       },
-      complete: () => { }
+      complete: () => { this.isSearching = false; }
     });
   }
 

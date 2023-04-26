@@ -81,7 +81,7 @@ export class AddCommentsComponent implements OnInit {
 
     setTimeout(() => {
       this.isDataAvailable = true;
-    }, 300);
+    }, 100);
   }
 
   onFileSelected(event: any) {
