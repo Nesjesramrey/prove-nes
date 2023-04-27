@@ -23,10 +23,19 @@
 
       <div class="set-12 step-content">
         <form [formGroup]="addThemeFormGroup" (submit)="onCreateTopic(addThemeFormGroup)">
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" *ngIf="user['activityName'] != 'citizen'">
             <mat-label>Cobertura</mat-label>
             <mat-select (selectionChange)="onCoverageSelected($event)" formControlName="coverage">
               <mat-option *ngFor="let state of coverage" [value]="state._id">
+                <small>{{state?.name}}</small>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" *ngIf="user['activityName'] == 'citizen'">
+            <mat-label>Cobertura</mat-label>
+            <mat-select (selectionChange)="onCoverageSelected($event)" formControlName="coverage">
+              <mat-option *ngFor="let state of coverage" [value]="state.id">
                 <small>{{state?.name}}</small>
               </mat-option>
             </mat-select>
