@@ -19,6 +19,8 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ShareSheetComponent } from 'src/app/components/share-sheet/share-sheet.component';
 import { AddDocumentSolutionComponent } from 'src/app/components/add-document-solution/add-document-solution.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommentService } from 'src/app/services/comment.service';
 
 @Component({
   selector: '.solution-page',
@@ -51,6 +53,8 @@ export class SolutionComponent implements OnInit {
   public isMobile: boolean = false;
   @HostBinding('class') public class: string = '';
   public otherSolutions: any = null;
+  public commentFormGroup!: FormGroup;
+  public isPosting: boolean = false;
 
   constructor(
     public dialog: MatDialog,
@@ -66,6 +70,8 @@ export class SolutionComponent implements OnInit {
     public deviceDetectorService: DeviceDetectorService,
     public matBottomSheet: MatBottomSheet,
     public router: Router,
+    public formBuilder: FormBuilder,
+    public commentService: CommentService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
@@ -78,21 +84,78 @@ export class SolutionComponent implements OnInit {
 
   ngOnInit(): void {
     // *** load user
-    this.user = this.UserService.fetchFireUser().subscribe({
-      error: (error: any) => { },
-      next: (reply: any) => {
-        this.user = reply;
-      },
-      complete: () => {
-        this.fetchVotes();
-      }
-    });
+    // this.user = this.UserService.fetchFireUser().subscribe({
+    //   error: (error: any) => { },
+    //   next: (reply: any) => {
+    //     this.user = reply;
+    //   },
+    //   complete: () => {
+    //     this.fetchVotes();
+    //   }
+    // });
 
     // *** load document
-    this.documentService.fetchSingleDocumentById({ _id: this.documentID }).subscribe({
+    // this.documentService.fetchSingleDocumentById({ _id: this.documentID }).subscribe({
+    //   error: (error: any) => { },
+    //   next: (reply: any) => {
+    //     this.document = reply;
+
+    //     let category = this.document['layouts'].filter((x: any) => { return x['_id'] == this.categoryID; });
+    //     this.category = category[0];
+
+    //     let subcategory = this.category['subLayouts'].filter((x: any) => { return x['_id'] == this.subcategoryID; });
+    //     this.subcategory = subcategory[0];
+
+    //     let topic = this.subcategory['topics'].filter((x: any) => { return x['_id'] == this.topicID; });
+    //     this.topic = topic[0];
+    //     this.topic['shortTitle'] = this.getshortTitle(this.topic['title']);
+
+    //     let solution = this.topic['solutions'].filter((x: any) => { return x['_id'] == this.solutionID; });
+    //     this.solution = solution[0];
+    //     this.solution['shortTitle'] = this.getshortTitle(this.solution['title']);
+    //     this.stats = this.solution['stats'];
+    //     if (this.stats == null) { this.stats = { score: 0 } }
+    //     if (this.solution['comments'].length > 0) {
+    //       this.solution['comments'].filter((x: any) => {
+    //         if (x['message'].length > 85) {
+    //           x['truncate'] = true;
+    //         } else {
+    //           x['truncate'] = false;
+    //         }
+    //       });
+    //     }
+    //     this.otherSolutions = this.topic['solutions'].filter((x: any) => { return x['_id'] != this.solutionID; });
+    //   },
+    //   complete: () => {
+    //     this.isDataAvailable = true;
+    //     this.commentFormGroup = this.formBuilder.group({
+    //       message: ['', [Validators.required]],
+    //       file: ['', []]
+    //     });
+    //   }
+    // });
+
+    // *** load favourites
+    // this.favoritesService.fetchFavoritesBySolutionID({ _id: this.solutionID }).subscribe({
+    //   error: (error: any) => { },
+    //   next: (reply: any) => {
+    //     this.allFavorites = reply['data'];
+    //     this.isFavorites = this.checkFavorites();
+    //   },
+    //   complete: () => { }
+    // });
+
+    let user: Observable<any> = this.UserService.fetchFireUser();
+    let document: Observable<any> = this.documentService.fetchSingleDocumentById({ _id: this.documentID });
+    let favorite: Observable<any> = this.favoritesService.fetchFavoritesBySolutionID({ _id: this.solutionID });
+
+    forkJoin([user, document, favorite]).subscribe({
       error: (error: any) => { },
       next: (reply: any) => {
-        this.document = reply;
+        // console.log(reply);
+        this.user = reply[0];
+
+        this.document = reply[1];
 
         let category = this.document['layouts'].filter((x: any) => { return x['_id'] == this.categoryID; });
         this.category = category[0];
@@ -118,23 +181,19 @@ export class SolutionComponent implements OnInit {
             }
           });
         }
-        // console.log(this.solution);
         this.otherSolutions = this.topic['solutions'].filter((x: any) => { return x['_id'] != this.solutionID; });
-      },
-      complete: () => {
-        this.isDataAvailable = true;
-        // console.log(this.topic);
-      }
-    });
 
-    // *** load favourites
-    this.favoritesService.fetchFavoritesBySolutionID({ _id: this.solutionID }).subscribe({
-      error: (error: any) => { },
-      next: (reply: any) => {
-        this.allFavorites = reply['data'];
+        this.allFavorites = reply[2]['data'];
         this.isFavorites = this.checkFavorites();
       },
-      complete: () => { }
+      complete: () => {
+        this.fetchVotes();
+        this.commentFormGroup = this.formBuilder.group({
+          message: ['', [Validators.required]],
+          file: ['', []]
+        });
+        this.isDataAvailable = true;
+      }
     });
   }
 
@@ -418,7 +477,42 @@ export class SolutionComponent implements OnInit {
   popCitizensWall(type: string) {
     this.router.navigateByUrl('/posts', {
       state:
-        { solution: this.solutionID, load: type }
+        { solution: this.solutionID }
+    });
+  }
+
+  onFileSelected(event: any) {
+    this.commentFormGroup.patchValue({ file: event.target.files[0] });
+    this.commentFormGroup.updateValueAndValidity();
+  }
+
+  onComment(formGroup: FormGroup) {
+    this.isPosting = true;
+
+    let data: any = {
+      location: 'solution',
+      document_id: this.documentID,
+      location_id: this.solutionID,
+      formData: new FormData(),
+    };
+
+    data['formData'].append('file', this.commentFormGroup.controls['file']['value']);
+    data['formData'].append('message', formGroup['value']['message']);
+    data['formData'].append('coverage', JSON.stringify([this.solution['coverage'][0]['_id']]));
+
+    this.commentService.createNewSolutionComment(data).subscribe({
+      error: (error: any) => {
+        this.isPosting = false;
+        this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+      },
+      next: (reply: any) => {
+        this.solution['comments'].unshift(reply);
+        this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
+      },
+      complete: () => {
+        this.isPosting = false;
+        this.commentFormGroup.reset();
+      }
     });
   }
 }

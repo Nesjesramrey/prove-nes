@@ -148,7 +148,7 @@ export class AddDocumentThemeComponent implements OnInit {
 
   onCoverageSelected(event: any) {
     this.coverageSelected = event['value'];
-    console.log(event);
+    // console.log(event);
   }
 
   onFileSelected(event: any) {

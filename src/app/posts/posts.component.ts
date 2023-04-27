@@ -73,29 +73,33 @@ export class PostsComponent implements OnInit {
 
     // console.log(history.state);
     if (history.state.topic != undefined) {
-      if (history.state.load != undefined) {
-        this.routerData = true;
-        switch (history.state.load) {
-          case 'testimony':
-            posts = this.postsService.fetchAllTopicPosts({ limit: 10, page: 1, relationType: history.state.load, relation: 'topic', relationId: history.state.topic });
-            break;
-          case 'complaint':
-            posts = this.postsService.fetchAllTopicPosts({ limit: 10, page: 1, relationType: history.state.load, relation: 'topic', relationId: history.state.topic });
-            break;
-        }
-      }
+      this.routerData = true;
+      posts = this.postsService.fetchAllTopicPosts({ limit: 10, page: 1, relation: 'topic', relationId: history.state.topic });
+      // if (history.state.load != undefined) {
+      //   this.routerData = true;
+      //   switch (history.state.load) {
+      //     case 'testimony':
+      //       posts = this.postsService.fetchAllTopicPosts({ limit: 10, page: 1, relationType: history.state.load, relation: 'topic', relationId: history.state.topic });
+      //       break;
+      //     case 'complaint':
+      //       posts = this.postsService.fetchAllTopicPosts({ limit: 10, page: 1, relationType: history.state.load, relation: 'topic', relationId: history.state.topic });
+      //       break;
+      //   }
+      // }
     } else if (history.state.solution != undefined) {
-      if (history.state.load != undefined) {
-        this.routerData = true;
-        switch (history.state.load) {
-          case 'testimony':
-            posts = this.postsService.fetchAllTopicPosts({ limit: 10, page: 1, relationType: history.state.load, relation: 'solution', relationId: history.state.solution });
-            break;
-          case 'complaint':
-            posts = this.postsService.fetchAllTopicPosts({ limit: 10, page: 1, relationType: history.state.load, relation: 'solution', relationId: history.state.solution });
-            break;
-        }
-      }
+      this.routerData = true;
+      posts = this.postsService.fetchAllTopicPosts({ limit: 10, page: 1, relation: 'solution', relationId: history.state.solution });
+      // if (history.state.load != undefined) {
+      //   this.routerData = true;
+      //   switch (history.state.load) {
+      //     case 'testimony':
+      //       posts = this.postsService.fetchAllTopicPosts({ limit: 10, page: 1, relationType: history.state.load, relation: 'solution', relationId: history.state.solution });
+      //       break;
+      //     case 'complaint':
+      //       posts = this.postsService.fetchAllTopicPosts({ limit: 10, page: 1, relationType: history.state.load, relation: 'solution', relationId: history.state.solution });
+      //       break;
+      //   }
+      // }
     }
     else {
       this.routerData = false;
@@ -397,7 +401,7 @@ export class PostsComponent implements OnInit {
         this.isSearching = false;
       },
       next: (reply: any) => {
-        console.log(reply);
+        // console.log(reply);
         if (reply[0]['data'].length == 0) {
           this.utilityService.openErrorSnackBar('No hay resultados para tu busqueda.');
           return;
