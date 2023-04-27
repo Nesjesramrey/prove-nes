@@ -21,7 +21,7 @@ export class PostsService {
 
   fetchAllTopicPosts(data: any) {
     return this.httpClient.get(
-      this.endPointService.apiEndPoint + this.endPointService.fetchAllPostsEndPoint + `?limitPerPage=${data['limit']}&page=${data['page']}&relationType=${data['relationType']}&relation=${data['relation']}&relationId=${data['relationId']}`
+      this.endPointService.apiEndPoint + this.endPointService.fetchAllPostsEndPoint + `?limitPerPage=${data['limit']}&page=${data['page']}&relation=${data['relation']}&relationId=${data['relationId']}`
     ).pipe(catchError(error => of(error)));
   }
 

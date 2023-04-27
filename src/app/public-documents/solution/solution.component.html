@@ -69,6 +69,7 @@
 
           <div class="infohldr">
             <h3>{{ solution.title }}</h3>
+            <p><small><i>{{topic['coverage'][0]['name']}}</i></small></p>
             <expanded-text [text]="solution.description" [title]="solution.title"></expanded-text>
           </div>
 
@@ -88,21 +89,69 @@
               <mat-icon>share</mat-icon>
             </button>
 
-            <button type="button" mat-mini-fab color="warn" matTooltip="Agregar Comentario" matTooltipClass="tooltip"
+            <!-- <button type="button" mat-mini-fab color="warn" matTooltip="Agregar Comentario" matTooltipClass="tooltip"
               (click)="popAddCommentsDialog()">
               <mat-icon>forum</mat-icon>
-            </button>
+            </button> -->
+          </div>
+        </div>
+
+        <div class="set-12 listhldr">
+          <div class="set-12 hdtls">
+            <div class="set-6">
+              <div class="set-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Agregar:</mat-label>
+                  <mat-select>
+                    <mat-option (click)="openModalTestimony($event)" disabled>
+                      <small>Testimonio</small>
+                    </mat-option>
+                    <mat-option disabled>
+                      <small>Denuncia</small>
+                    </mat-option>
+                    <mat-option (click)="openModalSolution(null)">
+                      <small>Solución</small>
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="set-6 btns">
+              <p>Explora más contenido en el <strong><a href="javascript:void(0)" (click)="popCitizensWall('')">Muro
+                    Ciudadano</a></strong></p>
+            </div>
           </div>
         </div>
 
         <div class="set-12 coms">
-          <div class="set-12 btns">
-            <small>
-              <a href="javascript:void(0)" (click)="popCitizensWall('testimony')">Testimonios</a>
-            </small>
-            <small>
-              <a href="javascript:void(0)" (click)="popCitizensWall('complaint')">Denuncias</a>
-            </small>
+          <div class="set-12 head-titles">
+            <span>Comentarios</span>
+            <div class="line"></div>
+          </div>
+
+          <div class="set-12 combox">
+            <p>Únete a la conversación</p>
+            <form [formGroup]="commentFormGroup" (submit)="onComment(commentFormGroup)">
+              <mat-form-field appearance="outline">
+                <mat-label><i>Escribe tu comentario</i></mat-label>
+                <textarea matInput cdkTextareaAutosize formControlName="message"></textarea>
+              </mat-form-field>
+
+              <div class="set-12 ctrls">
+                <input type="file" #file (change)="onFileSelected($event)">
+                <button type="button" mat-mini-fab color="warn" class="mini"
+                  [disabled]="commentFormGroup.invalid || isPosting" (click)="file.click()">
+                  <mat-icon>attach_file</mat-icon>
+                </button>
+                <button type="submit" mat-raised-button color="warn" class="wicon"
+                  [disabled]="commentFormGroup.invalid || isPosting">
+                  <mat-icon>save</mat-icon>
+                  <small>Comentar</small>
+                </button>
+                <mat-spinner diameter="30" *ngIf="isPosting"></mat-spinner>
+              </div>
+            </form>
           </div>
 
           <div class="set-12 cmtlst" *ngIf="solution['comments'].length > 0">
@@ -111,7 +160,8 @@
                 <div class="avatar">
                   <img [src]="com['createdBy']['avatarImage']" [alt]="" *ngIf="com['createdBy']['avatarImage'] != null">
                   <span *ngIf="com['createdBy']['avatarImage'] == null">
-                    {{com['createdBy']['firstname'] | firstword | firstletter}}{{com['createdBy']['lastname'] | firstword | firstletter}}
+                    {{com['createdBy']['firstname'] | firstword | firstletter}}{{com['createdBy']['lastname'] |
+                    firstword | firstletter}}
                   </span>
                 </div>
               </div>
@@ -130,7 +180,7 @@
                 </div>
 
                 <div class="set-12 dates">
-                  <small>{{com['createdBy']['firstname']}} {{com['createdBy']['lastname']}}</small> - 
+                  <small>{{com['createdBy']['firstname']}} {{com['createdBy']['lastname']}}</small> -
                   <small>{{com['createdAt'] | date: 'mediumDate'}} - {{com['createdAt'] | date: 'mediumTime'}}</small>
                 </div>
 

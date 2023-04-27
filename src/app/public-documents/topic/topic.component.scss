@@ -35,7 +35,7 @@
 
         mat-icon {
           font-size: 11pt;
-          color: #ffffff;
+          // color: #ffffff;
         }
       }
     }
@@ -58,7 +58,7 @@
       width: 60%;
       padding: 20px;
 
-      h3 {
+      p {
         margin-bottom: 15px;
       }
     }
@@ -467,6 +467,10 @@
   .cmtlst {
     padding: 20px;
 
+    .head-titles {
+      margin-bottom: 20px;
+    }
+
     .com {
       padding: 10px 0;
       border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
@@ -501,11 +505,30 @@
       font-size: 11pt;
     }
 
-    .dates {
+    .dates,
+    .rdmore {
       font-style: italic;
       color: rgba($color: #000000, $alpha: 0.4);
       font-size: 10pt;
       margin-top: 5px;
+      display: flex;
+      align-items: center;
+
+      * {
+        margin: 0;
+      }
+
+      small {
+        margin-right: 10px;
+      }
+    }
+
+    .dates {
+      justify-content: flex-start;
+    }
+
+    .rdmore {
+      justify-content: flex-end;
     }
 
     .mess {
@@ -525,6 +548,50 @@
 
       button {
         margin: auto !important;
+      }
+    }
+
+    .combox {
+      margin-bottom: 20px;
+
+      p {
+        color: #1e7e7f;
+        margin-bottom: 5px;
+        font-weight: bold;
+        font-size: 11pt;
+        font-style: italic;
+      }
+
+      textarea {
+        min-height: 40px;
+      }
+
+      .ctrls {
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        * {
+          margin: 0;
+        }
+
+        button {
+          margin-left: 10px;
+        }
+
+        mat-spinner {
+          margin-left: 20px;
+        }
+
+        .mini {
+          zoom: 0.7;
+        }
+      }
+
+      ::ng-deep .mat-form-field-wrapper {
+        padding-bottom: 0 !important;
+        margin: 0 !important;
       }
     }
   }
@@ -577,7 +644,9 @@
     .slt {
       padding-bottom: 10px;
       margin-bottom: 10px;
-      border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
+      border-bottom: 1px solid rgba($color: #000000, $alpha: 0.3);
+      display: flex;
+      align-items: center;
 
       button {
         text-align: left;
@@ -586,6 +655,19 @@
 
       button:hover {
         color: #1e7e7f;
+      }
+
+      .set-2 {
+        button {
+          zoom: 0.7;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 11pt;
+          font-weight: 300;
+          pointer-events: none;
+          border: 1px solid rgba($color: #000000, $alpha: 0.3);
+        }
       }
     }
 
@@ -602,6 +684,32 @@
 
       button {
         margin: auto !important;
+      }
+    }
+  }
+
+  .hdtls {
+    display: flex;
+    align-items: center;
+    padding: 20px 20px 0 20px;
+
+    ::ng-deep .mat-form-field-wrapper {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    .btns {
+      display: inline-flex;
+      justify-content: flex-end;
+      font-size: 11pt;
+
+      * {
+        margin: 0;
+      }
+
+      a {
+        // margin-left: 10px !important;
+        color: #1e7e7f;
       }
     }
   }

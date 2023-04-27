@@ -3,11 +3,25 @@
     <div class="set-12 hdtls">
       <div class="set-6">
         <div class="set-6">
-          <mat-form-field appearance="outline">
+          <!-- <mat-form-field appearance="outline">
             <mat-label>Cobertura</mat-label>
             <mat-select [value]="coverageSelected" (selectionChange)="onSelectCoverage($event)">
               <mat-option *ngFor="let location of coverage" [value]="location._id">
                 <small>{{ location.name }}</small>
+              </mat-option>
+            </mat-select>
+          </mat-form-field> -->
+          <mat-form-field appearance="outline">
+            <mat-label>Agregar:</mat-label>
+            <mat-select>
+              <mat-option>
+                <small>Testimonio</small>
+              </mat-option>
+              <mat-option>
+                <small>Denuncia</small>
+              </mat-option>
+              <mat-option>
+                <small>Solución</small>
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -15,12 +29,14 @@
       </div>
 
       <div class="set-6 btns">
-        <small>
-          <a href="javascript:void(0)" (click)="popCitizensWall('testimony')">Testimonios</a>
+        <p>Explora más contenido en el <strong><a href="javascript:void(0)" (click)="popCitizensWall('')">Muro
+              Ciudadano</a></strong></p>
+        <!-- <small>
+          <a href="javascript:void(0)" (click)="popCitizensWall('testimony')">Ver testimonios</a>
         </small>
         <small>
-          <a href="javascript:void(0)" (click)="popCitizensWall('complaint')">Denuncias</a>
-        </small>
+          <a href="javascript:void(0)" (click)="popCitizensWall('complaint')">Ver denuncias</a>
+        </small> -->
       </div>
     </div>
 

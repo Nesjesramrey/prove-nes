@@ -1,5 +1,5 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UtilityService } from 'src/app/services/utility.service';
 import { forkJoin, Observable } from 'rxjs';
 import { LayoutService } from 'src/app/services/layout.service';
@@ -20,6 +20,9 @@ import { AddCommentsComponent } from 'src/app/components/add-comments/add-commen
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ShareSheetComponent } from 'src/app/components/share-sheet/share-sheet.component';
+import { ComplaintDialogComponent } from 'src/app/components/complaint-dialog/complaint-dialog.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommentService } from 'src/app/services/comment.service';
 
 @Component({
   selector: '.topic-page',
@@ -54,6 +57,8 @@ export class TopicComponent implements OnInit {
   public isMobile: boolean = false;
   @HostBinding('class') public class: string = '';
   public isCollaborator: boolean = false;
+  public commentFormGroup!: FormGroup;
+  public isPosting: boolean = false;
 
   constructor(
     public dialog: MatDialog,
@@ -66,7 +71,10 @@ export class TopicComponent implements OnInit {
     public userService: UserService,
     public favoritesService: FavoritesService,
     public deviceDetectorService: DeviceDetectorService,
-    public matBottomSheet: MatBottomSheet
+    public matBottomSheet: MatBottomSheet,
+    public router: Router,
+    public formBuilder: FormBuilder,
+    public commentService: CommentService
   ) {
     this.documentID = this.activatedRoute['snapshot']['params']['documentID'];
     this.categoryID = this.activatedRoute['snapshot']['params']['categoryID'];
@@ -116,7 +124,7 @@ export class TopicComponent implements OnInit {
             }
           });
         }
-        // console.log(this.topic);
+        // console.log(this.topic['comments']);
 
         this.solutionsData = this.topic['solutions'];
         this.solutionsData.filter((x: any) => {
@@ -154,6 +162,10 @@ export class TopicComponent implements OnInit {
       },
       complete: () => {
         this.fetchVotes();
+        this.commentFormGroup = this.formBuilder.group({
+          message: ['', [Validators.required]],
+          file: ['', []]
+        });
         this.isDataAvailable = true;
       }
     });
@@ -285,6 +297,21 @@ export class TopicComponent implements OnInit {
       if (reply != undefined) {
         this.topic.testimonials.unshift(reply.testimonials[0]);
       }
+    });
+  }
+
+  popComplaintsDialog() {
+    const dialogRef = this.dialog.open<any>(ComplaintDialogComponent, {
+      width: '100%',
+      data: {
+        user: this.user
+      },
+      disableClose: true,
+      panelClass: 'full-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((reply: any) => {
+      if (reply != undefined) { }
     });
   }
 
@@ -456,5 +483,47 @@ export class TopicComponent implements OnInit {
   linkSolution(id: string) {
     const path = `documentos-publicos/${this.documentID}/categoria/${this.categoryID}/subcategoria/${this.subcategoryID}/tema/${this.topicID}/solucion/${id}`;
     this.utilityService.linkMe(path);
+  }
+
+  popCitizensWall(type: any) {
+    this.router.navigateByUrl('/posts', {
+      state:
+        { topic: this.topicID }
+    });
+  }
+
+  onFileSelected(event: any) {
+    this.commentFormGroup.patchValue({ file: event.target.files[0] });
+    this.commentFormGroup.updateValueAndValidity();
+  }
+
+  onComment(formGroup: FormGroup) {
+    this.isPosting = true;
+
+    let data: any = {
+      location: 'topic',
+      document_id: this.documentID,
+      location_id: this.topicID,
+      formData: new FormData(),
+    };
+
+    data['formData'].append('file', this.commentFormGroup.controls['file']['value']);
+    data['formData'].append('message', formGroup['value']['message']);
+    data['formData'].append('coverage', JSON.stringify([this.topic['coverage'][0]['_id']]));
+
+    this.commentService.createNewTopicComment(data).subscribe({
+      error: (error: any) => {
+        this.isPosting = false;
+        this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
+      },
+      next: (reply: any) => {
+        this.topic['comments'].unshift(reply);
+        this.utilityService.openSuccessSnackBar(this.utilityService['saveSuccess']);
+      },
+      complete: () => {
+        this.isPosting = false;
+        this.commentFormGroup.reset();
+      }
+    });
   }
 }

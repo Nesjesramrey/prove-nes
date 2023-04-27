@@ -107,10 +107,10 @@ export class SolutionsCardComponent implements OnInit {
     });
   }
 
-  popCitizensWall(type: string) {
+  popCitizensWall(type: any) {
     this.router.navigateByUrl('/posts', {
       state:
-        { topic: this.topicID, load: type }
+        { topic: this.topicID }
     });
   }
 }
