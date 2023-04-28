@@ -104,7 +104,7 @@
                 <mat-form-field appearance="outline">
                   <mat-label>Agregar:</mat-label>
                   <mat-select>
-                    <mat-option (click)="openModalTestimony($event)" disabled>
+                    <mat-option (click)="openModalTestimony($event)">
                       <small>Testimonio</small>
                     </mat-option>
                     <mat-option (click)="popComplaintsDialog()" disabled>
@@ -125,10 +125,21 @@
           </div>
         </div>
 
-        <div class="set-12 cmtlst" *ngIf="topic['comments'].length > 0">
+        <div class="set-12 coms">
           <div class="set-12 head-titles">
             <span>Comentarios</span>
             <div class="line"></div>
+          </div>
+
+          <div class="set-12 cmtlst nocom" *ngIf="topic['comments'].length == 0">
+            <h4>No hay comentarios</h4>
+            <p>
+              <small>Sé el primero en comentar</small>
+            </p>
+            <!-- <button type="button" mat-raised-button color="warn" class="wicon" (click)="popAddCommentsDialog()">
+              <mat-icon>add_circle</mat-icon>
+              <small>Agregar comentario</small>
+            </button> -->
           </div>
 
           <div class="set-12 combox">
@@ -155,58 +166,50 @@
             </form>
           </div>
 
-          <div class="set-12 com" *ngFor="let com of topic['comments']">
-            <div class="set-1">
-              <div class="avatar">
-                <img [src]="com['createdBy']['avatarImage']" [alt]="" *ngIf="com['createdBy']['avatarImage'] != null">
-                <span *ngIf="com['createdBy']['avatarImage'] == null">
-                  {{com['createdBy']['firstname'] | firstword | firstletter}}{{com['createdBy']['lastname'] | firstword
-                  | firstletter}}
-                </span>
+          <div class="set-12 cmtlst" *ngIf="topic['comments'].length > 0">
+            <div class="set-12 com" *ngFor="let com of topic['comments']">
+              <div class="set-1">
+                <div class="avatar">
+                  <img [src]="com['createdBy']['avatarImage']" [alt]="" *ngIf="com['createdBy']['avatarImage'] != null">
+                  <span *ngIf="com['createdBy']['avatarImage'] == null">
+                    {{com['createdBy']['firstname'] | firstword | firstletter}}{{com['createdBy']['lastname'] |
+                    firstword
+                    | firstletter}}
+                  </span>
+                </div>
               </div>
-            </div>
 
-            <div class="set-11">
-              <div class="set-12 mess" [innerHTML]="utilityService.truncateMessages(com['message'])"
-                *ngIf="com['truncate']"></div>
-              <div class="set-12 mess" [innerHTML]="com['message']" *ngIf="!com['truncate']"></div>
+              <div class="set-11">
+                <div class="set-12 mess" [innerHTML]="utilityService.truncateMessages(com['message'])"
+                  *ngIf="com['truncate']"></div>
+                <div class="set-12 mess" [innerHTML]="com['message']" *ngIf="!com['truncate']"></div>
 
-              <div class="set-12 rdmore txt-right" *ngIf="com['message'].length > 170">
-                <small>
-                  <a href="javascript:void(0)" (click)="toggleCommentMessage(com)">
-                    {{com['truncate'] ? 'Leer más' : 'Leer menos'}}
+                <div class="set-12 rdmore txt-right" *ngIf="com['message'].length > 170">
+                  <small>
+                    <a href="javascript:void(0)" (click)="toggleCommentMessage(com)">
+                      {{com['truncate'] ? 'Leer más' : 'Leer menos'}}
+                    </a>
+                  </small>
+                </div>
+
+                <div class="set-12 dates">
+                  <small>{{com['createdBy']['firstname']}} {{com['createdBy']['lastname']}}</small>
+                  <small>-</small>
+                  <small>{{com['createdAt'] | date: 'mediumDate'}} - {{com['createdAt'] | date: 'mediumTime'}}</small>
+                  <small *ngIf="com['attachment'] != null">-</small>
+                  <a [href]="com['attachment']" target="_self" *ngIf="com['attachment'] != null">
+                    <mat-icon color="warn">attachment</mat-icon>
                   </a>
-                </small>
-              </div>
+                </div>
 
-              <div class="set-12 dates">
-                <small>{{com['createdBy']['firstname']}} {{com['createdBy']['lastname']}}</small>
-                <small>-</small>
-                <small>{{com['createdAt'] | date: 'mediumDate'}} - {{com['createdAt'] | date: 'mediumTime'}}</small>
-                <small *ngIf="com['attachment'] != null">-</small>
-                <button type="button" *ngIf="com['attachment'] != null">
-                  <mat-icon color="warn">attachment</mat-icon>
-                </button>
+                <!-- <div class="set-12 dates">
+                  <small>
+                    <a href="javascript:void(0)">Responder</a>
+                  </small>
+                </div> -->
               </div>
-
-              <!-- <div class="set-12 dates">
-                <small>
-                  <a href="javascript:void(0)">Responder</a>
-                </small>
-              </div> -->
             </div>
           </div>
-        </div>
-
-        <div class="set-12 cmtlst nocom" *ngIf="topic['comments'].length == 0">
-          <h4>No hay comentarios</h4>
-          <p>
-            <small>Sé el primero en comentar</small>
-          </p>
-          <button type="button" mat-raised-button color="warn" class="wicon" (click)="popAddCommentsDialog()">
-            <mat-icon>add_circle</mat-icon>
-            <small>Agregar comentario</small>
-          </button>
         </div>
       </mat-card>
     </div>

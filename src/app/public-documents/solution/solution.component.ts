@@ -488,6 +488,9 @@ export class SolutionComponent implements OnInit {
 
   onComment(formGroup: FormGroup) {
     this.isPosting = true;
+    let url = this.router['url'];
+    url = url.replace('/documentos-publicos/', '/documentos/');
+    url = url.replace('/tema/', '/temas/');
 
     let data: any = {
       location: 'solution',
@@ -499,6 +502,7 @@ export class SolutionComponent implements OnInit {
     data['formData'].append('file', this.commentFormGroup.controls['file']['value']);
     data['formData'].append('message', formGroup['value']['message']);
     data['formData'].append('coverage', JSON.stringify([this.solution['coverage'][0]['_id']]));
+    data['formData'].append('redirectURL', url);
 
     this.commentService.createNewSolutionComment(data).subscribe({
       error: (error: any) => {

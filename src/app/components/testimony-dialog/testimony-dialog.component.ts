@@ -70,6 +70,7 @@ export class TestimonyDialogComponent implements OnInit {
   public locationAvailable: boolean = false;
   public isMobile: boolean = false;
   public url: string = '';
+  public topic: any = null;
   public solution: any = null;
   public team: any = null;
   public class: string = '';
@@ -79,18 +80,19 @@ export class TestimonyDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public formBuilder: FormBuilder,
     public utilityService: UtilityService,
-    public testuimonyServive: TestimonyService,
+    public testimonyService: TestimonyService,
     public deviceDetectorService: DeviceDetectorService,
     @Inject(DOCUMENT) public DOM: Document,
     public router: Router,
     public uploadService: UploadService
   ) {
-    // console.log(this.dialogData);
+    console.log(this.dialogData);
     this.user = this.dialogData['user'];
     if (this.user == null) { this.isAnonymous = true; }
     this.isMobile = this.deviceDetectorService.isMobile();
     if (this.isMobile) { this.class = 'fixmobile'; }
     this.url = this.DOM.location.origin + this.router.url;
+    this.topic = this.dialogData['topic'];
     this.solution = this.dialogData['solution'];
     this.team = this.dialogData['team'];
   }
@@ -139,9 +141,7 @@ export class TestimonyDialogComponent implements OnInit {
     this.submitted = true;
 
     if (this.fileNames.length == 0) {
-      let data: any = {
-        formData: new FormData()
-      }
+      let data: any = { formData: new FormData() }
 
       Array.from(this.testimonyFormGroup.controls['files']['value'])
         .forEach((file: any) => { data['formData'].append('files', file); });
@@ -155,19 +155,22 @@ export class TestimonyDialogComponent implements OnInit {
           break;
       }
 
+      if (this.topic != undefined) {
+        data['formData'].append('type', 'topic');
+        data['formData'].append('relationId', this.topic['_id']);
+      }
+
       if (this.solution != undefined) {
         data['formData'].append('type', 'solution');
         data['formData'].append('relationId', this.solution['_id']);
       }
 
-      if (this.team != undefined) {
-        data['formData'].append('team', this.team['_id']);
-      }
+      if (this.team != undefined) { data['formData'].append('team', this.team['_id']); }
 
       data['formData'].append('isAnonymous', (this.isAnonymous).toString());
       data['formData'].append('images', JSON.stringify([]));
 
-      this.testuimonyServive.createNewTestimony(data).subscribe({
+      this.testimonyService.createNewTestimony(data).subscribe({
         error: (error: any) => {
           this.utilityService.openErrorSnackBar(this.utilityService['errorOops']);
           this.killDialog();
@@ -178,7 +181,9 @@ export class TestimonyDialogComponent implements OnInit {
           if (this.solution != undefined) { this.solution['testimonials'].push(reply['testimony']); }
         },
         complete: () => {
-          if (this.solution != undefined) {
+          if (this.topic != undefined) {
+            this.dialogRef.close(this.topic);
+          } else if (this.solution != undefined) {
             this.dialogRef.close(this.solution);
           } else {
             this.stepNext();
@@ -195,10 +200,17 @@ export class TestimonyDialogComponent implements OnInit {
         isAnonymous: this.isAnonymous,
         type: 'testimony'
       }
+
+      if (this.topic != undefined) {
+        data['relationType'] = 'topic';
+        data['relationId'] = this.topic['_id']
+      }
+
       if (this.solution != undefined) {
         data['relationType'] = 'solution';
         data['relationId'] = this.solution['_id']
       }
+
       if (this.team != undefined) { data['team'] = this.team['_id']; }
 
       this.uploadService.injectPayload(data);

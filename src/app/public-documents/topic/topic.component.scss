@@ -465,7 +465,7 @@
   }
 
   .cmtlst {
-    padding: 20px;
+    // padding: 20px;
 
     .head-titles {
       margin-bottom: 20px;
@@ -534,65 +534,50 @@
     .mess {
       text-align: justify;
     }
+  }
 
-    &.nocom {
-      text-align: center;
+  .combox {
+    margin-bottom: 20px;
+    padding-top: 20px;
 
-      h4 {
-        margin-bottom: 5px;
-      }
+    p {
+      color: #1e7e7f;
+      margin-bottom: 5px;
+      font-weight: bold;
+      font-size: 11pt;
+      font-style: italic;
+    }
 
-      p {
-        margin-bottom: 10px;
+    textarea {
+      min-height: 40px;
+    }
+
+    .ctrls {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      * {
+        margin: 0;
       }
 
       button {
-        margin: auto !important;
+        margin-left: 10px;
+      }
+
+      mat-spinner {
+        margin-left: 20px;
+      }
+
+      .mini {
+        zoom: 0.7;
       }
     }
 
-    .combox {
-      margin-bottom: 20px;
-
-      p {
-        color: #1e7e7f;
-        margin-bottom: 5px;
-        font-weight: bold;
-        font-size: 11pt;
-        font-style: italic;
-      }
-
-      textarea {
-        min-height: 40px;
-      }
-
-      .ctrls {
-        margin-top: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-
-        * {
-          margin: 0;
-        }
-
-        button {
-          margin-left: 10px;
-        }
-
-        mat-spinner {
-          margin-left: 20px;
-        }
-
-        .mini {
-          zoom: 0.7;
-        }
-      }
-
-      ::ng-deep .mat-form-field-wrapper {
-        padding-bottom: 0 !important;
-        margin: 0 !important;
-      }
+    ::ng-deep .mat-form-field-wrapper {
+      padding-bottom: 0 !important;
+      margin: 0 !important;
     }
   }
 
@@ -640,6 +625,28 @@
     }
   }
 
+  .coms {
+    padding: 20px;
+
+    .btns {
+      display: inline-flex;
+      justify-content: flex-end;
+      font-size: 11pt;
+
+      * {
+        margin: 0;
+      }
+
+      a {
+        margin-left: 10px !important;
+      }
+    }
+
+    .nocom {
+      padding-top: 20px;
+    }
+  }
+
   .sltshldr {
     .slt {
       padding-bottom: 10px;
@@ -674,16 +681,9 @@
     &.nocom {
       text-align: center;
 
-      h4 {
-        margin-bottom: 5px;
-      }
-
-      p {
-        margin-bottom: 10px;
-      }
-
       button {
-        margin: auto !important;
+        margin: auto;
+        margin-top: 20px;
       }
     }
   }
