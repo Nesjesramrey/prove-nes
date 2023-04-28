@@ -2,17 +2,24 @@
   <div class="set-10">
     <h3 class="txt-left">{{title.toUpperCase()}}</h3>
   </div>
+
   <div class="set-2 txt-right">
-    <button type="button" mat-icon-button color="primary" matTooltip="Salir" matTooltipClass="tooltip"
-      (click)="killDialog()">
+    <button type="button" mat-mini-fab color="primary" (click)="killDialog()">
       <mat-icon>cancel</mat-icon>
     </button>
   </div>
+</div>
 
-  <!-- <h2 class="title">{{ title.toUpperCase() }}</h2>
-  <button class="button" type="button" mat-icon-button (click)="killDialog()">
-    <mat-icon>cancel</mat-icon>
-  </button> -->
+<div class="set-12 btns">
+  <button type="button" mat-mini-fab color="primary" disabled>
+    <mat-icon>favorite</mat-icon>
+  </button>
+  <button type="button" mat-mini-fab color="primary" disabled>
+    <mat-icon>share</mat-icon>
+  </button>
+  <button type="button" mat-mini-fab color="primary" disabled>
+    <mat-icon>forum</mat-icon>
+  </button>
 </div>
 
 <div class="body">

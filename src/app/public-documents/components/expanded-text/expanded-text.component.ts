@@ -49,7 +49,7 @@ export class ExpandedTextComponent implements OnInit {
         text: this.text,
       },
       disableClose: true,
-      panelClass: 'full-dialog'
+      panelClass: 'posts-dialog'
     });
   }
 }
