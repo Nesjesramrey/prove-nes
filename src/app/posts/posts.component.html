@@ -4,7 +4,7 @@
 
 <div class="set-12 hldr" *ngIf="isDataAvailable">
   <div class="set-12">
-    <div class="side-menu">
+    <div class="side-menu" *ngIf="!isMobile">
       <mat-card>
         <div class="set-12 filters">
           <form [formGroup]="searchTeamsFG" (submit)="filterPosts(searchTeamsFG)">

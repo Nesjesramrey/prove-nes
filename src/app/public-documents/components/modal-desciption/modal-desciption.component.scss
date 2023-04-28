@@ -1,15 +1,8 @@
 :host {
   padding: 20px;
   float: left;
-  width: 70%;
-  margin: 0 15%;
-
-  .container {
-    width: 600px;
-    height: 450px;
-    overflow: hidden;
-    position: relative;
-  }
+  // width: 50%;
+  // margin: 0 25%;
 
   .header {
     display: flex;
@@ -27,11 +20,31 @@
       text-align: center;
     }
 
-    .button {
-      color: #71f5ad;
-      position: relative;
-      top: 19px;
-      right: 26px;
+    button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      zoom: 0.7;
+    }
+  }
+
+  .btns {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+
+    button {
+      zoom: 0.7;
+      margin-left: 10px;
+
+      mat-icon {
+        font-size: 13pt;
+      }
+    }
+
+    button:first-child {
+      margin: 0;
     }
   }
 
@@ -42,5 +55,9 @@
     overflow-y: auto;
     overflow-x: hidden;
     overflow-wrap: break-word;
+
+    .text {
+      text-align: justify;
+    }
   }
 }
