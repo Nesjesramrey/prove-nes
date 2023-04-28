@@ -66,7 +66,6 @@ export class PostsComponent implements OnInit {
 
   ngOnInit(): void {
     let user: Observable<any> = this.userService.fetchFireUser();
-    // let posts: Observable<any> = this.postsService.fetchAllPosts({ limit: 10, page: this.postsPage });
     let posts: Observable<any>;
     let states: Observable<any> = this.utilityService.fetchAllStates();
     let document: Observable<any> = this.documentService.fetchCoverDocument();
@@ -75,31 +74,9 @@ export class PostsComponent implements OnInit {
     if (history.state.topic != undefined) {
       this.routerData = true;
       posts = this.postsService.fetchAllTopicPosts({ limit: 10, page: 1, relation: 'topic', relationId: history.state.topic });
-      // if (history.state.load != undefined) {
-      //   this.routerData = true;
-      //   switch (history.state.load) {
-      //     case 'testimony':
-      //       posts = this.postsService.fetchAllTopicPosts({ limit: 10, page: 1, relationType: history.state.load, relation: 'topic', relationId: history.state.topic });
-      //       break;
-      //     case 'complaint':
-      //       posts = this.postsService.fetchAllTopicPosts({ limit: 10, page: 1, relationType: history.state.load, relation: 'topic', relationId: history.state.topic });
-      //       break;
-      //   }
-      // }
     } else if (history.state.solution != undefined) {
       this.routerData = true;
       posts = this.postsService.fetchAllTopicPosts({ limit: 10, page: 1, relation: 'solution', relationId: history.state.solution });
-      // if (history.state.load != undefined) {
-      //   this.routerData = true;
-      //   switch (history.state.load) {
-      //     case 'testimony':
-      //       posts = this.postsService.fetchAllTopicPosts({ limit: 10, page: 1, relationType: history.state.load, relation: 'solution', relationId: history.state.solution });
-      //       break;
-      //     case 'complaint':
-      //       posts = this.postsService.fetchAllTopicPosts({ limit: 10, page: 1, relationType: history.state.load, relation: 'solution', relationId: history.state.solution });
-      //       break;
-      //   }
-      // }
     }
     else {
       this.routerData = false;
@@ -112,22 +89,6 @@ export class PostsComponent implements OnInit {
         next: (reply: any) => {
           // console.log(reply);
           this.user = reply[0];
-          // console.log(this.user['status']);
-
-          // if (history.state.topic != undefined) {
-          //   if (history.state.load != undefined) {
-          //     switch (history.state.load) {
-          //       case 'testimony':
-          //         this.posts = reply[1][0]['data'];
-          //         break;
-          //       case 'complaint':
-          //         this.posts = reply[1][0]['data'];
-          //         break;
-          //     }
-          //   }
-          // } else {
-          //   this.posts = reply[1][0]['data'];
-          // }
 
           this.posts = reply[1][0]['data'];
           this.setPostsCards();
@@ -138,10 +99,8 @@ export class PostsComponent implements OnInit {
           }
 
           this.states = reply[2];
-          // console.log('states: ', this.states);
 
           this.document = reply[3];
-          // console.log('document: ', this.document);
           this.document['layouts'].filter((x: any) => {
             this.layouts.push(x);
 
@@ -157,8 +116,6 @@ export class PostsComponent implements OnInit {
               });
             });
           });
-          // console.log(this.topics);
-          // console.log(this.solutions);
         },
         complete: () => {
           this.searchTeamsFG = this.formBuilder.group({

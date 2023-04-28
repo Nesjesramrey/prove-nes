@@ -103,7 +103,7 @@
                 <mat-form-field appearance="outline">
                   <mat-label>Agregar:</mat-label>
                   <mat-select>
-                    <mat-option (click)="openModalTestimony($event)" disabled>
+                    <mat-option (click)="openModalTestimony($event)">
                       <small>Testimonio</small>
                     </mat-option>
                     <mat-option disabled>
@@ -128,6 +128,17 @@
           <div class="set-12 head-titles">
             <span>Comentarios</span>
             <div class="line"></div>
+          </div>
+
+          <div class="set-12 cmtlst nocom" *ngIf="solution['comments'].length == 0">
+            <h4>No hay comentarios</h4>
+            <p>
+              <small>Sé el primero en comentar</small>
+            </p>
+            <!-- <button type="button" mat-raised-button color="warn" class="wicon" (click)="popAddCommentsDialog()">
+              <mat-icon>add_circle</mat-icon>
+              <small>Agregar comentario</small>
+            </button> -->
           </div>
 
           <div class="set-12 combox">
@@ -171,7 +182,7 @@
                   *ngIf="com['truncate']"></div>
                 <div class="set-12 mess" [innerHTML]="com['message']" *ngIf="!com['truncate']"></div>
 
-                <div class="set-12 dates txt-right" *ngIf="com['message'].length > 170">
+                <div class="set-12 rdmore txt-right" *ngIf="com['message'].length > 170">
                   <small>
                     <a href="javascript:void(0)" (click)="toggleCommentMessage(com)">
                       {{com['truncate'] ? 'Leer más' : 'Leer menos'}}
@@ -180,8 +191,13 @@
                 </div>
 
                 <div class="set-12 dates">
-                  <small>{{com['createdBy']['firstname']}} {{com['createdBy']['lastname']}}</small> -
+                  <small>{{com['createdBy']['firstname']}} {{com['createdBy']['lastname']}}</small>
+                  <small>-</small>
                   <small>{{com['createdAt'] | date: 'mediumDate'}} - {{com['createdAt'] | date: 'mediumTime'}}</small>
+                  <small *ngIf="com['attachment'] != null">-</small>
+                  <a [href]="com['attachment']" target="_self" *ngIf="com['attachment'] != null">
+                    <mat-icon color="warn">attachment</mat-icon>
+                  </a>
                 </div>
 
                 <!-- <div class="set-12 dates">
@@ -191,17 +207,6 @@
                 </div> -->
               </div>
             </div>
-          </div>
-
-          <div class="set-12 cmtlst nocom" *ngIf="solution['comments'].length == 0">
-            <h4>No hay comentarios</h4>
-            <p>
-              <small>Sé el primero en comentar</small>
-            </p>
-            <button type="button" mat-raised-button color="warn" class="wicon" (click)="popAddCommentsDialog()">
-              <mat-icon>add_circle</mat-icon>
-              <small>Agregar comentario</small>
-            </button>
           </div>
         </div>
       </mat-card>
@@ -223,16 +228,30 @@
         </div>
       </div>
 
-      <div class="set-12 sltshldr" *ngIf="otherSolutions.length == 0">
+      <div class="set-12 sltshldr nocom" *ngIf="otherSolutions.length == 0">
         <h4>No hay mas soluciones</h4>
+        <p>
+          <small>Sé el primero en agregar una solución</small>
+        </p>
+        <button type="button" mat-raised-button color="warn" class="wicon" (click)="openModalSolution(null)">
+          <mat-icon>add_circle</mat-icon>
+          <small>Agregar solución</small>
+        </button>
       </div>
 
       <div class="set-12 sltshldr" *ngIf="otherSolutions.length > 0">
         <div class="set-12 slt" *ngFor="let solution of otherSolutions">
-          <button type="button"
-            (click)="loadOtheSolution('/documentos-publicos/' + documentID + '/categoria/' + categoryID + '/subcategoria/' + subcategoryID + '/tema/' + topicID + '/solucion/' + solution['_id'])">
-            {{solution['title']}}
-          </button>
+          <div class="set-10">
+            <button type="button"
+              (click)="loadOtheSolution('/documentos-publicos/' + documentID + '/categoria/' + categoryID + '/subcategoria/' + subcategoryID + '/tema/' + topicID + '/solucion/' + solution['_id'])">
+              <strong>{{solution['title']}}</strong>
+            </button>
+          </div>
+          <div class="set-2 txt-right">
+            <button type="button" mat-mini-fab color="primary">
+              {{solution['stats']['score']}}
+            </button>
+          </div>
         </div>
       </div>
     </div>

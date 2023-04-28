@@ -3,8 +3,14 @@
   height: 100%;
   float: left;
   // padding: 40px;
-  margin-top: 80px;
+  padding-top: 80px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+
+  .hldr {
+    flex: 1 0 auto;
+  }
 
   mat-card:not(:last-child) {
     margin-bottom: 20px;
@@ -357,6 +363,10 @@
     ::ng-deep .mat-form-field-wrapper {
       padding: 0;
     }
+  }
+
+  .app-footer {
+    flex-shrink: 0;
   }
 }
 

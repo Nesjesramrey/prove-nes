@@ -23,6 +23,7 @@ import { ShareSheetComponent } from 'src/app/components/share-sheet/share-sheet.
 import { ComplaintDialogComponent } from 'src/app/components/complaint-dialog/complaint-dialog.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommentService } from 'src/app/services/comment.service';
+import { TestimonyDialogComponent } from 'src/app/components/testimony-dialog/testimony-dialog.component';
 
 @Component({
   selector: '.topic-page',
@@ -277,26 +278,40 @@ export class TopicComponent implements OnInit {
   }
 
   openModalTestimony(event: any) {
-    const dialogRef = this.dialog.open<AddDocumentTestimonyComponent>(AddDocumentTestimonyComponent, {
+    // const dialogRef = this.dialog.open<AddDocumentTestimonyComponent>(
+    //   AddDocumentTestimonyComponent, {
+    //   data: {
+    //     documentID: this.documentID,
+    //     document: this.document,
+    //     categoryID: this.categoryID,
+    //     topicID: this.topicID,
+    //     type: 'topic',
+    //     image: this.image,
+    //     firstname: this.user['firstname'],
+    //     lastname: this.user['lastname'],
+    //     user: this.user
+    //   },
+    //   disableClose: true,
+    //   panelClass: 'full-dialog'
+    // });
+
+    // dialogRef.afterClosed().subscribe((reply: any) => {
+    //   if (reply != undefined) {
+    //     this.topic.testimonials.unshift(reply.testimonials[0]);
+    //   }
+    // });
+
+    const dialogRef = this.dialog.open<any>(TestimonyDialogComponent, {
       data: {
-        documentID: this.documentID,
-        document: this.document,
-        categoryID: this.categoryID,
-        topicID: this.topicID,
-        type: 'topic',
-        image: this.image,
-        firstname: this.user['firstname'],
-        lastname: this.user['lastname'],
-        user: this.user
+        user: this.user,
+        topic: this.topic
       },
       disableClose: true,
-      panelClass: 'full-dialog'
+      panelClass: 'side-dialog'
     });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) {
-        this.topic.testimonials.unshift(reply.testimonials[0]);
-      }
+      if (reply != undefined) { }
     });
   }
 
@@ -499,6 +514,9 @@ export class TopicComponent implements OnInit {
 
   onComment(formGroup: FormGroup) {
     this.isPosting = true;
+    let url = this.router['url'];
+    url = url.replace('/documentos-publicos/', '/documentos/');
+    url = url.replace('/tema/', '/temas/');
 
     let data: any = {
       location: 'topic',
@@ -510,6 +528,7 @@ export class TopicComponent implements OnInit {
     data['formData'].append('file', this.commentFormGroup.controls['file']['value']);
     data['formData'].append('message', formGroup['value']['message']);
     data['formData'].append('coverage', JSON.stringify([this.topic['coverage'][0]['_id']]));
+    data['formData'].append('redirectURL', url);
 
     this.commentService.createNewTopicComment(data).subscribe({
       error: (error: any) => {

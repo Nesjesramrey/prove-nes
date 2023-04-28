@@ -20,7 +20,7 @@ export class AddDocumentCommentComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public commentService: CommentService
   ) { 
-    console.log(this.dialogData);
+    // console.log(this.dialogData);
   }
 
   killDialog() {

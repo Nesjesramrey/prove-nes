@@ -21,6 +21,7 @@ import { ShareSheetComponent } from 'src/app/components/share-sheet/share-sheet.
 import { AddDocumentSolutionComponent } from 'src/app/components/add-document-solution/add-document-solution.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommentService } from 'src/app/services/comment.service';
+import { TestimonyDialogComponent } from 'src/app/components/testimony-dialog/testimony-dialog.component';
 
 @Component({
   selector: '.solution-page',
@@ -296,25 +297,38 @@ export class SolutionComponent implements OnInit {
   }
 
   openModalTestimony(event: any) {
-    const dialogRef = this.dialog.open<AddDocumentTestimonyComponent>(AddDocumentTestimonyComponent, {
+    // const dialogRef = this.dialog.open<AddDocumentTestimonyComponent>(AddDocumentTestimonyComponent, {
+    //   data: {
+    //     documentID: this.documentID,
+    //     document: this.document,
+    //     categoryID: this.categoryID,
+    //     topicID: this.solutionID,
+    //     type: 'solution',
+    //     image: this.image,
+    //     user: this.user
+    //   },
+    //   disableClose: true,
+    //   panelClass: 'full-dialog'
+    // }
+    // );
+
+    // dialogRef.afterClosed().subscribe((reply: any) => {
+    //   if (reply != undefined) {
+    //     this.solution.testimonials.unshift(reply.testimonials[0]);
+    //   }
+    // });
+
+    const dialogRef = this.dialog.open<any>(TestimonyDialogComponent, {
       data: {
-        documentID: this.documentID,
-        document: this.document,
-        categoryID: this.categoryID,
-        topicID: this.solutionID,
-        type: 'solution',
-        image: this.image,
-        user: this.user
+        user: this.user,
+        solution: this.solution
       },
       disableClose: true,
-      panelClass: 'full-dialog'
-    }
-    );
+      panelClass: 'side-dialog'
+    });
 
     dialogRef.afterClosed().subscribe((reply: any) => {
-      if (reply != undefined) {
-        this.solution.testimonials.unshift(reply.testimonials[0]);
-      }
+      if (reply != undefined) { }
     });
   }
 
@@ -488,6 +502,9 @@ export class SolutionComponent implements OnInit {
 
   onComment(formGroup: FormGroup) {
     this.isPosting = true;
+    let url = this.router['url'];
+    url = url.replace('/documentos-publicos/', '/documentos/');
+    url = url.replace('/tema/', '/temas/');
 
     let data: any = {
       location: 'solution',
@@ -499,6 +516,7 @@ export class SolutionComponent implements OnInit {
     data['formData'].append('file', this.commentFormGroup.controls['file']['value']);
     data['formData'].append('message', formGroup['value']['message']);
     data['formData'].append('coverage', JSON.stringify([this.solution['coverage'][0]['_id']]));
+    data['formData'].append('redirectURL', url);
 
     this.commentService.createNewSolutionComment(data).subscribe({
       error: (error: any) => {

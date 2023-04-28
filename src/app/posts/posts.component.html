@@ -2,7 +2,7 @@
   <mat-spinner></mat-spinner>
 </div>
 
-<div class="set-12" *ngIf="isDataAvailable">
+<div class="set-12 hldr" *ngIf="isDataAvailable">
   <div class="set-12">
     <div class="side-menu">
       <mat-card>
@@ -65,7 +65,11 @@
         <span>Regresar</span>
       </div>
 
-      <div class="set-12">
+      <div class="set-12 noposts" *ngIf="posts.length == 0">
+        <h4>No se encontraron datos para tu petición</h4>
+      </div>
+
+      <div class="set-12" *ngIf="posts.length != 0">
         <mat-card *ngFor="let post of posts">
           <!-- testimony -->
           <div class="set-12" *ngIf="post['relation'] == 'testimony'">
@@ -279,13 +283,15 @@
     </div>
   </div>
 
-  <div class="set-12 ldmr">
+  <div class="set-12 ldmr" *ngIf="posts.length != 0">
     <button type="button" mat-raised-button color="warn" (click)="loadMorePosts()" [disabled]="submitted">
       <mat-icon>add_circle</mat-icon>
       <small>Cargar más</small>
     </button>
   </div>
+</div>
 
+<div class="set-12" *ngIf="isDataAvailable">
   <div class="posts-floating-menu" [user]="user" *ngIf="user != null"></div>
   <div class="app-footer"></div>
 </div>
